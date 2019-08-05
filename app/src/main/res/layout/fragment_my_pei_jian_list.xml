@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rl_column"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <com.jhhscm.platform.views.EnhanceTabLayout
+                android:id="@+id/enhance_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabIndicatorColor="@color/a397"
+                app:tabIndicatorHeight="2dp"
+                app:tabIndicatorWidth="16dp"
+                app:tabSelectTextColor="@color/a397"
+                app:tabTextColor="@color/acc9"
+                app:tab_Gravity="mode_fill"
+                app:tab_Mode="mode_fixed" />
+
+        </RelativeLayout>
+
+        <!--<android.support.v4.view.ViewPager-->
+        <!--android:id="@+id/mViewPager"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@+id/rl_column" />-->
+
+        <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_column"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+
+        <RelativeLayout
+            android:id="@+id/rl_case_base_null"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="150dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/image"
+                android:layout_centerHorizontal="true"
+                android:text="暂无模板！"
+                android:textColor="@color/acc6"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

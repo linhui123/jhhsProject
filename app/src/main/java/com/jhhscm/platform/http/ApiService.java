@@ -1,0 +1,250 @@
+package com.jhhscm.platform.http;
+
+
+import com.jhhscm.platform.aliapi.AliPrePayBean;
+import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
+import com.jhhscm.platform.fragment.GoodsToCarts.FindAddressListBean;
+import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryDetailBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetOldPageListBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
+import com.jhhscm.platform.fragment.home.AdBean;
+import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
+import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
+import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
+import com.jhhscm.platform.fragment.my.order.FindOrderListBean;
+import com.jhhscm.platform.fragment.sale.FindOrderBean;
+import com.jhhscm.platform.fragment.sale.OldGoodOrderHistoryBean;
+import com.jhhscm.platform.http.bean.BaseEntity;
+import com.jhhscm.platform.http.bean.NetBean;
+import com.jhhscm.platform.http.bean.ResultBean;
+import com.jhhscm.platform.http.bean.SaveBean;
+import com.jhhscm.platform.http.bean.UserBean;
+
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
+
+
+/**
+ * 类说明：接口定义
+ */
+public interface ApiService {
+
+    String USER_VERIFI_CATION = "appLogin/verification";
+    String USER_LOGIN = "appLogin/toLogin";
+
+    /**
+     * 首页
+     */
+    String GET_ADVERTISEMENT = "appIndex/getAdvertisement";
+    String GET_EXAMPLE = "appIndex/getExample";
+    String GET_HOSPITAIL_AND_DOCTOR_FILE = "appIndex/getHospitailAndDoctorFile";
+
+    //验证码获取
+    String GET_CODE = "user/getCode";
+    //登陆
+    String LOGIN = "user/login";
+    //获取用户信息
+    String GET_USER = "user/getUser";
+    //获取轮播、广告
+    String GET_AD = "index/getAd";
+    //查询首页品牌列表
+    String FIND_BRANDHOMEPAGE = "brand/findBrandHomePage";
+    //查询首页品牌列表
+    String FIND_MOUNTINGSHOMEPAGE = "category/findCategoryHomePage";
+    //查询首页劳务招聘
+    String FIND_LABOURRELEASEHOMEPAGE = "labour/findLabourReleaseHomePage";
+    //查询机械下拉框
+    String GET_COMBOBOX = "kv/getComboBox";
+    //查询新机列表
+    String GET_GOODSPAGELIST = "goods/getGoodsPageList";
+    //查询二手机列表
+    String GET_OLDPAGELIST = "goods/getOldPageList";
+    //信息咨询
+    String SAVE_MSG = "msg/saveMsg";
+    //收藏
+    String SAVE = "collect/save";
+    //查看是否收藏
+    String FIND_COLLECTBYUSERCODE = "collect/findCollectByUserCode";
+
+    //添加购物车
+    String ADD_GOODSTOCARTS = "goodscart/addGoodsToCarts";
+    //获取用户购物车列表
+    String GET_CARTGOODSBYUSERCODE = "goodscart/getCartGoodsByUserCode";
+    //删除购物车信息
+    String DEL_GOODSTOCARTS = "goodscart/delGoodsToCarts";
+    //修改购物车信息
+    String UPDATE_GOODSTOCARTS = "goodscart/updateGoodsToCarts";
+
+    //添加收货地址  addAddress
+    String ADD_ADDRESS = "address/addAddress";
+    //添加收货地址  delAddress
+    String DEL_ADDRESS = "address/delAddress";
+    //修改收货地址  updateAddress
+    String UPDATE_ADDRESS = "address/updateAddress";
+    //获取用户收货地址 findAddressList
+    String FIND_ADDRESSLIST = "address/findAddressList";
+
+    //创建订单
+    String CREATE_ORDER = "order/createOrder";
+    //微信支付下订单接口
+    String WX_PREPAY = "pay/wxPrePay";
+    //支付宝下订单接口
+    String ALI_PREPAY = "pay/aliPrePay";
+    //查询订单
+    String FIND_ORDER = "order/findOrder";
+
+    //获取行政区域列表
+    String GET_REGION = "address/getRegion";
+    //查询配件列表
+    String FIND_CATEGORY = "category/findCategory";
+    //查询配件详情
+    String FIND_CATEGORYDETAIL = "category/findCategoryDetail";
+
+    //二手机历史
+    String OLD_GOODORDERHISTORY = "goods/oldGoodOrderHistory";
+    //二手机估价
+    String FIND_GOODSASSESS = "goodsAssess/findGoodsAssess";
+
+    //订单列表
+    String FIND_ORDERLIST = "order/findOrderList";
+
+    @FormUrlEncoded
+    @POST(GET_CODE)
+    Call<BaseEntity> getCode(@Field("mobile") String mobile);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_CODE)
+    Call<BaseEntity> CodeTest(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_USER)
+    Call<BaseEntity<UserBean>> getUser(@Body NetBean content);
+
+    @FormUrlEncoded
+    @POST(LOGIN)
+    Call<BaseEntity> login(@Field("appid") String appid, @Field("content") String content, @Field("sign") String sign);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(LOGIN)
+    Call<BaseEntity> LoginTest(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_AD)
+    Call<BaseEntity<AdBean>> getAd(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_BRANDHOMEPAGE)
+    Call<BaseEntity<FindBrandHomePageBean>> findBrandHomePage(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_MOUNTINGSHOMEPAGE)
+    Call<BaseEntity<FindCategoryHomePageBean>> findCategoryHomePage(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_LABOURRELEASEHOMEPAGE)
+    Call<BaseEntity<FindLabourReleaseHomePageBean>> findLabourReleaseHomePage(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_COMBOBOX)
+    Call<BaseEntity<GetComboBoxBean>> getComboBox(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_GOODSPAGELIST)
+    Call<BaseEntity<GetGoodsPageListBean>> getGoodsPageList(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_OLDPAGELIST)
+    Call<BaseEntity<GetOldPageListBean>> getOldPageList(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(SAVE_MSG)
+    Call<BaseEntity> saveMsg(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(SAVE)
+    Call<BaseEntity> save(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_COLLECTBYUSERCODE)
+    Call<BaseEntity<SaveBean>> findCollectByUserCode(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(ADD_GOODSTOCARTS)
+    Call<BaseEntity> addGoodsToCarts(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_CARTGOODSBYUSERCODE)
+    Call<BaseEntity<GetCartGoodsByUserCodeBean>> getCartGoodsByUserCode(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(DEL_GOODSTOCARTS)
+    Call<BaseEntity<ResultBean>> delGoodsToCarts(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(UPDATE_GOODSTOCARTS)
+    Call<BaseEntity<ResultBean>> updateGoodsToCarts(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_REGION)
+    Call<BaseEntity<GetRegionBean>> getRegion(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_CATEGORY)
+    Call<BaseEntity<FindCategoryBean>> findCategory(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_CATEGORYDETAIL)
+    Call<BaseEntity<FindCategoryDetailBean>> findCategoryDetail(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(ADD_ADDRESS)
+    Call<BaseEntity<ResultBean>> addAddress(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(UPDATE_ADDRESS)
+    Call<BaseEntity<ResultBean>> updateAddress(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(DEL_ADDRESS)
+    Call<BaseEntity<ResultBean>> delAddress(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_ADDRESSLIST)
+    Call<BaseEntity<FindAddressListBean>> findAddressList(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(CREATE_ORDER)
+    Call<BaseEntity<CreateOrderResultBean>> createOrder(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(WX_PREPAY)
+    Call<BaseEntity<ResultBean>> wxPrePay(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(ALI_PREPAY)
+    Call<BaseEntity<AliPrePayBean>> aliPrePay(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_ORDER)
+    Call<BaseEntity> findOrder(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(OLD_GOODORDERHISTORY)
+    Call<BaseEntity<OldGoodOrderHistoryBean>> oldGoodOrderHistory(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_GOODSASSESS)
+    Call<BaseEntity> findGoodsAssess(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_ORDERLIST)
+    Call<BaseEntity<FindOrderListBean>> findOrderList(@Body NetBean content);
+}

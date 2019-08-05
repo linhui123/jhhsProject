@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="shouldShowBack"
+            type="boolean" />
+
+        <variable
+            name="shouldShowTitleBar"
+            type="boolean" />
+
+        <variable
+            name="shouldShowQuestionBack"
+            type="boolean" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/head_title_height"
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:visibility="@{shouldShowTitleBar?View.VISIBLE:View.GONE}">
+
+        <LinearLayout
+            android:id="@+id/titleLayout"
+            android:onClick="onTitleClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_head_title"
+                style="@style/head_title_txt_style"
+                android:layout_gravity="center_horizontal"
+                android:text="设置" />
+
+            <TextView
+                android:id="@+id/tv_quick_reply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:drawablePadding="5dp"
+                android:text="6个回答"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_head_back"
+            style="@style/head_text_action_btn_style"
+            android:onClick="onHeadBackClick"
+            android:visibility="@{shouldShowBack?View.VISIBLE:View.GONE}">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:scaleType="centerInside"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_head_backs"
+            style="@style/head_text_action_btn_style"
+            android:onClick="onHeadBackClick"
+            android:visibility="@{shouldShowQuestionBack?View.VISIBLE:View.GONE}">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_head_action"
+            style="@style/head_text_action_btn_style"
+            android:layout_alignParentRight="true"
+            android:onClick="onHeadActionClick"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_head_operate"
+                style="@style/head_operate_txt_style"
+                android:layout_gravity="center"
+                android:text="设置" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_head_icon_action"
+            style="@style/head_text_action_btn_style"
+            android:layout_alignParentRight="true"
+            android:onClick="onHeadActionClick"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_head_operate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/tv_head_operate_action"
+            style="@style/head_operate_txt_style"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:clickable="true"
+            android:onClick="onHeadActionClick"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</layout>

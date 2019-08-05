@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginRight="5dp"
+    android:background="@drawable/roud_shpape_bg">
+    <ImageView
+        android:scaleType="centerCrop"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="15dp"
+        android:id="@+id/more_new_item_img"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/digging_machine_name"
+        android:layout_below="@+id/more_new_item_img"
+        android:text="三一重工SY365H挖掘机"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:textColor="@color/background_tab_pressed"
+        android:layout_marginLeft="10dp"
+        android:textSize="11dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/digging_machine_contetn"
+        android:layout_below="@+id/digging_machine_name"
+        android:text="2017年|1900小时|福建-厦门"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/digging_machine_contetn"
+        android:text="65"
+        android:textSize="16dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/red_text"
+        android:id="@+id/new_machine_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/new_machine_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/new_machine_price"
+        android:layout_marginLeft="0dp"
+        android:layout_toRightOf="@+id/new_machine_price"
+        android:text="万"
+        android:textColor="@color/red_text"
+        android:textSize="11dp" />
+    <TextView
+        android:textColor="@color/red_text"
+        android:text="首付 35.2万"
+        android:textSize="11dp"
+        android:layout_alignBottom="@+id/new_machine_unit"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/new_machine_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:background="@drawable/bulutext_shpape_bg"
+        android:layout_marginLeft="25dp"
+        android:layout_alignRight="@+id/digging_machine_name"
+        android:paddingBottom="3dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="3dp"
+        android:paddingRight="8dp"
+        android:layout_alignBottom="@+id/new_machine_price"
+        android:textColor="@color/blue_txt"
+        android:text="询价"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

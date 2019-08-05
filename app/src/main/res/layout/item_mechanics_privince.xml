@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chk_payitem_select_status">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:paddingRight="@dimen/padding_15"
+            android:paddingBottom="10dp"
+            android:text="全部"
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/text_size_14" />
+
+    </RelativeLayout>
+</layout>

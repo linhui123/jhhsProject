@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="5dp">
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:padding="8dp"
+        android:text="某某某公司长期招聘一名挖机师傅"
+        android:id="@+id/labour_service_item_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:background="@drawable/edit_bg">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingRight="@dimen/padding_15"
+            android:paddingBottom="@dimen/dp_5"
+            android:singleLine="true"
+            android:text="全部"
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/text_size_12" />
+
+        <ImageView
+            android:id="@+id/im_del"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_5"
+            android:layout_toRightOf="@+id/tv_name"
+            android:src="@mipmap/msg_choose_true" />
+    </RelativeLayout>
+</layout>

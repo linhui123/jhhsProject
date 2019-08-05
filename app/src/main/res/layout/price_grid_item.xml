@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:background="@drawable/gray_item_shape">
+<ImageView
+    android:layout_marginRight="3dp"
+    android:layout_marginLeft="3dp"
+    android:layout_marginTop="2dp"
+    android:id="@+id/hot_item_img"
+    android:background="@drawable/timg"
+    android:layout_width="match_parent"
+    android:layout_height="90dp" />
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/hot_item_img"
+        android:id="@+id/hot_item_name"
+        android:textSize="12dp"
+        android:gravity="center"
+        android:text="山河智能"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/hot_item_name"
+        android:textSize="12dp"
+        android:gravity="center"
+        android:text="SWE70E挖掘机"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

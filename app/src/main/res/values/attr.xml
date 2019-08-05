@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CirclePageIndicator">
+        <!-- Whether or not the indicators should be centered. -->
+        <!-- 指示器是否居中显示 -->
+        <attr name="centered" format="boolean" />
+        <!-- Color of the filled circle that represents the current page. -->
+        <!-- 当前页面指示器颜色 -->
+        <attr name="selectColor" format="color" />
+        <!-- Color of the filled circles that represents pages. -->
+        <!-- 全部页面指示器颜色 -->
+        <attr name="pageColor" format="color" />
+        <!-- Radius of the circles. This is also the spacing between circles. -->
+        <!-- 指示器半径 -->
+        <attr name="radius" format="dimension" />
+        <!-- Whether or not the selected indicator snaps to the circles. -->
+        <!-- 指示器是否锁定位置 -->
+        <attr name="snap" format="boolean" />
+        <!-- Color of the open circles. -->
+        <!-- 全部页面指示器空心圆边框颜色 -->
+        <attr name="strokeColor" format="color" />
+        <!-- Width of the stroke used to draw the circles. -->
+        <!-- 全部页面指示器空心圆边框宽度 -->
+        <attr name="strokeWidth" format="dimension" />
+        <!-- View background -->
+        <!-- 页面指示器背景 -->
+        <attr name="android:background" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+
+
+    <declare-styleable name="RecyclerView">
+        <attr name="layoutManager" format="string" />
+        <attr name="android:orientation" />
+        <attr name="android:descendantFocusability" />
+        <attr name="spanCount" format="integer" />
+        <attr name="reverseLayout" format="boolean" />
+        <attr name="stackFromEnd" format="boolean" />
+        <attr name="fastScrollEnabled" format="boolean" />
+        <attr name="fastScrollVerticalThumbDrawable" format="reference" />
+        <attr name="fastScrollVerticalTrackDrawable" format="reference" />
+        <attr name="fastScrollHorizontalThumbDrawable" format="reference" />
+        <attr name="fastScrollHorizontalTrackDrawable" format="reference" />
+    </declare-styleable>
+    <dimen name="fastscroll_default_thickness">8dp</dimen>
+    <dimen name="fastscroll_margin">0dp</dimen>
+    <dimen name="fastscroll_minimum_range">50dp</dimen>
+    <dimen name="item_touch_helper_max_drag_scroll_per_frame">20dp</dimen>
+    <dimen name="item_touch_helper_swipe_escape_max_velocity">800dp</dimen>
+    <dimen name="item_touch_helper_swipe_escape_velocity">120dp</dimen>
+    <item name="item_touch_helper_previous_elevation" type="id" />
+
+    <declare-styleable name="AdvancedPagerSlidingTabStrip">
+        <attr name="apTabIndicatorColor" format="color" />
+        <attr name="apTabUnderlineColor" format="color" />
+        <attr name="apTabDividerColor" format="color" />
+        <attr name="apTabTextSelectColor" format="color" />
+        <attr name="apTabIndicatorHeight" format="dimension" />
+        <attr name="apTabUnderlineHeight" format="dimension" />
+        <attr name="apTabDividerPadding" format="dimension" />
+        <attr name="apTabPaddingLeftRight" format="dimension" />
+        <attr name="apTabPaddingTopBottom" format="dimension" />
+        <attr name="apTabScrollOffset" format="dimension" />
+        <attr name="apTabBackground" format="reference" />
+        <attr name="apTabShouldExpand" format="boolean" />
+        <attr name="apTabTextAllCaps" format="boolean" />
+        <attr name="apTabTextAlignLeft" format="boolean" />
+        <attr name="apTabDrawMode" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="text" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="EnhanceTabLayout">
+        <attr name="tab_Mode" format="enum">
+            <enum name="mode_fixed" value="1" />
+            <enum name="mode_scrollable" value="2" />
+        </attr>
+        <attr name="tab_Gravity" format="enum">
+            <enum name="mode_center" value="1" />
+            <enum name="mode_fill" value="0" />
+        </attr>
+        <attr name="tabIndicatorColor" format="color" />
+        <attr name="tabSelectTextColor" format="color" />
+        <attr name="tabTextColor" format="color" />
+        <attr name="tabIndicatorHeight" format="dimension" />
+        <attr name="tabIndicatorWidth" format="dimension" />
+        <attr name="tabTextSize" format="dimension" />
+    </declare-styleable>
+</resources>

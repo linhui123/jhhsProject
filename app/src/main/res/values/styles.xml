@@ -1,0 +1,97 @@
+<resources>
+
+    <style name="Theme.AppTheme.TranslucentStatusBar" parent="Theme.AppCompat.Light.NoActionBar" />
+    <!-- 自定义仿IOS的AlertDialog的样式 -->
+    <style name="AlertDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+    <!--公共对话框 -->
+    <style name="load_common_dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="transparent_dialog_style" parent="android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- 除去title -->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 除去背景色 -->
+    </style>
+
+    <style name="dimless_dialog_style" parent="transparent_dialog_style">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+
+    <!-- head title style -->
+    <style name="head_title_txt_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_title</item>
+        <item name="android:maxEms">13</item>
+        <item name="android:textColor">@color/acc3</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+
+    <style name="head_text_action_btn_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:paddingLeft">@dimen/dis_title_left</item>
+        <item name="android:paddingRight">@dimen/dis_title_left</item>
+        <item name="android:clickable">true</item>
+        <!--<item name="android:background">@drawable/selector_item_common_bg</item>-->
+    </style>
+
+    <style name="head_operate_txt_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_title</item>
+        <item name="android:textColor">@color/theme_color</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="botton_animation">
+        <item name="android:windowEnterAnimation">@anim/show_anim</item>
+        <item name="android:windowExitAnimation">@anim/hide_anim</item>
+    </style>
+
+    <style name="view_h_de">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/de</item>
+    </style>
+
+    <style name="CustomTabPageIndicator.Text" parent="android:TextAppearance.Medium">
+        <item name="android:typeface">monospace</item>
+    </style>
+
+
+    <style name="pagertab_style" >
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAppearance">@style/CustomTabPageIndicator.Text</item>
+        <item name="apTabIndicatorColor">@color/white</item>
+        <item name="apTabDividerColor">#00000000</item>
+        <item name="apTabShouldExpand">false</item>
+        <item name="apTabPaddingLeftRight">0dp</item>
+        <item name="apTabDrawMode">text</item>
+        <item name="apTabTextSelectColor">@color/white</item>
+
+    </style>
+</resources>

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/tv_assess"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/padding_15"
+                android:paddingTop="@dimen/dp_3"
+                android:paddingRight="@dimen/padding_15"
+                android:paddingBottom="@dimen/padding_10">
+
+                <ImageView
+                    android:id="@+id/im"
+                    android:layout_width="128dp"
+                    android:layout_height="90dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/ic_launcher" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_10"
+                    android:layout_toRightOf="@+id/im"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="三一重工SY365H挖掘机"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="2017年 | 1900小时 | 江苏-徐州市"
+                        android:textColor="@color/acc9"
+                        android:textSize="@dimen/text_size_12" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_3"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="参考价格: "
+                            android:textColor="@color/acc3"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="32.5万"
+                            android:textColor="@color/ff1a"
+                            android:textSize="@dimen/sp_14" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_10"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/padding_10"
+                            android:background="@drawable/text_bg_d9e"
+                            android:padding="@dimen/dp_5"
+                            android:text="打过锤"
+                            android:textColor="@color/a397"
+                            android:textSize="@dimen/text_size_12" />
+
+                        <TextView
+                            android:id="@+id/tv_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/text_bg_d9e"
+                            android:padding="@dimen/dp_5"
+                            android:text="土方车"
+                            android:textColor="@color/a397"
+                            android:textSize="@dimen/text_size_12" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View
+                style="@style/view_h_de"
+                android:layout_height="@dimen/padding_10" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_15"
+                android:layout_marginTop="@dimen/padding_10"
+                android:layout_marginRight="@dimen/padding_15"
+                android:layout_marginBottom="@dimen/padding_10">
+
+                <TextView
+                    android:id="@+id/tv_sale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="售价区间"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_sale"
+                    android:layout_marginTop="@dimen/padding_10">
+
+                    <TextView
+                        android:id="@+id/tv_price1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="  18.14万元"
+                        android:textColor="@color/ff1a"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_price2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="24.05万元"
+                        android:textColor="@color/ff1a"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_price3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="34.05万元"
+                        android:textColor="@color/ff1a"
+                        android:textSize="@dimen/sp_14" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_price"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_line_de" />
+
+                    <TextView
+                        android:id="@+id/ring_1"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/ring_397" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/ring_3"
+                        android:layout_toRightOf="@+id/ring_1"
+                        android:gravity="center_horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/button_c397" />
+
+                        <TextView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/ring_red" />
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:id="@+id/ring_3"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/ring_397" />
+
+
+                    <TextView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/ring_ffa7" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rl_line"
+                    android:layout_marginTop="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="  较低价"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="较高价"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="新机指导价"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/sp_14" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <View
+                style="@style/view_h_de"
+                android:layout_height="@dimen/padding_10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/padding_10"
+                android:text="预测未来五年价格"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_5"
+                android:text="（单位：万，每年2000小时工作）"
+                android:textColor="@color/acc9"
+                android:textSize="@dimen/sp_14" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barchart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/padding_10"
+                android:layout_marginBottom="@dimen/padding_10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></com.github.mikephil.charting.charts.BarChart>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_assess"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginRight="@dimen/padding_15"
+            android:layout_marginBottom="@dimen/padding_10"
+            android:layout_toRightOf="@+id/tv_reset"
+            android:layout_weight="1"
+            android:background="@drawable/button_c397"
+            android:gravity="center"
+            android:text="重新评估"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16" />
+    </RelativeLayout>
+
+</layout>

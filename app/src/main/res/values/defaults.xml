@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 默认资源集 -->
+    <!-- 默认指示器是否位于中间 -->
+    <bool name="default_circle_indicator_centered">true</bool>
+    <!-- 默认指示器全部页面实心圆颜色 -->
+    <color name="default_circle_indicator_page_color">#00000000</color>
+    <!-- 默认指示器当前页面实心圆颜色 -->
+    <color name="default_circle_indicator_select_color">#FFFFFFFF</color>
+    <!-- 默认指示器全部页面空心圆边框颜色 -->
+    <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>
+    <!-- 默认指示器全部页面空心圆边框宽度 -->
+    <dimen name="default_circle_indicator_stroke_width">1dp</dimen>
+    <!-- 默认指示器圆形半径 -->
+    <dimen name="default_circle_indicator_radius">4dp</dimen>
+    <!-- 默认指示器是否锁定在位置上，设置为false的话，指示器就会跟着手指划动而移动 -->
+    <bool name="default_circle_indicator_snap">false</bool>
+</resources>

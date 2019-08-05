@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            style="@style/view_h_de"
+            android:layout_height="@dimen/padding_10" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingRight="@dimen/padding_15"
+            android:paddingBottom="@dimen/dp_5">
+
+            <TextView
+                android:id="@+id/data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2019-7-30"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/order_staus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="待付款"
+                android:textColor="@color/ff1a"
+                android:textSize="@dimen/sp_14" />
+        </RelativeLayout>
+
+        <View style="@style/view_h_de" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_10"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingRight="@dimen/padding_15"
+            android:paddingBottom="@dimen/dp_5">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <View style="@style/view_h_de" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_10"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingRight="@dimen/padding_15"
+            android:paddingBottom="@dimen/dp_5">
+
+            <TextView
+                android:id="@+id/tatal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="合计 ￥110.00"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/cancle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/pay"
+                android:background="@drawable/edit_bg_acc9"
+                android:paddingLeft="@dimen/padding_10"
+                android:paddingTop="@dimen/dp_5"
+                android:layout_marginRight="@dimen/padding_15"
+                android:paddingRight="@dimen/padding_10"
+                android:paddingBottom="@dimen/dp_5"
+                android:text="取消订单"
+                android:textColor="@color/acc9"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/edit_bg_397"
+                android:paddingLeft="@dimen/padding_10"
+                android:paddingTop="@dimen/dp_5"
+                android:paddingRight="@dimen/padding_10"
+                android:paddingBottom="@dimen/dp_5"
+                android:text="立即支付"
+                android:textColor="@color/a397"
+                android:textSize="@dimen/sp_14" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/ll_bottom">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_15"
+                android:layout_marginRight="@dimen/padding_15"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:layout_marginBottom="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="品牌"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/ic_point"
+                        android:drawablePadding="@dimen/padding_10"
+                        android:text="请选择"
+                        android:textColor="@color/aa"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View style="@style/view_h_de" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:layout_marginBottom="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="型号"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/ic_point"
+                        android:drawablePadding="@dimen/padding_10"
+                        android:text="请选择"
+                        android:textColor="@color/aa"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View style="@style/view_h_de" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:layout_marginBottom="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="施工地区"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/ic_point"
+                        android:drawablePadding="@dimen/padding_10"
+                        android:text="请选择"
+                        android:textColor="@color/aa"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View style="@style/view_h_de" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:layout_marginBottom="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="年限"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/ic_point"
+                        android:drawablePadding="@dimen/padding_10"
+                        android:text="请选择"
+                        android:textColor="@color/aa"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View style="@style/view_h_de" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:layout_marginBottom="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="小时速"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <EditText
+                        android:id="@+id/tv_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_alignParentRight="true"
+                        android:background="@null"
+                        android:text="            请输入"
+                        android:textColor="@color/aa"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View style="@style/view_h_de" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:layout_marginBottom="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="是否打锤"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/ic_point"
+                        android:drawablePadding="@dimen/padding_10"
+                        android:text="请选择"
+                        android:textColor="@color/aa"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View style="@style/view_h_de" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:layout_marginBottom="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="作业方式"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/ic_point"
+                        android:drawablePadding="@dimen/padding_10"
+                        android:text="请选择"
+                        android:textColor="@color/aa"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View style="@style/view_h_de" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:layout_marginBottom="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="手机号码"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <EditText
+                        android:id="@+id/tv_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@null"
+                        android:text="           请输入"
+                        android:textColor="@color/aa"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View style="@style/view_h_de" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:layout_marginBottom="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="估价意向"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/ic_point"
+                        android:drawablePadding="@dimen/padding_10"
+                        android:text="请选择"
+                        android:textColor="@color/aa"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View style="@style/view_h_de" />
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5">
+
+            <TextView
+                android:id="@+id/tv_reset"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="@dimen/padding_10"
+                android:layout_weight="1"
+                android:background="@drawable/edit_bg_397"
+                android:gravity="center"
+                android:text="重置"
+                android:textColor="@color/a397"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/tv_assess"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/padding_10"
+                android:layout_toRightOf="@+id/tv_reset"
+                android:layout_weight="1"
+                android:background="@drawable/button_c397"
+                android:gravity="center"
+                android:text="快速估价"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_16" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">挖矿来</string>
+    <string name="progressbar_wait">请稍候&#8230;</string>
+    <string name="permission_dlg_close_txt">取消</string>
+    <string name="permission_dlg_settings_txt">前往设置</string>
+    <string name="permission_denied_txt">你已禁止授予挖矿来 %1$s 权限，可能\n会造成功能不可用，如需使用请到\n设置里授予权限</string>
+    <string name="login_already_send_code">%1$s秒</string>
+    <string name="login_send_code_again">重新发送</string>
+    <string name="format_aspect">%1$.1f</string>
+    <string name="launch_time">%1$ss跳过</string>
+
+    <string name="error_net">网络错误</string>
+
+    <!--home_page-->
+
+    <string name="views_load_more_click_to_load_more">加载更多</string>
+    <string name="views_load_more_loading">加载中</string>
+    <string name="views_load_more_loaded_empty">暂无数据</string>
+    <string name="views_load_more_loaded_no_more">没有更多了~</string>
+    <string name="views_load_more_error">加载失败</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unknown">发送返回</string>
+    <string name="error_missing_appid_rsa_private">Error: Missing \"APPID\" or \"RSA_PRIVATE\" in PayDemoActivity.
+    </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

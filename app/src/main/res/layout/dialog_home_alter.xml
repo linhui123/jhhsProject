@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="40dp"
+            android:layout_marginRight="40dp"
+            android:drawableTop="@mipmap/ic_home_expend1"
+            android:drawablePadding="@dimen/dp_3"
+            android:text="二手交易"
+            android:textColor="#ffffff"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="40dp"
+            android:layout_marginRight="40dp"
+            android:drawableTop="@mipmap/ic_home_expend2"
+            android:drawablePadding="@dimen/dp_3"
+            android:gravity="center"
+            android:text="发布招聘"
+            android:textColor="#ffffff"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="40dp"
+            android:drawableTop="@mipmap/ic_home_expend3"
+            android:drawablePadding="@dimen/dp_3"
+            android:gravity="center"
+            android:text="发布求职"
+            android:textColor="#ffffff"
+            android:visibility="visible" />
+    </LinearLayout>
+
+</layout>

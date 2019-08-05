@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/padding_15"
+        android:paddingTop="@dimen/dp_3"
+        android:paddingRight="@dimen/padding_15"
+        android:paddingBottom="@dimen/padding_10">
+
+        <ImageView
+            android:id="@+id/im"
+            android:layout_width="128dp"
+            android:layout_height="90dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_10"
+            android:layout_toRightOf="@+id/im"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="三一重工SY365H挖掘机"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tv_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="铲斗容量：0.26 m"
+                android:textColor="@color/acc9"
+                android:textSize="@dimen/text_size_12" />
+
+            <TextView
+                android:id="@+id/tv_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_3"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="65万 首付32.5万"
+                android:textColor="@color/ff1a"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tv_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_10"
+                android:text="询价"
+                android:textColor="@color/acc9"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

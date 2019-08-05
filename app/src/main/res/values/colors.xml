@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+    <color name="stroke_line">#ededed</color>
+    <color name="home_txt_color">#828189</color>
+    <color name="blue_txt">#3982fd</color>
+    <color name="black">#000000</color>
+    <color name="line_default_color">#e5e5e5</color>
+    <color name="cf5">#F5F5F5</color>
+    <color name="list_view_item_org">#f5f5f5</color>
+    <color name="background_tab_pressed">#e5e5e5</color>
+    <color name="action_sheet_blue">#037BFF</color>
+    <color name="red_text">#FF3030</color>
+    <color name="ff1a">#FF1A1A</color>
+    <color name="gray_grid">#f2f7fd</color>
+    <color name="peij_gird">#d1e8ff</color>
+    <color name="fitting_title_color">#9cc1fe</color>
+    <color name="color_f5">#F5222D</color>
+    <color name="aa">#aaaaaa</color>
+    <color name="acc3">#333333</color>
+    <color name="acc6">#666666</color>
+    <color name="acc9">#999999</color>
+    <color name="a397">#3977FE</color>
+    <color name="de">#dedede</color>
+    <color name="d9e">#D9E5FF</color>
+    <color name="window_bg">#f2f2f2</color>
+    <color name="ffa7">#FFA71A</color>
+    <color name="theme_color">#2fd4c7</color>
+</resources>
