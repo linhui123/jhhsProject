@@ -67,6 +67,8 @@
                 android:id="@+id/tv_gouwuche"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="43dp"
                 android:layout_marginRight="@dimen/padding_15"
                 android:layout_toRightOf="@+id/tv_shoucang"
                 android:drawableTop="@mipmap/ic_gouwuche"

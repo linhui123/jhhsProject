@@ -47,7 +47,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme.TranslucentStatusBar">
-        <activity android:name=".activity.FeedbackActivity"></activity>
+        <activity android:name=".activity.LabourDetailActivity"></activity>
+        <activity android:name=".activity.MechanicsByBrandActivity" />
+        <activity android:name=".activity.BrandActivity" />
+        <activity android:name=".activity.ComparisonActivity" />
+        <activity android:name=".activity.FeedbackActivity" />
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.OrderDetailActivity" />

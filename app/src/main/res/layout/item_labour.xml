@@ -20,7 +20,7 @@
                 android:id="@+id/tv_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="招聘"
+                android:text=""
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
 
@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/dp_5"
-                android:text="正手挖掘机操作员"
+                android:text=""
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>
@@ -48,7 +48,7 @@
                 android:drawablePadding="@dimen/dp_5"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="福建省 福州市"
+                android:text=""
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_12" />
 
@@ -61,7 +61,7 @@
                 android:drawablePadding="@dimen/dp_5"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="操作手/驾驶员"
+                android:text=""
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_12" />
 
@@ -74,7 +74,7 @@
                 android:drawablePadding="@dimen/dp_5"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="1年以上"
+                android:text=""
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_12" />
         </LinearLayout>
@@ -88,7 +88,7 @@
                 android:id="@+id/tv_xinzi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="300-400元/天"
+                android:text=""
                 android:textColor="@color/ff1a"
                 android:textSize="@dimen/sp_14" />
 
@@ -97,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="2019-07-23"
+                android:text=""
                 android:textColor="@color/acc9"
                 android:textSize="@dimen/text_size_12" />
         </RelativeLayout>

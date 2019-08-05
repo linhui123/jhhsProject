@@ -59,7 +59,7 @@
                 android:layout_marginRight="@dimen/padding_15"
                 android:drawableTop="@mipmap/ic_shoucang"
                 android:text="收藏"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/tv_pk"
@@ -68,7 +68,7 @@
                 android:layout_marginRight="@dimen/padding_15"
                 android:layout_toRightOf="@+id/tv_shoucang"
                 android:drawableTop="@mipmap/ic_pk"
-                android:text="收藏"
+                android:text="对比"
                 android:visibility="gone" />
 
             <TextView

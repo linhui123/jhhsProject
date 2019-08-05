@@ -45,9 +45,6 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.wxapi.WXEntryActivity;
-import com.jhhscm.platform.wxapi.WXPayCallbackActivity;
-import com.jhhscm.platform.wxapi.WXPayEntryActivity;
 
 import java.util.List;
 import java.util.Map;
@@ -214,8 +211,6 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
                                 new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                 if (response.body().getCode().equals("200")) {
                                     CashierActivity.start(getContext(), response.body().getData());
-                                    // ALiPayActivity.start(getContext(), response.body().getData());
-                                    //WXEntryActivity.start(getContext(), response.body().getData());
                                     ToastUtils.show(getContext(), "创建订单成功");
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsActivity;
+import com.jhhscm.platform.fragment.FinancialFragment;
 import com.jhhscm.platform.fragment.Mechanics.MechanicsFragment;
 import com.jhhscm.platform.fragment.Mechanics.PeiJianFragment;
 import com.jhhscm.platform.fragment.MsgFragment;
@@ -47,7 +48,8 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     private List<Fragment> mFragments = new ArrayList<Fragment>();
     private HomePageFragment homeFragment;
     private MechanicsFragment mechanicsFragment;
-    private PeiJianFragment msgFragment;
+//    private PeiJianFragment msgFragment;
+    private FinancialFragment financialFragment;
     private MyFragment mMeFragment;
 
     private FragmentManager fm;
@@ -113,9 +115,9 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         transaction = fm.beginTransaction();
         homeFragment = (HomePageFragment) fm.findFragmentByTag(homepage);
         mechanicsFragment = (MechanicsFragment) fm.findFragmentByTag("mEducationalAdminFragment");
-        msgFragment = (PeiJianFragment) fm.findFragmentByTag("mFinanceFragment");
+//        msgFragment = (PeiJianFragment) fm.findFragmentByTag("mFinanceFragment");
         mMeFragment = (MyFragment) fm.findFragmentByTag("mMeFragment");
-
+        financialFragment = (FinancialFragment) fm.findFragmentByTag("mFinancialFragment");
         mDataBinding.rdExpend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,8 +156,8 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         if (mechanicsFragment != null) {
             transaction1.hide(mechanicsFragment);
         }
-        if (msgFragment != null) {
-            transaction1.hide(msgFragment);
+        if (financialFragment != null) {
+            transaction1.hide(financialFragment);
         }
         if (mMeFragment != null) {
             transaction1.hide(mMeFragment);
@@ -177,11 +179,11 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
             }
 
         } else if (checkedId == R.id.rd_finance) {
-            if (msgFragment == null) {
-                msgFragment = new PeiJianFragment();
-                transaction1.add(R.id.fl, msgFragment, "mFinanceFragment");
+            if (financialFragment == null) {
+                financialFragment = new FinancialFragment();
+                transaction1.add(R.id.fl, financialFragment, "mFinancialFragment");
             } else {
-                transaction1.show(msgFragment);
+                transaction1.show(financialFragment);
             }
         } else if (checkedId == R.id.rd_me) {
             if (mMeFragment == null) {

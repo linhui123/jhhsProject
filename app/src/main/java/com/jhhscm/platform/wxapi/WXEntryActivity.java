@@ -51,7 +51,7 @@ public class WXEntryActivity extends AbsToolbarActivity implements IWXAPIEventHa
 
     @Override
     protected String getToolBarTitle() {
-        return "收银台";
+        return "";
     }
 
     @Override
@@ -118,7 +118,7 @@ public class WXEntryActivity extends AbsToolbarActivity implements IWXAPIEventHa
                 result = R.string.errcode_unknown;
                 break;
         }
-
+        finish();
         Toast.makeText(this, result, Toast.LENGTH_LONG).show();
     }
 }

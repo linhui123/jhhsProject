@@ -12,11 +12,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-
 import com.alipay.sdk.app.PayTask;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
-import com.jhhscm.platform.wxapi.WXEntryActivity;
 
 import java.util.Map;
 

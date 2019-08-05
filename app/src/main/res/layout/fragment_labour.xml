@@ -141,6 +141,7 @@
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/padding_10"
             android:layout_below="@+id/ll_select"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
 
         <LinearLayout
@@ -152,24 +153,24 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <LinearLayout
-                android:id="@+id/ll_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/dp_5"
-                android:paddingBottom="@dimen/padding_15"
-                android:visibility="gone">
+            <!--<LinearLayout-->
+                <!--android:id="@+id/ll_location"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@color/white"-->
+                <!--android:orientation="vertical"-->
+                <!--android:paddingTop="@dimen/dp_5"-->
+                <!--android:paddingBottom="@dimen/padding_15"-->
+                <!--android:visibility="gone">-->
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rl_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_5"
-                    android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
+                <!--<android.support.v7.widget.RecyclerView-->
+                    <!--android:id="@+id/rl_location"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="@dimen/dp_5"-->
+                    <!--android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>-->
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
             <LinearLayout
                 android:id="@+id/ll_gangwei"
@@ -333,10 +334,37 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_area"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rl_top"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/padding_15"
+                android:paddingRight="@dimen/padding_15"
+                android:visibility="gone">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rl_privince"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rl_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/ll_ohter"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"></LinearLayout>
+
         </LinearLayout>
     </RelativeLayout>
 </layout>

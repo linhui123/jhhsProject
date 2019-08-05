@@ -29,7 +29,7 @@ public class GetRegionViewHolder extends AbsRecyclerViewHolder<GetRegionBean.Res
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBusUtil.post(new GetRegionEvent(item.getId()+"",item.getType()+""));
+                EventBusUtil.post(new GetRegionEvent(item.getId() + "", item.getName(), item.getType() + ""));
             }
         });
     }

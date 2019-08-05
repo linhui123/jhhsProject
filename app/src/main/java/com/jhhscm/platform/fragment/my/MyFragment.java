@@ -89,6 +89,7 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
         });
     }
 
+
     @Override
     public void onResume() {
         super.onResume();

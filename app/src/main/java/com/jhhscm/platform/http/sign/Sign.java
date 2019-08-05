@@ -164,7 +164,13 @@ public class Sign {
                 sign = sign + key + "=" + list.get(i).getValue() + "&";
             }
         }
-        sign = sign + "&key=" + signKey;
+        if (sign.length()>0){
+            sign = sign + "&key=" + signKey;
+        }else {
+            sign = sign + "key=" + signKey;
+        }
+
+
         if (BuildConfig.DEBUG) {
             Log.e("http :" + method, " sign :" + sign);
         }

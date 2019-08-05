@@ -9,8 +9,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -36,6 +38,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -43,6 +46,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
+import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsActivity;
 import com.jhhscm.platform.databinding.ActivityAbsToolbarBinding;
@@ -73,18 +77,27 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.HttpUtils;
 import com.jhhscm.platform.tool.NETUtils;
 import com.jhhscm.platform.tool.ShareUtils;
 import com.jhhscm.platform.tool.StringUtils;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.YXProgressDialog;
 import com.jhhscm.platform.views.dialog.AlertDialogs;
 import com.jhhscm.platform.views.dialog.ShareDialog;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.net.URL;
@@ -106,6 +119,7 @@ public class MechanicsH5Activity extends AbsActivity {
     private FindCategoryBean findCategoryBean;
     private String goodCode;
     private String picUrl;
+    private String url;
     private int type = 0;
     private String count = "1";
     private static final int FILE_SELECTED = 5;
@@ -161,6 +175,7 @@ public class MechanicsH5Activity extends AbsActivity {
         setupToolbar();
         setupContentView();
         setupButtom();
+        checkDeviceHasNavigationBar(getApplicationContext());
     }
 
     private void setupButtom() {
@@ -177,7 +192,11 @@ public class MechanicsH5Activity extends AbsActivity {
         if (getIntent().hasExtra("pic_url")) {
             picUrl = getIntent().getStringExtra("pic_url");
         }
+        if (getIntent().hasExtra("url")) {
+            url = getIntent().getStringExtra("url");
+        }
 
+        Log.e("H5", "type " + type);
         if (type == 1) {
             mDataBinding.tvShoucang.setVisibility(View.VISIBLE);
             mDataBinding.tvPk.setVisibility(View.VISIBLE);
@@ -265,6 +284,13 @@ public class MechanicsH5Activity extends AbsActivity {
                 }).show();
             }
         });
+
+        mDataBinding.tvPk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ComparisonActivity.start(MechanicsH5Activity.this);
+            }
+        });
     }
 
     protected void setupToolbar() {
@@ -291,6 +317,11 @@ public class MechanicsH5Activity extends AbsActivity {
 
     @Override
     protected boolean fullScreenMode() {
+        return true;
+    }
+
+    @Override
+    public boolean isSupportSwipeBack() {
         return true;
     }
 
@@ -321,25 +352,72 @@ public class MechanicsH5Activity extends AbsActivity {
      * 分享
      */
     public void showShare() {
+        Log.e("showShare", "url " + url);
+        IMG_URL = "http://img.redocn.com/sheji/20141219/zhongguofengdaodeliyizhanbanzhijing_3744115.jpg";
         new ShareDialog(MechanicsH5Activity.this, new ShareDialog.CallbackListener() {
             @Override
             public void wechat() {
                 YXProgressDialog dialog = new YXProgressDialog(MechanicsH5Activity.this, "请稍后");
-                ShareUtils.shareUrl(MechanicsH5Activity.this, SHARE_URL,
-                        TITLE, CONTENT, SHARE_MEDIA.WEIXIN,
-                        ShareUtils.getShareListener(MechanicsH5Activity.this), IMG_URL);
-//                HttpUtils.shareCommonContent(H5Activity.this, hospId, "13");
+                shareUrlToWx(url, "挖矿来", "挖矿来", IMG_URL, 0);
             }
 
             @Override
             public void friends() {
-//                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
-//                ShareUtils.shareUrl(getContext(), SHARE_URL,
-//                        TITLE, CONTENT, SHARE_MEDIA.WEIXIN_CIRCLE,
-//                        ShareUtils.getShareListener(getContext()), IMG_URL);
-//                HttpUtils.shareCommonContent(getContext(), hospId, "13");
+                YXProgressDialog dialog = new YXProgressDialog(MechanicsH5Activity.this, "请稍后");
+                shareUrlToWx(url, "挖矿来", "挖矿来", IMG_URL, 1);
             }
         }).show();
+    }
+
+    /**
+     * 分享url地址
+     *
+     * @param url   地址
+     * @param title 标题
+     * @param desc  描述
+     */
+    public void shareUrlToWx(final String url, final String title, final String desc, final String iconUrl, final int flag) {
+        if (((MyApplication) getApplicationContext()).getApi() != null && !((MyApplication) getApplicationContext()).getApi().isWXAppInstalled()) {
+            ToastUtil.show(getApplicationContext(), "您还未安装微信客户端,无法使用该功能！");
+            return;
+        }
+        ImageLoader.getInstance().loadImage(iconUrl, new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+                WXWebpageObject webpage = new WXWebpageObject();
+                webpage.webpageUrl = url;
+                WXMediaMessage msg = new WXMediaMessage(webpage);
+                msg.title = title;
+                msg.description = desc;
+                //这里替换一张自己工程里的图片资源
+                msg.thumbData = bmpToByteArray(loadedImage, 32);
+                SendMessageToWX.Req req = new SendMessageToWX.Req();
+                req.transaction = String.valueOf(System.currentTimeMillis());
+                req.message = msg;
+                req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+                ((MyApplication) getApplicationContext()).getApi().sendReq(req);
+            }
+        });
+    }
+
+    /**
+     * Bitmap转换成byte[]并且进行压缩,压缩到不大于maxkb
+     *
+     * @param bitmap
+     * @param maxKb
+     * @return
+     */
+    public static byte[] bmpToByteArray(Bitmap bitmap, int maxKb) {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+        int options = 100;
+        while (output.toByteArray().length > maxKb && options != 10) {
+            output.reset(); //清空output
+            bitmap.compress(Bitmap.CompressFormat.JPEG, options, output);//这里压缩options%，把压缩后的数据存放到output中
+            options -= 10;
+        }
+        return output.toByteArray();
     }
 
     @Override
@@ -395,7 +473,7 @@ public class MechanicsH5Activity extends AbsActivity {
     }
 
     public void onEvent(WebCountEvent event) {
-        if(event!=null){
+        if (event != null) {
             count = event.getCount();
         }
     }
@@ -1054,7 +1132,7 @@ public class MechanicsH5Activity extends AbsActivity {
         map.put("goodsCode", findCategoryDetail.getData().getId());
         map.put("goodsName", findCategoryDetail.getData().getName());
         map.put("number", count);
-        map.put("price", findCategoryDetail.getData().getCounter_price()+"");
+        map.put("price", findCategoryDetail.getData().getCounter_price() + "");
         map.put("picUrl", picUrl);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
@@ -1161,4 +1239,61 @@ public class MechanicsH5Activity extends AbsActivity {
                 }));
     }
 
+    /**
+     * 获取新机详情
+     */
+
+    /**
+     * 获取二手机详情
+     */
+
+
+    /**
+     * 判断是否存在NavigationBar
+     * @param context：上下文环境
+     * @return：返回是否存在(true/false)
+     */
+    public boolean checkDeviceHasNavigationBar(Context context) {
+        boolean hasNavigationBar = false;
+        Resources rs = context.getResources();
+        int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
+        if (id > 0) {
+            hasNavigationBar = rs.getBoolean(id);
+        }
+        try {
+            Class systemPropertiesClass = Class.forName("android.os.SystemProperties");
+            Method m = systemPropertiesClass.getMethod("get", String.class);
+            String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
+            if ("1".equals(navBarOverride)) {
+                //不存在虚拟按键
+                hasNavigationBar = false;
+                ToastUtil.show(context,"不存在虚拟按键");
+            } else if ("0".equals(navBarOverride)) {
+                //存在虚拟按键
+                hasNavigationBar = true;
+                //手动设置控件的margin
+                //linebutton是一个linearlayout,里面包含了两个Button
+                RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) mDataBinding.rlBottom.getLayoutParams();
+                //setMargins：顺序是左、上、右、下
+                layout.setMargins(15,0,15,getNavigationBarHeight(this)+10);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hasNavigationBar;
+    }
+
+
+
+    /**
+     * 测量底部导航栏的高度
+     * @param mActivity:上下文环境
+     * @return：返回测量出的底部导航栏高度
+     */
+    private int getNavigationBarHeight(Activity mActivity) {
+        Resources resources = mActivity.getResources();
+        int resourceId = resources.getIdentifier("navigation_bar_height","dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
+    }
 }

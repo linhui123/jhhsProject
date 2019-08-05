@@ -5,12 +5,15 @@ package com.jhhscm.platform.tool;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -140,4 +143,5 @@ public class Utils {
 		activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
 		return dm.widthPixels;
 	}
+
 }

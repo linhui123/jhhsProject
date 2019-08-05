@@ -6,8 +6,12 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -57,7 +61,7 @@ public class ShareUtils {
     public static void shareUrl(Context context, String url, String title, String description, SHARE_MEDIA share_media, UMShareListener shareListener, String imgUrl) {
         UMWeb web = new UMWeb(url);
         web.setTitle(title);
-        web.setThumb(new UMImage(context,imgUrl));
+        web.setThumb(new UMImage(context, imgUrl));
         web.setDescription(description);
         new ShareAction((Activity) context).withMedia(web)
                 .setPlatform(share_media)
@@ -65,10 +69,10 @@ public class ShareUtils {
     }
 
     public static void shareUrls(Context context, String url, SHARE_MEDIA share_media, UMShareListener shareListener) {
-        UMImage imageurl = new UMImage(context,url);
+        UMImage imageurl = new UMImage(context, url);
         imageurl.compressStyle = UMImage.CompressStyle.SCALE;//大小压缩，默认为大小压缩，适合普通很大的图
         imageurl.compressStyle = UMImage.CompressStyle.QUALITY;//质量压缩，适合长图的分享
-        UMImage thumb =  new UMImage(context, url);
+        UMImage thumb = new UMImage(context, url);
         imageurl.setThumb(thumb);
         new ShareAction((Activity) context).withMedia(imageurl)
                 .setPlatform(share_media)
@@ -110,13 +114,13 @@ public class ShareUtils {
 
             @Override
             public void onResult(SHARE_MEDIA share_media) {
-                ToastUtils.show(context,"分享成功");
+                ToastUtils.show(context, "分享成功");
 //                safeCloseDialog(dialog);
             }
 
             @Override
             public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-                ToastUtils.show(context,"分享失败");
+                ToastUtils.show(context, "分享失败");
 //                safeCloseDialog(dialog);
             }
 

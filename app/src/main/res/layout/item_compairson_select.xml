@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/dp_5">
+
+        <TextView
+            android:id="@+id/item_slide"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:background="#ff565b"
+            android:gravity="center"
+            android:text="删 除"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:id="@+id/rl"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:paddingLeft="@dimen/padding_10"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingRight="@dimen/padding_10"
+            android:paddingBottom="@dimen/padding_10"
+            android:tag="slide_flag">
+
+            <ImageView
+                android:id="@+id/tv_select"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@mipmap/ic_shoping_s" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_10"
+                android:layout_marginRight="@dimen/padding_10"
+                android:layout_toRightOf="@+id/tv_select"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="配件名称配件名称配件名称配件名称配件名称"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_title"
+                android:layout_marginLeft="@dimen/padding_10"
+                android:layout_marginRight="@dimen/padding_10"
+                android:layout_toRightOf="@+id/tv_select"
+                android:text="￥55.00"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tv_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_title"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/padding_10"
+                android:layout_marginRight="@dimen/padding_10"
+                android:text="详情 》"
+                android:textSize="@dimen/sp_14" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

@@ -35,9 +35,7 @@ public class NewMechanicsViewHolder extends AbsRecyclerViewHolder<GetGoodsPageLi
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (item.getGood_code() != null) {
-                }
-                String url = UrlUtils.ESJXQ + "&good_code=8";
+                String url = UrlUtils.XJXQ + "&good_code=8";
                 MechanicsH5Activity.start(itemView.getContext(), url, "新机详情", "8", 1);
             }
         });

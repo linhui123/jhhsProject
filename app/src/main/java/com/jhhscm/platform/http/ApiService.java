@@ -5,9 +5,11 @@ import com.jhhscm.platform.aliapi.AliPrePayBean;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
 import com.jhhscm.platform.fragment.GoodsToCarts.FindAddressListBean;
 import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryDetailBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsByBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetOldPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
@@ -15,6 +17,9 @@ import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
+import com.jhhscm.platform.fragment.labour.FindLabourReleaseDetailBean;
+import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
+import com.jhhscm.platform.fragment.labour.FindLabourWorkListBean;
 import com.jhhscm.platform.fragment.my.order.FindOrderListBean;
 import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.fragment.sale.OldGoodOrderHistoryBean;
@@ -115,6 +120,11 @@ public interface ApiService {
 
     //订单列表
     String FIND_ORDERLIST = "order/findOrderList";
+
+    //查询品牌列表
+    String FIND_BRAND = "brand/findBrand";
+    //根据品牌获取商品列表
+    String GET_GOODSBYBRAND = "goods/getGoodsByBrand";
 
     @FormUrlEncoded
     @POST(GET_CODE)
@@ -247,4 +257,41 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(FIND_ORDERLIST)
     Call<BaseEntity<FindOrderListBean>> findOrderList(@Body NetBean content);
+
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_BRAND)
+    Call<BaseEntity<FindBrandBean>> findBrand(@Body NetBean content);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_GOODSBYBRAND)
+    Call<BaseEntity<GetGoodsByBrandBean>> getGoodsByBrand(@Body NetBean content);
+
+    //查询劳务招聘列表
+    String FIND_LABOURRELEASELIST = "labour/findLabourReleaseList";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_LABOURRELEASELIST)
+    Call<BaseEntity<FindLabourReleaseListBean>> findLabourReleaseList(@Body NetBean content);
+
+    //查询劳务招聘列表
+    String FIND_LABOURWORKLIST = "labour/findLabourWorkList";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_LABOURWORKLIST)
+    Call<BaseEntity<FindLabourReleaseListBean>> findLabourWorkList(@Body NetBean content);
+
+    //查询劳务招聘详情
+    String FIND_LABOURRELEASEDETAIL = "labour/findLabourReleaseDetail";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_LABOURRELEASEDETAIL)
+    Call<BaseEntity<FindLabourReleaseDetailBean>> findLabourReleaseDetail(@Body NetBean content);
+
+    //查询劳务求职详情
+    String FIND_LABOURWORKDETAIL = "labour/findLabourWorkDetail";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_LABOURWORKDETAIL)
+    Call<BaseEntity<FindLabourReleaseDetailBean>> findLabourWorkDetail(@Body NetBean content);
 }

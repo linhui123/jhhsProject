@@ -6,31 +6,49 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
+import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentLabourBinding;
-import com.jhhscm.platform.databinding.FragmentMechanicsBinding;
 import com.jhhscm.platform.event.GetRegionEvent;
-import com.jhhscm.platform.fragment.Mechanics.MechanicsFragment;
-import com.jhhscm.platform.fragment.Mechanics.OldMechanicsFragment;
+import com.jhhscm.platform.fragment.Mechanics.action.GetComboBoxAction;
+import com.jhhscm.platform.fragment.Mechanics.action.GetRegionAction;
+import com.jhhscm.platform.fragment.Mechanics.adapter.JXDropAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.SelectedAdapter;
+import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetOldPageListBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
+import com.jhhscm.platform.fragment.Mechanics.holder.GetRegionViewHolder;
 import com.jhhscm.platform.fragment.Mechanics.holder.OldMechanicsViewHolder;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.http.AHttpService;
+import com.jhhscm.platform.http.HttpHelper;
+import com.jhhscm.platform.http.bean.BaseEntity;
+import com.jhhscm.platform.http.bean.BaseErrorInfo;
+import com.jhhscm.platform.http.bean.NetBean;
+import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.jpush.ExampleUtil;
+import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import retrofit2.Response;
 
 
 public class LabourFragment extends AbsFragment<FragmentLabourBinding> implements SeekBar.OnSeekBarChangeListener {
@@ -41,6 +59,12 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
     private int mShowCount = 10;
     private int mCurrentPage = 1;
     private final int START_PAGE = mCurrentPage;
+
+    private String province = "";
+    private String city = "";
+    private String job = "";
+    private String salay_money = "";
+    private String work_time = "";
 
     public static LabourFragment instance() {
         LabourFragment view = new LabourFragment();
@@ -63,20 +87,42 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
         mDataBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.rv.setAdapter(mAdapter);
-//        mDataBinding.rv.autoRefresh();
+        mDataBinding.rv.autoRefresh();
         mDataBinding.rv.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
-//                getOldPageList(true);
+                if (type == 1) {
+                    findLabourReleaseList(true);
+                } else {
+                    findLabourWorkList(true);
+                }
+
             }
 
             @Override
             public void onLoadMore(RecyclerView view) {
-//                getOldPageList(false);
+                if (type == 1) {
+                    findLabourReleaseList(false);
+                } else {
+                    findLabourWorkList(false);
+                }
             }
         });
-
         resultBeanList = new ArrayList<>();
+        initDrop();
+        initPrivince();
+        getRegion("1", "");
+
+        initTop();
+    }
+
+    private void initTop() {
+        mDataBinding.tvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
 
         mDataBinding.llOhter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,16 +135,17 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
         mDataBinding.tvLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //  mDataBinding.rlPrivince.bringToFront();
                 if (mDataBinding.llXiala.getVisibility() == View.GONE) {
                     mDataBinding.llXiala.setVisibility(View.VISIBLE);
-                    mDataBinding.llLocation.setVisibility(View.VISIBLE);
+                    mDataBinding.llArea.setVisibility(View.VISIBLE);
                 } else {
-                    if (mDataBinding.tvLocation.getVisibility() == View.VISIBLE) {
+                    if (mDataBinding.llArea.getVisibility() == View.GONE) {
+                        closeDrap();
+                        mDataBinding.llArea.setVisibility(View.VISIBLE);
+                    } else if (mDataBinding.llArea.getVisibility() == View.VISIBLE) {
                         mDataBinding.llXiala.setVisibility(View.GONE);
                         closeDrap();
-                    } else {
-                        closeDrap();
-                        mDataBinding.tvLocation.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -192,6 +239,7 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
             @Override
             public void onClick(View v) {
                 type = 1;
+                mDataBinding.rv.autoRefresh();
                 mDataBinding.tvZhaopin.setBackgroundResource(R.color.white);
                 mDataBinding.tvZhaopin.setTextColor(getResources().getColor(R.color.a397));
                 mDataBinding.tvQiuzhi.setTextColor(getResources().getColor(R.color.white));
@@ -203,13 +251,13 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
             @Override
             public void onClick(View v) {
                 type = 2;
+                mDataBinding.rv.autoRefresh();
                 mDataBinding.tvQiuzhi.setBackgroundResource(R.color.white);
                 mDataBinding.tvQiuzhi.setTextColor(getResources().getColor(R.color.a397));
                 mDataBinding.tvZhaopin.setBackgroundResource(R.drawable.bg_397_left_ovel);
                 mDataBinding.tvZhaopin.setTextColor(getResources().getColor(R.color.white));
             }
         });
-        initData(type);
     }
 
     @Override
@@ -223,12 +271,22 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
      */
     public void onEvent(GetRegionEvent event) {
         if (event.pid != null && event.type != null) {
+            if (event.type.equals("1")) {//省点击，获取市
+                province = event.pid;
+                getRegion("2", event.pid);
+            } else if (event.type.equals("2")) {//市点击
+                city = event.pid;
+                mDataBinding.tvLocation.setText(event.name);
+                mDataBinding.llArea.setVisibility(View.GONE);
+                mDataBinding.llXiala.setVisibility(View.GONE);
+                mDataBinding.rv.autoRefresh();
+            }
         }
     }
 
     private void initData(int Type) {
-        List<GetOldPageListBean.DataBean> dataBeans = new ArrayList<>();
-        GetOldPageListBean.DataBean dataBean = new GetOldPageListBean.DataBean();
+        List<FindLabourReleaseListBean.DataBean> dataBeans = new ArrayList<>();
+        FindLabourReleaseListBean.DataBean dataBean = new FindLabourReleaseListBean.DataBean();
         dataBeans.add(dataBean);
         dataBeans.add(dataBean);
         dataBeans.add(dataBean);
@@ -255,21 +313,315 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
         mDataBinding.tvTotal.setText("0-" + total + "元");
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<GetOldPageListBean.DataBean> {
+    private void closeDrap() {
+//        mDataBinding.llLocation.setVisibility(View.GONE);
+        mDataBinding.llGangwei.setVisibility(View.GONE);
+        mDataBinding.llJingyan.setVisibility(View.GONE);
+        mDataBinding.llXinzi.setVisibility(View.GONE);
+        mDataBinding.llArea.setVisibility(View.GONE);
+    }
+
+    /**
+     * 查询劳务招聘列表
+     */
+    private void findLabourReleaseList(final boolean refresh) {
+        if (getContext() != null) {
+            Map<String, String> map = new TreeMap<String, String>();
+            map.put("province", province);
+            map.put("city", city);
+            map.put("job", job);
+            map.put("salay_money", salay_money);
+            map.put("work_time", work_time);
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = Sign.getSignKey(getActivity(), map, "findLabourReleaseList");
+            NetBean netBean = new NetBean();
+            netBean.setToken("");
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(FindLabourReleaseListAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<FindLabourReleaseListBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<FindLabourReleaseListBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                        FindLabourReleaseListBean findLabourReleaseListBean = response.body().getData();
+                                        for (FindLabourReleaseListBean.DataBean dataBean : findLabourReleaseListBean.getData()) {
+                                            dataBean.setType("1");
+                                        }
+                                        doSuccessResponse(refresh, findLabourReleaseListBean);
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
+    }
+
+    /**
+     * 查询劳务求职列表
+     */
+    private void findLabourWorkList(final boolean refresh) {
+        if (getContext() != null) {
+            Map<String, String> map = new TreeMap<String, String>();
+            map.put("province", province);
+            map.put("city", city);
+            map.put("job", job);
+            map.put("salay_money", salay_money);
+            map.put("work_time", work_time);
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = Sign.getSignKey(getActivity(), map, "findLabourWorkList");
+            NetBean netBean = new NetBean();
+            netBean.setToken("");
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(FindLabourWorkListAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<FindLabourReleaseListBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<FindLabourReleaseListBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                        FindLabourReleaseListBean findLabourReleaseListBean = response.body().getData();
+                                        for (FindLabourReleaseListBean.DataBean dataBean : findLabourReleaseListBean.getData()) {
+                                            dataBean.setType("2");
+                                        }
+                                        doSuccessResponse(refresh, findLabourReleaseListBean);
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
+    }
+
+    FindLabourReleaseListBean findCategoryBean;
+
+    private void doSuccessResponse(boolean refresh, FindLabourReleaseListBean categoryBean) {
+        this.findCategoryBean = categoryBean;
+        if (refresh) {
+            mAdapter.clear();
+            mAdapter.setData(categoryBean.getData());
+        } else {
+            mAdapter.append(categoryBean.getData());
+        }
+        mDataBinding.rv.getAdapter().notifyDataSetChanged();
+        mDataBinding.rv.loadComplete(mAdapter.getItemCount() == 0, ((float) findCategoryBean.getPage().getTotal() / (float) findCategoryBean.getPage().getPageSize()) > mCurrentPage);
+    }
+
+    private class InnerAdapter extends AbsRecyclerViewAdapter<FindLabourReleaseListBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<GetOldPageListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+        public AbsRecyclerViewHolder<FindLabourReleaseListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new LabourViewHolder(mInflater.inflate(R.layout.item_labour, parent, false));
         }
     }
 
-    private void closeDrap() {
-        mDataBinding.llLocation.setVisibility(View.GONE);
-        mDataBinding.llGangwei.setVisibility(View.GONE);
-        mDataBinding.llJingyan.setVisibility(View.GONE);
-        mDataBinding.llXinzi.setVisibility(View.GONE);
+
+    /**
+     * 获取下拉框
+     */
+    private void getComboBox(final String name) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("key_group_name", name);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getActivity(), map, "getComboBox:" + "name");
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(GetComboBoxAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<GetComboBoxBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<GetComboBoxBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    if ("job".equals(name)) {
+                                        gangwei(response.body().getData());
+                                    } else if ("work_time".equals(name)) {
+                                        jinyan(response.body().getData());
+                                    }
+                                } else {
+                                    ToastUtils.show(getContext(), "error " + name + ":" + response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    /**
+     * 初始化下拉
+     */
+    private void initDrop() {
+        /**
+         * job	    否		工作岗位
+         * work_time	否		经验
+         */
+        getComboBox("work_time");
+        getComboBox("job");
+    }
+
+    /**
+     * 下拉机型
+     */
+    private void gangwei(GetComboBoxBean getComboBoxBean) {
+        mDataBinding.rlGangwei.setLayoutManager(new LinearLayoutManager(getContext()));
+        JXDropAdapter JXAdapter = new JXDropAdapter(getComboBoxBean.getResult(), getContext());
+        mDataBinding.rlGangwei.setAdapter(JXAdapter);
+        JXAdapter.setMyListener(new JXDropAdapter.ItemListener() {
+            @Override
+            public void onItemClick(GetComboBoxBean.ResultBean item) {
+                job = item.getId();
+                mDataBinding.tvGangwei.setText(item.getKey_value());
+                mDataBinding.llXiala.setVisibility(View.GONE);
+                closeDrap();
+                mDataBinding.rv.autoRefresh();
+            }
+        });
+    }
+
+    /**
+     * 下拉排序
+     */
+    private void jinyan(GetComboBoxBean getComboBoxBean) {
+        mDataBinding.rlJingyan.setLayoutManager(new LinearLayoutManager(getContext()));
+        JXDropAdapter JXAdapter = new JXDropAdapter(getComboBoxBean.getResult(), getContext());
+        mDataBinding.rlJingyan.setAdapter(JXAdapter);
+        JXAdapter.setMyListener(new JXDropAdapter.ItemListener() {
+            @Override
+            public void onItemClick(GetComboBoxBean.ResultBean item) {
+                work_time = item.getId();
+                mDataBinding.tvJingyan.setText(item.getKey_value());
+                mDataBinding.llXiala.setVisibility(View.GONE);
+                closeDrap();
+                mDataBinding.rv.autoRefresh();
+            }
+        });
+    }
+
+
+    /**
+     * 获取行政区域列表
+     */
+    private void getRegion(final String type, final String pid) {
+        if (getContext() != null) {
+            Map<String, String> map = new TreeMap<String, String>();
+            map.put("type", type);
+            map.put("pid", pid);
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = Sign.getSignKey(getActivity(), map, "getRegion");
+            NetBean netBean = new NetBean();
+            netBean.setToken("");
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(GetRegionAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<GetRegionBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<GetRegionBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                        GetRegionBean getRegionBean = response.body().getData();
+                                        if (getRegionBean.getResult() != null) {
+                                            if (type.equals("1")) {//初次加载
+                                                pRegionBean = getRegionBean;
+                                                province = getRegionBean.getResult().get(0).getId() + "";
+                                                pAdapter.setData(pRegionBean.getResult());
+                                                getRegion("2", getRegionBean.getResult().get(0).getId() + "");
+                                            } else {
+                                                if (getRegionBean.getResult().size() > 0) {
+                                                    cRegionBean = getRegionBean;
+                                                    city = getRegionBean.getResult().get(0).getId() + "";
+                                                    cAdapter.setData(cRegionBean.getResult());
+                                                } else {
+                                                    ToastUtils.show(getContext(), "无数据");
+                                                }
+                                            }
+                                            Log.e("pAdapter", "  pAdapter.getItemCount() " + pAdapter.getItemCount());
+                                            Log.e("cAdapter", "  cAdapter.getItemCount() " + cAdapter.getItemCount());
+
+                                        }
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
+    }
+
+    PrinviceAdapter pAdapter;
+    CityAdapter cAdapter;
+
+    GetRegionBean pRegionBean;
+    GetRegionBean cRegionBean;
+
+    private void initPrivince() {
+        mDataBinding.rlPrivince.setLayoutManager(new LinearLayoutManager(getContext()));
+        pAdapter = new PrinviceAdapter(getContext());
+        mDataBinding.rlPrivince.setAdapter(pAdapter);
+
+        mDataBinding.rlCity.setLayoutManager(new LinearLayoutManager(getContext()));
+        cAdapter = new CityAdapter(getContext());
+        mDataBinding.rlCity.setAdapter(cAdapter);
+    }
+
+
+    private class PrinviceAdapter extends AbsRecyclerViewAdapter<GetRegionBean.ResultBean> {
+        public PrinviceAdapter(Context context) {
+            super(context);
+        }
+
+        @Override
+        public AbsRecyclerViewHolder<GetRegionBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false));
+        }
+    }
+
+    private class CityAdapter extends AbsRecyclerViewAdapter<GetRegionBean.ResultBean> {
+        public CityAdapter(Context context) {
+            super(context);
+        }
+
+        @Override
+        public AbsRecyclerViewHolder<GetRegionBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false));
+        }
     }
 }
