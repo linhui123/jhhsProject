@@ -37,8 +37,6 @@
                 android:textSize="@dimen/sp_14" />
         </RelativeLayout>
 
-        <View style="@style/view_h_de" />
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
@@ -50,8 +48,6 @@
             android:paddingBottom="@dimen/dp_5">
 
         </android.support.v7.widget.RecyclerView>
-
-        <View style="@style/view_h_de" />
 
         <RelativeLayout
             android:layout_width="match_parent"

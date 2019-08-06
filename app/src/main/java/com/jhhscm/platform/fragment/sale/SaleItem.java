@@ -17,9 +17,9 @@ public class SaleItem {
 
     public static OldGoodOrderHistoryBean oldGoodOrderHistoryBean;
     public static OldGoodOrderHistoryBean.DataBean dataBean;
+
     public static FindOrderListBean findOrderListBean;
     public static FindOrderListBean.DataBean orderBean;
-
     public SaleItem(int itemType) {
         this.itemType = itemType;
     }

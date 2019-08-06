@@ -259,6 +259,11 @@ public interface ApiService {
     @POST(FIND_ORDERLIST)
     Call<BaseEntity<FindOrderListBean>> findOrderList(@Body NetBean content);
 
+    //取消订单
+    String DEL_ORDER = "order/delOrder";
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(DEL_ORDER)
+    Call<BaseEntity<ResultBean>> delOrder(@Body NetBean content);
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(FIND_BRAND)

@@ -47,6 +47,7 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.DataUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.wxapi.WXPayEntryFragment;
 import com.jhhscm.platform.wxapi.WxPrePayAction;
@@ -142,7 +143,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
         }
 
         createOrderResultBean = (CreateOrderResultBean) getArguments().getSerializable("createOrderResultBean");
-        if (createOrderResultBean != null && createOrderResultBean.getData().getId() != null) {
+        if (createOrderResultBean != null && createOrderResultBean.getData().getOrderCode() != null) {
             wxPrePay();
             aliPrePay();
             findOrder(false);
@@ -170,7 +171,11 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
             @Override
             public void onClick(View v) {
                 if (type == ALI_PAY_FLAG) {
-                    payV1(v);
+                    if (aliPrePayBean != null) {
+                        payV1(v);
+                    } else {
+                        aliPrePay();
+                    }
                 } else if (type == WX_PAY_FLAG) {
                     payV2(v);
                 }
@@ -292,7 +297,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
      */
     private void wxPrePay() {
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("orderCode", createOrderResultBean.getData().getId());
+        map.put("orderCode", createOrderResultBean.getData().getOrderCode());
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getContext(), map, "wxPrePay");
@@ -333,7 +338,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
      */
     private void aliPrePay() {
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("orderCode", createOrderResultBean.getData().getId());
+        map.put("orderCode", createOrderResultBean.getData().getOrderCode());
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getContext(), map, "aliPrePay");
@@ -396,8 +401,9 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
 //                                    String jsonData = Des.decyptByDes(response.body().getContent());
 //                                    Gson gson = new Gson();
 //                                    findOrderBean = gson.fromJson(jsonData, FindOrderBean.class);
-                                    findOrderBean=response.body().getData();
-                                    if (findOrderBean.getOrder() != null) {
+                                    findOrderBean = response.body().getData();
+                                    if (findOrderBean.getOrder() != null
+                                            && findOrderBean.getOrder().getOrderStatus() != null) {
                                         if (finish) {//支付后
                                             if (!findOrderBean.getOrder().getOrderStatus().equals("1")) {//支付成功
                                                 payResult(true);
@@ -421,7 +427,6 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
     private void startCountDown() {
         long nowTime = System.currentTimeMillis();
         final String lastTime = DataUtil.getTimeExpend(nowTime, findOrderBean.getOrder().getEndTime(), "yyyy-MM-dd HH:mm:ss");
-
         final long lastTimeLong = DataUtil.getLongTime(nowTime, findOrderBean.getOrder().getEndTime(), "yyyy-MM-dd HH:mm:ss");
 
         CountDownTimer countDownTimer = new CountDownTimer(lastTimeLong, 1000) {

@@ -84,6 +84,8 @@ public class DataUtil {
             returnMillis = d.getTime();
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
         return returnMillis;
     }

@@ -10,16 +10,19 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.CashierActivity;
 import com.jhhscm.platform.activity.OrderDetailActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemHomePageBannerBinding;
 import com.jhhscm.platform.databinding.ItemOrderStatus1Binding;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderFragment;
+import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderViewHolder;
 import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.HomePageItem;
+import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.fragment.sale.SaleItem;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
@@ -44,12 +47,11 @@ public class OrderStaus1ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
         mBinding.rv.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
         mAdapter = new InnerAdapter(itemView.getContext());
         mBinding.rv.setAdapter(mAdapter);
-        mAdapter.setData(new GetCartGoodsByUserCodeBean().getResult());
+        mAdapter.setData(item.orderBean.getGoodsListBeans());
 
         mBinding.ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("OrderStaus1", "getOrder_text " + item.orderBean.getOrder_text());
                 if ("未付款".equals(item.orderBean.getOrder_text())) {
                     OrderDetailActivity.start(itemView.getContext(), item.orderBean.getOrder_code(), 1);
                 } else if ("未发货".equals(item.orderBean.getOrder_text())) {
@@ -62,16 +64,30 @@ public class OrderStaus1ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
             }
         });
 
+        mBinding.cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        mBinding.pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CashierActivity.start(itemView.getContext(), new CreateOrderResultBean(new CreateOrderResultBean.DataBean(item.orderBean.getOrder_code())));
+
+            }
+        });
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<GetCartGoodsByUserCodeBean.ResultBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<FindOrderBean.GoodsListBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<GetCartGoodsByUserCodeBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new CreateOrderViewHolder(mInflater.inflate(R.layout.item_create_order, parent, false));
+        public AbsRecyclerViewHolder<FindOrderBean.GoodsListBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new OrderListViewHolder(mInflater.inflate(R.layout.item_create_order, parent, false));
         }
     }
 }

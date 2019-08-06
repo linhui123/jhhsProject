@@ -41,12 +41,11 @@ public class OrderDetailActivity extends AbsToolbarActivity {
 
     @Override
     public boolean isSupportSwipeBack() {
-        return false;
+        return true;
     }
 
     @Override
     protected String getToolBarTitle() {
-        mDataBinding.toolbar.setVisibility(View.GONE);
         return "订单详情";
     }
 

@@ -1,12 +1,20 @@
 package com.jhhscm.platform.fragment.GoodsToCarts;
 
+import com.jhhscm.platform.fragment.GoodsToCarts.action.CreateOrderAction;
+
 import java.io.Serializable;
 
-public class CreateOrderResultBean implements Serializable{
+public class CreateOrderResultBean implements Serializable {
 
     /**
      * data : {"id":29,"orderCode":"201907314000001278964379","userCode":"1000000330781973","orderStatus":101,"consignee":"测试","mobile":"15927112992","address":"111 详细地址","message":"","goodsPrice":25,"freightPrice":3,"couponPrice":0,"integralPrice":0,"grouponPrice":0,"orderPrice":25,"actualPrice":0,"addTime":"2019-07-31 13:41:13","updateTime":"2019-07-31 13:41:13"}
      */
+    public CreateOrderResultBean() {
+    }
+
+    public CreateOrderResultBean(DataBean dataBean) {
+        this.data = dataBean;
+    }
 
     private DataBean data;
 
@@ -56,6 +64,14 @@ public class CreateOrderResultBean implements Serializable{
         private String actualPrice;
         private String addTime;
         private String updateTime;
+
+
+        public DataBean() {
+        }
+
+        public DataBean(String orderCode) {
+            this.orderCode = orderCode;
+        }
 
         public String getId() {
             return id;

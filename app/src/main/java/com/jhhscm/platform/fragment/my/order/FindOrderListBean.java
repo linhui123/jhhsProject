@@ -1,5 +1,7 @@
 package com.jhhscm.platform.fragment.my.order;
 
+import com.jhhscm.platform.fragment.sale.FindOrderBean;
+
 import java.util.List;
 
 public class FindOrderListBean {
@@ -152,6 +154,15 @@ public class FindOrderListBean {
         private String order_text;
         private String id;
         private String message;
+        private List<FindOrderBean.GoodsListBean> goodsListBeans;
+
+        public List<FindOrderBean.GoodsListBean> getGoodsListBeans() {
+            return goodsListBeans;
+        }
+
+        public void setGoodsListBeans(List<FindOrderBean.GoodsListBean> goodsListBeans) {
+            this.goodsListBeans = goodsListBeans;
+        }
 
         public String getOrder_code() {
             return order_code;

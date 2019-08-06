@@ -1,6 +1,8 @@
 package com.jhhscm.platform.activity.base;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +15,9 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.databinding.ActivityAbsToolbarBinding;
 import com.jhhscm.platform.tool.DisplayUtils;
+import com.jhhscm.platform.tool.ToastUtil;
+
+import java.lang.reflect.Method;
 
 /**
  * Created by Administrator on 2017/10/23.
@@ -61,11 +66,13 @@ public abstract class AbsToolbarActivity extends AbsActivity {
 
     protected void setToolBarRightText(String text, boolean b) {
         if (b) {//可点击
-            if (enableOperateText()) mDataBinding.tvOperateText.setTextColor(getResources().getColor(R.color.acc3));
+            if (enableOperateText())
+                mDataBinding.tvOperateText.setTextColor(getResources().getColor(R.color.acc3));
             if (enableOperateText()) mDataBinding.tvOperateText.setText(text);
             mDataBinding.tvOperateText.setClickable(true);
         } else {//不可点击
-            if (enableOperateText()) mDataBinding.tvOperateText.setTextColor(getResources().getColor(R.color.acc9));
+            if (enableOperateText())
+                mDataBinding.tvOperateText.setTextColor(getResources().getColor(R.color.acc9));
             if (enableOperateText()) mDataBinding.tvOperateText.setText(text);
             mDataBinding.tvOperateText.setClickable(false);
         }
@@ -137,7 +144,7 @@ public abstract class AbsToolbarActivity extends AbsActivity {
             onDeleteClick(view.getContext());
         } else if (enableQuestionButton()) {
             onQuestionClick(view.getContext());
-        }else if (enableAddButton()) {
+        } else if (enableAddButton()) {
             onAddClick(view.getContext());
         }
     }
@@ -184,4 +191,5 @@ public abstract class AbsToolbarActivity extends AbsActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

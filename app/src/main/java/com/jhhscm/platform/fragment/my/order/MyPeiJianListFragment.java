@@ -1,6 +1,9 @@
 package com.jhhscm.platform.fragment.my.order;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,10 +16,12 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.GoodsToCartsActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentMyPeiJianListBinding;
+import com.jhhscm.platform.event.AddressResultEvent;
 import com.jhhscm.platform.event.GetRegionEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderViewHolder;
 import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
@@ -25,6 +30,8 @@ import com.jhhscm.platform.fragment.Mechanics.PeiJianFragment;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 
+import com.jhhscm.platform.fragment.sale.FindOrderAction;
+import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -40,6 +47,7 @@ import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.Utils;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
+import java.security.spec.MGF1ParameterSpec;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,11 +58,12 @@ import retrofit2.Response;
 public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBinding> {
     private MyPeiJianListAdapter mAdapter;
     private UserSession userSession;
-    private int mShowCount = 10;
+    private int mShowCount = 5;
     private int mCurrentPage = 1;
     private final int START_PAGE = mCurrentPage;
 
     private static final int TAB_COUNT = 5;
+    private String type = "";
     public static final int ORDER_STAUS_1 = 1;
     public static final int ORDER_STAUS_2 = 1;
     public static final int ORDER_STAUS_3 = 2;
@@ -95,21 +104,23 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
         mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
-                findOrderList(true, "");
-                //  mAdapter.setDetail(new FindOrderListBean());
+                findOrderList(true, type);
             }
 
             @Override
             public void onLoadMore(RecyclerView view) {
-                findOrderList(true, "");
-                //  mAdapter.setDetail(new FindOrderListBean());
+                findOrderList(true, type);
             }
         });
 
-
+        mDataBinding.tel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoodsToCartsActivity.start(getContext());
+            }
+        });
         initTabColumn();
     }
-
 
     /**
      * 初始化Column栏目项
@@ -137,16 +148,22 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
         mDataBinding.enhanceTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                showDialog();
                 if (tab.getPosition() == 0) {
-                    findOrderList(true, "");
-                }else  if (tab.getPosition() == 1) {
-                    findOrderList(true, "1");
-                }else  if (tab.getPosition() == 2) {
-                    findOrderList(true, "2");
-                }else  if (tab.getPosition() == 3) {
-                    findOrderList(true, "3");
-                }else  if (tab.getPosition() == 4) {
-                    findOrderList(true, "4");
+                    type = "";
+                    mDataBinding.recyclerview.autoRefresh();
+                } else if (tab.getPosition() == 1) {
+                    type = "1";
+                    mDataBinding.recyclerview.autoRefresh();
+                } else if (tab.getPosition() == 2) {
+                    type = "2";
+                    mDataBinding.recyclerview.autoRefresh();
+                } else if (tab.getPosition() == 3) {
+                    type = "3";
+                    mDataBinding.recyclerview.autoRefresh();
+                } else if (tab.getPosition() == 4) {
+                    type = "4";
+                    mDataBinding.recyclerview.autoRefresh();
                 }
             }
 
@@ -165,15 +182,14 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
         }
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBusUtil.unregisterEvent(this);
     }
 
-    public void onEvent(GetRegionEvent messageEvent) {
-
+    public void onEvent(AddressResultEvent messageEvent) {
+        mDataBinding.recyclerview.autoRefresh();
     }
 
     /**
@@ -218,19 +234,70 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
 
     FindOrderListBean findOrderListBean;
 
-    private void doSuccessResponse(boolean refresh, FindOrderListBean categoryBean) {
-        if(categoryBean!=null){
-
-        }
-
-
+    private void doSuccessResponse(final boolean refresh, final FindOrderListBean categoryBean) {
         this.findOrderListBean = categoryBean;
-        if (refresh) {
-            mAdapter.setDetail(categoryBean);
-        } else {
-            mAdapter.setExpend(categoryBean);
+        if (findOrderListBean != null) {
+            for (FindOrderListBean.DataBean dataBean : findOrderListBean.getData()) {
+                findOrder(dataBean.getOrder_code());
+            }
         }
-        mDataBinding.recyclerview.getAdapter().notifyDataSetChanged();
-        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findOrderListBean.getPage().getTotal() / (float) findOrderListBean.getPage().getPageSize()) > mCurrentPage);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (refresh) {
+                    mAdapter.setDetail(categoryBean);
+                } else {
+                    mAdapter.setExpend(categoryBean);
+                }
+                mDataBinding.recyclerview.getAdapter().notifyDataSetChanged();
+                mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findOrderListBean.getPage().getTotal() / (float) findOrderListBean.getPage().getPageSize()) > mCurrentPage);
+            }
+        }, 2000);
     }
+
+    /**
+     * 订单查询
+     */
+    private void findOrder(final String orderGood) {
+        showDialog();
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("orderGood", orderGood);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "findOrder");
+        NetBean netBean = new NetBean();
+        netBean.setToken(userSession.getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(FindOrderAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<FindOrderBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<FindOrderBean>> response,
+                                           BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                if (response.body().getCode().equals("200")) {
+                                    FindOrderBean findOrderBean = response.body().getData();
+                                    if (findOrderBean != null && findOrderBean.getGoodsList() != null) {
+                                        for (FindOrderListBean.DataBean dataBean : findOrderListBean.getData()) {
+                                            if (dataBean.getOrder_code().equals(orderGood)) {
+                                                dataBean.setGoodsListBeans(findOrderBean.getGoodsList());
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
 }
+
