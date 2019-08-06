@@ -1,4 +1,5 @@
-package com.jhhscm.platform.fragment.my.order;
+package com.jhhscm.platform.fragment.my.labour;
+
 
 import android.content.Context;
 import android.support.design.widget.TabLayout;
@@ -9,32 +10,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.LoginActivity;
+import com.jhhscm.platform.activity.PushQiuZhiActivity;
+import com.jhhscm.platform.activity.PushZhaoPinActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.FragmentMyPeiJianListBinding;
-import com.jhhscm.platform.event.GetRegionEvent;
-import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderViewHolder;
-import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
-import com.jhhscm.platform.fragment.Mechanics.PeiJianFragment;
-
-import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
+import com.jhhscm.platform.databinding.FragmentMyLabourBinding;
+import com.jhhscm.platform.event.AddressResultEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-
+import com.jhhscm.platform.fragment.my.labour.action.FindLabourListAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.UserSession;
-import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
-import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.Utils;
@@ -47,106 +43,101 @@ import java.util.TreeMap;
 
 import retrofit2.Response;
 
-public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBinding> {
-    private MyPeiJianListAdapter mAdapter;
+public class MyLabourFragment extends AbsFragment<FragmentMyLabourBinding> {
+    private InnerAdapter mAdapter;
+    private static final int TAB_COUNT = 2;
     private UserSession userSession;
     private int mShowCount = 10;
     private int mCurrentPage = 1;
     private final int START_PAGE = mCurrentPage;
-
-    private static final int TAB_COUNT = 5;
-    public static final int ORDER_STAUS_1 = 1;
-    public static final int ORDER_STAUS_2 = 1;
-    public static final int ORDER_STAUS_3 = 2;
-    public static final int ORDER_STAUS_4 = 3;
-    public static final int ORDER_STAUS_5 = 4;
-
     private ArrayList<Fragment> fragments = new ArrayList<Fragment>();
     private int mScreenWidth = 0; // 屏幕宽度
 
-    public static MyPeiJianListFragment instance() {
-        MyPeiJianListFragment view = new MyPeiJianListFragment();
+    private int type = 1;
+
+    public static MyLabourFragment instance() {
+        MyLabourFragment view = new MyLabourFragment();
         return view;
     }
 
     @Override
-    protected FragmentMyPeiJianListBinding bindRootView(LayoutInflater inflater, ViewGroup container, boolean attachToRoot) {
-        return FragmentMyPeiJianListBinding.inflate(inflater, container, attachToRoot);
+    protected FragmentMyLabourBinding bindRootView(LayoutInflater inflater, ViewGroup container, boolean attachToRoot) {
+        return FragmentMyLabourBinding.inflate(inflater, container, attachToRoot);
     }
 
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
-        RelativeLayout.LayoutParams llParams = (RelativeLayout.LayoutParams) mDataBinding.rlColumn.getLayoutParams();
-        llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
-        mDataBinding.rlColumn.setLayoutParams(llParams);
-
         if (ConfigUtils.getCurrentUser(getContext()) != null
-                && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
+                && ConfigUtils.getCurrentUser(getContext()).getMobile() != null
+                && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
             userSession = ConfigUtils.getCurrentUser(getContext());
         } else {
             startNewActivity(LoginActivity.class);
         }
 
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new MyPeiJianListAdapter(getContext());
+        mAdapter = new InnerAdapter(getContext());
         mDataBinding.recyclerview.setAdapter(mAdapter);
         mDataBinding.recyclerview.autoRefresh();
         mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
-                findOrderList(true, "");
+                findLabourList(true, type + "");
                 //  mAdapter.setDetail(new FindOrderListBean());
             }
 
             @Override
             public void onLoadMore(RecyclerView view) {
-                findOrderList(true, "");
+                findLabourList(true, type + "");
                 //  mAdapter.setDetail(new FindOrderListBean());
             }
         });
 
-
+        mDataBinding.tel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (type == 0) {
+                    PushZhaoPinActivity.start(getContext(), "", "", 0);
+                } else {
+                    PushQiuZhiActivity.start(getContext(), "", "", 0);
+                }
+            }
+        });
         initTabColumn();
     }
-
 
     /**
      * 初始化Column栏目项
      */
     private void initTabColumn() {
         final List<String> tabNameS = new ArrayList<>();
-        tabNameS.add("  全部   ");
-        tabNameS.add("待付款");
-        tabNameS.add("代发货");
-        tabNameS.add("待收货");
-        tabNameS.add("已完成");
+        tabNameS.add("我的求职");
+        tabNameS.add("我的招聘");
 
         int count = TAB_COUNT;
         fragments.clear();//清空
-        if (count == 0) {
-            mDataBinding.rlCaseBaseNull.setVisibility(View.VISIBLE);
-        } else {
-            mDataBinding.rlCaseBaseNull.setVisibility(View.GONE);
-        }
-        for (int i = 0; i < count; i++) {
-            fragments.add(PeiJianFragment.instance());
-        }
+//        if (count == 0) {
+//            mDataBinding.rlCaseBaseNull.setVisibility(View.VISIBLE);
+//        } else {
+//            mDataBinding.rlCaseBaseNull.setVisibility(View.GONE);
+//        }
+//        for (int i = 0; i < count; i++) {
+//            fragments.add(PeiJianFragment.instance());
+//        }
 
         mScreenWidth = Utils.getWindowsWidth(getActivity());
         mDataBinding.enhanceTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
-                    findOrderList(true, "");
-                }else  if (tab.getPosition() == 1) {
-                    findOrderList(true, "1");
-                }else  if (tab.getPosition() == 2) {
-                    findOrderList(true, "2");
-                }else  if (tab.getPosition() == 3) {
-                    findOrderList(true, "3");
-                }else  if (tab.getPosition() == 4) {
-                    findOrderList(true, "4");
+                    type = 1;
+                    mDataBinding.tel.setImageResource(R.mipmap.ic_push_qiuzhi);
+                    findLabourList(true, "1");
+                } else if (tab.getPosition() == 1) {
+                    type = 0;
+                    mDataBinding.tel.setImageResource(R.mipmap.ic_push_zhaopin);
+                    findLabourList(true, "0");
                 }
             }
 
@@ -172,31 +163,31 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
         EventBusUtil.unregisterEvent(this);
     }
 
-    public void onEvent(GetRegionEvent messageEvent) {
-
+    public void onEvent(AddressResultEvent messageEvent) {
+        Log.e("AddressResultEvent"," AddressResultEvent ");
+        findLabourList(true, type + "");
     }
 
     /**
-     * 获取订单列表
-     * 获取列表后，遍历商品信息
+     * 查询个人劳务列表
      */
-    private void findOrderList(final boolean refresh, final String type) {
-        Map<String, String> map = new TreeMap<String, String>();
+    private void findLabourList(final boolean refresh, final String type) {
+        Map<String, Object> map = new TreeMap<String, Object>();
         map.put("user_code", userSession.getUserCode());
-        map.put("order_type", type);
-        map.put("page", mCurrentPage + "");
-        map.put("limit", mShowCount + "");
+        map.put("type", type);
+        map.put("page", mCurrentPage);
+        map.put("limit", mShowCount);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "findOrderList: " + "type");
+        String sign = SignObject.getSignKey(getActivity(), map, "findLabourList: " + "type");
         NetBean netBean = new NetBean();
         netBean.setToken(userSession.getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
-        onNewRequestCall(FindOrderListAction.newInstance(getContext(), netBean)
-                .request(new AHttpService.IResCallback<BaseEntity<FindOrderListBean>>() {
+        onNewRequestCall(FindLabourListAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<FindLabourListBean>>() {
                     @Override
-                    public void onCallback(int resultCode, Response<BaseEntity<FindOrderListBean>> response, BaseErrorInfo baseErrorInfo) {
+                    public void onCallback(int resultCode, Response<BaseEntity<FindLabourListBean>> response, BaseErrorInfo baseErrorInfo) {
                         if (getView() != null) {
                             closeDialog();
                             if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
@@ -204,8 +195,11 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
                             }
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
-                                    findOrderListBean = response.body().getData();
-                                    doSuccessResponse(refresh, findOrderListBean);
+                                    findLabourListBean = response.body().getData();
+                                    for (FindLabourListBean.DataBean dataBean : findLabourListBean.getData()) {
+                                        dataBean.setType(type);
+                                    }
+                                    doSuccessResponse(refresh, findLabourListBean);
 //                                    mAdapter.setDetail(response.body().getData());
                                 } else {
                                     ToastUtils.show(getContext(), "error " + type + ":" + response.body().getMessage());
@@ -216,21 +210,31 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
                 }));
     }
 
-    FindOrderListBean findOrderListBean;
+    FindLabourListBean findLabourListBean;
 
-    private void doSuccessResponse(boolean refresh, FindOrderListBean categoryBean) {
-        if(categoryBean!=null){
-
-        }
-
-
-        this.findOrderListBean = categoryBean;
+    private void doSuccessResponse(boolean refresh, FindLabourListBean categoryBean) {
+        this.findLabourListBean = categoryBean;
         if (refresh) {
-            mAdapter.setDetail(categoryBean);
+            mAdapter.setData(categoryBean.getData());
         } else {
-            mAdapter.setExpend(categoryBean);
+            mAdapter.append(categoryBean.getData());
         }
         mDataBinding.recyclerview.getAdapter().notifyDataSetChanged();
-        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findOrderListBean.getPage().getTotal() / (float) findOrderListBean.getPage().getPageSize()) > mCurrentPage);
+        if (mAdapter.getItemCount() == 0) {
+            mDataBinding.recyclerview.loadComplete(true, false);
+        } else {
+            mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findLabourListBean.getPage().getTotal() / (float) findLabourListBean.getPage().getPageSize()) > mCurrentPage);
+        }
+    }
+
+    private class InnerAdapter extends AbsRecyclerViewAdapter<FindLabourListBean.DataBean> {
+        public InnerAdapter(Context context) {
+            super(context);
+        }
+
+        @Override
+        public AbsRecyclerViewHolder<FindLabourListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new MyLabourViewHolder(mInflater.inflate(R.layout.item_my_labour, parent, false));
+        }
     }
 }

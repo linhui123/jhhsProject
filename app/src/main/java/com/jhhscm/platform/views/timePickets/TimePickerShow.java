@@ -2,6 +2,7 @@ package com.jhhscm.platform.views.timePickets;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -78,7 +79,7 @@ public class TimePickerShow {
         // int hour = calendar.get(Calendar.HOUR_OF_DAY);
         // int min = calendar.get(Calendar.MINUTE);
         // int second = calendar.get(Calendar.SECOND);
-        wheelMain.setEND_YEAR(year);
+        wheelMain.setEND_YEAR(2088);
         // 若为空显示当前时间
         if (dateStr != null && !dateStr.equals("")) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -109,7 +110,7 @@ public class TimePickerShow {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int min = calendar.get(Calendar.MINUTE);
         // int second = calendar.get(Calendar.SECOND);
-        wheelMain.setEND_YEAR(year);
+        wheelMain.setEND_YEAR(2088);
         // 若为空显示当前时间
         if (dateStr != null && !dateStr.equals("")) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -238,8 +239,8 @@ public class TimePickerShow {
             @Override
             public void onClick(View v) {
                 if (type == 1) {
-                    if (StringUtils.getTimeCompareSize(getTxtTime("-", "-", " ", ":", "", "")) == 3) {
-                        ToastUtils.show(MyApplication.getInstance(), "选择时间不能大于当前时间");
+                    if (StringUtils.getTimeCompareSize(getTxtTime("-", "-", " ", ":", "", ""), "yyyy-MM-dd") == 1) {
+                        ToastUtils.show(MyApplication.getInstance(), "选择时间不能小于当前时间");
                         return;
                     }
                     timePickerListener.onClicklistener(getTxtTime("-", "-", " ", ":", "", ""));

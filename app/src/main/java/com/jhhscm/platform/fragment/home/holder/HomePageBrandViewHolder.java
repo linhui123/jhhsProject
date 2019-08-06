@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.BrandActivity;
+import com.jhhscm.platform.activity.MechanicsByBrandActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.bean.UserData;
@@ -36,6 +38,13 @@ public class HomePageBrandViewHolder extends AbsRecyclerViewHolder<HomePageItem>
             InnerAdapter mAdapter = new InnerAdapter(itemView.getContext());
             mBinding.layoutProject.setAdapter(mAdapter);
             mAdapter.setData(HomePageItem.findBrandHomePageBean.getResult());
+
+            mBinding.rl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BrandActivity.start(itemView.getContext());
+                }
+            });
         }
     }
 
@@ -64,6 +73,13 @@ public class HomePageBrandViewHolder extends AbsRecyclerViewHolder<HomePageItem>
         protected void onBindView(final FindBrandHomePageBean.ResultBean item) {
             mBinding.tvBrand.setText(item.getName());
             ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.imBrand);
+
+            mBinding.rlName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MechanicsByBrandActivity.start(itemView.getContext(), item.getId());
+                }
+            });
         }
     }
 }

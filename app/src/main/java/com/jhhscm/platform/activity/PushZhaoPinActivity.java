@@ -4,22 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
+import com.jhhscm.platform.fragment.Mechanics.BrandFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
-import com.jhhscm.platform.fragment.labour.LabourDetailFragment;
-import com.jhhscm.platform.fragment.labour.LabourFragment;
-import com.umeng.commonsdk.debug.D;
+import com.jhhscm.platform.fragment.my.labour.PushZhaoPinFragment;
 
-public class LabourDetailActivity extends AbsToolbarActivity {
-    private int type;//0 查看；1编辑
+public class PushZhaoPinActivity extends AbsToolbarActivity {
+    private int type;//0只读；1编辑
 
-    public static void start(Context context, int type, FindLabourReleaseListBean.DataBean dataBean) {
-        Intent intent = new Intent(context, LabourDetailActivity.class);
-        intent.putExtra("dataBean", dataBean);
+    public static void start(Context context, String labour_code,String id, int type) {
+        Intent intent = new Intent(context, PushZhaoPinActivity.class);
         intent.putExtra("type", type);
+        intent.putExtra("id", id);
+        intent.putExtra("labour_code", labour_code);
         context.startActivity(intent);
     }
 
@@ -50,24 +48,24 @@ public class LabourDetailActivity extends AbsToolbarActivity {
 
     @Override
     protected String getToolBarTitle() {
-        FindLabourReleaseListBean.DataBean dataBean = (FindLabourReleaseListBean.DataBean) getIntent().getSerializableExtra("dataBean");
-        if (dataBean.getType().equals("0")) {
-            return "招聘详情";
-        } else {
-            return "求职详情";
+        if (getIntent().getIntExtra("type",0)==0){
+            return "发布招聘";
+        }else {
+            return "编辑招聘";
         }
     }
 
     @Override
     protected AbsFragment onCreateContentView() {
-        return LabourDetailFragment.instance();
+        return PushZhaoPinFragment.instance();
     }
 
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
-        args.putSerializable("dataBean", getIntent().getSerializableExtra("dataBean"));
         args.putInt("type", getIntent().getIntExtra("type", 0));
+        args.putString("labour_code", getIntent().getStringExtra("labour_code"));
+        args.putString("id", getIntent().getStringExtra("id"));
         return args;
     }
 }

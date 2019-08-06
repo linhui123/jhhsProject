@@ -55,7 +55,7 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
     private InnerAdapter mAdapter;
     private SelectedAdapter selectedAdapter;
     private List<GetComboBoxBean.ResultBean> resultBeanList;
-    private int type = 1;//1招聘，2求职
+    private int type = 0;//0招聘，1求职
     private int mShowCount = 10;
     private int mCurrentPage = 1;
     private final int START_PAGE = mCurrentPage;
@@ -91,7 +91,7 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
         mDataBinding.rv.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
-                if (type == 1) {
+                if (type == 0) {
                     findLabourReleaseList(true);
                 } else {
                     findLabourWorkList(true);
@@ -101,7 +101,7 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
 
             @Override
             public void onLoadMore(RecyclerView view) {
-                if (type == 1) {
+                if (type == 0) {
                     findLabourReleaseList(false);
                 } else {
                     findLabourWorkList(false);
@@ -238,7 +238,7 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
         mDataBinding.tvZhaopin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                type = 1;
+                type = 0;
                 mDataBinding.rv.autoRefresh();
                 mDataBinding.tvZhaopin.setBackgroundResource(R.color.white);
                 mDataBinding.tvZhaopin.setTextColor(getResources().getColor(R.color.a397));
@@ -250,7 +250,7 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
         mDataBinding.tvQiuzhi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                type = 2;
+                type = 1;
                 mDataBinding.rv.autoRefresh();
                 mDataBinding.tvQiuzhi.setBackgroundResource(R.color.white);
                 mDataBinding.tvQiuzhi.setTextColor(getResources().getColor(R.color.a397));
@@ -354,7 +354,7 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
                                     if (response.body().getCode().equals("200")) {
                                         FindLabourReleaseListBean findLabourReleaseListBean = response.body().getData();
                                         for (FindLabourReleaseListBean.DataBean dataBean : findLabourReleaseListBean.getData()) {
-                                            dataBean.setType("1");
+                                            dataBean.setType("0");
                                         }
                                         doSuccessResponse(refresh, findLabourReleaseListBean);
                                     } else {
@@ -400,7 +400,7 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
                                     if (response.body().getCode().equals("200")) {
                                         FindLabourReleaseListBean findLabourReleaseListBean = response.body().getData();
                                         for (FindLabourReleaseListBean.DataBean dataBean : findLabourReleaseListBean.getData()) {
-                                            dataBean.setType("2");
+                                            dataBean.setType("1");
                                         }
                                         doSuccessResponse(refresh, findLabourReleaseListBean);
                                     } else {

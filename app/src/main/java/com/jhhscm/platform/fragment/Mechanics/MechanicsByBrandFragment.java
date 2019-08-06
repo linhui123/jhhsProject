@@ -32,6 +32,7 @@ import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -93,18 +94,14 @@ public class MechanicsByBrandFragment extends AbsFragment<FragmentMechanicsByBra
     private void getGoodsByBrand(final boolean refresh, String brand_id) {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
-            Map<String, Object> map1 = new TreeMap<String, Object>();
-            map1.put("brand_id", Integer.parseInt(brand_id));
-            map1.put("page", mCurrentPage + "");
-            map1.put("limit", mShowCount + "");
-            String content = JSON.toJSONString(map1);
-            content = Des.encryptByDes(content);
 
-            Map<String, String> map = new TreeMap<String, String>();
-            map.put("brand_id", brand_id);
+            Map<String, Object> map = new TreeMap<String, Object>();
+            map.put("brand_id", Integer.parseInt(brand_id));
             map.put("page", mCurrentPage + "");
             map.put("limit", mShowCount + "");
-            String sign = Sign.getSignKey(getActivity(), map, "getGoodsByBrand");
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = SignObject.getSignKey(getActivity(), map, "getGoodsByBrand");
 
             NetBean netBean = new NetBean();
             netBean.setToken("");

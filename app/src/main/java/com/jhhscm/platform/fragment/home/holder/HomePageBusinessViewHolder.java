@@ -38,30 +38,31 @@ public class HomePageBusinessViewHolder extends AbsRecyclerViewHolder<HomePageIt
 
     @Override
     protected void onBindView(final HomePageItem item) {
-        if (item.adBean3.getResult().size() < 9) {
-            mBinding.indicator.setVisibility(View.GONE);
-        }
-        dlGridViewBeans = new ArrayList<>();
-        for (AdBean.ResultBean resultBean : item.adBean3.getResult()) {
-            DLGridViewBean dlGridViewBean = new DLGridViewBean();
-            dlGridViewBean.setImg(resultBean.getUrl());
-            dlGridViewBean.setText(resultBean.getName());
-            dlGridViewBeans.add(dlGridViewBean);
-        }
-        setting = new DLVPSetting(itemView.getContext(), 2, 4, new DLVPSetting.OnClickItemListener() {
-            @Override
-            public void OnClickItem(int position, DLGridViewBean bean) {
-
+        if (item.adBean3 != null && item.adBean3.getResult() != null) {
+            if (item.adBean3.getResult().size() < 9) {
+                mBinding.indicator.setVisibility(View.GONE);
             }
+            dlGridViewBeans = new ArrayList<>();
+            for (AdBean.ResultBean resultBean : item.adBean3.getResult()) {
+                DLGridViewBean dlGridViewBean = new DLGridViewBean();
+                dlGridViewBean.setImg(resultBean.getUrl());
+                dlGridViewBean.setText(resultBean.getName());
+                dlGridViewBeans.add(dlGridViewBean);
+            }
+            setting = new DLVPSetting(itemView.getContext(), 2, 4, new DLVPSetting.OnClickItemListener() {
+                @Override
+                public void OnClickItem(int position, DLGridViewBean bean) {
 
-            @Override
-            public void OnClickItem(int position, Map<String, Object> map) {
+                }
+
+                @Override
+                public void OnClickItem(int position, Map<String, Object> map) {
 //                Toast.makeText(itemView.getContext(), (String) map.get("txt"), Toast.LENGTH_SHORT).show();
-            }
-        });
-        mBinding.viewPager.setAdapter(setting.getAdapter(dlGridViewBeans));
-        mBinding.indicator.setViewPager(mBinding.viewPager);
-
+                }
+            });
+            mBinding.viewPager.setAdapter(setting.getAdapter(dlGridViewBeans));
+            mBinding.indicator.setViewPager(mBinding.viewPager);
+        }
     }
 }
 

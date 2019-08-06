@@ -79,6 +79,9 @@ public class AddressDialog extends BaseDialog {
         initAddress();
         getRegion("1", "");
         mDataBinding.tv1.setText("请选择");
+        if (mContent != null) {
+            mDataBinding.tvTitle.setText(mContent);
+        }
 
         mDataBinding.tv1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,7 +189,7 @@ public class AddressDialog extends BaseDialog {
                 countryId = event.pid;
                 countryName = event.name;
                 mDataBinding.tv3.setText(countryName);
-                if (mListener!=null){
+                if (mListener != null) {
                     mListener.clickResult(pID, pName, cityId, cityName, countryId, countryName);
                 }
                 dismiss();

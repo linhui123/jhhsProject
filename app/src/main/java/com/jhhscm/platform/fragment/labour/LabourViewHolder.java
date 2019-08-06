@@ -23,7 +23,7 @@ public class LabourViewHolder extends AbsRecyclerViewHolder<FindLabourReleaseLis
 
     @Override
     protected void onBindView(final FindLabourReleaseListBean.DataBean item) {
-        if (item.getType().equals("1")) {
+        if (item.getType().equals("0")) {
             mBinding.tvType.setText("招聘");
         } else {
             mBinding.tvType.setText("求职");
@@ -38,7 +38,7 @@ public class LabourViewHolder extends AbsRecyclerViewHolder<FindLabourReleaseLis
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LabourDetailActivity.start(itemView.getContext(), item);
+                LabourDetailActivity.start(itemView.getContext(), 0, item);
             }
         });
     }

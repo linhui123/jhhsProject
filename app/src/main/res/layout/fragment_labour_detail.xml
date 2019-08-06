@@ -37,7 +37,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/padding_10"
                         android:layout_toRightOf="@+id/type"
-                        android:text="正手挖掘机操作员"
+                        android:text=""
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
 
@@ -46,7 +46,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/type"
-                        android:text="更新时间：2019-07-23"
+                        android:text="更新时间："
                         android:textSize="@dimen/text_size_16" />
 
                     <TextView
@@ -55,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/type"
                         android:layout_alignParentRight="true"
-                        android:text="关注次数：168"
+                        android:text="关注次数："
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
@@ -91,7 +91,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -114,7 +114,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -137,7 +137,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -160,7 +160,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -183,7 +183,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -222,7 +222,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -245,7 +245,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -268,7 +268,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -291,7 +291,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -329,7 +329,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -352,7 +352,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -375,7 +375,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -414,7 +414,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -437,7 +437,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -460,7 +460,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -483,7 +483,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -523,7 +523,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -546,7 +546,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -569,7 +569,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -592,7 +592,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/padding_10"
-                            android:text="正手挖掘机操作员"
+                            android:text=""
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
@@ -606,7 +606,8 @@
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
             android:paddingLeft="@dimen/padding_15"
-            android:paddingRight="@dimen/padding_15">
+            android:paddingRight="@dimen/padding_15"
+            android:visibility="gone">
 
             <com.jhhscm.platform.views.CircleImageView
                 android:id="@+id/im"
@@ -655,7 +656,49 @@
                 android:text="电话联系"
                 android:textColor="@color/white" />
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/rl_bottom1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingRight="@dimen/padding_15">
+
+            <TextView
+                android:id="@+id/tv_del"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding_15"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/edit_bg_397"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="删除"
+                android:textColor="@color/a397"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/tv_edit"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding_15"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_c397"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="编辑"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_16" />
+        </LinearLayout>
     </RelativeLayout>
-
-
 </layout>

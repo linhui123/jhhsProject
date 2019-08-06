@@ -9,7 +9,7 @@ import com.jhhscm.platform.http.bean.NetBean;
 
 import retrofit2.Call;
 
-public class FindOrderAction extends AHttpService<BaseEntity> {
+public class FindOrderAction extends AHttpService<BaseEntity<FindOrderBean>> {
 
     private NetBean netBean;
 

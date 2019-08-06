@@ -27,5 +27,3 @@ public class FindLabourReleaseDetailAction extends AHttpService<BaseEntity<FindL
         return apiService.findLabourReleaseDetail(netBean);
     }
 }
-
-

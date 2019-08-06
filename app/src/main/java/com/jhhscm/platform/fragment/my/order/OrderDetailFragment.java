@@ -105,9 +105,9 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(FindOrderAction.newInstance(getContext(), netBean)
-                .request(new AHttpService.IResCallback<BaseEntity>() {
+                .request(new AHttpService.IResCallback<BaseEntity<FindOrderBean>>() {
                     @Override
-                    public void onCallback(int resultCode, Response<BaseEntity> response,
+                    public void onCallback(int resultCode, Response<BaseEntity<FindOrderBean>> response,
                                            BaseErrorInfo baseErrorInfo) {
                         if (getView() != null) {
                             closeDialog();
@@ -117,10 +117,11 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
                             if (response != null) {
                                 new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                 if (response.body().getCode().equals("200")) {
-                                    String jsonData = Des.decyptByDes(response.body().getContent());
-                                    Gson gson = new Gson();
-                                    findOrderBean = gson.fromJson(jsonData, FindOrderBean.class);
-                                    if (findOrderBean.getOrder() != null) {
+//                                    String jsonData = Des.decyptByDes(response.body().getContent());
+//                                    Gson gson = new Gson();
+//                                    findOrderBean = gson.fromJson(jsonData, FindOrderBean.class);
+                                    findOrderBean=response.body().getData();
+                                    if (findOrderBean != null && findOrderBean.getOrder() != null) {
                                         intView(findOrderBean);
                                     }
                                 } else {

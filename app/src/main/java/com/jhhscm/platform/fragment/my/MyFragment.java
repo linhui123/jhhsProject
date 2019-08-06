@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.LoginActivity;
+import com.jhhscm.platform.activity.MyLabourActivity;
 import com.jhhscm.platform.activity.MyPeiJianListActivity;
 import com.jhhscm.platform.activity.ReceiveAddressActivity;
 import com.jhhscm.platform.activity.SettingActivity;
@@ -66,7 +67,12 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                 initUser();
             }
         });
-
+        mDataBinding.rlLaowu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyLabourActivity.start(getContext());
+            }
+        });
         mDataBinding.rlPeijian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

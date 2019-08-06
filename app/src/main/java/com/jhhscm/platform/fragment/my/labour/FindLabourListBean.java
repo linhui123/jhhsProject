@@ -1,12 +1,12 @@
-package com.jhhscm.platform.fragment.labour;
+package com.jhhscm.platform.fragment.my.labour;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class FindLabourReleaseListBean {
+public class FindLabourListBean {
+
     /**
-     * data : [{"labour_code":"1","salay_money":"薪资2000-4000元/月","province":"河北省","city":"新疆维吾尔自治区","name":"招聘挖掘机小能手","id":1},{"labour_code":"2","salay_money":"薪资4000-5000元/月","province":"河北省","city":"新疆维吾尔自治区","name":"招聘挖掘机小能手","id":2},{"labour_code":"3","salay_money":"薪资2000元以下","province":"河北省","city":"新疆维吾尔自治区","name":"招聘挖掘机小能手","id":3},{"labour_code":"4","salay_money":"薪资面议","province":"河北省","city":"新疆维吾尔自治区","name":"招聘挖掘机小能手","id":4},{"labour_code":"5","salay_money":"薪资2000-4000元/月","province":"河北省","city":"新疆维吾尔自治区","name":"招聘挖掘机小能手","id":5}]
-     * page : {"total":6,"startRow":1,"size":5,"navigateFirstPageNums":1,"prePage":0,"endRow":5,"pageSize":5,"pageNum":1,"navigateLastPageNums":2,"navigatePageNums":[1,2]}
+     * data : [{"labour_code":"f647a9f2c2e14bbe94d63939a6f722b0","update_time":"2019-08-05T08:12:19.000+0000","num":0,"name":"测试发布求职信息","id":6},{"labour_code":"5ae639ed2582405f98e039389c83f0f1","update_time":"2019-08-05T08:12:56.000+0000","num":0,"name":"测试发布求职信息","id":7},{"labour_code":"f107f2d2701c4be78e8572be6cfa4f12","update_time":"2019-08-05T08:12:57.000+0000","num":1,"name":"测试发布求职信息","id":8}]
+     * page : {"total":3,"startRow":1,"size":3,"navigateFirstPageNums":1,"prePage":0,"endRow":3,"pageSize":5,"pageNum":1,"navigateLastPageNums":1,"navigatePageNums":[1]}
      */
 
     private PageBean page;
@@ -30,16 +30,16 @@ public class FindLabourReleaseListBean {
 
     public static class PageBean {
         /**
-         * total : 6
+         * total : 3
          * startRow : 1
-         * size : 5
+         * size : 3
          * navigateFirstPageNums : 1
          * prePage : 0
-         * endRow : 5
+         * endRow : 3
          * pageSize : 5
          * pageNum : 1
-         * navigateLastPageNums : 2
-         * navigatePageNums : [1,2]
+         * navigateLastPageNums : 1
+         * navigatePageNums : [1]
          */
 
         private int total;
@@ -134,55 +134,31 @@ public class FindLabourReleaseListBean {
         }
     }
 
-    public static class DataBean implements Serializable {
+    public static class DataBean {
         /**
-         * labour_code : 1
-         * salay_money : 薪资2000-4000元/月
-         * province : 河北省
-         * city : 新疆维吾尔自治区
-         * name : 招聘挖掘机小能手
-         * id : 1
+         * labour_code : f647a9f2c2e14bbe94d63939a6f722b0
+         * update_time : 2019-08-05T08:12:19.000+0000
+         * num : 0
+         * name : 测试发布求职信息
+         * id : 6
          */
 
-        private String work_time;
-        private String add_time;
         private String labour_code;
-        private String salay_money;
-        private String province;
-        private String city;
+        private String update_time;
+        private int num;
         private String name;
         private String id;
         private String type;
-        public DataBean() {
-        }
-        public DataBean(String id,String type, String labour_code) {
+        public DataBean(String id, String labour_code) {
             this.id = id;
-            this.type = type;
             this.labour_code = labour_code;
         }
-
         public String getType() {
             return type;
         }
 
         public void setType(String type) {
             this.type = type;
-        }
-
-        public String getWork_time() {
-            return work_time;
-        }
-
-        public void setWork_time(String work_time) {
-            this.work_time = work_time;
-        }
-
-        public String getAdd_time() {
-            return add_time;
-        }
-
-        public void setAdd_time(String add_time) {
-            this.add_time = add_time;
         }
 
         public String getLabour_code() {
@@ -193,28 +169,20 @@ public class FindLabourReleaseListBean {
             this.labour_code = labour_code;
         }
 
-        public String getSalay_money() {
-            return salay_money;
+        public String getUpdate_time() {
+            return update_time;
         }
 
-        public void setSalay_money(String salay_money) {
-            this.salay_money = salay_money;
+        public void setUpdate_time(String update_time) {
+            this.update_time = update_time;
         }
 
-        public String getProvince() {
-            return province;
+        public int getNum() {
+            return num;
         }
 
-        public void setProvince(String province) {
-            this.province = province;
-        }
-
-        public String getCity() {
-            return city;
-        }
-
-        public void setCity(String city) {
-            this.city = city;
+        public void setNum(int num) {
+            this.num = num;
         }
 
         public String getName() {
