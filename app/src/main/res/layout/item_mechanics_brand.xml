@@ -5,6 +5,7 @@
         android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:paddingLeft="@dimen/padding_15"
         android:paddingTop="@dimen/dp_3"
         android:paddingRight="@dimen/padding_15"
@@ -23,8 +24,10 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:textSize="@dimen/text_size_16"
             android:layout_toRightOf="@+id/im"
-            android:text="奥邦" />
+            android:text="奥邦"
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/text_size_16" />
+
     </RelativeLayout>
 </layout>

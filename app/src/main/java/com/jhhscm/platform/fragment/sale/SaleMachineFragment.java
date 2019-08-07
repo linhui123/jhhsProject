@@ -6,11 +6,13 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.PushOldMechanicsActivity;
 import com.jhhscm.platform.databinding.FragmentSaleMachineBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
@@ -37,7 +39,6 @@ import java.util.TreeMap;
 import retrofit2.Response;
 
 public class SaleMachineFragment extends AbsFragment<FragmentSaleMachineBinding> {
-
     private int mShowCount = 10;
     private int mCurrentPage = 1;
     private final int START_PAGE = mCurrentPage;
@@ -57,9 +58,6 @@ public class SaleMachineFragment extends AbsFragment<FragmentSaleMachineBinding>
 
     @Override
     protected void setupViews() {
-//        RelativeLayout.LayoutParams llParams = (RelativeLayout.LayoutParams) mDataBinding.rv.getLayoutParams();
-//        llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
-//        mDataBinding.rv.setLayoutParams(llParams);
         EventBusUtil.registerEvent(this);
         mDataBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new SaleMachineAdapter(getContext());
@@ -74,6 +72,13 @@ public class SaleMachineFragment extends AbsFragment<FragmentSaleMachineBinding>
             @Override
             public void onLoadMore(RecyclerView view) {
                 oldGoodOrderHistory(false);
+            }
+        });
+
+        mDataBinding.tvFabu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PushOldMechanicsActivity.start(getContext());
             }
         });
     }

@@ -16,6 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="林**"
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/text_size_16"
             android:textStyle="bold" />
 
         <TextView
@@ -25,6 +27,8 @@
             android:layout_marginLeft="@dimen/padding_10"
             android:layout_toRightOf="@+id/tv_name"
             android:text="180****3012"
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/text_size_16"
             android:textStyle="bold" />
 
         <TextView
@@ -34,7 +38,8 @@
             android:layout_below="@+id/tv_name"
             android:layout_marginTop="@dimen/dp_5"
             android:text="默认"
-            android:textColor="@color/ff1a" />
+            android:textColor="@color/ff1a"
+            android:textSize="@dimen/text_size_16" />
 
         <TextView
             android:id="@+id/tv_address"
@@ -45,18 +50,21 @@
             android:layout_toLeftOf="@+id/tv_edit"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="           福建省 福州市 XX区 XXXX镇 XXXX街道XXXXX小区XXX号楼" />
+            android:text="           福建省 福州市 XX区 XXXX镇 XXXX街道XXXXX小区XXX号楼"
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/text_size_16" />
 
         <ImageView
             android:id="@+id/tv_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/padding_10"
-            android:paddingRight="@dimen/padding_10"
-            android:paddingTop="@dimen/padding_10"
-            android:paddingBottom="@dimen/padding_10"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_address_edit" />
+            android:paddingLeft="@dimen/padding_10"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingRight="@dimen/padding_10"
+            android:paddingBottom="@dimen/padding_10"
+            android:src="@mipmap/ic_address_edit"
+            android:textSize="@dimen/text_size_16" />
     </RelativeLayout>
 </layout>

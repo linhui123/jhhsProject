@@ -28,4 +28,3 @@ public class DelLabourReleaseAction extends AHttpService<BaseEntity<ResultBean>>
         return apiService.delLabourRelease(netBean);
     }
 }
-

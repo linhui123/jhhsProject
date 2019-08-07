@@ -94,15 +94,13 @@ public class MechanicsByBrandFragment extends AbsFragment<FragmentMechanicsByBra
     private void getGoodsByBrand(final boolean refresh, String brand_id) {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
-
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("brand_id", Integer.parseInt(brand_id));
-            map.put("page", mCurrentPage + "");
-            map.put("limit", mShowCount + "");
+            map.put("page", mCurrentPage);
+            map.put("limit", mShowCount);
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = SignObject.getSignKey(getActivity(), map, "getGoodsByBrand");
-
             NetBean netBean = new NetBean();
             netBean.setToken("");
             netBean.setSign(sign);
@@ -136,21 +134,21 @@ public class MechanicsByBrandFragment extends AbsFragment<FragmentMechanicsByBra
     private void doSuccessResponse(boolean refresh, GetGoodsByBrandBean categoryBean) {
         this.findCategoryBean = categoryBean;
         if (refresh) {
-            mAdapter.setData(categoryBean.getResult());
+            mAdapter.setData(categoryBean.getResult().getData());
         } else {
-            mAdapter.append(categoryBean.getResult());
+            mAdapter.append(categoryBean.getResult().getData());
         }
         mDataBinding.recyclerview.getAdapter().notifyDataSetChanged();
-        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findCategoryBean.getPage().getTotal() / (float) findCategoryBean.getPage().getPageSize()) > mCurrentPage);
+        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findCategoryBean.getResult().getPage().getTotal() / (float) findCategoryBean.getResult().getPage().getPageSize()) > mCurrentPage);
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<GetGoodsByBrandBean.ResultBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<GetGoodsByBrandBean.ResultBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<GetGoodsByBrandBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+        public AbsRecyclerViewHolder<GetGoodsByBrandBean.ResultBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new MechanicsByBrandViewHolder(mInflater.inflate(R.layout.item_compairson_select, parent, false));
         }
     }

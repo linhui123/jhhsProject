@@ -44,12 +44,8 @@ public class OldMechanicsViewHolder extends AbsRecyclerViewHolder<GetOldPageList
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (item.getGood_code() != null) {
-                    //                String url = UrlUtils.XJXQ + "&good_code=" + item.getGood_code();
-                    //                H5Activity.start(itemView.getContext(), url, "新机详情");
-                }
-                String url = UrlUtils.ESJXQ + "&good_code=8";
-                MechanicsH5Activity.start(itemView.getContext(), url, "二手机详情", "8", 2);
+                String url = UrlUtils.ESJXQ + "&good_code=" + item.getGood_code();
+                MechanicsH5Activity.start(itemView.getContext(), url, "二手机详情", item.getGood_code(), 2);
             }
         });
 

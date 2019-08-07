@@ -20,7 +20,9 @@ import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseDetailBean;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
 import com.jhhscm.platform.fragment.labour.FindLabourWorkListBean;
+import com.jhhscm.platform.fragment.my.collect.FindCollectListBean;
 import com.jhhscm.platform.fragment.my.labour.FindLabourListBean;
+import com.jhhscm.platform.fragment.my.mechanics.FindOldGoodByUserCodeBean;
 import com.jhhscm.platform.fragment.my.order.FindOrderListBean;
 import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.fragment.sale.OldGoodOrderHistoryBean;
@@ -261,6 +263,7 @@ public interface ApiService {
 
     //取消订单
     String DEL_ORDER = "order/delOrder";
+
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(DEL_ORDER)
     Call<BaseEntity<ResultBean>> delOrder(@Body NetBean content);
@@ -310,37 +313,65 @@ public interface ApiService {
 
     //发布劳务求职详情
     String SAVE_LABOURWORK = "labour/saveLabourWork";
+
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(SAVE_LABOURWORK)
     Call<BaseEntity<ResultBean>> saveLabourWork(@Body NetBean content);
 
     //查询个人劳务列表
     String FIND_LABOURLIST = "labour/findLabourList";
+
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(FIND_LABOURLIST)
     Call<BaseEntity<FindLabourListBean>> findLabourList(@Body NetBean content);
 
     //删除招聘信息
     String DEL_LABOURRELEASE = "labour/delLabourRelease";
+
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(DEL_LABOURRELEASE)
     Call<BaseEntity<ResultBean>> delLabourRelease(@Body NetBean content);
 
     //删除求职信息
     String DEL_LABOURWORK = "labour/delLabourWork";
+
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(DEL_LABOURWORK)
     Call<BaseEntity<ResultBean>> delLabourWork(@Body NetBean content);
 
     //修改劳务招聘
     String UPDATE_LABOURRELEASE = "labour/updateLabourRelease";
+
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(UPDATE_LABOURRELEASE)
     Call<BaseEntity<ResultBean>> updateLabourRelease(@Body NetBean content);
 
     //修改求职信息
     String UPDATE_LABOURWORK = "labour/updateLabourWork";
+
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(UPDATE_LABOURWORK)
     Call<BaseEntity<ResultBean>> updateLabourWork(@Body NetBean content);
+
+    //根据用户编号查看收藏列表
+    String FIND_COLLECTLIST = "collect/findCollectList";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_COLLECTLIST)
+    Call<BaseEntity<FindCollectListBean>> findCollectList(@Body NetBean content);
+
+    //取消收藏
+    String COLLECT_DELETE = "collect/delete";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(COLLECT_DELETE)
+    Call<BaseEntity<ResultBean>> collectDelete(@Body NetBean content);
+
+    //我的机子
+    String FIND_OLDGOODBYUSERCODE = "goods/findOldGoodByUserCode";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_OLDGOODBYUSERCODE)
+    Call<BaseEntity<FindOldGoodByUserCodeBean>> findOldGoodByUserCode(@Body NetBean content);
+
 }

@@ -68,12 +68,11 @@ public class EnhanceTabLayout extends FrameLayout {
     private void readAttr(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.EnhanceTabLayout);
         mSelectIndicatorColor = typedArray.getColor(R.styleable.EnhanceTabLayout_tabIndicatorColor, context.getResources().getColor(R.color.colorAccent));
-        mUnSelectTextColor = typedArray.getColor(R.styleable.EnhanceTabLayout_tabTextColor, Color.parseColor("#999999"));
+        mUnSelectTextColor = typedArray.getColor(R.styleable.EnhanceTabLayout_tabTextColor, Color.parseColor("#666666"));
         mSelectTextColor = typedArray.getColor(R.styleable.EnhanceTabLayout_tabSelectTextColor, context.getResources().getColor(R.color.colorAccent));
         mIndicatorHeight = typedArray.getDimensionPixelSize(R.styleable.EnhanceTabLayout_tabIndicatorHeight, 1);
         mIndicatorWidth = typedArray.getDimensionPixelSize(R.styleable.EnhanceTabLayout_tabIndicatorWidth, 0);
         mTabTextSize = typedArray.getDimensionPixelSize(R.styleable.EnhanceTabLayout_tabTextSize, 14);
-        DisplayMetrics dm = getResources().getDisplayMetrics();
         mTabMode = typedArray.getInt(R.styleable.EnhanceTabLayout_tab_Mode, 1);
         mTabGravity = typedArray.getInt(R.styleable.EnhanceTabLayout_tab_Gravity, 0);
         typedArray.recycle();
@@ -93,8 +92,6 @@ public class EnhanceTabLayout extends FrameLayout {
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                // onTabItemSelected(tab.getPosition());
-                // Tab 选中之后，改变各个Tab的状态
                 for (int i = 0; i < mTabLayout.getTabCount(); i++) {
                     View view = mTabLayout.getTabAt(i).getCustomView();
                     if (view == null) {

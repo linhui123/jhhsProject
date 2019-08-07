@@ -38,6 +38,7 @@ import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.ShareDialog;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
+import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -69,11 +70,27 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
         mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new HomePageAdapter(getContext());
         mDataBinding.wrvRecycler.setAdapter(mAdapter);
+        mDataBinding.wrvRecycler.loadComplete(true,false);
+        mDataBinding.wrvRecycler.hideLoad();
+        mDataBinding.wrvRecycler.autoRefresh();
+        mDataBinding.wrvRecycler.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
+            @Override
+            public void onRefresh(RecyclerView view) {
+                getAD(2);
+                getAD(3);
+                getAD(4);
+                findBrandHomePage();;
+            }
 
-        getAD(2);
-        getAD(3);
-        getAD(4);
-        findBrandHomePage();
+            @Override
+            public void onLoadMore(RecyclerView view) {
+                getAD(2);
+                getAD(3);
+                getAD(4);
+                findBrandHomePage();
+            }
+        });
+
         initTel();
     }
 
@@ -278,6 +295,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
 
     private void setView() {
         mAdapter.setDetail(homePageItem);
+        mDataBinding.wrvRecycler.loadComplete(true,false);
     }
 
     /**

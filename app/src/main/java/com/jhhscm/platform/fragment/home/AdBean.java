@@ -26,6 +26,15 @@ public class AdBean {
         private String link;
         private String url;
         private String content;
+        private String TYPE;
+
+        public String getTYPE() {
+            return TYPE;
+        }
+
+        public void setTYPE(String TYPE) {
+            this.TYPE = TYPE;
+        }
 
         public String getName() {
             return name;

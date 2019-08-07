@@ -43,6 +43,16 @@
 
         </com.github.lzyzsd.jsbridge.BridgeWebView>
 
+        <ImageView
+            android:id="@+id/web_load_anim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:layout_below="@+id/toolbar"
+            android:background="@drawable/web_load_anim" />
+
         <RelativeLayout
             android:id="@+id/rl_bottom"
             android:layout_width="match_parent"

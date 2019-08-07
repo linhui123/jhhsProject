@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/acc3"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/text_size_16" />
 
             <TextView
                 android:id="@+id/tv_name"
@@ -31,7 +31,7 @@
                 android:paddingLeft="@dimen/dp_5"
                 android:text=""
                 android:textColor="@color/acc3"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/text_size_16" />
         </LinearLayout>
 
         <RelativeLayout
@@ -54,7 +54,7 @@
                 android:layout_alignParentRight="true"
                 android:text="关注次数："
                 android:textColor="@color/acc9"
-                android:textSize="@dimen/text_size_12" />
+                android:textSize="@dimen/sp_14"/>
         </RelativeLayout>
     </LinearLayout>
 </layout>

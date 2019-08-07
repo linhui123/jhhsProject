@@ -78,6 +78,12 @@
                 android:background="@mipmap/ic_info" />
         </RelativeLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@+id/rl_top"
+            android:background="@drawable/home_bg" />
+
         <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
             android:id="@+id/wrv_recycler"
             android:layout_width="match_parent"

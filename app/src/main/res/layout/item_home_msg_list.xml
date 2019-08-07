@@ -5,14 +5,21 @@
         android:id="@+id/rl_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/acc3"
             android:text="劳务资讯" />
+
+        <View
+            style="@style/view_h_de"
+            android:layout_below="@+id/tv_msg" />
     </RelativeLayout>
 </layout>

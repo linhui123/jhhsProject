@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_up"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="21dp"
+                    android:text="@string/case_base_uploading"
+                    android:textColor="@color/acc3"
+                    android:textSize="28sp" />
+
+                <com.jhhscm.platform.views.selector.ImageSelector
+                    android:id="@+id/isSchemeImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_up"
+                    android:layout_marginTop="20dp"
+                    android:padding="10dp"
+                    app:colum_num="3"
+                    app:image_num="9" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_case_base_time_node"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/isSchemeImage"
+                    android:background="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="18dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="18dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_case_base_time_node"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="14dp"
+                            android:gravity="right"
+                            android:hint="请选择"
+                            android:textColor="@color/color333"
+                            android:textColorHint="@color/color_cc"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/ic_bargain_detail" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_case_base_time_nodes"
+                        style="@style/user_info_primary_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="20dp"
+                        android:paddingBottom="18dp"
+                        android:paddingTop="18dp"
+                        android:text="@string/case_base_time_node"
+                        android:textColor="@color/acc3"
+                        android:textSize="16sp" />
+
+                    <View
+                        style="@style/divider"
+                        android:layout_below="@+id/tv_case_base_time_nodes"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btn_up"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="26dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/gray_login_btn"
+            android:enabled="true"
+            android:text="@string/case_base_up"
+            android:textColor="@drawable/gray_btn_text"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+</layout>

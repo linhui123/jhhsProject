@@ -5,12 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
@@ -111,6 +115,11 @@ public class H5PeiJianActivity extends AbsActivity {
         setupButtom();
         checkDeviceHasNavigationBar(H5PeiJianActivity.this);
         webview = (BridgeWebView) findViewById(R.id.webview);
+
+        //加载动画
+        final AnimationDrawable animationDrawable = (AnimationDrawable) mDataBinding.webLoadAnim.getBackground();
+
+
         if (!NETUtils.isNetworkConnected(getApplicationContext())) {
             ToastUtils.show(getApplicationContext(), "网络异常，请检查网络连接");
         } else {
@@ -127,6 +136,35 @@ public class H5PeiJianActivity extends AbsActivity {
                     ResultBean resultBean = gson.fromJson(data, ResultBean.class);
                     count = resultBean.getCount()+"";
                     Log.e("registerHandler", "data " + resultBean.getCount());
+                }
+            });
+
+            //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
+            webview.setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    // TODO Auto-generated method stub
+                    //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
+                    view.loadUrl(url);
+                    return true;
+                }
+
+                @Override
+                public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                    super.onPageStarted(view, url, favicon);
+                    mDataBinding.webLoadAnim.setVisibility(View.VISIBLE);
+                    //判断是否在运行
+                    if(!animationDrawable.isRunning()){
+                        //开启帧动画
+                        animationDrawable.start();
+                    }
+                }
+
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+                    animationDrawable.stop();
+                    mDataBinding.webLoadAnim.setVisibility(View.GONE);
                 }
             });
         }

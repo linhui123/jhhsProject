@@ -13,10 +13,13 @@ import com.jhhscm.platform.activity.AboutActivity;
 import com.jhhscm.platform.activity.FeedbackActivity;
 import com.jhhscm.platform.databinding.FragmentMyBinding;
 import com.jhhscm.platform.databinding.FragmentSetBinding;
+import com.jhhscm.platform.event.LoginOutEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.my.MyFragment;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.DataCleanManager;
 import com.jhhscm.platform.tool.DisplayUtils;
+import com.jhhscm.platform.tool.EventBusUtil;
 
 public class SetFragment extends AbsFragment<FragmentSetBinding> {
 
@@ -64,6 +67,15 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
             @Override
             public void onClick(View v) {
                 FeedbackActivity.start(getContext());
+            }
+        });
+
+        mDataBinding.rlOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConfigUtils.removeCurrentUser(getContext());
+                EventBusUtil.post(new LoginOutEvent());
+                getActivity().finish();
             }
         });
     }

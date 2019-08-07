@@ -22,7 +22,7 @@ import java.util.List;
 public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.RecViewholder> {
 
     private Context context;
-    private List<GetGoodsByBrandBean.ResultBean> data = new ArrayList<>();
+    private List<GetGoodsByBrandBean.ResultBean.DataBean> data = new ArrayList<>();
     private LayoutInflater layoutInflater;
     private DeletedItemListener deletedItemListener;
     private CountChangeListener changeListener;
@@ -45,7 +45,7 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
         layoutInflater = LayoutInflater.from(context);
     }
 
-    public void setList(List<GetGoodsByBrandBean.ResultBean> list, boolean refresh) {
+    public void setList(List<GetGoodsByBrandBean.ResultBean.DataBean> list, boolean refresh) {
         if (refresh) {
             data.clear();
         }
@@ -53,7 +53,7 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
         notifyDataSetChanged();
     }
 
-    public void setData(GetGoodsByBrandBean.ResultBean resultBean) {
+    public void setData(GetGoodsByBrandBean.ResultBean.DataBean resultBean) {
         data.add(resultBean);
         notifyDataSetChanged();
     }
@@ -127,7 +127,7 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
      * view.getWidth()获取的是屏幕中可以看到的大小.
      */
     public class RecViewholder extends RecyclerView.ViewHolder implements SlideSwapAction {
-        GetGoodsByBrandBean.ResultBean item;
+        GetGoodsByBrandBean.ResultBean.DataBean item;
         public TextView slide;
         public RelativeLayout relativeLayout;
         public ImageView tvSelect;
@@ -150,7 +150,7 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
             return dip2px(slide.getContext(), 100);
         }
 
-        public void setData(GetGoodsByBrandBean.ResultBean item) {
+        public void setData(GetGoodsByBrandBean.ResultBean.DataBean item) {
             this.item = item;
         }
 
@@ -174,15 +174,15 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
     }
 
     public interface DeletedItemListener {
-        void deleted(GetGoodsByBrandBean.ResultBean resultBean);
+        void deleted(GetGoodsByBrandBean.ResultBean.DataBean resultBean);
     }
 
     public interface CountChangeListener {
-        void changeCount(List<GetGoodsByBrandBean.ResultBean> resultBeans, int position);
+        void changeCount(List<GetGoodsByBrandBean.ResultBean.DataBean> resultBeans, int position);
     }
 
     public interface SelectedListener {
-        void select(GetGoodsByBrandBean.ResultBean resultBean);
+        void select(GetGoodsByBrandBean.ResultBean.DataBean resultBean);
     }
 }
 

@@ -5,7 +5,8 @@
         android:id="@+id/ll_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:paddingTop="10dp"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -18,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/acc3"
-                android:textSize="@dimen/text_size_15"
+                android:textSize="@dimen/text_size_16"
                 android:text="配件推荐" />
 
             <TextView
@@ -27,17 +28,17 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:textColor="@color/a397"
-                android:textSize="@dimen/text_size_11"
+                android:textSize="@dimen/sp_14"
                 android:text="查看更多》" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:layout_marginLeft="19dp"
-            android:layout_marginRight="19dp"
-            android:layout_marginTop="25dp">
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/layout_project"

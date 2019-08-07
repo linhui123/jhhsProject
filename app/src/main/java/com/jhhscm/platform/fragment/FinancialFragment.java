@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -26,15 +27,18 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.MechanicsH5Activity;
+import com.jhhscm.platform.databinding.FragmentFinancialBinding;
 import com.jhhscm.platform.databinding.FragmentWebBinding;
 import com.jhhscm.platform.event.LoginH5Event;
 import com.jhhscm.platform.event.WebTitleEvent;
 import com.jhhscm.platform.fragment.Mechanics.PeiJianFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.NETUtils;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -45,7 +49,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 
-public class FinancialFragment extends AbsFragment<FragmentWebBinding> {
+public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
     private UploadHandler mUploadHandler;
     private static final int FILE_SELECTED = 5;
 
@@ -56,8 +60,8 @@ public class FinancialFragment extends AbsFragment<FragmentWebBinding> {
 
 
     @Override
-    protected FragmentWebBinding bindRootView(LayoutInflater inflater, ViewGroup container, boolean attachToRoot) {
-        return FragmentWebBinding.inflate(inflater, container, attachToRoot);
+    protected FragmentFinancialBinding bindRootView(LayoutInflater inflater, ViewGroup container, boolean attachToRoot) {
+        return FragmentFinancialBinding.inflate(inflater, container, attachToRoot);
     }
 
     private WebChromeClient mWebChromeClient = new WebChromeClient() {
@@ -211,6 +215,11 @@ public class FinancialFragment extends AbsFragment<FragmentWebBinding> {
 
     @Override
     protected void setupViews() {
+        RelativeLayout.LayoutParams llParams = (RelativeLayout.LayoutParams) mDataBinding.toolbar.getLayoutParams();
+        llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
+        mDataBinding.toolbar.setLayoutParams(llParams);
+        mDataBinding.toolbarTitle.setText("金服");
+
         initViews();
     }
 
@@ -260,6 +269,9 @@ public class FinancialFragment extends AbsFragment<FragmentWebBinding> {
             showLoadingPage(R.id.rl_loading);
             setLoadFailedMessage("网络异常，请检查网络连接");
         } else {
+            //加载动画
+            final AnimationDrawable animationDrawable = (AnimationDrawable) mDataBinding.webLoadAnim.getBackground();
+
             mDataBinding.webView.loadUrl(UrlUtils.JF);
             mDataBinding.webView.setVisibility(View.VISIBLE);
             mDataBinding.webView.setWebViewClient(new WebViewClient() {
@@ -268,11 +280,15 @@ public class FinancialFragment extends AbsFragment<FragmentWebBinding> {
                     super.onPageFinished(view, url);
                     closeDialog();
                     mDataBinding.webView.setVisibility(View.VISIBLE);
+                    animationDrawable.stop();
+                    mDataBinding.webLoadAnim.setVisibility(View.GONE);
                 }
 
                 @Override
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     super.onPageStarted(view, url, favicon);
+                    mDataBinding.webLoadAnim.setVisibility(View.VISIBLE);
+                    animationDrawable.start();
                 }
             });
         }

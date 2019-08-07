@@ -6,6 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:paddingTop="@dimen/padding_10"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -20,25 +22,25 @@
                 android:layout_height="wrap_content"
                 android:text="劳务资讯"
                 android:textColor="@color/acc3"
-                android:textSize="@dimen/text_size_15" />
+                android:textSize="@dimen/text_size_16" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:text="查看更多》"
                 android:textColor="@color/a397"
-                android:textSize="@dimen/text_size_11" />
+                android:textSize="@dimen/sp_14"  />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:layout_marginLeft="19dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="19dp"
-            android:layout_marginTop="25dp">
+            android:layout_marginBottom="5dp">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/layout_project"

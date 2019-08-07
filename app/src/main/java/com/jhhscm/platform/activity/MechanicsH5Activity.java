@@ -13,6 +13,7 @@ import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -685,6 +686,9 @@ public class MechanicsH5Activity extends AbsActivity {
                 showLoadingPage(R.id.rl_loading);
                 setLoadFailedMessage("网络异常，请检查网络连接");
             } else {
+
+                //加载动画
+                final AnimationDrawable animationDrawable = (AnimationDrawable) mDataBinding.webLoadAnim.getBackground();
                 mDataBinding.webView.loadUrl(getArguments().getString("url"));
                 mDataBinding.webView.setVisibility(View.VISIBLE);
                 mDataBinding.webView.setWebViewClient(new WebViewClient() {
@@ -693,11 +697,15 @@ public class MechanicsH5Activity extends AbsActivity {
                         super.onPageFinished(view, url);
                         closeDialog();
                         mDataBinding.webView.setVisibility(View.VISIBLE);
+                        animationDrawable.stop();
+                        mDataBinding.webLoadAnim.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onPageStarted(WebView view, String url, Bitmap favicon) {
                         super.onPageStarted(view, url, favicon);
+                        mDataBinding.webLoadAnim.setVisibility(View.VISIBLE);
+                        animationDrawable.start();
                     }
                 });
             }

@@ -70,8 +70,19 @@
         <item name="android:windowEnterAnimation">@anim/show_anim</item>
         <item name="android:windowExitAnimation">@anim/hide_anim</item>
     </style>
+    <style name="divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/de</item>
+    </style>
 
     <style name="view_h_de">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/de</item>
+    </style>
+
+    <style name="view_h_de_1">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/de</item>
@@ -93,5 +104,17 @@
         <item name="apTabDrawMode">text</item>
         <item name="apTabTextSelectColor">@color/white</item>
 
+    </style>
+    <style name="user_item_title_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/acc3</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="user_info_primary_style" parent="@style/user_item_title_style">
+        <item name="android:textColor">@color/theme_color</item>
+        <item name="android:textSize">13sp</item>
     </style>
 </resources>

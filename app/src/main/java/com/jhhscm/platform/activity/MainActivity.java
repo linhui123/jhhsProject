@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsActivity;
+import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.fragment.FinancialFragment;
 import com.jhhscm.platform.fragment.Mechanics.MechanicsFragment;
 import com.jhhscm.platform.fragment.Mechanics.PeiJianFragment;
@@ -26,7 +27,9 @@ import com.jhhscm.platform.fragment.my.MyFragment;
 import com.jhhscm.platform.fragment.sale.SaleMachineFragment;
 import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.permission.YXPermission;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
+import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.HomeAlterDialog;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
@@ -48,7 +51,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     private List<Fragment> mFragments = new ArrayList<Fragment>();
     private HomePageFragment homeFragment;
     private MechanicsFragment mechanicsFragment;
-//    private PeiJianFragment msgFragment;
+    //    private PeiJianFragment msgFragment;
     private FinancialFragment financialFragment;
     private MyFragment mMeFragment;
 
@@ -110,14 +113,16 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     }
 
     private void initView() {
+        EventBusUtil.registerEvent(this);
         mDataBinding.rgOper.setOnCheckedChangeListener(this);
         fm = getSupportFragmentManager();
         transaction = fm.beginTransaction();
-        homeFragment = (HomePageFragment) fm.findFragmentByTag(homepage);
-        mechanicsFragment = (MechanicsFragment) fm.findFragmentByTag("mEducationalAdminFragment");
-//        msgFragment = (PeiJianFragment) fm.findFragmentByTag("mFinanceFragment");
-        mMeFragment = (MyFragment) fm.findFragmentByTag("mMeFragment");
+        homeFragment = (HomePageFragment) fm.findFragmentByTag("homeFragment");
+        mechanicsFragment = (MechanicsFragment) fm.findFragmentByTag("mechanicsFragment");
         financialFragment = (FinancialFragment) fm.findFragmentByTag("mFinancialFragment");
+        mMeFragment = (MyFragment) fm.findFragmentByTag("mMeFragment");
+
+
         mDataBinding.rdExpend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,12 +135,12 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
 
                     @Override
                     public void clickS() {
-
+                        PushZhaoPinActivity.start(MainActivity.this, "", "", 0);
                     }
 
                     @Override
                     public void clickT() {
-
+                        PushQiuZhiActivity.start(MainActivity.this, "", "", 0);
                     }
                 }).show();
             }
@@ -262,6 +267,33 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
         super.onDestroy();
+        EventBusUtil.unregisterEvent(this);
+    }
+
+    public void onEvent(JumpEvent event) {
+        if (event.getType() != null) {
+            if ("HOME_PAGE".equals(event.getType())) {//首页
+                onCheckedChanged(mDataBinding.rgOper, R.id.rd_analysis);
+            } else if ("MECHANICAL".equals(event.getType())) {//机械
+                onCheckedChanged(mDataBinding.rgOper, R.id.rd_educationadmin);
+            } else if ("PARTS".equals(event.getType())) {//配件
+                PeiJianActivity.start(MainActivity.this);
+            } else if ("AFTER_SALE".equals(event.getType())) {//售后
+                ToastUtils.show(MainActivity.this, "该功能正在建设中");
+            } else if ("GOLD".equals(event.getType())) {//金服
+                onCheckedChanged(mDataBinding.rgOper, R.id.rd_finance);
+            } else if ("STEWARD".equals(event.getType())) {//管家
+                ToastUtils.show(MainActivity.this, "该功能正在建设中");
+            } else if ("RENT".equals(event.getType())) {//租赁
+                ToastUtils.show(MainActivity.this, "该功能正在建设中");
+            } else if ("PROJECT".equals(event.getType())) {//工程
+                ToastUtils.show(MainActivity.this, "该功能正在建设中");
+            } else if ("LABOUR".equals(event.getType())) {//劳务
+                LabourActivity.start(MainActivity.this);
+            } else if ("WEB".equals(event.getType())) {//外部链接
+
+            }
+        }
     }
 
 }

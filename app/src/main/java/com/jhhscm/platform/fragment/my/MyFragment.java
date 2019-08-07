@@ -9,16 +9,21 @@ import android.widget.RelativeLayout;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.LoginActivity;
+import com.jhhscm.platform.activity.MyCollectionActivity;
 import com.jhhscm.platform.activity.MyLabourActivity;
+import com.jhhscm.platform.activity.MyMechanicsActivity;
 import com.jhhscm.platform.activity.MyPeiJianListActivity;
 import com.jhhscm.platform.activity.ReceiveAddressActivity;
 import com.jhhscm.platform.activity.SettingActivity;
 import com.jhhscm.platform.databinding.FragmentHomePageBinding;
 import com.jhhscm.platform.databinding.FragmentMyBinding;
+import com.jhhscm.platform.event.ConsultationEvent;
+import com.jhhscm.platform.event.LoginOutEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.HomePageFragment;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.DisplayUtils;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 
@@ -49,6 +54,7 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
 
     @Override
     protected void setupViews() {
+        EventBusUtil.registerEvent(this);
         LinearLayout.LayoutParams llParams = (LinearLayout.LayoutParams) mDataBinding.title.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.title.setLayoutParams(llParams);
@@ -60,30 +66,61 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             }
         });
 
-        mDataBinding.tvJizi.setOnClickListener(new View.OnClickListener() {
+        mDataBinding.rlShoucang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConfigUtils.removeCurrentUser(getContext());
-                initUser();
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    MyCollectionActivity.start(getContext());
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
+            }
+        });
+
+        mDataBinding.rlJizi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    MyMechanicsActivity.start(getContext());
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
             }
         });
         mDataBinding.rlLaowu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyLabourActivity.start(getContext());
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    MyLabourActivity.start(getContext());
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
             }
         });
         mDataBinding.rlPeijian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyPeiJianListActivity.start(getContext());
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    MyPeiJianListActivity.start(getContext());
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
             }
         });
 
         mDataBinding.rlAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ReceiveAddressActivity.start(getActivity(), false);
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    ReceiveAddressActivity.start(getActivity(), false);
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
             }
         });
 
@@ -114,5 +151,15 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             mDataBinding.tvName.setVisibility(View.VISIBLE);
             mDataBinding.rlCer.setVisibility(View.GONE);
         }
+    }
+
+    public void onEvent(LoginOutEvent event) {
+        initUser();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregisterEvent(this);
     }
 }

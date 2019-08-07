@@ -7,9 +7,10 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/enhance_tab_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabBackground="@android:color/transparent"
-        app:tabIndicatorHeight="0dp"
-        app:tab_Gravity="mode_fill"
-        app:tab_Mode="mode_fixed"></android.support.design.widget.TabLayout>
+        android:layout_height="40dp"
+        app:tabContentStart="0dp"
+        app:tabPaddingEnd="14dp"
+        app:tabMaxWidth="200dp"
+        app:tabMinWidth="20dp"
+        app:tabIndicatorHeight="0dp"></android.support.design.widget.TabLayout>
 </FrameLayout>

@@ -84,6 +84,13 @@ public class LoginFragment extends AbsFragment<FragmentLoginBinding> {
                 }
             }
         });
+
+        mDataBinding.tvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
     }
 
     private void getCode(String tel) {

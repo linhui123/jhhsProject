@@ -102,9 +102,9 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
         });
     }
 
-    List<GetGoodsByBrandBean.ResultBean> getCartGoodsByUserCodeBean;
+    List<GetGoodsByBrandBean.ResultBean.DataBean> getCartGoodsByUserCodeBean;
 
-    private void initData(List<GetGoodsByBrandBean.ResultBean> resultBeans, boolean refresh) {
+    private void initData(List<GetGoodsByBrandBean.ResultBean.DataBean> resultBeans, boolean refresh) {
         compairsonAdapter.setList(resultBeans, refresh);
         if (refresh) {
             getCartGoodsByUserCodeBean = resultBeans;
@@ -130,13 +130,13 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
         wAdapter = new CompairsonAdapter(getContext());
         wAdapter.setDeletedItemListener(new CompairsonAdapter.DeletedItemListener() {
             @Override
-            public void deleted(GetGoodsByBrandBean.ResultBean resultBean) {
+            public void deleted(GetGoodsByBrandBean.ResultBean.DataBean resultBean) {
 
             }
         });
         wAdapter.setSelectedListener(new CompairsonAdapter.SelectedListener() {
             @Override
-            public void select(GetGoodsByBrandBean.ResultBean resultBean) {
+            public void select(GetGoodsByBrandBean.ResultBean.DataBean resultBean) {
 
             }
         });
@@ -145,7 +145,7 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
 
 
     @Override
-    public void deleted(GetGoodsByBrandBean.ResultBean resultBean) {
+    public void deleted(GetGoodsByBrandBean.ResultBean.DataBean resultBean) {
 
     }
 
@@ -162,7 +162,7 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
     }
 
     @Override
-    public void select(GetGoodsByBrandBean.ResultBean resultBean) {
+    public void select(GetGoodsByBrandBean.ResultBean.DataBean resultBean) {
 //        MechanicsByBrandActivity.start(getContext(), resultBean.getId());
     }
 }

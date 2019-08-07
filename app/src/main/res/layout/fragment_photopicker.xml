@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="ResourceName">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <GridView
+                android:id="@+id/gv_images"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:clipToPadding="false"
+                android:listSelector="@android:color/transparent"
+                android:horizontalSpacing="@dimen/space_size"
+                android:paddingBottom="?android:attr/actionBarSize"
+                android:verticalSpacing="@dimen/space_size" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/photo_picker_footer"
+                    layout="@layout/include_picker_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true" />
+
+                <ViewStub
+                    android:id="@+id/floder_stub"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@id/photo_picker_footer"
+                    android:layout="@layout/include_fload_stub_list" />
+            </RelativeLayout>
+        </FrameLayout>
+
+    </RelativeLayout>
+</layout>
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout
+        android:id="@+id/fl_wrap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <ImageView
+            android:id="@+id/iv_album"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#404e545a"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_error"
+            />
+        <View
+            android:id="@+id/v_mask"
+            android:visibility="gone"
+            android:background="#88000000"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/chk_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|right"
+            android:layout_margin="5dp"
+            android:src="@drawable/selector_album_checkbox"
+            />
+        <View
+            android:id="@+id/v_press"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:focusable="false"
+            android:visibility="gone"
+            android:focusableInTouchMode="false" />
+    </FrameLayout>
+</layout>

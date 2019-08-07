@@ -29,4 +29,14 @@
     <color name="window_bg">#f2f2f2</color>
     <color name="ffa7">#FFA71A</color>
     <color name="theme_color">#2fd4c7</color>
+    <color name="full_transparent">#00000000</color>
+    <color name="accf0">#f0f0f0</color>
+
+    <color name="action_text_color_normal">#cfcfcf</color>
+    <color name="action_text_color_pressed">#353535</color>
+    <color name="action_text_color_enabled">#818585</color>
+    <color name="color_1890">#1890FF</color>
+    <color name="color333">#333333</color>
+    <color name="color_cc">#CCCCCC</color>
+    <color name="color_09">#096DD9</color>
 </resources>
