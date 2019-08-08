@@ -38,8 +38,8 @@ import java.util.TreeMap;
 
 import retrofit2.Response;
 
-public class AssessResultFragment extends AbsFragment<FragmentAssessResultBinding> implements View.OnClickListener {
-
+public class AssessResultFragment extends AbsFragment<FragmentAssessResultBinding> {
+    FindGoodsAssessBean findGoodsAssessBean;
 
     public static AssessResultFragment instance() {
         AssessResultFragment view = new AssessResultFragment();
@@ -53,20 +53,35 @@ public class AssessResultFragment extends AbsFragment<FragmentAssessResultBindin
 
     @Override
     protected void setupViews() {
-        findGoodsAssess();
+        findGoodsAssessBean = (FindGoodsAssessBean) getArguments().getSerializable("findGoodsAssessBean");
         initView();
-        intChart();
     }
 
     private void initView() {
+        intChart();
+        if (findGoodsAssessBean!=null){
+            mDataBinding.tv1.setText(findGoodsAssessBean.getData().getName());
+            String data = findGoodsAssessBean.getData().getFactory_time() == null ? "" : findGoodsAssessBean.getData().getFactory_time() + "年 | ";
+            String Old_time = findGoodsAssessBean.getData().getOld_time() == null ? "" : findGoodsAssessBean.getData().getOld_time() + "小时 | ";
+            String Province = findGoodsAssessBean.getData().getProvince() == null ? "" : findGoodsAssessBean.getData().getProvince() + "-";
+            String City = findGoodsAssessBean.getData().getCity() == null ? "" : findGoodsAssessBean.getData().getCity();
+            mDataBinding.tv2.setText(data + Old_time + Province + City);
+            mDataBinding.tv3.setText(findGoodsAssessBean.getData().getCounter_price());
+            if (findGoodsAssessBean.getData().getCounter_price() != null) {
+                double price = Double.parseDouble(findGoodsAssessBean.getData().getCounter_price()) / 2;
+                mDataBinding.tvPrice1.setText(findGoodsAssessBean.getData().getOriginal_price());
+            }
 
+            mDataBinding.tvPrice2.setText(findGoodsAssessBean.getData().getCounter_price());
+            mDataBinding.tvPrice3.setText(findGoodsAssessBean.getData().getOriginal_price());
+        }
     }
 
     ArrayList<Integer> colors;
 
     private void intChart() {
         mDataBinding.barchart.setDrawBarShadow(false);     //表不要阴影
-        mDataBinding.barchart.setDrawValueAboveBar(true); //数据显示上方
+//        mDataBinding.barchart.setDrawValueAboveBar(false); //数据显示上方
         Description description = new Description();
         description.setText(" ");
         mDataBinding.barchart.setDescription(description);  //表的描述信息
@@ -84,7 +99,6 @@ public class AssessResultFragment extends AbsFragment<FragmentAssessResultBindin
         //X轴 样式
         final XAxis xAxis = mDataBinding.barchart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
         xAxis.setEnabled(true);//是否显示X坐标轴
         xAxis.setDrawGridLines(false);////是否显示网格线
         xAxis.setLabelRotationAngle(0);//柱的下面描述文字  旋转90度
@@ -111,11 +125,11 @@ public class AssessResultFragment extends AbsFragment<FragmentAssessResultBindin
 
         //模拟数据
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-        yVals1.add(new BarEntry(2015, 80));
-        yVals1.add(new BarEntry(2016, 70));
-        yVals1.add(new BarEntry(2017, 60));
-        yVals1.add(new BarEntry(2018, 50));
-        yVals1.add(new BarEntry(2019, 40));
+        yVals1.add(new BarEntry(2020, 80));
+        yVals1.add(new BarEntry(2021, 70));
+        yVals1.add(new BarEntry(2022, 60));
+        yVals1.add(new BarEntry(2023, 50));
+        yVals1.add(new BarEntry(2024, 40));
         setData(yVals1);
     }
 
@@ -145,7 +159,7 @@ public class AssessResultFragment extends AbsFragment<FragmentAssessResultBindin
 //            colors.add(R.color.a397);
 //            set1.setColors(colors);
             set1.setColor(Color.parseColor("#3977FE"));
-            set1.setDrawValues(true);
+            set1.setDrawValues(false);
 //            set1.setBarBorderWidth(10f);
 //            set1.setBarBorderColor(Color.WHITE);
             ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
@@ -156,85 +170,4 @@ public class AssessResultFragment extends AbsFragment<FragmentAssessResultBindin
             mDataBinding.barchart.setData(data);
         }
     }
-
-
-    /**
-     * 咨询
-     */
-    public void onEvent(ConsultationEvent event) {
-        if (event.phone != null) {
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBusUtil.unregisterEvent(this);
-    }
-
-    /**
-     * 二手机估价
-     */
-    private void findGoodsAssess() {
-        Map<String, String> map = new TreeMap<String, String>();
-        String content = JSON.toJSONString(map);
-        content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "findGoodsAssess");
-        NetBean netBean = new NetBean();
-        netBean.setToken("");
-        netBean.setSign(sign);
-        netBean.setContent(content);
-        onNewRequestCall(FindGoodsAssessAction.newInstance(getContext(), netBean)
-                .request(new AHttpService.IResCallback<BaseEntity<OldGoodOrderHistoryBean>>() {
-
-                    @Override
-                    public void onCallback(int resultCode, Response<BaseEntity<OldGoodOrderHistoryBean>> response, BaseErrorInfo baseErrorInfo) {
-                        if (getView() != null) {
-                            closeDialog();
-                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
-                                return;
-                            }
-                            if (response != null) {
-                                if (response.body().getCode().equals("200")) {
-
-                                } else {
-                                    ToastUtils.show(getContext(), response.body().getMessage());
-                                }
-                            }
-                        }
-                    }
-                }));
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_1:
-                new DropDialog(getContext(), "品牌", new DropDialog.CallbackListener() {
-                    @Override
-                    public void clickResult(String pid, String pNmae, String cityId, String cName, String countryID, String countryName) {
-
-                    }
-                });
-                break;
-            case R.id.tv_2:
-                break;
-            case R.id.tv_3:
-                break;
-            case R.id.tv_4:
-                break;
-            case R.id.tv_6:
-                break;
-            case R.id.tv_7:
-                break;
-            case R.id.tv_9:
-                break;
-            case R.id.tv_reset:
-
-                break;
-            case R.id.tv_assess:
-                break;
-        }
-    }
-
 }

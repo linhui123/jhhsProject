@@ -19,6 +19,7 @@ import com.jhhscm.platform.fragment.Mechanics.action.GetComboBoxAction;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
+import com.jhhscm.platform.fragment.my.mechanics.FindOldGoodByUserCodeBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -26,7 +27,9 @@ import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
+import com.jhhscm.platform.tool.DataUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -151,27 +154,27 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
      * 二手机估价
      */
     private void findGoodsAssess() {
-        Map<String, String> map = new TreeMap<String, String>();
-        map.put("brand_id", brand_id);
+        Map<String, Object> map = new TreeMap<String, Object>();
+        map.put("brand_id", Integer.parseInt(brand_id));
         map.put("fix_p_9", fix_p_9);
         map.put("province", province);
         map.put("city", city);
         map.put("factory_time", factory_time);
-        map.put("old_time", old_time);
+        map.put("old_time", Integer.parseInt(old_time));
         map.put("fix_p_13", fix_p_13);
         map.put("fix_p_13", fix_p_13);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "findGoodsAssess");
+        String sign = SignObject.getSignKey(getActivity(), map, "findGoodsAssess");
         NetBean netBean = new NetBean();
         netBean.setToken("");
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(FindGoodsAssessAction.newInstance(getContext(), netBean)
-                .request(new AHttpService.IResCallback<BaseEntity<OldGoodOrderHistoryBean>>() {
+                .request(new AHttpService.IResCallback<BaseEntity<FindGoodsAssessBean>>() {
 
                     @Override
-                    public void onCallback(int resultCode, Response<BaseEntity<OldGoodOrderHistoryBean>> response, BaseErrorInfo baseErrorInfo) {
+                    public void onCallback(int resultCode, Response<BaseEntity<FindGoodsAssessBean>> response, BaseErrorInfo baseErrorInfo) {
                         if (getView() != null) {
                             closeDialog();
                             if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
@@ -179,7 +182,11 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
                             }
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
-                                    AssessResultActivity.start(getContext());
+                                    if (response.body().getData().getData().getMessage() != null) {
+                                        ToastUtils.show(getContext(), response.body().getData().getData().getMessage());
+                                    } else {
+                                        AssessResultActivity.start(getContext(), response.body().getData());
+                                    }
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
                                 }
@@ -215,7 +222,10 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
                 timePickerShow.setOnTimePickerListener(new TimePickerShow.OnTimePickerListener() {
                     @Override
                     public void onClicklistener(String dataTime) {
-                        factory_time = dataTime.trim();
+                        if (dataTime.length() > 4) {
+                            factory_time = dataTime.substring(0, 4);
+                        }
+
                         mDataBinding.tv4.setText(dataTime.trim());
                         judgeButton();
                     }
@@ -234,8 +244,8 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
                 initReset();
                 break;
             case R.id.tv_assess:
-                findGoodsAssess();
 
+                findGoodsAssess();
                 break;
         }
     }

@@ -10,6 +10,17 @@ import java.util.Map;
 
 public class DataUtil {
 
+    public static Date getStringToData(String s, String pattern) {
+        java.text.SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+        Date date = null;
+        try {
+            date = formatter.parse(s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
     /**
      * 时间差计算
      * 传入字串类型 pattern

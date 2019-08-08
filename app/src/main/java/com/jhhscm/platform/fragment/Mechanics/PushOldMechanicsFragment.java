@@ -130,44 +130,44 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
     /**
      * 二手机估价
      */
-    private void findGoodsAssess() {
-        Map<String, String> map = new TreeMap<String, String>();
-        map.put("brand_id", brand_id);
-        map.put("fix_p_9", fix_p_9);
-        map.put("province", province);
-        map.put("city", city);
-        map.put("factory_time", factory_time);
-        map.put("old_time", old_time);
-        map.put("fix_p_13", fix_p_13);
-        map.put("fix_p_13", fix_p_13);
-        String content = JSON.toJSONString(map);
-        content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "findGoodsAssess");
-        NetBean netBean = new NetBean();
-        netBean.setToken("");
-        netBean.setSign(sign);
-        netBean.setContent(content);
-        onNewRequestCall(FindGoodsAssessAction.newInstance(getContext(), netBean)
-                .request(new AHttpService.IResCallback<BaseEntity<OldGoodOrderHistoryBean>>() {
-
-                    @Override
-                    public void onCallback(int resultCode, Response<BaseEntity<OldGoodOrderHistoryBean>> response, BaseErrorInfo baseErrorInfo) {
-                        if (getView() != null) {
-                            closeDialog();
-                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
-                                return;
-                            }
-                            if (response != null) {
-                                if (response.body().getCode().equals("200")) {
-                                    AssessResultActivity.start(getContext());
-                                } else {
-                                    ToastUtils.show(getContext(), response.body().getMessage());
-                                }
-                            }
-                        }
-                    }
-                }));
-    }
+//    private void findGoodsAssess() {
+//        Map<String, String> map = new TreeMap<String, String>();
+//        map.put("brand_id", brand_id);
+//        map.put("fix_p_9", fix_p_9);
+//        map.put("province", province);
+//        map.put("city", city);
+//        map.put("factory_time", factory_time);
+//        map.put("old_time", old_time);
+//        map.put("fix_p_13", fix_p_13);
+//        map.put("fix_p_13", fix_p_13);
+//        String content = JSON.toJSONString(map);
+//        content = Des.encryptByDes(content);
+//        String sign = Sign.getSignKey(getActivity(), map, "findGoodsAssess");
+//        NetBean netBean = new NetBean();
+//        netBean.setToken("");
+//        netBean.setSign(sign);
+//        netBean.setContent(content);
+//        onNewRequestCall(FindGoodsAssessAction.newInstance(getContext(), netBean)
+//                .request(new AHttpService.IResCallback<BaseEntity<OldGoodOrderHistoryBean>>() {
+//
+//                    @Override
+//                    public void onCallback(int resultCode, Response<BaseEntity<OldGoodOrderHistoryBean>> response, BaseErrorInfo baseErrorInfo) {
+//                        if (getView() != null) {
+//                            closeDialog();
+//                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+//                                return;
+//                            }
+//                            if (response != null) {
+//                                if (response.body().getCode().equals("200")) {
+//                                    AssessResultActivity.start(getContext());
+//                                } else {
+//                                    ToastUtils.show(getContext(), response.body().getMessage());
+//                                }
+//                            }
+//                        }
+//                    }
+//                }));
+//    }
 
     @Override
     public void onClick(View view) {
@@ -214,7 +214,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                 initReset();
                 break;
             case R.id.tv_assess:
-                findGoodsAssess();
+//                findGoodsAssess();
 
                 break;
         }

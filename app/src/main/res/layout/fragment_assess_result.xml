@@ -42,7 +42,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="三一重工SY365H挖掘机"
+                        android:text=""
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/sp_14" />
 
@@ -53,7 +53,7 @@
                         android:layout_marginTop="@dimen/dp_5"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="2017年 | 1900小时 | 江苏-徐州市"
+                        android:text=" |  | "
                         android:textColor="@color/acc9"
                         android:textSize="@dimen/text_size_12" />
 
@@ -78,7 +78,7 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="32.5万"
+                            android:text="0.0万"
                             android:textColor="@color/ff1a"
                             android:textSize="@dimen/sp_14" />
                     </LinearLayout>
@@ -147,7 +147,7 @@
                         android:id="@+id/tv_price1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="  18.14万元"
+                        android:text="  0.0万元"
                         android:textColor="@color/ff1a"
                         android:textSize="@dimen/sp_14" />
 
@@ -156,7 +156,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="24.05万元"
+                        android:text="0.0万元"
                         android:textColor="@color/ff1a"
                         android:textSize="@dimen/sp_14" />
 
@@ -165,7 +165,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="34.05万元"
+                        android:text="0.0万元"
                         android:textColor="@color/ff1a"
                         android:textSize="@dimen/sp_14" />
                 </RelativeLayout>

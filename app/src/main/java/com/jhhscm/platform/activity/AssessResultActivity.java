@@ -9,11 +9,13 @@ import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.sale.AssessFragment;
 import com.jhhscm.platform.fragment.sale.AssessResultFragment;
+import com.jhhscm.platform.fragment.sale.FindGoodsAssessBean;
 
 public class AssessResultActivity extends AbsToolbarActivity {
 
-    public static void start(Context context) {
+    public static void start(Context context, FindGoodsAssessBean findGoodsAssessBean) {
         Intent intent = new Intent(context, AssessResultActivity.class);
+        intent.putExtra("findGoodsAssessBean",findGoodsAssessBean);
         context.startActivity(intent);
     }
 
@@ -55,6 +57,7 @@ public class AssessResultActivity extends AbsToolbarActivity {
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putSerializable("findGoodsAssessBean",getIntent().getSerializableExtra("findGoodsAssessBean"));
         return args;
     }
 }

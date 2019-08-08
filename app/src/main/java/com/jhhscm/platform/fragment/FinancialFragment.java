@@ -30,7 +30,10 @@ import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.H5Activity;
+import com.jhhscm.platform.activity.MainActivity;
 import com.jhhscm.platform.activity.MechanicsH5Activity;
 import com.jhhscm.platform.databinding.FragmentFinancialBinding;
 import com.jhhscm.platform.databinding.FragmentWebBinding;
@@ -38,16 +41,30 @@ import com.jhhscm.platform.event.LoginH5Event;
 import com.jhhscm.platform.event.WebTitleEvent;
 import com.jhhscm.platform.fragment.Mechanics.PeiJianFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
+import com.jhhscm.platform.http.AHttpService;
+import com.jhhscm.platform.http.HttpHelper;
+import com.jhhscm.platform.http.bean.BaseEntity;
+import com.jhhscm.platform.http.bean.BaseErrorInfo;
+import com.jhhscm.platform.http.bean.NetBean;
+import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.NETUtils;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.dialog.AlertDialogs;
+import com.jhhscm.platform.views.dialog.SimpleDialog;
+import com.jhhscm.platform.views.dialog.TelPhoneDialog;
 
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.Map;
+import java.util.TreeMap;
+
+import retrofit2.Response;
 
 public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
     private UploadHandler mUploadHandler;
@@ -221,6 +238,27 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
         mDataBinding.toolbarTitle.setText("金服");
 
         initViews();
+
+        mDataBinding.tvInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new TelPhoneDialog(getContext(), new TelPhoneDialog.CallbackListener() {
+
+                    @Override
+                    public void clickYes(String phone) {
+                        saveMsg(phone);
+                    }
+                }).show();
+            }
+        });
+
+        mDataBinding.tvJisuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                H5Activity.start(getActivity(), UrlUtils.ZL,"租赁");
+                H5Activity.start(getActivity(), UrlUtils.JSQ,"计算器");
+            }
+        });
     }
 
     @Override
@@ -624,6 +662,46 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
         private Intent createSoundRecorderIntent() {
             return new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
         }
+    }
+
+    /**
+     * 信息咨询
+     */
+    private void saveMsg(final String phone) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("mobile", phone);
+        map.put("type", "1");
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getActivity(), map, "saveMsg");
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(SaveMsgAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity> response, BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    new SimpleDialog(getContext(), phone, new SimpleDialog.CallbackListener() {
+                                        @Override
+                                        public void clickYes() {
+
+                                        }
+                                    }).show();
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
     }
 
 }

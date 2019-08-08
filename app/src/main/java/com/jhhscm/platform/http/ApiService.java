@@ -24,6 +24,7 @@ import com.jhhscm.platform.fragment.my.collect.FindCollectListBean;
 import com.jhhscm.platform.fragment.my.labour.FindLabourListBean;
 import com.jhhscm.platform.fragment.my.mechanics.FindOldGoodByUserCodeBean;
 import com.jhhscm.platform.fragment.my.order.FindOrderListBean;
+import com.jhhscm.platform.fragment.sale.FindGoodsAssessBean;
 import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.fragment.sale.OldGoodOrderHistoryBean;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -255,7 +256,7 @@ public interface ApiService {
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(FIND_GOODSASSESS)
-    Call<BaseEntity> findGoodsAssess(@Body NetBean content);
+    Call<BaseEntity<FindGoodsAssessBean>> findGoodsAssess(@Body NetBean content);
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(FIND_ORDERLIST)

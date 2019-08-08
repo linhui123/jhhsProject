@@ -344,13 +344,13 @@
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
-                <!--<com.jhhscm.platform.views.selector.ImageSelector-->
-                    <!--android:id="@+id/selector2"-->
-                    <!--app:with_camera="true"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginTop="12dp"-->
-                    <!--app:image_num="20" />-->
+                <com.jhhscm.platform.views.selector.ImageSelector
+                    android:id="@+id/selector2"
+                    app:with_camera="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:image_num="20" />
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>

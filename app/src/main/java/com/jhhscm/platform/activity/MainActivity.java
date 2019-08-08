@@ -30,6 +30,7 @@ import com.jhhscm.platform.permission.YXPermission;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.dialog.HomeAlterDialog;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
@@ -285,7 +286,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
             } else if ("STEWARD".equals(event.getType())) {//管家
                 ToastUtils.show(MainActivity.this, "该功能正在建设中");
             } else if ("RENT".equals(event.getType())) {//租赁
-                ToastUtils.show(MainActivity.this, "该功能正在建设中");
+                H5Activity.start(MainActivity.this, UrlUtils.ZL,"租赁");
             } else if ("PROJECT".equals(event.getType())) {//工程
                 ToastUtils.show(MainActivity.this, "该功能正在建设中");
             } else if ("LABOUR".equals(event.getType())) {//劳务
