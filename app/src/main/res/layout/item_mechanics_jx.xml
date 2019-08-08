@@ -15,7 +15,7 @@
             android:paddingBottom="@dimen/dp_3"
             android:text="全部"
             android:textColor="@color/acc3"
-            android:textSize="@dimen/text_size_12" />
+            android:textSize="@dimen/text_size_16" />
 
         <ImageView
             android:id="@+id/im_select"

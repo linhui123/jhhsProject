@@ -26,9 +26,6 @@ public class AboutFragment extends AbsFragment<FragmentAboutBinding> {
 
     @Override
     protected void setupViews() {
-//        LinearLayout.LayoutParams llParams = (LinearLayout.LayoutParams) mDataBinding.rl1.getLayoutParams();
-//        llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
-//        mDataBinding.rl1.setLayoutParams(llParams);
 
         mDataBinding.version.setText("当前版本号：" + ExampleUtil.GetVersion(getContext()));
     }

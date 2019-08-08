@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.MsgActivity;
 import com.jhhscm.platform.databinding.FragmentHomePageBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
@@ -70,7 +71,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
         mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new HomePageAdapter(getContext());
         mDataBinding.wrvRecycler.setAdapter(mAdapter);
-        mDataBinding.wrvRecycler.loadComplete(true,false);
+        mDataBinding.wrvRecycler.loadComplete(true, false);
         mDataBinding.wrvRecycler.hideLoad();
         mDataBinding.wrvRecycler.autoRefresh();
         mDataBinding.wrvRecycler.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
@@ -79,7 +80,8 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
                 getAD(2);
                 getAD(3);
                 getAD(4);
-                findBrandHomePage();;
+                findBrandHomePage();
+                ;
             }
 
             @Override
@@ -92,6 +94,13 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
         });
 
         initTel();
+
+        mDataBinding.msgImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MsgActivity.start(getActivity());
+            }
+        });
     }
 
     private void initTel() {
@@ -106,9 +115,9 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
                      * SCROLL_STATE_SETTLING：RecyclerView目前动画虽然不是在最后一个位置外部控制。**/
 
                     mDataBinding.tel.setVisibility(View.VISIBLE);
-                    imgTranslateAnimation(100,0);
+                    imgTranslateAnimation(100, 0);
                 } else if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-                    imgTranslateAnimation(0,100);
+                    imgTranslateAnimation(0, 100);
                     mDataBinding.tel.setVisibility(View.GONE);
                 }
             }
@@ -295,7 +304,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
 
     private void setView() {
         mAdapter.setDetail(homePageItem);
-        mDataBinding.wrvRecycler.loadComplete(true,false);
+        mDataBinding.wrvRecycler.loadComplete(true, false);
     }
 
     /**

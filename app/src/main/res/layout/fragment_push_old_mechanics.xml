@@ -121,6 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_marginBottom="0dp"
                         android:drawableRight="@mipmap/ic_point"
                         android:drawablePadding="@dimen/padding_10"
                         android:paddingTop="@dimen/padding_10"
@@ -206,6 +207,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="0dp"
                         android:background="@null"
                         android:gravity="right"
                         android:hint="请输入"
@@ -236,6 +239,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="0dp"
                         android:background="@null"
                         android:gravity="right"
                         android:hint="请输入"
@@ -345,7 +350,7 @@
                     android:textSize="@dimen/text_size_16" />
 
                 <com.jhhscm.platform.views.selector.ImageSelector
-                    android:id="@+id/selector2"
+                    android:id="@+id/selector"
                     app:with_camera="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -355,29 +360,27 @@
 
         </android.support.v4.widget.NestedScrollView>
 
-        <LinearLayout
-            android:id="@+id/ll_bottom"
+        <RelativeLayout
+            android:id="@+id/rl_bottom"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:paddingTop="@dimen/dp_5"
             android:paddingBottom="@dimen/dp_5">
 
             <TextView
                 android:id="@+id/tv_assess"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginLeft="@dimen/padding_10"
-                android:layout_toRightOf="@+id/tv_reset"
-                android:layout_weight="1"
+                android:paddingLeft="@dimen/padding_10"
+                android:paddingRight="@dimen/padding_10"
                 android:background="@drawable/button_c397"
                 android:gravity="center"
                 android:text="提交"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_16" />
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </layout>

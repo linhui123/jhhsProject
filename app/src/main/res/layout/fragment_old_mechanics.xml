@@ -16,41 +16,81 @@
             android:paddingTop="@dimen/dp_5"
             android:paddingBottom="@dimen/dp_5">
 
-            <TextView
-                android:id="@+id/tv_paixu"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="排序"
-                android:textColor="@color/acc3" />
+                android:gravity="center">
 
-            <TextView
-                android:id="@+id/tv_jixing"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="机型"
-                android:textColor="@color/acc3" />
+                <TextView
+                    android:id="@+id/tv_paixu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/ic_point1"
+                    android:drawablePadding="@dimen/padding_10"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="排序"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_pinpai"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="品牌"
-                android:textColor="@color/acc3" />
+                android:gravity="center">
 
-            <TextView
-                android:id="@+id/tv_shaixuan"
+                <TextView
+                    android:id="@+id/tv_jixing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/ic_point1"
+                    android:drawablePadding="@dimen/padding_10"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="机型"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="筛选"
-                android:textColor="@color/acc3" />
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_pinpai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/ic_point1"
+                    android:drawablePadding="@dimen/padding_10"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="品牌"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_shaixuan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/ic_point1"
+                    android:drawablePadding="@dimen/padding_10"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="筛选"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+            </LinearLayout>
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView

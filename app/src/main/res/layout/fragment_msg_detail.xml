@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingTop="10dp"
+            android:paddingRight="@dimen/padding_15"
+            android:text=""
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:gravity="center"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingTop="10dp"
+            android:paddingRight="@dimen/padding_15"
+            android:text=""
+            android:textColor="@color/acc9"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/data"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingTop="10dp"
+            android:paddingRight="@dimen/padding_15"
+            android:text=""
+            android:textColor="@color/acc6"
+            android:textSize="@dimen/text_size_16" />
+    </RelativeLayout>
+</layout>

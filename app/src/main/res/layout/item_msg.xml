@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="@dimen/padding_15"
+        android:paddingTop="@dimen/dp_5"
+        android:paddingRight="@dimen/padding_15"
+        android:paddingBottom="@dimen/dp_5">
+
+        <ImageView
+            android:id="@+id/im"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_toLeftOf="@+id/data"
+            android:layout_toRightOf="@+id/im"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="主题"
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:text="2019-07-31"
+            android:textColor="@color/acc6"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_toRightOf="@+id/im"
+            android:text="内容"
+            android:layout_marginTop="@dimen/dp_5"
+            android:textColor="@color/acc6"
+            android:textSize="@dimen/text_size_16" />
+    </RelativeLayout>
+</layout>

@@ -29,6 +29,15 @@ public class FindBrandBean {
         private String pic_url;
         private String floor_price;
         private String desc;
+        private boolean select;
+
+        public boolean isSelect() {
+            return select;
+        }
+
+        public void setSelect(boolean select) {
+            this.select = select;
+        }
 
         public String getName() {
             return name;

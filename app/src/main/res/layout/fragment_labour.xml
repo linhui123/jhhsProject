@@ -41,7 +41,8 @@
                     android:paddingRight="@dimen/padding_10"
                     android:paddingBottom="@dimen/dp_5"
                     android:text="招聘"
-                    android:textColor="@color/a397" />
+                    android:textColor="@color/a397"
+                    android:textSize="@dimen/text_size_16" />
 
                 <TextView
                     android:id="@+id/tv_qiuzhi"
@@ -53,7 +54,8 @@
                     android:paddingRight="@dimen/padding_10"
                     android:paddingBottom="@dimen/dp_5"
                     android:text="求职"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -81,8 +83,10 @@
                     android:drawableRight="@mipmap/ic_point1"
                     android:drawablePadding="@dimen/padding_10"
                     android:gravity="center"
+                    android:singleLine="true"
                     android:text="全国"
-                    android:textColor="@color/acc3" />
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
             </LinearLayout>
 
             <LinearLayout
@@ -98,8 +102,10 @@
                     android:drawableRight="@mipmap/ic_point1"
                     android:drawablePadding="@dimen/padding_10"
                     android:gravity="center"
+                    android:singleLine="true"
                     android:text="工作岗位"
-                    android:textColor="@color/acc3" />
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
             </LinearLayout>
 
             <LinearLayout
@@ -115,8 +121,10 @@
                     android:drawableRight="@mipmap/ic_point1"
                     android:drawablePadding="@dimen/padding_10"
                     android:gravity="center"
+                    android:singleLine="true"
                     android:text="薪资水平"
-                    android:textColor="@color/acc3" />
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
             </LinearLayout>
 
             <LinearLayout
@@ -132,8 +140,10 @@
                     android:drawableRight="@mipmap/ic_point1"
                     android:drawablePadding="@dimen/padding_10"
                     android:gravity="center"
+                    android:singleLine="true"
                     android:text="经验要求"
-                    android:textColor="@color/acc3" />
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
             </LinearLayout>
         </LinearLayout>
 
@@ -141,8 +151,8 @@
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/padding_10"
-            android:layout_below="@+id/ll_select"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+            android:layout_below="@+id/ll_select"
+            android:layout_marginTop="@dimen/padding_10"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
 
         <LinearLayout
             android:id="@+id/ll_xiala"
@@ -152,25 +162,6 @@
             android:background="#77000000"
             android:orientation="vertical"
             android:visibility="gone">
-
-            <!--<LinearLayout-->
-                <!--android:id="@+id/ll_location"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@color/white"-->
-                <!--android:orientation="vertical"-->
-                <!--android:paddingTop="@dimen/dp_5"-->
-                <!--android:paddingBottom="@dimen/padding_15"-->
-                <!--android:visibility="gone">-->
-
-                <!--<android.support.v7.widget.RecyclerView-->
-                    <!--android:id="@+id/rl_location"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginTop="@dimen/dp_5"-->
-                    <!--android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>-->
-
-            <!--</LinearLayout>-->
 
             <LinearLayout
                 android:id="@+id/ll_gangwei"
@@ -220,118 +211,137 @@
                 android:paddingBottom="@dimen/padding_15"
                 android:visibility="gone">
 
-                <LinearLayout
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rl_xinzi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
 
-                    <TextView
-                        android:id="@+id/tv_1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/padding_10"
-                        android:layout_marginRight="@dimen/padding_10"
-                        android:layout_weight="1"
-                        android:background="@drawable/edit_bg_397"
-                        android:gravity="center"
-                        android:paddingTop="@dimen/dp_5"
-                        android:paddingBottom="@dimen/dp_5"
-                        android:text="按月新查看"
-                        android:textColor="@color/acc3"
-                        android:textSize="@dimen/text_size_18" />
-
-                    <TextView
-                        android:id="@+id/tv_2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/padding_10"
-                        android:layout_marginRight="@dimen/padding_10"
-                        android:layout_weight="1"
-                        android:background="@drawable/et_border"
-                        android:gravity="center"
-                        android:paddingTop="@dimen/dp_5"
-                        android:paddingBottom="@dimen/dp_5"
-                        android:text="按日新查看"
-                        android:textColor="@color/acc3"
-                        android:textSize="@dimen/text_size_18" />
-
-                    <TextView
-                        android:id="@+id/tv_3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/padding_10"
-                        android:layout_marginRight="@dimen/padding_10"
-                        android:layout_weight="1"
-                        android:background="@drawable/et_border"
-                        android:gravity="center"
-                        android:paddingTop="@dimen/dp_5"
-                        android:paddingBottom="@dimen/dp_5"
-                        android:text="薪资面议"
-                        android:textColor="@color/acc3"
-                        android:textSize="@dimen/text_size_18" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_total"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/padding_15"
-                    android:gravity="center"
-                    android:text="0-8000元"
-                    android:textColor="@color/a397"
-                    android:textSize="@dimen/text_size_18" />
-
-                <SeekBar
-                    android:id="@+id/seekbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:height="@dimen/dp_3"
-                    android:max="100"
-                    android:secondaryProgress="0"
-                    android:progress="20"
-                    android:progressDrawable="@drawable/seekbar_bg"
-                    android:thumb="@drawable/seekbar_thumb" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/padding_15"
-                    android:paddingRight="@dimen/padding_15">
-
-                    <TextView
-                        android:id="@+id/tv_start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_5"
-                        android:text="￥0"
-                        android:textColor="@color/acc9"
-                        android:textSize="@dimen/text_size_12" />
-
-                    <TextView
-                        android:id="@+id/tv_end"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="@dimen/dp_5"
-                        android:text="1万+"
-                        android:textColor="@color/acc9"
-                        android:textSize="@dimen/text_size_12" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/tv_confirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/padding_15"
-                    android:layout_marginTop="@dimen/padding_10"
-                    android:layout_marginRight="@dimen/padding_15"
-                    android:background="@drawable/button_c397"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/padding_10"
-                    android:paddingBottom="@dimen/padding_10"
-                    android:text="确 定"
-                    android:textColor="@color/white" />
             </LinearLayout>
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/ll_xinzi"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@color/white"-->
+            <!--android:orientation="vertical"-->
+            <!--android:paddingTop="@dimen/dp_5"-->
+            <!--android:paddingBottom="@dimen/padding_15"-->
+            <!--android:visibility="gone">-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/padding_10"-->
+            <!--android:layout_marginRight="@dimen/padding_10"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/edit_bg_397"-->
+            <!--android:gravity="center"-->
+            <!--android:paddingTop="@dimen/dp_5"-->
+            <!--android:paddingBottom="@dimen/dp_5"-->
+            <!--android:text="按月新查看"-->
+            <!--android:textColor="@color/acc3"-->
+            <!--android:textSize="@dimen/text_size_18" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_2"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/padding_10"-->
+            <!--android:layout_marginRight="@dimen/padding_10"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/et_border"-->
+            <!--android:gravity="center"-->
+            <!--android:paddingTop="@dimen/dp_5"-->
+            <!--android:paddingBottom="@dimen/dp_5"-->
+            <!--android:text="按日新查看"-->
+            <!--android:textColor="@color/acc3"-->
+            <!--android:textSize="@dimen/text_size_18" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_3"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/padding_10"-->
+            <!--android:layout_marginRight="@dimen/padding_10"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/et_border"-->
+            <!--android:gravity="center"-->
+            <!--android:paddingTop="@dimen/dp_5"-->
+            <!--android:paddingBottom="@dimen/dp_5"-->
+            <!--android:text="薪资面议"-->
+            <!--android:textColor="@color/acc3"-->
+            <!--android:textSize="@dimen/text_size_18" />-->
+            <!--</LinearLayout>-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_total"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/padding_15"-->
+            <!--android:gravity="center"-->
+            <!--android:text="0-8000元"-->
+            <!--android:textColor="@color/a397"-->
+            <!--android:textSize="@dimen/text_size_18" />-->
+
+            <!--<SeekBar-->
+            <!--android:id="@+id/seekbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:height="@dimen/dp_3"-->
+            <!--android:max="100"-->
+            <!--android:secondaryProgress="0"-->
+            <!--android:progress="20"-->
+            <!--android:progressDrawable="@drawable/seekbar_bg"-->
+            <!--android:thumb="@drawable/seekbar_thumb" />-->
+
+            <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingLeft="@dimen/padding_15"-->
+            <!--android:paddingRight="@dimen/padding_15">-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_start"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/dp_5"-->
+            <!--android:text="￥0"-->
+            <!--android:textColor="@color/acc9"-->
+            <!--android:textSize="@dimen/text_size_12" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_end"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginTop="@dimen/dp_5"-->
+            <!--android:text="1万+"-->
+            <!--android:textColor="@color/acc9"-->
+            <!--android:textSize="@dimen/text_size_12" />-->
+            <!--</RelativeLayout>-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_confirm"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/padding_15"-->
+            <!--android:layout_marginTop="@dimen/padding_10"-->
+            <!--android:layout_marginRight="@dimen/padding_15"-->
+            <!--android:background="@drawable/button_c397"-->
+            <!--android:gravity="center"-->
+            <!--android:paddingTop="@dimen/padding_10"-->
+            <!--android:paddingBottom="@dimen/padding_10"-->
+            <!--android:text="确 定"-->
+            <!--android:textColor="@color/white" />-->
+            <!--</LinearLayout>-->
 
             <LinearLayout
                 android:id="@+id/ll_area"

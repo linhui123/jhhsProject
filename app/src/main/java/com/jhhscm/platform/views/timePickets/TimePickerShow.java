@@ -53,8 +53,6 @@ public class TimePickerShow {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int min = calendar.get(Calendar.MINUTE);
-//		int second = calendar.get(Calendar.SECOND);
-
         wheelMain.setEND_YEAR(2888);// 设置最大年份
         wheelMain.setSTART_YEAR(year);
         wheelMain.initDateTimePicker(year, month, day, hour, min, -1);
@@ -76,9 +74,6 @@ public class TimePickerShow {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        // int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        // int min = calendar.get(Calendar.MINUTE);
-        // int second = calendar.get(Calendar.SECOND);
         wheelMain.setEND_YEAR(2088);
         // 若为空显示当前时间
         if (dateStr != null && !dateStr.equals("")) {
@@ -99,6 +94,9 @@ public class TimePickerShow {
         return timepickerview;
     }
 
+    /**
+     * type=1精确到分；type=2精确到日
+     */
     public View timePickerView(String dateStr, int type) {
         View timepickerview = View.inflate(context, R.layout.item_timepickers, null);
         wheelMain = new WheelMain(timepickerview);
@@ -109,7 +107,6 @@ public class TimePickerShow {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int min = calendar.get(Calendar.MINUTE);
-        // int second = calendar.get(Calendar.SECOND);
         wheelMain.setEND_YEAR(2088);
         // 若为空显示当前时间
         if (dateStr != null && !dateStr.equals("")) {
@@ -161,13 +158,15 @@ public class TimePickerShow {
         dialog.setPositiveButton("完成", new OnClickListener() {
             @Override
             public void onClick(View v) {
-//				textView.setText(getTxtTime("-", "-", "", "", "", ""));
                 timePickerListener.onClicklistener(getTxtTime("-", "-", "", "", "", ""));
             }
         });
         dialog.show();
     }
 
+    /**
+     * type=1精确到分；type=2精确到月
+     */
     public void timePickerAlertDialog(final String textView, final int type) {
         TimePicketAlertDialog dialog = new TimePicketAlertDialog(context);
         dialog.builder();
@@ -182,11 +181,10 @@ public class TimePickerShow {
         dialog.setPositiveButton("完成", new OnClickListener() {
             @Override
             public void onClick(View v) {
-//				textView.setText(getTxtTime("-", "-", "", "", "", ""));
                 if (type == 1) {
                     timePickerListener.onClicklistener(getTxtTime("-", "-", " ", ":", "", ""));
                 } else if (type == 2) {
-                    timePickerListener.onClicklistener(getTxtTime(".", "", "", "", "", ""));
+                    timePickerListener.onClicklistener(getTxtTime("-", "", "", "", "", ""));
                 }
             }
         });

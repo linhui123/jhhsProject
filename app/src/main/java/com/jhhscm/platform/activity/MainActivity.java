@@ -20,11 +20,8 @@ import com.jhhscm.platform.activity.base.AbsActivity;
 import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.fragment.FinancialFragment;
 import com.jhhscm.platform.fragment.Mechanics.MechanicsFragment;
-import com.jhhscm.platform.fragment.Mechanics.PeiJianFragment;
-import com.jhhscm.platform.fragment.MsgFragment;
 import com.jhhscm.platform.fragment.home.HomePageFragment;
 import com.jhhscm.platform.fragment.my.MyFragment;
-import com.jhhscm.platform.fragment.sale.SaleMachineFragment;
 import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.permission.YXPermission;
 import com.jhhscm.platform.tool.EventBusUtil;
@@ -275,14 +272,17 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         if (event.getType() != null) {
             if ("HOME_PAGE".equals(event.getType())) {//首页
                 onCheckedChanged(mDataBinding.rgOper, R.id.rd_analysis);
+                mDataBinding.rdAnalysis.setChecked(true);
             } else if ("MECHANICAL".equals(event.getType())) {//机械
                 onCheckedChanged(mDataBinding.rgOper, R.id.rd_educationadmin);
+                mDataBinding.rdEducationadmin.setChecked(true);
             } else if ("PARTS".equals(event.getType())) {//配件
                 PeiJianActivity.start(MainActivity.this);
             } else if ("AFTER_SALE".equals(event.getType())) {//售后
                 ToastUtils.show(MainActivity.this, "该功能正在建设中");
             } else if ("GOLD".equals(event.getType())) {//金服
                 onCheckedChanged(mDataBinding.rgOper, R.id.rd_finance);
+                mDataBinding.rdFinance.setChecked(true);
             } else if ("STEWARD".equals(event.getType())) {//管家
                 ToastUtils.show(MainActivity.this, "该功能正在建设中");
             } else if ("RENT".equals(event.getType())) {//租赁

@@ -47,7 +47,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme.TranslucentStatusBar">
-        <activity android:name=".activity.PushOldMechanicsActivity"></activity>
+        <activity android:name=".activity.MsgDetailActivity"></activity>
+        <activity android:name=".activity.MsgActivity" />
+        <activity android:name=".activity.PushOldMechanicsActivity" />
         <activity android:name=".activity.MyMechanicsActivity" />
         <activity android:name=".activity.MyCollectionActivity" />
         <activity android:name=".activity.MyLabourActivity" />

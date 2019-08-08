@@ -23,6 +23,7 @@
                 android:paddingBottom="@dimen/dp_5"
                 android:text="选择地区>"
                 android:textColor="@color/white"
+                android:textSize="@dimen/text_size_16"
                 android:visibility="gone" />
 
             <LinearLayout
@@ -43,7 +44,8 @@
                     android:paddingRight="@dimen/padding_10"
                     android:paddingBottom="@dimen/dp_5"
                     android:text="  新机  "
-                    android:textColor="@color/a397" />
+                    android:textColor="@color/a397"
+                    android:textSize="@dimen/text_size_16" />
 
                 <TextView
                     android:id="@+id/tv_old"
@@ -55,7 +57,8 @@
                     android:paddingRight="@dimen/padding_10"
                     android:paddingBottom="@dimen/dp_5"
                     android:text="二手机"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
             </LinearLayout>
 
             <ImageView

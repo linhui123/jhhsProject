@@ -18,12 +18,15 @@ import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentNewMechanicsBinding;
 import com.jhhscm.platform.databinding.FragmentOldMechanicsBinding;
 import com.jhhscm.platform.event.GetRegionEvent;
+import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetComboBoxAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetGoodsPageListAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetOldPageListAction;
+import com.jhhscm.platform.fragment.Mechanics.adapter.BrandAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.JXDropAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.SXDropAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.SelectedAdapter;
+import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetOldPageListBean;
@@ -69,7 +72,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
     private String fix_p_3 = "";//动力
     private String fix_p_2 = "";//铲斗
     private String fix_p_1 = "";//吨位
-
+    private String brand_id = "";
     String pID = "";
     String cID = "";
     public static OldMechanicsFragment instance() {
@@ -217,6 +220,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
             map.put("merchant_id", merchant_id);
             map.put("fix_p_3", fix_p_3);
             map.put("fix_p_2", fix_p_2);
+            map.put("brand_id", brand_id);
             map.put("fix_p_1", fix_p_1);
             map.put("page", mCurrentPage + "");
             map.put("limit", mShowCount + "");
@@ -276,6 +280,33 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
     }
 
     /**
+     * 初始化下拉
+     */
+    private void initDrop() {
+        /**
+         * goods_type	    否		机型
+         * goods_factory	否		商品厂商
+         * goods_power  	是		动力
+         * goods_shovel	    否		铲斗
+         * goods_ton	    是		吨位
+         * old_sort     	是		二手机排序
+         */
+
+        getComboBox("goods_type");
+        getComboBox("old_sort");
+        getComboBox("goods_power");
+        getComboBox("goods_shovel");
+        getComboBox("goods_ton");
+        findBrand();
+        mDataBinding.tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initSelected();
+            }
+        });
+    }
+
+    /**
      * 获取下拉框
      */
     private void getComboBox(final String name) {
@@ -320,30 +351,41 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
     }
 
     /**
-     * 初始化下拉
+     * 获取品牌列表 findBrand
      */
-    private void initDrop() {
-        /**
-         * goods_type	    否		机型
-         * goods_factory	否		商品厂商
-         * goods_power  	是		动力
-         * goods_shovel	    否		铲斗
-         * goods_ton	    是		吨位
-         * old_sort     	是		二手机排序
-         */
-
-        getComboBox("goods_type");
-        getComboBox("old_sort");
-        getComboBox("goods_power");
-        getComboBox("goods_shovel");
-        getComboBox("goods_ton");
-
-        mDataBinding.tvConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initSelected();
-            }
-        });
+    private void findBrand() {
+        if (getContext() != null) {
+            Map<String, String> map = new TreeMap<String, String>();
+            map.put("brand_type", "1");
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = Sign.getSignKey(getActivity(), map, "findBrand");
+            NetBean netBean = new NetBean();
+            netBean.setToken("");
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(FindBrandAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<FindBrandBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<FindBrandBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                        pinpai(response.body().getData());
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
     }
 
     private void initSelected() {
@@ -400,8 +442,20 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
     /**
      * 下拉品牌
      */
-    private void pinpai(GetComboBoxBean getComboBoxBean) {
-
+    private void pinpai(FindBrandBean findBrandBean) {
+        mDataBinding.rlPinpai.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        BrandAdapter bAdapter = new BrandAdapter(findBrandBean.getResult(), getContext());
+        mDataBinding.rlPinpai.setAdapter(bAdapter);
+        bAdapter.setMyListener(new BrandAdapter.ItemListener() {
+            @Override
+            public void onItemClick(FindBrandBean.ResultBean item) {
+                brand_id = item.getId();
+                mDataBinding.tvPinpai.setText(item.getName());
+                mDataBinding.llXiala.setVisibility(View.GONE);
+                closeDrap();
+                mDataBinding.wrvRecycler.autoRefresh();
+            }
+        });
     }
 
     /**

@@ -78,8 +78,10 @@
                     android:drawableRight="@mipmap/ic_point1"
                     android:drawablePadding="@dimen/padding_10"
                     android:gravity="center"
+                    android:singleLine="true"
                     android:text="综合"
-                    android:textColor="@color/acc3" />
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
             </LinearLayout>
 
             <LinearLayout
@@ -95,8 +97,10 @@
                     android:drawableRight="@mipmap/ic_point1"
                     android:drawablePadding="@dimen/padding_10"
                     android:gravity="center"
+                    android:singleLine="true"
                     android:text="全部"
-                    android:textColor="@color/acc3" />
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
             </LinearLayout>
 
             <LinearLayout
@@ -112,8 +116,10 @@
                     android:drawableRight="@mipmap/ic_point1"
                     android:drawablePadding="@dimen/padding_10"
                     android:gravity="center"
+                    android:singleLine="true"
                     android:text="品牌"
-                    android:textColor="@color/acc3" />
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
             </LinearLayout>
         </LinearLayout>
 

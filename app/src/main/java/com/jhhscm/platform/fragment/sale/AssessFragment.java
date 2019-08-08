@@ -222,10 +222,7 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
                 timePickerShow.setOnTimePickerListener(new TimePickerShow.OnTimePickerListener() {
                     @Override
                     public void onClicklistener(String dataTime) {
-                        if (dataTime.length() > 4) {
-                            factory_time = dataTime.substring(0, 4);
-                        }
-
+                        factory_time = dataTime.trim();
                         mDataBinding.tv4.setText(dataTime.trim());
                         judgeButton();
                     }

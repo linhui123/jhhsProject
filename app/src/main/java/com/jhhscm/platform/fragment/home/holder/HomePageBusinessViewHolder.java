@@ -10,6 +10,9 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.google.gson.Gson;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.MainActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
@@ -56,8 +59,9 @@ public class HomePageBusinessViewHolder extends AbsRecyclerViewHolder<HomePageIt
                 @Override
                 public void OnClickItem(int position, DLGridViewBean bean) {
                     AdBean.ResultBean resultBean = (AdBean.ResultBean) bean.getObject();
-
-                    jump(resultBean.getTYPE());
+                    Gson gson = new Gson();
+                    AdBean.DataBean findOrderBean = gson.fromJson(resultBean.getContent(), AdBean.DataBean.class);
+                    jump(findOrderBean.getTYPE());
                 }
 
                 @Override

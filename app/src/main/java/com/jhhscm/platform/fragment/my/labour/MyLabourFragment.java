@@ -172,6 +172,7 @@ public class MyLabourFragment extends AbsFragment<FragmentMyLabourBinding> {
      * 查询个人劳务列表
      */
     private void findLabourList(final boolean refresh, final String type) {
+        mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
         Map<String, Object> map = new TreeMap<String, Object>();
         map.put("user_code", userSession.getUserCode());
         map.put("type", type);

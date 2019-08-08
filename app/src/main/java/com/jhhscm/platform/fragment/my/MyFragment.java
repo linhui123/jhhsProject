@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.LoginActivity;
+import com.jhhscm.platform.activity.MsgActivity;
 import com.jhhscm.platform.activity.MyCollectionActivity;
 import com.jhhscm.platform.activity.MyLabourActivity;
 import com.jhhscm.platform.activity.MyMechanicsActivity;
@@ -55,14 +56,21 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
-        LinearLayout.LayoutParams llParams = (LinearLayout.LayoutParams) mDataBinding.title.getLayoutParams();
+        LinearLayout.LayoutParams llParams = (LinearLayout.LayoutParams) mDataBinding.rlTop.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
-        mDataBinding.title.setLayoutParams(llParams);
+        mDataBinding.rlTop.setLayoutParams(llParams);
 
         mDataBinding.tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startNewActivity(LoginActivity.class);
+            }
+        });
+
+        mDataBinding.msgImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MsgActivity.start(getActivity());
             }
         });
 

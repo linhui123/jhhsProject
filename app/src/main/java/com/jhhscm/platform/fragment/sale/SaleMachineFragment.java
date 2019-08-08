@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.PushOldMechanicsActivity;
 import com.jhhscm.platform.databinding.FragmentSaleMachineBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
@@ -78,7 +79,12 @@ public class SaleMachineFragment extends AbsFragment<FragmentSaleMachineBinding>
         mDataBinding.tvFabu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PushOldMechanicsActivity.start(getContext());
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
+                    PushOldMechanicsActivity.start(getContext());
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
             }
         });
     }

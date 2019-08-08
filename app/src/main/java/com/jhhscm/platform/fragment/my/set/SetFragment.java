@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AboutActivity;
 import com.jhhscm.platform.activity.FeedbackActivity;
@@ -16,10 +17,25 @@ import com.jhhscm.platform.databinding.FragmentSetBinding;
 import com.jhhscm.platform.event.LoginOutEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.my.MyFragment;
+import com.jhhscm.platform.http.AHttpService;
+import com.jhhscm.platform.http.HttpHelper;
+import com.jhhscm.platform.http.bean.BaseEntity;
+import com.jhhscm.platform.http.bean.BaseErrorInfo;
+import com.jhhscm.platform.http.bean.NetBean;
+import com.jhhscm.platform.http.bean.ResultBean;
+import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.DataCleanManager;
+import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.ToastUtil;
+import com.jhhscm.platform.tool.ToastUtils;
+
+import java.util.Map;
+import java.util.TreeMap;
+
+import retrofit2.Response;
 
 public class SetFragment extends AbsFragment<FragmentSetBinding> {
 
@@ -73,10 +89,55 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
         mDataBinding.rlOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConfigUtils.removeCurrentUser(getContext());
-                EventBusUtil.post(new LoginOutEvent());
-                getActivity().finish();
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
+                    loginOut();
+                } else {
+                    ToastUtil.show(getContext(), "请先登录");
+                }
             }
         });
+    }
+
+    /**
+     * 意见反馈
+     */
+    private void loginOut() {
+        if (getContext() != null) {
+            Map<String, Object> map = new TreeMap<String, Object>();
+            map.put("mobile", ConfigUtils.getCurrentUser(getContext()).getMobile());
+            map.put("appid", "336abf9e97cd4276bf8aecde9d32ed0a");
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = SignObject.getSignKey(getActivity(), map, "loginOut");
+            NetBean netBean = new NetBean();
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(LoginOutAciton.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                        ToastUtil.show(getContext(), "退出成功");
+                                        ConfigUtils.removeCurrentUser(getContext());
+                                        EventBusUtil.post(new LoginOutEvent());
+                                        getActivity().finish();
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
     }
 }

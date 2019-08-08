@@ -23,14 +23,6 @@
             android:singleLine="true"
             android:text="全部"
             android:textColor="@color/acc3"
-            android:textSize="@dimen/text_size_12" />
-
-        <ImageView
-            android:id="@+id/im_del"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp_5"
-            android:layout_toRightOf="@+id/tv_name"
-            android:src="@mipmap/msg_choose_true" />
+            android:textSize="@dimen/text_size_16" />
     </RelativeLayout>
 </layout>

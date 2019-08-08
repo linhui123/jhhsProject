@@ -22,7 +22,7 @@ import com.jhhscm.platform.aliapi.PayResult;
 import com.jhhscm.platform.bean.PayResultZhiFBean;
 import com.jhhscm.platform.bean.PayReusltBean;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
-import com.jhhscm.platform.network.NetWorks;
+
 import com.jhhscm.platform.tool.JsonUtil;
 import com.jhhscm.platform.tool.Utils;
 import com.jhhscm.platform.wxapi.WXPay;

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_top"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/blue_txt"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingRight="@dimen/padding_15">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/bg_white"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_1">
+
+                <TextView
+                    android:id="@+id/tv_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingLeft="@dimen/padding_10"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingRight="@dimen/padding_10"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:text="活动消息"
+                    android:textColor="@color/a397"
+                    android:textSize="@dimen/text_size_16" />
+
+                <TextView
+                    android:id="@+id/tv_old"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_397_right_ovel"
+                    android:paddingLeft="@dimen/padding_10"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingRight="@dimen/padding_10"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:text="系统消息"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
+            android:id="@+id/rl_activity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_top"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_5"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+
+        <!--<com.jhhscm.platform.views.recyclerview.WrappedRecyclerView-->
+            <!--android:id="@+id/rl_system"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_below="@+id/rl_top"-->
+            <!--android:layout_marginTop="@dimen/dp_5"-->
+            <!--android:layout_marginBottom="@dimen/dp_5"-->
+            <!--android:visibility="gone"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>-->
+
+    </RelativeLayout>
+</layout>

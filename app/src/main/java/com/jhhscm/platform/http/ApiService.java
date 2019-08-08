@@ -10,9 +10,13 @@ import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryDetailBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsByBrandBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsDetailsBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetOldDetailsBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetOldPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
+import com.jhhscm.platform.fragment.Mechanics.push.OldMechanicsUpImageBean;
+import com.jhhscm.platform.fragment.Mechanics.push.UploadInvalidOrderImgEntity;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
@@ -20,6 +24,7 @@ import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseDetailBean;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
 import com.jhhscm.platform.fragment.labour.FindLabourWorkListBean;
+import com.jhhscm.platform.fragment.msg.GetPushListBean;
 import com.jhhscm.platform.fragment.my.collect.FindCollectListBean;
 import com.jhhscm.platform.fragment.my.labour.FindLabourListBean;
 import com.jhhscm.platform.fragment.my.mechanics.FindOldGoodByUserCodeBean;
@@ -33,12 +38,17 @@ import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.bean.SaveBean;
 import com.jhhscm.platform.http.bean.UserBean;
 
+import java.util.List;
+
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 
 /**
@@ -173,6 +183,21 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(GET_GOODSPAGELIST)
     Call<BaseEntity<GetGoodsPageListBean>> getGoodsPageList(@Body NetBean content);
+
+    //查询新机详情
+    String GET_GOODSDETAILS = "goods/getGoodsDetails";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_GOODSDETAILS)
+    Call<BaseEntity<GetGoodsDetailsBean>> getGoodsDetails(@Body NetBean content);
+
+
+    //查询二手机详情
+    String GET_OLDDETAILS = "goods/getOldDetails";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_OLDDETAILS)
+    Call<BaseEntity<GetOldDetailsBean>> getOldDetails(@Body NetBean content);
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(GET_OLDPAGELIST)
@@ -375,4 +400,38 @@ public interface ApiService {
     @POST(FIND_OLDGOODBYUSERCODE)
     Call<BaseEntity<FindOldGoodByUserCodeBean>> findOldGoodByUserCode(@Body NetBean content);
 
+    //二手机上传图片
+    String UPLOAD_IMAGE_URL = "goods/uploadImg";
+
+    @Multipart
+    @POST(UPLOAD_IMAGE_URL)
+    Call<OldMechanicsUpImageBean> uploadImages(@Part List<MultipartBody.Part> parts);
+
+    //发布二手机
+    String SAVE_OLDGOOD = "goods/saveOldGood";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(SAVE_OLDGOOD)
+    Call<BaseEntity<ResultBean>> saveOldGood(@Body NetBean content);
+
+    //消息列表
+    String GET_PUSHLIST = "push/getPushList";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_PUSHLIST)
+    Call<BaseEntity<GetPushListBean>> getPushList(@Body NetBean content);
+
+    //登出
+    String LOGIN_OUT = "user/loginOut";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(LOGIN_OUT)
+    Call<BaseEntity<ResultBean>> loginOut(@Body NetBean content);
+
+    //意见反馈
+    String SAVE_FEEDBACK = "feedback/save";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(SAVE_FEEDBACK)
+    Call<BaseEntity<ResultBean>> saveFeedBack(@Body NetBean content);
 }

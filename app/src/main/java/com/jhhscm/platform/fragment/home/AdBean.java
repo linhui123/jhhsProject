@@ -68,4 +68,16 @@ public class AdBean {
             this.content = content;
         }
     }
+
+    public static class DataBean{
+        private String  TYPE;
+
+        public String getTYPE() {
+            return TYPE;
+        }
+
+        public void setTYPE(String TYPE) {
+            this.TYPE = TYPE;
+        }
+    }
 }

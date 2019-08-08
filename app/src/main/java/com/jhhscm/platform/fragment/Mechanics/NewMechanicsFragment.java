@@ -17,11 +17,14 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentMechanicsBinding;
 import com.jhhscm.platform.databinding.FragmentNewMechanicsBinding;
+import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetComboBoxAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetGoodsPageListAction;
+import com.jhhscm.platform.fragment.Mechanics.adapter.BrandAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.JXDropAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.SXDropAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.SelectedAdapter;
+import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.holder.NewMechanicsViewHolder;
@@ -63,6 +66,7 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
     private String fix_p_3 = "";//动力
     private String fix_p_2 = "";//铲斗
     private String fix_p_1 = "";//吨位
+    private String brand_id = "";
 
     public static NewMechanicsFragment instance() {
         NewMechanicsFragment view = new NewMechanicsFragment();
@@ -184,14 +188,16 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
             map.put("keyword", "");
             map.put("fix_p_9", fix_p_9);
             map.put("merchant_id", merchant_id);
+            map.put("merchant_id", merchant_id);
             map.put("fix_p_3", fix_p_3);
             map.put("fix_p_2", fix_p_2);
             map.put("fix_p_1", fix_p_1);
+            map.put("brand_id", brand_id);
             map.put("page", mCurrentPage + "");
             map.put("limit", mShowCount + "");
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
-            String sign = Sign.getSignKey(getActivity(), map,"getGoodsPageList");
+            String sign = Sign.getSignKey(getActivity(), map, "getGoodsPageList");
             NetBean netBean = new NetBean();
             netBean.setToken("");
             netBean.setSign(sign);
@@ -245,6 +251,34 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
     }
 
     /**
+     * 初始化下拉
+     */
+    private void initDrop() {
+        /**
+         * goods_type	    否		机型
+         * goods_factory	否		商品厂商
+         * goods_power  	是		动力
+         * goods_shovel	    否		铲斗
+         * goods_ton	    是		吨位
+         * old_sort     	是		二手机排序
+         */
+
+        getComboBox("goods_type");
+        getComboBox("goods_factory");
+        getComboBox("goods_power");
+        getComboBox("goods_shovel");
+        getComboBox("goods_ton");
+        findBrand();
+        mDataBinding.tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initSelected();
+            }
+        });
+    }
+
+
+    /**
      * 获取下拉框
      */
     private void getComboBox(final String name) {
@@ -288,31 +322,43 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
                 }));
     }
 
+
     /**
-     * 初始化下拉
+     * 获取品牌列表 findBrand
      */
-    private void initDrop() {
-        /**
-         * goods_type	    否		机型
-         * goods_factory	否		商品厂商
-         * goods_power  	是		动力
-         * goods_shovel	    否		铲斗
-         * goods_ton	    是		吨位
-         * old_sort     	是		二手机排序
-         */
-
-        getComboBox("goods_type");
-        getComboBox("goods_factory");
-        getComboBox("goods_power");
-        getComboBox("goods_shovel");
-        getComboBox("goods_ton");
-
-        mDataBinding.tvConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initSelected();
-            }
-        });
+    private void findBrand() {
+        if (getContext() != null) {
+            Map<String, String> map = new TreeMap<String, String>();
+            map.put("brand_type", "1");
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = Sign.getSignKey(getActivity(), map, "findBrand");
+            NetBean netBean = new NetBean();
+            netBean.setToken("");
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(FindBrandAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<FindBrandBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<FindBrandBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                       pinpai(response.body().getData());
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
     }
 
     private void initSelected() {
@@ -337,15 +383,6 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
         JXAdapter.setMyListener(new JXDropAdapter.ItemListener() {
             @Override
             public void onItemClick(GetComboBoxBean.ResultBean item) {
-//                if (resultBeanList.size() > 0) {
-//                    for (GetComboBoxBean.ResultBean r : getComboBoxBean.getResult()) {
-//                        if (resultBeanList.contains(r)) {
-//                            resultBeanList.remove(r);
-//                        }
-//                    }
-//                }
-//                resultBeanList.add(item);
-//                initSelected();
                 fix_p_9 = item.getId();
                 mDataBinding.tvJixing.setText(item.getKey_value());
                 mDataBinding.llXiala.setVisibility(View.GONE);
@@ -365,15 +402,6 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
         JXAdapter.setMyListener(new JXDropAdapter.ItemListener() {
             @Override
             public void onItemClick(GetComboBoxBean.ResultBean item) {
-//                if (resultBeanList.size() > 0) {
-//                    for (GetComboBoxBean.ResultBean r : getComboBoxBean.getResult()) {
-//                        if (resultBeanList.contains(r)) {
-//                            resultBeanList.remove(r);
-//                        }
-//                    }
-//                }
-//                resultBeanList.add(item);
-//                initSelected();
                 merchant_id = item.getId();
                 mDataBinding.tvChanshang.setText(item.getKey_value());
                 mDataBinding.llXiala.setVisibility(View.GONE);
@@ -386,8 +414,20 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
     /**
      * 下拉品牌
      */
-    private void pinpai(GetComboBoxBean getComboBoxBean) {
-
+    private void pinpai(FindBrandBean findBrandBean) {
+        mDataBinding.rlPinpai.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        BrandAdapter bAdapter = new BrandAdapter(findBrandBean.getResult(), getContext());
+        mDataBinding.rlPinpai.setAdapter(bAdapter);
+        bAdapter.setMyListener(new BrandAdapter.ItemListener() {
+            @Override
+            public void onItemClick(FindBrandBean.ResultBean item) {
+                brand_id = item.getId();
+                mDataBinding.tvPinpai.setText(item.getName());
+                mDataBinding.llXiala.setVisibility(View.GONE);
+                closeDrap();
+                mDataBinding.wrvRecycler.autoRefresh();
+            }
+        });
     }
 
     /**

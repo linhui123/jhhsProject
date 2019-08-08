@@ -29,8 +29,10 @@
                     android:drawableRight="@mipmap/ic_point1"
                     android:drawablePadding="@dimen/padding_10"
                     android:gravity="center"
+                    android:singleLine="true"
                     android:text="机型"
-                    android:textColor="@color/acc3" />
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
             </LinearLayout>
 
             <LinearLayout
@@ -46,8 +48,10 @@
                     android:drawableRight="@mipmap/ic_point1"
                     android:drawablePadding="@dimen/padding_10"
                     android:gravity="center"
+                    android:singleLine="true"
                     android:text="产商"
-                    android:textColor="@color/acc3" />
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
             </LinearLayout>
 
             <LinearLayout
@@ -63,8 +67,10 @@
                     android:drawableRight="@mipmap/ic_point1"
                     android:drawablePadding="@dimen/padding_10"
                     android:gravity="center"
+                    android:singleLine="true"
                     android:text="品牌"
-                    android:textColor="@color/acc3" />
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
             </LinearLayout>
 
             <LinearLayout
@@ -80,8 +86,10 @@
                     android:drawableRight="@mipmap/ic_point1"
                     android:drawablePadding="@dimen/padding_10"
                     android:gravity="center"
+                    android:singleLine="true"
                     android:text="筛选"
-                    android:textColor="@color/acc3" />
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
             </LinearLayout>
         </LinearLayout>
 
@@ -234,6 +242,7 @@
                     android:paddingTop="@dimen/dp_5"
                     android:paddingBottom="@dimen/dp_5"
                     android:text="确定"
+                    android:textSize="@dimen/text_size_16"
                     android:textColor="@color/white" />
             </LinearLayout>
 

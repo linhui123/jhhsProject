@@ -30,7 +30,9 @@ public class HomePageADViewHolder extends AbsRecyclerViewHolder<HomePageItem> {
                 list.add(adBean.getUrl());
             }
 //        list.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic1xjab4j30ci08cjrv.jpg");
-            ImageLoader.getInstance().displayImage(list.get(0), mBinding.ivReport);
+            if (list.size()>0){
+                ImageLoader.getInstance().displayImage(list.get(0), mBinding.ivReport);
+            }
 
             mBinding.ivReport.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
 import com.google.gson.Gson;
+import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsActivity;
 import com.jhhscm.platform.bean.LogingResultBean;
@@ -56,8 +58,14 @@ import com.jhhscm.platform.views.YXProgressDialog;
 import com.jhhscm.platform.views.dialog.ShareDialog;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,7 +86,7 @@ public class H5PeiJianActivity extends AbsActivity {
     private String picUrl;
     private int type = 0;
     private String count = "1";
-
+    private String url;
     private String SHARE_URL = "";
     private String TITLE = "";
     private String CONTENT = "";
@@ -115,7 +123,7 @@ public class H5PeiJianActivity extends AbsActivity {
         setupButtom();
         checkDeviceHasNavigationBar(H5PeiJianActivity.this);
         webview = (BridgeWebView) findViewById(R.id.webview);
-
+        url = getIntent().getStringExtra("url");
         //加载动画
         final AnimationDrawable animationDrawable = (AnimationDrawable) mDataBinding.webLoadAnim.getBackground();
 
@@ -134,7 +142,7 @@ public class H5PeiJianActivity extends AbsActivity {
                 public void handler(String data, CallBackFunction function) {
                     Gson gson = new Gson();
                     ResultBean resultBean = gson.fromJson(data, ResultBean.class);
-                    count = resultBean.getCount()+"";
+                    count = resultBean.getCount() + "";
                     Log.e("registerHandler", "data " + resultBean.getCount());
                 }
             });
@@ -154,7 +162,7 @@ public class H5PeiJianActivity extends AbsActivity {
                     super.onPageStarted(view, url, favicon);
                     mDataBinding.webLoadAnim.setVisibility(View.VISIBLE);
                     //判断是否在运行
-                    if(!animationDrawable.isRunning()){
+                    if (!animationDrawable.isRunning()) {
                         //开启帧动画
                         animationDrawable.start();
                     }
@@ -185,7 +193,6 @@ public class H5PeiJianActivity extends AbsActivity {
             picUrl = getIntent().getStringExtra("pic_url");
         }
         findCategoryDetailBean = new FindCategoryDetailBean();
-        findCategoryDetail(goodCode, false);
 
         //判断是否收藏
         if (userSession != null
@@ -225,11 +232,9 @@ public class H5PeiJianActivity extends AbsActivity {
                         && userSession.getUserCode() != null
                         && userSession.getToken() != null) {
                     if (picUrl != null && picUrl.length() > 0) {
-                        if (findCategoryDetailBean != null) {
-                            addGoodsToCarts(userSession.getUserCode(), picUrl, findCategoryDetailBean, userSession.getToken());
-                        } else {
-                            findCategoryDetail(goodCode, true);
-                        }
+
+                        findCategoryDetail(goodCode, false);
+
                     }
                 } else {
                     startNewActivity(LoginActivity.class);
@@ -293,25 +298,100 @@ public class H5PeiJianActivity extends AbsActivity {
      * 分享
      */
     public void showShare() {
+        if (findCategoryDetailBean != null && findCategoryDetailBean.getData() != null) {
+            if (findCategoryDetailBean.getData().getPic_gallery_url_list() != null
+                    && findCategoryDetailBean.getData().getPic_gallery_url_list().size() > 0) {
+                IMG_URL = findCategoryDetailBean.getData().getPic_gallery_url_list().get(0);
+            }
+            TITLE = findCategoryDetailBean.getData().getName();
+            CONTENT = findCategoryDetailBean.getData().getWord_detail();
+        } else {
+            IMG_URL = "";
+            TITLE = "挖矿来";
+            CONTENT = "挖矿来";
+        }
+        Log.e("ShareDialog", "IMG_URL " + IMG_URL);
         new ShareDialog(H5PeiJianActivity.this, new ShareDialog.CallbackListener() {
             @Override
             public void wechat() {
                 YXProgressDialog dialog = new YXProgressDialog(H5PeiJianActivity.this, "请稍后");
-                ShareUtils.shareUrl(H5PeiJianActivity.this, SHARE_URL,
-                        TITLE, CONTENT, SHARE_MEDIA.WEIXIN,
-                        ShareUtils.getShareListener(H5PeiJianActivity.this), IMG_URL);
-//                HttpUtils.shareCommonContent(H5Activity.this, hospId, "13");
+                shareUrlToWx(url, TITLE, CONTENT, IMG_URL, 0);
             }
 
             @Override
             public void friends() {
-//                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
-//                ShareUtils.shareUrl(getContext(), SHARE_URL,
-//                        TITLE, CONTENT, SHARE_MEDIA.WEIXIN_CIRCLE,
-//                        ShareUtils.getShareListener(getContext()), IMG_URL);
-//                HttpUtils.shareCommonContent(getContext(), hospId, "13");
+                YXProgressDialog dialog = new YXProgressDialog(H5PeiJianActivity.this, "请稍后");
+                shareUrlToWx(url, TITLE, CONTENT, IMG_URL, 1);
             }
         }).show();
+    }
+
+    /**
+     * 分享url地址
+     *
+     * @param url   地址
+     * @param title 标题
+     * @param desc  描述
+     */
+    public void shareUrlToWx(final String url, final String title, final String desc, final String iconUrl, final int flag) {
+        if (((MyApplication) getApplicationContext()).getApi() != null && !((MyApplication) getApplicationContext()).getApi().isWXAppInstalled()) {
+            ToastUtil.show(getApplicationContext(), "您还未安装微信客户端,无法使用该功能！");
+            return;
+        }
+        if (iconUrl != null && iconUrl.length() > 0) {
+            ImageLoader.getInstance().loadImage(iconUrl, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    super.onLoadingComplete(imageUri, view, loadedImage);
+                    WXWebpageObject webpage = new WXWebpageObject();
+                    webpage.webpageUrl = url;
+                    WXMediaMessage msg = new WXMediaMessage(webpage);
+                    msg.title = title;
+                    msg.description = desc;
+                    //这里替换一张自己工程里的图片资源
+                    msg.thumbData = bmpToByteArray(loadedImage, 32);
+                    SendMessageToWX.Req req = new SendMessageToWX.Req();
+                    req.transaction = String.valueOf(System.currentTimeMillis());
+                    req.message = msg;
+                    req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+                    ((MyApplication) getApplicationContext()).getApi().sendReq(req);
+                }
+            });
+        } else {
+            WXWebpageObject webpage = new WXWebpageObject();
+            webpage.webpageUrl = url;
+            WXMediaMessage msg = new WXMediaMessage(webpage);
+            msg.title = title;
+            msg.description = desc;
+            //这里替换一张自己工程里的图片资源
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+            msg.setThumbImage(bitmap);
+            SendMessageToWX.Req req = new SendMessageToWX.Req();
+            req.transaction = String.valueOf(System.currentTimeMillis());
+            req.message = msg;
+            req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+            ((MyApplication) getApplicationContext()).getApi().sendReq(req);
+        }
+
+    }
+
+    /**
+     * Bitmap转换成byte[]并且进行压缩,压缩到不大于maxkb
+     *
+     * @param bitmap
+     * @param maxKb
+     * @return
+     */
+    public static byte[] bmpToByteArray(Bitmap bitmap, int maxKb) {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+        int options = 100;
+        while (output.toByteArray().length > maxKb && options != 10) {
+            output.reset(); //清空output
+            bitmap.compress(Bitmap.CompressFormat.JPEG, options, output);//这里压缩options%，把压缩后的数据存放到output中
+            options -= 10;
+        }
+        return output.toByteArray();
     }
 
     /**
@@ -469,8 +549,10 @@ public class H5PeiJianActivity extends AbsActivity {
                             new HttpHelper().showError(getApplicationContext(), response.body().getCode(), response.body().getMessage());
                             if (response.body().getCode().equals("200")) {
                                 findCategoryDetailBean = response.body().getData();
-                                if (finish) {
+                                if (findCategoryDetailBean.getData() != null) {
                                     addGoodsToCarts(userSession.getUserCode(), picUrl, findCategoryDetailBean, userSession.getToken());
+                                } else {
+                                    ToastUtils.show(getApplicationContext(), "获取不到该商品信息，请联系管理员");
                                 }
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
@@ -482,6 +564,7 @@ public class H5PeiJianActivity extends AbsActivity {
 
     /**
      * 判断是否存在NavigationBar
+     *
      * @param context：上下文环境
      * @return：返回是否存在(true/false)
      */
@@ -499,7 +582,7 @@ public class H5PeiJianActivity extends AbsActivity {
             if ("1".equals(navBarOverride)) {
                 //不存在虚拟按键
                 hasNavigationBar = false;
-                ToastUtil.show(context,"不存在虚拟按键");
+                ToastUtil.show(context, "不存在虚拟按键");
             } else if ("0".equals(navBarOverride)) {
                 //存在虚拟按键
                 hasNavigationBar = true;
@@ -507,7 +590,7 @@ public class H5PeiJianActivity extends AbsActivity {
                 //linebutton是一个linearlayout,里面包含了两个Button
                 RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) mDataBinding.rlBottom.getLayoutParams();
                 //setMargins：顺序是左、上、右、下
-                layout.setMargins(15,0,15,getNavigationBarHeight(this)+10);
+                layout.setMargins(15, 0, 15, getNavigationBarHeight(this) + 10);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -516,15 +599,15 @@ public class H5PeiJianActivity extends AbsActivity {
     }
 
 
-
     /**
      * 测量底部导航栏的高度
+     *
      * @param mActivity:上下文环境
      * @return：返回测量出的底部导航栏高度
      */
     private int getNavigationBarHeight(Activity mActivity) {
         Resources resources = mActivity.getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height","dimen", "android");
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
         int height = resources.getDimensionPixelSize(resourceId);
         return height;
     }

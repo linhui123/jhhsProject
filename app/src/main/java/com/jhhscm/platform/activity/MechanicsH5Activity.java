@@ -59,11 +59,15 @@ import com.jhhscm.platform.event.WebTitleEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.AddGoodsToCartsAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindCategoryDetailAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindCollectByUserCodeAction;
+import com.jhhscm.platform.fragment.Mechanics.action.GetGoodsDetailsAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetGoodsPageListAction;
+import com.jhhscm.platform.fragment.Mechanics.action.GetOldDetailsAction;
 import com.jhhscm.platform.fragment.Mechanics.action.SaveAction;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryDetailBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsDetailsBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetOldDetailsBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.http.AHttpService;
@@ -110,14 +114,15 @@ import retrofit2.Response;
 import rx.exceptions.OnErrorFailedException;
 
 /**
- * 新机、二手机、配件详情H5页面
+ * 新机、二手机、H5页面
  */
 public class MechanicsH5Activity extends AbsActivity {
     protected AbsFragment mFragment;
     protected ActivityMechanicsH5Binding mDataBinding;
     private UserSession userSession;
 
-    private FindCategoryBean findCategoryBean;
+    private GetOldDetailsBean getOldDetailsBean;
+    private GetGoodsDetailsBean getGoodsDetailsBean;
     private String goodCode;
     private String picUrl;
     private String url;
@@ -199,10 +204,12 @@ public class MechanicsH5Activity extends AbsActivity {
 
         Log.e("H5", "type " + type);
         if (type == 1) {
+            getGoodsDetails(goodCode);
             mDataBinding.tvShoucang.setVisibility(View.VISIBLE);
             mDataBinding.tvPk.setVisibility(View.VISIBLE);
             mDataBinding.tvDijia.setVisibility(View.VISIBLE);
         } else if (type == 2) {
+            getOldDetails(goodCode);
             mDataBinding.tvShoucang.setVisibility(View.VISIBLE);
             mDataBinding.tvXujia.setVisibility(View.VISIBLE);
         } else if (type == 3) {
@@ -353,19 +360,38 @@ public class MechanicsH5Activity extends AbsActivity {
      * 分享
      */
     public void showShare() {
-        Log.e("showShare", "url " + url);
-        IMG_URL = "http://img.redocn.com/sheji/20141219/zhongguofengdaodeliyizhanbanzhijing_3744115.jpg";
+        if (type == 1 && getGoodsDetailsBean != null && getGoodsDetailsBean.getResult() != null) {
+            IMG_URL = getGoodsDetailsBean.getResult().getGoodsDetails().getPicSmallUrl();
+            TITLE = getGoodsDetailsBean.getResult().getGoodsDetails().getName();
+            CONTENT = getGoodsDetailsBean.getResult().getGoodsDetails().getWord_detail();
+        } else if (type == 2 && getOldDetailsBean != null && getOldDetailsBean.getResult() != null) {
+            IMG_URL = getOldDetailsBean.getResult().getGoodsDetails().getPicUrl();
+            TITLE = getOldDetailsBean.getResult().getGoodsDetails().getName();
+            CONTENT = getOldDetailsBean.getResult().getGoodsDetails().getWord_detail();
+        } else if (type == 3 && findCategoryDetailBean != null && findCategoryDetailBean.getData() != null) {
+            if (findCategoryDetailBean.getData().getPic_gallery_url_list() != null
+                    && findCategoryDetailBean.getData().getPic_gallery_url_list().size() > 0) {
+                IMG_URL = findCategoryDetailBean.getData().getPic_gallery_url_list().get(0);
+            }
+            TITLE = findCategoryDetailBean.getData().getName();
+            CONTENT = findCategoryDetailBean.getData().getWord_detail();
+        } else {
+            IMG_URL = "";
+            TITLE = "挖矿来";
+            CONTENT = "挖矿来";
+        }
+        Log.e("ShareDialog", "IMG_URL " + IMG_URL);
         new ShareDialog(MechanicsH5Activity.this, new ShareDialog.CallbackListener() {
             @Override
             public void wechat() {
                 YXProgressDialog dialog = new YXProgressDialog(MechanicsH5Activity.this, "请稍后");
-                shareUrlToWx(url, "挖矿来", "挖矿来", IMG_URL, 0);
+                shareUrlToWx(url, TITLE, CONTENT, IMG_URL, 0);
             }
 
             @Override
             public void friends() {
                 YXProgressDialog dialog = new YXProgressDialog(MechanicsH5Activity.this, "请稍后");
-                shareUrlToWx(url, "挖矿来", "挖矿来", IMG_URL, 1);
+                shareUrlToWx(url, TITLE, CONTENT, IMG_URL, 1);
             }
         }).show();
     }
@@ -382,24 +408,41 @@ public class MechanicsH5Activity extends AbsActivity {
             ToastUtil.show(getApplicationContext(), "您还未安装微信客户端,无法使用该功能！");
             return;
         }
-        ImageLoader.getInstance().loadImage(iconUrl, new SimpleImageLoadingListener() {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                super.onLoadingComplete(imageUri, view, loadedImage);
-                WXWebpageObject webpage = new WXWebpageObject();
-                webpage.webpageUrl = url;
-                WXMediaMessage msg = new WXMediaMessage(webpage);
-                msg.title = title;
-                msg.description = desc;
-                //这里替换一张自己工程里的图片资源
-                msg.thumbData = bmpToByteArray(loadedImage, 32);
-                SendMessageToWX.Req req = new SendMessageToWX.Req();
-                req.transaction = String.valueOf(System.currentTimeMillis());
-                req.message = msg;
-                req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
-                ((MyApplication) getApplicationContext()).getApi().sendReq(req);
-            }
-        });
+        if (iconUrl != null && iconUrl.length() > 0) {
+            ImageLoader.getInstance().loadImage(iconUrl, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    super.onLoadingComplete(imageUri, view, loadedImage);
+                    WXWebpageObject webpage = new WXWebpageObject();
+                    webpage.webpageUrl = url;
+                    WXMediaMessage msg = new WXMediaMessage(webpage);
+                    msg.title = title;
+                    msg.description = desc;
+                    //这里替换一张自己工程里的图片资源
+                    msg.thumbData = bmpToByteArray(loadedImage, 32);
+                    SendMessageToWX.Req req = new SendMessageToWX.Req();
+                    req.transaction = String.valueOf(System.currentTimeMillis());
+                    req.message = msg;
+                    req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+                    ((MyApplication) getApplicationContext()).getApi().sendReq(req);
+                }
+            });
+        } else {
+            WXWebpageObject webpage = new WXWebpageObject();
+            webpage.webpageUrl = url;
+            WXMediaMessage msg = new WXMediaMessage(webpage);
+            msg.title = title;
+            msg.description = desc;
+            //这里替换一张自己工程里的图片资源
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+            msg.setThumbImage(bitmap);
+            SendMessageToWX.Req req = new SendMessageToWX.Req();
+            req.transaction = String.valueOf(System.currentTimeMillis());
+            req.message = msg;
+            req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+            ((MyApplication) getApplicationContext()).getApi().sendReq(req);
+        }
+
     }
 
     /**
@@ -661,7 +704,6 @@ public class MechanicsH5Activity extends AbsActivity {
 
         private void initViews() {
             EventBusUtil.registerEvent(this);
-            showDialog();
             mDataBinding.webView.setVisibility(View.GONE);
             WebSettings settings = mDataBinding.webView.getSettings();
             settings.setJavaScriptEnabled(true); //与js交互必须设置
@@ -1248,16 +1290,78 @@ public class MechanicsH5Activity extends AbsActivity {
     }
 
     /**
-     * 获取新机详情
+     * 获取新机详情  getGoodsDetails
      */
+    private void getGoodsDetails(String goodsCode) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("good_code", goodsCode);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(this, map, "findCategoryDetail");
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        showDialog();
+        onNewRequestCall(GetGoodsDetailsAction.newInstance(this, netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<GetGoodsDetailsBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<GetGoodsDetailsBean>> response,
+                                           BaseErrorInfo baseErrorInfo) {
+                        closeDialog();
+                        if (new HttpHelper().showError(getApplicationContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                            return;
+                        }
+                        if (response != null) {
+                            new HttpHelper().showError(getApplicationContext(), response.body().getCode(), response.body().getMessage());
+                            if (response.body().getCode().equals("200")) {
+                                getGoodsDetailsBean = response.body().getData();
+                            } else {
+                                ToastUtils.show(getApplicationContext(), response.body().getMessage());
+                            }
+                        }
+                    }
+                }));
+    }
 
     /**
-     * 获取二手机详情
+     * 获取二手机详情 getOldDetails
      */
-
+    private void getOldDetails(String goodsCode) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("good_code", goodsCode);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(this, map, "findCategoryDetail");
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        showDialog();
+        onNewRequestCall(GetOldDetailsAction.newInstance(this, netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<GetOldDetailsBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<GetOldDetailsBean>> response,
+                                           BaseErrorInfo baseErrorInfo) {
+                        closeDialog();
+                        if (new HttpHelper().showError(getApplicationContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                            return;
+                        }
+                        if (response != null) {
+                            new HttpHelper().showError(getApplicationContext(), response.body().getCode(), response.body().getMessage());
+                            if (response.body().getCode().equals("200")) {
+                                getOldDetailsBean = response.body().getData();
+                            } else {
+                                ToastUtils.show(getApplicationContext(), response.body().getMessage());
+                            }
+                        }
+                    }
+                }));
+    }
 
     /**
      * 判断是否存在NavigationBar
+     *
      * @param context：上下文环境
      * @return：返回是否存在(true/false)
      */
@@ -1275,7 +1379,7 @@ public class MechanicsH5Activity extends AbsActivity {
             if ("1".equals(navBarOverride)) {
                 //不存在虚拟按键
                 hasNavigationBar = false;
-                ToastUtil.show(context,"不存在虚拟按键");
+                ToastUtil.show(context, "不存在虚拟按键");
             } else if ("0".equals(navBarOverride)) {
                 //存在虚拟按键
                 hasNavigationBar = true;
@@ -1283,7 +1387,7 @@ public class MechanicsH5Activity extends AbsActivity {
                 //linebutton是一个linearlayout,里面包含了两个Button
                 RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) mDataBinding.rlBottom.getLayoutParams();
                 //setMargins：顺序是左、上、右、下
-                layout.setMargins(15,0,15,getNavigationBarHeight(this)+10);
+                layout.setMargins(15, 0, 15, getNavigationBarHeight(this) + 10);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1292,15 +1396,15 @@ public class MechanicsH5Activity extends AbsActivity {
     }
 
 
-
     /**
      * 测量底部导航栏的高度
+     *
      * @param mActivity:上下文环境
      * @return：返回测量出的底部导航栏高度
      */
     private int getNavigationBarHeight(Activity mActivity) {
         Resources resources = mActivity.getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height","dimen", "android");
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
         int height = resources.getDimensionPixelSize(resourceId);
         return height;
     }

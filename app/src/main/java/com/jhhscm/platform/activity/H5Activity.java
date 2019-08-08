@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -409,7 +410,7 @@ public class H5Activity extends AbsToolbarActivity {
 
         private void initViews() {
             EventBusUtil.registerEvent(this);
-            showDialog();
+//            showDialog();
             getShareContent();
             mDataBinding.webView.setVisibility(View.GONE);
             WebSettings settings = mDataBinding.webView.getSettings();
@@ -441,6 +442,8 @@ public class H5Activity extends AbsToolbarActivity {
             mDataBinding.webView.clearCache(true);
             mDataBinding.webView.setWebViewClient(mWebViewClient);
             mDataBinding.webView.setWebChromeClient(mWebChromeClient);
+            //加载动画
+            final AnimationDrawable animationDrawable = (AnimationDrawable) mDataBinding.webLoadAnim.getBackground();
             if (!NETUtils.isNetworkConnected(getActivity())) {
                 showLoadingPage(R.id.rl_loading);
                 setLoadFailedMessage("网络异常，请检查网络连接");
@@ -452,11 +455,19 @@ public class H5Activity extends AbsToolbarActivity {
                         super.onPageFinished(view, url);
                         closeDialog();
                         mDataBinding.webView.setVisibility(View.VISIBLE);
+                        animationDrawable.stop();
+                        mDataBinding.webLoadAnim.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onPageStarted(WebView view, String url, Bitmap favicon) {
                         super.onPageStarted(view, url, favicon);
+                        mDataBinding.webLoadAnim.setVisibility(View.VISIBLE);
+                        //判断是否在运行
+                        if (!animationDrawable.isRunning()) {
+                            //开启帧动画
+                            animationDrawable.start();
+                        }
                     }
                 });
 

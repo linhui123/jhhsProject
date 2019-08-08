@@ -282,7 +282,7 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
 
     private void initViews() {
         EventBusUtil.registerEvent(this);
-        showDialog();
+
         mDataBinding.webView.setVisibility(View.GONE);
         WebSettings settings = mDataBinding.webView.getSettings();
         settings.setJavaScriptEnabled(true); //与js交互必须设置
@@ -354,13 +354,13 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
 
         @JavascriptInterface
         public void shareWechat() {
-            showDialog();
-            closeDialog();
+
+
         }
 
         @JavascriptInterface
         public void shareFriends() {
-            showDialog();
+
 //                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
 //                ShareUtils.shareUrl(getContext(), SHARE_URL,
 //                        TITLE, CONTENT, SHARE_MEDIA.WEIXIN_CIRCLE,
@@ -370,7 +370,7 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
 
         @JavascriptInterface
         public void shareToWechat(String title, String content, String imageUrl, String shareUrl) {
-            showDialog();
+
 //                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
 //                ShareUtils.shareUrl(getContext(), shareUrl,
 //                        title, content, SHARE_MEDIA.WEIXIN,
@@ -380,7 +380,7 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
 
         @JavascriptInterface
         public void shareToFriends(String title, String content, String imageUrl, String shareUrl) {
-            showDialog();
+
 //                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
 //                ShareUtils.shareUrl(getContext(), shareUrl,
 //                        title, content, SHARE_MEDIA.WEIXIN_CIRCLE,

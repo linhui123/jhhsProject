@@ -69,12 +69,12 @@ public class SelectedAdapter extends RecyclerView.Adapter<SelectedAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         GetComboBoxBean.ResultBean item;
         TextView tv_name;
-        ImageView im_del;
+//        ImageView im_del;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
-            im_del = (ImageView) itemView.findViewById(R.id.im_del);
+//            im_del = (ImageView) itemView.findViewById(R.id.im_del);
             tv_name.setOnClickListener(this);
         }
 

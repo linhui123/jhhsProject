@@ -75,7 +75,7 @@ public class BrandFragment extends AbsFragment<FragmentBrandBinding> {
     }
 
     /**
-     * 获取配件列表
+     * 获取品牌列表
      */
     private void findBrand(final boolean refresh) {
         if (getContext() != null) {

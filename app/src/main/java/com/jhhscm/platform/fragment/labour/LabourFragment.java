@@ -205,35 +205,35 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
             }
         });
 
-        mDataBinding.tv3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDataBinding.seekbar.setVisibility(View.GONE);
-                mDataBinding.tvTotal.setVisibility(View.GONE);
-                mDataBinding.tvStart.setVisibility(View.GONE);
-                mDataBinding.tvEnd.setVisibility(View.GONE);
-            }
-        });
-        mDataBinding.tv2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDataBinding.seekbar.setVisibility(View.VISIBLE);
-                mDataBinding.tvTotal.setVisibility(View.VISIBLE);
-                mDataBinding.tvStart.setVisibility(View.VISIBLE);
-                mDataBinding.tvEnd.setVisibility(View.VISIBLE);
-            }
-        });
-        mDataBinding.tv1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDataBinding.seekbar.setVisibility(View.VISIBLE);
-                mDataBinding.tvTotal.setVisibility(View.VISIBLE);
-                mDataBinding.tvStart.setVisibility(View.VISIBLE);
-                mDataBinding.tvEnd.setVisibility(View.VISIBLE);
-            }
-        });
+//        mDataBinding.tv3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mDataBinding.seekbar.setVisibility(View.GONE);
+//                mDataBinding.tvTotal.setVisibility(View.GONE);
+//                mDataBinding.tvStart.setVisibility(View.GONE);
+//                mDataBinding.tvEnd.setVisibility(View.GONE);
+//            }
+//        });
+//        mDataBinding.tv2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mDataBinding.seekbar.setVisibility(View.VISIBLE);
+//                mDataBinding.tvTotal.setVisibility(View.VISIBLE);
+//                mDataBinding.tvStart.setVisibility(View.VISIBLE);
+//                mDataBinding.tvEnd.setVisibility(View.VISIBLE);
+//            }
+//        });
+//        mDataBinding.tv1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mDataBinding.seekbar.setVisibility(View.VISIBLE);
+//                mDataBinding.tvTotal.setVisibility(View.VISIBLE);
+//                mDataBinding.tvStart.setVisibility(View.VISIBLE);
+//                mDataBinding.tvEnd.setVisibility(View.VISIBLE);
+//            }
+//        });
 
-        mDataBinding.seekbar.setOnSeekBarChangeListener(this);
+//        mDataBinding.seekbar.setOnSeekBarChangeListener(this);
 
         mDataBinding.tvZhaopin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -310,7 +310,7 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
     public void onStopTrackingTouch(SeekBar seekBar) {
         seekBar.getProgress();
         String total = seekBar.getProgress() * 100 + "";
-        mDataBinding.tvTotal.setText("0-" + total + "元");
+//        mDataBinding.tvTotal.setText("0-" + total + "元");
     }
 
     private void closeDrap() {
@@ -467,6 +467,8 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
                                         gangwei(response.body().getData());
                                     } else if ("work_time".equals(name)) {
                                         jinyan(response.body().getData());
+                                    } else if ("salay_money".equals(name)) {
+                                        xinzi(response.body().getData());
                                     }
                                 } else {
                                     ToastUtils.show(getContext(), "error " + name + ":" + response.body().getMessage());
@@ -482,11 +484,13 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
      */
     private void initDrop() {
         /**
-         * job	    否		工作岗位
-         * work_time	否		经验
+         * job	   		工作岗位
+         * work_tim		经验
+         * salay_money  薪资
          */
         getComboBox("work_time");
         getComboBox("job");
+        getComboBox("salay_money");
     }
 
     /**
@@ -527,7 +531,24 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
         });
     }
 
-
+    /**
+     * 下拉薪资
+     */
+    private void xinzi(GetComboBoxBean getComboBoxBean) {
+        mDataBinding.rlXinzi.setLayoutManager(new LinearLayoutManager(getContext()));
+        JXDropAdapter JXAdapter = new JXDropAdapter(getComboBoxBean.getResult(), getContext());
+        mDataBinding.rlXinzi.setAdapter(JXAdapter);
+        JXAdapter.setMyListener(new JXDropAdapter.ItemListener() {
+            @Override
+            public void onItemClick(GetComboBoxBean.ResultBean item) {
+                salay_money = item.getId();
+                mDataBinding.tvXinzi.setText(item.getKey_value());
+                mDataBinding.llXiala.setVisibility(View.GONE);
+                closeDrap();
+                mDataBinding.rv.autoRefresh();
+            }
+        });
+    }
     /**
      * 获取行政区域列表
      */
