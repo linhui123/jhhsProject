@@ -26,12 +26,15 @@ import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
+import com.jhhscm.platform.fragment.my.CheckVersionAction;
+import com.jhhscm.platform.fragment.my.CheckVersionBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
@@ -94,7 +97,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
         });
 
         initTel();
-
+        checkVersion();
         mDataBinding.msgImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -322,7 +325,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
     private void saveMsg(final String phone) {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("mobile", phone);
-        map.put("type", "1");
+        map.put("type", "0");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "saveMsg");
@@ -357,28 +360,48 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
     }
 
     /**
-     * 分享
+     * 版本更新查询
      */
-    public void showShare() {
-        new ShareDialog(getContext(), new ShareDialog.CallbackListener() {
-            @Override
-            public void wechat() {
-//                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
-//                ShareUtils.shareUrl(getContext(), SHARE_URL,
-//                        TITLE, CONTENT, SHARE_MEDIA.WEIXIN,
-//                        ShareUtils.getShareListener(getContext()), IMG_URL);
-//                HttpUtils.shareCommonContent(getContext(), hospId, "13");
-            }
+    private void checkVersion() {
+        Map<String, String> map = new TreeMap<String, String>();
+        String version = ExampleUtil.GetVersion(getContext()).contains("V")
+                ? ExampleUtil.GetVersion(getContext()).replace("V", "")
+                : ExampleUtil.GetVersion(getContext());
+        map.put("app_version", version);
+        map.put("app_type", "0");
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getActivity(), map, "saveMsg");
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(CheckVersionAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<CheckVersionBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<CheckVersionBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    CheckVersionBean checkVersionBean = response.body().getData();
+                                    if ("0".equals(checkVersionBean.getIs_update())) {//需要更新
+                                        if ("0".equals(checkVersionBean.getIs_must_update())) {//需要强制更新
 
-            @Override
-            public void friends() {
-//                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
-//                ShareUtils.shareUrl(getContext(), SHARE_URL,
-//                        TITLE, CONTENT, SHARE_MEDIA.WEIXIN_CIRCLE,
-//                        ShareUtils.getShareListener(getContext()), IMG_URL);
-//                HttpUtils.shareCommonContent(getContext(), hospId, "13");
-            }
-        }).show();
+                                        }else {
+
+                                        }
+                                    }
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
     }
 
 }

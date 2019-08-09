@@ -227,6 +227,61 @@
                     android:paddingTop="@dimen/dp_5"
                     android:paddingBottom="@dimen/dp_5">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@mipmap/ic_xinghao"
+                        android:text="结算周期"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_base_sattle_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/ic_point"
+                        android:drawablePadding="@dimen/padding_10"
+                        android:hint="请选择"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_5">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@mipmap/ic_xinghao"
+                        android:text="薪资水平"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_base_xinzi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/ic_point"
+                        android:drawablePadding="@dimen/padding_10"
+                        android:hint="请选择"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_5"
+                    android:visibility="gone"
+                    android:paddingBottom="@dimen/dp_5">
+
                     <ImageView
                         android:id="@+id/im_tian"
                         android:layout_width="wrap_content"
@@ -271,6 +326,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
                     android:paddingTop="@dimen/dp_5"
+                    android:visibility="gone"
                     android:paddingBottom="@dimen/dp_5">
 
                     <ImageView
@@ -317,6 +373,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
                     android:paddingTop="@dimen/dp_5"
+                    android:visibility="gone"
                     android:paddingBottom="@dimen/dp_5">
 
                     <ImageView

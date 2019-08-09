@@ -13,6 +13,12 @@ public class BrandResultEvent implements EventBusUtil.IEvent {
         this.brand_name = brand_name;
     }
 
+    public BrandResultEvent(String brand_id, String fix_p_9,String fix_p_9_name) {
+        this.brand_id = brand_id;
+        this.fix_p_9 = fix_p_9;
+        this.fix_p_9_name = fix_p_9_name;
+    }
+
     public BrandResultEvent(String brand_id, String brand_name,String fix_p_9,String fix_p_9_name) {
         this.brand_id = brand_id;
         this.fix_p_9 = fix_p_9;

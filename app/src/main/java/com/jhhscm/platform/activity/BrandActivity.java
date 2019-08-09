@@ -12,8 +12,11 @@ import com.jhhscm.platform.fragment.base.AbsFragment;
 
 public class BrandActivity extends AbsToolbarActivity {
 
-    public static void start(Context context) {
+    private int type = 1;// 1 选择品牌； 2选择机型
+
+    public static void start(Context context, int type) {
         Intent intent = new Intent(context, BrandActivity.class);
+        intent.putExtra("type", type);
         context.startActivity(intent);
     }
 
@@ -55,6 +58,7 @@ public class BrandActivity extends AbsToolbarActivity {
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putInt("type", getIntent().getIntExtra("type", 1));
         return args;
     }
 }

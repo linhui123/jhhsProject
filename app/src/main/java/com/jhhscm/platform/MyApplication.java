@@ -1,11 +1,16 @@
 package com.jhhscm.platform;
 
 import android.app.Application;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.StrictMode;
+import android.util.Log;
 
+import com.jhhscm.platform.jpush.MyReceiver;
 import com.jhhscm.platform.views.AuthImageDownloader;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -47,7 +52,9 @@ public class MyApplication extends Application {
         api.registerApp("wx43d03d3271a1c5d4");
         initImageLoader(instance);
         JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
-        JPushInterface.init(this);
+        JPushInterface.init(getApplicationContext());
+        registerMessageReceiver();
+        Log.e("JPushInterface", "getRegistrationID : " + JPushInterface.getRegistrationID(getApplicationContext()));
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         closeAndroidPDialog();
@@ -106,4 +113,24 @@ public class MyApplication extends Application {
         ImageLoader.getInstance().init(config);
         ImageLoader.getInstance().handleSlowNetwork(true);
     }
+
+    public void registerMessageReceiver() {
+        MyReceiver mMessageReceiver = new MyReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        filter.addAction("1");
+        registerReceiver(mMessageReceiver, filter);
+    }
+
+    public class MessageReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("1".equals(intent.getAction())) {
+                Log.e("JPushInterface", "onReceive : " );
+
+            }
+        }
+    }
+
 }

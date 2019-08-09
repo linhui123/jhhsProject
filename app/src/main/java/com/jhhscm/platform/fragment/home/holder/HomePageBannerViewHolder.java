@@ -7,10 +7,14 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemHomePageBannerBinding;
+import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.HomePageItem;
+import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.StringUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -59,15 +63,14 @@ public class HomePageBannerViewHolder extends AbsRecyclerViewHolder<HomePageItem
 //        list.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1562306846041&di=2b594e635a7b21ab85e400c27aad48fa&imgtype=0&src=http%3A%2F%2Fimg010.hc360.cn%2Fg6%2FM09%2F25%2FB6%2FwKhQr1OVYwGEFaS_AAAAALvbF5Q839.jpg");
 
             mBinding.bgaBanner.setData(list, null);
-
             mBinding.bgaBanner.setDelegate(new BGABanner.Delegate() {
                 @Override
                 public void onBannerItemClick(BGABanner banner, View itemViews, @Nullable Object model, int position) {
-                    MobclickAgent.onEvent(itemView.getContext(), "HomePageBanner");
-//                if (!StringUtils.isNullEmpty(jumpData)) {
-//                    JumpDataUtils.jumpData(itemView.getContext(), jumpData, "");
-////                        EventBusUtil.post(new SignInEvent(SignInEvent.CLOSE));
-//                }
+                    AdBean adBean = item.adBean1;
+                    AdBean.ResultBean resultBean = adBean.getResult().get(position);
+                    Gson gson = new Gson();
+                    AdBean.DataBean findOrderBean = gson.fromJson(resultBean.getContent(), AdBean.DataBean.class);
+                    EventBusUtil.post(new JumpEvent(findOrderBean.getTYPE(), resultBean));
                 }
             });
         }

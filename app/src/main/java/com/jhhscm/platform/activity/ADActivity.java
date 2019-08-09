@@ -96,7 +96,7 @@ public class ADActivity extends AbsActivity {
                                 if (adBean != null && adBean.getResult().size() > 0) {
                                     relativeLayout.setVisibility(View.VISIBLE);
                                     ImageLoader.getInstance().displayImage(adBean.getResult().get(0).getUrl(), imageView);
-                                    startCountDownTimer(1000);
+                                    startCountDownTimer(2000);
                                 } else {
                                     startNewActivity(MainActivity.class);
                                     finish();

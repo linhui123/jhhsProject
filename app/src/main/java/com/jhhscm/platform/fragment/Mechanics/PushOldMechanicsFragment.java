@@ -18,6 +18,7 @@ import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.BrandActivity;
 import com.jhhscm.platform.activity.LoginActivity;
+import com.jhhscm.platform.activity.MechanicsByBrandActivity;
 import com.jhhscm.platform.bean.UploadImage;
 import com.jhhscm.platform.databinding.FragmentPushOldMechanicsBinding;
 import com.jhhscm.platform.event.BrandResultEvent;
@@ -75,7 +76,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
 
     private OldGoodOrderHistoryBean oldGoodOrderHistoryBean;
     private String brand_id, goods_factory, fix_p_9, factory_time, fix_p_13, fix_p_14, province, city;
-    private String tel, old_time, price, biaopai;
+    private String tel, old_time, price, biaopai, name;
     private UserSession userSession;
     private GetComboBoxBean getComboBoxBean;
 
@@ -183,6 +184,24 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                 judgeButton();
             }
         });
+
+        mDataBinding.tvName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                name = s.toString();
+                judgeButton();
+            }
+        });
     }
 
     /**
@@ -191,6 +210,8 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
     public void onEvent(BrandResultEvent event) {
         if (event.getBrand_id() != null) {
             brand_id = event.getBrand_id();
+        }
+        if (event.getBrand_name() != null && event.getBrand_name().length() > 0) {
             mDataBinding.tv1.setText(event.getBrand_name());
         }
         if (event.getFix_p_9() != null) {
@@ -210,13 +231,17 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_1://品牌 brand_id
-                BrandActivity.start(getContext());
+                BrandActivity.start(getContext(), 1);
                 break;
             case R.id.tv_chanshang://厂商  goods_factory
                 getComboBox("goods_factory");
                 break;
             case R.id.tv_2://型号 fix_p_9
-                BrandActivity.start(getContext());
+                if (brand_id != null && brand_id.length() > 0) {
+                    MechanicsByBrandActivity.start(getContext(), brand_id);
+                } else {
+                    ToastUtil.show(getContext(), "请先选择品牌");
+                }
                 break;
             case R.id.tv_3://施工地区 province city
                 new AddressDialog(getActivity(), "施工地区", new AddressDialog.CallbackListener() {
@@ -328,6 +353,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                 && goods_factory != null && goods_factory.length() > 0
                 && fix_p_9 != null && fix_p_9.length() > 0
                 && factory_time != null && factory_time.length() > 0
+                && name != null && name.length() > 0
                 && old_time != null && old_time.length() > 0
                 && fix_p_13 != null && fix_p_13.length() > 0
                 && fix_p_14 != null && fix_p_14.length() > 0
@@ -385,6 +411,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
         }
         try {
             //1M以上图片进行压缩处理
+            Log.e("imageFile", "imageFile.length() " + imageFile.length());
             if (imageFile.length() > UPLOAD_IMAGE_SIZE_LIMIT) {
                 Luban.get(MyApplication.getInstance())
                         .load(imageFile)
@@ -411,6 +438,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                                 // TODO 压缩成功后调用，返回压缩后的图片文件
 //                                return file;
 //                                return photos;
+                                Log.e("file", "file.length() " + file.length());
                                 doUploadImageAction1(file, imagePath);
                             }
                         });    //启动压缩
@@ -439,7 +467,11 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                             if (response != null) {
 //                        new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                 if (response.body().getErrno().equals("0")) {
-                                    doUploadImageResponse1(imageUrl, response.body());
+                                    if ("0".equals(response.body().getData().getCode())) {
+                                        doUploadImageResponse1(imageUrl, response.body());
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getData().getMsg());
+                                    }
                                 } else {
 //                            ToastUtils.show(getContext(), response.body().getMessage());
                                 }
@@ -512,9 +544,9 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
             }
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("user_code", userSession.getUserCode());
-            map.put("name", userSession.getMobile());
+            map.put("name", name);
             map.put("brand_id", brand_id);
-            map.put("fix_p_9", fix_p_9);
+            map.put("fix_p_17", fix_p_9);
             map.put("province", province);
             map.put("city", city);
             map.put("factory_time", factory_time);

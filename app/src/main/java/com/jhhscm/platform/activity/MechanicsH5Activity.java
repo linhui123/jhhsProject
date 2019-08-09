@@ -256,12 +256,10 @@ public class MechanicsH5Activity extends AbsActivity {
                 if (userSession != null
                         && userSession.getUserCode() != null
                         && userSession.getToken() != null) {
-                    if (picUrl != null && picUrl.length() > 0) {
-                        if (findCategoryDetailBean != null) {
-                            addGoodsToCarts(userSession.getUserCode(), picUrl, findCategoryDetailBean, userSession.getToken());
-                        } else {
-                            findCategoryDetail(goodCode);
-                        }
+                    if (findCategoryDetailBean != null) {
+                        addGoodsToCarts(userSession.getUserCode(), picUrl, findCategoryDetailBean, userSession.getToken());
+                    } else {
+                        findCategoryDetail(goodCode);
                     }
                 } else {
                     startNewActivity(LoginActivity.class);
@@ -278,6 +276,7 @@ public class MechanicsH5Activity extends AbsActivity {
                         saveMsg(phone);
                     }
                 }).show();
+
             }
         });
         mDataBinding.tvXujia.setOnClickListener(new View.OnClickListener() {
@@ -1165,6 +1164,8 @@ public class MechanicsH5Activity extends AbsActivity {
                                     rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());  // left, top, right, bottom
                                     mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
                                 }
+                            } else if (response.body().getCode().equals("1003")) {
+                                startNewActivity(LoginActivity.class);
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
                             }

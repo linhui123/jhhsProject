@@ -59,7 +59,7 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
     private String settl_time;//结款周期
     private String other_req = "";//其他待遇
     private String work_pre;//工作性质
-    private String work_num;//招聘人数
+    //    private String work_num;//招聘人数
     private String work_time;//工作经验
     private String work_type;//项目类型
     private String contact;//联系人
@@ -183,7 +183,12 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
          m_type	是		机械类型
          work_type	是		机械类型
          release_work_type	是		项目类型*/
-
+        mDataBinding.tvBaseXinzi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getComboBox("salay_money");
+            }
+        });
         mDataBinding.tvBaseZhize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,6 +232,14 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
             @Override
             public void onClick(View v) {
                 getComboBox("good_work");
+            }
+        });
+
+
+        mDataBinding.tvBaseSattleTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getComboBox("settl_time");
             }
         });
         mDataBinding.tvPData.setOnClickListener(new View.OnClickListener() {
@@ -432,18 +445,19 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
                 judgeButton();
             }
         });
+
     }
 
     private void getOtherReq() {
-        if (xinziType1) {
-            settl_time = "按天结";
-        }
-        if (xinziType2) {
-            settl_time = "按月结";
-        }
-        if (xinziType3) {
-            settl_time = "薪资面议";
-        }
+//        if (xinziType1) {
+//            settl_time = "按天结";
+//        }
+//        if (xinziType2) {
+//            settl_time = "按月结";
+//        }
+//        if (xinziType3) {
+//            settl_time = "薪资面议";
+//        }
         other_req = "";
         if (tvType1) {
             other_req = "包吃";
@@ -504,9 +518,8 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
             map.put("settl_time", settl_time);
             map.put("other_req", other_req);
             map.put("work_pre", work_pre);
-            map.put("work_num", work_num);
+//            map.put("work_num", work_num);
             map.put("work_time", work_time);
-//            map.put("work_type", work_type);
             map.put("good_work", good_work);
             map.put("province", pId);
             map.put("city", cId);
@@ -562,7 +575,7 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
             map.put("settl_time", settl_time);
             map.put("other_req", other_req);
             map.put("work_pre", work_pre);
-            map.put("work_num", work_num);
+//            map.put("work_num", work_num);
             map.put("work_time", work_time);
 //            map.put("work_type", work_type);
             map.put("good_work", good_work);
@@ -622,9 +635,10 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
                 && mDataBinding.tvBaseJixie.getText().toString().length() > 0
                 && mDataBinding.tvBaseWorkType.getText().toString().length() > 0
                 && mDataBinding.tvBaseJingyan.getText().toString().length() > 0
-                && xinziType > 0
                 && mDataBinding.tvPType.getText().toString().length() > 0
                 && mDataBinding.tvPLocation.getText().toString().length() > 0
+                && mDataBinding.tvBaseXinzi.getText().toString().length() > 0
+                && mDataBinding.tvBaseSattleTime.getText().toString().length() > 0
                 && mDataBinding.tvPData.getText().toString().length() > 0) {
             mDataBinding.tvFabu.setEnabled(true);
             mDataBinding.tvFabu.setBackgroundResource(R.drawable.button_c397);
@@ -670,6 +684,7 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
                                                 job = id;
                                                 mDataBinding.tvBaseZhize.setText(Nmae);
                                                 mDataBinding.tvBaseZhize.setTag(id);
+                                                judgeButton();
                                             }
                                         }).show();
                                     } else if ("m_type".equals(name)) {
@@ -679,6 +694,7 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
                                                 m_type = id;
                                                 mDataBinding.tvBaseJixie.setText(Nmae);
                                                 mDataBinding.tvBaseJixie.setTag(id);
+                                                judgeButton();
                                             }
                                         }).show();
                                     } else if ("work_pre".equals(name)) {
@@ -688,6 +704,7 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
                                                 work_pre = id;
                                                 mDataBinding.tvBaseWorkType.setText(Nmae);
                                                 mDataBinding.tvBaseWorkType.setTag(id);
+                                                judgeButton();
                                             }
                                         }).show();
                                     } else if ("work_time".equals(name)) {
@@ -697,6 +714,7 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
                                                 work_time = id;
                                                 mDataBinding.tvBaseJingyan.setText(Nmae);
                                                 mDataBinding.tvBaseJingyan.setTag(id);
+                                                judgeButton();
                                             }
                                         }).show();
                                     } else if ("good_work".equals(name)) {
@@ -706,10 +724,30 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
                                                 good_work = id;
                                                 mDataBinding.tvPType.setTag(id);
                                                 mDataBinding.tvPType.setText(Nmae);
+                                                judgeButton();
+                                            }
+                                        }).show();
+                                    } else if ("salay_money".equals(name)) {
+                                        new DropTDialog(getContext(), "薪资水平", getComboBoxBean.getResult(), new DropTDialog.CallbackListener() {
+                                            @Override
+                                            public void clickResult(String id, String Nmae) {
+                                                salay_money = id;
+                                                mDataBinding.tvBaseXinzi.setTag(id);
+                                                mDataBinding.tvBaseXinzi.setText(Nmae);
+                                                judgeButton();
+                                            }
+                                        }).show();
+                                    } else if ("settl_time".equals(name)) {
+                                        new DropTDialog(getContext(), "结算周期", getComboBoxBean.getResult(), new DropTDialog.CallbackListener() {
+                                            @Override
+                                            public void clickResult(String id, String Nmae) {
+                                                settl_time = id;
+                                                mDataBinding.tvBaseSattleTime.setTag(id);
+                                                mDataBinding.tvBaseSattleTime.setText(Nmae);
+                                                judgeButton();
                                             }
                                         }).show();
                                     }
-                                    judgeButton();
                                 } else {
                                     ToastUtils.show(getContext(), "error " + name + ":" + response.body().getMessage());
                                 }
@@ -789,24 +827,25 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
             //福利
             settl_time = dataBean.getSettl_time();
             salay_money = dataBean.getSalay_money();
-
-            if (settl_time != null) {
-                if (settl_time.contains("天")) {
-                    xinziType = 1;
-                    xinziType1 = true;
-                    mDataBinding.imTian.setImageResource(R.mipmap.ic_shoping_s1);
-                    mDataBinding.tvTian.setText(salay_money);
-                } else if (settl_time.contains("月")) {
-                    xinziType = 2;
-                    xinziType2 = true;
-                    mDataBinding.imYue.setImageResource(R.mipmap.ic_shoping_s1);
-                    mDataBinding.tvYue.setText(salay_money);
-                } else {//薪资面议
-                    xinziType = 3;
-                    xinziType3 = true;
-                    mDataBinding.imMianyi.setImageResource(R.mipmap.ic_shoping_s1);
-                }
-            }
+            mDataBinding.tvBaseXinzi.setText(salay_money);
+            mDataBinding.tvBaseSattleTime.setText(settl_time);
+//            if (settl_time != null) {
+//                if (settl_time.contains("天")) {
+//                    xinziType = 1;
+//                    xinziType1 = true;
+//                    mDataBinding.imTian.setImageResource(R.mipmap.ic_shoping_s1);
+//                    mDataBinding.tvTian.setText(salay_money);
+//                } else if (settl_time.contains("月")) {
+//                    xinziType = 2;
+//                    xinziType2 = true;
+//                    mDataBinding.imYue.setImageResource(R.mipmap.ic_shoping_s1);
+//                    mDataBinding.tvYue.setText(salay_money);
+//                } else {//薪资面议
+//                    xinziType = 3;
+//                    xinziType3 = true;
+//                    mDataBinding.imMianyi.setImageResource(R.mipmap.ic_shoping_s1);
+//                }
+//            }
 
             other_req = dataBean.getOther_req();
             if (other_req != null && other_req.length() > 0) {

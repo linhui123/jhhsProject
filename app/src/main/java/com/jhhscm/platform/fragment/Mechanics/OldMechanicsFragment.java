@@ -73,8 +73,10 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
     private String fix_p_2 = "";//铲斗
     private String fix_p_1 = "";//吨位
     private String brand_id = "";
+    private String old_sort = "";
     String pID = "";
     String cID = "";
+
     public static OldMechanicsFragment instance() {
         OldMechanicsFragment view = new OldMechanicsFragment();
         return view;
@@ -216,11 +218,25 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, String> map = new TreeMap<String, String>();
             map.put("keyword", "");
-            map.put("fix_p_9", fix_p_9);
-            map.put("merchant_id", merchant_id);
+            map.put("old_sort", old_sort);//小时数
             map.put("fix_p_3", fix_p_3);
             map.put("fix_p_2", fix_p_2);
-            map.put("brand_id", brand_id);
+
+            ArrayList<Integer> list = new ArrayList<>();
+            if (merchant_id != null && merchant_id.length() > 0) {
+                list.add(Integer.parseInt(merchant_id));
+                map.put("merchant_id", JSON.toJSONString(list));
+            }
+            list.clear();
+            if (fix_p_9 != null && fix_p_9.length() > 0) {
+                list.add(Integer.parseInt(fix_p_9));
+                map.put("fix_p_9", JSON.toJSONString(list));
+            }
+            list.clear();
+            if (brand_id != null && brand_id.length() > 0) {
+                list.add(Integer.parseInt(brand_id));
+                map.put("brand_id", JSON.toJSONString(list));
+            }
             map.put("fix_p_1", fix_p_1);
             map.put("page", mCurrentPage + "");
             map.put("limit", mShowCount + "");
@@ -238,6 +254,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                                                BaseErrorInfo baseErrorInfo) {
                             if (getView() != null) {
                                 closeDialog();
+
                                 if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
                                     return;
                                 }
@@ -246,6 +263,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                                     if (response.body().getCode().equals("200")) {
                                         doSuccessResponse(refresh, response.body().getData());
                                     } else {
+                                        mDataBinding.wrvRecycler.loadComplete(true, false);
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
                                 }
@@ -411,7 +429,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
         JXAdapter.setMyListener(new JXDropAdapter.ItemListener() {
             @Override
             public void onItemClick(GetComboBoxBean.ResultBean item) {
-                fix_p_9 = item.getId();
+                fix_p_9 = item.getKey_name();
                 mDataBinding.tvJixing.setText(item.getKey_value());
                 mDataBinding.llXiala.setVisibility(View.GONE);
                 closeDrap();
@@ -430,7 +448,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
         JXAdapter.setMyListener(new JXDropAdapter.ItemListener() {
             @Override
             public void onItemClick(GetComboBoxBean.ResultBean item) {
-//                merchant_id = item.getId();
+                old_sort = item.getKey_name();
                 mDataBinding.tvPaixu.setText(item.getKey_value());
                 mDataBinding.llXiala.setVisibility(View.GONE);
                 closeDrap();
@@ -475,7 +493,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                         }
                     }
                 }
-                fix_p_3 = item.getId();
+                fix_p_3 = item.getKey_name();
                 resultBeanList.add(item);
             }
         });
@@ -495,7 +513,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                         }
                     }
                 }
-                fix_p_2 = item.getId();
+                fix_p_2 = item.getKey_name();
                 resultBeanList.add(item);
             }
         });
@@ -515,7 +533,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                         }
                     }
                 }
-                fix_p_1 = item.getId();
+                fix_p_1 = item.getKey_name();
                 resultBeanList.add(item);
             }
         });
@@ -529,6 +547,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
     }
 
     GetRegionBean getRegionBean;
+
     private void showArea() {
         if (getRegionBean != null) {
             BottomMenuShow bottomMenuShow = new BottomMenuShow(getContext());

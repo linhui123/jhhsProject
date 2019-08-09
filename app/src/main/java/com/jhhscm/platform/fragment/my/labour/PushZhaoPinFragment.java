@@ -183,7 +183,18 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
          m_type	是		机械类型
          work_type	是		机械类型
          release_work_type	是		项目类型*/
-
+        mDataBinding.tvBaseXinzi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getComboBox("salay_money");
+            }
+        });
+        mDataBinding.tvBaseSattleTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getComboBox("settl_time");
+            }
+        });
         mDataBinding.tvBaseZhize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -450,15 +461,15 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
     }
 
     private void getOtherReq() {
-        if (xinziType1) {
-            settl_time = "按天结";
-        }
-        if (xinziType2) {
-            settl_time = "按月结";
-        }
-        if (xinziType3) {
-            settl_time = "薪资面议";
-        }
+//        if (xinziType1) {
+//            settl_time = "按天结";
+//        }
+//        if (xinziType2) {
+//            settl_time = "按月结";
+//        }
+//        if (xinziType3) {
+//            settl_time = "薪资面议";
+//        }
         other_req = "";
         if (tvType1) {
             other_req = "包吃";
@@ -533,7 +544,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             map.put("contact_msg", userSession.getMobile());
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
-            String sign = Sign.getSignKey(getActivity(), map, "saveLabourWork");
+            String sign = Sign.getSignKey(getActivity(), map, "saveLabourRelease");
             NetBean netBean = new NetBean();
             netBean.setToken(userSession.getToken());
             netBean.setSign(sign);
@@ -640,7 +651,8 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
                 && mDataBinding.tvBaseWorkType.getText().toString().length() > 0
                 && mDataBinding.tvBaseJingyan.getText().toString().length() > 0
                 && mDataBinding.tvBaseNum.getText().toString().length() > 0
-                && xinziType > 0
+                && mDataBinding.tvBaseXinzi.getText().toString().length() > 0
+                && mDataBinding.tvBaseSattleTime.getText().toString().length() > 0
                 && mDataBinding.tvPType.getText().toString().length() > 0
                 && mDataBinding.tvPLocation.getText().toString().length() > 0
                 && mDataBinding.tvPData.getText().toString().length() > 0) {
@@ -688,6 +700,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
                                                 job = id;
                                                 mDataBinding.tvBaseZhize.setText(Nmae);
                                                 mDataBinding.tvBaseZhize.setTag(id);
+                                                judgeButton();
                                             }
                                         }).show();
                                     } else if ("m_type".equals(name)) {
@@ -697,6 +710,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
                                                 m_type = id;
                                                 mDataBinding.tvBaseJixie.setText(Nmae);
                                                 mDataBinding.tvBaseJixie.setTag(id);
+                                                judgeButton();
                                             }
                                         }).show();
                                     } else if ("work_pre".equals(name)) {
@@ -706,6 +720,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
                                                 work_pre = id;
                                                 mDataBinding.tvBaseWorkType.setText(Nmae);
                                                 mDataBinding.tvBaseWorkType.setTag(id);
+                                                judgeButton();
                                             }
                                         }).show();
                                     } else if ("work_time".equals(name)) {
@@ -715,6 +730,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
                                                 work_time = id;
                                                 mDataBinding.tvBaseJingyan.setText(Nmae);
                                                 mDataBinding.tvBaseJingyan.setTag(id);
+                                                judgeButton();
                                             }
                                         }).show();
                                     } else if ("release_work_type".equals(name)) {
@@ -724,10 +740,30 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
                                                 work_type = id;
                                                 mDataBinding.tvPType.setTag(id);
                                                 mDataBinding.tvPType.setText(Nmae);
+                                                judgeButton();
+                                            }
+                                        }).show();
+                                    }else if ("salay_money".equals(name)) {
+                                        new DropTDialog(getContext(), "薪资水平", getComboBoxBean.getResult(), new DropTDialog.CallbackListener() {
+                                            @Override
+                                            public void clickResult(String id, String Nmae) {
+                                                salay_money = id;
+                                                mDataBinding.tvBaseXinzi.setTag(id);
+                                                mDataBinding.tvBaseXinzi.setText(Nmae);
+                                                judgeButton();
+                                            }
+                                        }).show();
+                                    } else if ("settl_time".equals(name)) {
+                                        new DropTDialog(getContext(), "结算周期", getComboBoxBean.getResult(), new DropTDialog.CallbackListener() {
+                                            @Override
+                                            public void clickResult(String id, String Nmae) {
+                                                settl_time = id;
+                                                mDataBinding.tvBaseSattleTime.setTag(id);
+                                                mDataBinding.tvBaseSattleTime.setText(Nmae);
+                                                judgeButton();
                                             }
                                         }).show();
                                     }
-                                    judgeButton();
                                 } else {
                                     ToastUtils.show(getContext(), "error " + name + ":" + response.body().getMessage());
                                 }
@@ -800,24 +836,25 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             //福利
             settl_time = dataBean.getSettl_time();
             salay_money = dataBean.getSalay_money();
-
-            if (settl_time != null) {
-                if (settl_time.contains("天")) {
-                    xinziType = 1;
-                    xinziType1=true;
-                    mDataBinding.imTian.setImageResource(R.mipmap.ic_shoping_s1);
-                    mDataBinding.tvTian.setText(salay_money);
-                } else if (settl_time.contains("月")) {
-                    xinziType = 2;
-                    xinziType2=true;
-                    mDataBinding.imYue.setImageResource(R.mipmap.ic_shoping_s1);
-                    mDataBinding.tvYue.setText(salay_money);
-                } else {//薪资面议
-                    xinziType = 3;
-                    xinziType3=true;
-                    mDataBinding.imMianyi.setImageResource(R.mipmap.ic_shoping_s1);
-                }
-            }
+            mDataBinding.tvBaseXinzi.setText(salay_money);
+            mDataBinding.tvBaseSattleTime.setText(settl_time);
+//            if (settl_time != null) {
+//                if (settl_time.contains("天")) {
+//                    xinziType = 1;
+//                    xinziType1=true;
+//                    mDataBinding.imTian.setImageResource(R.mipmap.ic_shoping_s1);
+//                    mDataBinding.tvTian.setText(salay_money);
+//                } else if (settl_time.contains("月")) {
+//                    xinziType = 2;
+//                    xinziType2=true;
+//                    mDataBinding.imYue.setImageResource(R.mipmap.ic_shoping_s1);
+//                    mDataBinding.tvYue.setText(salay_money);
+//                } else {//薪资面议
+//                    xinziType = 3;
+//                    xinziType3=true;
+//                    mDataBinding.imMianyi.setImageResource(R.mipmap.ic_shoping_s1);
+//                }
+//            }
 
             other_req = dataBean.getOther_req();
             if (other_req != null && other_req.length() > 0) {

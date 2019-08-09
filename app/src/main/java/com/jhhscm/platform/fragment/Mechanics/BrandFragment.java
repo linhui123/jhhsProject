@@ -51,6 +51,7 @@ import retrofit2.Response;
 
 public class BrandFragment extends AbsFragment<FragmentBrandBinding> {
     private InnerAdapter mAdapter;
+    private int type = 1;// 1 选择品牌； 2选择机型
 
     public static BrandFragment instance() {
         BrandFragment view = new BrandFragment();
@@ -67,6 +68,7 @@ public class BrandFragment extends AbsFragment<FragmentBrandBinding> {
 //        RelativeLayout.LayoutParams llParams = (RelativeLayout.LayoutParams) mDataBinding.recyclerview.getLayoutParams();
 //        llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
 //        mDataBinding.recyclerview.setLayoutParams(llParams);
+        type = getArguments().getInt("type");
         EventBusUtil.registerEvent(this);
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
@@ -132,7 +134,7 @@ public class BrandFragment extends AbsFragment<FragmentBrandBinding> {
 
         @Override
         public AbsRecyclerViewHolder<FindBrandBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new BrandViewHolder(mInflater.inflate(R.layout.item_mechanics_brand, parent, false));
+            return new BrandViewHolder(mInflater.inflate(R.layout.item_mechanics_brand, parent, false),type);
         }
     }
 

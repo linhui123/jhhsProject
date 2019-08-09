@@ -42,10 +42,18 @@ public class OldMechanicsUpImageBean {
          * allfilePath : http://wajueji.oss-cn-shenzhen.aliyuncs.com/oldGood/c9180b9140e54e45b3ed8d3f16bbc92b.png?Expires=1880595756&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=Tk83n1tmcnjLvQsW%2BgV90caE4mY%3D
          * catalogues : oldGood/c9180b9140e54e45b3ed8d3f16bbc92b.png
          */
-
+        private String msg;
         private String code;
         private String allfilePath;
         private String catalogues;
+
+        public String getMsg() {
+            return msg;
+        }
+
+        public void setMsg(String msg) {
+            this.msg = msg;
+        }
 
         public String getCode() {
             return code;

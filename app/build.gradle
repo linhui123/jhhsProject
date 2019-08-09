@@ -42,6 +42,12 @@ android {
         multiDexEnabled true
         flavorDimensions "versionCode"
     }
+
+//    manifestPlaceholders = [
+//            JPUSH_APPKEY : "2b35c08dcab5f061719c852d",//值来自开发者平台取得的AppKey
+//            JPUSH_CHANNEL: "default_developer",
+//    ]
+
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
@@ -55,9 +61,7 @@ android {
         }
 
     }
-}
 
-android {
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
@@ -112,8 +116,8 @@ dependencies {
     implementation 'com.mylhyl:acp:1.1.5'
     implementation 'cn.bingoogolapple:bga-banner:2.2.5@aar'
     implementation 'cn.bingoogolapple:bga-swipebacklayout:1.1.5@aar'
-    implementation files('libs/jcore-android-2.0.1.jar')
-    implementation files('libs/jpush-android-3.3.2.jar')
+    implementation files('libs/jcore-android-2.1.2.jar')
+    implementation files('libs/jpush-android-3.3.4.jar')
 //    implementation files('libs/alipaySdk-20170725.jar')
     implementation files('libs/libammsdk.jar')
     implementation files('libs/universal-image-loader-1.9.5.jar')
@@ -132,4 +136,9 @@ dependencies {
 
     implementation 'top.zibin:Luban:1.0.8'
     implementation 'com.github.chrisbanes.photoview:library:1.2.3'
+    implementation 'com.arialyy.aria:aria-core:3.5.1'
+    annotationProcessor 'com.arialyy.aria:aria-compiler:3.5.1'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.3'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.3'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-x86:0.8.3'
 }

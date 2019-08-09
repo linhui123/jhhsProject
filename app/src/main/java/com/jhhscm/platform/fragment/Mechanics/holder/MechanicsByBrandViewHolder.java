@@ -26,13 +26,14 @@ public class MechanicsByBrandViewHolder extends AbsRecyclerViewHolder<GetGoodsBy
     @Override
     protected void onBindView(final GetGoodsByBrandBean.ResultBean.DataBean item) {
         mBinding.tvTitle.setText(item.getName());
-        mBinding.tvPrice.setText(item.getRetailPrice()+"");
+        mBinding.tvPrice.setText(item.getRetailPrice() + "");
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mBinding.tvSelect.setBackgroundResource(R.mipmap.ic_shoping_s1);
                 EventBusUtil.post(new CompMechanicsEvent(item));
-                EventBusUtil.post(new BrandResultEvent(item.getBrandId()+"",item.getId()+""));
+                EventBusUtil.post(new BrandResultEvent(item.getBrandId() + "", item.getId() + "", item.getName()));
+//                EventBusUtil.post(new BrandResultEvent(item.getBrandId() + "", item.getId() + ""));
                 EventBusUtil.post(new FinishEvent());
             }
         });

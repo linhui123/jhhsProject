@@ -42,7 +42,7 @@ public class HomePageBrandViewHolder extends AbsRecyclerViewHolder<HomePageItem>
             mBinding.rl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BrandActivity.start(itemView.getContext());
+                    BrandActivity.start(itemView.getContext(),2);
                 }
             });
         }

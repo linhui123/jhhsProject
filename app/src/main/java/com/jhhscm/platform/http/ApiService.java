@@ -25,6 +25,7 @@ import com.jhhscm.platform.fragment.labour.FindLabourReleaseDetailBean;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
 import com.jhhscm.platform.fragment.labour.FindLabourWorkListBean;
 import com.jhhscm.platform.fragment.msg.GetPushListBean;
+import com.jhhscm.platform.fragment.my.CheckVersionBean;
 import com.jhhscm.platform.fragment.my.collect.FindCollectListBean;
 import com.jhhscm.platform.fragment.my.labour.FindLabourListBean;
 import com.jhhscm.platform.fragment.my.mechanics.FindOldGoodByUserCodeBean;
@@ -434,4 +435,11 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(SAVE_FEEDBACK)
     Call<BaseEntity<ResultBean>> saveFeedBack(@Body NetBean content);
+
+    //意见反馈
+    String CHECK_VERSION = "update/checkVersion";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(CHECK_VERSION)
+    Call<BaseEntity<CheckVersionBean>> checkVersion(@Body NetBean content);
 }

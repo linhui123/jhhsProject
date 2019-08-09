@@ -17,6 +17,7 @@ import com.jhhscm.platform.databinding.ItemHomeRecommendListBinding;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
 import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -72,7 +73,7 @@ public class HomePageRecommendViewHolder extends AbsRecyclerViewHolder<HomePageI
                 @Override
                 public void onClick(View v) {
                     String url = UrlUtils.PJXQ + "&good_code=21";
-                    MechanicsH5Activity.start(itemView.getContext(), url, "配件详情", "21", item.getIcon_url(),3);
+                    MechanicsH5Activity.start(itemView.getContext(), url, "配件详情", "21", item.getIcon_url(), 3);
                 }
             });
         }

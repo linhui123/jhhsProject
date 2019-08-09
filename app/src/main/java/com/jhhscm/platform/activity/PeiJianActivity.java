@@ -46,7 +46,7 @@ public class PeiJianActivity extends AbsToolbarActivity {
 
     @Override
     public boolean isSupportSwipeBack() {
-        return false;
+        return true;
     }
 
     @Override

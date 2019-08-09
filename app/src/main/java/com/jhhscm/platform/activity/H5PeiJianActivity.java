@@ -231,11 +231,11 @@ public class H5PeiJianActivity extends AbsActivity {
                 if (userSession != null
                         && userSession.getUserCode() != null
                         && userSession.getToken() != null) {
-                    if (picUrl != null && picUrl.length() > 0) {
+//                    if (picUrl != null && picUrl.length() > 0) {
 
-                        findCategoryDetail(goodCode, false);
+                    findCategoryDetail(goodCode, false);
 
-                    }
+//                    }
                 } else {
                     startNewActivity(LoginActivity.class);
                 }
@@ -249,7 +249,7 @@ public class H5PeiJianActivity extends AbsActivity {
                         && userSession.getUserCode() != null
                         && userSession.getToken() != null) {
                     if (picUrl != null && picUrl.length() > 0) {
-                        if (findCategoryDetailBean != null) {
+                        if (findCategoryDetailBean != null && findCategoryDetailBean.getData() != null) {
                             List<GetCartGoodsByUserCodeBean.ResultBean> list = new ArrayList<>();
                             GetCartGoodsByUserCodeBean.ResultBean resultBean = new GetCartGoodsByUserCodeBean.ResultBean();
                             resultBean.setNumber(count);
@@ -263,6 +263,8 @@ public class H5PeiJianActivity extends AbsActivity {
                             GetCartGoodsByUserCodeBean g = new GetCartGoodsByUserCodeBean();
                             g.setResult(list);
                             CreateOrderActivity.start(H5PeiJianActivity.this, g);
+                        } else {
+                            ToastUtil.show(H5PeiJianActivity.this, "获取不到该商品信息，请联系管理员");
                         }
                     }
                 } else {
@@ -472,6 +474,8 @@ public class H5PeiJianActivity extends AbsActivity {
                                     rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());  // left, top, right, bottom
                                     mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
                                 }
+                            } else if (response.body().getCode().equals("1003")) {
+                                startNewActivity(LoginActivity.class);
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
                             }
@@ -550,7 +554,11 @@ public class H5PeiJianActivity extends AbsActivity {
                             if (response.body().getCode().equals("200")) {
                                 findCategoryDetailBean = response.body().getData();
                                 if (findCategoryDetailBean.getData() != null) {
-                                    addGoodsToCarts(userSession.getUserCode(), picUrl, findCategoryDetailBean, userSession.getToken());
+                                    if (findCategoryDetailBean.getData().getPic_gallery_url_list() != null
+                                            && findCategoryDetailBean.getData().getPic_gallery_url_list().size() > 0) {
+                                        picUrl = findCategoryDetailBean.getData().getPic_gallery_url_list().get(0);
+                                        addGoodsToCarts(userSession.getUserCode(), picUrl, findCategoryDetailBean, userSession.getToken());
+                                    }
                                 } else {
                                     ToastUtils.show(getApplicationContext(), "获取不到该商品信息，请联系管理员");
                                 }

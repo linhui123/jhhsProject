@@ -97,5 +97,18 @@
         <attr name="left_margin" format="integer" />
         <attr name="with_camera" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="FlikerProgressBar">
+
+        <attr name="textSize" format="dimension" />
+
+        <attr name="loadingColor" format="color" />
+
+        <attr name="stopColor" format="color" />
+
+        <attr name="f_radius" format="dimension" />
+
+        <attr name="borderWidth" format="dimension" />
+
+    </declare-styleable>
 
 </resources>

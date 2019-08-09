@@ -41,7 +41,6 @@ import cn.jpush.android.api.JPushInterface;
 import com.jhhscm.platform.databinding.ActivityMainBinding;
 
 public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
-    private static String homepage = "mAnalysisFragment";
     private ActivityMainBinding mDataBinding;
     /**
      * 创建一个集合，存储碎片
@@ -49,7 +48,6 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     private List<Fragment> mFragments = new ArrayList<Fragment>();
     private HomePageFragment homeFragment;
     private MechanicsFragment mechanicsFragment;
-    //    private PeiJianFragment msgFragment;
     private FinancialFragment financialFragment;
     private MyFragment mMeFragment;
 
@@ -61,7 +59,6 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     public static MainActivity instance;
     private MessageReceiver mMessageReceiver;
     public static final String MESSAGE_RECEIVED_ACTION = "com.jhhscm.platform.MESSAGE_RECEIVED_ACTION";
-    public static final String KEY_TITLE = "title";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";
 
@@ -72,11 +69,11 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         instance = this;
         initPermission();
         registerMessageReceiver();
-        JPushInterface.init(getApplicationContext());// used for receive msg
+//        JPushInterface.init(getApplicationContext());// used for receive msg
         if (savedInstanceState == null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             homeFragment = new HomePageFragment();
-            fragmentManager.beginTransaction().add(R.id.fl, homeFragment, homepage).commit();
+            fragmentManager.beginTransaction().add(R.id.fl, homeFragment, "homeFragment").commit();
         }
     }
 
@@ -168,7 +165,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         if (checkedId == R.id.rd_analysis) {
             if (homeFragment == null) {
                 homeFragment = new HomePageFragment();
-                transaction1.add(R.id.fl, homeFragment, homepage);
+                transaction1.add(R.id.fl, homeFragment, "homeFragment");
             } else {
                 transaction1.show(homeFragment);
             }
@@ -176,7 +173,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         } else if (checkedId == R.id.rd_educationadmin) {
             if (mechanicsFragment == null) {
                 mechanicsFragment = new MechanicsFragment();
-                transaction1.add(R.id.fl, mechanicsFragment, "mEducationalAdminFragment");
+                transaction1.add(R.id.fl, mechanicsFragment, "mechanicsFragment");
             } else {
                 transaction1.show(mechanicsFragment);
             }
@@ -286,15 +283,14 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
             } else if ("STEWARD".equals(event.getType())) {//管家
                 ToastUtils.show(MainActivity.this, "该功能正在建设中");
             } else if ("RENT".equals(event.getType())) {//租赁
-                H5Activity.start(MainActivity.this, UrlUtils.ZL,"租赁");
+                H5Activity.start(MainActivity.this, UrlUtils.ZL, "租赁");
             } else if ("PROJECT".equals(event.getType())) {//工程
                 ToastUtils.show(MainActivity.this, "该功能正在建设中");
             } else if ("LABOUR".equals(event.getType())) {//劳务
                 LabourActivity.start(MainActivity.this);
             } else if ("WEB".equals(event.getType())) {//外部链接
-
+                H5Activity.start(MainActivity.this, event.getResultBean().getUrl());
             }
         }
     }
-
 }

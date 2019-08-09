@@ -61,7 +61,7 @@ public class HomePageBusinessViewHolder extends AbsRecyclerViewHolder<HomePageIt
                     AdBean.ResultBean resultBean = (AdBean.ResultBean) bean.getObject();
                     Gson gson = new Gson();
                     AdBean.DataBean findOrderBean = gson.fromJson(resultBean.getContent(), AdBean.DataBean.class);
-                    jump(findOrderBean.getTYPE());
+                    jump(findOrderBean.getTYPE(), resultBean);
                 }
 
                 @Override
@@ -74,8 +74,8 @@ public class HomePageBusinessViewHolder extends AbsRecyclerViewHolder<HomePageIt
         }
     }
 
-    private void jump(String type) {
-        EventBusUtil.post(new JumpEvent(type));
+    private void jump(String type, AdBean.ResultBean resultBean) {
+        EventBusUtil.post(new JumpEvent(type, resultBean));
     }
 }
 

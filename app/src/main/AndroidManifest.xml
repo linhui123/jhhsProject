@@ -26,7 +26,8 @@
     <permission
         android:name="com.jhhscm.platform.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
-    <uses-permission android:name="com.jhhscm.platform.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="com.jhhscm.platform.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature"/>
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
@@ -170,15 +171,12 @@
         </activity>
         <activity
             android:name=".wxapi.WXEntryActivity"
-            android:exported="true" /> <!-- <activity -->
-        <!-- android:name="com.alipay.sdk.app.H5PayActivity" -->
-        <!-- android:configChanges="orientation|keyboardHidden|navigation|screenSize" -->
-        <!-- android:exported="false" -->
-        <!-- android:screenOrientation="behind" -->
-        <!-- android:windowSoftInputMode="adjustResize|stateHidden" /> -->
+            android:exported="true" />
+
         <meta-data
             android:name="android.max_aspect"
             android:value="2.2" /> <!-- Required SDK 核心功能 -->
+
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -248,7 +246,8 @@
         <!-- 这个Service要继承JCommonService -->
         <service
             android:name=".jpush.PushService"
-            android:process=":pushcore">
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jiguang.user.service.action" />
             </intent-filter>

@@ -97,7 +97,7 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
         mDataBinding.tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BrandActivity.start(getContext());
+                BrandActivity.start(getContext(),2);
             }
         });
     }

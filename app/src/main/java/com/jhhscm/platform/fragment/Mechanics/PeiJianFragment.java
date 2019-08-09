@@ -19,12 +19,15 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentNewMechanicsBinding;
 import com.jhhscm.platform.databinding.FragmentPeiJianBinding;
+import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindCategoryAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetComboBoxAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetGoodsPageListAction;
+import com.jhhscm.platform.fragment.Mechanics.adapter.BrandAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.JXDropAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.SXDropAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.SelectedAdapter;
+import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
@@ -158,6 +161,13 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
                 }
             }
         });
+
+        mDataBinding.tvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
     }
 
     /**
@@ -284,6 +294,45 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
         getComboBox("goods_power");
         getComboBox("goods_shovel");
         getComboBox("goods_ton");
+        findBrand();
+    }
+
+    /**
+     * 获取品牌列表 findBrand
+     */
+    private void findBrand() {
+        if (getContext() != null) {
+            Map<String, String> map = new TreeMap<String, String>();
+            map.put("brand_type", "2");
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = Sign.getSignKey(getActivity(), map, "findBrand");
+            NetBean netBean = new NetBean();
+            netBean.setToken("");
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(FindBrandAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<FindBrandBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<FindBrandBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                        pinpai(response.body().getData());
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
     }
 
     /**
@@ -327,8 +376,20 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
     /**
      * 下拉品牌
      */
-    private void pinpai(GetComboBoxBean getComboBoxBean) {
-
+    private void pinpai(FindBrandBean findBrandBean) {
+        mDataBinding.rlPinpai.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        BrandAdapter bAdapter = new BrandAdapter(findBrandBean.getResult(), getContext());
+        mDataBinding.rlPinpai.setAdapter(bAdapter);
+        bAdapter.setMyListener(new BrandAdapter.ItemListener() {
+            @Override
+            public void onItemClick(FindBrandBean.ResultBean item) {
+                merchant_id = item.getId();
+                mDataBinding.tvPinpai.setText(item.getName());
+                mDataBinding.llXiala.setVisibility(View.GONE);
+                closeDrap();
+                mDataBinding.wrvRecycler.autoRefresh();
+            }
+        });
     }
 
     private void closeDrap() {

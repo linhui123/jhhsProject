@@ -23,15 +23,14 @@ public class PeiJianViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.Da
         ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.im);
         mBinding.tv1.setText(item.getName());
         mBinding.tv2.setText(item.getCounter_price() != null ? "￥" + item.getCounter_price() : "￥ --");
-        mBinding.tv3.setText(item.getName() != null ? "已售出 " + item.getName() + " 件" : "已售出 --件");
+        mBinding.tv3.setText(item.getSale_num() != null ? "已售出 " + item.getSale_num() + " 件" : "已售出 --件");
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = UrlUtils.PJXQ + "&good_code="+item.getId();
+                String url = UrlUtils.PJXQ + "&good_code=" + item.getId();
                 H5PeiJianActivity.start(itemView.getContext(), url, "配件详情", item.getId(), item.getPic_url(), 3);
             }
         });
-
     }
 }
 

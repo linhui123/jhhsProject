@@ -11,6 +11,7 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AssessResultActivity;
 import com.jhhscm.platform.activity.BrandActivity;
 import com.jhhscm.platform.activity.LoginActivity;
+import com.jhhscm.platform.activity.MechanicsByBrandActivity;
 import com.jhhscm.platform.databinding.FragmentAssessBinding;
 import com.jhhscm.platform.databinding.FragmentSaleMachineBinding;
 import com.jhhscm.platform.event.BrandResultEvent;
@@ -32,6 +33,7 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.DataUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.AddressDialog;
 import com.jhhscm.platform.views.dialog.DropDialog;
@@ -135,6 +137,8 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
     public void onEvent(BrandResultEvent event) {
         if (event.getBrand_id() != null) {
             brand_id = event.getBrand_id();
+        }
+        if (event.getBrand_name() != null && event.getBrand_name().length() > 0) {
             mDataBinding.tv1.setText(event.getBrand_name());
         }
         if (event.getFix_p_9() != null) {
@@ -200,10 +204,14 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_1://品牌 brand_id
-                BrandActivity.start(getContext());
+                BrandActivity.start(getContext(), 1);
                 break;
             case R.id.tv_2://型号 fix_p_9
-                BrandActivity.start(getContext());
+                if (brand_id != null && brand_id.length() > 0) {
+                    MechanicsByBrandActivity.start(getContext(), brand_id);
+                } else {
+                    ToastUtil.show(getContext(), "请先选择品牌");
+                }
                 break;
             case R.id.tv_3://施工地区 province city
                 new AddressDialog(getActivity(), "施工地区", new AddressDialog.CallbackListener() {
@@ -222,8 +230,10 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
                 timePickerShow.setOnTimePickerListener(new TimePickerShow.OnTimePickerListener() {
                     @Override
                     public void onClicklistener(String dataTime) {
-                        factory_time = dataTime.trim();
-                        mDataBinding.tv4.setText(dataTime.trim());
+                        if (dataTime.length() > 4) {
+                            factory_time = dataTime.substring(0, 4);
+                            mDataBinding.tv4.setText(dataTime.trim());
+                        }
                         judgeButton();
                     }
                 });
