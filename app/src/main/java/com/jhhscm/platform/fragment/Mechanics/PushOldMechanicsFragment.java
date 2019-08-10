@@ -238,7 +238,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                 break;
             case R.id.tv_2://型号 fix_p_9
                 if (brand_id != null && brand_id.length() > 0) {
-                    MechanicsByBrandActivity.start(getContext(), brand_id);
+                    MechanicsByBrandActivity.start(getContext(), brand_id, 0);
                 } else {
                     ToastUtil.show(getContext(), "请先选择品牌");
                 }
@@ -454,6 +454,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
     }
 
     private void doUploadImageAction1(final File file, final String imageUrl) {
+        showDialog();
         String token = ConfigUtils.getCurrentUser(getContext()).getToken();
         onNewRequestCall(UploadOldMechanicsImgAction.newInstance(getContext(), file, token).
                 request(new AHttpService.IResCallback<OldMechanicsUpImageBean>() {
@@ -463,9 +464,8 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                             if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
                                 return;
                             }
-//                        closeDialog();
+                            closeDialog();
                             if (response != null) {
-//                        new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                 if (response.body().getErrno().equals("0")) {
                                     if ("0".equals(response.body().getData().getCode())) {
                                         doUploadImageResponse1(imageUrl, response.body());
@@ -473,7 +473,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                                         ToastUtils.show(getContext(), response.body().getData().getMsg());
                                     }
                                 } else {
-//                            ToastUtils.show(getContext(), response.body().getMessage());
+
                                 }
                             }
                         }
@@ -534,6 +534,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
      */
     private void saveOldGood() {
         if (getContext() != null) {
+            showDialog();
             String jsonString1 = "";
             for (UpdateImageBean updateImageBean : updateImageBeanList1) {
                 if (jsonString1.length() > 0) {
@@ -613,7 +614,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
             if ("1".equals(navBarOverride)) {
                 //不存在虚拟按键
                 hasNavigationBar = false;
-                ToastUtil.show(context, "不存在虚拟按键");
+//                ToastUtil.show(context, "不存在虚拟按键");
             } else if ("0".equals(navBarOverride)) {
                 //存在虚拟按键
                 hasNavigationBar = true;

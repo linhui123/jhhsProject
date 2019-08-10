@@ -13,10 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.arialyy.aria.core.Aria;
+import com.arialyy.aria.core.AriaManager;
 import com.arialyy.aria.core.download.DownloadTask;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.DialogUpdateBinding;
 import com.jhhscm.platform.permission.YXPermission;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 
@@ -30,7 +32,7 @@ public class UpdateDialog extends BaseDialog {
     private boolean mCancelable = true;
     private String sure;
     private String DOWNLOAD_URL;
-    private String blsApp = "BLSAPP";
+    private String jhhsApp = "jhhsApp";
     private int a = 0;
 
     public interface CallbackListener {
@@ -62,8 +64,6 @@ public class UpdateDialog extends BaseDialog {
         mDataBinding.llSure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                dismiss();
-//                if (mListener != null) mListener.clickYes();
                 if (mDataBinding.sure.getText().toString().equals("下载")) {
                     startDownload();
                 } else if (mDataBinding.sure.getText().toString().equals("安装")) {
@@ -71,26 +71,9 @@ public class UpdateDialog extends BaseDialog {
                 }
             }
         });
-        update();
     }
-
-    private void update() {
-//        if (Aria.download(this).taskExists(DOWNLOAD_URL)) {
-//            DownloadTarget target = Aria.download(this).load(DOWNLOAD_URL);
-//            int a=target.getPercent();
-//            mDataBinding.flikerbar.setProgress(8);
-//        }
-//
-//        DownloadEntity entity = Aria.download(this).getDownloadEntity(DOWNLOAD_URL);
-//        if (entity != null) {
-//            int state = entity.getState();
-//        }
-        Aria.download(this).register();
-    }
-
 
     private void startDownload() {
-
         YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
                 .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
                 .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
@@ -102,11 +85,13 @@ public class UpdateDialog extends BaseDialog {
 
                 Aria.download(this)
                         .load(DOWNLOAD_URL)
-                        .setFilePath(getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/" + blsApp + ".apk")
+                        .setDownloadPath(getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/" + jhhsApp + ".apk")
                         .start();
+
                 mDataBinding.content.setText("下载完成（0%）");
                 mDataBinding.sure.setText("下载中");
                 mDataBinding.sure.setEnabled(false);
+                Aria.download(getContext()).addSchedulerListener(new MySchedulerListener());
             }
 
             @Override
@@ -116,7 +101,6 @@ public class UpdateDialog extends BaseDialog {
         });
 
     }
-
     private void resumeDownload() {
         mDataBinding.flikerbar.setBackgroundResource(R.color.color_cc);
         mDataBinding.flikerbar.setStop(false);
@@ -124,31 +108,8 @@ public class UpdateDialog extends BaseDialog {
     }
 
     private void stopDownload() {
-//        mDataBinding.btnConfirm.setText("暂停");
         Aria.download(this).load(DOWNLOAD_URL).pause();
         mDataBinding.flikerbar.setStop(true);
-    }
-
-    //在这里处理任务执行中的状态，如进度进度条的刷新
-//    @Download.onTaskRunning
-    private void running(DownloadTask task) {
-        int p = task.getPercent();    //任务进度百分比
-        String speed = task.getConvertSpeed();    //转换单位后的下载速度，单位转换需要在配置文件中打开
-        long speed1 = task.getSpeed(); //原始byte长度速度
-        Log.i("speed", speed);
-        Log.i("speeds", p + "");
-        String text = "下载完成(" + (p + 1) + ")%";
-        mDataBinding.content.setText(text);
-        mDataBinding.flikerbar.setProgress(p + 1);
-    }
-
-    //    @Download.onTaskComplete
-    void taskComplete(DownloadTask task) {
-        mDataBinding.flikerbar.finishLoad();
-        mDataBinding.sure.setText("安装");
-        mDataBinding.sure.setEnabled(true);
-        mDataBinding.content.setText("下载完成（100%）");
-        openAPK(getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/" + blsApp + ".apk");
     }
 
 
@@ -177,7 +138,14 @@ public class UpdateDialog extends BaseDialog {
     public void onStop() {
         super.onStop();
         Aria.download(this).load(DOWNLOAD_URL).pause();
+
         mDataBinding.flikerbar.setStop(true);
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+//        Aria.download(this).unRegister();
+        super.onDetachedFromWindow();
     }
 
     public void setCanDissmiss(boolean cancelable) {
@@ -189,6 +157,48 @@ public class UpdateDialog extends BaseDialog {
     public void onBackPressed() {
         if (mCancelable) {
             super.onBackPressed();
+        }
+    }
+
+    private class MySchedulerListener extends Aria.DownloadSchedulerListener {
+
+        @Override public void onTaskStart(DownloadTask task) {
+           Log.e("MySchedulerListener","安装包开始下载");
+        }
+
+        @Override public void onTaskStop(DownloadTask task) {
+            Log.e("MySchedulerListener","安装包停止下载");
+//            Toast.makeText(MainActivity.this, "停止下载", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override public void onTaskCancel(DownloadTask task) {
+            Log.e("MySchedulerListener","安装包取消下载");
+//            Toast.makeText(MainActivity.this, "取消下载", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override public void onTaskFail(DownloadTask task) {
+            ToastUtil.show(getContext(),"下载失败");
+        }
+
+        @Override public void onTaskComplete(DownloadTask task) {
+            ToastUtil.show(getContext(),"下载完成");
+            mDataBinding.flikerbar.finishLoad();
+            mDataBinding.sure.setText("安装");
+            mDataBinding.sure.setEnabled(true);
+            mDataBinding.content.setText("下载完成（100%）");
+            openAPK(getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/" + jhhsApp + ".apk");
+
+        }
+
+        @Override public void onTaskRunning(DownloadTask task) {
+            int p = task.getPercent();    //任务进度百分比
+            String speed = task.getConvertSpeed();    //转换单位后的下载速度，单位转换需要在配置文件中打开
+            long speed1 = task.getSpeed(); //原始byte长度速度
+            Log.i("speed", speed);
+            Log.i("speeds", p + "");
+            String text = "下载完成(" + (p + 1) + ")%";
+            mDataBinding.content.setText(text);
+            mDataBinding.flikerbar.setProgress(p + 1);
         }
     }
 }

@@ -54,6 +54,9 @@ public class TelPhoneDialog extends BaseDialog {
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
             mDataBinding.edPhone.setText(ConfigUtils.getCurrentUser(getContext()).getMobile());
         }
+        if (mContent!=null){
+            mDataBinding.content.setText(mContent);
+        }
 
         mDataBinding.tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override

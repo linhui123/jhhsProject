@@ -7,6 +7,7 @@ import com.jhhscm.platform.activity.AssessActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemSaleMechanicsTopBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
+import com.jhhscm.platform.event.OrderSussessEvent;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 
@@ -25,7 +26,7 @@ public class SaleMechanicsTopViewHolder extends AbsRecyclerViewHolder<SaleItem> 
             @Override
             public void onClick(View view) {
                 if (mBinding.etPhone.getText().toString().length()>8){
-                    EventBusUtil.post(new ConsultationEvent(mBinding.etPhone.getText().toString()));
+                    EventBusUtil.post(new OrderSussessEvent(mBinding.etPhone.getText().toString()));
                 }else {
                     ToastUtil.show(itemView.getContext(),"请输入正确手机号");
                 }

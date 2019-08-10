@@ -38,27 +38,19 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindOldGoodByUs
         mBinding.tv4.setText("");
         if (item.getIs_sell() == 0) {
             mBinding.tv4.setText("审核");
-        }else   if (item.getIs_sell() == 1) {
+        } else if (item.getIs_sell() == 1) {
             mBinding.tv4.setText("已售出");
-        }else   if (item.getIs_sell() ==2) {
+        } else if (item.getIs_sell() == 2) {
             mBinding.tv4.setText("正在销售");
         }
 
-
-//        mBinding.rl.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String url = UrlUtils.ESJXQ + "&good_code=" + item.getGood_code();
-//                MechanicsH5Activity.start(itemView.getContext(), url, "二手机详情", item.getGood_code(), 2);
-//            }
-//        });
-
-//        mBinding.tv4.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        mBinding.rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = UrlUtils.ESJXQ + "&good_code=" + item.getGood_code();
+                MechanicsH5Activity.start(itemView.getContext(), url, "二手机详情", item.getGood_code(), 2);
+            }
+        });
     }
 
     private String wan(String toal) {

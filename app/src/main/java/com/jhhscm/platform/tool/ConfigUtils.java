@@ -6,7 +6,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
 import com.jhhscm.platform.http.bean.UserSession;
+
+import java.util.List;
 
 
 /**
@@ -40,11 +43,12 @@ public class ConfigUtils {
     private static final String HOSPITAILADDRESS = "HospitailAddress";
     private static final String isSkip = "isSkip";
     private static final String HISTORY_SEARCH = "HistorySearch";
-
+    private static final String NEW_MECHANICS = "newMechanics";
     private static UserSession mCurrentUser;
-//    private static LocationBean mLocation;
+    //    private static LocationBean mLocation;
 //    private static IsCheckBean isCheckBean;
 //    private static FindByContentTypeNameBean.HistoryBean historyBean;
+    private static GetGoodsPageListBean dataBean;//新机浏览历史；最多只存5个
 
     public static void setIsLaunch(Context context) {
         SharedPreferences.Editor edit = getSharedPreferences(context).edit();
@@ -115,7 +119,8 @@ public class ConfigUtils {
         }
         return mCurrentUser;
     }
-//
+
+    //
 //    public static void setLocation(Context context, LocationBean user) {
 //        removeLocation(context);
 //        Gson gson = new Gson();
@@ -153,6 +158,29 @@ public class ConfigUtils {
 //        edit.commit();
 //    }
 //
+    public static void setNewMechanics(Context context, GetGoodsPageListBean dataBean) {
+        Gson gson = new Gson();
+        String userJson = gson.toJson(dataBean);
+        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
+        edit.putString(NEW_MECHANICS, userJson);
+        edit.commit();
+    }
+
+    public static void removeNewMechanics(Context context) {
+        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
+        edit.remove(NEW_MECHANICS);
+        edit.commit();
+        dataBean = null;
+    }
+
+    public synchronized static GetGoodsPageListBean getNewMechanics(Context context) {
+        String userJson = getSharedPreferences(context).getString(NEW_MECHANICS, "");
+        if (!TextUtils.isEmpty(userJson)) {
+            Gson gson = new Gson();
+            dataBean = gson.fromJson(userJson, GetGoodsPageListBean.class);
+        }
+        return dataBean;
+    }
 //    public static void removeHistorySearch(Context context) {
 //        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
 //        edit.remove(HISTORY_SEARCH);

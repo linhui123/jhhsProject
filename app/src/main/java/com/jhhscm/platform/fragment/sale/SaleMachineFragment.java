@@ -16,6 +16,7 @@ import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.PushOldMechanicsActivity;
 import com.jhhscm.platform.databinding.FragmentSaleMachineBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
+import com.jhhscm.platform.event.OrderSussessEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.http.AHttpService;
@@ -31,6 +32,7 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.dialog.OrderSuccessDialog;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
@@ -92,7 +94,7 @@ public class SaleMachineFragment extends AbsFragment<FragmentSaleMachineBinding>
     /**
      * 咨询
      */
-    public void onEvent(ConsultationEvent event) {
+    public void onEvent(OrderSussessEvent event) {
         if (event.phone != null) {
             saveMsg(event.phone);
         }
@@ -177,7 +179,8 @@ public class SaleMachineFragment extends AbsFragment<FragmentSaleMachineBinding>
                             }
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
-                                    new SimpleDialog(getContext(), phone, new SimpleDialog.CallbackListener() {
+                                    new OrderSuccessDialog(getContext(), new OrderSuccessDialog.CallbackListener() {
+
                                         @Override
                                         public void clickYes() {
 

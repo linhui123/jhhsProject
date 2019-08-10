@@ -145,7 +145,7 @@ public class GetGoodsPageListBean {
          * FixP2 : 6
          * second : 0
          */
-
+        private String counter_price;
         private String FixP5;
         private String good_code;
         private String name;
@@ -153,6 +153,23 @@ public class GetGoodsPageListBean {
         private String pic_url;
         private String FixP2;
         private String second;
+        private boolean select;
+
+        public boolean isSelect() {
+            return select;
+        }
+
+        public void setSelect(boolean select) {
+            this.select = select;
+        }
+
+        public String getCounter_price() {
+            return counter_price;
+        }
+
+        public void setCounter_price(String counter_price) {
+            this.counter_price = counter_price;
+        }
 
         public String getFixP5() {
             return FixP5;

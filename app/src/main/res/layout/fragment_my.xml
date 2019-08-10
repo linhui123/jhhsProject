@@ -116,6 +116,7 @@
                             android:background="@drawable/bg_text_ffa7"
                             android:paddingLeft="@dimen/padding_10"
                             android:paddingRight="@dimen/padding_10"
+                            android:visibility="gone"
                             android:text="去认证"
                             android:textColor="@color/white" />
                     </RelativeLayout>

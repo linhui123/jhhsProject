@@ -35,7 +35,7 @@ public class BrandViewHolder extends AbsRecyclerViewHolder<FindBrandBean.ResultB
                     EventBusUtil.post(new BrandResultEvent(item.getId(), item.getName()));
                     EventBusUtil.post(new FinishEvent());
                 }else {
-                    MechanicsByBrandActivity.start(itemView.getContext(), item.getId());
+                    MechanicsByBrandActivity.start(itemView.getContext(), item.getId(),0);
                 }
             }
         });

@@ -280,12 +280,14 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
         if (type == ALI_PAY_FLAG) {
             if (success) {
                 showAlert(getContext(), "支付宝支付成功");
+                getActivity().finish();
             } else {
                 showAlert(getContext(), "支付宝支付失败");
             }
         } else if (type == WX_PAY_FLAG) {
             if (success) {
                 showAlert(getContext(), "微信支付成功");
+                getActivity().finish();
             } else {
                 showAlert(getContext(), "微信支付失败");
             }

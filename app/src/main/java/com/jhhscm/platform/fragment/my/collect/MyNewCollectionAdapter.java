@@ -11,6 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.MechanicsH5Activity;
+import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.slideswaphelper.SlideSwapAction;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -82,6 +84,14 @@ public class MyNewCollectionAdapter extends RecyclerView.Adapter<MyNewCollection
                 if (null != deletedItemListener) {
                     deletedItemListener.deleted(data.get(position));
                 }
+            }
+        });
+
+        holder.rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = UrlUtils.XJXQ + "&good_code=" + data.get(position).getGood_code();
+                MechanicsH5Activity.start(context, url, "新机详情", data.get(position).getGood_code(), 1);
             }
         });
     }

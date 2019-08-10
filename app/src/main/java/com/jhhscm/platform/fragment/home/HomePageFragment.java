@@ -1,5 +1,6 @@
 package com.jhhscm.platform.fragment.home;
 
+import android.os.CountDownTimer;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -35,6 +36,8 @@ import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.jpush.ExampleUtil;
+import com.jhhscm.platform.tool.DataUtil;
+import com.jhhscm.platform.tool.DateUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
@@ -42,6 +45,7 @@ import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.ShareDialog;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
+import com.jhhscm.platform.views.dialog.UpdateDialog;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.util.Map;
@@ -104,6 +108,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
                 MsgActivity.start(getActivity());
             }
         });
+        mDataBinding.wetherDate.setText(DateUtils.getCurDate("MM/dd"));
     }
 
     private void initTel() {
@@ -390,9 +395,23 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
                                     CheckVersionBean checkVersionBean = response.body().getData();
                                     if ("0".equals(checkVersionBean.getIs_update())) {//需要更新
                                         if ("0".equals(checkVersionBean.getIs_must_update())) {//需要强制更新
-
-                                        }else {
-
+                                            final UpdateDialog alertDialog = new UpdateDialog(getContext(),
+                                                    "http://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d&word=%E5%A4%A7%E5%9B%BE%E7%89%87&step_word=&hs=0&pn=3&spn=0&di=105050&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&istype=2&ie=utf-8&oe=utf-8&in=&cl=2&lm=-1&st=-1&cs=3330325448%2C3545219178&os=3697803994%2C2928885464&simid=3510558266%2C384530084&adpicid=0&lpn=0&ln=490&fr=&fmq=1565425801220_R&fm=result&ic=&s=undefined&hd=&latest=&copyright=&se=&sme=&tab=0&width=&height=&face=undefined&ist=&jit=&cg=&bdtype=0&oriquery=&objurl=http%3A%2F%2Fgss0.baidu.com%2F-Po3dSag_xI4khGko9WTAnF6hhy%2Flvpics%2Fh%3D800%2Fsign%3D9931b79f1dd5ad6eb5f969eab1ca39a3%2Fa8773912b31bb051b3333f73307adab44aede052.jpg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fsey57_z%26e3Bkwt17_z%26e3Bv54AzdH3Frtvp6wejsAzdH3Fbkncknmanc89aumwucaj9k18&gsm=0&rpstart=0&rpnum=0&islist=&querylist=&force=undefined", new UpdateDialog.CallbackListener() {
+                                                @Override
+                                                public void clickYes() {
+//                                                    startCountDownTimer();
+                                                }
+                                            });
+                                            alertDialog.show();
+                                        } else {
+                                            final UpdateDialog alertDialog = new UpdateDialog(getContext(),
+                                                    "http://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d&word=%E5%A4%A7%E5%9B%BE%E7%89%87&step_word=&hs=0&pn=3&spn=0&di=105050&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&istype=2&ie=utf-8&oe=utf-8&in=&cl=2&lm=-1&st=-1&cs=3330325448%2C3545219178&os=3697803994%2C2928885464&simid=3510558266%2C384530084&adpicid=0&lpn=0&ln=490&fr=&fmq=1565425801220_R&fm=result&ic=&s=undefined&hd=&latest=&copyright=&se=&sme=&tab=0&width=&height=&face=undefined&ist=&jit=&cg=&bdtype=0&oriquery=&objurl=http%3A%2F%2Fgss0.baidu.com%2F-Po3dSag_xI4khGko9WTAnF6hhy%2Flvpics%2Fh%3D800%2Fsign%3D9931b79f1dd5ad6eb5f969eab1ca39a3%2Fa8773912b31bb051b3333f73307adab44aede052.jpg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fsey57_z%26e3Bkwt17_z%26e3Bv54AzdH3Frtvp6wejsAzdH3Fbkncknmanc89aumwucaj9k18&gsm=0&rpstart=0&rpnum=0&islist=&querylist=&force=undefined", new UpdateDialog.CallbackListener() {
+                                                @Override
+                                                public void clickYes() {
+//                                                    startCountDownTimer();
+                                                }
+                                            });
+                                            alertDialog.show();
                                         }
                                     }
                                 } else {
@@ -403,5 +422,4 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
                     }
                 }));
     }
-
 }

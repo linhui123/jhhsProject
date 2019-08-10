@@ -20,6 +20,7 @@
             android:id="@+id/rl"
             android:layout_width="match_parent"
             android:tag="slide_flag"
+            android:clickable="true"
             android:layout_height="100dp">
 
             <RelativeLayout

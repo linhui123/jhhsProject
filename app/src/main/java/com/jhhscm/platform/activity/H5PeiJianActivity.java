@@ -590,7 +590,7 @@ public class H5PeiJianActivity extends AbsActivity {
             if ("1".equals(navBarOverride)) {
                 //不存在虚拟按键
                 hasNavigationBar = false;
-                ToastUtil.show(context, "不存在虚拟按键");
+//                ToastUtil.show(context, "不存在虚拟按键");
             } else if ("0".equals(navBarOverride)) {
                 //存在虚拟按键
                 hasNavigationBar = true;

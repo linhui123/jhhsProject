@@ -10,19 +10,24 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.MechanicsH5Activity;
 import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
 import com.jhhscm.platform.fragment.GoodsToCarts.adapter.RecOtherTypeAdapter;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsByBrandBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
+import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.slideswaphelper.SlideSwapAction;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.jhhscm.platform.fragment.Mechanics.MechanicsItem.getGoodsPageListBean;
+
 public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.RecViewholder> {
 
     private Context context;
-    private List<GetGoodsByBrandBean.ResultBean.DataBean> data = new ArrayList<>();
+    private List<GetGoodsPageListBean.DataBean> data = new ArrayList<>();
     private LayoutInflater layoutInflater;
     private DeletedItemListener deletedItemListener;
     private CountChangeListener changeListener;
@@ -45,7 +50,7 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
         layoutInflater = LayoutInflater.from(context);
     }
 
-    public void setList(List<GetGoodsByBrandBean.ResultBean.DataBean> list, boolean refresh) {
+    public void setList(List<GetGoodsPageListBean.DataBean> list, boolean refresh) {
         if (refresh) {
             data.clear();
         }
@@ -53,7 +58,7 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
         notifyDataSetChanged();
     }
 
-    public void setData(GetGoodsByBrandBean.ResultBean.DataBean resultBean) {
+    public void setData(GetGoodsPageListBean.DataBean resultBean) {
         data.add(resultBean);
         notifyDataSetChanged();
     }
@@ -76,7 +81,7 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
     public void onBindViewHolder(final RecViewholder holder, final int position) {
         holder.setData(data.get(position));
         holder.tvTitle.setText(data.get(position).getName());
-        holder.tvPrice.setText("￥" + data.get(position).getCounterPrice());
+        holder.tvPrice.setText("￥" + data.get(position).getCounter_price());
         if (data.get(position).isSelect()) {
             holder.tvSelect.setImageResource(R.mipmap.ic_shoping_s1);
         } else {
@@ -94,7 +99,7 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
                     holder.tvSelect.setImageResource(R.mipmap.ic_shoping_s1);
                 }
                 if (null != selectedListener) {
-                    selectedListener.select(data.get(position));
+                    selectedListener.select(data);
                 }
             }
         });
@@ -104,7 +109,7 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
             @Override
             public void onClick(View v) {
                 if (null != deletedItemListener) {
-                    deletedItemListener.deleted(data.get(position));
+                    deletedItemListener.deleted(data, position);
                 }
             }
         });
@@ -112,7 +117,8 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
         holder.tvDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String url = UrlUtils.XJXQ + "&good_code=" + data.get(position).getGood_code();
+                MechanicsH5Activity.start(context, url, "新机详情", data.get(position).getGood_code(), 1);
             }
         });
     }
@@ -127,7 +133,7 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
      * view.getWidth()获取的是屏幕中可以看到的大小.
      */
     public class RecViewholder extends RecyclerView.ViewHolder implements SlideSwapAction {
-        GetGoodsByBrandBean.ResultBean.DataBean item;
+        GetGoodsPageListBean.DataBean item;
         public TextView slide;
         public RelativeLayout relativeLayout;
         public ImageView tvSelect;
@@ -150,7 +156,7 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
             return dip2px(slide.getContext(), 100);
         }
 
-        public void setData(GetGoodsByBrandBean.ResultBean.DataBean item) {
+        public void setData(GetGoodsPageListBean.DataBean item) {
             this.item = item;
         }
 
@@ -174,15 +180,15 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
     }
 
     public interface DeletedItemListener {
-        void deleted(GetGoodsByBrandBean.ResultBean.DataBean resultBean);
+        void deleted(List<GetGoodsPageListBean.DataBean> resultBeans, int position);
     }
 
     public interface CountChangeListener {
-        void changeCount(List<GetGoodsByBrandBean.ResultBean.DataBean> resultBeans, int position);
+        void changeCount(List<GetGoodsPageListBean.DataBean> resultBeans, int position);
     }
 
     public interface SelectedListener {
-        void select(GetGoodsByBrandBean.ResultBean.DataBean resultBean);
+        void select(List<GetGoodsPageListBean.DataBean> resultBeans);
     }
 }
 

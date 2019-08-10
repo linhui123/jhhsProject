@@ -11,6 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.H5PeiJianActivity;
+import com.jhhscm.platform.activity.MechanicsH5Activity;
+import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.slideswaphelper.SlideSwapAction;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -81,6 +84,14 @@ public class MyPeiJianCollectionAdapter extends RecyclerView.Adapter<MyPeiJianCo
                 if (null != deletedItemListener) {
                     deletedItemListener.deleted(data.get(position));
                 }
+            }
+        });
+
+        holder.rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = UrlUtils.PJXQ + "&good_code=" + data.get(position).getGood_code();
+                H5PeiJianActivity.start(context, url, "配件详情", data.get(position).getId(), data.get(position).getPic_url(), 3);
             }
         });
     }

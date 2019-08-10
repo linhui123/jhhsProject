@@ -4,21 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
-import com.jhhscm.platform.fragment.Mechanics.BrandFragment;
-import com.jhhscm.platform.fragment.Mechanics.MechanicsByBrandFragment;
+import com.jhhscm.platform.fragment.Mechanics.ComparisonDetailFragment;
+import com.jhhscm.platform.fragment.Mechanics.ComparisonFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 
-public class MechanicsByBrandActivity extends AbsToolbarActivity {
+public class ComparisonDetailActivity extends AbsToolbarActivity {
 
-    private int type = 0;//0 返回；1进入详情；
-
-    public static void start(Context context, String brand_id, int type) {
-        Intent intent = new Intent(context, MechanicsByBrandActivity.class);
-        intent.putExtra("brand_id", brand_id);
-        intent.putExtra("type", type);
+    public static void start(Context context, String good_code1, String good_code2) {
+        Intent intent = new Intent(context, ComparisonDetailActivity.class);
+        intent.putExtra("good_code1", good_code1);
+        intent.putExtra("good_code2", good_code2);
         context.startActivity(intent);
     }
 
@@ -49,19 +46,19 @@ public class MechanicsByBrandActivity extends AbsToolbarActivity {
 
     @Override
     protected String getToolBarTitle() {
-        return "选择机型";
+        return "机型对比";
     }
 
     @Override
     protected AbsFragment onCreateContentView() {
-        return MechanicsByBrandFragment.instance();
+        return ComparisonDetailFragment.instance();
     }
 
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
-        args.putString("brand_id", getIntent().getStringExtra("brand_id"));
-        args.putInt("type", getIntent().getIntExtra("type",0));
+        args.putString("good_code1",getIntent().getStringExtra("good_code1"));
+        args.putString("good_code2",getIntent().getStringExtra("good_code2"));
         return args;
     }
 }

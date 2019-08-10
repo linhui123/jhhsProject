@@ -413,6 +413,14 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
         mDataBinding.rlSelected.setLayoutManager(layoutManager);
         selectedAdapter = new SelectedAdapter(resultBeanList, getContext());
         mDataBinding.rlSelected.setAdapter(selectedAdapter);
+        selectedAdapter.setMyListener(new SelectedAdapter.ItemListener() {
+            @Override
+            public void onItemClick(GetComboBoxBean.ResultBean item) {
+                resultBeanList.remove(item);
+                selectedAdapter.notifyDataSetChanged();
+                mDataBinding.wrvRecycler.autoRefresh();
+            }
+        });
         mDataBinding.llXiala.setVisibility(View.GONE);
         closeDrap();
         mDataBinding.wrvRecycler.autoRefresh();

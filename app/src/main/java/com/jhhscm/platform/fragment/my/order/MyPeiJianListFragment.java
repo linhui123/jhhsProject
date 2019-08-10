@@ -148,7 +148,7 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
         mDataBinding.enhanceTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                showDialog();
+//                showDialog();
                 if (tab.getPosition() == 0) {
                     type = "";
                     mDataBinding.recyclerview.autoRefresh();
@@ -222,7 +222,6 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
                                 if (response.body().getCode().equals("200")) {
                                     findOrderListBean = response.body().getData();
                                     doSuccessResponse(refresh, findOrderListBean);
-//                                    mAdapter.setDetail(response.body().getData());
                                 } else {
                                     ToastUtils.show(getContext(), "error " + type + ":" + response.body().getMessage());
                                 }
@@ -236,30 +235,39 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
 
     private void doSuccessResponse(final boolean refresh, final FindOrderListBean categoryBean) {
         this.findOrderListBean = categoryBean;
-        if (findOrderListBean != null) {
-            for (FindOrderListBean.DataBean dataBean : findOrderListBean.getData()) {
-                findOrder(dataBean.getOrder_code());
+        if (findOrderListBean != null && findOrderListBean.getData() != null
+                && findOrderListBean.getData().size() > 0) {
+            for (int i = 0; i < findOrderListBean.getData().size(); i++) {
+                findOrder(findOrderListBean.getData().get(i).getOrder_code());
+                if (i == findOrderListBean.getData().size() - 1) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (refresh) {
+                                mAdapter.setDetail(categoryBean);
+                            } else {
+                                mAdapter.setExpend(categoryBean);
+                            }
+                        }
+                    }, 500);
+                }
+            }
+        } else {
+            if (refresh) {
+                mAdapter.setDetail(categoryBean);
+            } else {
+                mAdapter.setExpend(categoryBean);
             }
         }
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (refresh) {
-                    mAdapter.setDetail(categoryBean);
-                } else {
-                    mAdapter.setExpend(categoryBean);
-                }
-                mDataBinding.recyclerview.getAdapter().notifyDataSetChanged();
-                mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findOrderListBean.getPage().getTotal() / (float) findOrderListBean.getPage().getPageSize()) > mCurrentPage);
-            }
-        }, 2000);
+        mDataBinding.recyclerview.getAdapter().notifyDataSetChanged();
+        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findOrderListBean.getPage().getTotal() / (float) findOrderListBean.getPage().getPageSize()) > mCurrentPage);
+
     }
 
     /**
      * 订单查询
      */
     private void findOrder(final String orderGood) {
-        showDialog();
         Map<String, String> map = new TreeMap<String, String>();
         map.put("orderGood", orderGood);
         String content = JSON.toJSONString(map);

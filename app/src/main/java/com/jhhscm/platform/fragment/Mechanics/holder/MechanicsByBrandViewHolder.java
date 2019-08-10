@@ -3,6 +3,7 @@ package com.jhhscm.platform.fragment.Mechanics.holder;
 import android.view.View;
 
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.MechanicsH5Activity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemCompairsonSelectBinding;
 import com.jhhscm.platform.databinding.ItemMechanicsBrandBinding;
@@ -12,14 +13,17 @@ import com.jhhscm.platform.event.FinishEvent;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsByBrandBean;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.UrlUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MechanicsByBrandViewHolder extends AbsRecyclerViewHolder<GetGoodsByBrandBean.ResultBean.DataBean> {
 
     private ItemCompairsonSelectBinding mBinding;
+    private int type = 0;//0 返回；1进入详情；
 
-    public MechanicsByBrandViewHolder(View itemView) {
+    public MechanicsByBrandViewHolder(View itemView, int t) {
         super(itemView);
+        this.type = t;
         mBinding = ItemCompairsonSelectBinding.bind(itemView);
     }
 
@@ -30,11 +34,15 @@ public class MechanicsByBrandViewHolder extends AbsRecyclerViewHolder<GetGoodsBy
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBinding.tvSelect.setBackgroundResource(R.mipmap.ic_shoping_s1);
-                EventBusUtil.post(new CompMechanicsEvent(item));
-                EventBusUtil.post(new BrandResultEvent(item.getBrandId() + "", item.getId() + "", item.getName()));
-//                EventBusUtil.post(new BrandResultEvent(item.getBrandId() + "", item.getId() + ""));
-                EventBusUtil.post(new FinishEvent());
+                if (type==0){
+                    mBinding.tvSelect.setBackgroundResource(R.mipmap.ic_shoping_s1);
+                    EventBusUtil.post(new CompMechanicsEvent(item));
+                    EventBusUtil.post(new BrandResultEvent(item.getBrandId() + "", item.getId() + "", item.getName()));
+                    EventBusUtil.post(new FinishEvent());
+                }else {
+                    String url = UrlUtils.XJXQ + "&good_code=" + item.getCode();
+                    MechanicsH5Activity.start(itemView.getContext(), url, "新机详情", item.getCode(), 1);
+                }
             }
         });
     }

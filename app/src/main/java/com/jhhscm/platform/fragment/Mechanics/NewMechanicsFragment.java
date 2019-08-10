@@ -350,7 +350,7 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
                                 if (response != null) {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
-                                       pinpai(response.body().getData());
+                                        pinpai(response.body().getData());
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
@@ -368,6 +368,14 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
         mDataBinding.rlSelected.setLayoutManager(layoutManager);
         selectedAdapter = new SelectedAdapter(resultBeanList, getContext());
         mDataBinding.rlSelected.setAdapter(selectedAdapter);
+        selectedAdapter.setMyListener(new SelectedAdapter.ItemListener() {
+            @Override
+            public void onItemClick(GetComboBoxBean.ResultBean item) {
+                resultBeanList.remove(item);
+                selectedAdapter.notifyDataSetChanged();
+                mDataBinding.wrvRecycler.autoRefresh();
+            }
+        });
         mDataBinding.llXiala.setVisibility(View.GONE);
         closeDrap();
         mDataBinding.wrvRecycler.autoRefresh();

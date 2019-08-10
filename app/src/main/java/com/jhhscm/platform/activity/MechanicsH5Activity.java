@@ -106,7 +106,9 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -269,8 +271,9 @@ public class MechanicsH5Activity extends AbsActivity {
         mDataBinding.tvDijia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TelPhoneDialog(MechanicsH5Activity.this, new TelPhoneDialog.CallbackListener() {
-
+                new TelPhoneDialog(MechanicsH5Activity.this,
+                        "设备还能更优惠，马上输入您的手机号进行咨询",
+                        new TelPhoneDialog.CallbackListener() {
                     @Override
                     public void clickYes(String phone) {
                         saveMsg(phone);
@@ -774,13 +777,13 @@ public class MechanicsH5Activity extends AbsActivity {
 
             @JavascriptInterface
             public void shareWechat() {
-                showDialog();
+//                showDialog();
                 closeDialog();
             }
 
             @JavascriptInterface
             public void shareFriends() {
-                showDialog();
+//                showDialog();
 //                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
 //                ShareUtils.shareUrl(getContext(), SHARE_URL,
 //                        TITLE, CONTENT, SHARE_MEDIA.WEIXIN_CIRCLE,
@@ -790,7 +793,7 @@ public class MechanicsH5Activity extends AbsActivity {
 
             @JavascriptInterface
             public void shareToWechat(String title, String content, String imageUrl, String shareUrl) {
-                showDialog();
+//                showDialog();
 //                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
 //                ShareUtils.shareUrl(getContext(), shareUrl,
 //                        title, content, SHARE_MEDIA.WEIXIN,
@@ -800,7 +803,7 @@ public class MechanicsH5Activity extends AbsActivity {
 
             @JavascriptInterface
             public void shareToFriends(String title, String content, String imageUrl, String shareUrl) {
-                showDialog();
+//                showDialog();
 //                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
 //                ShareUtils.shareUrl(getContext(), shareUrl,
 //                        title, content, SHARE_MEDIA.WEIXIN_CIRCLE,
@@ -1317,6 +1320,23 @@ public class MechanicsH5Activity extends AbsActivity {
                             new HttpHelper().showError(getApplicationContext(), response.body().getCode(), response.body().getMessage());
                             if (response.body().getCode().equals("200")) {
                                 getGoodsDetailsBean = response.body().getData();
+                                GetGoodsPageListBean getGoodsPageListBean = new GetGoodsPageListBean();
+                                GetGoodsPageListBean.DataBean dataBean = new GetGoodsPageListBean.DataBean();
+                                dataBean.setCounter_price(getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price() + "");
+                                dataBean.setGood_code(getGoodsDetailsBean.getResult().getGoodsDetails().getGood_code());
+                                dataBean.setName(getGoodsDetailsBean.getResult().getGoodsDetails().getName());
+                                dataBean.setSelect(false);
+                                if (ConfigUtils.getNewMechanics(getApplicationContext()) != null
+                                        && ConfigUtils.getNewMechanics(getApplicationContext()).getData() != null
+                                        && ConfigUtils.getNewMechanics(getApplicationContext()).getData().size() > 0) {
+                                    getGoodsPageListBean = ConfigUtils.getNewMechanics(getApplicationContext());
+                                    getGoodsPageListBean.getData().add(dataBean);
+                                } else {
+                                    List<GetGoodsPageListBean.DataBean> dataBeans = new ArrayList<>();
+                                    dataBeans.add(dataBean);
+                                    getGoodsPageListBean.setData(dataBeans);
+                                }
+                                ConfigUtils.setNewMechanics(getApplicationContext(), getGoodsPageListBean);
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
                             }
@@ -1380,7 +1400,7 @@ public class MechanicsH5Activity extends AbsActivity {
             if ("1".equals(navBarOverride)) {
                 //不存在虚拟按键
                 hasNavigationBar = false;
-                ToastUtil.show(context, "不存在虚拟按键");
+//                ToastUtil.show(context, "不存在虚拟按键");
             } else if ("0".equals(navBarOverride)) {
                 //存在虚拟按键
                 hasNavigationBar = true;

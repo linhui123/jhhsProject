@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 
 import com.jhhscm.platform.R;
 
-import butterknife.ButterKnife;
-
 public class ChooseCarFragment extends Fragment{
 private View rootView;
     @Override

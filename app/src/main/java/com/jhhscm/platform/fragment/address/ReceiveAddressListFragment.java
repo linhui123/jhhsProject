@@ -111,6 +111,7 @@ public class ReceiveAddressListFragment extends AbsFragment<FragmentReceiveAddre
      * 获取地址列表
      */
     private void findAddressList(boolean refresh, String userCode, String token) {
+        showDialog();
         Map<String, String> map = new TreeMap<String, String>();
         map.put("user_code", userCode);
         String content = JSON.toJSONString(map);

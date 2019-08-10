@@ -159,12 +159,16 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
      */
     private void findGoodsAssess() {
         Map<String, Object> map = new TreeMap<String, Object>();
-        map.put("brand_id", Integer.parseInt(brand_id));
+        if (brand_id!=null){
+            map.put("brand_id", Integer.parseInt(brand_id));
+        }
         map.put("fix_p_9", fix_p_9);
         map.put("province", province);
         map.put("city", city);
         map.put("factory_time", factory_time);
-        map.put("old_time", Integer.parseInt(old_time));
+        if (old_time!=null){
+            map.put("old_time", Integer.parseInt(old_time));
+        }
         map.put("fix_p_13", fix_p_13);
         map.put("fix_p_13", fix_p_13);
         String content = JSON.toJSONString(map);
@@ -208,7 +212,7 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
                 break;
             case R.id.tv_2://型号 fix_p_9
                 if (brand_id != null && brand_id.length() > 0) {
-                    MechanicsByBrandActivity.start(getContext(), brand_id);
+                    MechanicsByBrandActivity.start(getContext(), brand_id,0);
                 } else {
                     ToastUtil.show(getContext(), "请先选择品牌");
                 }
@@ -345,23 +349,20 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
         mDataBinding.tv9.setText("");
     }
 
-    //    private String brand_id, fix_p_9, factory_time, old_time, fix_p_13, fix_p_14, province, city;
-//    private String tel;
-//    private String valuation_intention;
     private void judgeButton() {
-        if (brand_id != null && brand_id.length() > 0
-                && fix_p_9 != null && fix_p_9.length() > 0
-                && factory_time != null && factory_time.length() > 0
-                && old_time != null && old_time.length() > 0
-                && fix_p_13 != null && fix_p_13.length() > 0
-                && fix_p_14 != null && fix_p_14.length() > 0
-                && province != null && province.length() > 0
-                && city != null && city.length() > 0) {
-            mDataBinding.tvAssess.setEnabled(true);
-            mDataBinding.tvAssess.setBackgroundResource(R.drawable.button_c397);
-        } else {
-            mDataBinding.tvAssess.setEnabled(false);
-            mDataBinding.tvAssess.setBackgroundResource(R.drawable.button_b0c);
-        }
+//        if (brand_id != null && brand_id.length() > 0
+//                && fix_p_9 != null && fix_p_9.length() > 0
+//                && factory_time != null && factory_time.length() > 0
+//                && old_time != null && old_time.length() > 0
+//                && fix_p_13 != null && fix_p_13.length() > 0
+//                && fix_p_14 != null && fix_p_14.length() > 0
+//                && province != null && province.length() > 0
+//                && city != null && city.length() > 0) {
+//            mDataBinding.tvAssess.setEnabled(true);
+//            mDataBinding.tvAssess.setBackgroundResource(R.drawable.button_c397);
+//        } else {
+//            mDataBinding.tvAssess.setEnabled(false);
+//            mDataBinding.tvAssess.setBackgroundResource(R.drawable.button_b0c);
+//        }
     }
 }

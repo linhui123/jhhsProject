@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class MechanicsByBrandFragment extends AbsFragment<FragmentMechanicsByBra
     private int mCurrentPage = 1;
     private final int START_PAGE = mCurrentPage;
 
+    private int type = 0;
     private String brand_id;
 
     public static MechanicsByBrandFragment instance() {
@@ -69,7 +71,7 @@ public class MechanicsByBrandFragment extends AbsFragment<FragmentMechanicsByBra
         } else {
             getActivity().finish();
         }
-
+        type = getArguments().getInt("type");
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.recyclerview.setAdapter(mAdapter);
@@ -149,7 +151,7 @@ public class MechanicsByBrandFragment extends AbsFragment<FragmentMechanicsByBra
 
         @Override
         public AbsRecyclerViewHolder<GetGoodsByBrandBean.ResultBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new MechanicsByBrandViewHolder(mInflater.inflate(R.layout.item_compairson_select, parent, false));
+            return new MechanicsByBrandViewHolder(mInflater.inflate(R.layout.item_compairson_select, parent, false), type);
         }
     }
 

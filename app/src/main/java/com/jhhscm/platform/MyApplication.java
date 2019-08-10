@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.util.Log;
 
+import com.arialyy.aria.core.Aria;
 import com.jhhscm.platform.jpush.MyReceiver;
 import com.jhhscm.platform.views.AuthImageDownloader;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -62,6 +63,7 @@ public class MyApplication extends Application {
             builder.detectFileUriExposure();
         }
         UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "");
+//        Aria.init(this);
         // UMConfigure.setLogEnabled(true);
     }
 

@@ -59,6 +59,15 @@ public class SelectedAdapter extends RecyclerView.Adapter<SelectedAdapter.ViewHo
             }
         });
 
+        holder.im_del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (myListener != null) {
+                    myListener.onItemClick(list.get(position));
+                }
+            }
+        });
+
     }
 
     @Override
@@ -69,12 +78,12 @@ public class SelectedAdapter extends RecyclerView.Adapter<SelectedAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         GetComboBoxBean.ResultBean item;
         TextView tv_name;
-//        ImageView im_del;
+        ImageView im_del;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
-//            im_del = (ImageView) itemView.findViewById(R.id.im_del);
+            im_del = (ImageView) itemView.findViewById(R.id.im_close);
             tv_name.setOnClickListener(this);
         }
 

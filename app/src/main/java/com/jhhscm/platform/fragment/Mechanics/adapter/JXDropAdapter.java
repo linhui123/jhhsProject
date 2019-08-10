@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jhhscm.platform.R;
@@ -45,7 +46,7 @@ public class JXDropAdapter extends RecyclerView.Adapter<JXDropAdapter.ViewHolder
             holder.im_select.setVisibility(View.GONE);
         }
         holder.tv_name.setText(list.get(position).getKey_value());
-        holder.tv_name.setOnClickListener(new View.OnClickListener() {
+        holder.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 for (int i = 0; i < list.size(); i++) {
@@ -70,12 +71,13 @@ public class JXDropAdapter extends RecyclerView.Adapter<JXDropAdapter.ViewHolder
         GetComboBoxBean.ResultBean item;
         TextView tv_name;
         ImageView im_select;
+        RelativeLayout rl;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             im_select = (ImageView) itemView.findViewById(R.id.im_select);
-            tv_name.setOnClickListener(this);
+            rl = (RelativeLayout) itemView.findViewById(R.id.rl);
         }
 
         public void setData(GetComboBoxBean.ResultBean item) {

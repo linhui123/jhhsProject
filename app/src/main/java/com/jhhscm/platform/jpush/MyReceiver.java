@@ -1,15 +1,20 @@
 package com.jhhscm.platform.jpush;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.jhhscm.platform.MyApplication;
+import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.MainActivity;
-import com.jhhscm.platform.activity.TestActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +23,8 @@ import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.helper.Logger;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
  * 自定义接收器
@@ -28,9 +35,11 @@ import cn.jpush.android.helper.Logger;
  */
 public class MyReceiver extends BroadcastReceiver {
     private static final String TAG = "JIGUANG-Example";
+    private Context context;
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        this.context = context;
         try {
             Log.e("JPushInterface", "MyReceiver onReceive");
 
@@ -51,15 +60,11 @@ public class MyReceiver extends BroadcastReceiver {
                 Logger.d(TAG, "[MyReceiver] 接收到推送下来的通知");
                 int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
                 Logger.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
+                showNofity(bundle.getString(JPushInterface.EXTRA_CONTENT_TYPE),bundle.getString(JPushInterface.EXTRA_ALERT));
 
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
                 Logger.d(TAG, "[MyReceiver] 用户点击打开了通知");
                 //打开自定义的Activity
-                Intent i = new Intent(context, TestActivity.class);
-                i.putExtras(bundle);
-                //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                context.startActivity(i);
                 String dsd = bundle.getString(JPushInterface.EXTRA_EXTRA);
             } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
                 Logger.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
@@ -132,4 +137,28 @@ public class MyReceiver extends BroadcastReceiver {
             LocalBroadcastManager.getInstance(context).sendBroadcast(msgIntent);
         }
     }
+
+    private void showNofity(String title, String content) {
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
+
+        mBuilder.setContentTitle(title)//设置通知栏标题
+                .setContentText(content) //设置通知栏显示内容
+                .setContentIntent(getDefalutIntent(Notification.FLAG_AUTO_CANCEL)) //设置通知栏点击意图
+//	.setNumber(number) //设置通知集合的数量
+                .setTicker(title) //通知首次出现在通知栏，带上升动画效果的
+                .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
+                .setPriority(Notification.PRIORITY_DEFAULT) //设置该通知优先级
+//	.setAutoCancel(true)//设置这个标志当用户单击面板就可以让通知将自动取消
+                .setOngoing(false)//ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)
+                .setDefaults(Notification.DEFAULT_VIBRATE)//向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合
+                //Notification.DEFAULT_ALL  Notification.DEFAULT_SOUND 添加声音 // requires VIBRATE permission
+                .setSmallIcon(R.mipmap.ic_launcher);//设置通知小ICON
+    }
+
+    public PendingIntent getDefalutIntent(int flags) {
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, new Intent(), flags);
+        return pendingIntent;
+    }
+
 }

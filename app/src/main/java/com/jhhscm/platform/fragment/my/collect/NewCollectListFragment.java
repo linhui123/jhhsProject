@@ -122,6 +122,7 @@ public class NewCollectListFragment extends AbsFragment<FragmentCollectListBindi
      * 根据用户编号查看收藏列表
      */
     private void findCollectList(final boolean refresh, final String type) {
+        mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
         Map<String, String> map = new TreeMap<String, String>();
         map.put("user_code", userSession.getUserCode());
         map.put("goods_type", type);
@@ -129,7 +130,7 @@ public class NewCollectListFragment extends AbsFragment<FragmentCollectListBindi
         map.put("limit", mShowCount + "");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "findCollectList: " + "type");
+        String sign = Sign.getSignKey(getActivity(), map, "findCollectList: " + "type" + type);
         NetBean netBean = new NetBean();
         netBean.setToken(userSession.getToken());
         netBean.setSign(sign);
@@ -168,7 +169,7 @@ public class NewCollectListFragment extends AbsFragment<FragmentCollectListBindi
                     recAdapter.setList(resultBeans, refresh);
                 }
             }
-        }else {
+        } else {
             recAdapter.setList(resultBeans, refresh);
         }
         if (resultBeans.size() > 0) {
@@ -195,7 +196,7 @@ public class NewCollectListFragment extends AbsFragment<FragmentCollectListBindi
     /**
      * 取消收藏
      */
-    private void collectDelete( final String good_code) {
+    private void collectDelete(final String good_code) {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("user_code", userSession.getUserCode());
         map.put("good_code", good_code);

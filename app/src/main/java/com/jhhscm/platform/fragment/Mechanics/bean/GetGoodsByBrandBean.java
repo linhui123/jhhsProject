@@ -201,9 +201,9 @@ public class GetGoodsByBrandBean {
             private int isSecond;
             private int isNew;
             private String unit;
-            private double freightPrice;
-            private double counterPrice;
-            private double retailPrice;
+            private String freightPrice;
+            private String counterPrice;
+            private String retailPrice;
             private int num;
             private int saleNum;
             private String fixP1;
@@ -343,27 +343,27 @@ public class GetGoodsByBrandBean {
                 this.unit = unit;
             }
 
-            public double getFreightPrice() {
+            public String getFreightPrice() {
                 return freightPrice;
             }
 
-            public void setFreightPrice(double freightPrice) {
+            public void setFreightPrice(String freightPrice) {
                 this.freightPrice = freightPrice;
             }
 
-            public double getCounterPrice() {
+            public String getCounterPrice() {
                 return counterPrice;
             }
 
-            public void setCounterPrice(double counterPrice) {
+            public void setCounterPrice(String  counterPrice) {
                 this.counterPrice = counterPrice;
             }
 
-            public double getRetailPrice() {
+            public String getRetailPrice() {
                 return retailPrice;
             }
 
-            public void setRetailPrice(double retailPrice) {
+            public void setRetailPrice(String retailPrice) {
                 this.retailPrice = retailPrice;
             }
 

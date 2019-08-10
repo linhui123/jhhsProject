@@ -538,7 +538,7 @@ public class H5Activity extends AbsToolbarActivity {
 
             @JavascriptInterface
             public void shareWechat() {
-                showDialog();
+//                showDialog();
 //                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
 //                ShareUtils.shareUrl(getContext(), SHARE_URL,
 //                        TITLE, CONTENT, SHARE_MEDIA.WEIXIN,
@@ -548,7 +548,7 @@ public class H5Activity extends AbsToolbarActivity {
 
             @JavascriptInterface
             public void shareFriends() {
-                showDialog();
+//                showDialog();
 //                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
 //                ShareUtils.shareUrl(getContext(), SHARE_URL,
 //                        TITLE, CONTENT, SHARE_MEDIA.WEIXIN_CIRCLE,
@@ -558,7 +558,7 @@ public class H5Activity extends AbsToolbarActivity {
 
             @JavascriptInterface
             public void shareToWechat(String title, String content, String imageUrl, String shareUrl) {
-                showDialog();
+//                showDialog();
 //                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
 //                ShareUtils.shareUrl(getContext(), shareUrl,
 //                        title, content, SHARE_MEDIA.WEIXIN,
@@ -568,7 +568,7 @@ public class H5Activity extends AbsToolbarActivity {
 
             @JavascriptInterface
             public void shareToFriends(String title, String content, String imageUrl, String shareUrl) {
-                showDialog();
+//                showDialog();
 //                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
 //                ShareUtils.shareUrl(getContext(), shareUrl,
 //                        title, content, SHARE_MEDIA.WEIXIN_CIRCLE,

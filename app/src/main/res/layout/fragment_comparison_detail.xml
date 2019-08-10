@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/padding_15"
+            android:paddingBottom="@dimen/padding_15"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingRight="@dimen/padding_15">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_pk_l"
+                    android:drawablePadding="@dimen/padding_10"
+                    android:gravity="center"
+                    android:text="机型信息"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingRight="@dimen/dp_3">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="山河智能SWE70E挖掘机"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="25.73万"
+                        android:textColor="@color/ff1a"
+                        android:textSize="@dimen/text_size_16" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_3">
+
+                    <TextView
+                        android:id="@+id/tv_name_r"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="山河智能SWE70E挖掘机"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_price_r"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="25.73万"
+                        android:textColor="@color/ff1a"
+                        android:textSize="@dimen/text_size_16" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_10"
+                android:layout_weight="1"
+                android:text="规格"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold" />
+
+            <View
+                style="@style/view_h_de"
+                android:layout_marginTop="@dimen/padding_10" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:text="动力"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_dongli"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="传统动力"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_dongli_r"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="传统动力"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+            </LinearLayout>
+
+            <View style="@style/view_h_de" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:text="产商"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_chanshang"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="国产"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_chanshang_r"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="国产"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+            </LinearLayout>
+
+            <View style="@style/view_h_de" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:text="铲斗"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_chandou"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="反铲"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_chandou_r"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="反铲"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+            </LinearLayout>
+
+            <View style="@style/view_h_de" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:text="吨位(吨)"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_dunwei"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="45"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_dunwei_r"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="20"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+            </LinearLayout>
+
+            <View style="@style/view_h_de" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:text="整机工作重量(kg)"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_zhongliang"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="45"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_zhongliang_r"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="20"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+            </LinearLayout>
+
+            <View style="@style/view_h_de" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:text="铲斗容量（m^3）"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_cdrongliang"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="45"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_cdrongliang_r"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="20"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+            </LinearLayout>
+
+            <View style="@style/view_h_de" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_10"
+                android:layout_weight="1"
+                android:text="性能"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold" />
+
+            <View
+                style="@style/view_h_de"
+                android:layout_marginTop="@dimen/padding_10" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:text="额定功率( km/rpm)"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_gonglv"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="反铲"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_gonglv_r"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="反铲"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+            </LinearLayout>
+
+            <View style="@style/view_h_de" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:text="发动机型号"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_fadongji"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="45"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_fadongji_r"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="20"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+            </LinearLayout>
+
+            <View style="@style/view_h_de" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:text="燃油箱"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_rangyouxiang"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="45"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_rangyouxiang_r"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="20"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+            </LinearLayout>
+
+            <View style="@style/view_h_de" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:text="最大挖掘深度(m)"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_height"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="45"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+
+                <TextView
+                    android:id="@+id/tv_height_r"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="10dp"
+                    android:singleLine="true"
+                    android:text="20"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View style="@style/view_v_de" />
+            </LinearLayout>
+
+            <View style="@style/view_h_de" />
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>
