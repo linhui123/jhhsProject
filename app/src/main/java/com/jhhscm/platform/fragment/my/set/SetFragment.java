@@ -12,6 +12,8 @@ import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AboutActivity;
 import com.jhhscm.platform.activity.FeedbackActivity;
+import com.jhhscm.platform.activity.LoginActivity;
+import com.jhhscm.platform.activity.ReceiveAddressActivity;
 import com.jhhscm.platform.databinding.FragmentMyBinding;
 import com.jhhscm.platform.databinding.FragmentSetBinding;
 import com.jhhscm.platform.event.LoginOutEvent;
@@ -75,6 +77,19 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
                     mDataBinding.tvCache.setText("0.0M");
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+            }
+        });
+
+
+        mDataBinding.rlAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    ReceiveAddressActivity.start(getActivity(), false);
+                } else {
+                    startNewActivity(LoginActivity.class);
                 }
             }
         });

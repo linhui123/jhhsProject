@@ -79,6 +79,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
     private String tel, old_time, price, biaopai, name;
     private UserSession userSession;
     private GetComboBoxBean getComboBoxBean;
+    private boolean updateImgResult;
 
     public static PushOldMechanicsFragment instance() {
         PushOldMechanicsFragment view = new PushOldMechanicsFragment();
@@ -274,6 +275,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                 break;
             case R.id.tv_assess:
                 if (mDataBinding.selector.getUploadImageList().size() > 0) {
+                    updateImgResult = true;
                     doUploadAImagesAction1();
                 } else {
                     ToastUtils.show(getContext(), "请上传图片");
@@ -470,10 +472,12 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                                     if ("0".equals(response.body().getData().getCode())) {
                                         doUploadImageResponse1(imageUrl, response.body());
                                     } else {
+                                        updateImgResult = false;
                                         ToastUtils.show(getContext(), response.body().getData().getMsg());
                                     }
                                 } else {
-
+                                    updateImgResult = false;
+                                    ToastUtils.show(getContext(), "图片上传失败");
                                 }
                             }
                         }
@@ -516,7 +520,11 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                         updateImageBean.setPATIENT_IMAGE_NODE("1");
                         updateImageBeanList1.add(updateImageBean);
                     }
-                    saveOldGood();
+                    if (updateImgResult) {
+                        saveOldGood();
+                    } else {
+                        ToastUtils.show(getContext(), "图片上传失败,请重新提交");
+                    }
                 } else {
                     error();
                     closeDialog();

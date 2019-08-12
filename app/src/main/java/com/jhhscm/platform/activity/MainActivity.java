@@ -12,16 +12,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsActivity;
 import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.fragment.FinancialFragment;
 import com.jhhscm.platform.fragment.Mechanics.MechanicsFragment;
+import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.HomePageFragment;
 import com.jhhscm.platform.fragment.my.MyFragment;
 import com.jhhscm.platform.jpush.ExampleUtil;
@@ -291,7 +294,12 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
             } else if ("LABOUR".equals(event.getType())) {//劳务
                 LabourActivity.start(MainActivity.this);
             } else if ("WEB".equals(event.getType())) {//外部链接
-                H5Activity.start(MainActivity.this, event.getResultBean().getUrl());
+                Gson gson = new Gson();
+                AdBean.ResultBean adBean = gson.fromJson(event.getResultBean().getContent(), AdBean.ResultBean.class);
+                if (adBean.getPARAM() != null) {
+                    Log.e("WEB", "外部链接：" + adBean.getPARAM().getHREF_URL());
+                    H5Activity.start(MainActivity.this, adBean.getPARAM().getHREF_URL());
+                }
             }
         }
     }

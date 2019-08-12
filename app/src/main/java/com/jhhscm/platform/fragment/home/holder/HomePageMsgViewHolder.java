@@ -16,6 +16,7 @@ import com.jhhscm.platform.databinding.ItemHomeMsgListBinding;
 import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
+import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class HomePageMsgViewHolder extends AbsRecyclerViewHolder<HomePageItem> {
 
     @Override
     protected void onBindView(final HomePageItem item) {
+        mBinding.layoutProject.addItemDecoration(new DividerItemStrokeDecoration(itemView.getContext()));
         mBinding.layoutProject.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
         InnerAdapter mAdapter = new InnerAdapter(itemView.getContext());
         mBinding.layoutProject.setAdapter(mAdapter);

@@ -88,7 +88,6 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
                 getAD(3);
                 getAD(4);
                 findBrandHomePage();
-                ;
             }
 
             @Override
@@ -169,7 +168,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
         map.put("position", position + "");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "getAD");
+        String sign = Sign.getSignKey(getActivity(), map, "getAD type:" + position);
         NetBean netBean = new NetBean();
         netBean.setToken("");
         netBean.setSign(sign);
@@ -189,7 +188,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
                                         HomePageItem.adBean1 = response.body().getData();
                                     } else if (position == 3) {
                                         HomePageItem.adBean3 = response.body().getData();
-                                    } else {
+                                    } else if (position == 4) {
                                         HomePageItem.adBean2 = response.body().getData();
                                     }
                                 } else {

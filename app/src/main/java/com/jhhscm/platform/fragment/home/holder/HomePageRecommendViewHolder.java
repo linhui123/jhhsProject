@@ -72,8 +72,7 @@ public class HomePageRecommendViewHolder extends AbsRecyclerViewHolder<HomePageI
             mBinding.rlName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String url = UrlUtils.PJXQ + "&good_code=21";
-                    MechanicsH5Activity.start(itemView.getContext(), url, "配件详情", "21", item.getIcon_url(), 3);
+                    PeiJianActivity.start(itemView.getContext(), item.getId(), item.getName());
                 }
             });
         }

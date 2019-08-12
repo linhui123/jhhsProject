@@ -10,6 +10,7 @@ import com.jhhscm.platform.bean.UserData;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
+import com.jhhscm.platform.fragment.home.holder.HomePageACViewHolder;
 import com.jhhscm.platform.fragment.home.holder.HomePageADViewHolder;
 import com.jhhscm.platform.fragment.home.holder.HomePageBannerViewHolder;
 import com.jhhscm.platform.fragment.home.holder.HomePageBrandViewHolder;
@@ -56,6 +57,11 @@ public class HomePageAdapter extends AbsRecyclerViewAdapter<HomePageItem> {
         mData.add(item);
     }
 
+    private void addHomePageAc() {
+        HomePageItem item = new HomePageItem(HomePageItem.TYPE_HOME_PAGE_AC);
+        mData.add(item);
+    }
+
     /**
      * 电话信息
      */
@@ -95,11 +101,11 @@ public class HomePageAdapter extends AbsRecyclerViewAdapter<HomePageItem> {
         mData.clear();
         addHomePageBanner(homePageItem.adBean1);
         addHomePageBusiness(homePageItem.adBean3);
-        addHomePageAD(homePageItem.adBean2);
         addHomePageSendFriends();
+        addHomePageAD(homePageItem.adBean2);
         addHomePageBank(homePageItem.findBrandHomePageBean);
         addHomePageRecommend(homePageItem.findCategoryHomePageBean);
-        addHomePageAD(homePageItem.adBean2);
+        addHomePageAc();
         addHomePageMsg(homePageItem.findLabourReleaseHomePageBean);
         notifyDataSetChanged();
     }
@@ -113,6 +119,8 @@ public class HomePageAdapter extends AbsRecyclerViewAdapter<HomePageItem> {
                 return new HomePageBusinessViewHolder(mInflater.inflate(R.layout.item_home_page_business, parent, false));
             case HomePageItem.TYPE_HOME_PAGE_AD:
                 return new HomePageADViewHolder(mInflater.inflate(R.layout.item_home_page_ad, parent, false));
+            case HomePageItem.TYPE_HOME_PAGE_AC:
+                return new HomePageACViewHolder(mInflater.inflate(R.layout.item_home_page_ac, parent, false));
             case HomePageItem.TYPE_HOME_PAGE_SEND_FRIENDS:
                 return new HomePageSendFriendsViewHolder(mInflater.inflate(R.layout.item_home_page_phone, parent, false));
             case HomePageItem.TYPE_HOME_PAGE_BRAND:

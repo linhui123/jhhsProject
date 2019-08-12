@@ -1,25 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:roundiv="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/banner_bg"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <cn.bingoogolapple.bgabanner.BGABanner
-            android:id="@+id/bga_banner"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            app:banner_pageChangeDuration="1000"
-            app:banner_pointAutoPlayAble="true"
-            app:banner_pointAutoPlayInterval="5000"
-            app:banner_pointContainerBackground="@android:color/transparent"
-            app:banner_pointDrawable="@drawable/bga_banner_selector_point"
-            app:banner_pointTopBottomMargin="10dp"
-            app:banner_transitionEffect="alpha" />
-    </LinearLayout>
+            android:layout_height="150dp"
+            android:layout_below="@+id/rl_top"
+            android:background="@color/a397" />
+
+        <com.jhhscm.platform.views.OvalLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:orientation="vertical"
+            roundiv:left_bottom_radius1="5dp"
+            roundiv:left_top_radius1="5dp"
+            roundiv:right_bottom_radius1="5dp"
+            roundiv:right_top_radius1="5dp">
+
+            <cn.bingoogolapple.bgabanner.BGABanner
+                android:id="@+id/bga_banner"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                app:banner_pageChangeDuration="1000"
+                app:banner_pointAutoPlayAble="true"
+                app:banner_pointAutoPlayInterval="5000"
+                app:banner_pointContainerBackground="@android:color/transparent"
+                app:banner_pointDrawable="@drawable/bga_banner_selector_point"
+                app:banner_pointTopBottomMargin="10dp"
+                app:banner_transitionEffect="alpha" />
+        </com.jhhscm.platform.views.OvalLinearLayout>
+
+    </RelativeLayout>
 </layout>

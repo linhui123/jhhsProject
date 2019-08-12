@@ -274,11 +274,11 @@ public class MechanicsH5Activity extends AbsActivity {
                 new TelPhoneDialog(MechanicsH5Activity.this,
                         "设备还能更优惠，马上输入您的手机号进行咨询",
                         new TelPhoneDialog.CallbackListener() {
-                    @Override
-                    public void clickYes(String phone) {
-                        saveMsg(phone);
-                    }
-                }).show();
+                            @Override
+                            public void clickYes(String phone) {
+                                saveMsg(phone, "2");
+                            }
+                        }).show();
 
             }
         });
@@ -289,7 +289,7 @@ public class MechanicsH5Activity extends AbsActivity {
 
                     @Override
                     public void clickYes(String phone) {
-                        saveMsg(phone);
+                        saveMsg(phone, "3");
                     }
                 }).show();
             }
@@ -711,19 +711,27 @@ public class MechanicsH5Activity extends AbsActivity {
             settings.setJavaScriptEnabled(true); //与js交互必须设置
             settings.setAllowFileAccess(true);
             settings.setDomStorageEnabled(true);
-            settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+            settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
             settings.setLoadWithOverviewMode(true);
             settings.setUseWideViewPort(true);
             settings.setSupportZoom(true);
             settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
             settings.setDefaultTextEncodingName("UTF-8");
             settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+
+            settings.setDomStorageEnabled(true);//开启DOM storage API功能
+            settings.setDatabaseEnabled(true);//开启database storeage API功能
+            String cacheDirPath = getContext().getFilesDir().getAbsolutePath()+ "/webcache";//缓存路径
+            settings.setDatabasePath(cacheDirPath);//设置数据库缓存路径
+            settings.setAppCachePath(cacheDirPath);//设置AppCaches缓存路径
+            settings.setAppCacheEnabled(true);//开启AppCaches功能
+
             mDataBinding.webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
             mDataBinding.webView.addJavascriptInterface(new JSInterface(), "Android");
 
-            mDataBinding.webView.clearHistory();
-            mDataBinding.webView.clearFormData();
-            mDataBinding.webView.clearCache(true);
+//            mDataBinding.webView.clearHistory();
+//            mDataBinding.webView.clearFormData();
+//            mDataBinding.webView.clearCache(true);
             mDataBinding.webView.setWebViewClient(mWebViewClient);
             mDataBinding.webView.setWebChromeClient(mWebChromeClient);
             if (!NETUtils.isNetworkConnected(getActivity())) {
@@ -740,7 +748,6 @@ public class MechanicsH5Activity extends AbsActivity {
                     public void onPageFinished(WebView view, String url) {
                         super.onPageFinished(view, url);
                         closeDialog();
-                        mDataBinding.webView.setVisibility(View.VISIBLE);
                         animationDrawable.stop();
                         mDataBinding.webLoadAnim.setVisibility(View.GONE);
                     }
@@ -751,6 +758,21 @@ public class MechanicsH5Activity extends AbsActivity {
                         mDataBinding.webLoadAnim.setVisibility(View.VISIBLE);
                         animationDrawable.start();
                     }
+
+                    @RequiresApi(api = Build.VERSION_CODES.M)
+                    @Override
+                    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                        mDataBinding.webView.setVisibility(View.GONE);
+                        mDataBinding.rlError.setVisibility(View.VISIBLE);
+                        mDataBinding.tvReload.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mDataBinding.rlError.setVisibility(View.GONE);
+                                mDataBinding.webView.reload();
+                            }
+                        });
+                    }
+
                 });
             }
         }
@@ -1168,6 +1190,7 @@ public class MechanicsH5Activity extends AbsActivity {
                                     mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
                                 }
                             } else if (response.body().getCode().equals("1003")) {
+                                ToastUtils.show(getApplicationContext(), "登录信息过期，请重新登录");
                                 startNewActivity(LoginActivity.class);
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
@@ -1258,10 +1281,10 @@ public class MechanicsH5Activity extends AbsActivity {
     /**
      * 信息咨询
      */
-    private void saveMsg(final String phone) {
+    private void saveMsg(final String phone, String type) {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("mobile", phone);
-        map.put("type", "1");
+        map.put("type", type);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(MechanicsH5Activity.this, map, "saveMsg");
@@ -1407,6 +1430,7 @@ public class MechanicsH5Activity extends AbsActivity {
                 //手动设置控件的margin
                 //linebutton是一个linearlayout,里面包含了两个Button
                 RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) mDataBinding.rlBottom.getLayoutParams();
+                Log.e("getNavigationBarHeight","getNavigationBarHeight:"+getNavigationBarHeight(this));
                 //setMargins：顺序是左、上、右、下
                 layout.setMargins(15, 0, 15, getNavigationBarHeight(this) + 10);
             }

@@ -49,23 +49,24 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="80dp"
                     android:background="@color/a397" />
 
                 <RelativeLayout
                     android:id="@+id/rl_user"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
-                    android:background="@drawable/bg_white">
+                    android:background="@drawable/bg_white_shadow">
 
                     <com.jhhscm.platform.views.CircleImageView
                         android:id="@+id/im_user"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:layout_centerVertical="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
                         android:layout_marginLeft="20dp"
                         android:scaleType="centerCrop"
                         android:src="@mipmap/ic_launcher" />
@@ -116,9 +117,9 @@
                             android:background="@drawable/bg_text_ffa7"
                             android:paddingLeft="@dimen/padding_10"
                             android:paddingRight="@dimen/padding_10"
-                            android:visibility="gone"
                             android:text="去认证"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:visibility="gone" />
                     </RelativeLayout>
                 </RelativeLayout>
 
@@ -141,6 +142,7 @@
                             android:id="@+id/tv_shoucang"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:drawableLeft="@mipmap/ic_set_collect"
                             android:drawablePadding="12dp"
                             android:text="我的收藏"
                             android:textColor="@color/acc3"
@@ -154,6 +156,8 @@
                             android:src="@mipmap/ic_point" />
                     </RelativeLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <RelativeLayout
                         android:id="@+id/rl_jizi"
                         android:layout_width="match_parent"
@@ -164,6 +168,7 @@
                             android:id="@+id/tv_jizi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:drawableLeft="@mipmap/ic_set_mechanics"
                             android:drawablePadding="12dp"
                             android:text="我的设备"
                             android:textColor="@color/acc3"
@@ -177,6 +182,8 @@
                             android:src="@mipmap/ic_point" />
                     </RelativeLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <RelativeLayout
                         android:id="@+id/rl_laowu"
                         android:layout_width="match_parent"
@@ -187,6 +194,7 @@
                             android:id="@+id/tv_laowu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:drawableLeft="@mipmap/ic_set_labour"
                             android:drawablePadding="12dp"
                             android:text="我的劳务"
                             android:textColor="@color/acc3"
@@ -200,6 +208,8 @@
                             android:src="@mipmap/ic_point" />
                     </RelativeLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <RelativeLayout
                         android:id="@+id/rl_peijian"
                         android:layout_width="match_parent"
@@ -210,6 +220,7 @@
                             android:id="@+id/tv_peijian"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:drawableLeft="@mipmap/ic_set_peijian"
                             android:drawablePadding="12dp"
                             android:text="我的配件"
                             android:textColor="@color/acc3"
@@ -223,28 +234,7 @@
                             android:src="@mipmap/ic_point" />
                     </RelativeLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/rl_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp">
-
-                        <TextView
-                            android:id="@+id/tv_address"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="12dp"
-                            android:text="收货地址"
-                            android:textColor="@color/acc3"
-                            android:textSize="16sp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/ic_point" />
-                    </RelativeLayout>
+                    <View style="@style/view_h_de" />
 
                     <RelativeLayout
                         android:id="@+id/rl_tel"
@@ -256,6 +246,7 @@
                             android:id="@+id/tv_tel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:drawableLeft="@mipmap/ic_set_contact"
                             android:drawablePadding="12dp"
                             android:text="联系我们"
                             android:textColor="@color/acc3"
@@ -266,9 +257,11 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:text="400-0000-0000"
+                            android:text="0591-88390068"
                             android:textColor="@color/ff1a" />
                     </RelativeLayout>
+
+                    <View style="@style/view_h_de" />
 
                     <RelativeLayout
                         android:id="@+id/rl_set"
@@ -280,6 +273,7 @@
                             android:id="@+id/tv_set"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:drawableLeft="@mipmap/ic_set_set"
                             android:drawablePadding="12dp"
                             android:text="设置"
                             android:textColor="@color/acc3"
@@ -292,6 +286,8 @@
                             android:layout_centerVertical="true"
                             android:src="@mipmap/ic_point" />
                     </RelativeLayout>
+
+                    <View style="@style/view_h_de" />
                 </LinearLayout>
             </RelativeLayout>
         </android.support.v4.widget.NestedScrollView>

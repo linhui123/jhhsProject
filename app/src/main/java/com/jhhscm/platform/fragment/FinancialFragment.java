@@ -14,7 +14,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -288,19 +290,26 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
         settings.setJavaScriptEnabled(true); //与js交互必须设置
         settings.setAllowFileAccess(true);
         settings.setDomStorageEnabled(true);
-        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
         settings.setSupportZoom(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         settings.setDefaultTextEncodingName("UTF-8");
         settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+
+        settings.setDomStorageEnabled(true);//开启DOM storage API功能
+        settings.setDatabaseEnabled(true);//开启database storeage API功能
+        String cacheDirPath = getContext().getFilesDir().getAbsolutePath()+ "/webcache";//缓存路径
+        settings.setDatabasePath(cacheDirPath);//设置数据库缓存路径
+        settings.setAppCachePath(cacheDirPath);//设置AppCaches缓存路径
+        settings.setAppCacheEnabled(true);//开启AppCaches功能
         mDataBinding.webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         mDataBinding.webView.addJavascriptInterface(new JSInterface(), "Android");
 
-        mDataBinding.webView.clearHistory();
-        mDataBinding.webView.clearFormData();
-        mDataBinding.webView.clearCache(true);
+//        mDataBinding.webView.clearHistory();
+//        mDataBinding.webView.clearFormData();
+//        mDataBinding.webView.clearCache(true);
         mDataBinding.webView.setWebViewClient(mWebViewClient);
         mDataBinding.webView.setWebChromeClient(mWebChromeClient);
         if (!NETUtils.isNetworkConnected(getActivity())) {
@@ -317,7 +326,6 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
                 public void onPageFinished(WebView view, String url) {
                     super.onPageFinished(view, url);
                     closeDialog();
-                    mDataBinding.webView.setVisibility(View.VISIBLE);
                     animationDrawable.stop();
                     mDataBinding.webLoadAnim.setVisibility(View.GONE);
                 }
@@ -327,6 +335,22 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
                     super.onPageStarted(view, url, favicon);
                     mDataBinding.webLoadAnim.setVisibility(View.VISIBLE);
                     animationDrawable.start();
+                }
+
+                @RequiresApi(api = Build.VERSION_CODES.M)
+                @Override
+                public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                    if (getView() != null) { ;
+                        mDataBinding.webView.setVisibility(View.GONE);
+                        mDataBinding.rlError.setVisibility(View.VISIBLE);
+                        mDataBinding.tvReload.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mDataBinding.rlError.setVisibility(View.GONE);
+                                mDataBinding.webView.reload();
+                            }
+                        });
+                    }
                 }
             });
         }
@@ -670,7 +694,7 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
     private void saveMsg(final String phone) {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("mobile", phone);
-        map.put("type", "1");
+        map.put("type", "6");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "saveMsg");

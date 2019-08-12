@@ -14,12 +14,20 @@
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:textSize="@dimen/sp_14"
+            android:text="劳务资讯"
             android:textColor="@color/acc3"
-            android:text="劳务资讯" />
+            android:textSize="@dimen/sp_14" />
 
-        <View
-            style="@style/view_h_de"
-            android:layout_below="@+id/tv_msg" />
+        <!--<View-->
+        <!--style="@style/view_h_de"-->
+        <!--android:layout_below="@+id/tv_msg" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/line_stroke"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="2dp"-->
+            <!--android:layerType="software"-->
+            <!--android:layout_below="@+id/tv_msg"-->
+            <!--android:background="@drawable/line_stroke" />-->
     </RelativeLayout>
 </layout>

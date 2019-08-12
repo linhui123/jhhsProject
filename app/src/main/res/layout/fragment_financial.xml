@@ -63,32 +63,73 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:paddingLeft="@dimen/padding_15"
-            android:paddingRight="@dimen/padding_15"
             android:background="@color/white"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingRight="@dimen/padding_15"
+            android:paddingBottom="@dimen/dp_5">
 
             <TextView
                 android:id="@+id/tv_jisuan"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="@dimen/dp_5"
                 android:layout_weight="1"
                 android:background="@drawable/button_c397"
                 android:gravity="center"
                 android:text="购机计算器"
-                android:layout_marginRight="@dimen/dp_5"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_16" />
 
             <TextView
                 android:id="@+id/tv_info"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:layout_marginLeft="@dimen/dp_5"
+                android:layout_weight="1"
                 android:background="@drawable/button_c397"
                 android:gravity="center"
                 android:text="咨询联系"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_16" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rl_error"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/ll_bottom"
+            android:layout_below="@+id/toolbar"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:src="@mipmap/ic_error_1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:text="网络居然奔溃了"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_16" />
+
+
+            <TextView
+                android:id="@+id/tv_reload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:text="重新加载"
+                android:padding="@dimen/padding_10"
+                android:background="@drawable/button_c397"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_16" />
         </LinearLayout>

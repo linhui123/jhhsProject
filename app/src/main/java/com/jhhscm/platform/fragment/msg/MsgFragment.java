@@ -50,7 +50,7 @@ import java.util.TreeMap;
 import retrofit2.Response;
 
 public class MsgFragment extends AbsFragment<FragmentMsgBinding> {
-    private String type = "0";
+    private int type = 0;
     private InnerAdapter aAdapter;
 
     private int mShowCount = 10;
@@ -76,7 +76,7 @@ public class MsgFragment extends AbsFragment<FragmentMsgBinding> {
         mDataBinding.tvNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                type = "0";
+                type = 0;
                 mDataBinding.rlActivity.autoRefresh();
                 mDataBinding.tvNew.setBackgroundResource(R.color.white);
                 mDataBinding.tvNew.setTextColor(getResources().getColor(R.color.a397));
@@ -88,13 +88,19 @@ public class MsgFragment extends AbsFragment<FragmentMsgBinding> {
         mDataBinding.tvOld.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                type = "1";
+                type = 1;
                 mDataBinding.rlActivity.autoRefresh();
                 mDataBinding.tvOld.setBackgroundResource(R.color.white);
                 mDataBinding.tvOld.setTextColor(getResources().getColor(R.color.a397));
                 mDataBinding.tvNew.setBackgroundResource(R.drawable.bg_397_left_ovel);
                 mDataBinding.tvNew.setTextColor(getResources().getColor(R.color.white));
+            }
+        });
 
+        mDataBinding.imBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
             }
         });
 
@@ -124,11 +130,11 @@ public class MsgFragment extends AbsFragment<FragmentMsgBinding> {
     /**
      * 消息列表
      */
-    private void getPushList(final boolean refresh, String type) {
+    private void getPushList(final boolean refresh, final int type) {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, Object> map = new TreeMap<String, Object>();
-            map.put("msg_type", Integer.parseInt(type));
+            map.put("msg_type", type);
             map.put("page", mCurrentPage);
             map.put("limit", mShowCount);
             String content = JSON.toJSONString(map);
@@ -152,7 +158,12 @@ public class MsgFragment extends AbsFragment<FragmentMsgBinding> {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         getPushListBean = response.body().getData();
-                                        initView(refresh);
+                                        if (getPushListBean != null) {
+                                            for (GetPushListBean.DataBean dataBean : getPushListBean.getData()) {
+                                                dataBean.setType(type);
+                                            }
+                                        }
+                                        initView(getPushListBean, refresh);
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
@@ -163,13 +174,14 @@ public class MsgFragment extends AbsFragment<FragmentMsgBinding> {
         }
     }
 
-    private void initView(boolean refresh) {
-            if (refresh) {
-                aAdapter.setData(getPushListBean.getData());
-            } else {
-                aAdapter.append(getPushListBean.getData());
-            }
-            mDataBinding.rlActivity.loadComplete(aAdapter.getItemCount() == 0, ((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage);
+    private void initView(GetPushListBean pushListBean, boolean refresh) {
+        this.getPushListBean = pushListBean;
+        if (refresh) {
+            aAdapter.setData(pushListBean.getData());
+        } else {
+            aAdapter.append(pushListBean.getData());
+        }
+        mDataBinding.rlActivity.loadComplete(aAdapter.getItemCount() == 0, ((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage);
     }
 
     private class InnerAdapter extends AbsRecyclerViewAdapter<GetPushListBean.DataBean> {

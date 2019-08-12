@@ -27,9 +27,9 @@ public class HomePageADViewHolder extends AbsRecyclerViewHolder<HomePageItem> {
 
     @Override
     protected void onBindView(final HomePageItem item) {
-        if (item.adBean1 != null) {
+        if (item.adBean2 != null) {
             final List<String> list = new ArrayList<>();
-            for (AdBean.ResultBean adBean : item.adBean1.getResult()) {
+            for (AdBean.ResultBean adBean : item.adBean2.getResult()) {
                 list.add(adBean.getUrl());
             }
 //        list.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic1xjab4j30ci08cjrv.jpg");
@@ -41,7 +41,7 @@ public class HomePageADViewHolder extends AbsRecyclerViewHolder<HomePageItem> {
                 @Override
                 public void onClick(View v) {
                     if (list.size() > 0) {
-                        AdBean adBean = item.adBean1;
+                        AdBean adBean = item.adBean2;
                         AdBean.ResultBean resultBean = adBean.getResult().get(0);
                         Gson gson = new Gson();
                         AdBean.DataBean findOrderBean = gson.fromJson(resultBean.getContent(), AdBean.DataBean.class);

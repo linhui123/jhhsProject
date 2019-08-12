@@ -4,26 +4,41 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="@dimen/padding_10" />
+            android:layout_height="80dp"
+            android:layout_below="@+id/rl_top"
+            android:background="@drawable/home_bg" />
 
-        <com.jhhscm.platform.views.dlflipviewpage.indicator.CirclePageIndicator
-            android:id="@+id/indicator"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/viewPager"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="@dimen/padding_10"
-            app:pageColor="@color/colorAccent"
-            app:radius="3dp"
-            app:selectColor="@color/colorPrimary"
-            app:strokeWidth="0dp" />
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_white_shadow"
+            android:orientation="vertical">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="@dimen/padding_10" />
+
+            <com.jhhscm.platform.views.dlflipviewpage.indicator.CirclePageIndicator
+                android:id="@+id/indicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/viewPager"
+                android:layout_marginTop="@dimen/padding_10"
+                app:pageColor="@color/colorAccent"
+                app:radius="3dp"
+                app:selectColor="@color/colorPrimary"
+                app:strokeWidth="0dp" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 </layout>

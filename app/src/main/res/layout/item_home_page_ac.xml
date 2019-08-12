@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingTop="@dimen/padding_15"
+        android:paddingRight="16dp"
+        android:paddingBottom="@dimen/padding_15">
+
+        <com.jhhscm.platform.views.OvalImageView
+            android:id="@+id/iv_report"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:src="@mipmap/ic_home_jinfu"
+            android:scaleType="centerCrop"
+            roundiv:left_bottom_radius1="5dp"
+            roundiv:left_top_radius1="5dp"
+            roundiv:right_bottom_radius1="5dp"
+            roundiv:right_top_radius1="5dp" />
+
+    </LinearLayout>
+</layout>

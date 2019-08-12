@@ -9,7 +9,7 @@
             android:id="@+id/rl_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blue_txt">
+            android:background="@color/a397">
 
             <TextView
                 android:id="@+id/city_text"
@@ -78,16 +78,11 @@
                 android:background="@mipmap/ic_info" />
         </RelativeLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_below="@+id/rl_top"
-            android:background="@drawable/home_bg" />
-
         <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
             android:id="@+id/wrv_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:layout_below="@+id/rl_top"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
 
         <ImageView

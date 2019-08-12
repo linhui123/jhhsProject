@@ -32,6 +32,7 @@ public class ADActivity extends AbsActivity {
     private ImageView imageView;
     private TextView textView;
     private RelativeLayout relativeLayout;
+    private boolean Instance;
 
     @Override
     protected boolean fullScreenMode() {
@@ -51,7 +52,14 @@ public class ADActivity extends AbsActivity {
         textView = (TextView) findViewById(R.id.tv_time);
         relativeLayout = (RelativeLayout) findViewById(R.id.ll_layouts);
         getAD(1);
-
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Instance = true;
+                startNewActivity(MainActivity.class);
+                finish();
+            }
+        });
     }
 
     private void startCountDownTimer(int time) {
@@ -63,8 +71,10 @@ public class ADActivity extends AbsActivity {
 
             @Override
             public void onFinish() {
-                startNewActivity(MainActivity.class);
-                finish();
+                if (!Instance){
+                    startNewActivity(MainActivity.class);
+                    finish();
+                }
             }
         }.start();
     }
@@ -77,7 +87,7 @@ public class ADActivity extends AbsActivity {
         map.put("position", position + "");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getApplicationContext(), map,"getAD");
+        String sign = Sign.getSignKey(getApplicationContext(), map, "getAD");
         NetBean netBean = new NetBean();
         netBean.setToken("");
         netBean.setSign(sign);
@@ -104,7 +114,7 @@ public class ADActivity extends AbsActivity {
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
                             }
-                        }else {
+                        } else {
                             startNewActivity(MainActivity.class);
                         }
                     }

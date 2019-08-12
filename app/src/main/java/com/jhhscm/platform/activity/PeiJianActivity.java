@@ -24,6 +24,13 @@ public class PeiJianActivity extends AbsToolbarActivity {
         context.startActivity(intent);
     }
 
+    public static void start(Context context, String category_id, String category_namw) {
+        Intent intent = new Intent(context, PeiJianActivity.class);
+        intent.putExtra("category_id", category_id);
+        intent.putExtra("category_namw", category_namw);
+        context.startActivity(intent);
+    }
+
     @Override
     protected boolean enableHomeButton() {
         return true;
@@ -63,6 +70,8 @@ public class PeiJianActivity extends AbsToolbarActivity {
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putString("category_namw",getIntent().getStringExtra("category_namw"));
+        args.putString("category_id",getIntent().getStringExtra("category_id"));
         return args;
     }
 }

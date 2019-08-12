@@ -28,6 +28,11 @@ public class GetComboBoxBean {
         private String desc;
         private boolean isSelect;
 
+        public ResultBean( String key_name, String key_value) {
+            this.key_name = key_name;
+            this.key_value = key_value;
+        }
+
         public ResultBean(boolean isSelect, String key_name, String id) {
             this.isSelect = isSelect;
             this.key_name = key_name;

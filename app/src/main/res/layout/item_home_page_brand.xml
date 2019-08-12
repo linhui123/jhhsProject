@@ -6,13 +6,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:orientation="vertical"
-        android:paddingTop="10dp">
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/padding_10"
+            android:background="@color/list_view_item_org" />
 
         <RelativeLayout
             android:id="@+id/rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_10"
             android:paddingLeft="@dimen/padding_15"
             android:paddingRight="@dimen/padding_15">
 
@@ -20,6 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="热门品牌"
+                android:textStyle="bold"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_16" />
 
@@ -28,19 +34,18 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="查看更多》"
+                android:text="查看更多>"
                 android:textColor="@color/a397"
                 android:textSize="@dimen/sp_14" />
         </RelativeLayout>
-
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp">
+            android:layout_marginBottom="5dp">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/layout_project"

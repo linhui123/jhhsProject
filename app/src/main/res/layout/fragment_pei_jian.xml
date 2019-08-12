@@ -15,20 +15,18 @@
             android:paddingLeft="@dimen/padding_15"
             android:paddingRight="@dimen/padding_15">
 
-            <TextView
+            <ImageView
                 android:id="@+id/tv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_5"
-                android:padding="@dimen/dp_5"
+                android:layout_centerVertical="true"
                 android:background="@mipmap/ic_back" />
 
             <TextView
                 android:id="@+id/tv_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/dp_5"
-                android:paddingBottom="@dimen/dp_5"
+                android:layout_centerVertical="true"
                 android:text="选择地区>"
                 android:textColor="@color/white"
                 android:visibility="gone" />
@@ -38,10 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:paddingLeft="@dimen/padding_10"
-                android:paddingTop="@dimen/dp_5"
-                android:paddingRight="@dimen/padding_10"
-                android:paddingBottom="@dimen/dp_5"
+                android:layout_centerVertical="true"
                 android:text="  配件  "
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_18" />
@@ -51,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:paddingTop="@dimen/dp_3"
+                android:layout_centerVertical="true"
                 android:src="@mipmap/ic_sousuo" />
         </RelativeLayout>
 
@@ -146,7 +141,7 @@
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/dp_5"
-                android:paddingBottom="@dimen/padding_15"
+                android:paddingBottom="@dimen/dp_5"
                 android:visibility="gone">
 
                 <android.support.v7.widget.RecyclerView
@@ -165,7 +160,7 @@
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/dp_5"
-                android:paddingBottom="@dimen/padding_15"
+                android:paddingBottom="@dimen/dp_5"
                 android:visibility="gone">
 
                 <android.support.v7.widget.RecyclerView
@@ -184,7 +179,7 @@
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/dp_5"
-                android:paddingBottom="@dimen/padding_15"
+                android:paddingBottom="@dimen/dp_5"
                 android:visibility="gone">
 
                 <android.support.v7.widget.RecyclerView

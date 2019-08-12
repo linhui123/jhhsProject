@@ -190,7 +190,7 @@
                     android:paddingLeft="@dimen/padding_15"
                     android:paddingTop="@dimen/dp_5"
                     android:paddingBottom="@dimen/dp_5"
-                    android:text="动力"
+                    android:text="价格"
                     android:textColor="@color/acc3" />
 
                 <android.support.v7.widget.RecyclerView
@@ -206,7 +206,7 @@
                     android:paddingLeft="@dimen/padding_15"
                     android:paddingTop="@dimen/dp_5"
                     android:paddingBottom="@dimen/dp_5"
-                    android:text="铲斗"
+                    android:text="使用小时数"
                     android:textColor="@color/acc3" />
 
                 <android.support.v7.widget.RecyclerView
@@ -222,7 +222,7 @@
                     android:paddingLeft="@dimen/padding_15"
                     android:paddingTop="@dimen/dp_5"
                     android:paddingBottom="@dimen/dp_5"
-                    android:text="吨位"
+                    android:text="出厂年限"
                     android:textColor="@color/acc3" />
 
                 <android.support.v7.widget.RecyclerView

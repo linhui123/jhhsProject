@@ -142,11 +142,19 @@ public class GetPushListBean implements Serializable {
          * add_time : 2019-08-02 16:11:17
          * content : 123
          */
-
+        private int type;
         private String id;
         private String title;
         private String add_time;
         private String content;
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
 
         public String getId() {
             return id;

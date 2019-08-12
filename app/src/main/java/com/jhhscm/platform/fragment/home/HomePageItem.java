@@ -13,14 +13,14 @@ public class HomePageItem {
     public static final int TYPE_HOME_PAGE_BRAND = 5;//品牌
     public static final int TYPE_HOME_PAGE_RECOMMEND = 6;//推荐
     public static final int TYPE_HOME_PAGE_MSG = 7;//劳务资讯
-
     public static final int TYPE_HOME_PAGE_PROJECT = 8;//业务项目
+    public static final int TYPE_HOME_PAGE_AC = 9;//广告
     public int itemType;
 
     public UserData userData;
     public static AdBean adBean1; //头部轮播图
     public static AdBean adBean2; //广告1
-    public static AdBean adBean3; //广告2
+    public static AdBean adBean3; //广告2 活动
     public static FindBrandHomePageBean findBrandHomePageBean;
     public static FindCategoryHomePageBean findCategoryHomePageBean;
     public static FindLabourReleaseHomePageBean findLabourReleaseHomePageBean;

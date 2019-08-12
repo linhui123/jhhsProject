@@ -27,6 +27,16 @@ public class AdBean {
         private String url;
         private String content;
         private String TYPE;
+        private String HREF_URL;
+        private ResultBean PARAM;
+
+        public String getHREF_URL() {
+            return HREF_URL;
+        }
+
+        public void setHREF_URL(String HREF_URL) {
+            this.HREF_URL = HREF_URL;
+        }
 
         public String getTYPE() {
             return TYPE;
@@ -66,6 +76,14 @@ public class AdBean {
 
         public void setContent(String content) {
             this.content = content;
+        }
+
+        public ResultBean getPARAM() {
+            return PARAM;
+        }
+
+        public void setPARAM(ResultBean PARAM) {
+            this.PARAM = PARAM;
         }
     }
 

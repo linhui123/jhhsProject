@@ -17,7 +17,7 @@
             android:layout_toLeftOf="@+id/tv_confirm"
             android:background="@drawable/edit_bg_acc9"
             android:hint="请输入你的手机号"
-            android:padding="@dimen/dp_5"
+            android:padding="@dimen/padding_10"
             android:textColor="@color/acc3"
             android:textSize="@dimen/text_size_16" />
 
@@ -28,9 +28,9 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/button_c397"
             android:paddingLeft="@dimen/padding_10"
-            android:paddingTop="@dimen/dp_5"
+            android:paddingTop="@dimen/padding_10"
             android:paddingRight="@dimen/padding_10"
-            android:paddingBottom="@dimen/dp_5"
+            android:paddingBottom="@dimen/padding_10"
             android:text="咨询更多优惠"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_16" />

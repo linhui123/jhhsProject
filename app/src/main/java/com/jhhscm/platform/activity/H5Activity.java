@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -105,38 +106,13 @@ public class H5Activity extends AbsToolbarActivity {
 
     @Override
     protected void onOneKeyShareClick(Context context) {
-        showShare();
+
     }
 
     private String SHARE_URL = "";
     private String TITLE = "";
     private String CONTENT = "";
     private String IMG_URL = "";
-
-    /**
-     * 分享
-     */
-    public void showShare() {
-        new ShareDialog(H5Activity.this, new ShareDialog.CallbackListener() {
-            @Override
-            public void wechat() {
-                YXProgressDialog dialog = new YXProgressDialog(H5Activity.this, "请稍后");
-                ShareUtils.shareUrl(H5Activity.this, SHARE_URL,
-                        TITLE, CONTENT, SHARE_MEDIA.WEIXIN,
-                        ShareUtils.getShareListener(H5Activity.this), IMG_URL);
-//                HttpUtils.shareCommonContent(H5Activity.this, hospId, "13");
-            }
-
-            @Override
-            public void friends() {
-//                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
-//                ShareUtils.shareUrl(getContext(), SHARE_URL,
-//                        TITLE, CONTENT, SHARE_MEDIA.WEIXIN_CIRCLE,
-//                        ShareUtils.getShareListener(getContext()), IMG_URL);
-//                HttpUtils.shareCommonContent(getContext(), hospId, "13");
-            }
-        }).show();
-    }
 
     @Override
     protected String getToolBarTitle() {
@@ -417,13 +393,20 @@ public class H5Activity extends AbsToolbarActivity {
             settings.setJavaScriptEnabled(true);
             settings.setAllowFileAccess(true);
             settings.setDomStorageEnabled(true);
-            settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+            settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
             settings.setLoadWithOverviewMode(true);
             settings.setUseWideViewPort(true);
             settings.setSupportZoom(true);
             settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
             settings.setDefaultTextEncodingName("UTF-8");
             settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+
+            settings.setDomStorageEnabled(true);//开启DOM storage API功能
+            settings.setDatabaseEnabled(true);//开启database storeage API功能
+            String cacheDirPath = getContext().getFilesDir().getAbsolutePath()+ "/webcache";//缓存路径
+            settings.setDatabasePath(cacheDirPath);//设置数据库缓存路径
+            settings.setAppCachePath(cacheDirPath);//设置AppCaches缓存路径
+            settings.setAppCacheEnabled(true);//开启AppCaches功能
             mDataBinding.webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
             mDataBinding.webView.addJavascriptInterface(new JSInterface(), "Android");
             // settings.setPluginsEnabled(true);
@@ -437,9 +420,9 @@ public class H5Activity extends AbsToolbarActivity {
 //            // settings.setAllowFileAccessFromFileURLs(true);
 //            methodInvoke(settings, "setAllowFileAccessFromFileURLs", new Class[]{boolean.class}, new Object[]{true});
 
-            mDataBinding.webView.clearHistory();
-            mDataBinding.webView.clearFormData();
-            mDataBinding.webView.clearCache(true);
+//            mDataBinding.webView.clearHistory();
+//            mDataBinding.webView.clearFormData();
+//            mDataBinding.webView.clearCache(true);
             mDataBinding.webView.setWebViewClient(mWebViewClient);
             mDataBinding.webView.setWebChromeClient(mWebChromeClient);
             //加载动画
@@ -448,13 +431,14 @@ public class H5Activity extends AbsToolbarActivity {
                 showLoadingPage(R.id.rl_loading);
                 setLoadFailedMessage("网络异常，请检查网络连接");
             } else {
+                Log.e("H5", "url:" + getArguments().getString("url"));
                 mDataBinding.webView.loadUrl(getArguments().getString("url"));
+                mDataBinding.webView.setVisibility(View.VISIBLE);
                 mDataBinding.webView.setWebViewClient(new WebViewClient() {
                     @Override
                     public void onPageFinished(WebView view, String url) {
                         super.onPageFinished(view, url);
                         closeDialog();
-                        mDataBinding.webView.setVisibility(View.VISIBLE);
                         animationDrawable.stop();
                         mDataBinding.webLoadAnim.setVisibility(View.GONE);
                     }
@@ -469,8 +453,24 @@ public class H5Activity extends AbsToolbarActivity {
                             animationDrawable.start();
                         }
                     }
-                });
 
+                    @RequiresApi(api = Build.VERSION_CODES.M)
+                    @Override
+                    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                        if (getView() != null) {
+                            Log.e("onReceivedError", "error:" + error.getErrorCode());
+                            mDataBinding.webView.setVisibility(View.GONE);
+                            mDataBinding.rlError.setVisibility(View.VISIBLE);
+                            mDataBinding.tvReload.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mDataBinding.rlError.setVisibility(View.GONE);
+                                    mDataBinding.webView.reload();
+                                }
+                            });
+                        }
+                    }
+                });
             }
         }
 

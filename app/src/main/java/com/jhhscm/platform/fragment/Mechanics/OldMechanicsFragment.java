@@ -46,6 +46,7 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.bottommenu.BottomMenuShow;
 import com.jhhscm.platform.views.bottommenu.bean.MenuData;
+import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.util.ArrayList;
@@ -90,6 +91,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
+        mDataBinding.wrvRecycler.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
         mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.wrvRecycler.setAdapter(mAdapter);
@@ -221,22 +223,24 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
             map.put("old_sort", old_sort);//小时数
             map.put("fix_p_3", fix_p_3);
             map.put("fix_p_2", fix_p_2);
-
-            ArrayList<Integer> list = new ArrayList<>();
-            if (merchant_id != null && merchant_id.length() > 0) {
-                list.add(Integer.parseInt(merchant_id));
-                map.put("merchant_id", JSON.toJSONString(list));
-            }
-            list.clear();
-            if (fix_p_9 != null && fix_p_9.length() > 0) {
-                list.add(Integer.parseInt(fix_p_9));
-                map.put("fix_p_9", JSON.toJSONString(list));
-            }
-            list.clear();
-            if (brand_id != null && brand_id.length() > 0) {
-                list.add(Integer.parseInt(brand_id));
-                map.put("brand_id", JSON.toJSONString(list));
-            }
+            map.put("merchant_id", merchant_id);
+            map.put("fix_p_9", fix_p_9);
+            map.put("brand_id", brand_id);
+//            ArrayList<Integer> list = new ArrayList<>();
+//            if (merchant_id != null && merchant_id.length() > 0) {
+//                list.add(Integer.parseInt(merchant_id));
+//                map.put("merchant_id", JSON.toJSONString(list));
+//            }
+//            list.clear();
+//            if (fix_p_9 != null && fix_p_9.length() > 0) {
+//                list.add(Integer.parseInt(fix_p_9));
+//                map.put("fix_p_9", JSON.toJSONString(list));
+//            }
+//            list.clear();
+//            if (brand_id != null && brand_id.length() > 0) {
+//                list.add(Integer.parseInt(brand_id));
+//                map.put("brand_id", JSON.toJSONString(list));
+//            }
             map.put("fix_p_1", fix_p_1);
             map.put("page", mCurrentPage + "");
             map.put("limit", mShowCount + "");

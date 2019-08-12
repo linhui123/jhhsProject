@@ -18,7 +18,7 @@ public class BrandViewHolder extends AbsRecyclerViewHolder<FindBrandBean.ResultB
     private int type = 1;// 1 选择品牌； 2选择机型
     private ItemMechanicsBrandBinding mBinding;
 
-    public BrandViewHolder(View itemView,int t) {
+    public BrandViewHolder(View itemView, int t) {
         super(itemView);
         type = t;
         mBinding = ItemMechanicsBrandBinding.bind(itemView);
@@ -31,11 +31,11 @@ public class BrandViewHolder extends AbsRecyclerViewHolder<FindBrandBean.ResultB
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (type==1){
+                if (type == 1) {
                     EventBusUtil.post(new BrandResultEvent(item.getId(), item.getName()));
                     EventBusUtil.post(new FinishEvent());
-                }else {
-                    MechanicsByBrandActivity.start(itemView.getContext(), item.getId(),0);
+                } else {
+                    MechanicsByBrandActivity.start(itemView.getContext(), item.getId(), 1);
                 }
             }
         });

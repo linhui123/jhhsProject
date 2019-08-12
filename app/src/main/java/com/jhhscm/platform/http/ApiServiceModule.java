@@ -40,7 +40,7 @@ public class ApiServiceModule {
     private static ApiServiceModule ourInstance = new ApiServiceModule();
     //URL定义
     private String BASE_URL2 = "http://47.106.110.219/#/newMachine";//显示
-    private String BASE_URL3 = "http://192.168.0.243:8083/wajueji/v1-0/";//测试
+    private String BASE_URL3 = "http://192.168.0.241:8083/wajueji/v1-0/";//测试
     private String BASE_URL4 = "http://120.76.101.183:9090/wajueji/v1-0/";//外网测试
 
     private Retrofit mApiRetrofit = null;

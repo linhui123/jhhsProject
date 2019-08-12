@@ -9,11 +9,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
@@ -27,6 +32,7 @@ import com.google.gson.Gson;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsActivity;
+import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.bean.LogingResultBean;
 import com.jhhscm.platform.databinding.ActivityH5TestBinding;
 import com.jhhscm.platform.databinding.ActivityMechanicsH5Binding;
@@ -37,6 +43,7 @@ import com.jhhscm.platform.fragment.Mechanics.action.FindCollectByUserCodeAction
 import com.jhhscm.platform.fragment.Mechanics.action.SaveAction;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryDetailBean;
+import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -112,7 +119,7 @@ public class H5PeiJianActivity extends AbsActivity {
 
     @Override
     public boolean isSupportSwipeBack() {
-        return true;
+        return false;
     }
 
     @Override
@@ -121,8 +128,28 @@ public class H5PeiJianActivity extends AbsActivity {
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_h5_test);
         setupToolbar();
         setupButtom();
-        checkDeviceHasNavigationBar(H5PeiJianActivity.this);
+
+//        checkDeviceHasNavigationBar(H5PeiJianActivity.this);
         webview = (BridgeWebView) findViewById(R.id.webview);
+        WebSettings settings = mDataBinding.webview.getSettings();
+        settings.setJavaScriptEnabled(true); //与js交互必须设置
+        settings.setAllowFileAccess(true);
+        settings.setDomStorageEnabled(true);
+        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        settings.setLoadWithOverviewMode(true);
+        settings.setUseWideViewPort(true);
+        settings.setSupportZoom(true);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        settings.setDefaultTextEncodingName("UTF-8");
+        settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+
+        settings.setDomStorageEnabled(true);//开启DOM storage API功能
+        settings.setDatabaseEnabled(true);//开启database storeage API功能
+        String cacheDirPath = getApplicationContext().getFilesDir().getAbsolutePath()+ "/webcache";//缓存路径
+        settings.setDatabasePath(cacheDirPath);//设置数据库缓存路径
+        settings.setAppCachePath(cacheDirPath);//设置AppCaches缓存路径
+        settings.setAppCacheEnabled(true);//开启AppCaches功能
+
         url = getIntent().getStringExtra("url");
         //加载动画
         final AnimationDrawable animationDrawable = (AnimationDrawable) mDataBinding.webLoadAnim.getBackground();
@@ -173,6 +200,20 @@ public class H5PeiJianActivity extends AbsActivity {
                     super.onPageFinished(view, url);
                     animationDrawable.stop();
                     mDataBinding.webLoadAnim.setVisibility(View.GONE);
+                }
+
+                @RequiresApi(api = Build.VERSION_CODES.M)
+                @Override
+                public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                    mDataBinding.webview.setVisibility(View.GONE);
+                    mDataBinding.rlError.setVisibility(View.VISIBLE);
+                    mDataBinding.tvReload.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mDataBinding.rlError.setVisibility(View.GONE);
+                            mDataBinding.webview.reload();
+                        }
+                    });
                 }
             });
         }
@@ -281,9 +322,10 @@ public class H5PeiJianActivity extends AbsActivity {
         }
         mDataBinding.toolbar.setTitle("");
         setSupportActionBar(mDataBinding.toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
         mDataBinding.toolbarTitle.setText(title);
+
         RelativeLayout.LayoutParams flParams = (RelativeLayout.LayoutParams) mDataBinding.toolbar.getLayoutParams();
         flParams.height += DisplayUtils.getStatusBarHeight(this);
         mDataBinding.toolbar.setLayoutParams(flParams);
@@ -292,6 +334,12 @@ public class H5PeiJianActivity extends AbsActivity {
             @Override
             public void onClick(View v) {
                 showShare();
+            }
+        });
+        mDataBinding.imBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              finish();
             }
         });
     }
@@ -596,6 +644,7 @@ public class H5PeiJianActivity extends AbsActivity {
                 hasNavigationBar = true;
                 //手动设置控件的margin
                 //linebutton是一个linearlayout,里面包含了两个Button
+                Log.e("getNavigationBarHeight","getNavigationBarHeight:"+getNavigationBarHeight(this));
                 RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) mDataBinding.rlBottom.getLayoutParams();
                 //setMargins：顺序是左、上、右、下
                 layout.setMargins(15, 0, 15, getNavigationBarHeight(this) + 10);

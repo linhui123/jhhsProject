@@ -1,5 +1,8 @@
 package com.jhhscm.platform.fragment.my;
 
+import android.Manifest;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +25,15 @@ import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.event.LoginOutEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.HomePageFragment;
+import com.jhhscm.platform.permission.YXPermission;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.mylhyl.acp.AcpListener;
+import com.mylhyl.acp.AcpOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.List;
 
 
 public class MyFragment extends AbsFragment<FragmentMyBinding> {
@@ -120,22 +128,36 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             }
         });
 
-        mDataBinding.rlAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ConfigUtils.getCurrentUser(getContext()) != null
-                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
-                    ReceiveAddressActivity.start(getActivity(), false);
-                } else {
-                    startNewActivity(LoginActivity.class);
-                }
-            }
-        });
-
         mDataBinding.rlSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SettingActivity.start(getActivity());
+            }
+        });
+
+        mDataBinding.rlTel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //6.0权限处理
+                YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
+                        .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
+                        .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
+                        .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "拨打电话"))
+                        .setPermissions(Manifest.permission.CALL_PHONE).build(), new AcpListener() {
+                    @Override
+                    public void onGranted() {
+                        Uri uriScheme = Uri.parse("tel:" + "0591-88390068");
+                        Intent it = new Intent(Intent.ACTION_CALL, uriScheme);
+                        getContext().startActivity(it);
+                    }
+
+
+                    @Override
+                    public void onDenied(List<String> permissions) {
+
+                    }
+                });
+
             }
         });
     }

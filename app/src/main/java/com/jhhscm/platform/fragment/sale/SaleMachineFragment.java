@@ -160,7 +160,7 @@ public class SaleMachineFragment extends AbsFragment<FragmentSaleMachineBinding>
     private void saveMsg(final String phone) {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("mobile", phone);
-        map.put("type", "1");
+        map.put("type", "5");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "saveMsg");

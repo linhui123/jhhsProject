@@ -41,6 +41,7 @@ import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.util.ArrayList;
@@ -80,6 +81,7 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
 
     @Override
     protected void setupViews() {
+        mDataBinding.wrvRecycler.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
         mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.wrvRecycler.setAdapter(mAdapter);
@@ -187,7 +189,6 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
             Map<String, String> map = new TreeMap<String, String>();
             map.put("keyword", "");
             map.put("fix_p_9", fix_p_9);
-            map.put("merchant_id", merchant_id);
             map.put("merchant_id", merchant_id);
             map.put("fix_p_3", fix_p_3);
             map.put("fix_p_2", fix_p_2);

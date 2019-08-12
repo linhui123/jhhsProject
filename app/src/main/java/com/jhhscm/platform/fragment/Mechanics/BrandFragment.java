@@ -65,9 +65,6 @@ public class BrandFragment extends AbsFragment<FragmentBrandBinding> {
 
     @Override
     protected void setupViews() {
-//        RelativeLayout.LayoutParams llParams = (RelativeLayout.LayoutParams) mDataBinding.recyclerview.getLayoutParams();
-//        llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
-//        mDataBinding.recyclerview.setLayoutParams(llParams);
         type = getArguments().getInt("type");
         EventBusUtil.registerEvent(this);
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
