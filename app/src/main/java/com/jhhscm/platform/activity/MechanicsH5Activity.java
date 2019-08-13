@@ -75,6 +75,7 @@ import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
+import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.bean.SaveBean;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.Sign;
@@ -298,7 +299,8 @@ public class MechanicsH5Activity extends AbsActivity {
         mDataBinding.tvPk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ComparisonActivity.start(MechanicsH5Activity.this);
+                addGoodsToCarts(userSession.getUserCode(), picUrl, findCategoryDetailBean, userSession.getToken());
+//                ComparisonActivity.start(MechanicsH5Activity.this);
             }
         });
     }
@@ -721,7 +723,7 @@ public class MechanicsH5Activity extends AbsActivity {
 
             settings.setDomStorageEnabled(true);//开启DOM storage API功能
             settings.setDatabaseEnabled(true);//开启database storeage API功能
-            String cacheDirPath = getContext().getFilesDir().getAbsolutePath()+ "/webcache";//缓存路径
+            String cacheDirPath = getContext().getFilesDir().getAbsolutePath() + "/webcache";//缓存路径
             settings.setDatabasePath(cacheDirPath);//设置数据库缓存路径
             settings.setAppCachePath(cacheDirPath);//设置AppCaches缓存路径
             settings.setAppCacheEnabled(true);//开启AppCaches功能
@@ -1203,28 +1205,28 @@ public class MechanicsH5Activity extends AbsActivity {
     /**
      * 添加购物车
      */
-    private void addGoodsToCarts(String userCode, String picUrl, FindCategoryDetailBean findCategoryDetail, String token) {
+    private void addGoodsToCarts(String userCode, String picUrl, FindCategoryDetailBean
+            findCategoryDetail, String token) {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("userCode", userCode);
-        map.put("goodsCode", findCategoryDetail.getData().getId());
+        map.put("goodsCode", goodCode);
         map.put("goodsName", findCategoryDetail.getData().getName());
         map.put("number", count);
         map.put("price", findCategoryDetail.getData().getCounter_price() + "");
         map.put("picUrl", picUrl);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
+
         String sign = Sign.getSignKey(this, map, "addGoodsToCarts");
         NetBean netBean = new NetBean();
         netBean.setToken(token);
         netBean.setSign(sign);
         netBean.setContent(content);
-        showDialog();
         onNewRequestCall(AddGoodsToCartsAction.newInstance(this, netBean)
-                .request(new AHttpService.IResCallback<BaseEntity>() {
+                .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
                     @Override
-                    public void onCallback(int resultCode, Response<BaseEntity> response,
+                    public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response,
                                            BaseErrorInfo baseErrorInfo) {
-                        closeDialog();
                         if (new HttpHelper().showError(getApplicationContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
                             return;
                         }
@@ -1239,7 +1241,6 @@ public class MechanicsH5Activity extends AbsActivity {
                     }
                 }));
     }
-
 
     private FindCategoryDetailBean findCategoryDetailBean;
 
@@ -1353,7 +1354,9 @@ public class MechanicsH5Activity extends AbsActivity {
                                         && ConfigUtils.getNewMechanics(getApplicationContext()).getData() != null
                                         && ConfigUtils.getNewMechanics(getApplicationContext()).getData().size() > 0) {
                                     getGoodsPageListBean = ConfigUtils.getNewMechanics(getApplicationContext());
-                                    getGoodsPageListBean.getData().add(dataBean);
+                                    if (!getGoodsPageListBean.getData().contains(dataBean)) {
+                                        getGoodsPageListBean.getData().add(0, dataBean);
+                                    }
                                 } else {
                                     List<GetGoodsPageListBean.DataBean> dataBeans = new ArrayList<>();
                                     dataBeans.add(dataBean);
@@ -1430,7 +1433,7 @@ public class MechanicsH5Activity extends AbsActivity {
                 //手动设置控件的margin
                 //linebutton是一个linearlayout,里面包含了两个Button
                 RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) mDataBinding.rlBottom.getLayoutParams();
-                Log.e("getNavigationBarHeight","getNavigationBarHeight:"+getNavigationBarHeight(this));
+                Log.e("getNavigationBarHeight", "getNavigationBarHeight:" + getNavigationBarHeight(this));
                 //setMargins：顺序是左、上、右、下
                 layout.setMargins(15, 0, 15, getNavigationBarHeight(this) + 10);
             }

@@ -3,13 +3,13 @@
 
     <RelativeLayout
         android:id="@+id/rl_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/padding_10"
         android:background="@drawable/bg_d1e"
         android:orientation="vertical"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp">
+        android:paddingTop="8dp"
+        android:paddingBottom="9dp">
 
         <TextView
             android:id="@+id/tv_name"
@@ -18,12 +18,11 @@
             android:layout_centerHorizontal="true"
             android:ellipsize="end"
             android:paddingLeft="@dimen/dp_5"
-            android:paddingTop="@dimen/padding_10"
             android:paddingRight="@dimen/dp_5"
             android:singleLine="true"
             android:text="名称"
             android:textColor="@color/a397"
-            android:textSize="@dimen/text_size_16" />
+            android:textSize="@dimen/sp_14" />
 
         <TextView
             android:id="@+id/tv_remark"
@@ -37,17 +36,17 @@
             android:paddingRight="2dp"
             android:singleLine="true"
             android:text="备注备注备注"
-            android:textColor="@color/a397"
-            android:textSize="@dimen/text_size_12" />
+            android:textColor="#b33977FE"
+            android:textSize="@dimen/padding_10" />
 
         <ImageView
             android:id="@+id/iv"
-            android:layout_width="wrap_content"
+            android:layout_width="66dp"
             android:layout_height="45dp"
             android:layout_below="@+id/tv_remark"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_3"
-            android:scaleType="centerInside"
+            android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher" />
     </RelativeLayout>
 </layout>

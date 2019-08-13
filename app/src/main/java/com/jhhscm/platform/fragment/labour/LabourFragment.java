@@ -41,6 +41,7 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.util.ArrayList;
@@ -84,6 +85,7 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.rlTop.setLayoutParams(llParams);
 
+        mDataBinding.rv.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
         mDataBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.rv.setAdapter(mAdapter);

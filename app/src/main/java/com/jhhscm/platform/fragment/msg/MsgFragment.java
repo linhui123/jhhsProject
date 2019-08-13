@@ -42,6 +42,7 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.util.Map;
@@ -108,6 +109,7 @@ public class MsgFragment extends AbsFragment<FragmentMsgBinding> {
     }
 
     private void initRv() {
+        mDataBinding.rlActivity.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
         mDataBinding.rlActivity.setLayoutManager(new LinearLayoutManager(getContext()));
         aAdapter = new InnerAdapter(getContext());
         mDataBinding.rlActivity.setAdapter(aAdapter);

@@ -13,7 +13,9 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.databinding.FragmentCollectListBinding;
 import com.jhhscm.platform.event.AddressResultEvent;
+import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -26,6 +28,9 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.dialog.SimpleDialog;
+import com.jhhscm.platform.views.dialog.TelPhoneDialog;
+import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.slideswaphelper.PlusItemSlideCallback;
 import com.jhhscm.platform.views.slideswaphelper.WItemTouchHelperPlus;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -97,6 +102,7 @@ public class NewCollectListFragment extends AbsFragment<FragmentCollectListBindi
     }
 
     private void initView() {
+        mDataBinding.rvGouwuche.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
         mDataBinding.rvGouwuche.setLayoutManager(new LinearLayoutManager(getActivity()));
         recAdapter = new MyNewCollectionAdapter(getContext());
         recAdapter.setDeletedItemListener(this);
@@ -117,6 +123,19 @@ public class NewCollectListFragment extends AbsFragment<FragmentCollectListBindi
     public void onEvent(AddressResultEvent messageEvent) {
         mDataBinding.refreshlayout.autoRefresh();
     }
+
+    public void onEvent(ConsultationEvent event) {
+        if (event != null && event.type == 2) {
+            new TelPhoneDialog(getContext(), new TelPhoneDialog.CallbackListener() {
+
+                @Override
+                public void clickYes(String phone) {
+                    saveMsg(phone, "2");
+                }
+            }).show();
+        }
+    }
+
 
     /**
      * 根据用户编号查看收藏列表
@@ -222,6 +241,44 @@ public class NewCollectListFragment extends AbsFragment<FragmentCollectListBindi
                                 } else {
                                     ToastUtils.show(getContext(), "error " + type + ":" + response.body().getMessage());
                                 }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    /**
+     * 信息咨询
+     */
+    private void saveMsg(final String phone, String type) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("mobile", phone);
+        map.put("type", type);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "saveMsg");
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(SaveMsgAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity> response, BaseErrorInfo baseErrorInfo) {
+                        closeDialog();
+                        if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                            return;
+                        }
+                        if (response != null) {
+                            if (response.body().getCode().equals("200")) {
+                                new SimpleDialog(getContext(), phone, new SimpleDialog.CallbackListener() {
+                                    @Override
+                                    public void clickYes() {
+
+                                    }
+                                }).show();
+                            } else {
+                                ToastUtils.show(getContext(), response.body().getMessage());
                             }
                         }
                     }

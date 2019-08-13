@@ -5,9 +5,9 @@
         android:id="@+id/rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="@dimen/dp_5"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="@dimen/dp_5"
         android:background="@drawable/edit_bg">
 
@@ -16,21 +16,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:paddingLeft="@dimen/padding_15"
-            android:paddingTop="@dimen/dp_5"
-            android:paddingRight="@dimen/padding_15"
-            android:paddingBottom="@dimen/dp_5"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingTop="@dimen/dp_3"
+            android:paddingRight="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_3"
             android:singleLine="true"
             android:text="全部"
             android:textColor="@color/acc3"
-            android:textSize="@dimen/text_size_16" />
+            android:textSize="@dimen/text_size_14" />
 
         <ImageView
             android:id="@+id/im_close"
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/padding_10"
+            android:layout_marginRight="@dimen/dp_5"
             android:layout_toRightOf="@+id/tv_name"
             android:background="@mipmap/ic_close" />
     </RelativeLayout>

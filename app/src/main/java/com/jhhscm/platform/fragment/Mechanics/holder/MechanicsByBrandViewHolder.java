@@ -16,6 +16,9 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 public class MechanicsByBrandViewHolder extends AbsRecyclerViewHolder<GetGoodsByBrandBean.ResultBean.DataBean> {
 
     private ItemCompairsonSelectBinding mBinding;
@@ -29,21 +32,37 @@ public class MechanicsByBrandViewHolder extends AbsRecyclerViewHolder<GetGoodsBy
 
     @Override
     protected void onBindView(final GetGoodsByBrandBean.ResultBean.DataBean item) {
+        if (type == 1) {
+            mBinding.tvSelect.setVisibility(View.INVISIBLE);
+        }
         mBinding.tvTitle.setText(item.getName());
-        mBinding.tvPrice.setText(item.getRetailPrice() + "");
+        mBinding.tvPrice.setText(wan(item.getCounterPrice()));
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (type==0){
+                if (type == 0) {
                     mBinding.tvSelect.setBackgroundResource(R.mipmap.ic_shoping_s1);
                     EventBusUtil.post(new CompMechanicsEvent(item));
                     EventBusUtil.post(new BrandResultEvent(item.getBrandId() + "", item.getId() + "", item.getName()));
                     EventBusUtil.post(new FinishEvent());
-                }else {
+                } else {
                     String url = UrlUtils.XJXQ + "&good_code=" + item.getCode();
                     MechanicsH5Activity.start(itemView.getContext(), url, "新机详情", item.getCode(), 1);
                 }
             }
         });
+    }
+
+    private String wan(String toal) {
+        DecimalFormat df = new DecimalFormat("#.0000");
+        toal = df.format(Double.parseDouble(toal) / 10000);
+        //保留2位小数
+        BigDecimal b = new BigDecimal(Double.parseDouble(toal));
+        if (b.compareTo(new BigDecimal(Double.parseDouble("0"))) == 0) {
+            toal = "暂无报价";
+        } else {
+            toal = b.setScale(2, BigDecimal.ROUND_DOWN).toString() + "万";
+        }
+        return toal;
     }
 }

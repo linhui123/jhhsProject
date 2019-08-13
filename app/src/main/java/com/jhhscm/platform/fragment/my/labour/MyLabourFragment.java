@@ -34,6 +34,7 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.Utils;
+import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class MyLabourFragment extends AbsFragment<FragmentMyLabourBinding> {
         } else {
             startNewActivity(LoginActivity.class);
         }
-
+        mDataBinding.recyclerview.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.recyclerview.setAdapter(mAdapter);

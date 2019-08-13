@@ -178,20 +178,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/dp_5"
                 android:clickable="true"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding_15"
+                android:paddingTop="@dimen/dp_5"
+                android:paddingRight="@dimen/padding_15"
                 android:paddingBottom="@dimen/dp_5"
                 android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/padding_15"
                     android:paddingTop="@dimen/dp_5"
                     android:paddingBottom="@dimen/dp_5"
                     android:text="动力"
-                    android:textColor="@color/acc3" />
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="bold" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rl_dongli"
@@ -203,11 +206,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/padding_15"
                     android:paddingTop="@dimen/dp_5"
                     android:paddingBottom="@dimen/dp_5"
                     android:text="铲斗"
-                    android:textColor="@color/acc3" />
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="bold" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rl_chandou"
@@ -219,11 +223,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/padding_15"
                     android:paddingTop="@dimen/dp_5"
                     android:paddingBottom="@dimen/dp_5"
                     android:text="吨位"
-                    android:textColor="@color/acc3" />
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="bold" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rl_dunwei"
@@ -236,15 +241,13 @@
                     android:id="@+id/tv_confirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/padding_15"
-                    android:layout_marginRight="@dimen/padding_15"
                     android:background="@drawable/button_c397"
                     android:gravity="center"
                     android:paddingTop="@dimen/dp_5"
                     android:paddingBottom="@dimen/dp_5"
                     android:text="确定"
-                    android:textSize="@dimen/text_size_16"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
             </LinearLayout>
 
             <LinearLayout

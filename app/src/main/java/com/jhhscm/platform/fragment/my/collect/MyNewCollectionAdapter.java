@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.MechanicsH5Activity;
+import com.jhhscm.platform.event.ConsultationEvent;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.slideswaphelper.SlideSwapAction;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -77,7 +79,12 @@ public class MyNewCollectionAdapter extends RecyclerView.Adapter<MyNewCollection
         holder.tv_new_2.setText("铲斗容量：" + data.get(position).getFix_p_2() + "m^3");
         holder.tv_new_3.setText("额定功率：" + data.get(position).getFix_p_5() + "km/rpm");
         holder.tv_new_4.setText("询价");
-
+        holder.tv_new_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBusUtil.post(new ConsultationEvent(2));
+            }
+        });
         holder.slide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

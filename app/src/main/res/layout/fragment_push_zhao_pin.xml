@@ -54,6 +54,8 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
+                <View style="@style/view_h_de" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -91,6 +93,8 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
+                <View style="@style/view_h_de" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -118,6 +122,8 @@
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
+
+                <View style="@style/view_h_de" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -147,6 +153,8 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
+                <View style="@style/view_h_de" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -168,11 +176,13 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:background="@null"
-                        android:inputType="number"
                         android:hint="请输入"
+                        android:inputType="number"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
+
+                <View style="@style/view_h_de" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -200,6 +210,8 @@
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
+
+                <View style="@style/view_h_de" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -247,6 +259,8 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
+                <View style="@style/view_h_de" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -274,13 +288,15 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
+                <View style="@style/view_h_de" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
                     android:paddingTop="@dimen/dp_5"
-                    android:visibility="gone"
-                    android:paddingBottom="@dimen/dp_5">
+                    android:paddingBottom="@dimen/dp_5"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/im_tian"
@@ -326,8 +342,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
                     android:paddingTop="@dimen/dp_5"
-                    android:visibility="gone"
-                    android:paddingBottom="@dimen/dp_5">
+                    android:paddingBottom="@dimen/dp_5"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/im_yue"
@@ -373,8 +389,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
                     android:paddingTop="@dimen/dp_5"
-                    android:visibility="gone"
-                    android:paddingBottom="@dimen/dp_5">
+                    android:paddingBottom="@dimen/dp_5"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/im_mianyi"
@@ -518,6 +534,8 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
+                <View style="@style/view_h_de" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -545,6 +563,8 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
+                <View style="@style/view_h_de" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -571,6 +591,8 @@
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
+
+                <View style="@style/view_h_de" />
 
                 <TextView
                     android:layout_width="wrap_content"

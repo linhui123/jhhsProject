@@ -34,6 +34,8 @@
                 android:src="@mipmap/ic_point" />
         </RelativeLayout>
 
+        <View style="@style/view_h_de" />
+
         <RelativeLayout
             android:id="@+id/rl_1"
             android:layout_width="match_parent"
@@ -58,6 +60,8 @@
                 android:src="@mipmap/ic_point" />
         </RelativeLayout>
 
+        <View style="@style/view_h_de" />
+
         <RelativeLayout
             android:id="@+id/rl_2"
             android:layout_width="match_parent"
@@ -80,6 +84,8 @@
                 android:layout_alignParentRight="true"
                 android:text="0.0M" />
         </RelativeLayout>
+
+        <View style="@style/view_h_de" />
 
         <RelativeLayout
             android:id="@+id/rl_3"
@@ -104,10 +110,13 @@
                 android:src="@mipmap/ic_point" />
         </RelativeLayout>
 
+        <View style="@style/view_h_de" />
+
         <RelativeLayout
             android:id="@+id/rl_out"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_15"
             android:padding="16dp">
 
             <TextView

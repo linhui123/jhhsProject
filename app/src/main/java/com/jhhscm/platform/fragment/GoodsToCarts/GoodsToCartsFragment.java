@@ -35,6 +35,7 @@ import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.slideswaphelper.PlusItemSlideCallback;
 import com.jhhscm.platform.views.slideswaphelper.WItemTouchHelperPlus;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -72,10 +73,9 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
-
-        SmartRefreshLayout.LayoutParams llParams = (SmartRefreshLayout.LayoutParams) mDataBinding.rvGouwuche.getLayoutParams();
-        llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
-        mDataBinding.rvGouwuche.setLayoutParams(llParams);
+//        SmartRefreshLayout.LayoutParams llParams = (SmartRefreshLayout.LayoutParams) mDataBinding.rvGouwuche.getLayoutParams();
+//        llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
+//        mDataBinding.rvGouwuche.setLayoutParams(llParams);
 
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null
@@ -171,6 +171,7 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
     }
 
     private void initView() {
+        mDataBinding.rvGouwuche.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
         mDataBinding.rvGouwuche.setLayoutManager(new LinearLayoutManager(getActivity()));
         recAdapter = new RecOtherTypeAdapter(getContext());
         recAdapter.setDeletedItemListener(this);
@@ -194,6 +195,8 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
      * 获取用户购物车列表
      */
     private void getCartGoodsByUserCode(String userCode, String token, final boolean refrash) {
+        Log.e("getCartGoodsByUserCode", " token :" + token);
+
         Map<String, String> map = new TreeMap<String, String>();
         map.put("userCode", userCode);
         String content = JSON.toJSONString(map);

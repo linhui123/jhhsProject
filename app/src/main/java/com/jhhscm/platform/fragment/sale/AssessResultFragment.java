@@ -55,11 +55,18 @@ public class AssessResultFragment extends AbsFragment<FragmentAssessResultBindin
     protected void setupViews() {
         findGoodsAssessBean = (FindGoodsAssessBean) getArguments().getSerializable("findGoodsAssessBean");
         initView();
+
+        mDataBinding.tvAssess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
     }
 
     private void initView() {
         intChart();
-        if (findGoodsAssessBean!=null){
+        if (findGoodsAssessBean != null) {
             mDataBinding.tv1.setText(findGoodsAssessBean.getData().getName());
             String data = findGoodsAssessBean.getData().getFactory_time() == null ? "" : findGoodsAssessBean.getData().getFactory_time() + "年 | ";
             String Old_time = findGoodsAssessBean.getData().getOld_time() == null ? "" : findGoodsAssessBean.getData().getOld_time() + "小时 | ";

@@ -24,6 +24,7 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.slideswaphelper.PlusItemSlideCallback;
 import com.jhhscm.platform.views.slideswaphelper.WItemTouchHelperPlus;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -89,6 +90,7 @@ public class PeiJianCollectListFragment extends AbsFragment<FragmentCollectListB
     }
 
     private void initView() {
+        mDataBinding.rvGouwuche.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
         mDataBinding.rvGouwuche.setLayoutManager(new LinearLayoutManager(getActivity()));
         recAdapter = new MyPeiJianCollectionAdapter(getContext());
         recAdapter.setDeletedItemListener(this);

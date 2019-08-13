@@ -21,8 +21,10 @@ import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentMyPeiJianListBinding;
+import com.jhhscm.platform.event.AddressRefreshEvent;
 import com.jhhscm.platform.event.AddressResultEvent;
 import com.jhhscm.platform.event.GetRegionEvent;
+import com.jhhscm.platform.event.OrderCancleEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderViewHolder;
 import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
 import com.jhhscm.platform.fragment.Mechanics.PeiJianFragment;
@@ -37,6 +39,7 @@ import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
+import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.ConfigUtils;
@@ -45,6 +48,7 @@ import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.Utils;
+import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.security.spec.MGF1ParameterSpec;
@@ -86,9 +90,6 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
-        RelativeLayout.LayoutParams llParams = (RelativeLayout.LayoutParams) mDataBinding.rlColumn.getLayoutParams();
-        llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
-        mDataBinding.rlColumn.setLayoutParams(llParams);
 
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
@@ -96,7 +97,6 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
         } else {
             startNewActivity(LoginActivity.class);
         }
-
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new MyPeiJianListAdapter(getContext());
         mDataBinding.recyclerview.setAdapter(mAdapter);
@@ -192,6 +192,12 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
         mDataBinding.recyclerview.autoRefresh();
     }
 
+    public void onEvent(OrderCancleEvent event) {
+        if (event.order_code != null) {
+            delOrder(event.order_code);
+        }
+    }
+
     /**
      * 获取订单列表
      * 获取列表后，遍历商品信息
@@ -222,6 +228,9 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
                                 if (response.body().getCode().equals("200")) {
                                     findOrderListBean = response.body().getData();
                                     doSuccessResponse(refresh, findOrderListBean);
+                                } else if (response.body().getCode().equals("1003")) {
+                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+                                    startNewActivity(LoginActivity.class);
                                 } else {
                                     ToastUtils.show(getContext(), "error " + type + ":" + response.body().getMessage());
                                 }
@@ -307,5 +316,40 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
                 }));
     }
 
+    /**
+     * 取消订单
+     */
+    private void delOrder(final String orderGood) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("order_code", orderGood);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "delOrder");
+        NetBean netBean = new NetBean();
+        netBean.setToken(userSession.getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(DelOrderAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response,
+                                           BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                if (response.body().getCode().equals("200")) {
+                                    mDataBinding.recyclerview.autoRefresh();
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
 }
 

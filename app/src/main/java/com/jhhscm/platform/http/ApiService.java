@@ -2,6 +2,7 @@ package com.jhhscm.platform.http;
 
 
 import com.jhhscm.platform.aliapi.AliPrePayBean;
+import com.jhhscm.platform.fragment.GoodsToCarts.CalculateOrderBean;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
 import com.jhhscm.platform.fragment.GoodsToCarts.FindAddressListBean;
 import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
@@ -218,7 +219,7 @@ public interface ApiService {
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(ADD_GOODSTOCARTS)
-    Call<BaseEntity> addGoodsToCarts(@Body NetBean content);
+    Call<BaseEntity<ResultBean>> addGoodsToCarts(@Body NetBean content);
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(GET_CARTGOODSBYUSERCODE)
@@ -247,6 +248,13 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(ADD_ADDRESS)
     Call<BaseEntity<ResultBean>> addAddress(@Body NetBean content);
+
+    //计算订单和运费  calculateOrder
+    String CALCULATE_ORDER = "order/calculateOrder";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(CALCULATE_ORDER)
+    Call<BaseEntity<CalculateOrderBean>> calculateOrder(@Body NetBean content);
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(UPDATE_ADDRESS)

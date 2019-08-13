@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.jhhscm.platform">
+
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许程序设置内置sd卡的写权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -48,43 +49,129 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme.TranslucentStatusBar">
-        <activity android:name=".activity.ComparisonDetailActivity"></activity>
-        <activity android:name=".activity.MsgDetailActivity" />
-        <activity android:name=".activity.MsgActivity" />
-        <activity android:name=".activity.PushOldMechanicsActivity" />
-        <activity android:name=".activity.MyMechanicsActivity" />
-        <activity android:name=".activity.MyCollectionActivity" />
-        <activity android:name=".activity.MyLabourActivity" />
-        <activity android:name=".activity.PushQiuZhiActivity" />
-        <activity android:name=".activity.PushZhaoPinActivity" />
-        <activity android:name=".activity.LabourDetailActivity" />
-        <activity android:name=".activity.MechanicsByBrandActivity" />
-        <activity android:name=".activity.BrandActivity" />
-        <activity android:name=".activity.ComparisonActivity" />
-        <activity android:name=".activity.FeedbackActivity" />
-        <activity android:name=".activity.AboutActivity" />
-        <activity android:name=".activity.SettingActivity" />
-        <activity android:name=".activity.OrderDetailActivity" />
-        <activity android:name=".activity.MyPeiJianListActivity" />
-        <activity android:name=".activity.AssessResultActivity" />
-        <activity android:name=".activity.AssessActivity" />
-        <activity android:name=".activity.CashierActivity" />
-        <activity android:name=".aliapi.ALiPayActivity" />
+        <activity android:name=".activity.H5PeiJian2Activity"></activity>
+        <activity
+            android:name=".activity.ComparisonDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MsgDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MsgActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PushOldMechanicsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyMechanicsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyCollectionActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyLabourActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PushQiuZhiActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PushZhaoPinActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LabourDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MechanicsByBrandActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BrandActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ComparisonActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FeedbackActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SettingActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.OrderDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyPeiJianListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AssessResultActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AssessActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CashierActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".aliapi.ALiPayActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".photopicker.PhotoPickerActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.SaleMachineActivity" />
+        <activity
+            android:name=".activity.SaleMachineActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.H5PeiJianActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.LabourActivity" />
-        <activity android:name=".activity.CreateOrderActivity" />
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.PeiJianActivity" />
+        <activity
+            android:name=".activity.LabourActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CreateOrderActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PeiJianActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LaunchActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppTheme.TranslucentStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -92,36 +179,49 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ADActivity" />
+        <activity
+            android:name=".activity.ADActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.H5Activity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.MechanicsH5Activity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.GoodsToCartsActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.ReceiveAddressActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.ReceiveAddressDetailActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".permission.YXPermissionActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.WelcomeActivity" /> <!-- Rich push 核心功能 since 2.0.6 -->
+        <activity
+            android:name=".activity.WelcomeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" /> <!-- Rich push 核心功能 since 2.0.6 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="09d83499a3fb354149b04a9b7c443dbb" />
@@ -219,7 +319,7 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver> <!-- Required SDK核心功能 -->
-        <!-- since 3.0.9 Required SDK 核心功能-->
+        <!-- since 3.0.9 Required SDK 核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.AlarmReceiver"
             android:exported="false" /> <!-- since 3.3.0 Required SDK核心功能 -->

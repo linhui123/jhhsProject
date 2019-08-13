@@ -186,6 +186,7 @@
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
+
                 <View style="@style/view_h_de" />
 
                 <RelativeLayout
@@ -378,11 +379,11 @@
 
                 <com.jhhscm.platform.views.selector.ImageSelector
                     android:id="@+id/selector"
-                    app:with_camera="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    app:image_num="20" />
+                    app:image_num="9"
+                    app:with_camera="true" />
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
@@ -393,18 +394,18 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp"
             android:paddingTop="@dimen/dp_5"
+            android:paddingRight="15dp"
             android:paddingBottom="@dimen/dp_5">
 
             <TextView
                 android:id="@+id/tv_assess"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:paddingLeft="@dimen/padding_10"
-                android:paddingRight="@dimen/padding_10"
                 android:background="@drawable/button_c397"
                 android:gravity="center"
+                android:paddingLeft="@dimen/padding_10"
+                android:paddingRight="@dimen/padding_10"
                 android:text="提交"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_16" />

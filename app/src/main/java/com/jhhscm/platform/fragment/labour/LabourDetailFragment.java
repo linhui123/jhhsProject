@@ -74,8 +74,10 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
         dataBean = (FindLabourReleaseListBean.DataBean) getArguments().getSerializable("dataBean");
         if (dataBean != null) {
             if (dataBean.getType().equals("0")) {//招聘
+                mDataBinding.type.setText("招聘");
                 findLabourReleaseDetail(dataBean.getLabour_code());
             } else {//求职
+                mDataBinding.type.setText("求职");
                 findLabourWorkDetail(dataBean.getLabour_code());
             }
         }
@@ -168,6 +170,7 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
 
     private void initViewRelease(final FindLabourReleaseDetailBean.DataBean dataBean) {
         if (dataBean != null) {
+            mDataBinding.type.setText("招聘");
             mDataBinding.llBase.setVisibility(View.GONE);
             mDataBinding.llJinyan.setVisibility(View.GONE);
             mDataBinding.name.setText(dataBean.getName());
@@ -246,6 +249,7 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
     private void initViewWork(final FindLabourReleaseDetailBean.DataBean dataBean) {
         if (dataBean != null) {
             id = dataBean.getId();
+            mDataBinding.type.setText("求职");
             mDataBinding.llBase.setVisibility(View.VISIBLE);
             mDataBinding.llJinyan.setVisibility(View.VISIBLE);
             mDataBinding.llZhiwei.setVisibility(View.GONE);

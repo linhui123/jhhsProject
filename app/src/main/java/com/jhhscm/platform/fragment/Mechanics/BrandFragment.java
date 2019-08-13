@@ -40,6 +40,7 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.util.ArrayList;
@@ -67,6 +68,7 @@ public class BrandFragment extends AbsFragment<FragmentBrandBinding> {
     protected void setupViews() {
         type = getArguments().getInt("type");
         EventBusUtil.registerEvent(this);
+        mDataBinding.recyclerview.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.recyclerview.setAdapter(mAdapter);

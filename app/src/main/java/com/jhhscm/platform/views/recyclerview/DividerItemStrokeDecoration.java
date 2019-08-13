@@ -19,6 +19,7 @@ public class DividerItemStrokeDecoration extends RecyclerView.ItemDecoration {
 
     private Context mContext;   //上下文
     private int dividerHeight;  //分割线的高度
+    private int mNoShowSize = 1;  //分割线的高度
     private Paint mPaint;   //画笔
 
     //自定义构造方法，在构造方法中初始化一些变量
@@ -29,12 +30,21 @@ public class DividerItemStrokeDecoration extends RecyclerView.ItemDecoration {
         mPaint.setColor(context.getResources().getColor(R.color.de));  //设置颜色
     }
 
+    //自定义构造方法，在构造方法中初始化一些变量
+    public DividerItemStrokeDecoration(Context context, int noShowSize) {
+        mContext = context;
+        mNoShowSize = noShowSize;
+        dividerHeight = 2;
+        mPaint = new Paint();
+        mPaint.setColor(context.getResources().getColor(R.color.de));  //设置颜色
+    }
+
     public void onDrawOver(Canvas c, RecyclerView parent) {
         final int left = parent.getPaddingLeft();
         final int right = parent.getWidth() - parent.getPaddingRight();
 
         final int childCount = parent.getChildCount();
-        for (int i = 0; i < childCount - 1; i++) {
+        for (int i = 0; i < childCount - mNoShowSize; i++) {
             final View child = parent.getChildAt(i);
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
                     .getLayoutParams();

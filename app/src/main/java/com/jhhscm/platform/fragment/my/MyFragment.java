@@ -177,7 +177,7 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             mDataBinding.username.setText(ConfigUtils.getCurrentUser(getContext()).getMobile());
             ImageLoader.getInstance().displayImage(ConfigUtils.getCurrentUser(getContext()).getAvatar(), mDataBinding.imUser);
         } else {
-            mDataBinding.imUser.setImageResource(R.mipmap.ic_launcher);
+            mDataBinding.imUser.setImageResource(R.mipmap.ic_heard);
             mDataBinding.tvName.setVisibility(View.VISIBLE);
             mDataBinding.rlCer.setVisibility(View.GONE);
         }

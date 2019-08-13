@@ -43,7 +43,6 @@ public class MyPeiJianListActivity extends AbsToolbarActivity {
 
     @Override
     protected String getToolBarTitle() {
-        mDataBinding.toolbar.setVisibility(View.GONE);
         return "我的配件";
     }
 

@@ -115,33 +115,31 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
         mDataBinding.refreshlayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-//                getCartGoodsByUserCode(userSession.getUserCode(), userSession.getToken(), true);
             }
         });
 
         mDataBinding.refreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-//                getCartGoodsByUserCode(userSession.getUserCode(), userSession.getToken(), false);
-
             }
         });
 
         initView();
         initBottom();
-
+        //从浏览记录中获取
         GetGoodsPageListBean getGoodsPageListBean = ConfigUtils.getNewMechanics(getContext());
-        if (getGoodsPageListBean != null && getGoodsPageListBean.getData() != null) {
-            wAdapter.setList(getGoodsPageListBean.getData(), true);
+        if (getGoodsPageListBean != null && getGoodsPageListBean.getData() != null && getGoodsPageListBean.getData().size() > 0) {
+            if (getGoodsPageListBean.getData().size() > 10) {
+                wAdapter.setList(getGoodsPageListBean.getData().subList(1, 10), true);
+            } else {
+                wAdapter.setList(getGoodsPageListBean.getData().subList(1, getGoodsPageListBean.getData().size()), true);
+            }
+            compairsonAdapter.setData(getGoodsPageListBean.getData().get(0));
         }
 
         mDataBinding.tvHostory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                GetGoodsPageListBean getGoodsPageListBean = ConfigUtils.getNewMechanics(getContext());
-//                if (getGoodsPageListBean != null && getGoodsPageListBean.getData() != null) {
-//                    wAdapter.setList(getGoodsPageListBean.getData(), true);
-//                }
                 mDataBinding.rvShoucang.setVisibility(View.GONE);
                 mDataBinding.rvWatch.setVisibility(View.VISIBLE);
                 mDataBinding.tvHostory.setTextSize(18);
@@ -167,9 +165,6 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
         mDataBinding.tvCom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("selectDataBean", "selectDataBean.size() " + selectDataBean.size());
-                Log.e("historyDataBean", "historyDataBean.size() " + historyDataBean.size());
-                Log.e("shoucangDataBean", "shoucangDataBean.size() " + shoucangDataBean.size());
                 if ((selectDataBean.size() + historyDataBean.size() + shoucangDataBean.size()) < 2) {
                     ToastUtil.show(getContext(), "请选择两台机型对比");
                 } else if ((selectDataBean.size() + historyDataBean.size() + shoucangDataBean.size()) > 2) {
@@ -178,7 +173,7 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
                     String good1 = "";
                     String good2 = "";
                     if (selectDataBean.size() == 1) {
-                        if (good1.length()>0){
+                        if (good1.length() > 0) {
                             good2 = selectDataBean.get(0).getGood_code();
                         }
                         good1 = selectDataBean.get(0).getGood_code();
@@ -188,7 +183,7 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
                         good2 = selectDataBean.get(1).getGood_code();
                     }
                     if (historyDataBean.size() == 1) {
-                        if (good1.length()>0){
+                        if (good1.length() > 0) {
                             good2 = historyDataBean.get(0).getGood_code();
                         }
                         good1 = historyDataBean.get(0).getGood_code();
@@ -198,7 +193,7 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
                         good2 = historyDataBean.get(1).getGood_code();
                     }
                     if (shoucangDataBean.size() == 1) {
-                        if (good1.length()>0){
+                        if (good1.length() > 0) {
                             good2 = shoucangDataBean.get(0).getGood_code();
                         }
                         good1 = shoucangDataBean.get(0).getGood_code();
@@ -287,7 +282,6 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
             }
         });
     }
-
 
     public void onEvent(CompMechanicsEvent event) {
         if (event.resultBean != null) {

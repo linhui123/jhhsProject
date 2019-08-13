@@ -19,6 +19,8 @@ import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.slideswaphelper.SlideSwapAction;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +83,8 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
     public void onBindViewHolder(final RecViewholder holder, final int position) {
         holder.setData(data.get(position));
         holder.tvTitle.setText(data.get(position).getName());
-        holder.tvPrice.setText("￥" + data.get(position).getCounter_price());
+
+        holder.tvPrice.setText(wan(data.get(position).getCounter_price()));
         if (data.get(position).isSelect()) {
             holder.tvSelect.setImageResource(R.mipmap.ic_shoping_s1);
         } else {
@@ -189,6 +192,19 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
 
     public interface SelectedListener {
         void select(List<GetGoodsPageListBean.DataBean> resultBeans);
+    }
+
+    private String wan(String toal) {
+        DecimalFormat df = new DecimalFormat("#.00");
+//        toal = df.format(Double.parseDouble(toal) / 10000);
+        //保留2位小数
+        BigDecimal b = new BigDecimal(Double.parseDouble(toal));
+        if (b.compareTo(new BigDecimal(Double.parseDouble("0"))) == 0) {
+            toal = "暂无报价";
+        } else {
+            toal = "￥" + b.setScale(2, BigDecimal.ROUND_DOWN).toString() + "万";
+        }
+        return toal;
     }
 }
 

@@ -102,7 +102,11 @@ public class HomePageAdapter extends AbsRecyclerViewAdapter<HomePageItem> {
         addHomePageBanner(homePageItem.adBean1);
         addHomePageBusiness(homePageItem.adBean3);
         addHomePageSendFriends();
-        addHomePageAD(homePageItem.adBean2);
+        if (homePageItem.adBean2 != null && homePageItem.adBean2.getResult() != null && homePageItem.adBean2.getResult().size() > 0) {
+            if (homePageItem.adBean2.getResult().get(0).getUrl()!=null){
+                addHomePageAD(homePageItem.adBean2);
+            }
+        }
         addHomePageBank(homePageItem.findBrandHomePageBean);
         addHomePageRecommend(homePageItem.findCategoryHomePageBean);
         addHomePageAc();

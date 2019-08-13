@@ -28,6 +28,8 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtils;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -105,33 +107,49 @@ public class ComparisonDetailFragment extends AbsFragment<FragmentComparisonDeta
 
     private void initRight(GetGoodsDetailsBean getGoodsDetailsBean) {
         mDataBinding.tvNameR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getName());
-        mDataBinding.tvPriceR.setText("" + getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price());
-        mDataBinding.tvDongliR.setText("--");
-        mDataBinding.tvChanshangR.setText("--");
-        mDataBinding.tvChandouR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p3());
-        mDataBinding.tvDunweiR.setText("--");
-        mDataBinding.tvZhongliangR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p1());
-        mDataBinding.tvCdrongliangR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p2());
+        if (getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price() != null) {
+            mDataBinding.tvPriceR.setText(wan(getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price()));
+        }
 
-        mDataBinding.tvGonglvR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p5());
-        mDataBinding.tvFadongjiR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p4());
-        mDataBinding.tvRangyouxiangR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p6());
-        mDataBinding.tvHeightR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p7());
+        mDataBinding.tvDongliR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p_10_text());
+        mDataBinding.tvChanshangR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getMerchant_text());
+        mDataBinding.tvChandouR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p_11_text());
+
+        mDataBinding.tvDunweiR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p_12());
+        mDataBinding.tvZhongliangR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p_1());
+        mDataBinding.tvCdrongliangR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p_2());
+
+        mDataBinding.tvGonglvR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p_5());
+//        mDataBinding.tvFadongjiR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p4());
+//        mDataBinding.tvRangyouxiangR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p6());
+//        mDataBinding.tvHeightR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p7());
     }
 
     private void initLeft(GetGoodsDetailsBean getGoodsDetailsBean) {
         mDataBinding.tvName.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getName());
-        mDataBinding.tvPrice.setText("" + getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price());
-        mDataBinding.tvDongli.setText("--");
-        mDataBinding.tvChanshang.setText("--");
-        mDataBinding.tvChandou.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p3());
-        mDataBinding.tvDunwei.setText("--");
-        mDataBinding.tvZhongliang.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p1());
-        mDataBinding.tvCdrongliang.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p2());
+        if (getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price() != null) {
+            mDataBinding.tvPrice.setText(wan(getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price()));
+        }
+        mDataBinding.tvDongli.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p_10_text());
+        mDataBinding.tvChanshang.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getMerchant_text());
+        mDataBinding.tvChandou.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p_11_text());
 
-        mDataBinding.tvGonglv.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p5());
-        mDataBinding.tvFadongji.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p4());
-        mDataBinding.tvRangyouxiang.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p6());
-        mDataBinding.tvHeight.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p7());
+        mDataBinding.tvDunwei.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p_12());
+        mDataBinding.tvZhongliang.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p_1());
+        mDataBinding.tvCdrongliang.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p_2());
+
+        mDataBinding.tvGonglv.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p_5());
+//        mDataBinding.tvFadongji.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p4());
+//        mDataBinding.tvRangyouxiang.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p6());
+//        mDataBinding.tvHeight.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p7());
+    }
+
+    private String wan(String toal) {
+        DecimalFormat df = new DecimalFormat("#.0000");
+        toal = df.format(Double.parseDouble(toal) / 10000);
+        //保留2位小数
+        BigDecimal b = new BigDecimal(Double.parseDouble(toal));
+        toal = b.setScale(2, BigDecimal.ROUND_DOWN).toString() + "万";
+        return toal;
     }
 }

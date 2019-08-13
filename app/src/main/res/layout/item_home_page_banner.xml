@@ -28,6 +28,7 @@
                 android:id="@+id/bga_banner"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
+                android:scaleType="fitXY"
                 app:banner_pageChangeDuration="1000"
                 app:banner_pointAutoPlayAble="true"
                 app:banner_pointAutoPlayInterval="5000"

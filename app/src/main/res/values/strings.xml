@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">挖矿来</string>
     <string name="progressbar_wait">请稍候&#8230;</string>
+    <string name="net_error">请求错误，请联系管理员</string>
+
     <string name="permission_dlg_close_txt">取消</string>
     <string name="permission_dlg_settings_txt">前往设置</string>
     <string name="permission_denied_txt">你已禁止授予挖矿来 %1$s 权限，可能\n会造成功能不可用，如需使用请到\n设置里授予权限</string>

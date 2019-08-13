@@ -17,6 +17,7 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentNewMechanicsBinding;
 import com.jhhscm.platform.databinding.FragmentOldMechanicsBinding;
+import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.event.GetRegionEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetComboBoxAction;
@@ -35,6 +36,7 @@ import com.jhhscm.platform.fragment.Mechanics.holder.NewMechanicsViewHolder;
 import com.jhhscm.platform.fragment.Mechanics.holder.OldMechanicsViewHolder;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.HomePageAdapter;
+import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -46,6 +48,8 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.bottommenu.BottomMenuShow;
 import com.jhhscm.platform.views.bottommenu.bean.MenuData;
+import com.jhhscm.platform.views.dialog.SimpleDialog;
+import com.jhhscm.platform.views.dialog.TelPhoneDialog;
 import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
@@ -206,6 +210,18 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
         }
     }
 
+    public void onEvent(ConsultationEvent event) {
+        if (event != null && event.type == 3) {
+            new TelPhoneDialog(getContext(), new TelPhoneDialog.CallbackListener() {
+
+                @Override
+                public void clickYes(String phone) {
+                    saveMsg(phone, "3");
+                }
+            }).show();
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -220,27 +236,18 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, String> map = new TreeMap<String, String>();
             map.put("keyword", "");
-            map.put("old_sort", old_sort);//小时数
+            map.put("old_sort", old_sort);//排序
+
             map.put("fix_p_3", fix_p_3);
             map.put("fix_p_2", fix_p_2);
             map.put("merchant_id", merchant_id);
+
             map.put("fix_p_9", fix_p_9);
             map.put("brand_id", brand_id);
-//            ArrayList<Integer> list = new ArrayList<>();
-//            if (merchant_id != null && merchant_id.length() > 0) {
-//                list.add(Integer.parseInt(merchant_id));
-//                map.put("merchant_id", JSON.toJSONString(list));
-//            }
-//            list.clear();
-//            if (fix_p_9 != null && fix_p_9.length() > 0) {
-//                list.add(Integer.parseInt(fix_p_9));
-//                map.put("fix_p_9", JSON.toJSONString(list));
-//            }
-//            list.clear();
-//            if (brand_id != null && brand_id.length() > 0) {
-//                list.add(Integer.parseInt(brand_id));
-//                map.put("brand_id", JSON.toJSONString(list));
-//            }
+            map.put("good_old_time", old_time);
+            map.put("good_counter_price", counter_price);
+            map.put("good_factory_time", factory_time);
+
             map.put("fix_p_1", fix_p_1);
             map.put("page", mCurrentPage + "");
             map.put("limit", mShowCount + "");
@@ -316,9 +323,10 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
 
         getComboBox("goods_type");
         getComboBox("old_sort");
-        getComboBox("goods_power");
-        getComboBox("goods_shovel");
-        getComboBox("goods_ton");
+
+        getComboBox("good_old_time");//已工作时长
+        getComboBox("good_counter_price");//二手机价格
+        getComboBox("good_factory_time");//二手机出厂时间
         findBrand();
         mDataBinding.tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -356,11 +364,11 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                                         jixing(response.body().getData());
                                     } else if ("old_sort".equals(name)) {
                                         paixu(response.body().getData());
-                                    } else if ("goods_power".equals(name)) {
+                                    } else if ("good_old_time".equals(name)) {
                                         dongli(response.body().getData());
-                                    } else if ("goods_shovel".equals(name)) {
+                                    } else if ("good_counter_price".equals(name)) {
                                         chandou(response.body().getData());
-                                    } else if ("goods_ton".equals(name)) {
+                                    } else if ("good_factory_time".equals(name)) {
                                         dunwei(response.body().getData());
                                     }
                                 } else {
@@ -421,6 +429,37 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
             @Override
             public void onItemClick(GetComboBoxBean.ResultBean item) {
                 resultBeanList.remove(item);
+                if (((SXDropAdapter) mDataBinding.rlDongli.getAdapter()).getList().contains(item)) {
+                    List<GetComboBoxBean.ResultBean> list = ((SXDropAdapter) mDataBinding.rlDongli.getAdapter()).getList();
+                    for (GetComboBoxBean.ResultBean resultBean : list) {
+                        if (resultBean.getKey_name().equals(item.getKey_name())) {
+                            resultBean.setSelect(false);
+                            ((SXDropAdapter) mDataBinding.rlDongli.getAdapter()).setList(list);
+                            ((SXDropAdapter) mDataBinding.rlDongli.getAdapter()).notifyDataSetChanged();
+                        }
+                    }
+                }
+                if (((SXDropAdapter) mDataBinding.rlChandou.getAdapter()).getList().contains(item)) {
+                    List<GetComboBoxBean.ResultBean> list = ((SXDropAdapter) mDataBinding.rlChandou.getAdapter()).getList();
+                    for (GetComboBoxBean.ResultBean resultBean : list) {
+                        if (resultBean.getKey_name().equals(item.getKey_name())) {
+                            resultBean.setSelect(false);
+                            ((SXDropAdapter) mDataBinding.rlChandou.getAdapter()).setList(list);
+                            ((SXDropAdapter) mDataBinding.rlChandou.getAdapter()).notifyDataSetChanged();
+                        }
+                    }
+                }
+                if (((SXDropAdapter) mDataBinding.rlDunwei.getAdapter()).getList().contains(item)) {
+                    List<GetComboBoxBean.ResultBean> list = ((SXDropAdapter) mDataBinding.rlDunwei.getAdapter()).getList();
+                    for (GetComboBoxBean.ResultBean resultBean : list) {
+                        if (resultBean.getKey_name().equals(item.getKey_name())) {
+                            resultBean.setSelect(false);
+                            ((SXDropAdapter) mDataBinding.rlDunwei.getAdapter()).setList(list);
+                            ((SXDropAdapter) mDataBinding.rlDunwei.getAdapter()).notifyDataSetChanged();
+                        }
+                    }
+                }
+
                 selectedAdapter.notifyDataSetChanged();
                 mDataBinding.wrvRecycler.autoRefresh();
             }
@@ -488,6 +527,10 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
         });
     }
 
+    String old_time;
+    String counter_price;
+    String factory_time;
+
     /**
      * 下拉筛选
      */
@@ -505,7 +548,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                         }
                     }
                 }
-                fix_p_3 = item.getKey_name();
+                old_time = item.getKey_name();
                 resultBeanList.add(item);
             }
         });
@@ -525,7 +568,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                         }
                     }
                 }
-                fix_p_2 = item.getKey_name();
+                counter_price = item.getKey_name();
                 resultBeanList.add(item);
             }
         });
@@ -545,7 +588,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                         }
                     }
                 }
-                fix_p_1 = item.getKey_name();
+                factory_time = item.getKey_name();
                 resultBeanList.add(item);
             }
         });
@@ -560,35 +603,41 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
 
     GetRegionBean getRegionBean;
 
-    private void showArea() {
-        if (getRegionBean != null) {
-            BottomMenuShow bottomMenuShow = new BottomMenuShow(getContext());
-            final ArrayList<MenuData> menuDatas = new ArrayList<>();
-//            for (int i = 0; i < mGetSourceEntity.getPROVINCE().size(); i++) {
-//                MenuData menuData = new MenuData();
-//                menuData.setmSecondary(true);
-//                menuData.setmText(mGetSourceEntity.getPROVINCE().get(i).getNAME());
-//                ArrayList<String> arrayList = new ArrayList<>();
-//                for (int j = 0; j < mGetSourceEntity.getPROVINCE().get(i).getCITY().size(); j++) {
-//                    arrayList.add(mGetSourceEntity.getPROVINCE().get(i).getCITY().get(j).getNAME());
-//                }
-//                menuData.setmData(arrayList);
-//                menuDatas.add(menuData);
-//            }
+    /**
+     * 信息咨询
+     */
+    private void saveMsg(final String phone, String type) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("mobile", phone);
+        map.put("type", type);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "saveMsg");
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(SaveMsgAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity> response, BaseErrorInfo baseErrorInfo) {
+                        closeDialog();
+                        if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                            return;
+                        }
+                        if (response != null) {
+                            if (response.body().getCode().equals("200")) {
+                                new SimpleDialog(getContext(), phone, new SimpleDialog.CallbackListener() {
+                                    @Override
+                                    public void clickYes() {
 
-            bottomMenuShow.bottomMenuAlertDialog("", menuDatas);
-            bottomMenuShow.setOnBottomMenuListener(new BottomMenuShow.OnBottomMenuListener() {
-                @Override
-                public void onClicklistener(MenuData data) {
-//                    mArge = menuDatas.get(data.getId()).getmText() + "  " + menuDatas.get(data.getId()).getmData().get(data.getIds());
-//                    mProvinceId = mGetSourceEntity.getPROVINCE().get(data.getId()).getAREA_ID();
-//                    mCityId = mGetSourceEntity.getPROVINCE().get(data.getId()).getCITY().get(data.getIds()).getAREA_ID();
-//                    mDataBinding.tvsArea.setText(mArge);
-//                    judgeButton();
-                }
-            });
-        } else {
-//            getSourece();
-        }
+                                    }
+                                }).show();
+                            } else {
+                                ToastUtils.show(getContext(), response.body().getMessage());
+                            }
+                        }
+                    }
+                }));
     }
 }

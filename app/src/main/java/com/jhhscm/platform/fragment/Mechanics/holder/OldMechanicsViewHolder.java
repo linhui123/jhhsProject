@@ -6,10 +6,12 @@ import com.jhhscm.platform.activity.H5Activity;
 import com.jhhscm.platform.activity.MechanicsH5Activity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemMechanicsOldBinding;
+import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.fragment.Mechanics.MechanicsItem;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetOldPageListBean;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.HomePageItem;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
@@ -38,8 +40,8 @@ public class OldMechanicsViewHolder extends AbsRecyclerViewHolder<GetOldPageList
         String City = item.getCity() == null ? "" : item.getCity();
         mBinding.tv2.setText(data + Old_time + Province + City);
 
-        String Counter_price = item.getCounter_price() == null ? "" : wan(item.getCounter_price()) + "  ";
-        String Retail_price = item.getRetail_price() == null ? "" : "首付" + wan(item.getRetail_price());
+        String Counter_price = item.getCounter_price() == null ? "" : item.getCounter_price() + "万  ";
+        String Retail_price = item.getRetail_price() == null ? "" : "首付" + item.getRetail_price()+ "万";
         mBinding.tv3.setText(Counter_price + Retail_price);
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +54,7 @@ public class OldMechanicsViewHolder extends AbsRecyclerViewHolder<GetOldPageList
         mBinding.tv4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                EventBusUtil.post(new ConsultationEvent(3));
             }
         });
     }

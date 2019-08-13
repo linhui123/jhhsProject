@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.MechanicsH5Activity;
+import com.jhhscm.platform.event.ConsultationEvent;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.slideswaphelper.SlideSwapAction;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -75,6 +77,12 @@ public class MyOldCollectionAdapter extends RecyclerView.Adapter<MyOldCollection
         ImageLoader.getInstance().displayImage(data.get(position).getPic_url(), holder.im_old);
         holder.tv_old_1.setText(data.get(position).getName());
         holder.tv_old_4.setText("询价");
+        holder.tv_new_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBusUtil.post(new ConsultationEvent(3));
+            }
+        });
         String time = data.get(position).getFactory_time() == null ? "" : data.get(position).getFactory_time() + "年 | ";
         String Old_time = data.get(position).getOld_time() == null ? "" : data.get(position).getOld_time() + "小时 | ";
         String Province = data.get(position).getProvince() == null ? "" : data.get(position).getProvince() + "-";

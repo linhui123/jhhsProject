@@ -44,6 +44,7 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.util.Map;
@@ -78,7 +79,7 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
         } else {
             startNewActivity(LoginActivity.class);
         }
-
+        mDataBinding.wrvRecycler.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
         mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.wrvRecycler.setAdapter(mAdapter);

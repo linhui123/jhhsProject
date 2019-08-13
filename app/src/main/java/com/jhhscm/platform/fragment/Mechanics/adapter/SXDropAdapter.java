@@ -24,6 +24,15 @@ public class SXDropAdapter extends RecyclerView.Adapter<SXDropAdapter.ViewHolder
         this.mContext = mContext;
     }
 
+    public List<GetComboBoxBean.ResultBean> getList() {
+        return list;
+    }
+
+    public void setList(List<GetComboBoxBean.ResultBean> list1) {
+        this.list = list1;
+        notifyDataSetChanged();
+    }
+
     public void setMyListener(ItemListener myListener) {
         this.myListener = myListener;
     }

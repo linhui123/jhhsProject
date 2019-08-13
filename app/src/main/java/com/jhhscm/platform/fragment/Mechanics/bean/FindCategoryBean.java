@@ -143,12 +143,20 @@ public class FindCategoryBean implements Serializable {
          * id : 27
          * pic_url : https://wajuejifiles.oss-cn-beijing.aliyuncs.com/C%3A%5CUsers%5CAdministrator%5CDesktop%5C%E5%B7%A5%E5%85%B7%E7%AE%B1%5Ctest.png
          */
-
+        private String good_code;
         private String sale_num;
         private String counter_price;
         private String name;
         private String id;
         private String pic_url;
+
+        public String getGood_code() {
+            return good_code;
+        }
+
+        public void setGood_code(String good_code) {
+            this.good_code = good_code;
+        }
 
         public String getSale_num() {
             return sale_num;

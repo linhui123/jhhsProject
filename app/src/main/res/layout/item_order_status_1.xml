@@ -17,7 +17,7 @@
             android:paddingLeft="@dimen/padding_15"
             android:paddingTop="@dimen/padding_10"
             android:paddingRight="@dimen/padding_15"
-            android:paddingBottom="@dimen/dp_5">
+            android:paddingBottom="@dimen/padding_10">
 
             <TextView
                 android:id="@+id/data"
@@ -37,22 +37,32 @@
                 android:textSize="@dimen/sp_14" />
         </RelativeLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/line_stroke" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_10"
             android:paddingLeft="@dimen/padding_15"
-            android:paddingTop="@dimen/padding_10"
+            android:paddingTop="@dimen/dp_5"
             android:paddingRight="@dimen/padding_15"
             android:paddingBottom="@dimen/dp_5">
 
         </android.support.v7.widget.RecyclerView>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="@dimen/padding_10"
+            android:background="@drawable/line_stroke" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_10"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/padding_15"
             android:paddingTop="@dimen/padding_10"
@@ -71,11 +81,11 @@
                 android:id="@+id/cancle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/padding_15"
                 android:layout_toLeftOf="@+id/pay"
                 android:background="@drawable/edit_bg_acc9"
                 android:paddingLeft="@dimen/padding_10"
                 android:paddingTop="@dimen/dp_5"
-                android:layout_marginRight="@dimen/padding_15"
                 android:paddingRight="@dimen/padding_10"
                 android:paddingBottom="@dimen/dp_5"
                 android:text="取消订单"

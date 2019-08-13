@@ -174,7 +174,7 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         map.put("order_code", order_code);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getContext(), map, "findOrder");
+        String sign = Sign.getSignKey(getContext(), map, "delOrder");
         NetBean netBean = new NetBean();
         netBean.setToken(userSession.getToken());
         netBean.setSign(sign);

@@ -318,7 +318,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
      * 咨询
      */
     public void onEvent(ConsultationEvent event) {
-        if (event.phone != null) {
+        if (event.phone != null && event.phone.length() > 0) {
             saveMsg(event.phone);
         }
     }

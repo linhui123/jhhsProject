@@ -91,7 +91,7 @@ public class MyPeiJianCollectionAdapter extends RecyclerView.Adapter<MyPeiJianCo
             @Override
             public void onClick(View v) {
                 String url = UrlUtils.PJXQ + "&good_code=" + data.get(position).getGood_code();
-                H5PeiJianActivity.start(context, url, "配件详情", data.get(position).getId(), data.get(position).getPic_url(), 3);
+                H5PeiJianActivity.start(context, url, "配件详情", data.get(position).getGood_code(), data.get(position).getPic_url(), 3);
             }
         });
     }

@@ -10,10 +10,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingTop="@dimen/padding_15"
-            android:paddingBottom="@dimen/padding_15"
             android:paddingLeft="@dimen/padding_15"
-            android:paddingRight="@dimen/padding_15">
+            android:paddingTop="@dimen/padding_15"
+            android:paddingRight="@dimen/padding_15"
+            android:paddingBottom="@dimen/padding_15">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:maxLines="2"
-                        android:text="山河智能SWE70E挖掘机"
+                        android:text=""
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
 
@@ -53,7 +53,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="25.73万"
+                        android:text=""
                         android:textColor="@color/ff1a"
                         android:textSize="@dimen/text_size_16" />
                 </LinearLayout>
@@ -71,7 +71,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:maxLines="2"
-                        android:text="山河智能SWE70E挖掘机"
+                        android:text=""
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
 
@@ -80,7 +80,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="25.73万"
+                        android:text=""
                         android:textColor="@color/ff1a"
                         android:textSize="@dimen/text_size_16" />
                 </LinearLayout>
@@ -131,7 +131,7 @@
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
                     android:singleLine="true"
-                    android:text="传统动力"
+                    android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -147,7 +147,7 @@
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
                     android:singleLine="true"
-                    android:text="传统动力"
+                    android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -187,7 +187,7 @@
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
                     android:singleLine="true"
-                    android:text="国产"
+                    android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -203,7 +203,7 @@
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
                     android:singleLine="true"
-                    android:text="国产"
+                    android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -243,7 +243,7 @@
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
                     android:singleLine="true"
-                    android:text="反铲"
+                    android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -259,7 +259,7 @@
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
                     android:singleLine="true"
-                    android:text="反铲"
+                    android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -299,7 +299,7 @@
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
                     android:singleLine="true"
-                    android:text="45"
+                    android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -315,7 +315,7 @@
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
                     android:singleLine="true"
-                    android:text="20"
+                    android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -356,7 +356,7 @@
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
                     android:singleLine="true"
-                    android:text="45"
+                    android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -373,7 +373,7 @@
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
                     android:singleLine="true"
-                    android:text="20"
+                    android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -414,7 +414,7 @@
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
                     android:singleLine="true"
-                    android:text="45"
+                    android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -431,7 +431,7 @@
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
                     android:singleLine="true"
-                    android:text="20"
+                    android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -486,7 +486,7 @@
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
                     android:singleLine="true"
-                    android:text="反铲"
+                    android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -503,7 +503,7 @@
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
                     android:singleLine="true"
-                    android:text="反铲"
+                    android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -515,7 +515,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <View style="@style/view_v_de" />
 
@@ -573,7 +574,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <View style="@style/view_v_de" />
 
@@ -631,7 +633,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <View style="@style/view_v_de" />
 

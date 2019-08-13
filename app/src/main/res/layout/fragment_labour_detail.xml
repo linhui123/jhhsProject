@@ -9,7 +9,7 @@
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/rl_bottom">
+            android:layout_above="@+id/bottom">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -29,7 +29,8 @@
                         android:layout_height="wrap_content"
                         android:text="招聘"
                         android:textColor="@color/acc3"
-                        android:textSize="@dimen/text_size_16" />
+                        android:textSize="@dimen/text_size_16"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/name"
@@ -69,15 +70,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@mipmap/ic_labour_title"
+                        android:drawablePadding="@dimen/dp_5"
                         android:text="职位要求"
                         android:textColor="@color/acc3"
-                        android:textSize="@dimen/text_size_16" />
+                        android:textSize="@dimen/text_size_16"
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -96,11 +101,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -119,11 +127,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -142,11 +153,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -165,11 +179,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -187,6 +204,8 @@
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
+
+                    <View style="@style/view_h_de" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -200,15 +219,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@mipmap/ic_labour_title"
+                        android:drawablePadding="@dimen/dp_5"
                         android:text="基本资料"
                         android:textColor="@color/acc3"
-                        android:textSize="@dimen/text_size_16" />
+                        android:textSize="@dimen/text_size_16"
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -227,11 +250,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -250,11 +276,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -273,11 +302,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -295,6 +327,8 @@
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
+
+                    <View style="@style/view_h_de" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -307,15 +341,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@mipmap/ic_labour_title"
+                        android:drawablePadding="@dimen/dp_5"
                         android:text="薪资福利"
                         android:textColor="@color/acc3"
-                        android:textSize="@dimen/text_size_16" />
+                        android:textSize="@dimen/text_size_16"
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -334,11 +372,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -357,11 +398,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -380,6 +424,7 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -387,20 +432,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:textStyle="bold">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@mipmap/ic_labour_title"
+                        android:drawablePadding="@dimen/dp_5"
                         android:text="项目概况"
                         android:textColor="@color/acc3"
-                        android:textSize="@dimen/text_size_16" />
+                        android:textSize="@dimen/text_size_16"
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -419,11 +469,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -442,11 +495,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -465,11 +521,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -488,6 +547,7 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -501,15 +561,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@mipmap/ic_labour_title"
+                        android:drawablePadding="@dimen/dp_5"
                         android:text="工程经验"
                         android:textColor="@color/acc3"
-                        android:textSize="@dimen/text_size_16" />
+                        android:textSize="@dimen/text_size_16"
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -528,11 +592,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -551,11 +618,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -574,11 +644,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
+                    <View style="@style/view_h_de" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -596,109 +669,114 @@
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
+
+                    <View style="@style/view_h_de" />
                 </LinearLayout>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
         <RelativeLayout
-            android:id="@+id/rl_bottom"
+            android:id="@+id/bottom"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
-            android:paddingLeft="@dimen/padding_15"
-            android:paddingRight="@dimen/padding_15"
-            android:visibility="gone">
-
-            <com.jhhscm.platform.views.CircleImageView
-                android:id="@+id/im"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/ic_launcher" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/im"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/padding_10">
-
-                <TextView
-                    android:id="@+id/user_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/im"
-                    android:paddingLeft="@dimen/padding_10"
-                    android:text="王*" />
-
-                <TextView
-                    android:id="@+id/user_tel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/user_name"
-                    android:layout_toRightOf="@+id/im"
-                    android:paddingLeft="@dimen/padding_10"
-                    android:text="189****9666" />
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/phone"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/button_c397"
-                android:gravity="center"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="电话联系"
-                android:textColor="@color/white" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/rl_bottom1"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:visibility="gone"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
             android:paddingLeft="@dimen/padding_15"
             android:paddingRight="@dimen/padding_15">
 
-            <TextView
-                android:id="@+id/tv_del"
-                android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/padding_15"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
-                android:background="@drawable/edit_bg_397"
-                android:gravity="center"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="删除"
-                android:textColor="@color/a397"
-                android:textSize="@dimen/text_size_16" />
+            <RelativeLayout
+                android:id="@+id/rl_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:visibility="gone">
 
-            <TextView
-                android:id="@+id/tv_edit"
-                android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/padding_15"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
-                android:background="@drawable/button_c397"
-                android:gravity="center"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="编辑"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_16" />
-        </LinearLayout>
+                <com.jhhscm.platform.views.CircleImageView
+                    android:id="@+id/im"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/ic_launcher" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/im"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/padding_10">
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/im"
+                        android:paddingLeft="@dimen/padding_10"
+                        android:text="王*" />
+
+                    <TextView
+                        android:id="@+id/user_tel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/user_name"
+                        android:layout_toRightOf="@+id/im"
+                        android:paddingLeft="@dimen/padding_10"
+                        android:text="189****9666" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/button_c397"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="电话联系"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/rl_bottom1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_del"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/edit_bg_397"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="删除"
+                    android:textColor="@color/a397"
+                    android:textSize="@dimen/text_size_16" />
+
+                <TextView
+                    android:id="@+id/tv_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_c397"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="编辑"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </layout>
