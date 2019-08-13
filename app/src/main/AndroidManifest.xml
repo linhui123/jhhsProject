@@ -49,7 +49,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme.TranslucentStatusBar">
-        <activity android:name=".activity.H5PeiJian2Activity"></activity>
         <activity
             android:name=".activity.ComparisonDetailActivity"
             android:launchMode="singleTask"

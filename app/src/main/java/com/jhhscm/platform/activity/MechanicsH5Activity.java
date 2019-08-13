@@ -256,17 +256,17 @@ public class MechanicsH5Activity extends AbsActivity {
         mDataBinding.tvJiaru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userSession != null
-                        && userSession.getUserCode() != null
-                        && userSession.getToken() != null) {
-                    if (findCategoryDetailBean != null) {
-                        addGoodsToCarts(userSession.getUserCode(), picUrl, findCategoryDetailBean, userSession.getToken());
-                    } else {
-                        findCategoryDetail(goodCode);
-                    }
-                } else {
-                    startNewActivity(LoginActivity.class);
-                }
+//                if (userSession != null
+//                        && userSession.getUserCode() != null
+//                        && userSession.getToken() != null) {
+//                    if (findCategoryDetailBean != null) {
+//                        addGoodsToCarts(userSession.getUserCode(), picUrl, findCategoryDetailBean, userSession.getToken());
+//                    } else {
+//                        findCategoryDetail(goodCode);
+//                    }
+//                } else {
+//                    startNewActivity(LoginActivity.class);
+//                }
             }
         });
         mDataBinding.tvDijia.setOnClickListener(new View.OnClickListener() {
@@ -299,8 +299,8 @@ public class MechanicsH5Activity extends AbsActivity {
         mDataBinding.tvPk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addGoodsToCarts(userSession.getUserCode(), picUrl, findCategoryDetailBean, userSession.getToken());
-//                ComparisonActivity.start(MechanicsH5Activity.this);
+//                addGoodsToCarts(userSession.getUserCode(), picUrl, findCategoryDetailBean, userSession.getToken());
+                ComparisonActivity.start(MechanicsH5Activity.this);
             }
         });
     }
