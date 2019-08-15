@@ -96,9 +96,9 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
         labour_code = getArguments().getString("labour_code");
         id = getArguments().getString("id");
         if (type == 0) {//只读
-            mDataBinding.tvFabu.setText("更新信息");
-        } else {//编辑
             mDataBinding.tvFabu.setText("发布信息");
+        } else {//编辑
+            mDataBinding.tvFabu.setText("更新信息");
             findLabourReleaseDetail(labour_code);
         }
 
@@ -834,8 +834,8 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             mDataBinding.tvElse.setText(dataBean.getOther_desc());
 
             //福利
-            settl_time = dataBean.getSettl_time();
-            salay_money = dataBean.getSalay_money();
+            settl_time = dataBean.getSettl_time_text();
+            salay_money = dataBean.getSalay_money_text();
             mDataBinding.tvBaseXinzi.setText(salay_money);
             mDataBinding.tvBaseSattleTime.setText(settl_time);
 //            if (settl_time != null) {

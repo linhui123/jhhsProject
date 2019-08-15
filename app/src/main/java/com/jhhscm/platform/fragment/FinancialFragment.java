@@ -34,14 +34,10 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.H5Activity;
-import com.jhhscm.platform.activity.MainActivity;
-import com.jhhscm.platform.activity.MechanicsH5Activity;
+import com.jhhscm.platform.activity.h5.H5Activity;
 import com.jhhscm.platform.databinding.FragmentFinancialBinding;
-import com.jhhscm.platform.databinding.FragmentWebBinding;
 import com.jhhscm.platform.event.LoginH5Event;
 import com.jhhscm.platform.event.WebTitleEvent;
-import com.jhhscm.platform.fragment.Mechanics.PeiJianFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.http.AHttpService;

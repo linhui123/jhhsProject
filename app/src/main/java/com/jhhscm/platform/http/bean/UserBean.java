@@ -39,6 +39,15 @@ public class UserBean {
         private String userCode;
         private String avatar;
         private int status;
+        private String is_check;//是否实名 0：未认证 1是已认证
+
+        public String getIs_check() {
+            return is_check;
+        }
+
+        public void setIs_check(String is_check) {
+            this.is_check = is_check;
+        }
 
         public String getMobile() {
             return mobile;

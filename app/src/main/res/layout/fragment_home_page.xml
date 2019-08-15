@@ -60,14 +60,16 @@
                 android:layout_height="35dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:gravity="center_vertical"
                 android:layout_marginRight="16dp"
                 android:layout_toLeftOf="@+id/msg_img"
                 android:layout_toRightOf="@+id/wether_date"
                 android:background="@drawable/edit_shpape_bg"
-                android:hint="严选车"
+                android:drawableLeft="@mipmap/ic_search_hint"
+                android:drawablePadding="@dimen/dp_5"
+                android:gravity="center_vertical"
+                android:hint="请输入你要找的机型"
                 android:paddingLeft="12dp"
-                android:textSize="12dp" />
+                android:textSize="@dimen/text_size_14" />
 
             <ImageView
                 android:id="@+id/msg_img"
@@ -83,8 +85,8 @@
             android:id="@+id/wrv_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:layout_below="@+id/rl_top"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+            android:layout_below="@+id/rl_top"
+            android:background="@color/white"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
 
         <ImageView
             android:id="@+id/tel"

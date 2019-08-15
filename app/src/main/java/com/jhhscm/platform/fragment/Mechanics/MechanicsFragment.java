@@ -2,8 +2,6 @@ package com.jhhscm.platform.fragment.Mechanics;
 
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,27 +9,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.SearchActivity;
+import com.jhhscm.platform.activity.SearchActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.FragmentHomePageBinding;
 import com.jhhscm.platform.databinding.FragmentMechanicsBinding;
-import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.event.GetRegionEvent;
-import com.jhhscm.platform.fragment.Mechanics.action.GetOldPageListAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetRegionAction;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetOldPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
 import com.jhhscm.platform.fragment.Mechanics.holder.GetRegionViewHolder;
-import com.jhhscm.platform.fragment.Mechanics.holder.OldMechanicsViewHolder;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.home.HomePageAdapter;
-import com.jhhscm.platform.fragment.home.HomePageFragment;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -43,8 +33,6 @@ import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 

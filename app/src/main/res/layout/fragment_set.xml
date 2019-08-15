@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="12dp"
-                android:text="收货地址"
+                android:text="地址管理"
                 android:textColor="@color/acc3"
                 android:textSize="16sp" />
 
@@ -32,7 +32,8 @@
                 android:src="@mipmap/ic_point" />
         </RelativeLayout>
 
-        <View style="@style/view_h_de" />
+        <View style="@style/view_h_de"
+            android:layout_height="@dimen/padding_10"/>
 
         <RelativeLayout
             android:id="@+id/rl_1"
@@ -58,7 +59,8 @@
                 android:src="@mipmap/ic_point" />
         </RelativeLayout>
 
-        <View style="@style/view_h_de" />
+        <View style="@style/view_h_de"
+            android:layout_height="@dimen/padding_10"/>
 
         <RelativeLayout
             android:id="@+id/rl_2"
@@ -84,7 +86,8 @@
                 android:text="0.0M" />
         </RelativeLayout>
 
-        <View style="@style/view_h_de" />
+        <View style="@style/view_h_de"
+            android:layout_height="@dimen/padding_10"/>
 
         <RelativeLayout
             android:id="@+id/rl_3"
@@ -110,13 +113,13 @@
                 android:src="@mipmap/ic_point" />
         </RelativeLayout>
 
-        <View style="@style/view_h_de" />
+        <View style="@style/view_h_de"
+            android:layout_height="@dimen/padding_10"/>
 
         <RelativeLayout
             android:id="@+id/rl_out"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:background="@color/white"
             android:padding="16dp">
 

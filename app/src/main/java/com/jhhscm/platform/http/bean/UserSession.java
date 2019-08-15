@@ -12,6 +12,15 @@ public class UserSession {
     private String userCode;
     private String status;
     private String avatar;
+    private String is_check;//是否实名 0：未认证 1是已认证
+
+    public String getIs_check() {
+        return is_check;
+    }
+
+    public void setIs_check(String is_check) {
+        this.is_check = is_check;
+    }
 
     public String getAvatar() {
         return avatar;

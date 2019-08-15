@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.jhhscm.platform.activity.MechanicsH5Activity;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;

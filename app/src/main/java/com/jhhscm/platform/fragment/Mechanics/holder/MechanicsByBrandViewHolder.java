@@ -3,18 +3,15 @@ package com.jhhscm.platform.fragment.Mechanics.holder;
 import android.view.View;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.MechanicsH5Activity;
+import com.jhhscm.platform.activity.h5.MechanicsH5Activity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemCompairsonSelectBinding;
-import com.jhhscm.platform.databinding.ItemMechanicsBrandBinding;
 import com.jhhscm.platform.event.BrandResultEvent;
 import com.jhhscm.platform.event.CompMechanicsEvent;
 import com.jhhscm.platform.event.FinishEvent;
-import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsByBrandBean;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.UrlUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;

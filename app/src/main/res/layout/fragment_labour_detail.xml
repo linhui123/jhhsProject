@@ -14,14 +14,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/padding_15"
-                android:paddingRight="@dimen/padding_15">
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/padding_10">
+                    android:paddingLeft="@dimen/padding_15"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/padding_15"
+                    android:paddingBottom="@dimen/padding_10">
 
                     <TextView
                         android:id="@+id/type"
@@ -47,6 +48,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/type"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:text="更新时间："
                         android:textSize="@dimen/text_size_16" />
 
@@ -56,22 +58,32 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/type"
                         android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:text="关注次数："
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
+
 
                 <LinearLayout
                     android:id="@+id/ll_zhiwei"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+
+                    android:paddingBottom="@dimen/padding_10">
+
+                    <View
+                        style="@style/view_h_de"
+                        android:layout_height="@dimen/padding_10" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@mipmap/ic_labour_title"
                         android:drawablePadding="@dimen/dp_5"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingRight="@dimen/padding_15"
                         android:text="职位要求"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16"
@@ -82,6 +94,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -101,13 +115,13 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
-
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -127,13 +141,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -153,13 +168,13 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
-
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -179,13 +194,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -205,22 +221,31 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/ll_base"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+
                     android:orientation="vertical"
+
+                    android:paddingBottom="@dimen/padding_10"
                     android:visibility="gone">
+
+                    <View
+                        style="@style/view_h_de"
+                        android:layout_height="@dimen/padding_10" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@mipmap/ic_labour_title"
                         android:drawablePadding="@dimen/dp_5"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingRight="@dimen/padding_15"
                         android:text="基本资料"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16"
@@ -231,6 +256,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -250,13 +277,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -276,13 +304,13 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
-
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -302,13 +330,13 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
-
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -327,16 +355,21 @@
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
-
-                    <View style="@style/view_h_de" />
                 </LinearLayout>
+
+                <View
+                    style="@style/view_h_de"
+                    android:layout_height="@dimen/padding_10" />
 
                 <LinearLayout
                     android:id="@+id/ll_fuli"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/padding_15"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/padding_15"
+                    android:paddingBottom="@dimen/padding_10">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -372,7 +405,6 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -398,8 +430,6 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
-
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -424,22 +454,31 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/ll_project"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:orientation="vertical"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
                     android:textStyle="bold">
+
+                    <View
+                        style="@style/view_h_de"
+                        android:layout_height="@dimen/padding_10" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@mipmap/ic_labour_title"
                         android:drawablePadding="@dimen/dp_5"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingRight="@dimen/padding_15"
+                        android:paddingBottom="@dimen/padding_10"
                         android:text="项目概况"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16"
@@ -450,6 +489,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -469,13 +510,13 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
-
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -495,13 +536,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -521,13 +563,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -547,22 +590,31 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/ll_jinyan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:orientation="vertical"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
                     android:visibility="gone">
+
+                    <View
+                        style="@style/view_h_de"
+                        android:layout_height="@dimen/padding_10" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@mipmap/ic_labour_title"
                         android:drawablePadding="@dimen/dp_5"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
                         android:text="工程经验"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16"
@@ -573,6 +625,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -592,13 +646,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -618,13 +673,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -644,13 +700,14 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10">
 
                         <TextView
@@ -670,7 +727,6 @@
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
-                    <View style="@style/view_h_de" />
                 </LinearLayout>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 
 
@@ -13,10 +14,12 @@ import com.jhhscm.platform.runtime.RuntimePermission;
 import com.jhhscm.platform.statusbar.StatusBarCompat;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.StatisticalUtil;
 import com.jhhscm.platform.tool.UdaUtils;
 import com.jhhscm.platform.views.YXProgressDialog;
 import com.jhhscm.platform.views.dialog.AlertDialog;
 import com.jhhscm.platform.views.dialog.DialogCallback;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,23 +134,23 @@ public abstract class AbsActivity extends AppCompatActivity implements RuntimePe
     @Override
     protected void onResume() {
         super.onResume();
-//        MobclickAgent.onResume(this);
-//        if (!TextUtils.isEmpty(getPageName())) {
-//            StatisticalUtil.onPageStart(getPageName());
-//        } else {
-//            StatisticalUtil.onPageStart(this);
-//        }
+        if (!TextUtils.isEmpty(getPageName())) {
+            StatisticalUtil.onPageStart(getPageName());
+        } else {
+            StatisticalUtil.onPageStart(this);
+        }
+        MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
-//        if (!TextUtils.isEmpty(getPageName())) {
-//            StatisticalUtil.onPageEnd(getPageName());
-//        } else {
-//            StatisticalUtil.onPageEnd(this);
-//        }
         super.onPause();
-//        MobclickAgent.onPause(this);
+        if (!TextUtils.isEmpty(getPageName())) {
+            StatisticalUtil.onPageEnd(getPageName());
+        } else {
+            StatisticalUtil.onPageEnd(this);
+        }
+        MobclickAgent.onPause(this);
     }
 
     public void onEventMainThread(LoginErrorEvent event) {

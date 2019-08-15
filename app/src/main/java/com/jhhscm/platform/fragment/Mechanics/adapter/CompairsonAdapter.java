@@ -10,21 +10,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.MechanicsH5Activity;
-import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
-import com.jhhscm.platform.fragment.GoodsToCarts.adapter.RecOtherTypeAdapter;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsByBrandBean;
+import com.jhhscm.platform.activity.h5.MechanicsH5Activity;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.slideswaphelper.SlideSwapAction;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.jhhscm.platform.fragment.Mechanics.MechanicsItem.getGoodsPageListBean;
 
 public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.RecViewholder> {
 

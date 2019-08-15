@@ -2,24 +2,17 @@ package com.jhhscm.platform.fragment.Mechanics.holder;
 
 import android.view.View;
 
-import com.jhhscm.platform.activity.H5Activity;
-import com.jhhscm.platform.activity.MechanicsH5Activity;
+import com.jhhscm.platform.activity.h5.MechanicsH5Activity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemMechanicsOldBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
-import com.jhhscm.platform.fragment.Mechanics.MechanicsItem;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetOldPageListBean;
-import com.jhhscm.platform.fragment.home.AdBean;
-import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 public class OldMechanicsViewHolder extends AbsRecyclerViewHolder<GetOldPageListBean.DataBean> {
 

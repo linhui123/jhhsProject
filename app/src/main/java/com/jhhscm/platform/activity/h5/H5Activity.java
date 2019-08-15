@@ -1,10 +1,9 @@
-package com.jhhscm.platform.activity;
+package com.jhhscm.platform.activity.h5;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
-import android.content.ClipboardManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,35 +30,27 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
-import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.MainActivity;
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.databinding.FragmentWebBinding;
 import com.jhhscm.platform.event.LoginH5Event;
 import com.jhhscm.platform.event.WebTitleEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.tool.HttpUtils;
 import com.jhhscm.platform.tool.NETUtils;
-import com.jhhscm.platform.tool.ShareUtils;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.views.YXProgressDialog;
 import com.jhhscm.platform.views.dialog.AlertDialogs;
-import com.jhhscm.platform.views.dialog.ShareDialog;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 
 
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
-
-import retrofit2.Response;
 
 /**
  * Created by Administrator on 2017/11/16.

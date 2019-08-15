@@ -30,7 +30,9 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.tool.UdaUtils;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
+import com.jhhscm.platform.views.dialog.TelPhoneDialog;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -192,12 +194,19 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
             mDataBinding.tvProject3.setText(dataBean.getEnd_time());
             mDataBinding.tvProject4.setText(dataBean.getOther_desc());
 
-            mDataBinding.userName.setText(dataBean.getContact());
-            mDataBinding.userTel.setText(dataBean.getContact_msg());
+            mDataBinding.userName.setText(UdaUtils.hiddenNameString(dataBean.getContact()));
+            mDataBinding.userTel.setText(UdaUtils.hiddenPhoneNumber(dataBean.getContact_msg()));
             mDataBinding.phone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    saveMsg(dataBean.getContact_msg());
+                    new TelPhoneDialog(getContext(), new TelPhoneDialog.CallbackListener() {
+
+                        @Override
+                        public void clickYes(String phone) {
+                            saveMsg(phone, "7");
+                        }
+                    }).show();
+
                 }
             });
         }
@@ -272,12 +281,18 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
             mDataBinding.tvJinyan3.setText(dataBean.getEnd_time());
             mDataBinding.tvJinyan4.setText(dataBean.getOther_desc());
 
-            mDataBinding.userName.setText(dataBean.getContact());
-            mDataBinding.userTel.setText(dataBean.getContact_msg());
+            mDataBinding.userName.setText(UdaUtils.hiddenNameString(dataBean.getContact()));
+            mDataBinding.userTel.setText(UdaUtils.hiddenPhoneNumber(dataBean.getContact_msg()));
             mDataBinding.phone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    saveMsg(dataBean.getContact_msg());
+                    new TelPhoneDialog(getContext(), new TelPhoneDialog.CallbackListener() {
+
+                        @Override
+                        public void clickYes(String phone) {
+                            saveMsg(phone, "8");
+                        }
+                    }).show();
                 }
             });
         }
@@ -286,10 +301,10 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
     /**
      * 信息咨询
      */
-    private void saveMsg(final String phone) {
+    private void saveMsg(final String phone, String type) {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("mobile", phone);
-        map.put("type", "1");
+        map.put("type", type);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "saveMsg");

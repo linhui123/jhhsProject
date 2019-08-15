@@ -2,9 +2,7 @@ package com.jhhscm.platform.fragment.my;
 
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +11,9 @@ import android.widget.RelativeLayout;
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.H5Activity;
+import com.jhhscm.platform.activity.h5.H5Activity;
 import com.jhhscm.platform.bean.LogingResultBean;
 import com.jhhscm.platform.databinding.FragmentLoginBinding;
-import com.jhhscm.platform.databinding.FragmentMyBinding;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -32,7 +29,6 @@ import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
-import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.UrlUtils;
 

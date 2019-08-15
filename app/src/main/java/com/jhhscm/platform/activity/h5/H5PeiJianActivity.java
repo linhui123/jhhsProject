@@ -1,4 +1,4 @@
-package com.jhhscm.platform.activity;
+package com.jhhscm.platform.activity.h5;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,12 +14,10 @@ import android.support.annotation.RequiresApi;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
@@ -31,14 +29,15 @@ import com.github.lzyzsd.jsbridge.DefaultHandler;
 import com.google.gson.Gson;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.CreateOrderActivity;
+import com.jhhscm.platform.activity.GoodsToCartsActivity;
+import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.base.AbsActivity;
 import com.jhhscm.platform.databinding.ActivityH5TestBinding;
 import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
 import com.jhhscm.platform.fragment.Mechanics.action.AddGoodsToCartsAction;
-import com.jhhscm.platform.fragment.Mechanics.action.FindCategoryDetailAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindCollectByUserCodeAction;
 import com.jhhscm.platform.fragment.Mechanics.action.SaveAction;
-import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryDetailBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;

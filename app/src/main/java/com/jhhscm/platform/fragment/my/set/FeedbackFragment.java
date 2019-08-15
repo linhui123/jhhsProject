@@ -20,6 +20,7 @@ import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.sign.SignObject;
+import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -69,6 +70,8 @@ public class FeedbackFragment extends AbsFragment<FragmentFeedbackBinding> {
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("mobile", mobile);
             map.put("content", con);
+            map.put("from_type", "1");
+            map.put("app_version", ExampleUtil.GetVersion(getContext()));
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = SignObject.getSignKey(getActivity(), map, "save");

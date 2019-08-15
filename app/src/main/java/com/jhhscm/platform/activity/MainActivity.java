@@ -1,7 +1,6 @@
 package com.jhhscm.platform.activity;
 
 import android.Manifest;
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,9 +17,10 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsActivity;
+import com.jhhscm.platform.activity.h5.H5Activity;
+import com.jhhscm.platform.activity.h5.ZuLinH5Activity;
 import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.fragment.FinancialFragment;
 import com.jhhscm.platform.fragment.Mechanics.MechanicsFragment;
@@ -29,6 +29,7 @@ import com.jhhscm.platform.fragment.home.HomePageFragment;
 import com.jhhscm.platform.fragment.my.MyFragment;
 import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.permission.YXPermission;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -40,8 +41,6 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.jpush.android.api.JPushInterface;
 
 import com.jhhscm.platform.databinding.ActivityMainBinding;
 
@@ -96,7 +95,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         YXPermission.getInstance(getApplicationContext()).request(new AcpOptions.Builder()
                 .setDeniedCloseBtn(getApplicationContext().getString(R.string.permission_dlg_close_txt))
                 .setDeniedSettingBtn(getApplicationContext().getString(R.string.permission_dlg_settings_txt))
-                .setDeniedMessage(getApplicationContext().getString(R.string.permission_denied_txt, "定位"))
+                .setDeniedMessage(getApplicationContext().getString(R.string.permission_denied_txt, "读写"))
                 .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE,
                         Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).build(), new AcpListener() {
@@ -134,12 +133,24 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
 
                     @Override
                     public void clickS() {
-                        PushZhaoPinActivity.start(MainActivity.this, "", "", 0);
+                        if (ConfigUtils.getCurrentUser(MainActivity.this) != null
+                                && ConfigUtils.getCurrentUser(MainActivity.this).getMobile() != null
+                                && ConfigUtils.getCurrentUser(MainActivity.this).getUserCode() != null) {
+                            PushZhaoPinActivity.start(MainActivity.this, "", "", 0);
+                        } else {
+                            startNewActivity(LoginActivity.class);
+                        }
                     }
 
                     @Override
                     public void clickT() {
-                        PushQiuZhiActivity.start(MainActivity.this, "", "", 0);
+                        if (ConfigUtils.getCurrentUser(MainActivity.this) != null
+                                && ConfigUtils.getCurrentUser(MainActivity.this).getMobile() != null
+                                && ConfigUtils.getCurrentUser(MainActivity.this).getUserCode() != null) {
+                            PushQiuZhiActivity.start(MainActivity.this, "", "", 0);
+                        } else {
+                            startNewActivity(LoginActivity.class);
+                        }
                     }
                 }).show();
             }
@@ -251,14 +262,14 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     @Override
     protected void onResume() {
         isForeground = true;
-        MobclickAgent.onResume(this);
+//        MobclickAgent.onResume(this);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
         isForeground = false;
-        MobclickAgent.onPause(this);
+//        MobclickAgent.onPause(this);
         super.onPause();
     }
 
@@ -287,7 +298,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
             } else if ("STEWARD".equals(event.getType())) {//管家
                 ToastUtils.show(MainActivity.this, "该功能正在建设中");
             } else if ("RENT".equals(event.getType())) {//租赁
-                H5Activity.start(MainActivity.this, UrlUtils.ZL, "租赁");
+                ZuLinH5Activity.start(MainActivity.this, UrlUtils.ZL, "租赁");
             } else if ("PROJECT".equals(event.getType())) {//工程
                 ToastUtils.show(MainActivity.this, "该功能正在建设中");
             } else if ("LABOUR".equals(event.getType())) {//劳务

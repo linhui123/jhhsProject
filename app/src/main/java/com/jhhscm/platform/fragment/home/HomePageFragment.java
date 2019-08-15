@@ -1,24 +1,31 @@
 package com.jhhscm.platform.fragment.home;
 
-import android.os.CountDownTimer;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.services.weather.LocalWeatherForecastResult;
+import com.amap.api.services.weather.LocalWeatherLive;
+import com.amap.api.services.weather.LocalWeatherLiveResult;
+import com.amap.api.services.weather.WeatherSearch;
+import com.amap.api.services.weather.WeatherSearchQuery;
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.SearchActivity;
+import com.jhhscm.platform.activity.SearchActivity;
 import com.jhhscm.platform.activity.MsgActivity;
 import com.jhhscm.platform.databinding.FragmentHomePageBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
+import com.jhhscm.platform.event.FinishEvent;
+import com.jhhscm.platform.event.ForceCloseEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.FindBrandHomePageAction;
 import com.jhhscm.platform.fragment.home.action.FindCategoryHomePageAction;
@@ -37,24 +44,24 @@ import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.jpush.ExampleUtil;
-import com.jhhscm.platform.tool.DataUtil;
-import com.jhhscm.platform.tool.DateUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.views.dialog.ShareDialog;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
 import com.jhhscm.platform.views.dialog.UpdateDialog;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
+import java.util.Calendar;
 import java.util.Map;
 import java.util.TreeMap;
 
 import retrofit2.Response;
 
-public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
+import static com.amap.api.location.AMapLocationClientOption.AMapLocationMode.Hight_Accuracy;
+
+public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> implements WeatherSearch.OnWeatherSearchListener {
     private HomePageItem homePageItem;
     private HomePageAdapter mAdapter;
 
@@ -75,7 +82,8 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
         mDataBinding.rlTop.setLayoutParams(llParams);
 
         EventBusUtil.registerEvent(this);
-
+        initView();
+        setUpMap();
         mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new HomePageAdapter(getContext());
         mDataBinding.wrvRecycler.setAdapter(mAdapter);
@@ -108,7 +116,6 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
                 MsgActivity.start(getActivity());
             }
         });
-        mDataBinding.wetherDate.setText(DateUtils.getCurDate("MM/dd"));
 
         mDataBinding.homeEidt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -331,6 +338,10 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
         }
     }
 
+    public void onEvent(ForceCloseEvent event) {
+        getActivity().finish();
+    }
+
     /**
      * 信息咨询
      */
@@ -403,21 +414,21 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
                                     if ("0".equals(checkVersionBean.getIs_update())) {//需要更新
                                         if ("0".equals(checkVersionBean.getIs_must_update())) {//需要强制更新
                                             final UpdateDialog alertDialog = new UpdateDialog(getContext(),
-                                                    "http://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d&word=%E5%A4%A7%E5%9B%BE%E7%89%87&step_word=&hs=0&pn=3&spn=0&di=105050&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&istype=2&ie=utf-8&oe=utf-8&in=&cl=2&lm=-1&st=-1&cs=3330325448%2C3545219178&os=3697803994%2C2928885464&simid=3510558266%2C384530084&adpicid=0&lpn=0&ln=490&fr=&fmq=1565425801220_R&fm=result&ic=&s=undefined&hd=&latest=&copyright=&se=&sme=&tab=0&width=&height=&face=undefined&ist=&jit=&cg=&bdtype=0&oriquery=&objurl=http%3A%2F%2Fgss0.baidu.com%2F-Po3dSag_xI4khGko9WTAnF6hhy%2Flvpics%2Fh%3D800%2Fsign%3D9931b79f1dd5ad6eb5f969eab1ca39a3%2Fa8773912b31bb051b3333f73307adab44aede052.jpg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fsey57_z%26e3Bkwt17_z%26e3Bv54AzdH3Frtvp6wejsAzdH3Fbkncknmanc89aumwucaj9k18&gsm=0&rpstart=0&rpnum=0&islist=&querylist=&force=undefined", new UpdateDialog.CallbackListener() {
+                                                    checkVersionBean.getUrl(), new UpdateDialog.CallbackListener() {
                                                 @Override
                                                 public void clickYes() {
 //                                                    startCountDownTimer();
                                                 }
-                                            });
+                                            },true);
                                             alertDialog.show();
                                         } else {
                                             final UpdateDialog alertDialog = new UpdateDialog(getContext(),
-                                                    "http://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d&word=%E5%A4%A7%E5%9B%BE%E7%89%87&step_word=&hs=0&pn=3&spn=0&di=105050&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&istype=2&ie=utf-8&oe=utf-8&in=&cl=2&lm=-1&st=-1&cs=3330325448%2C3545219178&os=3697803994%2C2928885464&simid=3510558266%2C384530084&adpicid=0&lpn=0&ln=490&fr=&fmq=1565425801220_R&fm=result&ic=&s=undefined&hd=&latest=&copyright=&se=&sme=&tab=0&width=&height=&face=undefined&ist=&jit=&cg=&bdtype=0&oriquery=&objurl=http%3A%2F%2Fgss0.baidu.com%2F-Po3dSag_xI4khGko9WTAnF6hhy%2Flvpics%2Fh%3D800%2Fsign%3D9931b79f1dd5ad6eb5f969eab1ca39a3%2Fa8773912b31bb051b3333f73307adab44aede052.jpg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fsey57_z%26e3Bkwt17_z%26e3Bv54AzdH3Frtvp6wejsAzdH3Fbkncknmanc89aumwucaj9k18&gsm=0&rpstart=0&rpnum=0&islist=&querylist=&force=undefined", new UpdateDialog.CallbackListener() {
+                                                    checkVersionBean.getUrl(), new UpdateDialog.CallbackListener() {
                                                 @Override
                                                 public void clickYes() {
 //                                                    startCountDownTimer();
                                                 }
-                                            });
+                                            },false);
                                             alertDialog.show();
                                         }
                                     }
@@ -428,5 +439,124 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
                         }
                     }
                 }));
+    }
+
+    //天气
+    public AMapLocationClient mLocationClient = null;    //声明mLocationOption对象
+    public AMapLocationClientOption mLocationOption = null;
+    private WeatherSearchQuery mquery;
+    private WeatherSearch mweathersearch;
+    private LocalWeatherLive weatherlive;
+    int month;
+    int day;
+    Calendar cal;
+
+    private void initView() {
+        cal = Calendar.getInstance();
+        month = cal.get(Calendar.MONTH) + 1;
+        day = cal.get(Calendar.DAY_OF_MONTH);
+        mDataBinding.wetherDate.setText(month + "/" + day);
+        mLocationClient = new AMapLocationClient(getActivity());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);//设置其为定位完成后的回调函数
+    }
+
+    private void setUpMap() {
+        //初始化定位参数
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
+        mLocationOption.setLocationMode(Hight_Accuracy);        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);        //设置是否只定位一次,默认为false
+        mLocationOption.setOnceLocation(true);        //设置是否允许模拟位置,默认为false，不允许模拟位置
+        mLocationOption.setMockEnable(false);        //设置定位间隔,单位毫秒,默认为2000ms
+        mLocationOption.setInterval(2000);        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);        //启动定位
+        mLocationClient.startLocation();
+    }
+
+    public AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation amapLocation) {
+            if (amapLocation != null) {
+                if (amapLocation.getErrorCode() == 0) {
+
+                    double lat = amapLocation.getLatitude();
+                    double lon = amapLocation.getLongitude();
+                    mDataBinding.cityText.setText(amapLocation.getCity());
+                    getWetherData();
+                } else {
+                    //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
+                    Log.e("joe", "location Error, ErrCode:"
+                            + amapLocation.getErrorCode() + ", errInfo:"
+                            + amapLocation.getErrorInfo());
+                }
+            }
+        }
+    };
+
+    private void getWetherData() {
+        mquery = new WeatherSearchQuery(mDataBinding.cityText.getText().toString(), WeatherSearchQuery.WEATHER_TYPE_LIVE);
+        mweathersearch = new WeatherSearch(getActivity());
+        mweathersearch.setOnWeatherSearchListener(this);
+        mweathersearch.setQuery(mquery);        //异步搜索
+        mweathersearch.searchWeatherAsyn();
+        mquery = new WeatherSearchQuery(mDataBinding.cityText.getText().toString(), WeatherSearchQuery.WEATHER_TYPE_FORECAST);
+        mweathersearch = new WeatherSearch(getActivity());
+        mweathersearch.setOnWeatherSearchListener(this);
+        mweathersearch.setQuery(mquery);//异步搜索
+        mweathersearch.searchWeatherAsyn();
+    }
+
+    @Override
+    public void onWeatherLiveSearched(LocalWeatherLiveResult weatherLiveResult, int rCode) {
+        if (rCode == 1000) {
+            if (weatherLiveResult != null && weatherLiveResult.getLiveResult() != null) {
+                weatherlive = weatherLiveResult.getLiveResult();
+//                Log.e("weatherlive", "weatherlive :" + weatherlive.getProvince());
+//                Log.e("weatherlive", "weatherlive :" + weatherlive.getCity());
+//                Log.e("weatherlive", "weatherlive :" + weatherlive.getWeather());
+//                Log.e("weatherlive", "getTemperature :" + weatherlive.getTemperature());
+                mDataBinding.wetherTemperature.setText(weatherlive.getTemperature() + "℃");
+                if ("阴".equals(weatherlive.getWeather())) {
+                    mDataBinding.wetherImg.setBackgroundResource(R.mipmap.ic_yin);
+                }
+                if ("晴".equals(weatherlive.getWeather())) {
+                    mDataBinding.wetherImg.setBackgroundResource(R.mipmap.qingtian_bg);
+                }
+                if ("阵雨".equals(weatherlive.getWeather())) {
+                    mDataBinding.wetherImg.setBackgroundResource(R.mipmap.ic_zhenyu);
+                }
+                if ("多云".equals(weatherlive.getWeather())) {
+                    mDataBinding.wetherImg.setBackgroundResource(R.mipmap.ic_duoyun);
+                }
+                if ("小雨".equals(weatherlive.getWeather())) {
+                    mDataBinding.wetherImg.setBackgroundResource(R.mipmap.ic_xiaoyu);
+                }
+                if ("中雨".equals(weatherlive.getWeather())) {
+                    mDataBinding.wetherImg.setBackgroundResource(R.mipmap.ic_zhongyu);
+                }
+                if ("大雨".equals(weatherlive.getWeather())) {
+                    mDataBinding.wetherImg.setBackgroundResource(R.mipmap.ic_dayu);
+                }
+                if ("暴雨".equals(weatherlive.getWeather())) {
+                    mDataBinding.wetherImg.setBackgroundResource(R.mipmap.ic_baoyu);
+                }
+                if ("雷阵雨".equals(weatherlive.getWeather())) {
+                    mDataBinding.wetherImg.setBackgroundResource(R.mipmap.ic_leizhenyu);
+                }
+                if (weatherlive.getWeather().contains("雪")) {
+                    mDataBinding.wetherImg.setBackgroundResource(R.mipmap.ic_xue);
+                }
+            } else {
+//                ToastUtil.show(getActivity(), "天气无数据");
+            }
+        } else {
+//            ToastUtil.showerror(WeatherSearchActivity.this, rCode);
+        }
+    }
+
+    @Override
+    public void onWeatherForecastSearched(LocalWeatherForecastResult localWeatherForecastResult, int i) {
+
     }
 }

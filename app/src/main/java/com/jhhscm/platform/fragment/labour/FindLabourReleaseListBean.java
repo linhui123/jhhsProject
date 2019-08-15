@@ -144,6 +144,7 @@ public class FindLabourReleaseListBean {
          * id : 1
          */
 
+        private String job;
         private String work_time;
         private String add_time;
         private String labour_code;
@@ -155,10 +156,19 @@ public class FindLabourReleaseListBean {
         private String type;
         public DataBean() {
         }
+
         public DataBean(String id,String type, String labour_code) {
             this.id = id;
             this.type = type;
             this.labour_code = labour_code;
+        }
+
+        public String getJob() {
+            return job;
+        }
+
+        public void setJob(String job) {
+            this.job = job;
         }
 
         public String getType() {

@@ -2,7 +2,6 @@ package com.jhhscm.platform.fragment.my.collect;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.MechanicsH5Activity;
+import com.jhhscm.platform.activity.h5.MechanicsH5Activity;
 import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.UrlUtils;

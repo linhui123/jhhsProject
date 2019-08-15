@@ -20,6 +20,7 @@ import com.jhhscm.platform.bean.LogingResultBean;
 import com.jhhscm.platform.bean.UploadImage;
 import com.jhhscm.platform.databinding.FragmentAuthenticationBinding;
 import com.jhhscm.platform.databinding.FragmentLoginBinding;
+import com.jhhscm.platform.event.LoginOutEvent;
 import com.jhhscm.platform.fragment.Mechanics.push.OldMechanicsUpImageBean;
 import com.jhhscm.platform.fragment.Mechanics.push.SaveOldGoodAction;
 import com.jhhscm.platform.fragment.Mechanics.push.UpdateImageBean;
@@ -41,6 +42,7 @@ import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -87,10 +89,9 @@ public class AuthenticationFragment extends AbsFragment<FragmentAuthenticationBi
         mDataBinding.tvTijiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mDataBinding.etId.getText().toString().length() > 0
-                        && mDataBinding.etUser.getText().toString().length() > 0
-                        && mDataBinding.selector.getUploadImageList().size() == 2) {
-                    ToastUtil.show(getContext(), "测试认证");
+                if (mDataBinding.etId.getText().toString().length() >= 15
+                        && mDataBinding.etUser.getText().toString().length() > 0) {
+                    checkData(mDataBinding.etUser.getText().toString(), mDataBinding.etId.getText().toString());
                 } else {
                     ToastUtil.show(getContext(), "请输入完整信息");
                 }
@@ -99,194 +100,24 @@ public class AuthenticationFragment extends AbsFragment<FragmentAuthenticationBi
     }
 
     /**
-     * 二手车上传图片
-     */
-    private List<UpdateImageBean> updateImageBeanList1;
-
-    protected void doUploadAImagesAction1() {
-        showDialog();
-        boolean hasImageAToken = doUploadImagesAction1();
-        if (hasImageAToken) {
-            doHasImageTokenSuccess1();
-        }
-    }
-
-    private boolean doUploadImagesAction1() {
-        List<UploadImage> uploadImages = mDataBinding.selector.getUploadImageList();
-        if (uploadImages == null) return true;
-        boolean hasImageToken = true;
-        for (int i = 0; i < uploadImages.size(); i++) {
-            UploadImage image = uploadImages.get(i);
-            if (StringUtils.isNullEmpty(image.getImageToken())) {
-                hasImageToken = false;
-                imageFile(getContext(), image.getImageUrl());
-            }
-        }
-        return hasImageToken;
-    }
-
-    public void imageFile(Context context, final String imagePath) {
-        final long UPLOAD_IMAGE_SIZE_LIMIT = 1024 * 1024;//1M
-        File imageFile = null;
-        try {
-            imageFile = new File(new URI(imagePath));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        if (imageFile == null || !imageFile.exists()) {
-            ToastUtils.show(context, "上传文件不存在！");
-            return;
-        }
-        try {
-            //1M以上图片进行压缩处理
-            Log.e("imageFile", "imageFile.length() " + imageFile.length());
-            if (imageFile.length() > UPLOAD_IMAGE_SIZE_LIMIT) {
-                Luban.get(MyApplication.getInstance())
-                        .load(imageFile)
-                        .putGear(Luban.THIRD_GEAR)
-                        .setFilename(imageFile.getAbsolutePath())
-                        .asObservable()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnError(new Action1<Throwable>() {
-                            @Override
-                            public void call(Throwable throwable) {
-                                throwable.printStackTrace();
-                            }
-                        })
-                        .onErrorResumeNext(new Func1<Throwable, Observable<? extends File>>() {
-                            @Override
-                            public Observable<? extends File> call(Throwable throwable) {
-                                return Observable.empty();
-                            }
-                        })
-                        .subscribe(new Action1<File>() {
-                            @Override
-                            public void call(File file) {
-                                // TODO 压缩成功后调用，返回压缩后的图片文件
-//                                return file;
-//                                return photos;
-                                Log.e("file", "file.length() " + file.length());
-                                doUploadImageAction1(file, imagePath);
-                            }
-                        });    //启动压缩
-                return;
-            } else {
-                doUploadImageAction1(imageFile, imagePath);
-                return;
-            }
-        } catch (Throwable e) {
-            ToastUtils.show(getContext(), "上传失败");
-            return;
-        }
-    }
-
-    private void doUploadImageAction1(final File file, final String imageUrl) {
-        showDialog();
-        String token = ConfigUtils.getCurrentUser(getContext()).getToken();
-        onNewRequestCall(UploadOldMechanicsImgAction.newInstance(getContext(), file, token).
-                request(new AHttpService.IResCallback<OldMechanicsUpImageBean>() {
-                    @Override
-                    public void onCallback(int resultCode, Response<OldMechanicsUpImageBean> response, BaseErrorInfo baseErrorInfo) {
-                        if (getView() != null) {
-                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
-                                return;
-                            }
-                            closeDialog();
-                            if (response != null) {
-                                if (response.body().getErrno().equals("0")) {
-                                    if ("0".equals(response.body().getData().getCode())) {
-                                        doUploadImageResponse1(imageUrl, response.body());
-                                    } else {
-                                        updateImgResult = false;
-                                        ToastUtils.show(getContext(), response.body().getData().getMsg());
-                                    }
-                                } else {
-                                    updateImgResult = false;
-                                    ToastUtils.show(getContext(), "图片上传失败");
-                                }
-                            }
-                        }
-                    }
-                }));
-    }
-
-    private void doUploadImageResponse1(String imageUrl, OldMechanicsUpImageBean response) {
-        mDataBinding.selector.setImageToken(new UploadImage(imageUrl, response.getData().getCatalogues(), response.getData().getAllfilePath(), response.getData().getCatalogues()));
-        doHasImageTokenSuccess1();
-    }
-
-    protected List<String> getImageTokenList1() {
-        List<String> imageTokens = new ArrayList<>();
-        List<UploadImage> uploadImages = mDataBinding.selector.getUploadImageList();
-        if (uploadImages == null) return imageTokens;
-        for (int i = 0; i < uploadImages.size(); i++) {
-            UploadImage image = uploadImages.get(i);
-            if (!StringUtils.isNullEmpty(image.getImageToken())) {
-                imageTokens.add(image.getImageToken());
-            } else {
-                return null;
-            }
-        }
-        return imageTokens;
-    }
-
-    //判断是否图片已经上传完成
-    private void doHasImageTokenSuccess1() {
-        List<UploadImage> uploadAImages = mDataBinding.selector.getUploadImageList();
-        List<String> imageATokens = getImageTokenList1();
-        if (uploadAImages != null && uploadAImages.size() > 0) {
-            if (imageATokens != null && imageATokens.size() > 0) {
-                if (uploadAImages.size() == imageATokens.size()) {
-                    updateImageBeanList1.clear();
-                    for (int i = 0; i < uploadAImages.size(); i++) {
-                        UpdateImageBean updateImageBean = new UpdateImageBean();
-                        updateImageBean.setIMG_URL(uploadAImages.get(i).getAllfilePath());
-                        updateImageBean.setMENU_CATALOGUES(uploadAImages.get(i).getCatalogues());
-                        updateImageBean.setPATIENT_IMAGE_NODE("1");
-                        updateImageBeanList1.add(updateImageBean);
-                    }
-                    if (updateImgResult) {
-                        saveOldGood();
-                    } else {
-                        ToastUtils.show(getContext(), "图片上传失败,请重新提交");
-                    }
-                } else {
-                    ToastUtils.show(getContext(), R.string.error_net);
-                    closeDialog();
-                    return;
-                }
-            } else {
-                return;
-            }
-        }
-    }
-
-    /**
      * 发布二手机
      */
-    private void saveOldGood() {
+    private void checkData(String name, String id) {
         if (getContext() != null) {
             showDialog();
-            String jsonString1 = "";
-            for (UpdateImageBean updateImageBean : updateImageBeanList1) {
-                if (jsonString1.length() > 0) {
-                    jsonString1 = jsonString1 + "," + "\"" + updateImageBean.getIMG_URL() + "\"";
-                } else {
-                    jsonString1 = "\"" + updateImageBean.getIMG_URL() + "\"";
-                }
-            }
             Map<String, Object> map = new TreeMap<String, Object>();
-            map.put("pic_gallery_url_list", "[" + jsonString1 + "]");
+            map.put("mobile", ConfigUtils.getCurrentUser(getContext()).getMobile());
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("user_name", name);
+            map.put("id_card", id);
             String content = JSON.toJSONString(map);
-            Log.e("saveOldGood", "content: " + content);
             content = Des.encryptByDes(content);
-            String sign = SignObject.getSignKey(getActivity(), map, "saveOldGood");
+            String sign = SignObject.getSignKey(getActivity(), map, "checkData");
             NetBean netBean = new NetBean();
-            netBean.setToken(userSession.getToken());
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
-            onNewRequestCall(SaveOldGoodAction.newInstance(getContext(), netBean)
+            onNewRequestCall(CheckDataAction.newInstance(getContext(), netBean)
                     .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
                         @Override
                         public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response,
@@ -299,7 +130,11 @@ public class AuthenticationFragment extends AbsFragment<FragmentAuthenticationBi
                                 if (response != null) {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
-                                        ToastUtils.show(getContext(), "二手机发布成功");
+                                        ToastUtils.show(getContext(), "身份认证成功");
+                                        UserSession userSession = ConfigUtils.getCurrentUser(getContext());
+                                        userSession.setIs_check("1");
+                                        ConfigUtils.setCurrentUser(getContext(), userSession);
+                                        EventBusUtil.post(new LoginOutEvent());
                                         getActivity().finish();
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());

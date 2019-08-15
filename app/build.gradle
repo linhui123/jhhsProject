@@ -94,10 +94,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation 'com.arialyy.aria:Aria:3.1.1'
-    annotationProcessor 'com.arialyy.aria:aria-compiler:3.4'
-//    implementation 'com.jakewharton:butterknife:8.8.1'
-//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.arialyy.aria:aria-core:3.6.6'
+    annotationProcessor 'com.arialyy.aria:aria-compiler:3.6.6'
+
     implementation 'com.hjq:xxpermissions:1.5'
     implementation 'de.greenrobot:eventbus:2.4.0'
     implementation 'jp.wasabeef:glide-transformations:2.0.1'
@@ -118,8 +117,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.3'
     implementation 'com.alibaba:fastjson:1.1.68.android'
     implementation 'com.github.SheHuan:NiceImageView:1.0.5'
-    implementation 'com.umeng.umsdk:analytics:8.0.0'
-    implementation 'com.umeng.umsdk:common:2.0.0'
     implementation 'com.mylhyl:acp:1.1.5'
     implementation 'cn.bingoogolapple:bga-banner:2.2.5@aar'
     implementation 'cn.bingoogolapple:bga-swipebacklayout:1.1.5@aar'
@@ -128,10 +125,12 @@ dependencies {
 //    implementation files('libs/alipaySdk-20170725.jar')
     implementation files('libs/libammsdk.jar')
     implementation files('libs/universal-image-loader-1.9.5.jar')
+    implementation 'com.umeng.umsdk:analytics:8.0.0'
+    implementation 'com.umeng.umsdk:common:2.0.0'
+//    implementation files('libs/umeng-share-core-6.9.3.jar')
+//    implementation files('libs/umeng-share-wechat-simplify-6.9.3.jar')
+//    implementation files('libs/umeng-sharetool-6.9.3.jar')
     implementation 'com.github.bumptech.glide:glide:3.7.0'
-    implementation files('libs/umeng-share-core-6.9.3.jar')
-    implementation files('libs/umeng-share-wechat-simplify-6.9.3.jar')
-    implementation files('libs/umeng-sharetool-6.9.3.jar')
     implementation 'org.apache.commons:commons-lang3:3.7'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-20'
     implementation 'com.github.lzyzsd:jsbridge:1.0.4'
@@ -143,4 +142,5 @@ dependencies {
 
     implementation 'top.zibin:Luban:1.0.8'
     implementation 'com.github.chrisbanes.photoview:library:1.2.3'
+//    implementation 'com.github.maning0303:MNUpdateAPK:V2.0.3'
 }

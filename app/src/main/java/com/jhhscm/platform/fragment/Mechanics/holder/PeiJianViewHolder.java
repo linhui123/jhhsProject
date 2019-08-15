@@ -2,7 +2,7 @@ package com.jhhscm.platform.fragment.Mechanics.holder;
 
 import android.view.View;
 
-import com.jhhscm.platform.activity.H5PeiJianActivity;
+import com.jhhscm.platform.activity.h5.H5PeiJianActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemMechanicsPeijianBinding;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;

@@ -58,6 +58,13 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                     && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
                 mDataBinding.tvName.setVisibility(View.GONE);
                 mDataBinding.username.setText(ConfigUtils.getCurrentUser(getContext()).getMobile());
+                if ("1".equals(ConfigUtils.getCurrentUser(getContext()).getIs_check())) {
+                    mDataBinding.tvCerGo.setVisibility(View.GONE);
+                    mDataBinding.tvCer.setText("已认证");
+                } else {
+                    mDataBinding.tvCer.setText("未认证");
+                    mDataBinding.tvCerGo.setVisibility(View.VISIBLE);
+                }
             }
         }
     }
@@ -178,6 +185,13 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
     private void initUser() {
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
+            if ("1".equals(ConfigUtils.getCurrentUser(getContext()).getIs_check())) {
+                mDataBinding.tvCerGo.setVisibility(View.GONE);
+                mDataBinding.tvCer.setText("已认证");
+            } else {
+                mDataBinding.tvCer.setText("未认证");
+                mDataBinding.tvCerGo.setVisibility(View.VISIBLE);
+            }
             mDataBinding.tvName.setVisibility(View.GONE);
             mDataBinding.rlCer.setVisibility(View.VISIBLE);
             mDataBinding.username.setText(ConfigUtils.getCurrentUser(getContext()).getMobile());

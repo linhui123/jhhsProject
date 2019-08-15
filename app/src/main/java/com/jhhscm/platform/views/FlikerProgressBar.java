@@ -259,7 +259,7 @@ public class FlikerProgressBar extends View implements Runnable {
         float yCoordinate = (getMeasuredHeight() + tHeight) / 2;
         float progressWidth = (progress / maxProgress) * getMeasuredWidth();
         if(progressWidth > xCoordinate){
-            pgCanvas.save();
+            canvas.save();
 //            canvas.save(Canvas.CLIP_SAVE_FLAG);
             float right = Math.min(progressWidth, xCoordinate + tWidth * 1.1f);
             canvas.clipRect(xCoordinate, 0, right, getMeasuredHeight());

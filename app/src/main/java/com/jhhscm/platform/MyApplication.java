@@ -23,6 +23,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 
 import java.lang.reflect.Constructor;
@@ -62,9 +63,21 @@ public class MyApplication extends Application {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             builder.detectFileUriExposure();
         }
-        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "");
-//        Aria.init(this);
-        // UMConfigure.setLogEnabled(true);
+//        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "");
+        //初始化
+        UMConfigure.init(this,"5d1ad0b94ca35789cd000bd3","",UMConfigure.DEVICE_TYPE_PHONE,"5d1ad0b94ca35789cd000bd3");
+        //开启Log
+        UMConfigure.setLogEnabled(true);
+        //打开调试模式
+//        MobclickAgent.setDebugMode( true );
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+
+        /**
+         *普通统计场景类型:EScenarioType.E_UM_NORMAL
+         *游戏场景类型:EScenarioType.E_UM_GAME
+         * 设置统计场景类型
+         */
+//        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
     }
 
     public static MyApplication getInstance() {

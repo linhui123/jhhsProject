@@ -21,6 +21,13 @@ public class ResultBean {
      */
 
     private String prepay_id;
+    /**
+     * msg : 认证成功！
+     * code : 1
+     */
+
+    private String msg;
+    private String code;
 
     public String getResult() {
         return result;
@@ -52,5 +59,21 @@ public class ResultBean {
 
     public void setPrepay_id(String prepay_id) {
         this.prepay_id = prepay_id;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

@@ -33,6 +33,7 @@ import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.Utils;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,7 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
 
     @Override
     protected void setupViews() {
+        MobclickAgent.onEvent(getContext(), "search");
         LinearLayout.LayoutParams llParams = (LinearLayout.LayoutParams) mDataBinding.llTop.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.llTop.setLayoutParams(llParams);
@@ -141,4 +143,14 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
     }
+
+//    public void onResume() {
+//        super.onResume();
+//        MobclickAgent.onPageStart("search");
+//    }
+//
+//    public void onPause() {
+//        super.onPause();
+//        MobclickAgent.onPageEnd("search");
+//    }
 }

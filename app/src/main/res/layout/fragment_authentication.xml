@@ -62,24 +62,24 @@
 
         <View style="@style/view_h_de" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="@dimen/padding_15"
-            android:text="上传本人身份证正面照及背面照"
-            android:textColor="@color/acc3"
-            android:textSize="@dimen/text_size_14" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginTop="@dimen/padding_15"-->
+            <!--android:text="上传本人身份证正面照及背面照"-->
+            <!--android:textColor="@color/acc3"-->
+            <!--android:textSize="@dimen/text_size_14" />-->
 
-        <com.jhhscm.platform.views.selector.ImageSelector
-            android:id="@+id/selector"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="20dp"
-            app:image_num="2"
-            app:with_camera="true" />
+        <!--<com.jhhscm.platform.views.selector.ImageSelector-->
+            <!--android:id="@+id/selector"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--app:image_num="2"-->
+            <!--app:with_camera="true" />-->
 
         <TextView
             android:id="@+id/tv_tijiao"

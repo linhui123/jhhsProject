@@ -2,23 +2,17 @@ package com.jhhscm.platform.fragment.home.holder;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.LoginActivity;
-import com.jhhscm.platform.activity.MechanicsH5Activity;
 import com.jhhscm.platform.activity.PeiJianActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemHomePageRecommendBinding;
 import com.jhhscm.platform.databinding.ItemHomeRecommendListBinding;
-import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
 import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
-import com.jhhscm.platform.tool.ConfigUtils;
-import com.jhhscm.platform.tool.UrlUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class HomePageRecommendViewHolder extends AbsRecyclerViewHolder<HomePageItem> {

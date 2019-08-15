@@ -152,7 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/ll_select"
-            android:layout_marginTop="@dimen/padding_10"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+            android:layout_marginTop="@dimen/dp_5"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
 
         <LinearLayout
             android:id="@+id/ll_xiala"

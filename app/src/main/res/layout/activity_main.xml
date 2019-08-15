@@ -57,15 +57,15 @@
                 android:textColor="@drawable/index_textcolor_selecter"
                 android:textSize="@dimen/text_size_12" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/rd_expend"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#fff"
+                android:background="#ffffff"
+                android:paddingBottom="@dimen/dp_3"
                 android:button="@null"
-                android:drawableTop="@drawable/home_bottom_expend" />
+                android:src="@drawable/home_bottom_expend" />
 
             <RadioButton
                 android:id="@+id/rd_finance"

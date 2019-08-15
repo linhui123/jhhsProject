@@ -450,4 +450,11 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(CHECK_VERSION)
     Call<BaseEntity<CheckVersionBean>> checkVersion(@Body NetBean content);
+
+    //校验身份证
+    String CHECK_DATA = "user/checkData";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(CHECK_DATA)
+    Call<BaseEntity<ResultBean>> checkData(@Body NetBean content);
 }

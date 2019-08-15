@@ -1,6 +1,5 @@
-package com.jhhscm.platform.activity;
+package com.jhhscm.platform.activity.h5;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,6 +12,7 @@ import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -39,32 +39,26 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.github.lzyzsd.jsbridge.BridgeHandler;
-import com.github.lzyzsd.jsbridge.CallBackFunction;
-import com.github.lzyzsd.jsbridge.DefaultHandler;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.ComparisonActivity;
+import com.jhhscm.platform.activity.LoginActivity;
+import com.jhhscm.platform.activity.MainActivity;
 import com.jhhscm.platform.activity.base.AbsActivity;
-import com.jhhscm.platform.databinding.ActivityAbsToolbarBinding;
 import com.jhhscm.platform.databinding.ActivityMechanicsH5Binding;
+import com.jhhscm.platform.databinding.ActivityZuLinH5Binding;
 import com.jhhscm.platform.databinding.FragmentWebBinding;
 import com.jhhscm.platform.event.LoginH5Event;
 import com.jhhscm.platform.event.WebCountEvent;
 import com.jhhscm.platform.event.WebTitleEvent;
-import com.jhhscm.platform.fragment.Mechanics.action.AddGoodsToCartsAction;
-import com.jhhscm.platform.fragment.Mechanics.action.FindCategoryDetailAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindCollectByUserCodeAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetGoodsDetailsAction;
-import com.jhhscm.platform.fragment.Mechanics.action.GetGoodsPageListAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetOldDetailsAction;
 import com.jhhscm.platform.fragment.Mechanics.action.SaveAction;
-import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
-import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryDetailBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsDetailsBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetOldDetailsBean;
@@ -75,7 +69,6 @@ import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
-import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.bean.SaveBean;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.Sign;
@@ -83,9 +76,7 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.tool.HttpUtils;
 import com.jhhscm.platform.tool.NETUtils;
-import com.jhhscm.platform.tool.ShareUtils;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -99,66 +90,41 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import retrofit2.Response;
-import rx.exceptions.OnErrorFailedException;
 
-/**
- * 新机、二手机、H5页面
- */
-public class MechanicsH5Activity extends AbsActivity {
+public class ZuLinH5Activity extends AbsActivity {
     protected AbsFragment mFragment;
-    protected ActivityMechanicsH5Binding mDataBinding;
-    private UserSession userSession;
-
-    private GetOldDetailsBean getOldDetailsBean;
-    private GetGoodsDetailsBean getGoodsDetailsBean;
-
-    private String goodCode;
-    private String picUrl;
-    private String good_name;
+    protected ActivityZuLinH5Binding mDataBinding;
 
     private String url;
-    private int type = 0;
-    private String count = "1";
     private static final int FILE_SELECTED = 5;
-    public static final int XJ = 1;
-    public static final int ESJ = 2;
-    public static final int PJ = 3;
 
     private String SHARE_URL = "";
     private String TITLE = "";
     private String CONTENT = "";
     private String IMG_URL = "";
 
-    public static void start(Context context, String url, String title, String good_code,String good_name,String picUrl, int type) {
-        Intent intent = new Intent(context, MechanicsH5Activity.class);
+    public static void start(Context context, String url, String title) {
+        Intent intent = new Intent(context, ZuLinH5Activity.class);
         intent.putExtra("url", url);
         intent.putExtra("title", title);
-        intent.putExtra("type", type);
-        intent.putExtra("good_code", good_code);
-        intent.putExtra("good_name", good_name);
-        intent.putExtra("picUrl", picUrl);
         context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_mechanics_h5);
+        mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_zu_lin_h5);
         setupToolbar();
         setupContentView();
         setupButtom();
@@ -166,95 +132,23 @@ public class MechanicsH5Activity extends AbsActivity {
     }
 
     private void setupButtom() {
-        if (ConfigUtils.getCurrentUser(getApplicationContext()) != null
-                && ConfigUtils.getCurrentUser(getApplicationContext()).getMobile() != null) {
-            userSession = ConfigUtils.getCurrentUser(getApplicationContext());
-        }
-        if (getIntent().hasExtra("type")) {
-            type = getIntent().getIntExtra("type", 0);
-        }
-        if (getIntent().hasExtra("good_code")) {
-            goodCode = getIntent().getStringExtra("good_code");
-        }
-        if (getIntent().hasExtra("good_name")) {
-            good_name = getIntent().getStringExtra("good_name");
-        }
-        if (getIntent().hasExtra("picUrl")) {
-            picUrl = getIntent().getStringExtra("picUrl");
-        }
         if (getIntent().hasExtra("url")) {
             url = getIntent().getStringExtra("url");
         }
 
-        Log.e("H5", "type " + type);
-        if (type == 1) {
-            getGoodsDetails(goodCode);
-            mDataBinding.tvShoucang.setVisibility(View.VISIBLE);
-            mDataBinding.tvPk.setVisibility(View.VISIBLE);
-            mDataBinding.tvDijia.setVisibility(View.VISIBLE);
-        } else if (type == 2) {
-            getOldDetails(goodCode);
-            mDataBinding.tvShoucang.setVisibility(View.VISIBLE);
-            mDataBinding.tvXujia.setVisibility(View.VISIBLE);
-        }
-
-        //判断是否收藏
-        if (userSession != null
-                && userSession.getUserCode() != null
-                && userSession.getToken() != null
-                && goodCode != null && goodCode.length() > 0) {
-            findCollectByUserCode(userSession.getUserCode(), goodCode, userSession.getToken());
-        }
-
-        //收藏
-        mDataBinding.tvShoucang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (userSession != null
-                        && userSession.getUserCode() != null
-                        && userSession.getToken() != null) {
-                    if (goodCode != null && goodCode.length() > 0) {
-                        save(userSession.getUserCode(), goodCode, userSession.getToken());
-                    }
-                } else {
-                    startNewActivity(LoginActivity.class);
-                }
-            }
-        });
-
         mDataBinding.tvDijia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TelPhoneDialog(MechanicsH5Activity.this,
-                        "设备还能更优惠，马上输入您的手机号进行咨询",
+                new TelPhoneDialog(ZuLinH5Activity.this,
                         new TelPhoneDialog.CallbackListener() {
                             @Override
                             public void clickYes(String phone) {
-                                saveMsg(phone, "2");
+                                saveMsg(phone, "9");
                             }
                         }).show();
-
-            }
-        });
-        mDataBinding.tvXujia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new TelPhoneDialog(MechanicsH5Activity.this, new TelPhoneDialog.CallbackListener() {
-
-                    @Override
-                    public void clickYes(String phone) {
-                        saveMsg(phone, "3");
-                    }
-                }).show();
             }
         });
 
-        mDataBinding.tvPk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ComparisonActivity.start(MechanicsH5Activity.this);
-            }
-        });
     }
 
     protected void setupToolbar() {
@@ -300,7 +194,7 @@ public class MechanicsH5Activity extends AbsActivity {
     }
 
     private void setupContentView() {
-        mFragment = new H5Fragment();
+        mFragment = new ZuLinH5Activity.H5Fragment();
         if (mFragment != null) {
             Bundle args = onPutArguments();
             if (args != null) {
@@ -316,42 +210,20 @@ public class MechanicsH5Activity extends AbsActivity {
      * 分享
      */
     public void showShare() {
-//        if (type == 1 && getGoodsDetailsBean != null && getGoodsDetailsBean.getResult() != null) {
-//            IMG_URL = picUrl;
-//            TITLE = good_name;
-//            CONTENT = getGoodsDetailsBean.getResult().getGoodsDetails().getWord_detail();
-//        } else if (type == 2 && getOldDetailsBean != null && getOldDetailsBean.getResult() != null) {
-//            IMG_URL = getOldDetailsBean.getResult().getGoodsDetails().getPicUrl();
-//            TITLE = getOldDetailsBean.getResult().getGoodsDetails().getName();
-//            CONTENT = getOldDetailsBean.getResult().getGoodsDetails().getWord_detail();
-//        } else {
-//            IMG_URL = "";
-//            TITLE = "挖矿来";
-//            CONTENT = "挖矿来";
-//        }
-        if (good_name != null) {
-            TITLE = good_name;
-        } else {
-            TITLE = "挖矿来";
-        }
-        if (picUrl != null) {
-            IMG_URL = picUrl;
-        } else {
-            IMG_URL = "";
-        }
+        TITLE = "租赁";
         CONTENT = "挖矿来";
-
+        IMG_URL = "";
         Log.e("ShareDialog", "IMG_URL " + IMG_URL);
-        new ShareDialog(MechanicsH5Activity.this, new ShareDialog.CallbackListener() {
+        new ShareDialog(ZuLinH5Activity.this, new ShareDialog.CallbackListener() {
             @Override
             public void wechat() {
-                YXProgressDialog dialog = new YXProgressDialog(MechanicsH5Activity.this, "请稍后");
+                YXProgressDialog dialog = new YXProgressDialog(ZuLinH5Activity.this, "请稍后");
                 shareUrlToWx(url, TITLE, CONTENT, IMG_URL, 0);
             }
 
             @Override
             public void friends() {
-                YXProgressDialog dialog = new YXProgressDialog(MechanicsH5Activity.this, "请稍后");
+                YXProgressDialog dialog = new YXProgressDialog(ZuLinH5Activity.this, "请稍后");
                 shareUrlToWx(url, TITLE, CONTENT, IMG_URL, 1);
             }
         }).show();
@@ -395,8 +267,9 @@ public class MechanicsH5Activity extends AbsActivity {
             msg.title = title;
             msg.description = desc;
             //这里替换一张自己工程里的图片资源
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-            msg.setThumbImage(bitmap);
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+            bitmap = changeColor(bitmap);
+            msg.thumbData = bmpToByteArray(bitmap, 32);
             SendMessageToWX.Req req = new SendMessageToWX.Req();
             req.transaction = String.valueOf(System.currentTimeMillis());
             req.message = msg;
@@ -425,6 +298,41 @@ public class MechanicsH5Activity extends AbsActivity {
         return output.toByteArray();
     }
 
+    //bitmap中的透明色用白色替换
+    public static Bitmap changeColor(Bitmap bitmap) {
+        if (bitmap == null) {
+            return null;
+        }
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+        int[] colorArray = new int[w * h];
+        int n = 0;
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                int color = getMixtureWhite(bitmap.getPixel(j, i));
+                colorArray[n++] = color;
+            }
+        }
+        return Bitmap.createBitmap(colorArray, w, h, Bitmap.Config.ARGB_8888);
+    }
+
+    //获取和白色混合颜色
+    private static int getMixtureWhite(int color) {
+        int alpha = Color.alpha(color);
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+        return Color.rgb(getSingleMixtureWhite(red, alpha), getSingleMixtureWhite(green, alpha),
+                getSingleMixtureWhite(blue, alpha));
+    }
+
+    // 获取单色的混合值
+    private static int getSingleMixtureWhite(int color, int alpha) {
+        int newColor = color * alpha / 255 + 255 - alpha;
+        return newColor > 255 ? 255 : newColor;
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -438,7 +346,7 @@ public class MechanicsH5Activity extends AbsActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == FILE_SELECTED) {
-            ((H5Fragment) mFragment).onFileChooserResult(resultCode, data);
+            ((ZuLinH5Activity.H5Fragment) mFragment).onFileChooserResult(resultCode, data);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -457,9 +365,9 @@ public class MechanicsH5Activity extends AbsActivity {
     }
 
     private void backPressed() {
-        boolean canGoBack = ((H5Fragment) mFragment).canWebViewGoBack();
+        boolean canGoBack = ((ZuLinH5Activity.H5Fragment) mFragment).canWebViewGoBack();
         if (canGoBack) {
-            ((H5Fragment) mFragment).webViewGoBack();
+            ((ZuLinH5Activity.H5Fragment) mFragment).webViewGoBack();
         } else {
             finish();
         }
@@ -478,13 +386,10 @@ public class MechanicsH5Activity extends AbsActivity {
     }
 
     public void onEvent(WebCountEvent event) {
-        if (event != null) {
-            count = event.getCount();
-        }
     }
 
     public static class H5Fragment extends AbsFragment<FragmentWebBinding> {
-        private UploadHandler mUploadHandler;
+        private ZuLinH5Activity.H5Fragment.UploadHandler mUploadHandler;
 
         @Override
         protected FragmentWebBinding bindRootView(LayoutInflater inflater, ViewGroup container, boolean attachToRoot) {
@@ -602,7 +507,7 @@ public class MechanicsH5Activity extends AbsActivity {
 
             // Android 4.1
             public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
-                mUploadHandler = new UploadHandler();
+                mUploadHandler = new ZuLinH5Activity.H5Fragment.UploadHandler();
                 mUploadHandler.openFileChooser(uploadMsg, acceptType, capture);
             }
         };
@@ -686,7 +591,7 @@ public class MechanicsH5Activity extends AbsActivity {
             settings.setAppCacheEnabled(true);//开启AppCaches功能
 
             mDataBinding.webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-            mDataBinding.webView.addJavascriptInterface(new JSInterface(), "Android");
+            mDataBinding.webView.addJavascriptInterface(new ZuLinH5Activity.H5Fragment.JSInterface(), "Android");
 
 //            mDataBinding.webView.clearHistory();
 //            mDataBinding.webView.clearFormData();
@@ -1071,95 +976,6 @@ public class MechanicsH5Activity extends AbsActivity {
     }
 
     /**
-     * 收藏
-     */
-    private void save(String user_code, String good_code, String token) {
-        Map<String, String> map = new TreeMap<String, String>();
-        map.put("user_code", user_code);
-        map.put("good_code", good_code);
-        map.put("token", token);
-        String content = JSON.toJSONString(map);
-        content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(this, map, "save");
-        NetBean netBean = new NetBean();
-        netBean.setToken(token);
-        netBean.setSign(sign);
-        netBean.setContent(content);
-        showDialog();
-        onNewRequestCall(SaveAction.newInstance(this, netBean)
-                .request(new AHttpService.IResCallback<BaseEntity>() {
-                    @Override
-                    public void onCallback(int resultCode, Response<BaseEntity> response,
-                                           BaseErrorInfo baseErrorInfo) {
-                        closeDialog();
-                        if (new HttpHelper().showError(getApplicationContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
-                            return;
-                        }
-                        if (response != null) {
-                            new HttpHelper().showError(getApplicationContext(), response.body().getCode(), response.body().getMessage());
-                            if (response.body().getCode().equals("200")) {
-                                Drawable rightDrawable = getResources().getDrawable(R.mipmap.ic_shoucang2);
-                                rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());  // left, top, right, bottom
-                                mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
-
-                                ToastUtils.show(getApplicationContext(), "收藏成功");
-                            } else {
-                                ToastUtils.show(getApplicationContext(), response.body().getMessage());
-                            }
-                        }
-                    }
-                }));
-    }
-
-    /**
-     * 判断是否收藏
-     */
-    private void findCollectByUserCode(String user_code, String good_code, String token) {
-        Map<String, String> map = new TreeMap<String, String>();
-        map.put("user_code", user_code);
-        map.put("good_code", good_code);
-        map.put("token", token);
-        String content = JSON.toJSONString(map);
-        content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(this, map, "save");
-        NetBean netBean = new NetBean();
-        netBean.setToken(token);
-        netBean.setSign(sign);
-        netBean.setContent(content);
-        showDialog();
-        onNewRequestCall(FindCollectByUserCodeAction.newInstance(this, netBean)
-                .request(new AHttpService.IResCallback<BaseEntity<SaveBean>>() {
-                    @Override
-                    public void onCallback(int resultCode, Response<BaseEntity<SaveBean>> response,
-                                           BaseErrorInfo baseErrorInfo) {
-                        closeDialog();
-                        if (new HttpHelper().showError(getApplicationContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
-                            return;
-                        }
-                        if (response != null) {
-                            new HttpHelper().showError(getApplicationContext(), response.body().getCode(), response.body().getMessage());
-                            if (response.body().getCode().equals("200")) {
-                                if (response.body().getData().isResult()) {
-                                    Drawable rightDrawable = getResources().getDrawable(R.mipmap.ic_shoucang2);
-                                    rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());  // left, top, right, bottom
-                                    mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
-                                } else {
-                                    Drawable rightDrawable = getResources().getDrawable(R.mipmap.ic_shoucang);
-                                    rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());  // left, top, right, bottom
-                                    mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
-                                }
-                            } else if (response.body().getCode().equals("1003")) {
-                                ToastUtils.show(getApplicationContext(), "登录信息过期，请重新登录");
-                                startNewActivity(LoginActivity.class);
-                            } else {
-                                ToastUtils.show(getApplicationContext(), response.body().getMessage());
-                            }
-                        }
-                    }
-                }));
-    }
-
-    /**
      * 信息咨询
      */
     private void saveMsg(final String phone, String type) {
@@ -1168,12 +984,12 @@ public class MechanicsH5Activity extends AbsActivity {
         map.put("type", type);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(MechanicsH5Activity.this, map, "saveMsg");
+        String sign = Sign.getSignKey(ZuLinH5Activity.this, map, "saveMsg");
         NetBean netBean = new NetBean();
         netBean.setToken("");
         netBean.setSign(sign);
         netBean.setContent(content);
-        onNewRequestCall(SaveMsgAction.newInstance(MechanicsH5Activity.this, netBean)
+        onNewRequestCall(SaveMsgAction.newInstance(ZuLinH5Activity.this, netBean)
                 .request(new AHttpService.IResCallback<BaseEntity>() {
                     @Override
                     public void onCallback(int resultCode, Response<BaseEntity> response, BaseErrorInfo baseErrorInfo) {
@@ -1183,101 +999,12 @@ public class MechanicsH5Activity extends AbsActivity {
                         }
                         if (response != null) {
                             if (response.body().getCode().equals("200")) {
-                                new SimpleDialog(MechanicsH5Activity.this, phone, new SimpleDialog.CallbackListener() {
+                                new SimpleDialog(ZuLinH5Activity.this, phone, new SimpleDialog.CallbackListener() {
                                     @Override
                                     public void clickYes() {
 
                                     }
                                 }).show();
-                            } else {
-                                ToastUtils.show(getApplicationContext(), response.body().getMessage());
-                            }
-                        }
-                    }
-                }));
-    }
-
-    /**
-     * 获取新机详情  getGoodsDetails
-     */
-    private void getGoodsDetails(String goodsCode) {
-        Map<String, String> map = new TreeMap<String, String>();
-        map.put("good_code", goodsCode);
-        String content = JSON.toJSONString(map);
-        content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(this, map, "findCategoryDetail");
-        NetBean netBean = new NetBean();
-        netBean.setToken("");
-        netBean.setSign(sign);
-        netBean.setContent(content);
-        showDialog();
-        onNewRequestCall(GetGoodsDetailsAction.newInstance(this, netBean)
-                .request(new AHttpService.IResCallback<BaseEntity<GetGoodsDetailsBean>>() {
-                    @Override
-                    public void onCallback(int resultCode, Response<BaseEntity<GetGoodsDetailsBean>> response,
-                                           BaseErrorInfo baseErrorInfo) {
-                        closeDialog();
-                        if (new HttpHelper().showError(getApplicationContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
-                            return;
-                        }
-                        if (response != null) {
-                            new HttpHelper().showError(getApplicationContext(), response.body().getCode(), response.body().getMessage());
-                            if (response.body().getCode().equals("200")) {
-                                getGoodsDetailsBean = response.body().getData();
-                                GetGoodsPageListBean getGoodsPageListBean = new GetGoodsPageListBean();
-                                GetGoodsPageListBean.DataBean dataBean = new GetGoodsPageListBean.DataBean();
-                                dataBean.setCounter_price(getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price() + "");
-                                dataBean.setGood_code(getGoodsDetailsBean.getResult().getGoodsDetails().getGood_code());
-                                dataBean.setName(getGoodsDetailsBean.getResult().getGoodsDetails().getName());
-                                dataBean.setSelect(false);
-                                if (ConfigUtils.getNewMechanics(getApplicationContext()) != null
-                                        && ConfigUtils.getNewMechanics(getApplicationContext()).getData() != null
-                                        && ConfigUtils.getNewMechanics(getApplicationContext()).getData().size() > 0) {
-                                    getGoodsPageListBean = ConfigUtils.getNewMechanics(getApplicationContext());
-                                    if (!getGoodsPageListBean.getData().contains(dataBean)) {
-                                        getGoodsPageListBean.getData().add(0, dataBean);
-                                    }
-                                } else {
-                                    List<GetGoodsPageListBean.DataBean> dataBeans = new ArrayList<>();
-                                    dataBeans.add(dataBean);
-                                    getGoodsPageListBean.setData(dataBeans);
-                                }
-                                ConfigUtils.setNewMechanics(getApplicationContext(), getGoodsPageListBean);
-                            } else {
-                                ToastUtils.show(getApplicationContext(), response.body().getMessage());
-                            }
-                        }
-                    }
-                }));
-    }
-
-    /**
-     * 获取二手机详情 getOldDetails
-     */
-    private void getOldDetails(String goodsCode) {
-        Map<String, String> map = new TreeMap<String, String>();
-        map.put("good_code", goodsCode);
-        String content = JSON.toJSONString(map);
-        content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(this, map, "findCategoryDetail");
-        NetBean netBean = new NetBean();
-        netBean.setToken("");
-        netBean.setSign(sign);
-        netBean.setContent(content);
-        showDialog();
-        onNewRequestCall(GetOldDetailsAction.newInstance(this, netBean)
-                .request(new AHttpService.IResCallback<BaseEntity<GetOldDetailsBean>>() {
-                    @Override
-                    public void onCallback(int resultCode, Response<BaseEntity<GetOldDetailsBean>> response,
-                                           BaseErrorInfo baseErrorInfo) {
-                        closeDialog();
-                        if (new HttpHelper().showError(getApplicationContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
-                            return;
-                        }
-                        if (response != null) {
-                            new HttpHelper().showError(getApplicationContext(), response.body().getCode(), response.body().getMessage());
-                            if (response.body().getCode().equals("200")) {
-                                getOldDetailsBean = response.body().getData();
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
                             }

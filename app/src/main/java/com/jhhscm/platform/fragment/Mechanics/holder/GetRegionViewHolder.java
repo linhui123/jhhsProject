@@ -3,15 +3,11 @@ package com.jhhscm.platform.fragment.Mechanics.holder;
 import android.view.View;
 
 
-import com.jhhscm.platform.activity.MechanicsH5Activity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.ItemMechanicsJxBinding;
 import com.jhhscm.platform.databinding.ItemMechanicsPrivinceBinding;
-import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.event.GetRegionEvent;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
 import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.tool.UrlUtils;
 
 
 public class GetRegionViewHolder extends AbsRecyclerViewHolder<GetRegionBean.ResultBean> {

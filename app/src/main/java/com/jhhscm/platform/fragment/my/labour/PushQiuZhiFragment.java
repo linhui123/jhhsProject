@@ -97,9 +97,9 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
         labour_code = getArguments().getString("labour_code");
         id = getArguments().getString("id");
         if (type == 0) {//只读
-            mDataBinding.tvFabu.setText("更新信息");
-        } else {//编辑
             mDataBinding.tvFabu.setText("发布信息");
+        } else {//编辑
+            mDataBinding.tvFabu.setText("更新信息");
             findLabourWorkDetail(labour_code);
         }
 
@@ -520,7 +520,6 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
             map.put("settl_time", settl_time);
             map.put("other_req", other_req);
             map.put("work_pre", work_pre);
-//            map.put("work_num", work_num);
             map.put("work_time", work_time);
             map.put("good_work", good_work);
             map.put("province", pId);
@@ -587,12 +586,12 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
             map.put("end_time", endTime);
             map.put("other_desc", other_desc);
             map.put("name", name);
-            map.put("user_code", userSession.getUserCode());
+            map.put("user_code",  ConfigUtils.getCurrentUser(getContext()).getUserCode());
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = SignObject.getSignKey(getActivity(), map, "saveLabourWork");
             NetBean netBean = new NetBean();
-            netBean.setToken(userSession.getToken());
+            netBean.setToken(  ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
             onNewRequestCall(UpdateLabourWorkAction.newInstance(getContext(), netBean)
@@ -827,8 +826,8 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
             other_desc = dataBean.getOther_desc();
 
             //福利
-            settl_time = dataBean.getSettl_time();
-            salay_money = dataBean.getSalay_money();
+            settl_time = dataBean.getSettl_time_text();
+            salay_money = dataBean.getSalay_money_text();
             mDataBinding.tvBaseXinzi.setText(salay_money);
             mDataBinding.tvBaseSattleTime.setText(settl_time);
 //            if (settl_time != null) {

@@ -2,8 +2,6 @@ package com.jhhscm.platform.fragment.Mechanics;
 
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +11,8 @@ import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.MechanicsH5Activity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.FragmentMechanicsBinding;
 import com.jhhscm.platform.databinding.FragmentNewMechanicsBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
@@ -31,11 +27,7 @@ import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.holder.NewMechanicsViewHolder;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.home.HomePageAdapter;
-import com.jhhscm.platform.fragment.home.HomePageItem;
-import com.jhhscm.platform.fragment.home.action.FindBrandHomePageAction;
 import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
-import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
