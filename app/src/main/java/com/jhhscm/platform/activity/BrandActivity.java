@@ -12,7 +12,7 @@ import com.jhhscm.platform.fragment.base.AbsFragment;
 
 public class BrandActivity extends AbsToolbarActivity {
 
-    private int type = 1;// 1 选择品牌； 2选择机型
+    private int type = 1;// 1 选择品牌； 2选择机型;3选择机型返回
 
     public static void start(Context context, int type) {
         Intent intent = new Intent(context, BrandActivity.class);

@@ -87,6 +87,7 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         }
 
         type = getArguments().getInt("type");
+        Log.e("type", "type :"+type);
         order_code = getArguments().getString("orderGood");
 
         mDataBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -110,7 +111,7 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         mDataBinding.tvTijiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CashierActivity.start(getContext(),new CreateOrderResultBean(new CreateOrderResultBean.DataBean(order_code)));
+                CashierActivity.start(getContext(), new CreateOrderResultBean(new CreateOrderResultBean.DataBean(order_code)));
             }
         });
         findOrder();
@@ -204,9 +205,8 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
     }
 
     private void intView(final FindOrderBean findOrderBean) {
-//        type = 4;
         if (type == 1) {
-            mDataBinding.orderType.setText("待付款");
+            mDataBinding.orderType.setText(findOrderBean.getOrder().getOrder_text());
             //剩余支付时间
             mDataBinding.tvInfo.setText("剩1小时17分钟将自动关闭");
             mDataBinding.tvCancle.setVisibility(View.VISIBLE);
@@ -215,26 +215,26 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
             mDataBinding.rlWuliuNo.setVisibility(View.GONE);
             mDataBinding.tvIm.setBackgroundResource(R.mipmap.ic_order_1);
         } else if (type == 2) {
-            mDataBinding.orderType.setText("待发货");
+            mDataBinding.orderType.setText(findOrderBean.getOrder().getOrder_text());
             mDataBinding.tvInfo.setText("买家已付款，等待商家发货");
             mDataBinding.rlWuliu.setVisibility(View.GONE);
             mDataBinding.rlWuliuNo.setVisibility(View.GONE);
             mDataBinding.tvIm.setBackgroundResource(R.mipmap.ic_order_2);
         } else if (type == 3) {
-            mDataBinding.orderType.setText("待收货");
+            mDataBinding.orderType.setText(findOrderBean.getOrder().getOrder_text());
             //剩余确认收货时间
             mDataBinding.tvInfo.setText("剩7天20小时30分钟将自动确认收货");
-            mDataBinding.tvWuliu.setText(findOrderBean.getOrder().getShip_channel());
-            mDataBinding.tvWuliuNo.setText(findOrderBean.getOrder().getShip_sn());
+//            mDataBinding.tvWuliu.setText(findOrderBean.getOrder().getShip_channel());
+//            mDataBinding.tvWuliuNo.setText(findOrderBean.getOrder().getShip_sn());
             mDataBinding.tvIm.setBackgroundResource(R.mipmap.ic_order_3);
         } else if (type == 4) {
-            mDataBinding.orderType.setText("已完成");
+            mDataBinding.orderType.setText(findOrderBean.getOrder().getOrder_text());
             mDataBinding.tvInfo.setVisibility(View.GONE);
             mDataBinding.rlWuliu.setVisibility(View.GONE);
             mDataBinding.rlWuliuNo.setVisibility(View.GONE);
             mDataBinding.tvIm.setBackgroundResource(R.mipmap.ic_order_4);
         } else if (type == 5) {
-            mDataBinding.orderType.setText("已取消");
+            mDataBinding.orderType.setText(findOrderBean.getOrder().getOrder_text());
             mDataBinding.tvInfo.setVisibility(View.GONE);
             mDataBinding.tvDel.setVisibility(View.VISIBLE);
             mDataBinding.rlWuliu.setVisibility(View.GONE);
@@ -266,9 +266,9 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         mDataBinding.tvWuliuNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (findOrderBean.getOrder().getShip_sn() != null) {
-                    copy(findOrderBean.getOrder().getShip_sn(), getContext());
-                }
+//                if (findOrderBean.getOrder().getShip_sn() != null) {
+//                    copy(findOrderBean.getOrder().getShip_sn(), getContext());
+//                }
             }
         });
     }

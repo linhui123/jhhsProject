@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.my.order.MyPeiJianListFragment;
 import com.jhhscm.platform.fragment.my.order.OrderDetailFragment;
 
 public class OrderDetailActivity extends AbsToolbarActivity {

@@ -163,6 +163,15 @@ public class FindCollectListBean {
         private String factory_time;
         private String type;
         private String sale_num;
+        private String counter_price;
+
+        public String getCounter_price() {
+            return counter_price;
+        }
+
+        public void setCounter_price(String counter_price) {
+            this.counter_price = counter_price;
+        }
 
         public String getGood_code() {
             return good_code;

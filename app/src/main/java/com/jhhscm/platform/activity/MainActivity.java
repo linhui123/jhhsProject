@@ -122,7 +122,6 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         financialFragment = (FinancialFragment) fm.findFragmentByTag("mFinancialFragment");
         mMeFragment = (MyFragment) fm.findFragmentByTag("mMeFragment");
 
-
         mDataBinding.rdExpend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

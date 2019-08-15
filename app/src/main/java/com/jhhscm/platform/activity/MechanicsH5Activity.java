@@ -126,8 +126,11 @@ public class MechanicsH5Activity extends AbsActivity {
 
     private GetOldDetailsBean getOldDetailsBean;
     private GetGoodsDetailsBean getGoodsDetailsBean;
+
     private String goodCode;
     private String picUrl;
+    private String good_name;
+
     private String url;
     private int type = 0;
     private String count = "1";
@@ -141,39 +144,14 @@ public class MechanicsH5Activity extends AbsActivity {
     private String CONTENT = "";
     private String IMG_URL = "";
 
-    public static void start(Context context, String url) {
-        Intent intent = new Intent(context, MechanicsH5Activity.class);
-        intent.putExtra("url", url);
-        context.startActivity(intent);
-    }
-
-    public static void start(Context context, String url, String title, int type) {
-        Intent intent = new Intent(context, MechanicsH5Activity.class);
-        intent.putExtra("url", url);
-        intent.putExtra("title", title);
-        intent.putExtra("type", type);
-        context.startActivity(intent);
-    }
-
-    public static void start(Context context, String url, String title, String good_code, int type) {
+    public static void start(Context context, String url, String title, String good_code,String good_name,String picUrl, int type) {
         Intent intent = new Intent(context, MechanicsH5Activity.class);
         intent.putExtra("url", url);
         intent.putExtra("title", title);
         intent.putExtra("type", type);
         intent.putExtra("good_code", good_code);
-        context.startActivity(intent);
-    }
-
-    /**
-     * 配件详情-购物车需要图片地址
-     */
-    public static void start(Context context, String url, String title, String good_code, String pic_url, int type) {
-        Intent intent = new Intent(context, MechanicsH5Activity.class);
-        intent.putExtra("url", url);
-        intent.putExtra("title", title);
-        intent.putExtra("type", type);
-        intent.putExtra("good_code", good_code);
-        intent.putExtra("pic_url", pic_url);
+        intent.putExtra("good_name", good_name);
+        intent.putExtra("picUrl", picUrl);
         context.startActivity(intent);
     }
 
@@ -198,8 +176,11 @@ public class MechanicsH5Activity extends AbsActivity {
         if (getIntent().hasExtra("good_code")) {
             goodCode = getIntent().getStringExtra("good_code");
         }
-        if (getIntent().hasExtra("pic_url")) {
-            picUrl = getIntent().getStringExtra("pic_url");
+        if (getIntent().hasExtra("good_name")) {
+            good_name = getIntent().getStringExtra("good_name");
+        }
+        if (getIntent().hasExtra("picUrl")) {
+            picUrl = getIntent().getStringExtra("picUrl");
         }
         if (getIntent().hasExtra("url")) {
             url = getIntent().getStringExtra("url");
@@ -215,11 +196,6 @@ public class MechanicsH5Activity extends AbsActivity {
             getOldDetails(goodCode);
             mDataBinding.tvShoucang.setVisibility(View.VISIBLE);
             mDataBinding.tvXujia.setVisibility(View.VISIBLE);
-        } else if (type == 3) {
-            findCategoryDetail(goodCode);
-            mDataBinding.tvShoucang.setVisibility(View.VISIBLE);
-            mDataBinding.tvGouwuche.setVisibility(View.VISIBLE);
-            mDataBinding.llPeijian.setVisibility(View.VISIBLE);
         }
 
         //判断是否收藏
@@ -246,29 +222,6 @@ public class MechanicsH5Activity extends AbsActivity {
             }
         });
 
-        mDataBinding.tvGouwuche.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GoodsToCartsActivity.start(MechanicsH5Activity.this);
-            }
-        });
-        //加购
-        mDataBinding.tvJiaru.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if (userSession != null
-//                        && userSession.getUserCode() != null
-//                        && userSession.getToken() != null) {
-//                    if (findCategoryDetailBean != null) {
-//                        addGoodsToCarts(userSession.getUserCode(), picUrl, findCategoryDetailBean, userSession.getToken());
-//                    } else {
-//                        findCategoryDetail(goodCode);
-//                    }
-//                } else {
-//                    startNewActivity(LoginActivity.class);
-//                }
-            }
-        });
         mDataBinding.tvDijia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -299,7 +252,6 @@ public class MechanicsH5Activity extends AbsActivity {
         mDataBinding.tvPk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                addGoodsToCarts(userSession.getUserCode(), picUrl, findCategoryDetailBean, userSession.getToken());
                 ComparisonActivity.start(MechanicsH5Activity.this);
             }
         });
@@ -364,26 +316,31 @@ public class MechanicsH5Activity extends AbsActivity {
      * 分享
      */
     public void showShare() {
-        if (type == 1 && getGoodsDetailsBean != null && getGoodsDetailsBean.getResult() != null) {
-            IMG_URL = getGoodsDetailsBean.getResult().getGoodsDetails().getPicSmallUrl();
-            TITLE = getGoodsDetailsBean.getResult().getGoodsDetails().getName();
-            CONTENT = getGoodsDetailsBean.getResult().getGoodsDetails().getWord_detail();
-        } else if (type == 2 && getOldDetailsBean != null && getOldDetailsBean.getResult() != null) {
-            IMG_URL = getOldDetailsBean.getResult().getGoodsDetails().getPicUrl();
-            TITLE = getOldDetailsBean.getResult().getGoodsDetails().getName();
-            CONTENT = getOldDetailsBean.getResult().getGoodsDetails().getWord_detail();
-        } else if (type == 3 && findCategoryDetailBean != null && findCategoryDetailBean.getData() != null) {
-            if (findCategoryDetailBean.getData().getPic_gallery_url_list() != null
-                    && findCategoryDetailBean.getData().getPic_gallery_url_list().size() > 0) {
-                IMG_URL = findCategoryDetailBean.getData().getPic_gallery_url_list().get(0);
-            }
-            TITLE = findCategoryDetailBean.getData().getName();
-            CONTENT = findCategoryDetailBean.getData().getWord_detail();
+//        if (type == 1 && getGoodsDetailsBean != null && getGoodsDetailsBean.getResult() != null) {
+//            IMG_URL = picUrl;
+//            TITLE = good_name;
+//            CONTENT = getGoodsDetailsBean.getResult().getGoodsDetails().getWord_detail();
+//        } else if (type == 2 && getOldDetailsBean != null && getOldDetailsBean.getResult() != null) {
+//            IMG_URL = getOldDetailsBean.getResult().getGoodsDetails().getPicUrl();
+//            TITLE = getOldDetailsBean.getResult().getGoodsDetails().getName();
+//            CONTENT = getOldDetailsBean.getResult().getGoodsDetails().getWord_detail();
+//        } else {
+//            IMG_URL = "";
+//            TITLE = "挖矿来";
+//            CONTENT = "挖矿来";
+//        }
+        if (good_name != null) {
+            TITLE = good_name;
+        } else {
+            TITLE = "挖矿来";
+        }
+        if (picUrl != null) {
+            IMG_URL = picUrl;
         } else {
             IMG_URL = "";
-            TITLE = "挖矿来";
-            CONTENT = "挖矿来";
         }
+        CONTENT = "挖矿来";
+
         Log.e("ShareDialog", "IMG_URL " + IMG_URL);
         new ShareDialog(MechanicsH5Activity.this, new ShareDialog.CallbackListener() {
             @Override
@@ -1194,83 +1151,6 @@ public class MechanicsH5Activity extends AbsActivity {
                             } else if (response.body().getCode().equals("1003")) {
                                 ToastUtils.show(getApplicationContext(), "登录信息过期，请重新登录");
                                 startNewActivity(LoginActivity.class);
-                            } else {
-                                ToastUtils.show(getApplicationContext(), response.body().getMessage());
-                            }
-                        }
-                    }
-                }));
-    }
-
-    /**
-     * 添加购物车
-     */
-    private void addGoodsToCarts(String userCode, String picUrl, FindCategoryDetailBean
-            findCategoryDetail, String token) {
-        Map<String, String> map = new TreeMap<String, String>();
-        map.put("userCode", userCode);
-        map.put("goodsCode", goodCode);
-        map.put("goodsName", findCategoryDetail.getData().getName());
-        map.put("number", count);
-        map.put("price", findCategoryDetail.getData().getCounter_price() + "");
-        map.put("picUrl", picUrl);
-        String content = JSON.toJSONString(map);
-        content = Des.encryptByDes(content);
-
-        String sign = Sign.getSignKey(this, map, "addGoodsToCarts");
-        NetBean netBean = new NetBean();
-        netBean.setToken(token);
-        netBean.setSign(sign);
-        netBean.setContent(content);
-        onNewRequestCall(AddGoodsToCartsAction.newInstance(this, netBean)
-                .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
-                    @Override
-                    public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response,
-                                           BaseErrorInfo baseErrorInfo) {
-                        if (new HttpHelper().showError(getApplicationContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
-                            return;
-                        }
-                        if (response != null) {
-                            new HttpHelper().showError(getApplicationContext(), response.body().getCode(), response.body().getMessage());
-                            if (response.body().getCode().equals("200")) {
-                                ToastUtils.show(getApplicationContext(), "购物车添加成功");
-                            } else {
-                                ToastUtils.show(getApplicationContext(), response.body().getMessage());
-                            }
-                        }
-                    }
-                }));
-    }
-
-    private FindCategoryDetailBean findCategoryDetailBean;
-
-    /**
-     * 获取配件详情
-     */
-    private void findCategoryDetail(String goodsCode) {
-        Map<String, String> map = new TreeMap<String, String>();
-        map.put("good_code", goodsCode);
-        String content = JSON.toJSONString(map);
-        content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(this, map, "findCategoryDetail");
-        NetBean netBean = new NetBean();
-        netBean.setToken("");
-        netBean.setSign(sign);
-        netBean.setContent(content);
-        showDialog();
-        onNewRequestCall(FindCategoryDetailAction.newInstance(this, netBean)
-                .request(new AHttpService.IResCallback<BaseEntity<FindCategoryDetailBean>>() {
-                    @Override
-                    public void onCallback(int resultCode, Response<BaseEntity<FindCategoryDetailBean>> response,
-                                           BaseErrorInfo baseErrorInfo) {
-                        closeDialog();
-                        if (new HttpHelper().showError(getApplicationContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
-                            return;
-                        }
-                        if (response != null) {
-                            new HttpHelper().showError(getApplicationContext(), response.body().getCode(), response.body().getMessage());
-                            if (response.body().getCode().equals("200")) {
-                                findCategoryDetailBean = response.body().getData();
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
                             }

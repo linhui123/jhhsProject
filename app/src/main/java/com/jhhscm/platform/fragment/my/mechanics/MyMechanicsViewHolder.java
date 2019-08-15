@@ -48,7 +48,7 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindOldGoodByUs
             @Override
             public void onClick(View v) {
                 String url = UrlUtils.ESJXQ + "&good_code=" + item.getGood_code();
-                MechanicsH5Activity.start(itemView.getContext(), url, "二手机详情", item.getGood_code(), 2);
+                MechanicsH5Activity.start(itemView.getContext(), url, "二手机详情", item.getGood_code(), item.getName(), item.getPic_url(), 2);
             }
         });
     }

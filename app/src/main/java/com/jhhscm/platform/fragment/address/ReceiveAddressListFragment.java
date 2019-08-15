@@ -31,6 +31,7 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 
 
 import java.util.Map;
@@ -81,6 +82,7 @@ public class ReceiveAddressListFragment extends AbsFragment<FragmentReceiveAddre
         }
         isResult = getArguments().getBoolean("isResult", false);
 
+        mDataBinding.rlReceiveAddress.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.rlReceiveAddress.setLayoutManager(new LinearLayoutManager(getContext()));
         receiveAddressAdapter = new InnerAdapter(getContext());
         mDataBinding.rlReceiveAddress.setAdapter(receiveAddressAdapter);

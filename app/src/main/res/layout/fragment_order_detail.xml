@@ -32,10 +32,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_above="@+id/tv_info"
-                        android:text="待付款"
                         android:layout_centerVertical="true"
+                        android:text="待付款"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/text_size_18" />
+                        android:textSize="@dimen/text_size_16" />
 
                     <TextView
                         android:id="@+id/tv_info"
@@ -45,7 +45,7 @@
                         android:layout_marginBottom="@dimen/padding_15"
                         android:text="剩1小时17分钟将自动关闭"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/text_size_16" />
+                        android:textSize="@dimen/text_size_14" />
 
 
                     <TextView
@@ -117,21 +117,31 @@
 
                 </RelativeLayout>
 
+                <View
+                    style="@style/view_h_de"
+                    android:layout_height="@dimen/padding_10" />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_10"
                     android:paddingLeft="@dimen/padding_15"
-                    android:paddingRight="@dimen/padding_15">
+                    android:paddingRight="@dimen/padding_15"
+                    android:paddingBottom="@dimen/padding_10">
 
                 </android.support.v7.widget.RecyclerView>
+
+                <View
+                    style="@style/view_h_de"
+                    android:layout_height="@dimen/padding_10" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_10"
                     android:paddingLeft="@dimen/padding_15"
+                    android:paddingBottom="@dimen/padding_10"
                     android:paddingRight="@dimen/padding_15">
 
                     <TextView
@@ -153,10 +163,13 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
+                <View style="@style/view_h_de" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
                     android:paddingLeft="@dimen/padding_15"
                     android:paddingRight="@dimen/padding_15">
 
@@ -181,10 +194,13 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
+                <View style="@style/view_h_de" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
                     android:paddingLeft="@dimen/padding_15"
                     android:paddingRight="@dimen/padding_15">
 
@@ -205,12 +221,15 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
+                <View style="@style/view_h_de" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_10"
                     android:paddingLeft="@dimen/padding_15"
-                    android:paddingRight="@dimen/padding_15">
+                    android:paddingRight="@dimen/padding_15"
+                    android:paddingBottom="@dimen/padding_10">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -229,11 +248,16 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
+                <View
+                    style="@style/view_h_de"
+                    android:layout_height="@dimen/padding_10" />
+
                 <RelativeLayout
                     android:id="@+id/rl_wuliu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
                     android:paddingLeft="@dimen/padding_15"
                     android:paddingRight="@dimen/padding_15">
 
@@ -254,11 +278,14 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
+                <View style="@style/view_h_de" />
+
                 <RelativeLayout
                     android:id="@+id/rl_wuliu_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
                     android:paddingLeft="@dimen/padding_15"
                     android:paddingRight="@dimen/padding_15">
 
@@ -281,11 +308,14 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
+                <View style="@style/view_h_de" />
+
                 <RelativeLayout
                     android:id="@+id/rl_order_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
                     android:paddingLeft="@dimen/padding_15"
                     android:paddingRight="@dimen/padding_15">
 
@@ -308,11 +338,14 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
+                <View style="@style/view_h_de" />
+
                 <RelativeLayout
                     android:id="@+id/rl_order_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
                     android:paddingLeft="@dimen/padding_15"
                     android:paddingRight="@dimen/padding_15">
 
@@ -339,12 +372,12 @@
             android:id="@+id/rl_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/padding_15"
             android:layout_marginRight="@dimen/padding_15"
             android:gravity="center_vertical"
             android:paddingTop="@dimen/dp_5"
-            android:paddingBottom="@dimen/dp_5"
-            android:layout_alignParentBottom="true">
+            android:paddingBottom="@dimen/dp_5">
 
             <TextView
                 android:id="@+id/tv_cancle"

@@ -5,8 +5,8 @@
         android:id="@+id/rl_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding_10"
-        android:layout_marginBottom="@dimen/padding_10"
+        android:paddingTop="@dimen/padding_10"
+        android:paddingBottom="@dimen/padding_10"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/padding_15"
         android:paddingRight="@dimen/padding_15">

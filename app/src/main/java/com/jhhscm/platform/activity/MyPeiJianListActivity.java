@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.my.order.MyOrderListFragment;
 import com.jhhscm.platform.fragment.my.order.MyPeiJianListFragment;
 
 public class MyPeiJianListActivity extends AbsToolbarActivity {
@@ -48,7 +49,7 @@ public class MyPeiJianListActivity extends AbsToolbarActivity {
 
     @Override
     protected AbsFragment onCreateContentView() {
-        return MyPeiJianListFragment.instance();
+        return MyOrderListFragment.instance();
     }
 
     @Override

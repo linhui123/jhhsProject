@@ -183,8 +183,8 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
             mDataBinding.tvZhiwei4.setText(dataBean.getWork_num());
             mDataBinding.tvZhiwei5.setText(dataBean.getWork_time_text());
 
-            mDataBinding.tvFuli1.setText(dataBean.getSalay_money());
-            mDataBinding.tvFuli2.setText(dataBean.getSettl_time());
+            mDataBinding.tvFuli1.setText(dataBean.getSalay_money_text());
+            mDataBinding.tvFuli2.setText(dataBean.getSettl_time_text());
             mDataBinding.tvFuli3.setText(dataBean.getOther_req());
 
             mDataBinding.tvProject1.setText(dataBean.getWork_type_text());
@@ -263,8 +263,8 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
             mDataBinding.tvBase3.setText(dataBean.getWork_pre_text());
             mDataBinding.tvBase4.setText(dataBean.getProvince_text() + " " + dataBean.getCity_text());
 
-            mDataBinding.tvFuli1.setText(dataBean.getSalay_money());
-            mDataBinding.tvFuli2.setText(dataBean.getSettl_time());
+            mDataBinding.tvFuli1.setText(dataBean.getSalay_money_text());
+            mDataBinding.tvFuli2.setText(dataBean.getSettl_time_text());
             mDataBinding.tvFuli3.setText(dataBean.getOther_req());
 
             mDataBinding.tvJinyan1.setText(dataBean.getWork_time_text());

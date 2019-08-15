@@ -20,7 +20,7 @@ public enum ServerErrorCode {
     SYS_PARAM_NOT_ENOUGH(510, "参数不足"),
     USER_REGISTER_CLOSED(1001, "注册已关闭"),
     USER_REGISTER_PASSWORD_DISTINCT(1002, "密码和重复密码不一致！"),
-    USER_REGISTER_USERNAME_WRONG_LENGTH(1003, "用户名/手机号码长度不正确！"),
+    USER_REGISTER_USERNAME_WRONG_LENGTH(1003, "token过期或失效！"),
     USER_REGISTER_USERNAME_WRONG_FORMAT(1004, "用户名/手机号码格式不正确！"),
     USER_REGISTER_USERNAME_FORBIDDEN(1005, "用户名/手机号码被禁止注册！"),
     USER_REGISTER_USERNAME_USED(1006, "用户名/手机号码被占用！"),

@@ -73,9 +73,6 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
-//        SmartRefreshLayout.LayoutParams llParams = (SmartRefreshLayout.LayoutParams) mDataBinding.rvGouwuche.getLayoutParams();
-//        llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
-//        mDataBinding.rvGouwuche.setLayoutParams(llParams);
 
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null
@@ -150,6 +147,7 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
                     GetCartGoodsByUserCodeBean g = new GetCartGoodsByUserCodeBean();
                     g.setResult(list);
                     CreateOrderActivity.start(getContext(), g);
+                    getActivity().finish();
                 } else {
                     ToastUtil.show(getContext(), "请先选择商品");
                 }

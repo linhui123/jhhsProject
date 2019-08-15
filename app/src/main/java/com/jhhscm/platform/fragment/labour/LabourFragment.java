@@ -282,6 +282,13 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
                 mDataBinding.llArea.setVisibility(View.GONE);
                 mDataBinding.llXiala.setVisibility(View.GONE);
                 mDataBinding.rv.autoRefresh();
+            }else if (event.type.equals("0")) {//市点击
+                city = "";
+                province="";
+                mDataBinding.tvLocation.setText("全国");
+                mDataBinding.llArea.setVisibility(View.GONE);
+                mDataBinding.llXiala.setVisibility(View.GONE);
+                mDataBinding.rv.autoRefresh();
             }
         }
     }
@@ -499,13 +506,17 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
      * 下拉机型
      */
     private void gangwei(GetComboBoxBean getComboBoxBean) {
+        GetComboBoxBean.ResultBean resultBean = new GetComboBoxBean.ResultBean("", "全部");
+        if (getComboBoxBean.getResult() != null && getComboBoxBean.getResult().size() > 0) {
+            getComboBoxBean.getResult().add(0, resultBean);
+        }
         mDataBinding.rlGangwei.setLayoutManager(new LinearLayoutManager(getContext()));
         JXDropAdapter JXAdapter = new JXDropAdapter(getComboBoxBean.getResult(), getContext());
         mDataBinding.rlGangwei.setAdapter(JXAdapter);
         JXAdapter.setMyListener(new JXDropAdapter.ItemListener() {
             @Override
             public void onItemClick(GetComboBoxBean.ResultBean item) {
-                job = item.getId();
+                job = item.getKey_name();
                 mDataBinding.tvGangwei.setText(item.getKey_value());
                 mDataBinding.llXiala.setVisibility(View.GONE);
                 closeDrap();
@@ -518,13 +529,17 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
      * 下拉排序
      */
     private void jinyan(GetComboBoxBean getComboBoxBean) {
+        GetComboBoxBean.ResultBean resultBean = new GetComboBoxBean.ResultBean("", "全部");
+        if (getComboBoxBean.getResult() != null && getComboBoxBean.getResult().size() > 0) {
+            getComboBoxBean.getResult().add(0, resultBean);
+        }
         mDataBinding.rlJingyan.setLayoutManager(new LinearLayoutManager(getContext()));
         JXDropAdapter JXAdapter = new JXDropAdapter(getComboBoxBean.getResult(), getContext());
         mDataBinding.rlJingyan.setAdapter(JXAdapter);
         JXAdapter.setMyListener(new JXDropAdapter.ItemListener() {
             @Override
             public void onItemClick(GetComboBoxBean.ResultBean item) {
-                work_time = item.getId();
+                work_time = item.getKey_name();
                 mDataBinding.tvJingyan.setText(item.getKey_value());
                 mDataBinding.llXiala.setVisibility(View.GONE);
                 closeDrap();
@@ -537,13 +552,17 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
      * 下拉薪资
      */
     private void xinzi(GetComboBoxBean getComboBoxBean) {
+        GetComboBoxBean.ResultBean resultBean = new GetComboBoxBean.ResultBean("", "全部");
+        if (getComboBoxBean.getResult() != null && getComboBoxBean.getResult().size() > 0) {
+            getComboBoxBean.getResult().add(0, resultBean);
+        }
         mDataBinding.rlXinzi.setLayoutManager(new LinearLayoutManager(getContext()));
         JXDropAdapter JXAdapter = new JXDropAdapter(getComboBoxBean.getResult(), getContext());
         mDataBinding.rlXinzi.setAdapter(JXAdapter);
         JXAdapter.setMyListener(new JXDropAdapter.ItemListener() {
             @Override
             public void onItemClick(GetComboBoxBean.ResultBean item) {
-                salay_money = item.getId();
+                salay_money = item.getKey_name();
                 mDataBinding.tvXinzi.setText(item.getKey_value());
                 mDataBinding.llXiala.setVisibility(View.GONE);
                 closeDrap();
@@ -583,7 +602,13 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
                                         if (getRegionBean.getResult() != null) {
                                             if (type.equals("1")) {//初次加载
                                                 pRegionBean = getRegionBean;
-                                                province = getRegionBean.getResult().get(0).getId() + "";
+                                                GetRegionBean.ResultBean resultBean = new GetRegionBean.ResultBean();
+                                                resultBean.setName("全部");
+                                                resultBean.setId(0);
+                                                resultBean.setType(0);
+                                                pRegionBean.getResult().add(0, resultBean);
+                                                province="";
+//                                                province = getRegionBean.getResult().get(0).getId() + "";
                                                 pAdapter.setData(pRegionBean.getResult());
                                                 getRegion("2", getRegionBean.getResult().get(0).getId() + "");
                                             } else {
@@ -592,11 +617,11 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
                                                     city = getRegionBean.getResult().get(0).getId() + "";
                                                     cAdapter.setData(cRegionBean.getResult());
                                                 } else {
-                                                    ToastUtils.show(getContext(), "无数据");
+//                                                    ToastUtils.show(getContext(), "无数据");
                                                 }
                                             }
-                                            Log.e("pAdapter", "  pAdapter.getItemCount() " + pAdapter.getItemCount());
-                                            Log.e("cAdapter", "  cAdapter.getItemCount() " + cAdapter.getItemCount());
+//                                            Log.e("pAdapter", "  pAdapter.getItemCount() " + pAdapter.getItemCount());
+//                                            Log.e("cAdapter", "  cAdapter.getItemCount() " + cAdapter.getItemCount());
 
                                         }
                                     } else {

@@ -7,7 +7,7 @@
         android:background="@color/white"
         android:paddingLeft="15dp"
         android:paddingTop="@dimen/padding_10"
-        android:paddingBottom="@dimen/dp_5"
+        android:paddingBottom="@dimen/padding_10"
         android:paddingRight="15dp">
 
         <EditText

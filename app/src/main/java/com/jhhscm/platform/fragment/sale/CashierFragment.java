@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.LoginActivity;
+import com.jhhscm.platform.activity.OrderDetailActivity;
 import com.jhhscm.platform.aliapi.ALiPayActivity;
 import com.jhhscm.platform.aliapi.AliPrePayAction;
 import com.jhhscm.platform.aliapi.AliPrePayBean;
@@ -34,6 +35,7 @@ import com.jhhscm.platform.databinding.FragmentWxpayEntryBinding;
 import com.jhhscm.platform.event.GetRegionEvent;
 import com.jhhscm.platform.event.WXResultEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -144,6 +146,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
 
         createOrderResultBean = (CreateOrderResultBean) getArguments().getSerializable("createOrderResultBean");
         if (createOrderResultBean != null && createOrderResultBean.getData().getOrderCode() != null) {
+            mDataBinding.tvPrice.setText(createOrderResultBean.getData().getOrderPrice() + "");
             wxPrePay();
             aliPrePay();
             findOrder(false);
@@ -182,7 +185,6 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
             }
         });
     }
-
 
     @Override
     public void onDestroy() {
@@ -276,20 +278,26 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
         payThread.start();
     }
 
-    private void payResult(boolean success) {
+    private void payResult(boolean success, FindOrderBean orderBean) {
         if (type == ALI_PAY_FLAG) {
             if (success) {
-                showAlert(getContext(), "支付宝支付成功");
+                ToastUtil.show(getContext(), "支付宝支付成功");
+                OrderDetailActivity.start(getContext(), orderBean.getGoodsList().get(0).getOrderCode(), 2);
                 getActivity().finish();
             } else {
-                showAlert(getContext(), "支付宝支付失败");
+                ToastUtil.show(getContext(), "支付宝支付失败");
+                OrderDetailActivity.start(getContext(), orderBean.getGoodsList().get(0).getOrderCode(), 1);
+                getActivity().finish();
             }
         } else if (type == WX_PAY_FLAG) {
             if (success) {
-                showAlert(getContext(), "微信支付成功");
+                ToastUtil.show(getContext(), "微信支付成功");
+                OrderDetailActivity.start(getContext(), orderBean.getGoodsList().get(0).getOrderCode(), 2);
                 getActivity().finish();
             } else {
-                showAlert(getContext(), "微信支付失败");
+                ToastUtil.show(getContext(), "微信支付失败");
+                OrderDetailActivity.start(getContext(), orderBean.getGoodsList().get(0).getOrderCode(), 1);
+                getActivity().finish();
             }
         }
     }
@@ -400,20 +408,19 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
                             if (response != null) {
                                 new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                 if (response.body().getCode().equals("200")) {
-//                                    String jsonData = Des.decyptByDes(response.body().getContent());
-//                                    Gson gson = new Gson();
-//                                    findOrderBean = gson.fromJson(jsonData, FindOrderBean.class);
                                     findOrderBean = response.body().getData();
                                     if (findOrderBean.getOrder() != null
-                                            && findOrderBean.getOrder().getOrderStatus() != null) {
+                                            && findOrderBean.getOrder().getOrder_status() != null) {
                                         if (finish) {//支付后
-                                            if (!findOrderBean.getOrder().getOrderStatus().equals("1")) {//支付成功
-                                                payResult(true);
+                                            if (findOrderBean.getOrder().getOrder_status().equals("201")) {//支付成功
+                                                payResult(true, findOrderBean);
+                                            } else if (findOrderBean.getOrder().getOrder_status().equals("102")) {
+                                                payResult(false, findOrderBean);
                                             } else {//支付失败
-                                                payResult(false);
+                                                payResult(false, findOrderBean);
                                             }
                                         } else {//支付前
-                                            mDataBinding.tvPrice.setText(findOrderBean.getOrder().getActualPrice() + "");
+                                            mDataBinding.tvPrice.setText(findOrderBean.getOrder().getOrder_price() + "");
                                             startCountDown();
                                         }
                                     }
@@ -428,8 +435,8 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
 
     private void startCountDown() {
         long nowTime = System.currentTimeMillis();
-        final String lastTime = DataUtil.getTimeExpend(nowTime, findOrderBean.getOrder().getEndTime(), "yyyy-MM-dd HH:mm:ss");
-        final long lastTimeLong = DataUtil.getLongTime(nowTime, findOrderBean.getOrder().getEndTime(), "yyyy-MM-dd HH:mm:ss");
+        final String lastTime = DataUtil.getTimeExpend(nowTime, findOrderBean.getOrder().getEnd_time(), "yyyy-MM-dd HH:mm:ss");
+        final long lastTimeLong = DataUtil.getLongTime(nowTime, findOrderBean.getOrder().getEnd_time(), "yyyy-MM-dd HH:mm:ss");
 
         CountDownTimer countDownTimer = new CountDownTimer(lastTimeLong, 1000) {
             @SuppressLint("StringFormatMatches")

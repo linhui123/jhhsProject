@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.AuthenticationActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.MsgActivity;
 import com.jhhscm.platform.activity.MyCollectionActivity;
@@ -67,7 +68,12 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
         LinearLayout.LayoutParams llParams = (LinearLayout.LayoutParams) mDataBinding.rlTop.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.rlTop.setLayoutParams(llParams);
-
+        mDataBinding.tvCerGo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AuthenticationActivity.start(getContext());
+            }
+        });
         mDataBinding.tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

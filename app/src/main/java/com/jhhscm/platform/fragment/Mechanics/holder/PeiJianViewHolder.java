@@ -28,7 +28,8 @@ public class PeiJianViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.Da
             @Override
             public void onClick(View v) {
                 String url = UrlUtils.PJXQ + "&good_code=" + item.getGood_code();
-                H5PeiJianActivity.start(itemView.getContext(), url, "配件详情", item.getGood_code(), item.getPic_url(), 3);
+                H5PeiJianActivity.start(itemView.getContext(), url, "配件详情", item.getName(),
+                        item.getGood_code(), item.getPic_url(), item.getCounter_price(), 3);
             }
         });
     }

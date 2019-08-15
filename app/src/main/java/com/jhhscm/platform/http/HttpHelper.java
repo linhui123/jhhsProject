@@ -2,6 +2,7 @@ package com.jhhscm.platform.http;
 
 import android.content.Context;
 
+import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.tool.BroadcastUtils;
 import com.jhhscm.platform.tool.NETUtils;
@@ -54,6 +55,10 @@ public class HttpHelper {
             int code = Integer.parseInt(resultCode);
             if (code == ServerErrorCode.USER_LOGOUT_FAILED.getCode()) {
                 BroadcastUtils.sendLoginInvalidBroadCast(context, msg);
+            }
+            if (code == ServerErrorCode.USER_REGISTER_USERNAME_WRONG_LENGTH.getCode()) {
+                BroadcastUtils.sendLoginInvalidBroadCast(context, msg);
+                LoginActivity.start(context);
             }
         } catch (Exception e) {
 

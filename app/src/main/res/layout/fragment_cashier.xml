@@ -4,10 +4,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:paddingLeft="@dimen/padding_15"
         android:paddingTop="@dimen/text_size_20"
-        android:paddingRight="@dimen/padding_15"
-        android:background="@color/white">
+        android:paddingRight="@dimen/padding_15">
 
         <RelativeLayout
             android:id="@+id/rl_top"
@@ -73,6 +73,10 @@
                 android:layout_alignParentRight="true"
                 android:src="@mipmap/ic_shoping_s1" />
         </RelativeLayout>
+
+        <View
+            style="@style/view_h_de"
+            android:layout_below="@+id/rl_ali" />
 
         <RelativeLayout
             android:id="@+id/rl_wx"

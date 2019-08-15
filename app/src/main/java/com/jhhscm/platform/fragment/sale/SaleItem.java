@@ -15,11 +15,12 @@ public class SaleItem {
 
     public int itemType;
 
-    public static OldGoodOrderHistoryBean oldGoodOrderHistoryBean;
-    public static OldGoodOrderHistoryBean.DataBean dataBean;
+    public OldGoodOrderHistoryBean oldGoodOrderHistoryBean;
+    public OldGoodOrderHistoryBean.DataBean dataBean;
 
-    public static FindOrderListBean findOrderListBean;
-    public static FindOrderListBean.DataBean orderBean;
+    public FindOrderListBean findOrderListBean;
+    public FindOrderListBean.DataBean orderBean;
+
     public SaleItem(int itemType) {
         this.itemType = itemType;
     }

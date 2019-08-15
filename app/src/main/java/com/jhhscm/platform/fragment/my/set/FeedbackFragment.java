@@ -48,9 +48,14 @@ public class FeedbackFragment extends AbsFragment<FragmentFeedbackBinding> {
         mDataBinding.tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mDataBinding.tvContent.getText().toString().length() > 0
-                        && mDataBinding.tvTel.getText().toString().length() > 0) {
-                    save(mDataBinding.tvContent.getText().toString(), mDataBinding.tvTel.getText().toString());
+                if (mDataBinding.tvContent.getText().toString().length() > 0) {
+                    if (mDataBinding.tvTel.getText().toString().length() > 7) {
+                        save(mDataBinding.tvContent.getText().toString(), mDataBinding.tvTel.getText().toString());
+                    } else {
+                        ToastUtil.show(getContext(), "请输入正确的手机号");
+                    }
+                } else {
+                    ToastUtil.show(getContext(), "请输入您的宝贵意见");
                 }
             }
         });

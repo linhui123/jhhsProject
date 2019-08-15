@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:paddingTop="@dimen/dp_3"
-            android:paddingBottom="@dimen/dp_3"
+            android:layout_weight="5"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingBottom="@dimen/padding_10"
             android:text="全部"
             android:textColor="@color/acc3"
             android:textSize="@dimen/text_size_16" />
 
         <ImageView
             android:id="@+id/im_select"
-            android:layout_width="16dp"
+            android:layout_width="0dp"
             android:layout_height="16dp"
             android:layout_alignParentRight="true"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="30dp"
+            android:layout_weight="1"
+            android:paddingTop="@dimen/padding_10"
             android:src="@mipmap/ic_m_selected2" />
-    </RelativeLayout>
+    </LinearLayout>
 </layout>

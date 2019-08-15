@@ -41,13 +41,13 @@ public class OldMechanicsViewHolder extends AbsRecyclerViewHolder<GetOldPageList
         mBinding.tv2.setText(data + Old_time + Province + City);
 
         String Counter_price = item.getCounter_price() == null ? "" : item.getCounter_price() + "万  ";
-        String Retail_price = item.getRetail_price() == null ? "" : "首付" + item.getRetail_price()+ "万";
+        String Retail_price = item.getRetail_price() == null ? "" : "首付" + item.getRetail_price() + "万";
         mBinding.tv3.setText(Counter_price + Retail_price);
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String url = UrlUtils.ESJXQ + "&good_code=" + item.getGood_code();
-                MechanicsH5Activity.start(itemView.getContext(), url, "二手机详情", item.getGood_code(), 2);
+                MechanicsH5Activity.start(itemView.getContext(), url, "二手机详情", item.getGood_code(), item.getName(),item.getPic_url(), 2);
             }
         });
 

@@ -258,7 +258,7 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
             @Override
             public void onClick(View v) {
 //                H5Activity.start(getActivity(), UrlUtils.ZL,"租赁");
-                H5Activity.start(getActivity(), UrlUtils.JSQ,"计算器");
+                H5Activity.start(getActivity(), UrlUtils.JSQ, "计算器");
             }
         });
     }
@@ -300,7 +300,7 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
 
         settings.setDomStorageEnabled(true);//开启DOM storage API功能
         settings.setDatabaseEnabled(true);//开启database storeage API功能
-        String cacheDirPath = getContext().getFilesDir().getAbsolutePath()+ "/webcache";//缓存路径
+        String cacheDirPath = getContext().getFilesDir().getAbsolutePath() + "/webcache";//缓存路径
         settings.setDatabasePath(cacheDirPath);//设置数据库缓存路径
         settings.setAppCachePath(cacheDirPath);//设置AppCaches缓存路径
         settings.setAppCacheEnabled(true);//开启AppCaches功能
@@ -318,7 +318,7 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
         } else {
             //加载动画
             final AnimationDrawable animationDrawable = (AnimationDrawable) mDataBinding.webLoadAnim.getBackground();
-
+            Log.e("JF", "UrlUtils.JF : " + UrlUtils.JF);
             mDataBinding.webView.loadUrl(UrlUtils.JF);
             mDataBinding.webView.setVisibility(View.VISIBLE);
             mDataBinding.webView.setWebViewClient(new WebViewClient() {
@@ -340,7 +340,8 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
                 @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                    if (getView() != null) { ;
+                    if (getView() != null) {
+                        ;
                         mDataBinding.webView.setVisibility(View.GONE);
                         mDataBinding.rlError.setVisibility(View.VISIBLE);
                         mDataBinding.tvReload.setOnClickListener(new View.OnClickListener() {

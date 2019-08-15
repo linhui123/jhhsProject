@@ -98,7 +98,8 @@ public class MyNewCollectionAdapter extends RecyclerView.Adapter<MyNewCollection
             @Override
             public void onClick(View v) {
                 String url = UrlUtils.XJXQ + "&good_code=" + data.get(position).getGood_code();
-                MechanicsH5Activity.start(context, url, "新机详情", data.get(position).getGood_code(), 1);
+                MechanicsH5Activity.start(context, url, "新机详情",
+                        data.get(position).getGood_code(),  data.get(position).getName(),data.get(position).getPic_url(),1);
             }
         });
     }

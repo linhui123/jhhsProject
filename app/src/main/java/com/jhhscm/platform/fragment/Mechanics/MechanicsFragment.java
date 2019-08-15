@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.SearchActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentHomePageBinding;
@@ -136,6 +137,13 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
                 }
             }
         });
+
+        mDataBinding.imSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchActivity.start(getContext());
+            }
+        });
         initPrivince();
         getRegion("1", "");
     }
@@ -146,6 +154,9 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
         EventBusUtil.unregisterEvent(this);
     }
 
+    private String pName;
+    private String cName;
+
     /**
      * 更新地区选择
      */
@@ -153,9 +164,17 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
         if (event.pid != null && event.type != null) {
             if (event.type.equals("1")) {//省点击，获取市
                 pID = event.pid;
+                pName = event.name;
                 getRegion("2", event.pid);
             } else if (event.type.equals("2")) {//市点击
                 cID = event.pid;
+                cName = event.name;
+                mDataBinding.tvArea.setText(pName + " " + cName);
+                mDataBinding.llArea.setVisibility(View.GONE);
+            } else if (event.type.equals("0")) {//全部点击
+                cID = event.pid;
+                cName = event.name;
+                mDataBinding.tvArea.setText("选择地区>");
                 mDataBinding.llArea.setVisibility(View.GONE);
             }
         }
@@ -193,6 +212,11 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
                                         if (getRegionBean.getResult() != null) {
                                             if (type.equals("1")) {//初次加载
                                                 pRegionBean = getRegionBean;
+                                                GetRegionBean.ResultBean resultBean = new GetRegionBean.ResultBean();
+                                                resultBean.setName("全部");
+                                                resultBean.setId(0);
+                                                resultBean.setType(0);
+                                                pRegionBean.getResult().add(0, resultBean);
                                                 pID = getRegionBean.getResult().get(0).getId() + "";
                                                 pAdapter.setData(pRegionBean.getResult());
                                                 getRegion("2", getRegionBean.getResult().get(0).getId() + "");
@@ -202,7 +226,7 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
                                                     cID = getRegionBean.getResult().get(0).getId() + "";
                                                     cAdapter.setData(cRegionBean.getResult());
                                                 } else {
-                                                    ToastUtils.show(getContext(), "无数据");
+//                                                    ToastUtils.show(getContext(), "无数据");
                                                 }
                                             }
                                             Log.e("pAdapter", "  pAdapter.getItemCount() " + pAdapter.getItemCount());

@@ -51,6 +51,7 @@ public class HomePageBannerViewHolder extends AbsRecyclerViewHolder<HomePageItem
             mBinding.bgaBanner.setAdapter(new BGABanner.Adapter() {
                 @Override
                 public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
+                    ((ImageView) view).setScaleType(ImageView.ScaleType.FIT_XY);
                     ImageLoader.getInstance().displayImage((String) model, (ImageView) view);
                 }
             });

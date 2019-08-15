@@ -209,11 +209,11 @@ public class ImageSelector extends LinearLayout {
                     @Override
                     public void onGranted() {
                         ImageSelectorItem item = mAdapter.getItem(position);
-                        if (item.isAddFlag()) {
+//                        if (item.isAddFlag()) {
                             doCheckAdd();
-                        } else {
+//                        } else {
 //                            ImageSelectorPreviewActivity.startActivity(getContext(), ImageSelector.this.hashCode(), getPreImages(), position);
-                        }
+//                        }
                     }
 
                     @Override

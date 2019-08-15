@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.SearchActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentNewMechanicsBinding;
@@ -175,6 +176,13 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
+            }
+        });
+
+        mDataBinding.imSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchActivity.start(getContext());
             }
         });
     }
@@ -353,6 +361,10 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
      * 下拉综合
      */
     private void zonghe(final GetComboBoxBean getComboBoxBean) {
+        GetComboBoxBean.ResultBean resultBean = new GetComboBoxBean.ResultBean("", "全部");
+        if (getComboBoxBean.getResult() != null && getComboBoxBean.getResult().size() > 0) {
+            getComboBoxBean.getResult().add(0, resultBean);
+        }
         mDataBinding.rlZonghe.setLayoutManager(new LinearLayoutManager(getContext()));
         JXDropAdapter JXAdapter = new JXDropAdapter(getComboBoxBean.getResult(), getContext());
         mDataBinding.rlZonghe.setAdapter(JXAdapter);
@@ -372,6 +384,10 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
      * 下拉全部
      */
     private void quanbu(final GetComboBoxBean getComboBoxBean) {
+        GetComboBoxBean.ResultBean resultBean = new GetComboBoxBean.ResultBean("", "全部");
+        if (getComboBoxBean.getResult() != null && getComboBoxBean.getResult().size() > 0) {
+            getComboBoxBean.getResult().add(0, resultBean);
+        }
         mDataBinding.rlQuanbu.setLayoutManager(new LinearLayoutManager(getContext()));
         JXDropAdapter JXAdapter = new JXDropAdapter(getComboBoxBean.getResult(), getContext());
         mDataBinding.rlQuanbu.setAdapter(JXAdapter);
@@ -391,6 +407,10 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
      * 下拉品牌
      */
     private void pinpai(FindBrandBean findBrandBean) {
+        FindBrandBean.ResultBean resultBean = new FindBrandBean.ResultBean("全部", "");
+        if (findBrandBean.getResult() != null && findBrandBean.getResult().size() > 0) {
+            findBrandBean.getResult().add(0, resultBean);
+        }
         mDataBinding.rlPinpai.setLayoutManager(new GridLayoutManager(getContext(), 3));
         BrandAdapter bAdapter = new BrandAdapter(findBrandBean.getResult(), getContext());
         mDataBinding.rlPinpai.setAdapter(bAdapter);

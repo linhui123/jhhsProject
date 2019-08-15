@@ -76,8 +76,8 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
 
     private OldGoodOrderHistoryBean oldGoodOrderHistoryBean;
     private String brand_id, goods_factory, fix_p_9, factory_time, fix_p_13, fix_p_14, province, city;
-    private String tel, old_time, price, biaopai, name;
-    private UserSession userSession;
+    private String tel, old_time, price, biaopai, name;    private UserSession userSession;
+
     private GetComboBoxBean getComboBoxBean;
     private boolean updateImgResult;
 
@@ -109,12 +109,29 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
     private void initView() {
         mDataBinding.tv1.setOnClickListener(this);
         mDataBinding.tvChanshang.setOnClickListener(this);
-        mDataBinding.tv2.setOnClickListener(this);
+//        mDataBinding.tv2.setOnClickListener(this);
         mDataBinding.tv3.setOnClickListener(this);
         mDataBinding.tv4.setOnClickListener(this);
         mDataBinding.tv6.setOnClickListener(this);
         mDataBinding.tv7.setOnClickListener(this);
         mDataBinding.tvAssess.setOnClickListener(this);
+        mDataBinding.tv2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                fix_p_9 = s.toString();
+                judgeButton();
+            }
+        });
         mDataBinding.tv5.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -215,10 +232,10 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
         if (event.getBrand_name() != null && event.getBrand_name().length() > 0) {
             mDataBinding.tv1.setText(event.getBrand_name());
         }
-        if (event.getFix_p_9() != null) {
-            fix_p_9 = event.getFix_p_9();
-            mDataBinding.tv2.setText(event.getFix_p_9_name());
-        }
+//        if (event.getFix_p_9() != null) {
+//            fix_p_9 = event.getFix_p_9();
+//            mDataBinding.tv2.setText(event.getFix_p_9_name());
+//        }
         judgeButton();
     }
 
@@ -237,13 +254,13 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
             case R.id.tv_chanshang://厂商  goods_factory
                 getComboBox("goods_factory");
                 break;
-            case R.id.tv_2://型号 fix_p_9
-                if (brand_id != null && brand_id.length() > 0) {
-                    MechanicsByBrandActivity.start(getContext(), brand_id, 0);
-                } else {
-                    ToastUtil.show(getContext(), "请先选择品牌");
-                }
-                break;
+//            case R.id.tv_2://型号 fix_p_9
+//                if (brand_id != null && brand_id.length() > 0) {
+//                    MechanicsByBrandActivity.start(getContext(), brand_id, 0);
+//                } else {
+//                    ToastUtil.show(getContext(), "请先选择品牌");
+//                }
+//                break;
             case R.id.tv_3://施工地区 province city
                 new AddressDialog(getActivity(), "施工地区", new AddressDialog.CallbackListener() {
                     @Override
@@ -587,6 +604,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                                 if (response != null) {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
+                                        ToastUtils.show(getContext(), "二手机发布成功");
                                         getActivity().finish();
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());

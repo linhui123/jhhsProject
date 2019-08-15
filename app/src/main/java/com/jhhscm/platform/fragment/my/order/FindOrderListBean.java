@@ -148,7 +148,7 @@ public class FindOrderListBean {
          */
 
         private String order_code;
-        private int order_status;
+        private String order_status;
         private String user_code;
         private String order_price;
         private String order_text;
@@ -172,11 +172,11 @@ public class FindOrderListBean {
             this.order_code = order_code;
         }
 
-        public int getOrder_status() {
+        public String  getOrder_status() {
             return order_status;
         }
 
-        public void setOrder_status(int order_status) {
+        public void setOrder_status(String order_status) {
             this.order_status = order_status;
         }
 

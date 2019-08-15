@@ -31,6 +31,11 @@ public class FindBrandBean {
         private String desc;
         private boolean select;
 
+        public ResultBean(String name, String id) {
+            this.name = name;
+            this.id = id;
+        }
+
         public boolean isSelect() {
             return select;
         }

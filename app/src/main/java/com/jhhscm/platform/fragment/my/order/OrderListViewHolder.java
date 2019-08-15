@@ -27,7 +27,27 @@ public class OrderListViewHolder extends AbsRecyclerViewHolder<FindOrderBean.Goo
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 1);
+
+                if (item.getOrder_status().contains("10")) {
+                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 1);
+                } else if (item.getOrder_status().contains("20")) {
+                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 2);
+                } else if (item.getOrder_status().contains("30")) {
+                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 3);
+                } else if (item.getOrder_status().contains("40")) {
+                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 4);
+                }
+
+//                if ("未付款".equals(item.getOrder_text())) {
+//                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 1);
+//                } else if ("未发货".equals(item.getOrder_text())
+//                        || "已付款".equals(item.getOrder_text())) {
+//                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 2);
+//                } else if ("未收货".equals(item.getOrder_text())) {
+//                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 3);
+//                } else if ("已完成".equals(item.getOrder_text())) {
+//                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 4);
+//                }
             }
         });
     }

@@ -79,6 +79,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
         } else {
             getCartGoodsByUserCodeBean = new GetCartGoodsByUserCodeBean();
         }
+
         mDataBinding.rv.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
         mDataBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
@@ -213,7 +214,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
             mDataBinding.tvYouhui.setText("-￥" + youhui);
             mDataBinding.tvQuanxuan.setText("共计" + num + "件商品");
             BigDecimal b = new BigDecimal(total);
-            mDataBinding.tvSum.setText("￥" + b.setScale(2, BigDecimal.ROUND_UP).toString());
+            mDataBinding.tvSum.setText("￥" + b.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
         }
     }
 
@@ -261,6 +262,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
                                 if (response.body().getCode().equals("200")) {
                                     CashierActivity.start(getContext(), response.body().getData());
                                     ToastUtils.show(getContext(), "创建订单成功");
+                                    getActivity().finish();
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
                                 }

@@ -6,10 +6,9 @@ package com.jhhscm.platform.tool;
 
 public class UrlUtils {
 
-    //    private static String BASE_URL = "http://192.168.0.228:8080/#/";//测试专用
+//        private static String BASE_URL = "http://192.168.0.235:8080/#/";//测试专用
     private static String BASE_URL = "http://api.jhhscm.cn:9095/#/";//线上
-    //http://120.76.101.183:9095
-    //http://api.jhhscm.cn:9095
+
 
     //新机详情   http://192.168.0.234:8080/#/product/productDetail?good_code=1
     public static String XJXQ = BASE_URL + "product/productDetail?isShowGetPhone=2";
@@ -18,9 +17,14 @@ public class UrlUtils {
     //配件详情 http://192.168.0.234:8080/#/parts/partsDetail?good_code=21
     public static String PJXQ = BASE_URL + "parts/partsDetail?isShowGetPhone=2";
     //金服  http://192.168.0.228:8080/#/financial/financial
-    public static String JF = BASE_URL + "financial/financial";
+//    public static String JF = BASE_URL + "financial/financial";
+    //http://192.168.0.235:8080/#/financial/financial2
+    public static String JF = BASE_URL + "financial/financial2";
     //租赁
     public static String ZL = BASE_URL + "lease/leaseIndex";
     //计算器
     public static String JSQ = BASE_URL + "financial/calputer";
+    // 服务协议：http://192.168.0.235:8080/#/about/serviceAgreement
+    public static String FWXY = BASE_URL + "about/serviceAgreement";
+
 }

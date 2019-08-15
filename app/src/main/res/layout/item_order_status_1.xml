@@ -5,6 +5,7 @@
         android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
         android:orientation="vertical">
 
         <View
@@ -23,7 +24,7 @@
                 android:id="@+id/data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2019-7-30"
+                android:text=""
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
 
@@ -32,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="待付款"
+                android:text=""
                 android:textColor="@color/ff1a"
                 android:textSize="@dimen/sp_14" />
         </RelativeLayout>
@@ -51,7 +52,6 @@
             android:paddingTop="@dimen/dp_5"
             android:paddingRight="@dimen/padding_15"
             android:paddingBottom="@dimen/dp_5">
-
         </android.support.v7.widget.RecyclerView>
 
         <TextView
@@ -67,13 +67,13 @@
             android:paddingLeft="@dimen/padding_15"
             android:paddingTop="@dimen/padding_10"
             android:paddingRight="@dimen/padding_15"
-            android:paddingBottom="@dimen/dp_5">
+            android:paddingBottom="@dimen/padding_10">
 
             <TextView
                 android:id="@+id/tatal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="合计 ￥110.00"
+                android:text="合计 ￥"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
 
@@ -105,6 +105,36 @@
                 android:text="立即支付"
                 android:textColor="@color/a397"
                 android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/wuliu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/edit_bg_397"
+                android:paddingLeft="@dimen/padding_10"
+                android:paddingTop="@dimen/dp_5"
+                android:paddingRight="@dimen/padding_10"
+                android:paddingBottom="@dimen/dp_5"
+                android:text="查看物流"
+                android:textColor="@color/a397"
+                android:visibility="gone"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/edit_bg_acc9"
+                android:paddingLeft="@dimen/padding_10"
+                android:paddingTop="@dimen/dp_5"
+                android:paddingRight="@dimen/padding_10"
+                android:paddingBottom="@dimen/dp_5"
+                android:text="删除订单"
+                android:textColor="@color/acc9"
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>
 </layout>

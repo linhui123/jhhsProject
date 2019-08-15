@@ -1,5 +1,6 @@
 package com.jhhscm.platform.fragment.GoodsToCarts;
 
+import android.util.Log;
 import android.view.View;
 
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
@@ -22,6 +23,7 @@ public class CreateOrderViewHolder extends AbsRecyclerViewHolder<GetCartGoodsByU
     @Override
     protected void onBindView(final GetCartGoodsByUserCodeBean.ResultBean item) {
         mBinding.tvTitle.setText(item.getGoodsName());
+        Log.e("CreateOrderViewHolder","item.getNumber() "+item.getNumber());
         mBinding.tvNum.setText("×" + item.getNumber());
         mBinding.tvPrice.setText(item.getPrice());
         ImageLoader.getInstance().displayImage(item.getPicUrl(), mBinding.im);

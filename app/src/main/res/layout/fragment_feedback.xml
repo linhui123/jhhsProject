@@ -29,6 +29,7 @@
             android:background="@drawable/edit_bg_acc9"
             android:gravity="top|left"
             android:hint="请填写您的手机号，方便我们联系"
+            android:inputType="number"
             android:padding="@dimen/dp_5" />
 
         <TextView

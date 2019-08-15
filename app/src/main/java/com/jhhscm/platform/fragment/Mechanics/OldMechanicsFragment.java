@@ -205,6 +205,9 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                 pID = event.pid;
             } else if (event.type.equals("2")) {//市点击
                 cID = event.pid;
+            }else if (event.type.equals("0")) {//全部点击
+                cID = "";
+                pID = "";
             }
             mDataBinding.wrvRecycler.autoRefresh();
         }
@@ -237,6 +240,8 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
             Map<String, String> map = new TreeMap<String, String>();
             map.put("keyword", "");
             map.put("old_sort", old_sort);//排序
+            map.put("province", pID);
+            map.put("city", cID);
 
             map.put("fix_p_3", fix_p_3);
             map.put("fix_p_2", fix_p_2);
@@ -323,7 +328,6 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
 
         getComboBox("goods_type");
         getComboBox("old_sort");
-
         getComboBox("good_old_time");//已工作时长
         getComboBox("good_counter_price");//二手机价格
         getComboBox("good_factory_time");//二手机出厂时间
@@ -420,6 +424,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
 
     private void initSelected() {
         //调整RecyclerView的排列方向
+        mDataBinding.rlSelected.setVisibility(View.VISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mDataBinding.rlSelected.setLayoutManager(layoutManager);
@@ -429,11 +434,15 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
             @Override
             public void onItemClick(GetComboBoxBean.ResultBean item) {
                 resultBeanList.remove(item);
+                if (resultBeanList == null || resultBeanList.size() == 0) {
+                    mDataBinding.rlSelected.setVisibility(View.GONE);
+                }
                 if (((SXDropAdapter) mDataBinding.rlDongli.getAdapter()).getList().contains(item)) {
                     List<GetComboBoxBean.ResultBean> list = ((SXDropAdapter) mDataBinding.rlDongli.getAdapter()).getList();
                     for (GetComboBoxBean.ResultBean resultBean : list) {
                         if (resultBean.getKey_name().equals(item.getKey_name())) {
                             resultBean.setSelect(false);
+                            old_time = "";
                             ((SXDropAdapter) mDataBinding.rlDongli.getAdapter()).setList(list);
                             ((SXDropAdapter) mDataBinding.rlDongli.getAdapter()).notifyDataSetChanged();
                         }
@@ -444,6 +453,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                     for (GetComboBoxBean.ResultBean resultBean : list) {
                         if (resultBean.getKey_name().equals(item.getKey_name())) {
                             resultBean.setSelect(false);
+                            counter_price = "";
                             ((SXDropAdapter) mDataBinding.rlChandou.getAdapter()).setList(list);
                             ((SXDropAdapter) mDataBinding.rlChandou.getAdapter()).notifyDataSetChanged();
                         }
@@ -454,6 +464,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                     for (GetComboBoxBean.ResultBean resultBean : list) {
                         if (resultBean.getKey_name().equals(item.getKey_name())) {
                             resultBean.setSelect(false);
+                            factory_time = "";
                             ((SXDropAdapter) mDataBinding.rlDunwei.getAdapter()).setList(list);
                             ((SXDropAdapter) mDataBinding.rlDunwei.getAdapter()).notifyDataSetChanged();
                         }
@@ -474,6 +485,10 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
      * 下拉机型
      */
     private void jixing(GetComboBoxBean getComboBoxBean) {
+        GetComboBoxBean.ResultBean resultBean = new GetComboBoxBean.ResultBean("", "全部");
+        if (getComboBoxBean.getResult() != null && getComboBoxBean.getResult().size() > 0) {
+            getComboBoxBean.getResult().add(0, resultBean);
+        }
         mDataBinding.rlJixing.setLayoutManager(new LinearLayoutManager(getContext()));
         JXDropAdapter JXAdapter = new JXDropAdapter(getComboBoxBean.getResult(), getContext());
         mDataBinding.rlJixing.setAdapter(JXAdapter);
@@ -493,6 +508,10 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
      * 下拉排序
      */
     private void paixu(GetComboBoxBean getComboBoxBean) {
+        GetComboBoxBean.ResultBean resultBean = new GetComboBoxBean.ResultBean("", "全部");
+        if (getComboBoxBean.getResult() != null && getComboBoxBean.getResult().size() > 0) {
+            getComboBoxBean.getResult().add(0, resultBean);
+        }
         mDataBinding.rlPaixu.setLayoutManager(new LinearLayoutManager(getContext()));
         JXDropAdapter JXAdapter = new JXDropAdapter(getComboBoxBean.getResult(), getContext());
         mDataBinding.rlPaixu.setAdapter(JXAdapter);
@@ -512,6 +531,10 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
      * 下拉品牌
      */
     private void pinpai(FindBrandBean findBrandBean) {
+        FindBrandBean.ResultBean resultBean = new FindBrandBean.ResultBean("全部", "");
+        if (findBrandBean.getResult() != null && findBrandBean.getResult().size() > 0) {
+            findBrandBean.getResult().add(0, resultBean);
+        }
         mDataBinding.rlPinpai.setLayoutManager(new GridLayoutManager(getContext(), 3));
         BrandAdapter bAdapter = new BrandAdapter(findBrandBean.getResult(), getContext());
         mDataBinding.rlPinpai.setAdapter(bAdapter);

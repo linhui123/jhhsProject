@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -81,13 +82,13 @@ public class JXDropAdapter extends RecyclerView.Adapter<JXDropAdapter.ViewHolder
         GetComboBoxBean.ResultBean item;
         TextView tv_name;
         ImageView im_select;
-        RelativeLayout rl;
+        LinearLayout rl;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             im_select = (ImageView) itemView.findViewById(R.id.im_select);
-            rl = (RelativeLayout) itemView.findViewById(R.id.rl);
+            rl = (LinearLayout) itemView.findViewById(R.id.rl);
         }
 
         public void setData(GetComboBoxBean.ResultBean item) {

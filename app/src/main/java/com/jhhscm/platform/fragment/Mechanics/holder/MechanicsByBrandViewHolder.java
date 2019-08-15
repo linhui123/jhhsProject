@@ -47,7 +47,7 @@ public class MechanicsByBrandViewHolder extends AbsRecyclerViewHolder<GetGoodsBy
                     EventBusUtil.post(new FinishEvent());
                 } else {
                     String url = UrlUtils.XJXQ + "&good_code=" + item.getCode();
-                    MechanicsH5Activity.start(itemView.getContext(), url, "新机详情", item.getCode(), 1);
+                    MechanicsH5Activity.start(itemView.getContext(), url, "新机详情", item.getCode(), item.getName(), item.getPicUrl(),1);
                 }
             }
         });

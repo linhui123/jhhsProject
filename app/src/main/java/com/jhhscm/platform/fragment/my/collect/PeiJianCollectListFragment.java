@@ -40,7 +40,7 @@ import retrofit2.Response;
 public class PeiJianCollectListFragment extends AbsFragment<FragmentCollectListBinding> implements MyPeiJianCollectionAdapter.DeletedItemListener {
     private MyPeiJianCollectionAdapter recAdapter;
     private UserSession userSession;
-    private int mShowCount = 10;
+    private int mShowCount = 20;
     private int mCurrentPage = 1;
     private final int START_PAGE = mCurrentPage;
 
@@ -70,7 +70,7 @@ public class PeiJianCollectListFragment extends AbsFragment<FragmentCollectListB
         mDataBinding.refresh.setEnableLastTime(false);
         mDataBinding.load.setEnableLastTime(false);
         mDataBinding.refreshlayout.setEnableRefresh(true);
-        mDataBinding.refreshlayout.setEnableLoadMore(true);
+        mDataBinding.refreshlayout.setEnableLoadMore(false);
         mDataBinding.refreshlayout.autoRefresh();
         mDataBinding.refreshlayout.setOnRefreshListener(new OnRefreshListener() {
             @Override

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_top"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/a397"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingRight="@dimen/padding_15"
+            android:paddingBottom="@dimen/dp_5">
+
+            <EditText
+                android:id="@+id/home_eidt"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:layout_weight="4"
+                android:background="@drawable/edit_shpape_bg"
+                android:gravity="center_vertical"
+                android:hint="严选车"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="12dp"
+                android:singleLine="true"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/cancle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_white"
+                android:gravity="center"
+                android:paddingLeft="@dimen/padding_10"
+                android:paddingTop="@dimen/dp_5"
+                android:paddingRight="@dimen/padding_10"
+                android:paddingBottom="@dimen/dp_5"
+                android:text="取消" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_column"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white">
+
+            <com.jhhscm.platform.views.EnhanceTabLayout
+                android:id="@+id/enhance_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabIndicatorColor="@color/a397"
+                app:tabIndicatorHeight="2dp"
+                app:tabIndicatorWidth="16dp"
+                app:tabSelectTextColor="@color/a397"
+                app:tabTextColor="@color/acc9"
+                app:tab_Gravity="mode_fill"
+                app:tab_Mode="mode_fixed" />
+
+        </RelativeLayout>
+
+        <View style="@style/view_h_de" />
+
+        <com.jhhscm.platform.views.tabstrip.APSTSViewPager
+            android:id="@+id/vp_m"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</layout>

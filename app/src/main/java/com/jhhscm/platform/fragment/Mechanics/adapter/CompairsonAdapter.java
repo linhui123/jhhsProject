@@ -84,7 +84,12 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
         holder.setData(data.get(position));
         holder.tvTitle.setText(data.get(position).getName());
 
-        holder.tvPrice.setText(wan(data.get(position).getCounter_price()));
+        if (data.get(position).getCounter_price()!=null){
+            holder.tvPrice.setText(wan(data.get(position).getCounter_price()));
+        }else {
+            holder.tvPrice.setText("暂无报价");
+        }
+
         if (data.get(position).isSelect()) {
             holder.tvSelect.setImageResource(R.mipmap.ic_shoping_s1);
         } else {
@@ -121,7 +126,8 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
             @Override
             public void onClick(View v) {
                 String url = UrlUtils.XJXQ + "&good_code=" + data.get(position).getGood_code();
-                MechanicsH5Activity.start(context, url, "新机详情", data.get(position).getGood_code(), 1);
+                MechanicsH5Activity.start(context, url, "新机详情",
+                        data.get(position).getGood_code(), data.get(position).getName(), data.get(position).getPic_url(),1);
             }
         });
     }

@@ -135,11 +135,6 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
 
         int count = TAB_COUNT;
         fragments.clear();//清空
-        if (count == 0) {
-            mDataBinding.rlCaseBaseNull.setVisibility(View.VISIBLE);
-        } else {
-            mDataBinding.rlCaseBaseNull.setVisibility(View.GONE);
-        }
         for (int i = 0; i < count; i++) {
             fragments.add(PeiJianFragment.instance());
         }
@@ -271,6 +266,12 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
         mDataBinding.recyclerview.getAdapter().notifyDataSetChanged();
         mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findOrderListBean.getPage().getTotal() / (float) findOrderListBean.getPage().getPageSize()) > mCurrentPage);
 
+//        if (findOrderListBean.getData().size() > 0) {
+//            mDataBinding.rlCaseBaseNull.setVisibility(View.VISIBLE);
+//            mDataBinding.recyclerview.hideLoad();
+//        } else {
+//            mDataBinding.rlCaseBaseNull.setVisibility(View.GONE);
+//        }
     }
 
     /**

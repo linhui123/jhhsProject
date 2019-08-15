@@ -13,8 +13,8 @@
             android:layout_centerHorizontal="true"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:paddingTop="@dimen/dp_5"
-            android:paddingBottom="@dimen/dp_5">
+            android:paddingTop="@dimen/padding_10"
+            android:paddingBottom="@dimen/padding_10">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -97,13 +97,20 @@
             android:id="@+id/rl_selected"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_below="@+id/rl_top"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
+            android:paddingTop="@dimen/dp_3"
+            android:paddingBottom="@dimen/dp_3"
+            android:background="@color/white"></android.support.v7.widget.RecyclerView>
+
+        <View
+            style="@style/view_h_de"
+            android:layout_below="@+id/rl_top" />
 
         <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
             android:id="@+id/wrv_recycler"
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/dp_1"
             android:layout_height="match_parent"
             android:layout_below="@+id/rl_selected"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
 
@@ -111,6 +118,7 @@
             android:id="@+id/ll_xiala"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_1"
             android:layout_below="@+id/rl_top"
             android:background="#77000000"
             android:orientation="vertical"
@@ -243,8 +251,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_c397"
                     android:gravity="center"
-                    android:paddingTop="@dimen/dp_5"
-                    android:paddingBottom="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
                     android:text="确定"
                     android:textColor="@color/white" />
             </LinearLayout>

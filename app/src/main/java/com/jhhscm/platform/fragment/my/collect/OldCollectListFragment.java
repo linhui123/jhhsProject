@@ -46,14 +46,14 @@ import retrofit2.Response;
 public class OldCollectListFragment extends AbsFragment<FragmentCollectListBinding> implements MyOldCollectionAdapter.DeletedItemListener {
     private MyOldCollectionAdapter recAdapter;
     private UserSession userSession;
-    private int mShowCount = 10;
+    private int mShowCount = 20;
     private int mCurrentPage = 1;
     private final int START_PAGE = mCurrentPage;
 
     private String type = "1";
 
-    public static NewCollectListFragment instance() {
-        NewCollectListFragment view = new NewCollectListFragment();
+    public static OldCollectListFragment instance() {
+        OldCollectListFragment view = new OldCollectListFragment();
         return view;
     }
 
@@ -76,7 +76,7 @@ public class OldCollectListFragment extends AbsFragment<FragmentCollectListBindi
         mDataBinding.refresh.setEnableLastTime(false);
         mDataBinding.load.setEnableLastTime(false);
         mDataBinding.refreshlayout.setEnableRefresh(true);
-        mDataBinding.refreshlayout.setEnableLoadMore(true);
+        mDataBinding.refreshlayout.setEnableLoadMore(false);
         mDataBinding.refreshlayout.autoRefresh();
         mDataBinding.refreshlayout.setOnRefreshListener(new OnRefreshListener() {
             @Override

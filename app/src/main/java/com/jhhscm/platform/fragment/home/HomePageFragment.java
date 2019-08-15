@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.SearchActivity;
 import com.jhhscm.platform.activity.MsgActivity;
 import com.jhhscm.platform.databinding.FragmentHomePageBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
@@ -108,6 +109,13 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> {
             }
         });
         mDataBinding.wetherDate.setText(DateUtils.getCurDate("MM/dd"));
+
+        mDataBinding.homeEidt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchActivity.start(getContext());
+            }
+        });
     }
 
     private void initTel() {

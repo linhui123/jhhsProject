@@ -396,6 +396,7 @@ public class H5Activity extends AbsToolbarActivity {
             settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
             settings.setLoadWithOverviewMode(true);
             settings.setUseWideViewPort(true);
+            settings.setTextZoom(100);
             settings.setSupportZoom(true);
             settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
             settings.setDefaultTextEncodingName("UTF-8");
@@ -403,7 +404,7 @@ public class H5Activity extends AbsToolbarActivity {
 
             settings.setDomStorageEnabled(true);//开启DOM storage API功能
             settings.setDatabaseEnabled(true);//开启database storeage API功能
-            String cacheDirPath = getContext().getFilesDir().getAbsolutePath()+ "/webcache";//缓存路径
+            String cacheDirPath = getContext().getFilesDir().getAbsolutePath() + "/webcache";//缓存路径
             settings.setDatabasePath(cacheDirPath);//设置数据库缓存路径
             settings.setAppCachePath(cacheDirPath);//设置AppCaches缓存路径
             settings.setAppCacheEnabled(true);//开启AppCaches功能
@@ -423,6 +424,7 @@ public class H5Activity extends AbsToolbarActivity {
 //            mDataBinding.webView.clearHistory();
 //            mDataBinding.webView.clearFormData();
 //            mDataBinding.webView.clearCache(true);
+//            mDataBinding.webView.setWebChromeClient(new WebChromeClient());
             mDataBinding.webView.setWebViewClient(mWebViewClient);
             mDataBinding.webView.setWebChromeClient(mWebChromeClient);
             //加载动画
@@ -433,8 +435,27 @@ public class H5Activity extends AbsToolbarActivity {
             } else {
                 Log.e("H5", "url:" + getArguments().getString("url"));
                 mDataBinding.webView.loadUrl(getArguments().getString("url"));
+//                https://wap.baidu.com/  https://www.baidu.com
+//                mDataBinding.webView.loadUrl("https://www.jianshu.com");
                 mDataBinding.webView.setVisibility(View.VISIBLE);
                 mDataBinding.webView.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        if (url.startsWith("http:") || url.startsWith("https:")) {
+                            return false;
+                        }
+
+                        try {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                            startActivity(intent);
+                            return true;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            return false;
+                        }
+                    }
+
+
                     @Override
                     public void onPageFinished(WebView view, String url) {
                         super.onPageFinished(view, url);
@@ -458,16 +479,19 @@ public class H5Activity extends AbsToolbarActivity {
                     @Override
                     public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                         if (getView() != null) {
+//                            ERROR_UNKNOW_URL_SCHEME
                             Log.e("onReceivedError", "error:" + error.getErrorCode());
-                            mDataBinding.webView.setVisibility(View.GONE);
-                            mDataBinding.rlError.setVisibility(View.VISIBLE);
-                            mDataBinding.tvReload.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    mDataBinding.rlError.setVisibility(View.GONE);
-                                    mDataBinding.webView.reload();
-                                }
-                            });
+                            if (error.getErrorCode() != ERROR_UNSUPPORTED_SCHEME) {
+                                mDataBinding.webView.setVisibility(View.GONE);
+                                mDataBinding.rlError.setVisibility(View.VISIBLE);
+                                mDataBinding.tvReload.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        mDataBinding.rlError.setVisibility(View.GONE);
+                                        mDataBinding.webView.reload();
+                                    }
+                                });
+                            }
                         }
                     }
                 });

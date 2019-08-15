@@ -107,7 +107,8 @@ public class MyOldCollectionAdapter extends RecyclerView.Adapter<MyOldCollection
             @Override
             public void onClick(View v) {
                 String url = UrlUtils.ESJXQ + "&good_code=" + data.get(position).getGood_code();
-                MechanicsH5Activity.start(context, url, "二手机详情", data.get(position).getGood_code(), 2);
+                MechanicsH5Activity.start(context, url, "二手机详情",
+                        data.get(position).getGood_code(), data.get(position).getName(), data.get(position).getPic_url(), 2);
             }
         });
     }

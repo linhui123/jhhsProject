@@ -49,6 +49,7 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 import com.jhhscm.platform.views.slideswaphelper.PlusItemSlideCallback;
 import com.jhhscm.platform.views.slideswaphelper.WItemTouchHelperPlus;
@@ -210,12 +211,13 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
         mDataBinding.tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BrandActivity.start(getContext(), 2);
+                BrandActivity.start(getContext(), 3);
             }
         });
     }
 
     private void initView() {
+        mDataBinding.rvSelect.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.rvSelect.setLayoutManager(new LinearLayoutManager(getActivity()));
         compairsonAdapter = new CompairsonAdapter(getContext());
         compairsonAdapter.setDeletedItemListener(this);
@@ -226,6 +228,7 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
         WItemTouchHelperPlus extension = new WItemTouchHelperPlus(callback);
         extension.attachToRecyclerView(mDataBinding.rvSelect);
 
+        mDataBinding.rvWatch.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.rvWatch.setLayoutManager(new LinearLayoutManager(getActivity()));
         wAdapter = new CompairsonAdapter(getContext());
         mDataBinding.rvWatch.setAdapter(wAdapter);
@@ -247,6 +250,7 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
             }
         });
 
+        mDataBinding.rvShoucang.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.rvShoucang.setLayoutManager(new LinearLayoutManager(getActivity()));
         sAdapter = new CompairsonAdapter(getContext());
         mDataBinding.rvShoucang.setAdapter(sAdapter);

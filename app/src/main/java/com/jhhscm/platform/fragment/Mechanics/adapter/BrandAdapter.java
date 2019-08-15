@@ -41,7 +41,12 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(BrandAdapter.ViewHolder holder, final int position) {
         holder.setData(list.get(position));
-        ImageLoader.getInstance().displayImage(list.get(position).getPic_url(), holder.im_brand);
+        if (list.get(position).getPic_url()!=null){
+            ImageLoader.getInstance().displayImage(list.get(position).getPic_url(), holder.im_brand);
+        }else {
+            holder.im_brand.setVisibility(View.INVISIBLE);
+        }
+
         holder.tv_name.setText(list.get(position).getName());
         holder.rl.setOnClickListener(new View.OnClickListener() {
             @Override
