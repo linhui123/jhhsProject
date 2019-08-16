@@ -85,13 +85,11 @@ public class MyLabourFragment extends AbsFragment<FragmentMyLabourBinding> {
             @Override
             public void onRefresh(RecyclerView view) {
                 findLabourList(true, type + "");
-                //  mAdapter.setDetail(new FindOrderListBean());
             }
 
             @Override
             public void onLoadMore(RecyclerView view) {
                 findLabourList(true, type + "");
-                //  mAdapter.setDetail(new FindOrderListBean());
             }
         });
 
@@ -118,15 +116,6 @@ public class MyLabourFragment extends AbsFragment<FragmentMyLabourBinding> {
 
         int count = TAB_COUNT;
         fragments.clear();//清空
-//        if (count == 0) {
-//            mDataBinding.rlCaseBaseNull.setVisibility(View.VISIBLE);
-//        } else {
-//            mDataBinding.rlCaseBaseNull.setVisibility(View.GONE);
-//        }
-//        for (int i = 0; i < count; i++) {
-//            fragments.add(PeiJianFragment.instance());
-//        }
-
         mScreenWidth = Utils.getWindowsWidth(getActivity());
         mDataBinding.enhanceTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

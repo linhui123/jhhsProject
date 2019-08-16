@@ -40,7 +40,7 @@ public class ApiServiceModule {
     private static ApiServiceModule ourInstance = new ApiServiceModule();
     //URL定义
     private String BASE_URL2 = "http://47.106.110.219/#/newMachine";//显示
-    private String BASE_URL3 = "http://192.168.0.232:8083/wajueji/v1-0/";//bowen 测试
+    private String BASE_URL3 = "http://192.168.0.228:8083/wajueji/v1-0/";//bowen 测试
     private String BASE_URL4 = "http://120.76.101.183:9090/wajueji/v1-0/";//外网测试
     private String BASE_URL5 = "http://api.jhhscm.cn/wajueji/v1-0/";
 
@@ -61,7 +61,7 @@ public class ApiServiceModule {
     Retrofit providerApiRetrofit(Context context) {
         if (mApiFileUploadRetrofit == null) {
             mApiFileUploadRetrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL3)
+                    .baseUrl(BASE_URL5)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(providerFileUploadOkHttpClient(context))
                     .build();

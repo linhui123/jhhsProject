@@ -119,6 +119,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
                 mDataBinding.tvDefault.setVisibility(View.GONE);
                 mDataBinding.tvAddress.setText(event.getResultBean().getAddress_detail());
             }
+            findAddressList(userSession.getUserCode(), userSession.getToken());
         }
     }
 

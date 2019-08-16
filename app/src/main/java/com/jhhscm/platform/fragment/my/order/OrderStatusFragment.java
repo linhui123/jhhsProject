@@ -1,9 +1,7 @@
 package com.jhhscm.platform.fragment.my.order;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,22 +12,12 @@ import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.GoodsToCartsActivity;
 import com.jhhscm.platform.activity.LoginActivity;
-import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
-import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentOrderStatusBinding;
-import com.jhhscm.platform.databinding.FragmentSearchNewBinding;
 import com.jhhscm.platform.event.AddressResultEvent;
-import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.event.OrderCancleEvent;
-import com.jhhscm.platform.event.SerachEvent;
-import com.jhhscm.platform.fragment.Mechanics.action.GetGoodsPageListAction;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
-import com.jhhscm.platform.fragment.Mechanics.holder.NewMechanicsViewHolder;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.fragment.sale.FindOrderAction;
 import com.jhhscm.platform.fragment.sale.FindOrderBean;
-import com.jhhscm.platform.fragment.search.SearchNewFragment;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -42,10 +30,6 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.views.dialog.SimpleDialog;
-import com.jhhscm.platform.views.dialog.TelPhoneDialog;
-import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
-import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.util.Map;
@@ -119,8 +103,9 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
     }
 
     public void onEvent(OrderCancleEvent event) {
-        if (event.order_code != null) {
+        if (event.order_code != null && type.equals(event.type)) {
             delOrder(event.order_code);
+            EventBusUtil.post(new AddressResultEvent());
         }
     }
 
@@ -129,7 +114,6 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
         super.onDestroy();
         EventBusUtil.unregisterEvent(this);
     }
-
 
     /**
      * 获取订单列表
@@ -178,11 +162,11 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
 
     private void doSuccessResponse(final boolean refresh, final FindOrderListBean categoryBean) {
         this.findOrderListBean = categoryBean;
-        if (findOrderListBean != null && findOrderListBean.getData() != null
-                && findOrderListBean.getData().size() > 0) {
-            for (int i = 0; i < findOrderListBean.getData().size(); i++) {
-                findOrder(findOrderListBean.getData().get(i).getOrder_code());
-                if (i == findOrderListBean.getData().size() - 1) {
+        if (categoryBean != null && categoryBean.getData() != null
+                && categoryBean.getData().size() > 0) {
+            for (int i = 0; i < categoryBean.getData().size(); i++) {
+                findOrder(categoryBean.getData().get(i).getOrder_code());
+                if (i == categoryBean.getData().size() - 1) {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {

@@ -334,7 +334,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
                                         Log.e("wxPrePay", "prepayid : " + prepayid);
                                     }
                                 } else {
-                                    ToastUtils.show(getContext(), response.body().getMessage());
+//                                    ToastUtils.show(getContext(), response.body().getMessage());
                                 }
                             }
                         }

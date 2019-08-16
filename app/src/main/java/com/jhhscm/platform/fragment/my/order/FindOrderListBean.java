@@ -146,7 +146,9 @@ public class FindOrderListBean {
          * id : 28
          * message :
          */
-
+        private String ship_time;
+        private String ship_sn;
+        private String ship_channel;
         private String order_code;
         private String order_status;
         private String user_code;
@@ -154,10 +156,35 @@ public class FindOrderListBean {
         private String order_text;
         private String id;
         private String message;
+
         private List<FindOrderBean.GoodsListBean> goodsListBeans;
 
         public List<FindOrderBean.GoodsListBean> getGoodsListBeans() {
             return goodsListBeans;
+        }
+
+        public String getShip_time() {
+            return ship_time;
+        }
+
+        public void setShip_time(String ship_time) {
+            this.ship_time = ship_time;
+        }
+
+        public String getShip_sn() {
+            return ship_sn;
+        }
+
+        public void setShip_sn(String ship_sn) {
+            this.ship_sn = ship_sn;
+        }
+
+        public String getShip_channel() {
+            return ship_channel;
+        }
+
+        public void setShip_channel(String ship_channel) {
+            this.ship_channel = ship_channel;
         }
 
         public void setGoodsListBeans(List<FindOrderBean.GoodsListBean> goodsListBeans) {

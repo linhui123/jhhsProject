@@ -67,17 +67,10 @@ public class MyApplication extends Application {
         //初始化
         UMConfigure.init(this,"5d1ad0b94ca35789cd000bd3","",UMConfigure.DEVICE_TYPE_PHONE,"5d1ad0b94ca35789cd000bd3");
         //开启Log
-        UMConfigure.setLogEnabled(true);
+//        UMConfigure.setLogEnabled(true);
         //打开调试模式
 //        MobclickAgent.setDebugMode( true );
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
-
-        /**
-         *普通统计场景类型:EScenarioType.E_UM_NORMAL
-         *游戏场景类型:EScenarioType.E_UM_GAME
-         * 设置统计场景类型
-         */
-//        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
     }
 
     public static MyApplication getInstance() {
@@ -147,5 +140,4 @@ public class MyApplication extends Application {
             }
         }
     }
-
 }

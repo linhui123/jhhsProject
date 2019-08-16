@@ -3,6 +3,7 @@ package com.jhhscm.platform.fragment.address;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,11 +28,13 @@ import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
+import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 
 import java.util.Map;
@@ -86,7 +89,20 @@ public class ReceiveAddressListFragment extends AbsFragment<FragmentReceiveAddre
         mDataBinding.rlReceiveAddress.setLayoutManager(new LinearLayoutManager(getContext()));
         receiveAddressAdapter = new InnerAdapter(getContext());
         mDataBinding.rlReceiveAddress.setAdapter(receiveAddressAdapter);
-        findAddressList(true, userSession.getUserCode(), userSession.getToken());
+        mDataBinding.rlReceiveAddress.autoRefresh();
+        mDataBinding.rlReceiveAddress.loadComplete(true, false);
+        mDataBinding.rlReceiveAddress.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
+            @Override
+            public void onRefresh(RecyclerView view) {
+                findAddressList(true, userSession.getUserCode(), userSession.getToken());
+            }
+
+            @Override
+            public void onLoadMore(RecyclerView view) {
+                findAddressList(false, userSession.getUserCode(), userSession.getToken());
+            }
+        });
+
 
         mDataBinding.rlAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,13 +128,16 @@ public class ReceiveAddressListFragment extends AbsFragment<FragmentReceiveAddre
     /**
      * 获取地址列表
      */
-    private void findAddressList(boolean refresh, String userCode, String token) {
+    private void findAddressList(final boolean refresh, String userCode, String token) {
+        mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
         showDialog();
-        Map<String, String> map = new TreeMap<String, String>();
+        Map<String, Object> map = new TreeMap<String, Object>();
         map.put("user_code", userCode);
+        map.put("page", mCurrentPage);
+        map.put("limit", mShowCount);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "findAddressList");
+        String sign = SignObject.getSignKey(getActivity(), map, "findAddressList");
         NetBean netBean = new NetBean();
         netBean.setToken(token);
         netBean.setSign(sign);
@@ -136,8 +155,7 @@ public class ReceiveAddressListFragment extends AbsFragment<FragmentReceiveAddre
                             if (response != null) {
                                 new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                 if (response.body().getCode().equals("200")) {
-                                    findAddressListBean = response.body().getData();
-                                    initAddress();
+                                    initAddress(refresh, response.body().getData());
                                     Log.e("findAddressList", "获取地址列表成功");
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
@@ -148,10 +166,16 @@ public class ReceiveAddressListFragment extends AbsFragment<FragmentReceiveAddre
                 }));
     }
 
-    private void initAddress() {
-        if (findAddressListBean != null) {
-            receiveAddressAdapter.setData(findAddressListBean.getResult().getData());
+    private void initAddress(boolean refresh, FindAddressListBean categoryBean) {
+        this.findAddressListBean = categoryBean;
+        if (refresh) {
+            receiveAddressAdapter.setData(categoryBean.getResult().getData());
+        } else {
+            receiveAddressAdapter.append(categoryBean.getResult().getData());
         }
+        mDataBinding.rlReceiveAddress.getAdapter().notifyDataSetChanged();
+        mDataBinding.rlReceiveAddress.loadComplete(receiveAddressAdapter.getItemCount() == 0,
+                ((float) findAddressListBean.getResult().getPage().getTotal() / (float) findAddressListBean.getResult().getPage().getPageSize()) > mCurrentPage);
     }
 
     private class InnerAdapter extends AbsRecyclerViewAdapter<FindAddressListBean.ResultBean.DataBean> {

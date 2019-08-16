@@ -224,8 +224,8 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
             mDataBinding.orderType.setText(findOrderBean.getOrder().getOrder_text());
             //剩余确认收货时间
             mDataBinding.tvInfo.setText("剩7天20小时30分钟将自动确认收货");
-//            mDataBinding.tvWuliu.setText(findOrderBean.getOrder().getShip_channel());
-//            mDataBinding.tvWuliuNo.setText(findOrderBean.getOrder().getShip_sn());
+            mDataBinding.tvWuliu.setText(findOrderBean.getOrder().getShip_channel());
+            mDataBinding.tvWuliuNo.setText(findOrderBean.getOrder().getShip_sn());
             mDataBinding.tvIm.setBackgroundResource(R.mipmap.ic_order_3);
         } else if (type == 4) {
             mDataBinding.orderType.setText(findOrderBean.getOrder().getOrder_text());
@@ -266,9 +266,9 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         mDataBinding.tvWuliuNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (findOrderBean.getOrder().getShip_sn() != null) {
-//                    copy(findOrderBean.getOrder().getShip_sn(), getContext());
-//                }
+                if (findOrderBean.getOrder().getShip_sn() != null) {
+                    copy(findOrderBean.getOrder().getShip_sn(), getContext());
+                }
             }
         });
     }

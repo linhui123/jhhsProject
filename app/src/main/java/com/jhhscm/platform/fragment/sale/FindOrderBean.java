@@ -54,6 +54,34 @@ public class FindOrderBean {
         private String order_price;
         private String order_text;
 
+        private String ship_time;
+        private String ship_sn;
+        private String ship_channel;
+
+        public String getShip_time() {
+            return ship_time;
+        }
+
+        public void setShip_time(String ship_time) {
+            this.ship_time = ship_time;
+        }
+
+        public String getShip_sn() {
+            return ship_sn;
+        }
+
+        public void setShip_sn(String ship_sn) {
+            this.ship_sn = ship_sn;
+        }
+
+        public String getShip_channel() {
+            return ship_channel;
+        }
+
+        public void setShip_channel(String ship_channel) {
+            this.ship_channel = ship_channel;
+        }
+
         public String getOrder_status() {
             return order_status;
         }

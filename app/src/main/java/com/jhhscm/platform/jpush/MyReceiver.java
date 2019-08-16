@@ -1,11 +1,13 @@
 package com.jhhscm.platform.jpush;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -56,12 +58,12 @@ public class MyReceiver extends BroadcastReceiver {
                 processCustomMessage(context, bundle);
 
             } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
-                Log.e("JPushInterface", "MyReceiver 接收到推送下来的通知");
-                Logger.d(TAG, "[MyReceiver] 接收到推送下来的通知");
-                int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
-                Logger.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
-                showNofity(bundle.getString(JPushInterface.EXTRA_CONTENT_TYPE),bundle.getString(JPushInterface.EXTRA_ALERT));
-
+//                Log.e("JPushInterface", "MyReceiver 接收到推送下来的通知");
+//                Logger.d(TAG, "[MyReceiver] 接收到推送下来的通知");
+//                int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
+//                Logger.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
+//                showNofity(bundle.getString(JPushInterface.EXTRA_CONTENT_TYPE), bundle.getString(JPushInterface.EXTRA_ALERT));
+                notifyTo(intent);
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
                 Logger.d(TAG, "[MyReceiver] 用户点击打开了通知");
                 //打开自定义的Activity
@@ -161,4 +163,54 @@ public class MyReceiver extends BroadcastReceiver {
         return pendingIntent;
     }
 
+
+    public void notifyTo(Intent intent) {
+        try {
+            Bundle bundle = intent.getExtras();
+//            Log.e(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Log.e(TAG, "8.0处理了");
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                int notificationId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);//定义通知id
+                String channelId = context.getPackageName();//通知渠道id
+                String channelName = "消息通知";//"PUSH_NOTIFY_NAME";//通知渠道名
+                int importance = NotificationManager.IMPORTANCE_HIGH;//通知级别
+                NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW);
+//                channel.enableLights(true);//设置闪光灯
+//                channel.setLightColor(Color.RED);
+                channel.enableVibration(true);//设置通知出现震动
+                channel.setShowBadge(true);
+                channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                notificationManager.createNotificationChannel(channel);
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+
+//                Intent notificationIntent = new Intent(context, NameSeachActivity.class);
+//                notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+                String message = bundle.getString(JPushInterface.EXTRA_ALERT);
+                String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+                String s = bundle.getString(JPushInterface.EXTRA_EXTRA);
+                Intent intent0 = new Intent(context, MainActivity.class);
+                PendingIntent pi = PendingIntent.getActivity(context, 0, intent0, PendingIntent.FLAG_UPDATE_CURRENT);
+                builder.setContentTitle(title)//设置通知栏标题
+                        .setContentText(message)
+                        .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
+                        .setSmallIcon(R.mipmap.ic_launcher)//设置通知小ICON
+                        .setChannelId(channelId)
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .setContentIntent(pi);
+                Notification notification = builder.build();
+                notification.flags |= Notification.FLAG_AUTO_CANCEL;
+                if (notificationManager != null) {
+                    notificationManager.notify(notificationId, notification);
+                }
+            } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
+                //跳转
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, "极光推送出错:" + e.getMessage());
+        }
+    }
 }

@@ -1,5 +1,7 @@
 package com.jhhscm.platform.fragment.GoodsToCarts;
 
+import com.jhhscm.platform.fragment.my.labour.FindLabourListBean;
+
 import java.io.Serializable;
 import java.util.List;
 

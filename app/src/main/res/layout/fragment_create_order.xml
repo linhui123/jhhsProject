@@ -120,7 +120,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="0dp"
-                        android:text="￥256.00" />
+                        android:text="￥" />
                 </RelativeLayout>
 
                 <View style="@style/view_h_de" />
@@ -145,7 +145,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="0dp"
-                        android:text="+￥256.00"
+                        android:text="+￥"
                         android:textColor="@color/ff1a" />
                 </RelativeLayout>
 
@@ -169,7 +169,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="-￥256.00"
+                        android:text="-￥"
                         android:textColor="@color/ff1a" />
                 </RelativeLayout>
 

@@ -89,7 +89,7 @@ public class AuthenticationFragment extends AbsFragment<FragmentAuthenticationBi
         mDataBinding.tvTijiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mDataBinding.etId.getText().toString().length() >= 15
+                if (mDataBinding.etId.getText().toString().length() == 18
                         && mDataBinding.etUser.getText().toString().length() > 0) {
                     checkData(mDataBinding.etUser.getText().toString(), mDataBinding.etId.getText().toString());
                 } else {

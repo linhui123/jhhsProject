@@ -5,7 +5,8 @@ import com.jhhscm.platform.tool.EventBusUtil;
 
 public class AddressResultEvent implements EventBusUtil.IEvent {
     private FindAddressListBean.ResultBean.DataBean resultBean;
-
+    public AddressResultEvent() {
+    }
     public AddressResultEvent(FindAddressListBean.ResultBean.DataBean resultBean) {
         this.resultBean = resultBean;
     }
