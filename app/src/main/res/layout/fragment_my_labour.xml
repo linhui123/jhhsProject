@@ -16,7 +16,7 @@
             <com.jhhscm.platform.views.EnhanceTabLayout
                 android:id="@+id/enhance_tab_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 app:tabIndicatorColor="@color/a397"
                 app:tabIndicatorHeight="2dp"
                 app:tabIndicatorWidth="16dp"
@@ -27,11 +27,16 @@
 
         </RelativeLayout>
 
+        <View
+            style="@style/view_h_de"
+            android:layout_below="@+id/rl_column" />
+
         <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_column"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+            android:layout_below="@+id/rl_column"
+            android:layout_marginTop="@dimen/dp_1"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
 
 
         <ImageView

@@ -1,5 +1,9 @@
 package com.jhhscm.platform.fragment.sale;
 
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 
@@ -22,13 +26,14 @@ public class SaleMechanicsTopViewHolder extends AbsRecyclerViewHolder<SaleItem> 
 
     @Override
     protected void onBindView(final SaleItem item) {
+        initText("2000");
         mBinding.tvPre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mBinding.etPhone.getText().toString().length()>8){
+                if (mBinding.etPhone.getText().toString().length() > 8) {
                     EventBusUtil.post(new OrderSussessEvent(mBinding.etPhone.getText().toString()));
-                }else {
-                    ToastUtil.show(itemView.getContext(),"请输入正确手机号");
+                } else {
+                    ToastUtil.show(itemView.getContext(), "请输入正确手机号");
                 }
             }
         });
@@ -39,5 +44,14 @@ public class SaleMechanicsTopViewHolder extends AbsRecyclerViewHolder<SaleItem> 
                 AssessActivity.start(itemView.getContext());
             }
         });
+    }
+
+    private void initText(String num) {
+        String content = "已经有" + num + "台机子成功在挖矿来售出";
+        SpannableString spannableString = new SpannableString(content);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, 3 + num.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF1A1A")), 3, 3 + num.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 3 + num.length(), content.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        mBinding.tvNum.setText(spannableString);
     }
 }

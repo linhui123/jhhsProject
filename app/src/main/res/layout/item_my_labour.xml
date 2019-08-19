@@ -5,6 +5,7 @@
         android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_white"
         android:orientation="vertical"
         android:paddingLeft="@dimen/padding_15"
         android:paddingTop="@dimen/dp_3"
@@ -54,7 +55,7 @@
                 android:layout_alignParentRight="true"
                 android:text="关注次数："
                 android:textColor="@color/acc9"
-                android:textSize="@dimen/sp_14"/>
+                android:textSize="@dimen/sp_14" />
         </RelativeLayout>
     </LinearLayout>
 </layout>

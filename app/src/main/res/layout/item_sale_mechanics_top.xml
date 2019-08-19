@@ -27,6 +27,7 @@
             android:paddingBottom="@dimen/padding_10">
 
             <TextView
+                android:id="@+id/tv_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/padding_15"
@@ -173,15 +174,26 @@
         </LinearLayout>
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/padding_10"
+            android:layout_below="@+id/ll_1"
+            android:layout_marginTop="@dimen/padding_10"
+            android:background="@color/cf5" />
+
+        <TextView
             android:id="@+id/tv_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_1"
             android:layout_marginLeft="@dimen/padding_15"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="@dimen/padding_10"
             android:text="成交历史"
             android:textColor="@color/acc3"
             android:textSize="@dimen/text_size_16" />
+
+        <View
+            style="@style/view_h_de"
+            android:layout_below="@+id/tv_2" />
     </RelativeLayout>
 </layout>
