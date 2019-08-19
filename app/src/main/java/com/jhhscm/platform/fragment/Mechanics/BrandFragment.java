@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
@@ -16,8 +18,10 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentBrandBinding;
 import com.jhhscm.platform.databinding.FragmentPeiJianBinding;
+import com.jhhscm.platform.event.BrandResultEvent;
 import com.jhhscm.platform.event.CompMechanicsEvent;
 import com.jhhscm.platform.event.FinishEvent;
+import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindCategoryAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetComboBoxAction;
@@ -26,6 +30,7 @@ import com.jhhscm.platform.fragment.Mechanics.adapter.SelectedAdapter;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.LettersSorting;
 import com.jhhscm.platform.fragment.Mechanics.holder.BrandViewHolder;
 import com.jhhscm.platform.fragment.Mechanics.holder.PeiJianViewHolder;
 import com.jhhscm.platform.fragment.base.AbsFragment;
@@ -36,14 +41,19 @@ import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.jpush.ExampleUtil;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.tool.Trans2PinYin;
+import com.jhhscm.platform.views.LettersView;
 import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -51,8 +61,8 @@ import java.util.TreeMap;
 import retrofit2.Response;
 
 public class BrandFragment extends AbsFragment<FragmentBrandBinding> {
-    private InnerAdapter mAdapter;
-    private int type = 1;// 1 选择品牌； 2选择机型
+    private LettersAdapter mAdapter;
+    private int type = 1;// 1 选择品牌； 2 跳转新机列表;3选择机型返回
 
     public static BrandFragment instance() {
         BrandFragment view = new BrandFragment();
@@ -68,17 +78,17 @@ public class BrandFragment extends AbsFragment<FragmentBrandBinding> {
     protected void setupViews() {
         type = getArguments().getInt("type");
         EventBusUtil.registerEvent(this);
-        mDataBinding.recyclerview.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
-        mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new InnerAdapter(getContext());
-        mDataBinding.recyclerview.setAdapter(mAdapter);
-        findBrand(true);
+//        mDataBinding.recyclerview.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
+//        mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+//        mAdapter = new InnerAdapter(getContext());
+//        mDataBinding.recyclerview.setAdapter(mAdapter);
+        findBrand();
     }
 
     /**
      * 获取品牌列表
      */
-    private void findBrand(final boolean refresh) {
+    private void findBrand() {
         if (getContext() != null) {
             Map<String, String> map = new TreeMap<String, String>();
             map.put("brand_type", "1");
@@ -102,7 +112,7 @@ public class BrandFragment extends AbsFragment<FragmentBrandBinding> {
                                 if (response != null) {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
-                                        doSuccessResponse(refresh, response.body().getData());
+                                        doSuccessResponse(response.body().getData());
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
@@ -115,32 +125,128 @@ public class BrandFragment extends AbsFragment<FragmentBrandBinding> {
 
     private FindBrandBean findCategoryBean;
 
-    private void doSuccessResponse(boolean refresh, FindBrandBean categoryBean) {
+    private void doSuccessResponse(FindBrandBean categoryBean) {
         this.findCategoryBean = categoryBean;
-        if (refresh) {
-            mAdapter.setData(categoryBean.getResult());
-        } else {
-            mAdapter.append(categoryBean.getResult());
-        }
-        mDataBinding.recyclerview.getAdapter().notifyDataSetChanged();
+        initLetterView();
+//        mAdapter.setData(categoryBean.getResult());
+//        mDataBinding.recyclerview.getAdapter().notifyDataSetChanged();
 //      mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findCategoryBean.getPage().getTotal() / (float) findCategoryBean.getPage().getPageSize()) > mCurrentPage);
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<FindBrandBean.ResultBean> {
-        public InnerAdapter(Context context) {
-            super(context);
+//    private class InnerAdapter extends AbsRecyclerViewAdapter<FindBrandBean.ResultBean> {
+//        public InnerAdapter(Context context) {
+//            super(context);
+//        }
+//
+//        @Override
+//        public AbsRecyclerViewHolder<FindBrandBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+//            return new BrandViewHolder(mInflater.inflate(R.layout.item_mechanics_brand, parent, false), type);
+//        }
+//    }
+
+    private String[] strChars = {"BackUpPhoneBean", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+            "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+
+    private void initLetterView() {
+        if (findCategoryBean.getResult().size() == 0)
+            return;
+
+        final List<FindBrandBean.ResultBean> hospitalListBeans = parsingData();//把拼音首字母也加到bean中
+
+        //这里把字母的数组设置一下
+        //首先把有的挑出来
+        List<String> list = new ArrayList<>();
+//        // 隐藏含*院部
+//        list.add("*");
+        for (int i1 = 0; i1 < strChars.length; i1++) {
+            boolean haveLetter = false;
+            for (int i = 0; i < hospitalListBeans.size(); i++) {
+                String l = hospitalListBeans.get(i).getLetter();
+                if (l.equals(strChars[i1]))
+                    haveLetter = true;
+            }
+            if (haveLetter)
+                list.add(strChars[i1]);
         }
 
-        @Override
-        public AbsRecyclerViewHolder<FindBrandBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new BrandViewHolder(mInflater.inflate(R.layout.item_mechanics_brand, parent, false),type);
+        String[] mStrChars = new String[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            mStrChars[i] = list.get(i);
         }
+        ViewGroup.LayoutParams layoutParams = mDataBinding.mLettersView.getLayoutParams();
+        layoutParams.height = mStrChars.length * 35 + 80;
+        mDataBinding.mLettersView.setLayoutParams(layoutParams);
+        mDataBinding.mLettersView.invalidate();
+
+        mDataBinding.mLettersView.setStrChars(mStrChars);
+        mDataBinding.mLettersView.setmTextView(mDataBinding.tvToast);//把toasttextview传进去用作展示中间的方框
+
+        mDataBinding.mLettersView.setOnLettersListViewListener(new LettersView.OnLettersListViewListener() {
+            @Override
+            public void onLettersListener(String s) {
+                //对应的位置
+                int position = mAdapter.getPositionForNmae(s.charAt(0));
+                //移动
+                mDataBinding.recyclerview.setSelection(position);
+            }
+        });
+        //对字母进行排序A-Z #
+        Collections.sort(hospitalListBeans, new LettersSorting());
+        //加载适配器
+        mAdapter = new LettersAdapter(getContext(), hospitalListBeans, type);
+        //设置数据
+        mDataBinding.recyclerview.setAdapter(mAdapter);
+        mDataBinding.recyclerview.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                String letter = hospitalListBeans.get(firstVisibleItem).getLetter();
+//                SLog.E("此时的pos是  "+firstVisibleItem);
+//                SLog.E("此时的字母是  "+letter);
+                int index = Arrays.binarySearch(mDataBinding.mLettersView.getStrChars(), letter);
+//                SLog.E("此时的字母位置是  "+mDataBinding.mLettersView.getStrChars()[index]);
+                if (index != mDataBinding.mLettersView.getCheckIndex()) {
+                    mDataBinding.mLettersView.setCheckIndex(index);
+                    mDataBinding.mLettersView.invalidate();
+                }
+
+            }
+        });
+    }
+
+    /**
+     * 联系人数组转换实体数据
+     *
+     * @return
+     */
+    private List<FindBrandBean.ResultBean> parsingData() {
+        List<FindBrandBean.ResultBean> hospitalListBeans = new ArrayList<>();
+        for (int i = 0; i < findCategoryBean.getResult().size(); i++) {
+            // 转换拼音截取首字母并且大写
+            String pinyin = Trans2PinYin.trans2PinYin(findCategoryBean.getResult().get(i).getName());
+//            if (findCategoryBean.getResult().get(i).getName().equals("重庆分院")) {
+//                pinyin = "chongqinfenyuan";
+//            }
+//            if (findCategoryBean.getResult().get(i).getName().equals("长沙分院")) {
+//                pinyin = "changshafenyuan";
+//            }
+            Log.i("parsingData", "pinyin:" + pinyin);
+            String letter = pinyin.substring(0, 1).toUpperCase();
+            Log.i("parsingData", "letter:" + letter);
+            findCategoryBean.getResult().get(i).setLetter(letter);
+            hospitalListBeans.add(findCategoryBean.getResult().get(i));
+
+        }
+        return hospitalListBeans;
     }
 
     public void onEvent(FinishEvent event) {
         getActivity().finish();
     }
-
 
     @Override
     public void onDestroy() {

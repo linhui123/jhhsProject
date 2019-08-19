@@ -54,7 +54,7 @@ public class TelPhoneDialog extends BaseDialog {
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
             mDataBinding.edPhone.setText(ConfigUtils.getCurrentUser(getContext()).getMobile());
         }
-        if (mContent!=null){
+        if (mContent != null) {
             mDataBinding.content.setText(mContent);
         }
 
@@ -69,6 +69,13 @@ public class TelPhoneDialog extends BaseDialog {
                     ToastUtils.show(getContext(), "请输入正确的手机号码");
                 }
 
+            }
+        });
+
+        mDataBinding.imClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
             }
         });
     }

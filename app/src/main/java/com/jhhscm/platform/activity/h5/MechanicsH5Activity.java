@@ -127,7 +127,7 @@ public class MechanicsH5Activity extends AbsActivity {
     private String CONTENT = "";
     private String IMG_URL = "";
 
-    public static void start(Context context, String url, String title, String good_code,String good_name,String picUrl, int type) {
+    public static void start(Context context, String url, String title, String good_code, String good_name, String picUrl, int type) {
         Intent intent = new Intent(context, MechanicsH5Activity.class);
         intent.putExtra("url", url);
         intent.putExtra("title", title);
@@ -257,7 +257,12 @@ public class MechanicsH5Activity extends AbsActivity {
         mDataBinding.ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showShare();
+                if (ConfigUtils.getCurrentUser(getApplicationContext()) != null
+                        && ConfigUtils.getCurrentUser(getApplicationContext()).getMobile() != null) {
+                    showShare();
+                } else {
+                    LoginActivity.start(MechanicsH5Activity.this);
+                }
             }
         });
     }
@@ -299,19 +304,6 @@ public class MechanicsH5Activity extends AbsActivity {
      * 分享
      */
     public void showShare() {
-//        if (type == 1 && getGoodsDetailsBean != null && getGoodsDetailsBean.getResult() != null) {
-//            IMG_URL = picUrl;
-//            TITLE = good_name;
-//            CONTENT = getGoodsDetailsBean.getResult().getGoodsDetails().getWord_detail();
-//        } else if (type == 2 && getOldDetailsBean != null && getOldDetailsBean.getResult() != null) {
-//            IMG_URL = getOldDetailsBean.getResult().getGoodsDetails().getPicUrl();
-//            TITLE = getOldDetailsBean.getResult().getGoodsDetails().getName();
-//            CONTENT = getOldDetailsBean.getResult().getGoodsDetails().getWord_detail();
-//        } else {
-//            IMG_URL = "";
-//            TITLE = "挖矿来";
-//            CONTENT = "挖矿来";
-//        }
         if (good_name != null) {
             TITLE = good_name;
         } else {
@@ -323,19 +315,20 @@ public class MechanicsH5Activity extends AbsActivity {
             IMG_URL = "";
         }
         CONTENT = "挖矿来";
-
+        SHARE_URL = url + "&mobile=" + ConfigUtils.getCurrentUser(getApplicationContext()).getMobile();
         Log.e("ShareDialog", "IMG_URL " + IMG_URL);
+        Log.e("ShareDialog", "SHARE_URL " + SHARE_URL);
         new ShareDialog(MechanicsH5Activity.this, new ShareDialog.CallbackListener() {
             @Override
             public void wechat() {
                 YXProgressDialog dialog = new YXProgressDialog(MechanicsH5Activity.this, "请稍后");
-                shareUrlToWx(url, TITLE, CONTENT, IMG_URL, 0);
+                shareUrlToWx(SHARE_URL, TITLE, CONTENT, IMG_URL, 0);
             }
 
             @Override
             public void friends() {
                 YXProgressDialog dialog = new YXProgressDialog(MechanicsH5Activity.this, "请稍后");
-                shareUrlToWx(url, TITLE, CONTENT, IMG_URL, 1);
+                shareUrlToWx(SHARE_URL, TITLE, CONTENT, IMG_URL, 1);
             }
         }).show();
     }

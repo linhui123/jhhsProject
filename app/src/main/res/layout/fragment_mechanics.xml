@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:paddingTop="@dimen/dp_3"
+                android:padding="@dimen/dp_5"
                 android:src="@mipmap/ic_sousuo" />
         </RelativeLayout>
 

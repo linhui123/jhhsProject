@@ -240,21 +240,27 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
         mDataBinding.tvInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TelPhoneDialog(getContext(), new TelPhoneDialog.CallbackListener() {
+                //联系我们
+                H5Activity.start(getActivity(),
+                        "https://cdn-daikuan.360jie.com.cn/dir_mkteditor/activity/qmmx/mobile/5.9.2/12m1jt.html?utm_term=ff46bd85411c94329ca684cbec1dafc0&utm_campaign=12mianshouqi_201708_qyzmb&utm_medium=jrc1&utm_source=rcdt&utm_content=csj"
+                        , "联系我们");
 
-                    @Override
-                    public void clickYes(String phone) {
-                        saveMsg(phone);
-                    }
-                }).show();
+//                new TelPhoneDialog(getContext(), new TelPhoneDialog.CallbackListener() {
+//
+//                    @Override
+//                    public void clickYes(String phone) {
+//                        saveMsg(phone);
+//                    }
+//                }).show();
             }
         });
 
         mDataBinding.tvJisuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                H5Activity.start(getActivity(), UrlUtils.ZL,"租赁");
-                H5Activity.start(getActivity(), UrlUtils.JSQ, "计算器");
+                //邀请入驻
+                H5Activity.start(getActivity(),"https://cm.xy.360.cn/#/register?pid=100127", "邀请入驻");
+//                H5Activity.start(getActivity(), UrlUtils.JSQ, "计算器");
             }
         });
     }

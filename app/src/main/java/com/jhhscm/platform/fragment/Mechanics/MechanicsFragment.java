@@ -217,9 +217,6 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
 //                                                    ToastUtils.show(getContext(), "无数据");
                                                 }
                                             }
-                                            Log.e("pAdapter", "  pAdapter.getItemCount() " + pAdapter.getItemCount());
-                                            Log.e("cAdapter", "  cAdapter.getItemCount() " + cAdapter.getItemCount());
-
                                         }
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());

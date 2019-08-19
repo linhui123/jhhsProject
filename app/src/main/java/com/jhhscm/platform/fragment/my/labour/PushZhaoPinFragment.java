@@ -257,6 +257,40 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
     }
 
     private void initEdit() {
+        mDataBinding.tvContact.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                judgeButton();
+                contact = s.toString();
+            }
+        });
+        mDataBinding.tvContactMsg.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                judgeButton();
+                contact_msg = s.toString();
+            }
+        });
         mDataBinding.tvTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -510,9 +544,9 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             }
         }
 
-        if (type==0){
+        if (type == 0) {
             saveLabourRelease();
-        }else {
+        } else {
             updateLabourRelease();
         }
     }
@@ -537,16 +571,16 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             map.put("city", cId);
             map.put("position", position);
             map.put("end_time", endTime);
-            map.put("other_desc", other_desc);
+            map.put("other_desc", other_desc.trim());
             map.put("name", name);
-            map.put("user_code", userSession.getUserCode());
-            map.put("contact", userSession.getMobile());
-            map.put("contact_msg", userSession.getMobile());
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("contact", contact.trim());
+            map.put("contact_msg", contact_msg.trim());
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = Sign.getSignKey(getActivity(), map, "saveLabourRelease");
             NetBean netBean = new NetBean();
-            netBean.setToken(userSession.getToken());
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
             onNewRequestCall(SaveLabourReleaseAction.newInstance(getContext(), netBean)
@@ -565,6 +599,9 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
                                         ToastUtils.show(getContext(), "发布成功");
                                         EventBusUtil.post(new AddressRefreshEvent(1));
                                         getActivity().finish();
+                                    } else if (response.body().getCode().equals("1003")) {
+                                        ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+                                        startNewActivity(LoginActivity.class);
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
@@ -598,14 +635,14 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             map.put("end_time", endTime);
             map.put("other_desc", other_desc);
             map.put("name", name);
-            map.put("user_code", userSession.getUserCode());
-            map.put("contact", userSession.getMobile());
-            map.put("contact_msg", userSession.getMobile());
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("contact", contact);
+            map.put("contact_msg", contact_msg);
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = SignObject.getSignKey(getActivity(), map, "saveLabourWork");
             NetBean netBean = new NetBean();
-            netBean.setToken(userSession.getToken());
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
             onNewRequestCall(UpdateLabourReleaseAction.newInstance(getContext(), netBean)
@@ -645,7 +682,9 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
     }
 
     private void judgeButton() {
-        if (mDataBinding.tvTitle.getText().toString().length() > 0
+        if (mDataBinding.tvContact.getText().toString().length() > 0
+                && mDataBinding.tvContactMsg.getText().toString().length() > 0
+                && mDataBinding.tvTitle.getText().toString().length() > 0
                 && mDataBinding.tvBaseZhize.getText().toString().length() > 0
                 && mDataBinding.tvBaseJixie.getText().toString().length() > 0
                 && mDataBinding.tvBaseWorkType.getText().toString().length() > 0
@@ -743,7 +782,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
                                                 judgeButton();
                                             }
                                         }).show();
-                                    }else if ("salay_money".equals(name)) {
+                                    } else if ("salay_money".equals(name)) {
                                         new DropTDialog(getContext(), "薪资水平", getComboBoxBean.getResult(), new DropTDialog.CallbackListener() {
                                             @Override
                                             public void clickResult(String id, String Nmae) {
@@ -838,6 +877,8 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             salay_money = dataBean.getSalay_money_text();
             mDataBinding.tvBaseXinzi.setText(salay_money);
             mDataBinding.tvBaseSattleTime.setText(settl_time);
+            mDataBinding.tvContact.setText(dataBean.getContact());
+            mDataBinding.tvContactMsg.setText(dataBean.getContact_msg());
 //            if (settl_time != null) {
 //                if (settl_time.contains("天")) {
 //                    xinziType = 1;
@@ -859,32 +900,32 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             other_req = dataBean.getOther_req();
             if (other_req != null && other_req.length() > 0) {
                 if (other_req.contains("包吃")) {
-                    tvType1=true;
+                    tvType1 = true;
                     mDataBinding.tvType1.setTextColor(Color.parseColor("#3977FE"));
                     mDataBinding.tvType1.setBackground(getActivity().getResources().getDrawable(R.drawable.bg_d9e5));
                 }
                 if (other_req.contains("包住")) {
-                    tvType2=true;
+                    tvType2 = true;
                     mDataBinding.tvType2.setTextColor(Color.parseColor("#3977FE"));
                     mDataBinding.tvType2.setBackground(getActivity().getResources().getDrawable(R.drawable.bg_d9e5));
                 }
                 if (other_req.contains("白班")) {
-                    tvType3=true;
+                    tvType3 = true;
                     mDataBinding.tvType3.setTextColor(Color.parseColor("#3977FE"));
                     mDataBinding.tvType3.setBackground(getActivity().getResources().getDrawable(R.drawable.bg_d9e5));
                 }
                 if (other_req.contains("有加班费")) {
-                    tvType4=true;
+                    tvType4 = true;
                     mDataBinding.tvType4.setTextColor(Color.parseColor("#3977FE"));
                     mDataBinding.tvType4.setBackground(getActivity().getResources().getDrawable(R.drawable.bg_d9e5));
                 }
                 if (other_req.contains("报销路费")) {
-                    tvType5=true;
+                    tvType5 = true;
                     mDataBinding.tvType5.setTextColor(Color.parseColor("#3977FE"));
                     mDataBinding.tvType5.setBackground(getActivity().getResources().getDrawable(R.drawable.bg_d9e5));
                 }
                 if (other_req.contains("保险")) {
-                    tvType6=true;
+                    tvType6 = true;
                     mDataBinding.tvType6.setTextColor(Color.parseColor("#3977FE"));
                     mDataBinding.tvType6.setBackground(getActivity().getResources().getDrawable(R.drawable.bg_d9e5));
                 }

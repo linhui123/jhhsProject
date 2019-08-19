@@ -13,10 +13,12 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.bean.UserData;
 import com.jhhscm.platform.databinding.ItemHomePagePhoneBinding;
+import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.databinding.ItemHomePageBrandBinding;
 import com.jhhscm.platform.databinding.ItemHomeProjectListBinding;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -42,7 +44,7 @@ public class HomePageBrandViewHolder extends AbsRecyclerViewHolder<HomePageItem>
             mBinding.rl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BrandActivity.start(itemView.getContext(),2);
+                    BrandActivity.start(itemView.getContext(), 2);
                 }
             });
         }
@@ -77,7 +79,8 @@ public class HomePageBrandViewHolder extends AbsRecyclerViewHolder<HomePageItem>
             mBinding.rlName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MechanicsByBrandActivity.start(itemView.getContext(), item.getId(),1);
+                    EventBusUtil.post(new JumpEvent("MECHANICAL", item.getId(), item.getName()));
+//                    MechanicsByBrandActivity.start(itemView.getContext(), item.getId(),1);
                 }
             });
         }

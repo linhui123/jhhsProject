@@ -78,7 +78,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_c397"
                 android:gravity="center"
-                android:text="购机计算器"
+                android:text="邀请入驻"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_16" />
 
@@ -90,7 +90,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_c397"
                 android:gravity="center"
-                android:text="咨询联系"
+                android:text="联系我们"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_16" />
         </LinearLayout>

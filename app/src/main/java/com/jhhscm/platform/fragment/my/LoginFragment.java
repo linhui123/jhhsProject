@@ -205,6 +205,7 @@ public class LoginFragment extends AbsFragment<FragmentLoginBinding> {
                                     userSession.setUserCode(userBean.getData().getUserCode());
                                     userSession.setStatus(userBean.getData().getStatus() + "");
                                     userSession.setNickname(userBean.getData().getNickname());
+                                    userSession.setIs_check(userBean.getData().getIs_check());
                                     ConfigUtils.setCurrentUser(getContext(), userSession);
 
                                     getActivity().finish();

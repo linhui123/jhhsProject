@@ -89,6 +89,65 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableRight="@mipmap/ic_xinghao"
+                        android:text="联系人"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <EditText
+                        android:id="@+id/tv_contact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@null"
+                        android:hint="请输入"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View style="@style/view_h_de" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_15"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/padding_15"
+                    android:paddingBottom="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@mipmap/ic_xinghao"
+                        android:text="联系电话"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <EditText
+                        android:id="@+id/tv_contact_msg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@null"
+                        android:hint="请输入"
+                        android:inputType="number"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View style="@style/view_h_de" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_15"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/padding_15"
+                    android:paddingBottom="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@mipmap/ic_xinghao"
                         android:text="应聘岗位"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />

@@ -23,13 +23,22 @@ public class FindBrandBean {
          * floor_price : 0
          * desc : 挖掘机品牌
          */
-
+        //字母
+        private String letter;
         private String name;
         private String id;
         private String pic_url;
         private String floor_price;
         private String desc;
         private boolean select;
+
+        public String getLetter() {
+            return letter;
+        }
+
+        public void setLetter(String letter) {
+            this.letter = letter;
+        }
 
         public ResultBean(String name, String id) {
             this.name = name;

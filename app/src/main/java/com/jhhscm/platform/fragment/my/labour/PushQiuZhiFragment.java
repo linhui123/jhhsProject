@@ -262,6 +262,40 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
     }
 
     private void initEdit() {
+        mDataBinding.tvContact.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                judgeButton();
+                contact = s.toString();
+            }
+        });
+        mDataBinding.tvContactMsg.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                judgeButton();
+                contact_msg = s.toString();
+            }
+        });
         mDataBinding.tvTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -526,14 +560,16 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
             map.put("city", cId);
             map.put("position", position);
             map.put("end_time", endTime);
-            map.put("other_desc", other_desc);
+            map.put("other_desc", other_desc.trim());
             map.put("name", name);
-            map.put("user_code", userSession.getUserCode());
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("contact", contact.trim());
+            map.put("contact_msg", contact_msg.trim());
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = Sign.getSignKey(getActivity(), map, "saveLabourWork");
             NetBean netBean = new NetBean();
-            netBean.setToken(userSession.getToken());
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
             onNewRequestCall(SaveLabourWorkAction.newInstance(getContext(), netBean)
@@ -552,6 +588,9 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
                                         ToastUtils.show(getContext(), "发布成功");
                                         EventBusUtil.post(new AddressRefreshEvent(1));
                                         getActivity().finish();
+                                    } else if (response.body().getCode().equals("1003")) {
+                                        ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+                                        startNewActivity(LoginActivity.class);
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
@@ -576,9 +615,7 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
             map.put("settl_time", settl_time);
             map.put("other_req", other_req);
             map.put("work_pre", work_pre);
-//            map.put("work_num", work_num);
             map.put("work_time", work_time);
-//            map.put("work_type", work_type);
             map.put("good_work", good_work);
             map.put("province", pId);
             map.put("city", cId);
@@ -586,12 +623,14 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
             map.put("end_time", endTime);
             map.put("other_desc", other_desc);
             map.put("name", name);
-            map.put("user_code",  ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("contact", contact);
+            map.put("contact_msg", contact_msg);
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = SignObject.getSignKey(getActivity(), map, "saveLabourWork");
             NetBean netBean = new NetBean();
-            netBean.setToken(  ConfigUtils.getCurrentUser(getContext()).getToken());
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
             onNewRequestCall(UpdateLabourWorkAction.newInstance(getContext(), netBean)
@@ -631,7 +670,9 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
     }
 
     private void judgeButton() {
-        if (mDataBinding.tvTitle.getText().toString().length() > 0
+        if (mDataBinding.tvContact.getText().toString().length() > 0
+                && mDataBinding.tvContactMsg.getText().toString().length() > 0
+                && mDataBinding.tvTitle.getText().toString().length() > 0
                 && mDataBinding.tvBaseZhize.getText().toString().length() > 0
                 && mDataBinding.tvBaseJixie.getText().toString().length() > 0
                 && mDataBinding.tvBaseWorkType.getText().toString().length() > 0
@@ -787,11 +828,6 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
                                 if (response != null) {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
-//                                        FindLabourReleaseListBean findLabourReleaseListBean = response.body().getData();
-//                                        for (FindLabourReleaseListBean.DataBean dataBean : findLabourReleaseListBean.getData()) {
-//                                            dataBean.setType("1");
-//                                        }
-//                                        doSuccessResponse(refresh,findLabourReleaseListBean);
                                         initViewWork(response.body().getData().getData());
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
@@ -830,6 +866,9 @@ public class PushQiuZhiFragment extends AbsFragment<FragmentPushQiuZhiBinding> {
             salay_money = dataBean.getSalay_money_text();
             mDataBinding.tvBaseXinzi.setText(salay_money);
             mDataBinding.tvBaseSattleTime.setText(settl_time);
+
+            mDataBinding.tvContact.setText(dataBean.getContact());
+            mDataBinding.tvContactMsg.setText(dataBean.getContact_msg());
 //            if (settl_time != null) {
 //                if (settl_time.contains("天")) {
 //                    xinziType = 1;

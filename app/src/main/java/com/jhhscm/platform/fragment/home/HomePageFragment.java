@@ -93,6 +93,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         mDataBinding.wrvRecycler.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
+                initView();
                 getAD(2);
                 getAD(3);
                 getAD(4);
@@ -101,10 +102,6 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
 
             @Override
             public void onLoadMore(RecyclerView view) {
-                getAD(2);
-                getAD(3);
-                getAD(4);
-                findBrandHomePage();
             }
         });
 

@@ -74,7 +74,7 @@ public class SearchOldFragment extends AbsFragment<FragmentSearchNewBinding> {
         mDataBinding.rvGouwuche.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.rvGouwuche.setAdapter(mAdapter);
-        mDataBinding.rvGouwuche.autoRefresh();
+//        mDataBinding.rvGouwuche.autoRefresh();
         mDataBinding.rvGouwuche.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
@@ -159,7 +159,7 @@ public class SearchOldFragment extends AbsFragment<FragmentSearchNewBinding> {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, String> map = new TreeMap<String, String>();
-            map.put("keyword", keyword);
+            map.put("keyword",  keyword.trim());
             map.put("page", mCurrentPage + "");
             map.put("limit", mShowCount + "");
             String content = JSON.toJSONString(map);

@@ -52,6 +52,13 @@ public class SimpleDialog extends BaseDialog {
     @Override
     protected void onInitView(View view) {
         initText(mContent);
+
+        mDataBinding.imClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 //        mDataBinding.content.setText(StringUtils.filterNullAndTrim(mContent));
     }
 

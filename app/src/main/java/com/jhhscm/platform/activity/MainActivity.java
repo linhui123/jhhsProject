@@ -25,6 +25,7 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsActivity;
 import com.jhhscm.platform.activity.h5.H5Activity;
 import com.jhhscm.platform.activity.h5.ZuLinH5Activity;
+import com.jhhscm.platform.event.BrandResultEvent;
 import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.fragment.FinancialFragment;
 import com.jhhscm.platform.fragment.Mechanics.MechanicsFragment;
@@ -87,6 +88,8 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
 //        JPushInterface.init(getApplicationContext());// used for receive msg
         if (savedInstanceState == null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
+            mechanicsFragment = new MechanicsFragment();
+            fragmentManager.beginTransaction().add(R.id.fl, mechanicsFragment, "mechanicsFragment").commit();
             homeFragment = new HomePageFragment();
             fragmentManager.beginTransaction().add(R.id.fl, homeFragment, "homeFragment").commit();
         }
@@ -132,7 +135,6 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         mechanicsFragment = (MechanicsFragment) fm.findFragmentByTag("mechanicsFragment");
         financialFragment = (FinancialFragment) fm.findFragmentByTag("mFinancialFragment");
         mMeFragment = (MyFragment) fm.findFragmentByTag("mMeFragment");
-
         mDataBinding.rdExpend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,10 +222,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
                 transaction1.show(mMeFragment);
             }
         }
-//        else if (checkedId == R.id.rd_expend) {
-//
-//        }
-        transaction1.commit();
+        transaction1.commitAllowingStateLoss();
     }
 
     @Override
@@ -298,6 +297,9 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
                 onCheckedChanged(mDataBinding.rgOper, R.id.rd_analysis);
                 mDataBinding.rdAnalysis.setChecked(true);
             } else if ("MECHANICAL".equals(event.getType())) {//机械
+                if (event.getBrand_id() != null) {
+                    EventBusUtil.post(new BrandResultEvent(event.getBrand_id(), event.getBrand_name()));
+                }
                 onCheckedChanged(mDataBinding.rgOper, R.id.rd_educationadmin);
                 mDataBinding.rdEducationadmin.setChecked(true);
             } else if ("PARTS".equals(event.getType())) {//配件

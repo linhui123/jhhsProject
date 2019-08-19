@@ -7,8 +7,21 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_white"
         android:orientation="vertical"
-        android:paddingBottom="24dp"
-        android:paddingTop="24dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="24dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/im_close"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/ic_close" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/content"

@@ -5,9 +5,10 @@ import com.jhhscm.platform.tool.EventBusUtil;
 
 public class BrandResultEvent implements EventBusUtil.IEvent {
     private String brand_id;//品牌
-    private String fix_p_9;//型号
     private String brand_name;//品牌
+    private String fix_p_9;//型号
     private String fix_p_9_name;//型号
+
     public BrandResultEvent(String brand_id,String brand_name) {
         this.brand_id = brand_id;
         this.brand_name = brand_name;

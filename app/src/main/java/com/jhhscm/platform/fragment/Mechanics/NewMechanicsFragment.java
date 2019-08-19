@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentNewMechanicsBinding;
+import com.jhhscm.platform.event.BrandResultEvent;
 import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetComboBoxAction;
@@ -188,6 +190,14 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
                     saveMsg(phone, "2");
                 }
             }).show();
+        }
+    }
+
+    public void onEvent(BrandResultEvent event) {
+        if (event != null && event.getBrand_id() != null) {
+            brand_id = event.getBrand_id();
+            mDataBinding.tvPinpai.setText(event.getBrand_name());
+            mDataBinding.wrvRecycler.autoRefresh();
         }
     }
 
@@ -491,7 +501,7 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
         if (findBrandBean.getResult() != null && findBrandBean.getResult().size() > 0) {
             findBrandBean.getResult().add(0, resultBean);
         }
-        mDataBinding.rlPinpai.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        mDataBinding.rlPinpai.setLayoutManager(new GridLayoutManager(getContext(), 4));
         BrandAdapter bAdapter = new BrandAdapter(findBrandBean.getResult(), getContext());
         mDataBinding.rlPinpai.setAdapter(bAdapter);
         bAdapter.setMyListener(new BrandAdapter.ItemListener() {
