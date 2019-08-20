@@ -11,9 +11,7 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
             android:paddingTop="10dp"
-            android:paddingRight="@dimen/padding_15"
             android:paddingBottom="10dp"
             android:text="全部"
             android:textColor="@color/acc3"
@@ -25,7 +23,7 @@
             android:layout_height="16dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="20dp"
             android:src="@mipmap/ic_m_selected2" />
     </RelativeLayout>
 </layout>

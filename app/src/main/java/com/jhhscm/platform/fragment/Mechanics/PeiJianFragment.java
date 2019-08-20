@@ -401,7 +401,7 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
         if (findBrandBean.getResult() != null && findBrandBean.getResult().size() > 0) {
             findBrandBean.getResult().add(0, resultBean);
         }
-        mDataBinding.rlPinpai.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        mDataBinding.rlPinpai.setLayoutManager(new GridLayoutManager(getContext(), 4));
         BrandAdapter bAdapter = new BrandAdapter(findBrandBean.getResult(), getContext());
         mDataBinding.rlPinpai.setAdapter(bAdapter);
         bAdapter.setMyListener(new BrandAdapter.ItemListener() {

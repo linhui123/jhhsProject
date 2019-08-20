@@ -65,7 +65,7 @@
                         android:layout_marginTop="3dp"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="铲斗容量：0.26 m"
+                        android:text="铲斗容量： m³"
                         android:textColor="@color/acc9"
                         android:textSize="@dimen/text_size_12" />
 
@@ -76,7 +76,7 @@
                         android:layout_marginTop="1dp"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="额定功率：44/2200 km/rpm"
+                        android:text="额定功率： km/rpm"
                         android:textColor="@color/acc9"
                         android:textSize="@dimen/text_size_12" />
 

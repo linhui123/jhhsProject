@@ -15,20 +15,30 @@
             android:paddingLeft="@dimen/padding_15"
             android:paddingRight="@dimen/padding_15">
 
-            <TextView
-                android:id="@+id/tv_area"
+            <LinearLayout
+                android:id="@+id/ll_a"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@+id/ll"
-                android:ellipsize="end"
-                android:paddingTop="@dimen/dp_5"
-                android:paddingBottom="@dimen/dp_5"
-                android:singleLine="true"
-                android:text="选择地区>"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_16"
-                android:visibility="gone" />
+                android:layout_marginRight="@dimen/dp_5"
+                android:layout_toLeftOf="@+id/ll">
+
+                <TextView
+                    android:id="@+id/tv_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/ic_drop_white"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:ellipsize="end"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:singleLine="true"
+                    android:text="选择地区"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14"
+                    android:visibility="gone" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/ll"
@@ -97,14 +107,16 @@
                 android:layout_width="140dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/dp_5"
-                android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
+                android:layout_marginBottom="@dimen/dp_5"
+                android:background="@color/cf5"></android.support.v7.widget.RecyclerView>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rl_city"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/dp_5"
-                android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
+                android:layout_marginBottom="@dimen/dp_5"
+                android:background="@color/white"></android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </RelativeLayout>
 </layout>

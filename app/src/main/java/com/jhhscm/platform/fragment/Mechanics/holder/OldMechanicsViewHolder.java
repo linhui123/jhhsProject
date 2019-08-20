@@ -25,7 +25,9 @@ public class OldMechanicsViewHolder extends AbsRecyclerViewHolder<GetOldPageList
 
     @Override
     protected void onBindView(final GetOldPageListBean.DataBean item) {
-        ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.im);
+        if (item.getPic_url() != null) {
+            ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.im);
+        }
         mBinding.tv1.setText(item.getName());
         String data = item.getFactory_time() == null ? "" : item.getFactory_time() + "年 | ";
         String Old_time = item.getOld_time() == null ? "" : item.getOld_time() + "小时 | ";

@@ -51,7 +51,6 @@ public class LoginFragment extends AbsFragment<FragmentLoginBinding> {
 
     @Override
     protected void setupViews() {
-
         RelativeLayout.LayoutParams llParams = (RelativeLayout.LayoutParams) mDataBinding.rlTop.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.rlTop.setLayoutParams(llParams);
@@ -136,8 +135,8 @@ public class LoginFragment extends AbsFragment<FragmentLoginBinding> {
     private void login(final String tel, String code) {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("secret", "27f7c720e0f440ce877e69573781d8ea");
-        map.put("mobile", tel);
-        map.put("veriCode", code);
+        map.put("mobile", tel.trim());
+        map.put("veriCode", code.trim());
         map.put("appid", "336abf9e97cd4276bf8aecde9d32ed0a");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);

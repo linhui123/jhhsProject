@@ -315,7 +315,7 @@ public class MechanicsH5Activity extends AbsActivity {
             IMG_URL = "";
         }
         CONTENT = "挖矿来";
-        SHARE_URL = url + "&mobile=" + ConfigUtils.getCurrentUser(getApplicationContext()).getMobile();
+        SHARE_URL = url + "&referrer=" + ConfigUtils.getCurrentUser(getApplicationContext()).getMobile();
         Log.e("ShareDialog", "IMG_URL " + IMG_URL);
         Log.e("ShareDialog", "SHARE_URL " + SHARE_URL);
         new ShareDialog(MechanicsH5Activity.this, new ShareDialog.CallbackListener() {
@@ -1291,7 +1291,7 @@ public class MechanicsH5Activity extends AbsActivity {
                 RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) mDataBinding.rlBottom.getLayoutParams();
                 Log.e("getNavigationBarHeight", "getNavigationBarHeight:" + getNavigationBarHeight(this));
                 //setMargins：顺序是左、上、右、下
-                layout.setMargins(15, 0, 15, getNavigationBarHeight(this) + 10);
+                layout.setMargins(0, 0, 0, getNavigationBarHeight(this) + 10);
             }
         } catch (Exception e) {
             e.printStackTrace();

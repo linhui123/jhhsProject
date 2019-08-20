@@ -69,7 +69,7 @@ public class LogisticsDialog extends BaseDialog {
         Display d = this.getWindow().getWindowManager().getDefaultDisplay();
         WindowManager.LayoutParams lp = this.getWindow().getAttributes();
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        int w = (int) (DisplayUtils.getDeviceWidth(getContext()) * 0.7);
+        int w = (int) (DisplayUtils.getDeviceWidth(getContext()) * 0.8);
         lp.width = w;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         this.getWindow().setAttributes(lp);
@@ -98,6 +98,7 @@ public class LogisticsDialog extends BaseDialog {
         mDataBinding.confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                copy(no, getContext());
                 if (mListener != null) mListener.clickY();
                 dismiss();
             }

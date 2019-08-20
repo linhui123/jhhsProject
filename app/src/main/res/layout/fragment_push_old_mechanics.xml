@@ -35,11 +35,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="0dp"
                         android:drawableRight="@mipmap/ic_point"
                         android:drawablePadding="@dimen/padding_10"
+                        android:hint="请选择"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
-                        android:text="请选择"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
@@ -65,9 +67,9 @@
                         android:layout_alignParentRight="true"
                         android:drawableRight="@mipmap/ic_point"
                         android:drawablePadding="@dimen/padding_10"
+                        android:hint="请选择"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
-                        android:text="请选择"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
@@ -134,12 +136,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
                         android:layout_marginBottom="0dp"
                         android:drawableRight="@mipmap/ic_point"
                         android:drawablePadding="@dimen/padding_10"
+                        android:hint="请选择"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
-                        android:text="请选择"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
@@ -165,9 +168,9 @@
                         android:layout_alignParentRight="true"
                         android:drawableRight="@mipmap/ic_point"
                         android:drawablePadding="@dimen/padding_10"
+                        android:hint="请选择"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
-                        android:text="请选择"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
@@ -340,11 +343,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="0dp"
                         android:drawableRight="@mipmap/ic_point"
                         android:drawablePadding="@dimen/padding_10"
+                        android:hint="请选择"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
-                        android:text="请选择"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
@@ -370,23 +375,36 @@
                         android:layout_alignParentRight="true"
                         android:drawableRight="@mipmap/ic_point"
                         android:drawablePadding="@dimen/padding_10"
+                        android:hint="请选择"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
-                        android:text="请选择"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
                 <View style="@style/view_h_de" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/padding_10"
-                    android:paddingBottom="@dimen/padding_10"
-                    android:text="上传图片(上传设备图片越多越好)"
-                    android:textColor="@color/acc3"
-                    android:textSize="@dimen/text_size_16" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:text="上传图片"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" (上传设备图片越多越好)"
+                        android:textColor="@color/acc9"
+                        android:textSize="@dimen/text_size_14" />
+                </LinearLayout>
 
                 <com.jhhscm.platform.views.selector.ImageSelector
                     android:id="@+id/selector"

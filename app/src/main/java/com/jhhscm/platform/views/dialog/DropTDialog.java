@@ -19,6 +19,7 @@ import com.jhhscm.platform.databinding.DialogDropTBinding;
 import com.jhhscm.platform.databinding.ItemLocationBinding;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.tool.DisplayUtils;
+import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 
 import java.util.List;
 
@@ -70,6 +71,7 @@ public class DropTDialog extends BaseDialog {
     private InnerAdapter pAdapter;
 
     private void initDrop() {
+        mDataBinding.rv1.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.rv1.setLayoutManager(new LinearLayoutManager(getContext()));
         pAdapter = new InnerAdapter(getContext());
         mDataBinding.rv1.setAdapter(pAdapter);

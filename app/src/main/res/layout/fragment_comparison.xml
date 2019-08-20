@@ -45,8 +45,8 @@
                 android:layout_marginTop="@dimen/padding_10"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/padding_15"
-                android:paddingRight="@dimen/padding_15"
                 android:paddingTop="@dimen/dp_5"
+                android:paddingRight="@dimen/padding_15"
                 android:paddingBottom="5dp">
 
                 <TextView
@@ -79,8 +79,8 @@
                 <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
                     android:id="@+id/rv_shoucang"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
-                    android:layout_height="wrap_content"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
 
             </RelativeLayout>
 
@@ -91,6 +91,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginRight="@dimen/padding_15"
             android:layout_marginBottom="@dimen/padding_10"
             android:background="@drawable/button_c397"
             android:gravity="center"

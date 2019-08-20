@@ -33,6 +33,7 @@ import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.dialog.LoginOutDialog;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -106,7 +107,12 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
             public void onClick(View v) {
                 if (ConfigUtils.getCurrentUser(getContext()) != null
                         && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
-                    loginOut();
+                    new LoginOutDialog(getContext(), new LoginOutDialog.CallbackListener() {
+                        @Override
+                        public void clickResult() {
+                            loginOut();
+                        }
+                    }).show();
                 } else {
                     ToastUtil.show(getContext(), "请先登录");
                 }

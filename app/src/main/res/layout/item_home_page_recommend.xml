@@ -32,7 +32,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
                 android:text="查看更多>"
                 android:textColor="@color/a397"
                 android:textSize="@dimen/sp_14" />

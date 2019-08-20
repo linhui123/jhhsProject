@@ -32,7 +32,7 @@
                 android:src="@mipmap/ic_point" />
         </RelativeLayout>
 
-        <View style="@style/view_h_de"
+        <View style="@style/view_h_f5"
             android:layout_height="@dimen/padding_10"/>
 
         <RelativeLayout
@@ -59,7 +59,7 @@
                 android:src="@mipmap/ic_point" />
         </RelativeLayout>
 
-        <View style="@style/view_h_de"
+        <View style="@style/view_h_f5"
             android:layout_height="@dimen/padding_10"/>
 
         <RelativeLayout
@@ -86,7 +86,7 @@
                 android:text="0.0M" />
         </RelativeLayout>
 
-        <View style="@style/view_h_de"
+        <View style="@style/view_h_f5"
             android:layout_height="@dimen/padding_10"/>
 
         <RelativeLayout
@@ -113,7 +113,7 @@
                 android:src="@mipmap/ic_point" />
         </RelativeLayout>
 
-        <View style="@style/view_h_de"
+        <View style="@style/view_h_f5"
             android:layout_height="@dimen/padding_10"/>
 
         <RelativeLayout

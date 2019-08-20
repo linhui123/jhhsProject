@@ -108,8 +108,8 @@ public class AuthenticationFragment extends AbsFragment<FragmentAuthenticationBi
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("mobile", ConfigUtils.getCurrentUser(getContext()).getMobile());
             map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
-            map.put("user_name", name);
-            map.put("id_card", id);
+            map.put("user_name", name.trim());
+            map.put("id_card", id.trim());
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = SignObject.getSignKey(getActivity(), map, "checkData");

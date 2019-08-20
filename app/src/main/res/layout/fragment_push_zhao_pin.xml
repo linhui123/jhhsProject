@@ -128,8 +128,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:background="@null"
-                        android:inputType="number"
                         android:hint="请输入"
+                        android:inputType="number"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
@@ -301,9 +301,9 @@
                     android:layout_marginTop="@dimen/padding_10"
                     android:drawableLeft="@mipmap/ic_shuxian"
                     android:drawablePadding="@dimen/dp_5"
-                    android:paddingBottom="@dimen/padding_10"
                     android:paddingLeft="@dimen/padding_15"
                     android:paddingRight="@dimen/padding_15"
+                    android:paddingBottom="@dimen/padding_10"
                     android:text="薪资福利"
                     android:textColor="@color/a397"
                     android:textSize="@dimen/text_size_16" />
@@ -371,16 +371,30 @@
 
                 <View style="@style/view_h_de" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/padding_10"
-                    android:paddingLeft="@dimen/padding_15"
-                    android:paddingRight="@dimen/padding_15"
-                    android:paddingBottom="@dimen/padding_10"
-                    android:text="其他福利(可多选)"
-                    android:textColor="@color/acc3"
-                    android:textSize="@dimen/text_size_16" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@mipmap/ic_xinghao"
+                        android:paddingLeft="@dimen/padding_15"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingRight="@dimen/dp_5"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:text="其他福利"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(可多选)"
+                        android:textColor="@color/acc9"
+                        android:textSize="@dimen/text_size_14" />
+                </LinearLayout>
 
                 <View style="@style/view_h_de" />
 
@@ -723,21 +737,40 @@
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
-                <EditText
-                    android:id="@+id/tv_else"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/padding_15"
                     android:layout_marginTop="@dimen/padding_10"
                     android:layout_marginRight="@dimen/padding_15"
-                    android:layout_marginBottom="@dimen/padding_10"
-                    android:background="@drawable/edit_bg_acc9"
-                    android:gravity="left|top"
-                    android:hint="简要描述你的工作职责……"
-                    android:minLines="5"
-                    android:padding="@dimen/dp_5"
-                    android:textColor="@color/acc3"
-                    android:textSize="@dimen/text_size_16" />
+                    android:layout_marginBottom="@dimen/padding_10">
+
+                    <EditText
+                        android:id="@+id/tv_else"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_bg_acc9"
+                        android:gravity="left|top"
+                        android:hint="简要描述你的工作职责……"
+                        android:maxLength="100"
+                        android:minLines="5"
+                        android:padding="@dimen/dp_5"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/ed_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:paddingRight="@dimen/padding_10"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:text="0/100"
+                        android:textColor="@color/acc9"
+                        android:textSize="@dimen/text_size_14" />
+                </RelativeLayout>
+
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 

@@ -11,9 +11,9 @@ public class UrlUtils {
 
 
     //新机详情   http://192.168.0.234:8080/#/product/productDetail?good_code=1
-    public static String XJXQ = BASE_URL + "product/productDetail?isShowGetPhone=2";
+    public static String XJXQ = BASE_URL + "product/productDetail?isShowGetPhone=1";
     //二手机详情  http://192.168.0.234:8080/#/product/oldProductDetail?good_code=8
-    public static String ESJXQ = BASE_URL + "product/oldProductDetail?isShowGetPhone=2";
+    public static String ESJXQ = BASE_URL + "product/oldProductDetail?isShowGetPhone=1";
     //配件详情 http://192.168.0.234:8080/#/parts/partsDetail?good_code=21
     public static String PJXQ = BASE_URL + "parts/partsDetail?isShowGetPhone=2";
     //金服  http://192.168.0.228:8080/#/financial/financial

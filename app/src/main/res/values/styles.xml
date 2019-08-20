@@ -83,6 +83,12 @@
         <item name="android:background">@color/de</item>
     </style>
 
+    <style name="view_h_f5">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/cf5</item>
+    </style>
+
     <style name="view_v_de">
         <item name="android:layout_width">1dp</item>
         <item name="android:layout_height">match_parent</item>

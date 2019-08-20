@@ -271,7 +271,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             @Override
             public void afterTextChanged(Editable s) {
                 judgeButton();
-                contact = s.toString();
+                contact = s.toString().trim();
             }
         });
         mDataBinding.tvContactMsg.addTextChangedListener(new TextWatcher() {
@@ -288,7 +288,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             @Override
             public void afterTextChanged(Editable s) {
                 judgeButton();
-                contact_msg = s.toString();
+                contact_msg = s.toString().trim();
             }
         });
         mDataBinding.tvTitle.addTextChangedListener(new TextWatcher() {
@@ -305,7 +305,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             @Override
             public void afterTextChanged(Editable s) {
                 judgeButton();
-                name = s.toString();
+                name = s.toString().trim();
             }
         });
         mDataBinding.tvBaseNum.addTextChangedListener(new TextWatcher() {
@@ -322,7 +322,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             @Override
             public void afterTextChanged(Editable s) {
                 judgeButton();
-                work_num = s.toString();
+                work_num = s.toString().trim();
             }
         });
         mDataBinding.tvTian.addTextChangedListener(new TextWatcher() {
@@ -339,7 +339,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             @Override
             public void afterTextChanged(Editable s) {
                 judgeButton();
-                salay_money = s.toString();
+                salay_money = s.toString().trim();
 //                xinziType=1;
 //                xinziType1=true;
 //                xinziType2 = false;
@@ -364,7 +364,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             @Override
             public void afterTextChanged(Editable s) {
                 judgeButton();
-                salay_money = s.toString();
+                salay_money = s.toString().trim();
 //                xinziType=2;
 //                xinziType1=false;
 //                xinziType2 = true;
@@ -388,8 +388,12 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (s.toString().length() <= 100) {
+                    mDataBinding.edCount.setText(s.toString().length() + "/100");
+                }
+                other_desc = s.toString().trim();
                 judgeButton();
-                other_desc = s.toString();
+
             }
         });
     }

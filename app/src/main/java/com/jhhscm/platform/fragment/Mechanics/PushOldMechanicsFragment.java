@@ -128,7 +128,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
 
             @Override
             public void afterTextChanged(Editable s) {
-                fix_p_9 = s.toString();
+                fix_p_9 = s.toString().trim();
                 judgeButton();
             }
         });
@@ -145,7 +145,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
 
             @Override
             public void afterTextChanged(Editable editable) {
-                old_time = editable.toString();
+                old_time = editable.toString().trim();
                 judgeButton();
             }
         });
@@ -163,7 +163,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
 
             @Override
             public void afterTextChanged(Editable editable) {
-                tel = editable.toString();
+                tel = editable.toString().trim();
                 judgeButton();
             }
         });
@@ -180,7 +180,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
 
             @Override
             public void afterTextChanged(Editable editable) {
-                biaopai = editable.toString();
+                biaopai = editable.toString().trim();
                 judgeButton();
             }
         });
@@ -198,7 +198,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
 
             @Override
             public void afterTextChanged(Editable editable) {
-                price = editable.toString();
+                price = editable.toString().trim();
                 judgeButton();
             }
         });
@@ -216,7 +216,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
 
             @Override
             public void afterTextChanged(Editable s) {
-                name = s.toString();
+                name = s.toString().trim();
                 judgeButton();
             }
         });

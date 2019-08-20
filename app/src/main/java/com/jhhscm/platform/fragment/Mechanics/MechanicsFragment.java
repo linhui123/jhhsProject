@@ -17,6 +17,7 @@ import com.jhhscm.platform.activity.SearchActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentMechanicsBinding;
+import com.jhhscm.platform.event.BrandResultEvent;
 import com.jhhscm.platform.event.GetRegionEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.GetRegionAction;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
@@ -32,6 +33,7 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -146,6 +148,15 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
     private String cName;
 
     /**
+     * 品牌跳转
+     */
+    public void onEvent(BrandResultEvent event) {
+        if (event != null && event.getBrand_id() != null) {
+            mDataBinding.tvNew.performClick();
+        }
+    }
+
+    /**
      * 更新地区选择
      */
     public void onEvent(GetRegionEvent event) {
@@ -162,7 +173,7 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
             } else if (event.type.equals("0")) {//全部点击
                 cID = event.pid;
                 cName = event.name;
-                mDataBinding.tvArea.setText("选择地区>");
+                mDataBinding.tvArea.setText("选择地区");
                 mDataBinding.llArea.setVisibility(View.GONE);
             }
         }
@@ -239,6 +250,7 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
         pAdapter = new PrinviceAdapter(getContext());
         mDataBinding.rlPrivince.setAdapter(pAdapter);
 
+        mDataBinding.rlCity.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.rlCity.setLayoutManager(new LinearLayoutManager(getContext()));
         cAdapter = new CityAdapter(getContext());
         mDataBinding.rlCity.setAdapter(cAdapter);

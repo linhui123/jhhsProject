@@ -73,7 +73,7 @@
                     android:paddingBottom="@dimen/padding_10">
 
                     <View
-                        style="@style/view_h_de"
+                        style="@style/view_h_f5"
                         android:layout_height="@dimen/padding_10" />
 
                     <TextView
@@ -235,7 +235,7 @@
                     android:visibility="gone">
 
                     <View
-                        style="@style/view_h_de"
+                        style="@style/view_h_f5"
                         android:layout_height="@dimen/padding_10" />
 
                     <TextView
@@ -358,7 +358,7 @@
                 </LinearLayout>
 
                 <View
-                    style="@style/view_h_de"
+                    style="@style/view_h_f5"
                     android:layout_height="@dimen/padding_10" />
 
                 <LinearLayout
@@ -467,7 +467,7 @@
                     android:textStyle="bold">
 
                     <View
-                        style="@style/view_h_de"
+                        style="@style/view_h_f5"
                         android:layout_height="@dimen/padding_10" />
 
                     <TextView
@@ -603,7 +603,7 @@
                     android:visibility="gone">
 
                     <View
-                        style="@style/view_h_de"
+                        style="@style/view_h_f5"
                         android:layout_height="@dimen/padding_10" />
 
                     <TextView
@@ -612,8 +612,8 @@
                         android:drawableLeft="@mipmap/ic_labour_title"
                         android:drawablePadding="@dimen/dp_5"
                         android:paddingLeft="@dimen/padding_15"
-                        android:paddingRight="@dimen/padding_15"
                         android:paddingTop="@dimen/padding_10"
+                        android:paddingRight="@dimen/padding_15"
                         android:paddingBottom="@dimen/padding_10"
                         android:text="工程经验"
                         android:textColor="@color/acc3"
@@ -735,14 +735,18 @@
             android:id="@+id/bottom"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_alignParentBottom="true"
-            android:paddingLeft="@dimen/padding_15"
-            android:paddingRight="@dimen/padding_15">
+            android:layout_alignParentBottom="true">
+
+            <View style="@style/view_h_de" />
 
             <RelativeLayout
                 android:id="@+id/rl_bottom"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/padding_15"
+                android:paddingTop="@dimen/dp_5"
+                android:paddingRight="@dimen/padding_15"
+                android:paddingBottom="@dimen/dp_5"
                 android:visibility="gone">
 
                 <com.jhhscm.platform.views.CircleImageView
@@ -750,7 +754,7 @@
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_heard" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -796,8 +800,12 @@
             <LinearLayout
                 android:id="@+id/rl_bottom1"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:paddingLeft="@dimen/padding_15"
+                android:paddingTop="@dimen/dp_5"
+                android:paddingRight="@dimen/padding_15"
+                android:paddingBottom="@dimen/dp_5"
                 android:visibility="gone">
 
                 <TextView

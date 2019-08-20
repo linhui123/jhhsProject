@@ -9,6 +9,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical"
             android:paddingLeft="@dimen/padding_15"
             android:paddingTop="@dimen/padding_15"
@@ -35,7 +36,9 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/bg_white_shadow"
                     android:orientation="vertical"
+                    android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_3">
 
                     <TextView
@@ -53,6 +56,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:paddingBottom="@dimen/padding_10"
                         android:text=""
                         android:textColor="@color/ff1a"
                         android:textSize="@dimen/text_size_16" />
@@ -62,8 +66,10 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/bg_white_shadow"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/dp_3">
+                    android:paddingLeft="@dimen/dp_3"
+                    android:paddingTop="@dimen/padding_10">
 
                     <TextView
                         android:id="@+id/tv_name_r"
@@ -80,21 +86,57 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:paddingBottom="@dimen/padding_10"
                         android:text=""
                         android:textColor="@color/ff1a"
                         android:textSize="@dimen/text_size_16" />
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_10"
-                android:layout_weight="1"
-                android:text="规格"
-                android:textColor="@color/acc3"
-                android:textSize="@dimen/text_size_16"
-                android:textStyle="bold" />
+                android:paddingLeft="@dimen/dp_5"
+                android:paddingRight="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="1"
+                    android:text="规格"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv1_same"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/ic_com_same"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:text="相同项"
+                    android:textSize="@dimen/text_size_16" />
+
+                <TextView
+                    android:id="@+id/tv1_diff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/tv1_same"
+                    android:drawableLeft="@mipmap/ic_com_diff"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingRight="@dimen/padding_10"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:text="不同项"
+                    android:textSize="@dimen/text_size_16" />
+            </RelativeLayout>
 
             <View
                 style="@style/view_h_de"
@@ -111,6 +153,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/cf5"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -126,6 +169,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -142,6 +186,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -167,6 +212,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/cf5"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -182,6 +228,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -198,6 +245,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -223,6 +271,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/cf5"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -238,6 +287,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -254,6 +304,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -279,6 +330,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/cf5"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -294,6 +346,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -310,6 +363,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -335,6 +389,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/cf5"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -348,9 +403,10 @@
                 <TextView
                     android:id="@+id/tv_zhongliang"
                     android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -365,9 +421,10 @@
                 <TextView
                     android:id="@+id/tv_zhongliang_r"
                     android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -393,11 +450,12 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/cf5"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
-                    android:text="铲斗容量（m^3）"
+                    android:text="铲斗容量(m³)"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -406,9 +464,10 @@
                 <TextView
                     android:id="@+id/tv_cdrongliang"
                     android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -423,9 +482,10 @@
                 <TextView
                     android:id="@+id/tv_cdrongliang_r"
                     android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -440,15 +500,54 @@
 
             <View style="@style/view_h_de" />
 
-            <TextView
-                android:layout_width="wrap_content"
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_10"
-                android:layout_weight="1"
-                android:text="性能"
-                android:textColor="@color/acc3"
-                android:textSize="@dimen/text_size_16"
-                android:textStyle="bold" />
+                android:paddingLeft="@dimen/dp_5"
+                android:paddingRight="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+
+                    android:layout_weight="1"
+                    android:text="性能"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv2_same"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/ic_com_same"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_5"
+
+                    android:paddingBottom="@dimen/dp_5"
+                    android:text="相同项"
+                    android:textSize="@dimen/text_size_16" />
+
+                <TextView
+                    android:id="@+id/tv2_diff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/tv2_same"
+                    android:drawableLeft="@mipmap/ic_com_diff"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingRight="@dimen/padding_10"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:text="不同项"
+                    android:textSize="@dimen/text_size_16" />
+            </RelativeLayout>
+
 
             <View
                 style="@style/view_h_de"
@@ -465,6 +564,7 @@
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/cf5"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
@@ -478,14 +578,14 @@
                 <TextView
                     android:id="@+id/tv_gonglv"
                     android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
-                    android:singleLine="true"
                     android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
@@ -495,14 +595,14 @@
                 <TextView
                     android:id="@+id/tv_gonglv_r"
                     android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/dp_5"
                     android:paddingTop="@dimen/padding_10"
                     android:paddingRight="@dimen/dp_5"
                     android:paddingBottom="10dp"
-                    android:singleLine="true"
                     android:text="--"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />

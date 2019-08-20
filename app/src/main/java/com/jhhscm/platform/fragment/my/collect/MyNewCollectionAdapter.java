@@ -75,7 +75,7 @@ public class MyNewCollectionAdapter extends RecyclerView.Adapter<MyNewCollection
         holder.rl_new.setVisibility(View.VISIBLE);
         ImageLoader.getInstance().displayImage(data.get(position).getPic_url(), holder.im_new);
         holder.tv_new_1.setText(data.get(position).getName());
-        holder.tv_new_2.setText("铲斗容量：" + data.get(position).getFix_p_2() + "m^3");
+        holder.tv_new_2.setText("铲斗容量：" + data.get(position).getFix_p_2() + "m³");
         holder.tv_new_3.setText("额定功率：" + data.get(position).getFix_p_5() + "km/rpm");
         holder.tv_new_4.setText("询价");
         holder.tv_new_4.setOnClickListener(new View.OnClickListener() {

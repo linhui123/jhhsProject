@@ -106,7 +106,7 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
 
             @Override
             public void afterTextChanged(Editable editable) {
-                old_time = editable.toString();
+                old_time = editable.toString().trim();
                 judgeButton();
             }
         });
@@ -124,7 +124,7 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
 
             @Override
             public void afterTextChanged(Editable editable) {
-                tel = editable.toString();
+                tel = editable.toString().trim();
                 judgeButton();
             }
         });

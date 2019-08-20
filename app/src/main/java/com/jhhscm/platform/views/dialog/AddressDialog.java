@@ -27,6 +27,7 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -123,14 +124,17 @@ public class AddressDialog extends BaseDialog {
     private LocationAdapter countryAdapter;
 
     private void initAddress() {
+        mDataBinding.rv1.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.rv1.setLayoutManager(new LinearLayoutManager(getContext()));
         pAdapter = new LocationAdapter(getContext());
         mDataBinding.rv1.setAdapter(pAdapter);
 
+        mDataBinding.rv2.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.rv2.setLayoutManager(new LinearLayoutManager(getContext()));
         cityAdapter = new LocationAdapter(getContext());
         mDataBinding.rv2.setAdapter(cityAdapter);
 
+        mDataBinding.rv3.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.rv3.setLayoutManager(new LinearLayoutManager(getContext()));
         countryAdapter = new LocationAdapter(getContext());
         mDataBinding.rv3.setAdapter(countryAdapter);

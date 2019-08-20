@@ -65,11 +65,11 @@ public class FeedbackFragment extends AbsFragment<FragmentFeedbackBinding> {
     /**
      * 意见反馈
      */
-    private void save(String mobile, String con) {
+    private void save(String con, String mobile) {
         if (getContext() != null) {
             Map<String, Object> map = new TreeMap<String, Object>();
-            map.put("mobile", mobile);
-            map.put("content", con);
+            map.put("mobile", mobile.trim());
+            map.put("content", con.trim());
             map.put("from_type", "1");
             map.put("app_version", ExampleUtil.GetVersion(getContext()));
             String content = JSON.toJSONString(map);

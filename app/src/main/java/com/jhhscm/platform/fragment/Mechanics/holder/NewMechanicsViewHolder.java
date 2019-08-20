@@ -22,9 +22,12 @@ public class NewMechanicsViewHolder extends AbsRecyclerViewHolder<GetGoodsPageLi
 
     @Override
     protected void onBindView(final GetGoodsPageListBean.DataBean item) {
-        ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.im);
+        if (item.getPic_url() != null) {
+            ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.im);
+        }
+
         mBinding.tv1.setText(item.getName());
-        mBinding.tv2.setText("铲斗容量：" + item.getFixP2() + " m^3");
+        mBinding.tv2.setText("铲斗容量：" + item.getFixP2() + " m³");
         mBinding.tv3.setText("额定功率：" + item.getFixP5() + " km/rpm");
         mBinding.tv4.setOnClickListener(new View.OnClickListener() {
             @Override

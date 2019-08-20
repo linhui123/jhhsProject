@@ -35,6 +35,7 @@
             android:gravity="center"
             android:lineSpacingExtra="1dp"
             android:lineSpacingMultiplier="1.2"
+            android:textColor="@color/acc3"
             android:text="请输入您的手机号，稍后挖矿来客服会尽快联系您"
             android:textSize="15sp" />
 

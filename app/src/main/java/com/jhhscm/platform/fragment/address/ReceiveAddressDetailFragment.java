@@ -310,9 +310,9 @@ public class ReceiveAddressDetailFragment extends AbsFragment<FragmentReceiveAdd
     }
 
     private void judgeButton() {
-        name = mDataBinding.etName.getText().toString();
-        tel = mDataBinding.etPhone.getText().toString();
-        addressDetail = mDataBinding.etLocation.getText().toString();
+        name = mDataBinding.etName.getText().toString().trim();
+        tel = mDataBinding.etPhone.getText().toString().trim();
+        addressDetail = mDataBinding.etLocation.getText().toString().trim();
         if (mDataBinding.etName.getText().toString().length() > 0
                 && mDataBinding.etLocation.getText().toString().length() > 0
                 && mDataBinding.etPhone.getText().toString().length() > 0
