@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.h5.MechanicsH5Activity;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
+import com.jhhscm.platform.tool.CalculationUtils;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.slideswaphelper.SlideSwapAction;
 
@@ -79,7 +80,7 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
         holder.tvTitle.setText(data.get(position).getName());
 
         if (data.get(position).getCounter_price()!=null){
-            holder.tvPrice.setText(wan(data.get(position).getCounter_price()));
+            holder.tvPrice.setText(CalculationUtils.wan1(data.get(position).getCounter_price()));
         }else {
             holder.tvPrice.setText("暂无报价");
         }
@@ -192,19 +193,6 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
 
     public interface SelectedListener {
         void select(List<GetGoodsPageListBean.DataBean> resultBeans);
-    }
-
-    private String wan(String toal) {
-        DecimalFormat df = new DecimalFormat("#.00");
-//        toal = df.format(Double.parseDouble(toal) / 10000);
-        //保留2位小数
-        BigDecimal b = new BigDecimal(Double.parseDouble(toal));
-        if (b.compareTo(new BigDecimal(Double.parseDouble("0"))) == 0) {
-            toal = "暂无报价";
-        } else {
-            toal = "￥" + b.setScale(2, BigDecimal.ROUND_DOWN).toString() + "万";
-        }
-        return toal;
     }
 }
 

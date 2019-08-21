@@ -159,18 +159,18 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
      */
     private void findGoodsAssess() {
         Map<String, Object> map = new TreeMap<String, Object>();
-        if (brand_id!=null){
+        if (brand_id != null && brand_id.length() > 0) {
             map.put("brand_id", Integer.parseInt(brand_id));
         }
         map.put("fix_p_9", fix_p_9);
         map.put("province", province);
         map.put("city", city);
         map.put("factory_time", factory_time);
-        if (old_time!=null){
+        if (old_time != null && old_time.length() > 0) {
             map.put("old_time", Integer.parseInt(old_time));
         }
         map.put("fix_p_13", fix_p_13);
-        map.put("fix_p_13", fix_p_13);
+        map.put("fix_p_14", fix_p_14);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = SignObject.getSignKey(getActivity(), map, "findGoodsAssess");
@@ -190,13 +190,11 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
                             }
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
-                                    if (response.body().getData().getData().getMessage() != null) {
-                                        ToastUtils.show(getContext(), response.body().getData().getData().getMessage());
-                                    } else {
-                                        AssessResultActivity.start(getContext(), response.body().getData());
-                                    }
-                                } else {
+                                    AssessResultActivity.start(getContext(), response.body().getData());
+                                } else if (response.body().getCode().equals("1001")) {
                                     ToastUtils.show(getContext(), response.body().getMessage());
+                                } else {
+                                    ToastUtils.show(getContext(), "网络异常");
                                 }
                             }
                         }
@@ -210,12 +208,8 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
             case R.id.tv_1://品牌 brand_id
                 BrandActivity.start(getContext(), 1);
                 break;
-            case R.id.tv_2://型号 fix_p_9
-                if (brand_id != null && brand_id.length() > 0) {
-                    MechanicsByBrandActivity.start(getContext(), brand_id,0);
-                } else {
-                    ToastUtil.show(getContext(), "请先选择品牌");
-                }
+            case R.id.tv_2://机型 fix_p_9
+                getComboBox("goods_type");
                 break;
             case R.id.tv_3://施工地区 province city
                 new AddressDialog(getActivity(), "施工地区", new AddressDialog.CallbackListener() {
@@ -255,8 +249,19 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
                 initReset();
                 break;
             case R.id.tv_assess:
+                if ((brand_id != null && brand_id.length() > 0)
+                        || (fix_p_9 != null && fix_p_9.length() > 0)
+                        || (factory_time != null && factory_time.length() > 0)
+                        || (fix_p_13 != null && fix_p_13.length() > 0)
+                        || (fix_p_14 != null && fix_p_14.length() > 0)
+                        || (province != null && province.length() > 0)
+                        || (city != null && city.length() > 0)
+                        || (old_time != null && old_time.length() > 0)) {
+                    findGoodsAssess();
+                } else {
+                    ToastUtil.show(getContext(), "请输入条件");
+                }
 
-                findGoodsAssess();
                 break;
         }
     }
@@ -267,7 +272,6 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
      * 获取下拉框
      */
     private void getComboBox(final String name) {
-//        final GetComboBoxBean[] comboBoxBean = {new GetComboBoxBean()};
         showDialog();
         Map<String, String> map = new TreeMap<String, String>();
         map.put("key_group_name", name);
@@ -317,6 +321,15 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
                                                 mDataBinding.tv9.setTag(id);
                                             }
                                         }).show();
+                                    } else if ("goods_type".equals(name)) {
+                                        new DropTDialog(getActivity(), "机型", getComboBoxBean.getResult(), new DropTDialog.CallbackListener() {
+                                            @Override
+                                            public void clickResult(String id, String Nmae) {
+                                                fix_p_9 = id;
+                                                mDataBinding.tv2.setText(Nmae);
+                                                mDataBinding.tv9.setTag(id);
+                                            }
+                                        }).show();
                                     }
                                     judgeButton();
                                 } else {
@@ -337,6 +350,7 @@ public class AssessFragment extends AbsFragment<FragmentAssessBinding> implement
         fix_p_14 = "";
         province = "";
         city = "";
+        old_time = "";
 
         mDataBinding.tv1.setText("");
         mDataBinding.tv2.setText("");

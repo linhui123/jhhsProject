@@ -235,7 +235,11 @@ public class MechanicsH5Activity extends AbsActivity {
         mDataBinding.tvPk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ComparisonActivity.start(MechanicsH5Activity.this);
+                if (ConfigUtils.getCurrentUser(getApplicationContext()) != null) {
+                    ComparisonActivity.start(MechanicsH5Activity.this);
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
             }
         });
     }

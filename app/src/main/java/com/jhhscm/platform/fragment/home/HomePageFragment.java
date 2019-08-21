@@ -52,6 +52,7 @@ import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
 import com.jhhscm.platform.views.dialog.UpdateDialog;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Calendar;
 import java.util.Map;
@@ -117,6 +118,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         mDataBinding.homeEidt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(getContext(), "search");
                 SearchActivity.start(getContext());
             }
         });
@@ -416,7 +418,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                                                 public void clickYes() {
 //                                                    startCountDownTimer();
                                                 }
-                                            },true);
+                                            }, true);
                                             alertDialog.show();
                                         } else {
                                             final UpdateDialog alertDialog = new UpdateDialog(getContext(),
@@ -425,7 +427,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                                                 public void clickYes() {
 //                                                    startCountDownTimer();
                                                 }
-                                            },false);
+                                            }, false);
                                             alertDialog.show();
                                         }
                                     }
@@ -466,7 +468,8 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         mLocationOption.setNeedAddress(true);        //设置是否只定位一次,默认为false
         mLocationOption.setOnceLocation(true);        //设置是否允许模拟位置,默认为false，不允许模拟位置
         mLocationOption.setMockEnable(false);        //设置定位间隔,单位毫秒,默认为2000ms
-        mLocationOption.setInterval(2000);        //给定位客户端对象设置定位参数
+        mLocationOption.setInterval(2000);        //给
+
         mLocationClient.setLocationOption(mLocationOption);        //启动定位
         mLocationClient.startLocation();
     }
@@ -476,7 +479,6 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         public void onLocationChanged(AMapLocation amapLocation) {
             if (amapLocation != null) {
                 if (amapLocation.getErrorCode() == 0) {
-
                     double lat = amapLocation.getLatitude();
                     double lon = amapLocation.getLongitude();
                     mDataBinding.cityText.setText(amapLocation.getCity());
@@ -543,6 +545,12 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                 }
                 if (weatherlive.getWeather().contains("雪")) {
                     mDataBinding.wetherImg.setBackgroundResource(R.mipmap.ic_xue);
+                }
+                if ("雾".equals(weatherlive.getWeather())) {
+                    mDataBinding.wetherImg.setBackgroundResource(R.mipmap.ic_wu);
+                }
+                if ("霾".equals(weatherlive.getWeather())) {
+                    mDataBinding.wetherImg.setBackgroundResource(R.mipmap.ic_mai);
                 }
             } else {
 //                ToastUtil.show(getActivity(), "天气无数据");

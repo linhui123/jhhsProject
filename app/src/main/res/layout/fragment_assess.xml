@@ -36,9 +36,9 @@
                         android:layout_alignParentRight="true"
                         android:drawableRight="@mipmap/ic_point"
                         android:drawablePadding="@dimen/padding_10"
+                        android:hint="请选择"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
-                        android:text="请选择"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
@@ -53,7 +53,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="型号"
+                        android:text="机型"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
 
@@ -66,9 +66,9 @@
                         android:layout_marginTop="0dp"
                         android:drawableRight="@mipmap/ic_point"
                         android:drawablePadding="@dimen/padding_10"
+                        android:hint="请选择"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
-                        android:text="请选择"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
@@ -94,9 +94,9 @@
                         android:layout_alignParentRight="true"
                         android:drawableRight="@mipmap/ic_point"
                         android:drawablePadding="@dimen/padding_10"
+                        android:hint="请选择"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
-                        android:text="请选择"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
@@ -122,9 +122,9 @@
                         android:layout_alignParentRight="true"
                         android:drawableRight="@mipmap/ic_point"
                         android:drawablePadding="@dimen/padding_10"
+                        android:hint="请选择"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
-                        android:text="请选择"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
@@ -148,11 +148,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:maxLength="8"
                         android:background="@null"
                         android:gravity="right"
                         android:hint="请输入"
                         android:inputType="number"
+                        android:maxLength="8"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
                         android:textColor="@color/acc3"
@@ -180,9 +180,9 @@
                         android:layout_alignParentRight="true"
                         android:drawableRight="@mipmap/ic_point"
                         android:drawablePadding="@dimen/padding_10"
+                        android:hint="请选择"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
-                        android:text="请选择"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
@@ -208,18 +208,21 @@
                         android:layout_alignParentRight="true"
                         android:drawableRight="@mipmap/ic_point"
                         android:drawablePadding="@dimen/padding_10"
+                        android:hint="请选择"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
-                        android:text="请选择"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
-                <View style="@style/view_h_de" />
+                <View
+                    style="@style/view_h_de"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -235,8 +238,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:background="@null"
-                        android:hint="请输入"
                         android:gravity="right"
+                        android:hint="请输入"
                         android:inputType="numberDecimal"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
@@ -265,9 +268,9 @@
                         android:layout_alignParentRight="true"
                         android:drawableRight="@mipmap/ic_point"
                         android:drawablePadding="@dimen/padding_10"
+                        android:hint="请选择"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
-                        android:text="请选择"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>

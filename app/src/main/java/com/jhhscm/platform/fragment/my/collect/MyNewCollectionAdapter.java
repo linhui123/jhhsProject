@@ -98,7 +98,7 @@ public class MyNewCollectionAdapter extends RecyclerView.Adapter<MyNewCollection
             public void onClick(View v) {
                 String url = UrlUtils.XJXQ + "&good_code=" + data.get(position).getGood_code();
                 MechanicsH5Activity.start(context, url, "新机详情",
-                        data.get(position).getGood_code(),  data.get(position).getName(),data.get(position).getPic_url(),1);
+                        data.get(position).getGood_code(), data.get(position).getName(), data.get(position).getPic_url(), 1);
             }
         });
     }
@@ -195,13 +195,5 @@ public class MyNewCollectionAdapter extends RecyclerView.Adapter<MyNewCollection
         void deleted(FindCollectListBean.DataBean resultBean);
     }
 
-    private String wan(String toal) {
-        DecimalFormat df = new DecimalFormat("#.0000");
-        toal = df.format(Double.parseDouble(toal) / 10000);
-        //保留2位小数
-        BigDecimal b = new BigDecimal(Double.parseDouble(toal));
-        toal = b.setScale(2, BigDecimal.ROUND_DOWN).toString() + "万";
-        return toal;
-    }
 }
 

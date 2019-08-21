@@ -73,7 +73,7 @@ public class MyPeiJianCollectionAdapter extends RecyclerView.Adapter<MyPeiJianCo
         holder.rl_peijian.setVisibility(View.VISIBLE);
         ImageLoader.getInstance().displayImage(data.get(position).getPic_url(), holder.im_peijian);
         holder.tv_peijian_1.setText(data.get(position).getName());
-        holder.tv_peijian_2.setText("￥" + data.get(position).getOriginal_price());
+        holder.tv_peijian_2.setText("￥" + data.get(position).getCounter_price());
         holder.tv_peijian_3.setText("已售出 " + data.get(position).getSale_num() + "件");
 
         holder.slide.setOnClickListener(new View.OnClickListener() {
@@ -184,15 +184,6 @@ public class MyPeiJianCollectionAdapter extends RecyclerView.Adapter<MyPeiJianCo
 
     public interface DeletedItemListener {
         void deleted(FindCollectListBean.DataBean resultBean);
-    }
-
-    private String wan(String toal) {
-        DecimalFormat df = new DecimalFormat("#.0000");
-        toal = df.format(Double.parseDouble(toal) / 10000);
-        //保留2位小数
-        BigDecimal b = new BigDecimal(Double.parseDouble(toal));
-        toal = b.setScale(2, BigDecimal.ROUND_DOWN).toString() + "万";
-        return toal;
     }
 }
 

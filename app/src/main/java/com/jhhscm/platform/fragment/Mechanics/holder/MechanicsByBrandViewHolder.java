@@ -10,6 +10,7 @@ import com.jhhscm.platform.event.BrandResultEvent;
 import com.jhhscm.platform.event.CompMechanicsEvent;
 import com.jhhscm.platform.event.FinishEvent;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsByBrandBean;
+import com.jhhscm.platform.tool.CalculationUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.UrlUtils;
 
@@ -33,7 +34,7 @@ public class MechanicsByBrandViewHolder extends AbsRecyclerViewHolder<GetGoodsBy
             mBinding.tvSelect.setVisibility(View.INVISIBLE);
         }
         mBinding.tvTitle.setText(item.getName());
-        mBinding.tvPrice.setText(wan(item.getCounterPrice()));
+        mBinding.tvPrice.setText(CalculationUtils.wan1(item.getCounterPrice()));
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,16 +51,4 @@ public class MechanicsByBrandViewHolder extends AbsRecyclerViewHolder<GetGoodsBy
         });
     }
 
-    private String wan(String toal) {
-        DecimalFormat df = new DecimalFormat("#.0000");
-        toal = df.format(Double.parseDouble(toal) / 10000);
-        //保留2位小数
-        BigDecimal b = new BigDecimal(Double.parseDouble(toal));
-        if (b.compareTo(new BigDecimal(Double.parseDouble("0"))) == 0) {
-            toal = "暂无报价";
-        } else {
-            toal = b.setScale(2, BigDecimal.ROUND_DOWN).toString() + "万";
-        }
-        return toal;
-    }
 }

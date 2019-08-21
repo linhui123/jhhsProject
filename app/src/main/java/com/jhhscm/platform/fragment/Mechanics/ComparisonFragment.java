@@ -135,7 +135,10 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
             } else {
                 wAdapter.setList(getGoodsPageListBean.getData().subList(1, getGoodsPageListBean.getData().size()), true);
             }
-            compairsonAdapter.setData(getGoodsPageListBean.getData().get(0));
+            GetGoodsPageListBean.DataBean dataBean = getGoodsPageListBean.getData().get(0);
+            dataBean.setSelect(true);
+            compairsonAdapter.setData(dataBean);
+            selectDataBean.add(dataBean);
         }
 
         mDataBinding.tvHostory.setOnClickListener(new View.OnClickListener() {
@@ -291,10 +294,11 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
         if (event.resultBean != null) {
             if (compairsonAdapter.getItemCount() < 2) {
                 GetGoodsPageListBean.DataBean resultBean = new GetGoodsPageListBean.DataBean();
-                resultBean.setSelect(false);
+                resultBean.setSelect(true);
                 resultBean.setName(event.resultBean.getName());
                 resultBean.setGood_code(event.resultBean.getCode());
                 compairsonAdapter.setData(resultBean);
+                selectDataBean.add(resultBean);
             } else {
                 ToastUtil.show(getContext(), "最多只允许添加两台机型");
             }
@@ -371,8 +375,7 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
         if (selectDataBean.contains(resultBean.get(position))) {
             selectDataBean.remove(resultBean.get(position));
         }
-        resultBean.remove(position);
-        compairsonAdapter.setList(resultBean, true);
+        compairsonAdapter.removeDataByPosition(position);
     }
 
     @Override
@@ -383,6 +386,7 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
                 selectDataBean.add(dataBean);
             }
         }
+        compairsonAdapter.notifyDataSetChanged();
     }
 }
 

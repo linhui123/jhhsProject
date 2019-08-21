@@ -26,10 +26,14 @@ import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.tool.CalculationUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.DropDialog;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.apache.commons.lang3.reflect.ConstructorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,20 +71,38 @@ public class AssessResultFragment extends AbsFragment<FragmentAssessResultBindin
     private void initView() {
         intChart();
         if (findGoodsAssessBean != null) {
-            mDataBinding.tv1.setText(findGoodsAssessBean.getData().getName());
-            String data = findGoodsAssessBean.getData().getFactory_time() == null ? "" : findGoodsAssessBean.getData().getFactory_time() + "年 | ";
-            String Old_time = findGoodsAssessBean.getData().getOld_time() == null ? "" : findGoodsAssessBean.getData().getOld_time() + "小时 | ";
-            String Province = findGoodsAssessBean.getData().getProvince() == null ? "" : findGoodsAssessBean.getData().getProvince() + "-";
-            String City = findGoodsAssessBean.getData().getCity() == null ? "" : findGoodsAssessBean.getData().getCity();
-            mDataBinding.tv2.setText(data + Old_time + Province + City);
-            mDataBinding.tv3.setText(findGoodsAssessBean.getData().getCounter_price());
-            if (findGoodsAssessBean.getData().getCounter_price() != null) {
-                double price = Double.parseDouble(findGoodsAssessBean.getData().getCounter_price()) / 2;
-                mDataBinding.tvPrice1.setText(findGoodsAssessBean.getData().getOriginal_price());
+            if (findGoodsAssessBean.getPic_url()!=null){
+                ImageLoader.getInstance().displayImage(findGoodsAssessBean.getPic_url(), mDataBinding.im);
             }
 
-            mDataBinding.tvPrice2.setText(findGoodsAssessBean.getData().getCounter_price());
-            mDataBinding.tvPrice3.setText(findGoodsAssessBean.getData().getOriginal_price());
+            mDataBinding.tv1.setText(findGoodsAssessBean.getName());
+            String data = findGoodsAssessBean.getFactory_time() == null ? "" : findGoodsAssessBean.getFactory_time() + "年 | ";
+            String Old_time = findGoodsAssessBean.getOld_time() == null ? "" : findGoodsAssessBean.getOld_time() + "小时 | ";
+            String Province = findGoodsAssessBean.getProvince() == null ? "" : findGoodsAssessBean.getProvince() + "-";
+            String City = findGoodsAssessBean.getCity() == null ? "" : findGoodsAssessBean.getCity();
+            mDataBinding.tv2.setText(data + Old_time + Province + City);
+
+            mDataBinding.tv3.setText(CalculationUtils.wan(findGoodsAssessBean.getCounter_price()));
+            if (findGoodsAssessBean.getCounter_price() != null) {
+                double price = Double.parseDouble(findGoodsAssessBean.getCounter_price()) / 2;
+                mDataBinding.tvPrice1.setText(CalculationUtils.wan(price + ""));
+            }
+            mDataBinding.tvPrice2.setText(CalculationUtils.wan(findGoodsAssessBean.getCounter_price()));
+            if (findGoodsAssessBean.getCounter_price() != null) {
+                double price = Double.parseDouble(findGoodsAssessBean.getCounter_price()) * 2;
+                mDataBinding.tvPrice3.setText(CalculationUtils.wan(price + ""));
+            }
+
+            if (findGoodsAssessBean.getFix_p_13() != null && findGoodsAssessBean.getFix_p_13().equals("0")) {
+                mDataBinding.tv4.setText("未打锤");
+            } else {
+                mDataBinding.tv4.setText("打过锤");
+            }
+            if (findGoodsAssessBean.getFix_p_14() != null && findGoodsAssessBean.getFix_p_14().equals("0")) {
+                mDataBinding.tv5.setText("土方");
+            } else {
+                mDataBinding.tv5.setText("石方");
+            }
         }
     }
 
@@ -94,7 +116,7 @@ public class AssessResultFragment extends AbsFragment<FragmentAssessResultBindin
         mDataBinding.barchart.setDescription(description);  //表的描述信息
         mDataBinding.barchart.setBackgroundColor(Color.WHITE);//背景颜色
         mDataBinding.barchart.setDrawGridBackground(false);  //不显示图表网格
-        mDataBinding.barchart.setPinchZoom(false);
+        mDataBinding.barchart.setPinchZoom(false);  //设置x轴和y轴能否同时缩放。默认否
         mDataBinding.barchart.setMaxVisibleValueCount(10); //最大显示的个数。超过60个将不再显示
         mDataBinding.barchart.setScaleEnabled(false);     //禁止缩放
         mDataBinding.barchart.setDragEnabled(false);// 是否可以拖拽
@@ -132,11 +154,11 @@ public class AssessResultFragment extends AbsFragment<FragmentAssessResultBindin
 
         //模拟数据
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-        yVals1.add(new BarEntry(2020, 80));
-        yVals1.add(new BarEntry(2021, 70));
-        yVals1.add(new BarEntry(2022, 60));
-        yVals1.add(new BarEntry(2023, 50));
-        yVals1.add(new BarEntry(2024, 40));
+        yVals1.add(new BarEntry(2021, 80));
+        yVals1.add(new BarEntry(2022, 75));
+        yVals1.add(new BarEntry(2023, 70));
+        yVals1.add(new BarEntry(2024, 65));
+        yVals1.add(new BarEntry(2025, 60));
         setData(yVals1);
     }
 
@@ -161,14 +183,8 @@ public class AssessResultFragment extends AbsFragment<FragmentAssessResultBindin
             set1 = new BarDataSet(yVals1, "");
             set1.setColors(ColorTemplate.MATERIAL_COLORS);
             //数据和颜色
-//            colors = new ArrayList<Integer>();
-//            colors.add(R.color.a397);
-//            colors.add(R.color.a397);
-//            set1.setColors(colors);
             set1.setColor(Color.parseColor("#3977FE"));
             set1.setDrawValues(false);
-//            set1.setBarBorderWidth(10f);
-//            set1.setBarBorderColor(Color.WHITE);
             ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
             dataSets.add(set1);
             BarData data = new BarData(dataSets);

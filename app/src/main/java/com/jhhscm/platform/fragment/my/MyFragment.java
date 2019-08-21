@@ -92,8 +92,10 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
         LinearLayout.LayoutParams llParams = (LinearLayout.LayoutParams) mDataBinding.rlTop.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.rlTop.setLayoutParams(llParams);
-
-        getUser();
+        if (ConfigUtils.getCurrentUser(getContext()) != null
+                && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
+            getUser();
+        }
 
         mDataBinding.tvCerGo.setOnClickListener(new View.OnClickListener() {
             @Override

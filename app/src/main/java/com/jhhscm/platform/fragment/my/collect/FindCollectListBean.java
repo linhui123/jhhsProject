@@ -164,6 +164,15 @@ public class FindCollectListBean {
         private String type;
         private String sale_num;
         private String counter_price;
+        private String retail_price;
+
+        public String getRetail_price() {
+            return retail_price;
+        }
+
+        public void setRetail_price(String retail_price) {
+            this.retail_price = retail_price;
+        }
 
         public String getCounter_price() {
             return counter_price;
@@ -277,7 +286,7 @@ public class FindCollectListBean {
             this.fix_p_5 = fix_p_5;
         }
 
-        public String  getOld_time() {
+        public String getOld_time() {
             return old_time;
         }
 

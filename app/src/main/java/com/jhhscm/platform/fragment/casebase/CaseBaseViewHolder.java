@@ -6,7 +6,7 @@ import android.view.View;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemCaseBaseBinding;
 import com.jhhscm.platform.tool.BlsAppUtils;
-import com.jhhscm.platform.tool.DateUtils;
+import com.jhhscm.platform.tool.DataUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -28,7 +28,7 @@ public class CaseBaseViewHolder extends AbsRecyclerViewHolder<FindCostomerByName
         final FindCostomerByNameMhEntity.CUSTOMERDETAILSBean customerdetailsBean = item.customerdetailsBean;
         if (customerdetailsBean != null) {
             mBinding.tvName.setText(customerdetailsBean.getNAME());
-            if (DateUtils.daysBetween(customerdetailsBean.getTIME(), DateUtils.getCurDate("yyyy-MM-dd"),"yyyy-MM-dd") <= 3) {
+            if (DataUtil.daysBetween(customerdetailsBean.getTIME(), DataUtil.getCurDate("yyyy-MM-dd"),"yyyy-MM-dd") <= 3) {
                 mBinding.imNew.setVisibility(View.VISIBLE);
             } else {
                 mBinding.imNew.setVisibility(View.GONE);

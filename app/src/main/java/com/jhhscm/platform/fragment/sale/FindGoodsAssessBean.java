@@ -1,154 +1,130 @@
 package com.jhhscm.platform.fragment.sale;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class FindGoodsAssessBean implements Serializable{
-
     /**
-     * data : {"good_code":"a409a9afd6274054aa36559b50734509","city":"朔州市","counter_price":15000,"factory_time":"2019","retail_price":0,"second":0,"province":"河北省","name":"","id":41,"is_sell":0,"old_time":1500}
+     * code : 200
+     * good_code : 1000000313193788
+     * fix_p_14 : 1
+     * counter_price : 12.0
+     * name : app
+     * id : 170
+     * pic_url : http://wajueji.oss-cn-shenzhen.aliyuncs.com/oldGood/fc23b1a7600540d99a7b08bf12f2309b.jpg?Expires=1881053955&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=g0ZkAWC3zU46IxCHOKAvsC1WIKI%3D
+     * old_time : 12
+     * factory_time : 2019
      */
 
-    private DataBean data;
+    private String code;
+    private String good_code;
+    private String fix_p_14;
+    private String counter_price;
+    private String name;
+    private String id;
+    private String pic_url;
+    private String old_time;
+    private String factory_time;
+    private String city;
+    private String province;
+    private String fix_p_13;
 
-    public DataBean getData() {
-        return data;
+
+    public String getCode() {
+        return code;
     }
 
-    public void setData(DataBean data) {
-        this.data = data;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public static class DataBean implements Serializable {
-        /**
-         * good_code : a409a9afd6274054aa36559b50734509
-         * city : 朔州市
-         * counter_price : 15000
-         * factory_time : 2019
-         * retail_price : 0
-         * second : 0
-         * province : 河北省
-         * name :
-         * id : 41
-         * is_sell : 0
-         * old_time : 1500
-         */
+    public String getGood_code() {
+        return good_code;
+    }
 
-        private String message;
-        private String good_code;
-        private String city;
-        private String counter_price;
-        private String factory_time;
-        private String retail_price;
-        private int second;
-        private String province;
-        private String name;
-        private int id;
-        private int is_sell;
-        private String old_time;
-        private String original_price;
+    public void setGood_code(String good_code) {
+        this.good_code = good_code;
+    }
 
-        public String getOriginal_price() {
-            return original_price;
-        }
+    public String getFix_p_14() {
+        return fix_p_14;
+    }
 
-        public void setOriginal_price(String original_price) {
-            this.original_price = original_price;
-        }
+    public void setFix_p_14(String fix_p_14) {
+        this.fix_p_14 = fix_p_14;
+    }
 
-        public String getMessage() {
-            return message;
-        }
+    public String getCounter_price() {
+        return counter_price;
+    }
 
-        public void setMessage(String message) {
-            this.message = message;
-        }
+    public void setCounter_price(String counter_price) {
+        this.counter_price = counter_price;
+    }
 
-        public String getGood_code() {
-            return good_code;
-        }
+    public String getName() {
+        return name;
+    }
 
-        public void setGood_code(String good_code) {
-            this.good_code = good_code;
-        }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        public String getCity() {
-            return city;
-        }
+    public String getId() {
+        return id;
+    }
 
-        public void setCity(String city) {
-            this.city = city;
-        }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-        public String  getCounter_price() {
-            return counter_price;
-        }
+    public String getPic_url() {
+        return pic_url;
+    }
 
-        public void setCounter_price(String counter_price) {
-            this.counter_price = counter_price;
-        }
+    public void setPic_url(String pic_url) {
+        this.pic_url = pic_url;
+    }
 
-        public String getFactory_time() {
-            return factory_time;
-        }
+    public String getOld_time() {
+        return old_time;
+    }
 
-        public void setFactory_time(String factory_time) {
-            this.factory_time = factory_time;
-        }
+    public void setOld_time(String old_time) {
+        this.old_time = old_time;
+    }
 
-        public String getRetail_price() {
-            return retail_price;
-        }
+    public String getFactory_time() {
+        return factory_time;
+    }
 
-        public void setRetail_price(String retail_price) {
-            this.retail_price = retail_price;
-        }
+    public void setFactory_time(String factory_time) {
+        this.factory_time = factory_time;
+    }
 
-        public int getSecond() {
-            return second;
-        }
+    public String getCity() {
+        return city;
+    }
 
-        public void setSecond(int second) {
-            this.second = second;
-        }
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-        public String getProvince() {
-            return province;
-        }
 
-        public void setProvince(String province) {
-            this.province = province;
-        }
+    public String getProvince() {
+        return province;
+    }
 
-        public String getName() {
-            return name;
-        }
+    public void setProvince(String province) {
+        this.province = province;
+    }
 
-        public void setName(String name) {
-            this.name = name;
-        }
+    public String getFix_p_13() {
+        return fix_p_13;
+    }
 
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public int getIs_sell() {
-            return is_sell;
-        }
-
-        public void setIs_sell(int is_sell) {
-            this.is_sell = is_sell;
-        }
-
-        public String  getOld_time() {
-            return old_time;
-        }
-
-        public void setOld_time(String old_time) {
-            this.old_time = old_time;
-        }
+    public void setFix_p_13(String fix_p_13) {
+        this.fix_p_13 = fix_p_13;
     }
 }

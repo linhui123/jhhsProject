@@ -7,6 +7,7 @@ import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemMechanicsOldBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetOldPageListBean;
+import com.jhhscm.platform.tool.CalculationUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -35,14 +36,14 @@ public class OldMechanicsViewHolder extends AbsRecyclerViewHolder<GetOldPageList
         String City = item.getCity() == null ? "" : item.getCity();
         mBinding.tv2.setText(data + Old_time + Province + City);
 
-        String Counter_price = item.getCounter_price() == null ? "" : item.getCounter_price() + "万  ";
-        String Retail_price = item.getRetail_price() == null ? "" : "首付" + item.getRetail_price() + "万";
+        String Counter_price = item.getCounter_price() == null ? "" : CalculationUtils.wan(item.getCounter_price()) + "  ";
+        String Retail_price = item.getRetail_price() == null ? "" : "首付" + CalculationUtils.wan(item.getRetail_price());
         mBinding.tv3.setText(Counter_price + Retail_price);
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String url = UrlUtils.ESJXQ + "&good_code=" + item.getGood_code();
-                MechanicsH5Activity.start(itemView.getContext(), url, "二手机详情", item.getGood_code(), item.getName(),item.getPic_url(), 2);
+                MechanicsH5Activity.start(itemView.getContext(), url, "二手机详情", item.getGood_code(), item.getName(), item.getPic_url(), 2);
             }
         });
 
@@ -54,13 +55,5 @@ public class OldMechanicsViewHolder extends AbsRecyclerViewHolder<GetOldPageList
         });
     }
 
-    private String wan(String toal) {
-        DecimalFormat df = new DecimalFormat("#.0000");
-        toal = df.format(Double.parseDouble(toal) / 10000);
-        //保留2位小数
-        BigDecimal b = new BigDecimal(Double.parseDouble(toal));
-        toal = b.setScale(2, BigDecimal.ROUND_DOWN).toString() + "万";
-        return toal;
-    }
 }
 

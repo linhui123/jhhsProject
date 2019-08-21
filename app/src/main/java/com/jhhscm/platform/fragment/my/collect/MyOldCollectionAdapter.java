@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.h5.MechanicsH5Activity;
 import com.jhhscm.platform.event.ConsultationEvent;
+import com.jhhscm.platform.tool.CalculationUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.slideswaphelper.SlideSwapAction;
@@ -88,8 +89,8 @@ public class MyOldCollectionAdapter extends RecyclerView.Adapter<MyOldCollection
         String City = data.get(position).getCity() == null ? "" : data.get(position).getCity();
         holder.tv_old_2.setText(Old_time + Province + City);
 
-        String Counter_price = data.get(position).getOriginal_price() == null ? "" : wan(data.get(position).getOriginal_price()) + "  ";
-        String Retail_price = data.get(position).getOriginal_price() == null ? "" : "首付" + wan(data.get(position).getOriginal_price());
+        String Counter_price = data.get(position).getCounter_price() == null ? "" : CalculationUtils.wan(data.get(position).getCounter_price()) + "  ";
+        String Retail_price = data.get(position).getRetail_price() == null ? "" : "首付" + CalculationUtils.wan(data.get(position).getRetail_price());
 
         holder.tv_old_3.setText(Counter_price + Retail_price);
 
@@ -202,15 +203,6 @@ public class MyOldCollectionAdapter extends RecyclerView.Adapter<MyOldCollection
 
     public interface DeletedItemListener {
         void deleted(FindCollectListBean.DataBean resultBean);
-    }
-
-    private String wan(String toal) {
-        DecimalFormat df = new DecimalFormat("#.0000");
-        toal = df.format(Double.parseDouble(toal) / 10000);
-        //保留2位小数
-        BigDecimal b = new BigDecimal(Double.parseDouble(toal));
-        toal = b.setScale(2, BigDecimal.ROUND_DOWN).toString() + "万";
-        return toal;
     }
 }
 

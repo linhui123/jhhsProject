@@ -45,7 +45,6 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.ComparisonActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.MainActivity;
 import com.jhhscm.platform.activity.base.AbsActivity;

@@ -51,7 +51,15 @@ public class ADActivity extends AbsActivity {
         imageView = (ImageView) findViewById(R.id.iv_image);
         textView = (TextView) findViewById(R.id.tv_time);
         relativeLayout = (RelativeLayout) findViewById(R.id.ll_layouts);
-        getAD(1);
+
+        if (getIntent().getStringExtra("imUrl") != null) {
+            relativeLayout.setVisibility(View.VISIBLE);
+            ImageLoader.getInstance().displayImage(getIntent().getStringExtra("imUrl"), imageView);
+            startCountDownTimer(2000);
+        } else {
+            getAD(1);
+        }
+
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +79,7 @@ public class ADActivity extends AbsActivity {
 
             @Override
             public void onFinish() {
-                if (!Instance){
+                if (!Instance) {
                     startNewActivity(MainActivity.class);
                     finish();
                 }

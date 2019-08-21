@@ -24,6 +24,7 @@ import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.tool.CalculationUtils;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.StringUtils;
@@ -180,7 +181,7 @@ public class ComparisonDetailFragment extends AbsFragment<FragmentComparisonDeta
     private void initRight(GetGoodsDetailsBean getGoodsDetailsBean) {
         mDataBinding.tvNameR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getName());
         if (getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price() != null) {
-            mDataBinding.tvPriceR.setText(wan(getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price()));
+            mDataBinding.tvPriceR.setText(CalculationUtils.wan1(getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price()));
         }
 
         mDataBinding.tvDongliR.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p_10_text());
@@ -201,7 +202,7 @@ public class ComparisonDetailFragment extends AbsFragment<FragmentComparisonDeta
     private void initLeft(GetGoodsDetailsBean getGoodsDetailsBean) {
         mDataBinding.tvName.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getName());
         if (getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price() != null) {
-            mDataBinding.tvPrice.setText(wan(getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price()));
+            mDataBinding.tvPrice.setText(CalculationUtils.wan1(getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price()));
         }
         mDataBinding.tvDongli.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getFix_p_10_text());
         mDataBinding.tvChanshang.setText(getGoodsDetailsBean.getResult().getGoodsDetails().getMerchant_text());
@@ -342,16 +343,4 @@ public class ComparisonDetailFragment extends AbsFragment<FragmentComparisonDeta
         }
     }
 
-    private String wan(String toal) {
-        if (Double.parseDouble(toal) == 0.0) {
-            return "暂无报价";
-        } else {
-            DecimalFormat df = new DecimalFormat("#.0000");
-            toal = df.format(Double.parseDouble(toal) / 10000);
-            //保留2位小数
-            BigDecimal b = new BigDecimal(Double.parseDouble(toal));
-            toal = b.setScale(2, BigDecimal.ROUND_DOWN).toString() + "万";
-            return toal;
-        }
-    }
 }
