@@ -20,6 +20,7 @@ import com.jhhscm.platform.databinding.ItemHomeProjectListBinding;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,7 @@ public class HomePageBrandViewHolder extends AbsRecyclerViewHolder<HomePageItem>
             mBinding.rl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MobclickAgent.onEvent(itemView.getContext(), "brand_home");
                     BrandActivity.start(itemView.getContext(), 2);
                 }
             });
@@ -79,6 +81,7 @@ public class HomePageBrandViewHolder extends AbsRecyclerViewHolder<HomePageItem>
             mBinding.rlName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MobclickAgent.onEvent(itemView.getContext(), "brand_home");
                     EventBusUtil.post(new JumpEvent("MECHANICAL", item.getId(), item.getName()));
 //                    MechanicsByBrandActivity.start(itemView.getContext(), item.getId(),1);
                 }

@@ -5,13 +5,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_below="@+id/rl_top"
-            android:background="@color/a397" />
+        android:layout_height="wrap_content"
+        android:background="@color/a397">
 
         <com.jhhscm.platform.views.OvalLinearLayout
             android:layout_width="match_parent"

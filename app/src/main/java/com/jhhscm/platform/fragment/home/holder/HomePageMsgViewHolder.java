@@ -17,6 +17,7 @@ import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
 import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ public class HomePageMsgViewHolder extends AbsRecyclerViewHolder<HomePageItem> {
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(itemView.getContext(), "labour_home");
                 LabourActivity.start(itemView.getContext());
             }
         });
@@ -72,6 +74,7 @@ public class HomePageMsgViewHolder extends AbsRecyclerViewHolder<HomePageItem> {
             mBinding.rlName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MobclickAgent.onEvent(itemView.getContext(), "labour_home");
                     LabourDetailActivity.start(itemView.getContext(), 0,
                             new FindLabourReleaseListBean.DataBean(item.getId(), "0", item.getLabour_code()));
                 }

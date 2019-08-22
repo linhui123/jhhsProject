@@ -45,7 +45,7 @@ public class MyApplication extends Application {
         this.api = api;
     }
 
-    //private String umengKey="5d1ad0b94ca35789cd000bd3";
+    //private String umengKey="5d5e074c4ca357dd29000b23";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -65,7 +65,7 @@ public class MyApplication extends Application {
         }
 //        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "");
         //初始化
-        UMConfigure.init(this,"5d1ad0b94ca35789cd000bd3","",UMConfigure.DEVICE_TYPE_PHONE,"5d1ad0b94ca35789cd000bd3");
+        UMConfigure.init(this,"5d5e074c4ca357dd29000b23","",UMConfigure.DEVICE_TYPE_PHONE,"5d5e074c4ca357dd29000b23");
         //开启Log
 //        UMConfigure.setLogEnabled(true);
         //打开调试模式

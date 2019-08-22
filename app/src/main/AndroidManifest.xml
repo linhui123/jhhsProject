@@ -388,7 +388,7 @@
         <!-- //统计 -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5d1ad0b94ca35789cd000bd3" />
+            android:value="5d5e074c4ca357dd29000b23" />
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />

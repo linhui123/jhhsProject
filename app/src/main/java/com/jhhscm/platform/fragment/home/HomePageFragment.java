@@ -111,6 +111,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         mDataBinding.msgImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(getContext(), "msg_home");
                 MsgActivity.start(getActivity());
             }
         });
@@ -118,7 +119,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         mDataBinding.homeEidt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MobclickAgent.onEvent(getContext(), "search");
+                MobclickAgent.onEvent(getContext(), "search_home");
                 SearchActivity.start(getContext());
             }
         });
@@ -151,6 +152,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
 
                     @Override
                     public void clickYes(String phone) {
+                        MobclickAgent.onEvent(getContext(), "consult_home");
                         saveMsg(phone);
                     }
                 }).show();
@@ -389,11 +391,12 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         String version = ExampleUtil.GetVersion(getContext()).contains("V")
                 ? ExampleUtil.GetVersion(getContext()).replace("V", "")
                 : ExampleUtil.GetVersion(getContext());
+        Log.e("", "version " + version);
         map.put("app_version", version);
         map.put("app_type", "0");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "saveMsg");
+        String sign = Sign.getSignKey(getActivity(), map, "checkVersion");
         NetBean netBean = new NetBean();
         netBean.setToken("");
         netBean.setSign(sign);
@@ -410,13 +413,14 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
                                     CheckVersionBean checkVersionBean = response.body().getData();
-                                    if ("0".equals(checkVersionBean.getIs_update())) {//需要更新
+                                    if ("0".equals(checkVersionBean.getIs_update())
+//                                            && checkVersionBean.getUrl() != null
+                                    ) {//需要更新
                                         if ("0".equals(checkVersionBean.getIs_must_update())) {//需要强制更新
                                             final UpdateDialog alertDialog = new UpdateDialog(getContext(),
                                                     checkVersionBean.getUrl(), new UpdateDialog.CallbackListener() {
                                                 @Override
                                                 public void clickYes() {
-//                                                    startCountDownTimer();
                                                 }
                                             }, true);
                                             alertDialog.show();

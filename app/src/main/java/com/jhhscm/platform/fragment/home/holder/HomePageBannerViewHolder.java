@@ -67,6 +67,7 @@ public class HomePageBannerViewHolder extends AbsRecyclerViewHolder<HomePageItem
             mBinding.bgaBanner.setDelegate(new BGABanner.Delegate() {
                 @Override
                 public void onBannerItemClick(BGABanner banner, View itemViews, @Nullable Object model, int position) {
+                    MobclickAgent.onEvent(itemView.getContext(), "banner_home");
                     AdBean adBean = item.adBean1;
                     AdBean.ResultBean resultBean = adBean.getResult().get(position);
                     Gson gson = new Gson();

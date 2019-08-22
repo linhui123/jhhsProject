@@ -14,6 +14,7 @@ import com.jhhscm.platform.databinding.ItemHomeRecommendListBinding;
 import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 public class HomePageRecommendViewHolder extends AbsRecyclerViewHolder<HomePageItem> {
 
@@ -33,6 +34,7 @@ public class HomePageRecommendViewHolder extends AbsRecyclerViewHolder<HomePageI
         mBinding.llLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(itemView.getContext(), "parts_home");
                 PeiJianActivity.start(itemView.getContext());
             }
         });
@@ -66,6 +68,7 @@ public class HomePageRecommendViewHolder extends AbsRecyclerViewHolder<HomePageI
             mBinding.rlName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MobclickAgent.onEvent(itemView.getContext(), "parts_home");
                     PeiJianActivity.start(itemView.getContext(), item.getId(), item.getName());
                 }
             });

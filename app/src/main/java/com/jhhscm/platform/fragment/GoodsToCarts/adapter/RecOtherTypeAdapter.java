@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.views.slideswaphelper.SlideSwapAction;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -116,11 +117,15 @@ public class RecOtherTypeAdapter extends RecyclerView.Adapter<RecOtherTypeAdapte
         holder.imJian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int num = Integer.parseInt(holder.tvNum.getText().toString()) - 1;
-                holder.tvNum.setText(num + "");
-                data.get(position).setNumber(num + "");
-                if (null != changeListener) {
-                    changeListener.changeCount(data, position);
+                if (Integer.parseInt(holder.tvNum.getText().toString()) > 1) {
+                    int num = Integer.parseInt(holder.tvNum.getText().toString()) - 1;
+                    holder.tvNum.setText(num + "");
+                    data.get(position).setNumber(num + "");
+                    if (null != changeListener) {
+                        changeListener.changeCount(data, position);
+                    }
+                } else {
+                    ToastUtil.show(context, "商品数量不能为空！");
                 }
             }
         });

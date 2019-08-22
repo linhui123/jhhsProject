@@ -1,11 +1,13 @@
 package com.jhhscm.platform.fragment.my.order;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,12 +44,14 @@ import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.ConfigUtils;
+import com.jhhscm.platform.tool.DataUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.Utils;
+import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.lang.reflect.Method;
@@ -87,9 +91,10 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         }
 
         type = getArguments().getInt("type");
-        Log.e("type", "type :"+type);
+        Log.e("type", "type :" + type);
         order_code = getArguments().getString("orderGood");
 
+        mDataBinding.rv.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.rv.setAdapter(mAdapter);
@@ -208,7 +213,8 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         if (type == 1) {
             mDataBinding.orderType.setText(findOrderBean.getOrder().getOrder_text());
             //剩余支付时间
-            mDataBinding.tvInfo.setText("剩1小时17分钟将自动关闭");
+            startCountDown();
+//            mDataBinding.tvInfo.setText("剩1小时17分钟将自动关闭");
             mDataBinding.tvCancle.setVisibility(View.VISIBLE);
             mDataBinding.tvTijiao.setVisibility(View.VISIBLE);
             mDataBinding.rlWuliu.setVisibility(View.GONE);
@@ -223,7 +229,11 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         } else if (type == 3) {
             mDataBinding.orderType.setText(findOrderBean.getOrder().getOrder_text());
             //剩余确认收货时间
-            mDataBinding.tvInfo.setText("剩7天20小时30分钟将自动确认收货");
+            if (findOrderBean.getOrder().getShip_time() != null) {
+                receivingCountDown();
+            } else {
+                mDataBinding.tvInfo.setText("剩7天将自动确认收货");
+            }
             mDataBinding.tvWuliu.setText(findOrderBean.getOrder().getShip_channel());
             mDataBinding.tvWuliuNo.setText(findOrderBean.getOrder().getShip_sn());
             mDataBinding.tvIm.setBackgroundResource(R.mipmap.ic_order_3);
@@ -356,4 +366,52 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         return cmb.getText().toString().trim();
     }
 
+    private void startCountDown() {
+        long nowTime = System.currentTimeMillis();
+        final long lastTimeLong = DataUtil.getLongTime(nowTime, findOrderBean.getOrder().getEnd_time(), "yyyy-MM-dd HH:mm:ss");
+
+        CountDownTimer countDownTimer = new CountDownTimer(lastTimeLong, 1000 * 60) {
+            @SuppressLint("StringFormatMatches")
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (getView() != null) {
+                    final String showTime = DataUtil.getLongTZ(millisUntilFinished, "yyyy-MM-dd HH:mm:ss");
+                    mDataBinding.tvInfo.setText("剩" + showTime + "将自动关闭");
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                if (getView() != null) {
+                    mDataBinding.tvTijiao.setVisibility(View.GONE);
+                    mDataBinding.tvInfo.setText("支付时间已超时，请重新下单");
+                }
+            }
+        };
+        countDownTimer.start();
+    }
+
+    private void receivingCountDown() {
+        long nowTime = System.currentTimeMillis();
+        final long lastTimeLong = DataUtil.getLongTimeReceive(nowTime, findOrderBean.getOrder().getShip_time(), 7, "yyyy-MM-dd HH:mm:ss");
+
+        CountDownTimer countDownTimer = new CountDownTimer(lastTimeLong, 1000 * 60) {
+            @SuppressLint("StringFormatMatches")
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (getView() != null) {
+                    final String showTime = DataUtil.getReceiveDay(millisUntilFinished, "yyyy-MM-dd HH:mm:ss");
+                    mDataBinding.tvInfo.setText("剩" + showTime + "将自动确认收货");
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                if (getView() != null) {
+                    mDataBinding.tvInfo.setText("自动收货");
+                }
+            }
+        };
+        countDownTimer.start();
+    }
 }

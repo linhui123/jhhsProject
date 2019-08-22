@@ -36,6 +36,7 @@ public class HomePageSendFriendsViewHolder extends AbsRecyclerViewHolder<HomePag
             @Override
             public void onClick(View v) {
                 if (mBinding.etPhone.getText().toString().length() > 8) {
+                    MobclickAgent.onEvent(itemView.getContext(), "consult_home");
                     EventBusUtil.post(new ConsultationEvent(mBinding.etPhone.getText().toString()));
                 }else {
                     ToastUtils.show(itemView.getContext(),"请输入正确的手机号");

@@ -57,14 +57,19 @@ android {
 //        }
 //
 //    }
+    /**友盟渠道*/
     productFlavors {
-        huawei {
-            targetSdkVersion 27
-        }
+        updata { targetSdkVersion 27 }
+        vivo { targetSdkVersion 27 }
+        oppo { targetSdkVersion 27 }
+        xiaomi { targetSdkVersion 27 }
+        huawei { targetSdkVersion 27 }
+        yingyongbao { targetSdkVersion 27 }
+        c360 { targetSdkVersion 27 }
+
         productFlavors.all {
             flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
         }
-
     }
 
     lintOptions {

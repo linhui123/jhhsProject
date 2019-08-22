@@ -86,7 +86,7 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
 
             @Override
             public void onLoadMore(RecyclerView view) {
-                findOrderList(true, type);
+                findOrderList(false, type);
             }
         });
 

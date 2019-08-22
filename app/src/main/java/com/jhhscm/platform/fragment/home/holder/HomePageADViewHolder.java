@@ -41,6 +41,7 @@ public class HomePageADViewHolder extends AbsRecyclerViewHolder<HomePageItem> {
                 @Override
                 public void onClick(View v) {
                     if (list.size() > 0) {
+                        MobclickAgent.onEvent(itemView.getContext(), "ad_home");
                         AdBean adBean = item.adBean2;
                         AdBean.ResultBean resultBean = adBean.getResult().get(0);
                         Gson gson = new Gson();

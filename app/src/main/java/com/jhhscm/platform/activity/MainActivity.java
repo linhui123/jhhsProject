@@ -138,6 +138,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         mDataBinding.rdExpend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(getApplicationContext(), "add_Fragment");
                 new HomeAlterDialog(MainActivity.this, new HomeAlterDialog.CallbackListener() {
 
                     @Override
@@ -192,6 +193,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
             transaction1.hide(mMeFragment);
         }
         if (checkedId == R.id.rd_analysis) {
+            MobclickAgent.onEvent(getApplicationContext(), "home_Fragment");
             if (homeFragment == null) {
                 homeFragment = new HomePageFragment();
                 transaction1.add(R.id.fl, homeFragment, "homeFragment");
@@ -200,6 +202,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
             }
 
         } else if (checkedId == R.id.rd_educationadmin) {
+            MobclickAgent.onEvent(getApplicationContext(), "mechanics_Fragment");
             if (mechanicsFragment == null) {
                 mechanicsFragment = new MechanicsFragment();
                 transaction1.add(R.id.fl, mechanicsFragment, "mechanicsFragment");
@@ -208,6 +211,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
             }
 
         } else if (checkedId == R.id.rd_finance) {
+            MobclickAgent.onEvent(getApplicationContext(), "financial_Fragment");
             if (financialFragment == null) {
                 financialFragment = new FinancialFragment();
                 transaction1.add(R.id.fl, financialFragment, "mFinancialFragment");
@@ -215,6 +219,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
                 transaction1.show(financialFragment);
             }
         } else if (checkedId == R.id.rd_me) {
+            MobclickAgent.onEvent(getApplicationContext(), "my_Fragment");
             if (mMeFragment == null) {
                 mMeFragment = new MyFragment();
                 transaction1.add(R.id.fl, mMeFragment, "mMeFragment");

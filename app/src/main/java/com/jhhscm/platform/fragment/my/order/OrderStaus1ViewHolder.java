@@ -43,10 +43,12 @@ public class OrderStaus1ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
                 type = "1";
                 mBinding.cancle.setVisibility(View.VISIBLE);
                 mBinding.pay.setVisibility(View.VISIBLE);
+                mBinding.wuliu.setVisibility(View.GONE);
             } else if (item.orderBean.getOrder_status().contains("20")) {
                 type = "2";
                 mBinding.cancle.setVisibility(View.GONE);
                 mBinding.pay.setVisibility(View.GONE);
+                mBinding.wuliu.setVisibility(View.GONE);
             } else if (item.orderBean.getOrder_status().contains("30")) {
                 type = "3";
                 mBinding.cancle.setVisibility(View.GONE);
@@ -60,6 +62,7 @@ public class OrderStaus1ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
             } else {
                 mBinding.cancle.setVisibility(View.GONE);
                 mBinding.pay.setVisibility(View.GONE);
+                mBinding.wuliu.setVisibility(View.GONE);
             }
 
             mBinding.rv.addItemDecoration(new DividerItemDecoration(itemView.getContext()));

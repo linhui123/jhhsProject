@@ -166,6 +166,12 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
             getCartGoodsByUserCodeBean.addAll(resultBeans);
             mDataBinding.refreshlayout.finishLoadMore(1000);
         }
+
+        if (recAdapter.getItemCount() == 0) {
+            mDataBinding.rlCaseBaseNull.setVisibility(View.VISIBLE);
+        } else {
+            mDataBinding.rlCaseBaseNull.setVisibility(View.GONE);
+        }
     }
 
     private void initView() {

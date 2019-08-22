@@ -58,7 +58,6 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
 
     @Override
     protected void setupViews() {
-        MobclickAgent.onEvent(getContext(), "search");
         LinearLayout.LayoutParams llParams = (LinearLayout.LayoutParams) mDataBinding.llTop.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.llTop.setLayoutParams(llParams);

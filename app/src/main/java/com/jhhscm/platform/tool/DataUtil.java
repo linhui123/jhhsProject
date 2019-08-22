@@ -68,6 +68,66 @@ public class DataUtil {
     }
 
     /**
+     * 获取剩余收货时间
+     */
+    public static Long getLongTimeReceive(long startTime, String endTime, long keepDay, String pattern) {
+        long longStart = startTime; //获取开始时间毫秒数
+        long keepTime = keepDay * 24 * 60 * 60 * 1000;
+        long longEnd = keepTime + getTimeMillis(endTime, pattern);  //获取结束时间毫秒数
+        long longExpend = longEnd - longStart;  //获取时间差
+        Log.e("getLongTimeReceive", "keepDay    " + keepDay);
+        Log.e("getLongTimeReceive", "longStart  " + longStart);
+        Log.e("getLongTimeReceive", "endTime    " + getTimeMillis(endTime, pattern));
+        Log.e("getLongTimeReceive", "keepTime   " + keepTime);
+        Log.e("getLongTimeReceive", "longEnd    " + longEnd);
+        Log.e("getLongTimeReceive", "longExpend " + longExpend);
+        return longExpend;
+    }
+
+    /**
+     * keepDay 默认收货天数
+     * 1天=86400000毫秒
+     * 获取剩余收货时间-时间差计算（中文提示)
+     */
+    public static String getReceiveDay(long longTime, String pattern) {
+        long longExpend = longTime;//剩余自动收货时间
+
+        long longDay = longExpend / (24 * 60 * 60 * 1000); //根据时间差来计算天数
+        long longHours = (longExpend - longDay * (24 * 60 * 60 * 1000)) / (60 * 60 * 1000); //根据时间差来计算小时数
+        long longMinutes = (longExpend - longDay * (24 * 60 * 60 * 1000) - longHours * (60 * 60 * 1000)) / (60 * 1000);   //根据时间差来计算分钟数
+        return longDay + "天" + longHours + "小时" + longMinutes + "分钟";
+    }
+
+    /**
+     * 时间差计算（中文提示hh.mm.ss)
+     */
+    public static String getLongTZ(long longTime, String pattern) {
+        long longExpend = longTime;  //获取时间差
+        long longHours = longExpend / (60 * 60 * 1000); //根据时间差来计算小时数
+        long longMinutes = (longExpend - longHours * (60 * 60 * 1000)) / (60 * 1000);   //根据时间差来计算分钟数
+        return longHours + "小时" + longMinutes + "分钟";
+    }
+
+    /**
+     * 时间差计算(小时差)
+     */
+    public static String getLongToHours(long longTime, String pattern) {
+        long longExpend = longTime;  //获取时间差
+        long longHours = longExpend / (60 * 60 * 1000); //根据时间差来计算小时数
+        return longHours + "";
+    }
+
+    /**
+     * 时间差计算(分钟差)
+     */
+    public static String getLongToMintues(long longTime, String pattern) {
+        long longExpend = longTime;  //获取时间差
+        long longHours = longExpend / (60 * 60 * 1000); //根据时间差来计算小时数
+        long longMinutes = (longExpend - longHours * (60 * 60 * 1000)) / (60 * 1000);   //根据时间差来计算分钟数
+        return longMinutes + "";
+    }
+
+    /**
      * 时间差计算
      */
     public static Long getLongTime(String startTime, String endTime, String pattern) {
@@ -83,6 +143,7 @@ public class DataUtil {
         long longExpend = longEnd - longStart;  //获取时间差
         return longExpend;
     }
+
 
     /**
      * 时间转化毫秒
