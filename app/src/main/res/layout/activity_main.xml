@@ -63,8 +63,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#ffffff"
-                android:paddingBottom="@dimen/dp_3"
                 android:button="@null"
+                android:paddingBottom="@dimen/dp_3"
                 android:src="@drawable/home_bottom_expend" />
 
             <RadioButton
@@ -74,10 +74,10 @@
                 android:layout_weight="1"
                 android:background="#fff"
                 android:button="@null"
-                android:drawableTop="@drawable/operationmanage_fiance_selector"
+                android:drawableTop="@drawable/zulin_selector"
                 android:drawablePadding="3dp"
                 android:gravity="center"
-                android:text="金服"
+                android:text="租赁"
                 android:textColor="@drawable/index_textcolor_selecter"
                 android:textSize="@dimen/text_size_12" />
 

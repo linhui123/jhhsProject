@@ -14,6 +14,7 @@ import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.event.OrderSussessEvent;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
+import com.umeng.analytics.MobclickAgent;
 
 public class SaleMechanicsTopViewHolder extends AbsRecyclerViewHolder<SaleItem> {
 
@@ -41,6 +42,7 @@ public class SaleMechanicsTopViewHolder extends AbsRecyclerViewHolder<SaleItem> 
         mBinding.tvGujia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MobclickAgent.onEvent(itemView.getContext(), "old_mechanics_assess");
                 AssessActivity.start(itemView.getContext());
             }
         });

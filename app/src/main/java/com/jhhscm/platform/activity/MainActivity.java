@@ -23,11 +23,13 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsActivity;
+import com.jhhscm.platform.activity.h5.FinancialH5Activity;
 import com.jhhscm.platform.activity.h5.H5Activity;
+import com.jhhscm.platform.activity.h5.ZuLinFragment;
 import com.jhhscm.platform.activity.h5.ZuLinH5Activity;
 import com.jhhscm.platform.event.BrandResultEvent;
 import com.jhhscm.platform.event.JumpEvent;
-import com.jhhscm.platform.fragment.FinancialFragment;
+import com.jhhscm.platform.activity.h5.FinancialFragment;
 import com.jhhscm.platform.fragment.Mechanics.MechanicsFragment;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.HomePageFragment;
@@ -46,12 +48,8 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import com.jhhscm.platform.databinding.ActivityMainBinding;
-
-import cn.jpush.android.api.JPushInterface;
-import cn.jpush.android.api.TagAliasCallback;
 
 import static android.app.Notification.EXTRA_CHANNEL_ID;
 import static android.provider.Settings.EXTRA_APP_PACKAGE;
@@ -64,7 +62,8 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     private List<Fragment> mFragments = new ArrayList<Fragment>();
     private HomePageFragment homeFragment;
     private MechanicsFragment mechanicsFragment;
-    private FinancialFragment financialFragment;
+//        private FinancialFragment financialFragment;
+    private ZuLinFragment zuLinFragment;
     private MyFragment mMeFragment;
 
     private FragmentManager fm;
@@ -133,7 +132,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         transaction = fm.beginTransaction();
         homeFragment = (HomePageFragment) fm.findFragmentByTag("homeFragment");
         mechanicsFragment = (MechanicsFragment) fm.findFragmentByTag("mechanicsFragment");
-        financialFragment = (FinancialFragment) fm.findFragmentByTag("mFinancialFragment");
+        zuLinFragment = (ZuLinFragment) fm.findFragmentByTag("zuLinFragment");
         mMeFragment = (MyFragment) fm.findFragmentByTag("mMeFragment");
         mDataBinding.rdExpend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,8 +185,8 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         if (mechanicsFragment != null) {
             transaction1.hide(mechanicsFragment);
         }
-        if (financialFragment != null) {
-            transaction1.hide(financialFragment);
+        if (zuLinFragment != null) {
+            transaction1.hide(zuLinFragment);
         }
         if (mMeFragment != null) {
             transaction1.hide(mMeFragment);
@@ -212,11 +211,11 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
 
         } else if (checkedId == R.id.rd_finance) {
             MobclickAgent.onEvent(getApplicationContext(), "financial_Fragment");
-            if (financialFragment == null) {
-                financialFragment = new FinancialFragment();
-                transaction1.add(R.id.fl, financialFragment, "mFinancialFragment");
+            if (zuLinFragment == null) {
+                zuLinFragment = new ZuLinFragment();
+                transaction1.add(R.id.fl, zuLinFragment, "zuLinFragment");
             } else {
-                transaction1.show(financialFragment);
+                transaction1.show(zuLinFragment);
             }
         } else if (checkedId == R.id.rd_me) {
             MobclickAgent.onEvent(getApplicationContext(), "my_Fragment");
@@ -302,25 +301,36 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
                 onCheckedChanged(mDataBinding.rgOper, R.id.rd_analysis);
                 mDataBinding.rdAnalysis.setChecked(true);
             } else if ("MECHANICAL".equals(event.getType())) {//机械
+                MobclickAgent.onEvent(getApplicationContext(), "mechanics_button_home");
                 if (event.getBrand_id() != null) {
                     EventBusUtil.post(new BrandResultEvent(event.getBrand_id(), event.getBrand_name()));
                 }
                 onCheckedChanged(mDataBinding.rgOper, R.id.rd_educationadmin);
                 mDataBinding.rdEducationadmin.setChecked(true);
             } else if ("PARTS".equals(event.getType())) {//配件
+                MobclickAgent.onEvent(getApplicationContext(), "parts_button_home");
                 PeiJianActivity.start(MainActivity.this);
             } else if ("AFTER_SALE".equals(event.getType())) {//售后
+                MobclickAgent.onEvent(getApplicationContext(), "after_button_home");
                 ToastUtils.show(MainActivity.this, "该功能正在建设中");
             } else if ("GOLD".equals(event.getType())) {//金服
-                onCheckedChanged(mDataBinding.rgOper, R.id.rd_finance);
-                mDataBinding.rdFinance.setChecked(true);
+                MobclickAgent.onEvent(getApplicationContext(), "gold_button_home");
+                FinancialH5Activity.start(MainActivity.this, UrlUtils.JF, "金服");
+//                onCheckedChanged(mDataBinding.rgOper, R.id.rd_finance);
+//                mDataBinding.rdFinance.setChecked(true);
             } else if ("STEWARD".equals(event.getType())) {//管家
+                MobclickAgent.onEvent(getApplicationContext(), "steward_button_home");
                 ToastUtils.show(MainActivity.this, "该功能正在建设中");
             } else if ("RENT".equals(event.getType())) {//租赁
-                ZuLinH5Activity.start(MainActivity.this, UrlUtils.ZL, "租赁");
+                MobclickAgent.onEvent(getApplicationContext(), "rent_button_home");
+//                ZuLinH5Activity.start(MainActivity.this, UrlUtils.ZL, "租赁");
+                onCheckedChanged(mDataBinding.rgOper, R.id.rd_finance);
+                mDataBinding.rdFinance.setChecked(true);
             } else if ("PROJECT".equals(event.getType())) {//工程
+                MobclickAgent.onEvent(getApplicationContext(), "project_button_home");
                 ToastUtils.show(MainActivity.this, "该功能正在建设中");
             } else if ("LABOUR".equals(event.getType())) {//劳务
+                MobclickAgent.onEvent(getApplicationContext(), "labour_button_home");
                 LabourActivity.start(MainActivity.this);
             } else if ("WEB".equals(event.getType())) {//外部链接
                 Gson gson = new Gson();

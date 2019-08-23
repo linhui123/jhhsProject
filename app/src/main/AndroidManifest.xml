@@ -11,14 +11,14 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 电话权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.READ_CALL_LOG" />
-    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
+    <!--<uses-permission android:name="android.permission.READ_CALL_LOG" />-->
+    <!--<uses-permission android:name="android.permission.WRITE_CALL_LOG" />-->
     <uses-permission android:name="com.android.voicemail.permission.ADD_VOICEMAIL" />
     <uses-permission android:name="android.permission.USE_SIP" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" /> <!-- 短信权限 -->
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
+    <!--<uses-permission android:name="android.permission.SEND_SMS" />-->
+    <!--<uses-permission android:name="android.permission.RECEIVE_SMS" />-->
+    <!--<uses-permission android:name="android.permission.READ_SMS" />-->
     <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH" />
     <uses-permission android:name="android.permission.RECEIVE_MMS" /> <!-- Required -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -26,6 +26,7 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.NOTIFICATION_RECEIVED" />
     <uses-permission android:name="android.permission.NOTIFICATION_OPENED" />
+
     <permission
         android:name="com.jhhscm.platform.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
@@ -52,7 +53,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme.TranslucentStatusBar">
-        <activity android:name=".activity.h5.ZuLinH5Activity"></activity>
+        <activity android:name=".activity.h5.FinancialH5Activity"></activity>
+        <activity android:name=".activity.h5.ZuLinH5Activity" />
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.AuthenticationActivity" />
         <activity
@@ -278,7 +280,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
 
         <meta-data
             android:name="android.max_aspect"

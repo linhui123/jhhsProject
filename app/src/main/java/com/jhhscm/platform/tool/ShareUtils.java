@@ -7,9 +7,14 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.view.View;
 
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.umeng.socialize.ShareAction;
@@ -18,6 +23,8 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.utils.SLog;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by intel on 2018/11/12.
@@ -171,4 +178,106 @@ public class ShareUtils {
     }
 
 
+    /**
+     * 分享url地址
+     *
+     * @param url   地址
+     * @param title 标题
+     * @param desc  描述
+     */
+    public static void shareUrlToWx(final Context context, final String url, final String title, final String desc, final String iconUrl, final int flag) {
+        if (((MyApplication) context).getApi() != null && !((MyApplication) context).getApi().isWXAppInstalled()) {
+            ToastUtil.show(context, "您还未安装微信客户端,无法使用该功能！");
+            return;
+        }
+        if (iconUrl != null && iconUrl.length() > 0) {
+            ImageLoader.getInstance().loadImage(iconUrl, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    super.onLoadingComplete(imageUri, view, loadedImage);
+                    WXWebpageObject webpage = new WXWebpageObject();
+                    webpage.webpageUrl = url;
+                    WXMediaMessage msg = new WXMediaMessage(webpage);
+                    msg.title = title;
+                    msg.description = desc;
+                    //这里替换一张自己工程里的图片资源
+                    msg.thumbData = bmpToByteArray(loadedImage, 32);
+                    SendMessageToWX.Req req = new SendMessageToWX.Req();
+                    req.transaction = String.valueOf(System.currentTimeMillis());
+                    req.message = msg;
+                    req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+                    ((MyApplication) context).getApi().sendReq(req);
+                }
+            });
+        } else {
+            WXWebpageObject webpage = new WXWebpageObject();
+            webpage.webpageUrl = url;
+            WXMediaMessage msg = new WXMediaMessage(webpage);
+            msg.title = title;
+            msg.description = desc;
+            //这里替换一张自己工程里的图片资源
+            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
+            bitmap = changeColor(bitmap);
+            msg.thumbData = bmpToByteArray(bitmap, 32);
+            SendMessageToWX.Req req = new SendMessageToWX.Req();
+            req.transaction = String.valueOf(System.currentTimeMillis());
+            req.message = msg;
+            req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+            ((MyApplication) context).getApi().sendReq(req);
+        }
+
+    }
+
+    /**
+     * Bitmap转换成byte[]并且进行压缩,压缩到不大于maxkb
+     *
+     * @param bitmap
+     * @param maxKb
+     * @return
+     */
+    public static byte[] bmpToByteArray(Bitmap bitmap, int maxKb) {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+        int options = 100;
+        while (output.toByteArray().length > maxKb && options != 10) {
+            output.reset(); //清空output
+            bitmap.compress(Bitmap.CompressFormat.JPEG, options, output);//这里压缩options%，把压缩后的数据存放到output中
+            options -= 10;
+        }
+        return output.toByteArray();
+    }
+
+    //bitmap中的透明色用白色替换
+    public static Bitmap changeColor(Bitmap bitmap) {
+        if (bitmap == null) {
+            return null;
+        }
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+        int[] colorArray = new int[w * h];
+        int n = 0;
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                int color = getMixtureWhite(bitmap.getPixel(j, i));
+                colorArray[n++] = color;
+            }
+        }
+        return Bitmap.createBitmap(colorArray, w, h, Bitmap.Config.ARGB_8888);
+    }
+
+    //获取和白色混合颜色
+    private static int getMixtureWhite(int color) {
+        int alpha = Color.alpha(color);
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+        return Color.rgb(getSingleMixtureWhite(red, alpha), getSingleMixtureWhite(green, alpha),
+                getSingleMixtureWhite(blue, alpha));
+    }
+
+    // 获取单色的混合值
+    private static int getSingleMixtureWhite(int color, int alpha) {
+        int newColor = color * alpha / 255 + 255 - alpha;
+        return newColor > 255 ? 255 : newColor;
+    }
 }

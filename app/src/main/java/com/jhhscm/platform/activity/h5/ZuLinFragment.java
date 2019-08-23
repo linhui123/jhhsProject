@@ -1,4 +1,5 @@
-package com.jhhscm.platform.fragment;
+package com.jhhscm.platform.activity.h5;
+
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -12,9 +13,11 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,8 +37,8 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.h5.H5Activity;
 import com.jhhscm.platform.databinding.FragmentFinancialBinding;
+import com.jhhscm.platform.databinding.FragmentZuLinBinding;
 import com.jhhscm.platform.event.LoginH5Event;
 import com.jhhscm.platform.event.WebTitleEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
@@ -50,9 +53,12 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.NETUtils;
+import com.jhhscm.platform.tool.ShareUtils;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.UrlUtils;
+import com.jhhscm.platform.views.YXProgressDialog;
 import com.jhhscm.platform.views.dialog.AlertDialogs;
+import com.jhhscm.platform.views.dialog.ShareDialog;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
 
@@ -64,9 +70,13 @@ import java.util.TreeMap;
 
 import retrofit2.Response;
 
-public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
+public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
     private UploadHandler mUploadHandler;
     private static final int FILE_SELECTED = 5;
+    private String SHARE_URL = "";
+    private String TITLE = "";
+    private String CONTENT = "";
+    private String IMG_URL = "";
 
     public static FinancialFragment instance() {
         FinancialFragment view = new FinancialFragment();
@@ -75,8 +85,8 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
 
 
     @Override
-    protected FragmentFinancialBinding bindRootView(LayoutInflater inflater, ViewGroup container, boolean attachToRoot) {
-        return FragmentFinancialBinding.inflate(inflater, container, attachToRoot);
+    protected FragmentZuLinBinding bindRootView(LayoutInflater inflater, ViewGroup container, boolean attachToRoot) {
+        return FragmentZuLinBinding.inflate(inflater, container, attachToRoot);
     }
 
     private WebChromeClient mWebChromeClient = new WebChromeClient() {
@@ -233,36 +243,49 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
         RelativeLayout.LayoutParams llParams = (RelativeLayout.LayoutParams) mDataBinding.toolbar.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.toolbar.setLayoutParams(llParams);
-        mDataBinding.toolbarTitle.setText("金服");
-
+        mDataBinding.toolbarTitle.setText("租赁");
+        mDataBinding.ivShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showShare();
+            }
+        });
         initViews();
-
-        mDataBinding.tvInfo.setOnClickListener(new View.OnClickListener() {
+        mDataBinding.tvDijia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //联系我们
-                H5Activity.start(getActivity(),
-                        "https://cdn-daikuan.360jie.com.cn/dir_mkteditor/activity/qmmx/mobile/5.9.2/12m1jt.html?utm_term=ff46bd85411c94329ca684cbec1dafc0&utm_campaign=12mianshouqi_201708_qyzmb&utm_medium=jrc1&utm_source=rcdt&utm_content=csj"
-                        , "联系我们");
-
-//                new TelPhoneDialog(getContext(), new TelPhoneDialog.CallbackListener() {
-//
-//                    @Override
-//                    public void clickYes(String phone) {
-//                        saveMsg(phone);
-//                    }
-//                }).show();
+                new TelPhoneDialog(getContext(),
+                        new TelPhoneDialog.CallbackListener() {
+                            @Override
+                            public void clickYes(String phone) {
+                                saveMsg(phone, "9");
+                            }
+                        }).show();
             }
         });
+    }
 
-        mDataBinding.tvJisuan.setOnClickListener(new View.OnClickListener() {
+    /**
+     * 分享
+     */
+    public void showShare() {
+        TITLE = "租赁";
+        CONTENT = "挖矿来";
+        IMG_URL = "";
+        Log.e("ShareDialog", "IMG_URL " + IMG_URL);
+        new ShareDialog(getContext(), new ShareDialog.CallbackListener() {
             @Override
-            public void onClick(View v) {
-                //邀请入驻
-                H5Activity.start(getActivity(),"https://cm.xy.360.cn/#/register?pid=100127", "邀请入驻");
-//                H5Activity.start(getActivity(), UrlUtils.JSQ, "计算器");
+            public void wechat() {
+                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
+                ShareUtils.shareUrlToWx(getActivity().getApplicationContext(), UrlUtils.ZL, TITLE, CONTENT, IMG_URL, 0);
             }
-        });
+
+            @Override
+            public void friends() {
+                YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
+                ShareUtils.shareUrlToWx(getActivity().getApplicationContext(), UrlUtils.ZL, TITLE, CONTENT, IMG_URL, 1);
+            }
+        }).show();
     }
 
     @Override
@@ -320,8 +343,8 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
         } else {
             //加载动画
             final AnimationDrawable animationDrawable = (AnimationDrawable) mDataBinding.webLoadAnim.getBackground();
-            Log.e("JF", "UrlUtils.JF : " + UrlUtils.JF);
-            mDataBinding.webView.loadUrl(UrlUtils.JF);
+            Log.e("JF", "UrlUtils.ZL : " + UrlUtils.ZL);
+            mDataBinding.webView.loadUrl(UrlUtils.ZL);
             mDataBinding.webView.setVisibility(View.VISIBLE);
             mDataBinding.webView.setWebViewClient(new WebViewClient() {
                 @Override
@@ -694,10 +717,10 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
     /**
      * 信息咨询
      */
-    private void saveMsg(final String phone) {
+    private void saveMsg(final String phone, String type) {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("mobile", phone);
-        map.put("type", "6");
+        map.put("type", type);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "saveMsg");
@@ -730,5 +753,6 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
                     }
                 }));
     }
+
 
 }

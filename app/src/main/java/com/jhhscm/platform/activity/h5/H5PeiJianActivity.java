@@ -52,6 +52,7 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.NETUtils;
+import com.jhhscm.platform.tool.ShareUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.YXProgressDialog;
@@ -61,6 +62,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Method;
@@ -245,6 +247,7 @@ public class H5PeiJianActivity extends AbsActivity {
                         && userSession.getUserCode() != null
                         && userSession.getToken() != null) {
                     if (goodCode != null && goodCode.length() > 0) {
+                        MobclickAgent.onEvent(getApplicationContext(), "parts_collect");
                         save(userSession.getUserCode(), goodCode, userSession.getToken());
                     }
                 } else {
@@ -272,11 +275,8 @@ public class H5PeiJianActivity extends AbsActivity {
                 if (userSession != null
                         && userSession.getUserCode() != null
                         && userSession.getToken() != null) {
-//                    if (picUrl != null && picUrl.length() > 0) {
+                    MobclickAgent.onEvent(getApplicationContext(), "add_to_carts");
                     addGoodsToCarts(userSession.getUserCode(), userSession.getToken());
-//                    } else {
-//                        findCategoryDetail(goodCode, false);
-//                    }
                 } else {
                     startNewActivity(LoginActivity.class);
                 }
@@ -290,7 +290,6 @@ public class H5PeiJianActivity extends AbsActivity {
                         && userSession.getUserCode() != null
                         && userSession.getToken() != null) {
                     if (picUrl != null && picUrl.length() > 0) {
-//                        if (findCategoryDetailBean != null && findCategoryDetailBean.getData() != null) {
                         List<GetCartGoodsByUserCodeBean.ResultBean> list = new ArrayList<>();
                         GetCartGoodsByUserCodeBean.ResultBean resultBean = new GetCartGoodsByUserCodeBean.ResultBean();
                         Log.e("CreateOrderViewHolder", "count " + count);
@@ -303,10 +302,9 @@ public class H5PeiJianActivity extends AbsActivity {
 
                         GetCartGoodsByUserCodeBean g = new GetCartGoodsByUserCodeBean();
                         g.setResult(list);
+
+                        MobclickAgent.onEvent(getApplicationContext(), "create_order");
                         CreateOrderActivity.start(H5PeiJianActivity.this, g);
-//                        } else {
-//                            ToastUtil.show(H5PeiJianActivity.this, getString(R.string.net_error));
-//                        }
                     }
                 } else {
                     startNewActivity(LoginActivity.class);
@@ -363,84 +361,18 @@ public class H5PeiJianActivity extends AbsActivity {
         new ShareDialog(H5PeiJianActivity.this, new ShareDialog.CallbackListener() {
             @Override
             public void wechat() {
+                MobclickAgent.onEvent(getApplicationContext(), "parts_share");
                 YXProgressDialog dialog = new YXProgressDialog(H5PeiJianActivity.this, "请稍后");
-                shareUrlToWx(url, TITLE, CONTENT, IMG_URL, 0);
+                ShareUtils.shareUrlToWx(getApplicationContext(),url, TITLE, CONTENT, IMG_URL, 0);
             }
 
             @Override
             public void friends() {
+                MobclickAgent.onEvent(getApplicationContext(), "parts_share");
                 YXProgressDialog dialog = new YXProgressDialog(H5PeiJianActivity.this, "请稍后");
-                shareUrlToWx(url, TITLE, CONTENT, IMG_URL, 1);
+                ShareUtils.shareUrlToWx(getApplicationContext(),url, TITLE, CONTENT, IMG_URL, 1);
             }
         }).show();
-    }
-
-    /**
-     * 分享url地址
-     *
-     * @param url   地址
-     * @param title 标题
-     * @param desc  描述
-     */
-    public void shareUrlToWx(final String url, final String title, final String desc, final String iconUrl, final int flag) {
-        if (((MyApplication) getApplicationContext()).getApi() != null && !((MyApplication) getApplicationContext()).getApi().isWXAppInstalled()) {
-            ToastUtil.show(getApplicationContext(), "您还未安装微信客户端,无法使用该功能！");
-            return;
-        }
-        if (iconUrl != null && iconUrl.length() > 0) {
-            ImageLoader.getInstance().loadImage(iconUrl, new SimpleImageLoadingListener() {
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    super.onLoadingComplete(imageUri, view, loadedImage);
-                    WXWebpageObject webpage = new WXWebpageObject();
-                    webpage.webpageUrl = url;
-                    WXMediaMessage msg = new WXMediaMessage(webpage);
-                    msg.title = title;
-                    msg.description = desc;
-                    //这里替换一张自己工程里的图片资源
-                    msg.thumbData = bmpToByteArray(loadedImage, 32);
-                    SendMessageToWX.Req req = new SendMessageToWX.Req();
-                    req.transaction = String.valueOf(System.currentTimeMillis());
-                    req.message = msg;
-                    req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
-                    ((MyApplication) getApplicationContext()).getApi().sendReq(req);
-                }
-            });
-        } else {
-            WXWebpageObject webpage = new WXWebpageObject();
-            webpage.webpageUrl = url;
-            WXMediaMessage msg = new WXMediaMessage(webpage);
-            msg.title = title;
-            msg.description = desc;
-            //这里替换一张自己工程里的图片资源
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-            msg.setThumbImage(bitmap);
-            SendMessageToWX.Req req = new SendMessageToWX.Req();
-            req.transaction = String.valueOf(System.currentTimeMillis());
-            req.message = msg;
-            req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
-            ((MyApplication) getApplicationContext()).getApi().sendReq(req);
-        }
-
-    }
-
-    /**
-     * Bitmap转换成byte[]并且进行压缩,压缩到不大于maxkb
-     *
-     * @param bitmap
-     * @param maxKb
-     * @return
-     */
-    public static byte[] bmpToByteArray(Bitmap bitmap, int maxKb) {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
-        int options = 100;
-        while (output.toByteArray().length > maxKb && options != 10) {
-            output.reset(); //清空output
-            bitmap.compress(Bitmap.CompressFormat.JPEG, options, output);//这里压缩options%，把压缩后的数据存放到output中
-            options -= 10;
-        }
-        return output.toByteArray();
     }
 
     /**

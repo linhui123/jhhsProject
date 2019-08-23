@@ -3,11 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
-        android:id="@+id/rl_loading"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/window_bg"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -28,8 +25,8 @@
                 android:textSize="16sp" />
         </android.support.v7.widget.Toolbar>
 
-        <WebView
-            android:id="@+id/web_view"
+        <FrameLayout
+            android:id="@+id/contentLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/ll_bottom"
@@ -61,13 +58,13 @@
         <LinearLayout
             android:id="@+id/ll_bottom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginRight="@dimen/padding_15"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/padding_15"
-            android:paddingTop="@dimen/padding_10"
-            android:paddingRight="@dimen/padding_15"
+            android:paddingTop="@dimen/dp_5"
             android:paddingBottom="@dimen/dp_5">
 
 
@@ -94,6 +91,7 @@
                 android:text="代理申请"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_16" />
+
 
         </LinearLayout>
 

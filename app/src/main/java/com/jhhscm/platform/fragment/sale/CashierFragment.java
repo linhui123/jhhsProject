@@ -55,6 +55,7 @@ import com.jhhscm.platform.wxapi.WXPayEntryFragment;
 import com.jhhscm.platform.wxapi.WxPrePayAction;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.umeng.analytics.MobclickAgent;
 
 import java.sql.Date;
 import java.text.ParseException;
@@ -175,11 +176,13 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
             public void onClick(View v) {
                 if (type == ALI_PAY_FLAG) {
                     if (aliPrePayBean != null) {
+                        MobclickAgent.onEvent(getContext(), "pay_zfb");
                         payV1(v);
                     } else {
                         aliPrePay();
                     }
                 } else if (type == WX_PAY_FLAG) {
+                    MobclickAgent.onEvent(getContext(), "pay_wx");
                     payV2(v);
                 }
             }

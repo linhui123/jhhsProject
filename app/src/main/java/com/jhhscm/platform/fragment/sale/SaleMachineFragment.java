@@ -35,6 +35,7 @@ import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.OrderSuccessDialog;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -83,6 +84,7 @@ public class SaleMachineFragment extends AbsFragment<FragmentSaleMachineBinding>
             public void onClick(View v) {
                 if (ConfigUtils.getCurrentUser(getContext()) != null
                         && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
+                    MobclickAgent.onEvent(getContext(), "old_mechanics_publish");
                     PushOldMechanicsActivity.start(getContext());
                 } else {
                     startNewActivity(LoginActivity.class);
@@ -96,6 +98,7 @@ public class SaleMachineFragment extends AbsFragment<FragmentSaleMachineBinding>
      */
     public void onEvent(OrderSussessEvent event) {
         if (event.phone != null) {
+            MobclickAgent.onEvent(getContext(), "sale_mechanics_consult");
             saveMsg(event.phone);
         }
     }
