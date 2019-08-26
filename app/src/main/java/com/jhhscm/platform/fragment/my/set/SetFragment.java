@@ -14,6 +14,7 @@ import com.jhhscm.platform.activity.AboutActivity;
 import com.jhhscm.platform.activity.FeedbackActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.ReceiveAddressActivity;
+import com.jhhscm.platform.activity.TraceReloadActivity;
 import com.jhhscm.platform.databinding.FragmentMyBinding;
 import com.jhhscm.platform.databinding.FragmentSetBinding;
 import com.jhhscm.platform.event.LoginOutEvent;
@@ -98,7 +99,10 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
         mDataBinding.rl3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FeedbackActivity.start(getContext());
+                //行驶轨迹回放
+                TraceReloadActivity.start(getContext());
+                //意见反馈
+//                FeedbackActivity.start(getContext());
             }
         });
 

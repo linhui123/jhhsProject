@@ -199,9 +199,9 @@ public class MechanicsH5Activity extends AbsActivity {
                         && userSession.getUserCode() != null
                         && userSession.getToken() != null) {
                     if (goodCode != null && goodCode.length() > 0) {
-                        if (type==1){
+                        if (type == 1) {
                             MobclickAgent.onEvent(getApplicationContext(), "new_mechanics_collect");
-                        }else {
+                        } else {
                             MobclickAgent.onEvent(getApplicationContext(), "old_mechanics_collect");
                         }
                         save(userSession.getUserCode(), goodCode, userSession.getToken());
@@ -335,9 +335,9 @@ public class MechanicsH5Activity extends AbsActivity {
         new ShareDialog(MechanicsH5Activity.this, new ShareDialog.CallbackListener() {
             @Override
             public void wechat() {
-                if (type==1){
+                if (type == 1) {
                     MobclickAgent.onEvent(getApplicationContext(), "new_mechanics_share");
-                }else {
+                } else {
                     MobclickAgent.onEvent(getApplicationContext(), "old_mechanics_share");
                 }
                 YXProgressDialog dialog = new YXProgressDialog(MechanicsH5Activity.this, "请稍后");
@@ -346,9 +346,9 @@ public class MechanicsH5Activity extends AbsActivity {
 
             @Override
             public void friends() {
-                if (type==1){
+                if (type == 1) {
                     MobclickAgent.onEvent(getApplicationContext(), "new_mechanics_share");
-                }else {
+                } else {
                     MobclickAgent.onEvent(getApplicationContext(), "old_mechanics_share");
                 }
                 YXProgressDialog dialog = new YXProgressDialog(MechanicsH5Activity.this, "请稍后");
@@ -629,7 +629,7 @@ public class MechanicsH5Activity extends AbsActivity {
                 showLoadingPage(R.id.rl_loading);
                 setLoadFailedMessage("网络异常，请检查网络连接");
             } else {
-
+                Log.e("mechanics", "url " + getArguments().getString("url"));
                 //加载动画
                 final AnimationDrawable animationDrawable = (AnimationDrawable) mDataBinding.webLoadAnim.getBackground();
                 mDataBinding.webView.loadUrl(getArguments().getString("url"));

@@ -1,6 +1,6 @@
 package com.jhhscm.platform.activity.h5;
 
-
+import android.support.v4.app.Fragment;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -36,6 +36,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.FragmentFinancialBinding;
 import com.jhhscm.platform.databinding.FragmentZuLinBinding;
@@ -77,6 +78,7 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
     private String TITLE = "";
     private String CONTENT = "";
     private String IMG_URL = "";
+    private String url = "";
 
     public static FinancialFragment instance() {
         FinancialFragment view = new FinancialFragment();
@@ -244,13 +246,23 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.toolbar.setLayoutParams(llParams);
         mDataBinding.toolbarTitle.setText("租赁");
+
+        if (MyApplication.getInstance().getZulinUrl() != null) {
+            Log.e("ZL", "getZulinUrl : " + MyApplication.getInstance().getZulinUrl());
+            url = MyApplication.getInstance().getZulinUrl();
+        } else {
+            url = UrlUtils.ZL;
+        }
+        Log.e("ZL", "UrlUtils.ZL : " + url);
         mDataBinding.ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showShare();
             }
         });
+
         initViews();
+
         mDataBinding.tvDijia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -277,13 +289,13 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
             @Override
             public void wechat() {
                 YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
-                ShareUtils.shareUrlToWx(getActivity().getApplicationContext(), UrlUtils.ZL, TITLE, CONTENT, IMG_URL, 0);
+                ShareUtils.shareUrlToWx(getActivity().getApplicationContext(), url, TITLE, CONTENT, IMG_URL, 0);
             }
 
             @Override
             public void friends() {
                 YXProgressDialog dialog = new YXProgressDialog(getContext(), "请稍后");
-                ShareUtils.shareUrlToWx(getActivity().getApplicationContext(), UrlUtils.ZL, TITLE, CONTENT, IMG_URL, 1);
+                ShareUtils.shareUrlToWx(getActivity().getApplicationContext(), url, TITLE, CONTENT, IMG_URL, 1);
             }
         }).show();
     }
@@ -343,8 +355,8 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
         } else {
             //加载动画
             final AnimationDrawable animationDrawable = (AnimationDrawable) mDataBinding.webLoadAnim.getBackground();
-            Log.e("JF", "UrlUtils.ZL : " + UrlUtils.ZL);
-            mDataBinding.webView.loadUrl(UrlUtils.ZL);
+
+            mDataBinding.webView.loadUrl(url);
             mDataBinding.webView.setVisibility(View.VISIBLE);
             mDataBinding.webView.setWebViewClient(new WebViewClient() {
                 @Override

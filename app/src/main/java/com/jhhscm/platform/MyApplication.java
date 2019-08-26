@@ -33,8 +33,10 @@ import java.lang.reflect.Method;
 import cn.jpush.android.api.JPushInterface;
 
 public class MyApplication extends Application {
+    private String zulinUrl;
     public static MyApplication instance;
     private static final String TAG = "JIGUANG-Example";
+
     public IWXAPI api;
 
     public IWXAPI getApi() {
@@ -65,7 +67,7 @@ public class MyApplication extends Application {
         }
 //        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "");
         //初始化
-        UMConfigure.init(this,"5d5e074c4ca357dd29000b23","",UMConfigure.DEVICE_TYPE_PHONE,"5d5e074c4ca357dd29000b23");
+        UMConfigure.init(this, "5d5e074c4ca357dd29000b23", "", UMConfigure.DEVICE_TYPE_PHONE, "5d5e074c4ca357dd29000b23");
         //开启Log
 //        UMConfigure.setLogEnabled(true);
         //打开调试模式
@@ -135,9 +137,17 @@ public class MyApplication extends Application {
         @Override
         public void onReceive(Context context, Intent intent) {
             if ("1".equals(intent.getAction())) {
-                Log.e("JPushInterface", "onReceive : " );
+                Log.e("JPushInterface", "onReceive : ");
 
             }
         }
+    }
+
+    public String getZulinUrl() {
+        return zulinUrl;
+    }
+
+    public void setZulinUrl(String zulinUrl) {
+        this.zulinUrl = zulinUrl;
     }
 }

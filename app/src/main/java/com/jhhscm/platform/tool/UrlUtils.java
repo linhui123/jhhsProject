@@ -6,7 +6,7 @@ package com.jhhscm.platform.tool;
 
 public class UrlUtils {
 
-//        private static String BASE_URL = "http://192.168.0.235:8080/#/";//测试专用
+    //        private static String BASE_URL = "http://192.168.0.235:8080/#/";//测试专用
     private static String BASE_URL = "http://api.jhhscm.cn:9095/#/";//线上
 
 

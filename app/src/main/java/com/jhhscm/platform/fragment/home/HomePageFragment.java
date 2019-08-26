@@ -19,9 +19,13 @@ import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
+import com.google.gson.Gson;
+import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.MainActivity;
 import com.jhhscm.platform.activity.SearchActivity;
 import com.jhhscm.platform.activity.MsgActivity;
+import com.jhhscm.platform.activity.h5.H5Activity;
 import com.jhhscm.platform.databinding.FragmentHomePageBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.event.FinishEvent;
@@ -98,6 +102,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                 getAD(2);
                 getAD(3);
                 getAD(4);
+                getAD(6);
                 findBrandHomePage();
             }
 
@@ -206,6 +211,14 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                                         HomePageItem.adBean3 = response.body().getData();
                                     } else if (position == 4) {
                                         HomePageItem.adBean2 = response.body().getData();
+                                    } else if (position == 6) {
+                                        if (response.body().getData().getResult().get(0) != null) {
+                                            Gson gson = new Gson();
+                                            AdBean.ResultBean adBean = gson.fromJson(response.body().getData().getResult().get(0).getContent(), AdBean.ResultBean.class);
+                                            if (adBean.getPARAM() != null) {
+                                                MyApplication.getInstance().setZulinUrl(adBean.getPARAM().getHREF_URL());
+                                            }
+                                        }
                                     }
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
