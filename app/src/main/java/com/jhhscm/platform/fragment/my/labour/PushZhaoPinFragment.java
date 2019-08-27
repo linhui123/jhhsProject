@@ -562,6 +562,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
         if (getContext() != null) {
             showDialog();
             Map<String, String> map = new TreeMap<String, String>();
+            map.put("name", name);
             map.put("job", job);
             map.put("m_type", m_type);
             map.put("salay_money", salay_money);
@@ -575,11 +576,17 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             map.put("city", cId);
             map.put("position", position);
             map.put("end_time", endTime);
-            map.put("other_desc", other_desc.trim());
-            map.put("name", name);
+            if (other_desc != null && other_desc.length() > 0) {
+                map.put("other_desc", other_desc.trim());
+            }
             map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
-            map.put("contact", contact.trim());
-            map.put("contact_msg", contact_msg.trim());
+            if (contact != null && contact.length() > 0) {
+                map.put("contact", contact.trim());
+            }
+            if (contact_msg != null && contact_msg.length() > 0) {
+                map.put("contact_msg", contact_msg.trim());
+            }
+
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = Sign.getSignKey(getActivity(), map, "saveLabourRelease");
@@ -662,7 +669,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
                                 if (response != null) {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
-                                        ToastUtils.show(getContext(), "发布成功");
+                                        ToastUtils.show(getContext(), "更新成功");
                                         EventBusUtil.post(new AddressRefreshEvent(1));
                                         getActivity().finish();
                                     } else {
@@ -875,33 +882,31 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             mDataBinding.tvPData.setText(dataBean.getEnd_time());
             mDataBinding.tvPLocation.setText(dataBean.getProvince_text() + " " + dataBean.getCity_text());
             mDataBinding.tvElse.setText(dataBean.getOther_desc());
+            name = dataBean.getName();
+            job = dataBean.getJob();
+            m_type = dataBean.getM_type();
+            work_pre = dataBean.getWork_pre();
+            pId = dataBean.getProvince();
+            cId = dataBean.getCity();
+            position = dataBean.getPosition();
+            endTime = dataBean.getEnd_time();
+            work_num = dataBean.getWork_num();
+            work_type = dataBean.getWork_type();
+            work_time = dataBean.getWork_time();
+            other_desc = dataBean.getOther_desc();
 
             //福利
-            settl_time = dataBean.getSettl_time_text();
-            salay_money = dataBean.getSalay_money_text();
-            mDataBinding.tvBaseXinzi.setText(salay_money);
-            mDataBinding.tvBaseSattleTime.setText(settl_time);
+            mDataBinding.tvBaseXinzi.setText(dataBean.getSalay_money_text());
+            mDataBinding.tvBaseSattleTime.setText(dataBean.getSettl_time_text());
             mDataBinding.tvContact.setText(dataBean.getContact());
             mDataBinding.tvContactMsg.setText(dataBean.getContact_msg());
-//            if (settl_time != null) {
-//                if (settl_time.contains("天")) {
-//                    xinziType = 1;
-//                    xinziType1=true;
-//                    mDataBinding.imTian.setImageResource(R.mipmap.ic_shoping_s1);
-//                    mDataBinding.tvTian.setText(salay_money);
-//                } else if (settl_time.contains("月")) {
-//                    xinziType = 2;
-//                    xinziType2=true;
-//                    mDataBinding.imYue.setImageResource(R.mipmap.ic_shoping_s1);
-//                    mDataBinding.tvYue.setText(salay_money);
-//                } else {//薪资面议
-//                    xinziType = 3;
-//                    xinziType3=true;
-//                    mDataBinding.imMianyi.setImageResource(R.mipmap.ic_shoping_s1);
-//                }
-//            }
 
+            settl_time = dataBean.getSettl_time();
+            salay_money = dataBean.getSalay_money();
+            contact = dataBean.getContact();
+            contact_msg = dataBean.getContact_msg();
             other_req = dataBean.getOther_req();
+
             if (other_req != null && other_req.length() > 0) {
                 if (other_req.contains("包吃")) {
                     tvType1 = true;

@@ -100,9 +100,9 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
             @Override
             public void onClick(View v) {
                 //行驶轨迹回放
-                TraceReloadActivity.start(getContext());
+//                TraceReloadActivity.start(getContext());
                 //意见反馈
-//                FeedbackActivity.start(getContext());
+                FeedbackActivity.start(getContext());
             }
         });
 

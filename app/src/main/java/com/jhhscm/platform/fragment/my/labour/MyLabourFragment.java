@@ -19,6 +19,7 @@ import com.jhhscm.platform.activity.PushZhaoPinActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentMyLabourBinding;
+import com.jhhscm.platform.event.AddressRefreshEvent;
 import com.jhhscm.platform.event.AddressResultEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.my.labour.action.FindLabourListAction;
@@ -157,6 +158,12 @@ public class MyLabourFragment extends AbsFragment<FragmentMyLabourBinding> {
         Log.e("AddressResultEvent"," AddressResultEvent ");
         findLabourList(true, type + "");
     }
+
+    public void onEvent(AddressRefreshEvent messageEvent) {
+        Log.e("AddressRefreshEvent"," AddressRefreshEvent ");
+        findLabourList(true, type + "");
+    }
+
 
     /**
      * 查询个人劳务列表
