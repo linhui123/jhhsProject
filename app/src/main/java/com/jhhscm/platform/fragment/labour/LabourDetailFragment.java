@@ -172,6 +172,7 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
 
     private void initViewRelease(final FindLabourReleaseDetailBean.DataBean dataBean) {
         if (dataBean != null) {
+            id = dataBean.getId();
             mDataBinding.type.setText("招聘");
             mDataBinding.llBase.setVisibility(View.GONE);
             mDataBinding.llJinyan.setVisibility(View.GONE);
@@ -385,7 +386,7 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
         if (getContext() != null) {
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("work_id", Integer.parseInt(work_id));
-            map.put("labour_id", Integer.parseInt(id));
+            map.put("labour_id", Integer.parseInt(labour_id));
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = SignObject.getSignKey(getActivity(), map, "delLabourWork");
