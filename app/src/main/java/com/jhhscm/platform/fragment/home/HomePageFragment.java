@@ -35,10 +35,12 @@ import com.jhhscm.platform.fragment.home.action.FindBrandHomePageAction;
 import com.jhhscm.platform.fragment.home.action.FindCategoryHomePageAction;
 import com.jhhscm.platform.fragment.home.action.FindLabourReleaseHomePageAction;
 import com.jhhscm.platform.fragment.home.action.GetAdAction;
+import com.jhhscm.platform.fragment.home.action.GetPageArticleListAction;
 import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
+import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.my.CheckVersionAction;
 import com.jhhscm.platform.fragment.my.CheckVersionBean;
 import com.jhhscm.platform.http.AHttpService;
@@ -47,6 +49,7 @@ import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
@@ -101,7 +104,8 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                 initView();
                 getAD(2);
                 getAD(3);
-                getAD(4);
+                getAD(4);//首页广告位
+                getAD(5);//首页活动位
                 getAD(6);
                 findBrandHomePage();
             }
@@ -211,6 +215,8 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                                         HomePageItem.adBean3 = response.body().getData();
                                     } else if (position == 4) {
                                         HomePageItem.adBean2 = response.body().getData();
+                                    } else if (position == 5) {
+                                        HomePageItem.adBean4 = response.body().getData();
                                     } else if (position == 6) {
                                         if (response.body().getData().getResult().get(0) != null) {
                                             Gson gson = new Gson();
@@ -303,6 +309,43 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
     }
 
     /**
+     * 获取首页文章列表
+     */
+    private void getPageArticleList() {
+        Map<String, Object> map = new TreeMap<String, Object>();
+        map.put("page", 1);
+        map.put("limit", 5);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = SignObject.getSignKey(getActivity(), map, "getPageArticleList");
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(GetPageArticleListAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<GetPageArticleListBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<GetPageArticleListBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    HomePageItem.getPageArticleListBean = response.body().getData();
+                                    setView();
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                    setView();
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    /**
      * 获取劳务资讯
      */
     private void findLabourReleaseHomePage() {
@@ -327,10 +370,10 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
                                     HomePageItem.findLabourReleaseHomePageBean = response.body().getData();
-                                    setView();
+                                    getPageArticleList();
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
-                                    setView();
+                                    getPageArticleList();
                                 }
                             }
                         }

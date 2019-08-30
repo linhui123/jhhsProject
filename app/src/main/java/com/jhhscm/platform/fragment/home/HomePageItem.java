@@ -4,6 +4,7 @@ import com.jhhscm.platform.bean.UserData;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
+import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 
 public class HomePageItem {
     public static final int TYPE_HOME_PAGE_BANNER = 1; // 轮播图
@@ -15,16 +16,18 @@ public class HomePageItem {
     public static final int TYPE_HOME_PAGE_MSG = 7;//劳务资讯
     public static final int TYPE_HOME_PAGE_PROJECT = 8;//业务项目
     public static final int TYPE_HOME_PAGE_AC = 9;//广告
+    public static final int TYPE_HOME_PAGE_NEWS = 10;//咨询信息
     public int itemType;
 
     public UserData userData;
     public static AdBean adBean1; //头部轮播图
     public static AdBean adBean2; //广告1
-    public static AdBean adBean3; //广告2 活动
+    public static AdBean adBean3; //按钮
+    public static AdBean adBean4; //活动
     public static FindBrandHomePageBean findBrandHomePageBean;
     public static FindCategoryHomePageBean findCategoryHomePageBean;
     public static FindLabourReleaseHomePageBean findLabourReleaseHomePageBean;
-
+    public static GetPageArticleListBean getPageArticleListBean;
 
     public HomePageItem(int itemType) {
         this.itemType = itemType;

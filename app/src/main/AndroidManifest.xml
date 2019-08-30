@@ -10,15 +10,14 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 电话权限 -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <!--<uses-permission android:name="android.permission.READ_CALL_LOG" />-->
-    <!--<uses-permission android:name="android.permission.WRITE_CALL_LOG" />-->
+    <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- <uses-permission android:name="android.permission.READ_CALL_LOG" /> -->
+    <!-- <uses-permission android:name="android.permission.WRITE_CALL_LOG" /> -->
     <uses-permission android:name="com.android.voicemail.permission.ADD_VOICEMAIL" />
     <uses-permission android:name="android.permission.USE_SIP" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" /> <!-- 短信权限 -->
-    <!--<uses-permission android:name="android.permission.SEND_SMS" />-->
-    <!--<uses-permission android:name="android.permission.RECEIVE_SMS" />-->
-    <!--<uses-permission android:name="android.permission.READ_SMS" />-->
+    <!-- <uses-permission android:name="android.permission.SEND_SMS" /> -->
+    <!-- <uses-permission android:name="android.permission.RECEIVE_SMS" /> -->
+    <!-- <uses-permission android:name="android.permission.READ_SMS" /> -->
     <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH" />
     <uses-permission android:name="android.permission.RECEIVE_MMS" /> <!-- Required -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -53,7 +52,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme.TranslucentStatusBar">
-        <activity android:name=".activity.h5.FinancialH5Activity"></activity>
+        <activity android:name=".activity.ArticleDetailActivity"></activity>
+        <activity android:name=".activity.h5.FinancialH5Activity" />
         <activity android:name=".activity.h5.ZuLinH5Activity" />
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.AuthenticationActivity" />
@@ -151,6 +151,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".views.selector.ImageSelectorPreviewActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".activity.SaleMachineActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -226,20 +231,22 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".activity.ArticleListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".activity.WelcomeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" /> <!-- Rich push 核心功能 since 2.0.6 -->
-
         <activity
             android:name=".activity.TraceReloadActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="09d83499a3fb354149b04a9b7c443dbb" />
-
-        <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
+            android:value="09d83499a3fb354149b04a9b7c443dbb" /> <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
         <service android:name="com.amap.api.location.APSService" />
 
         <activity

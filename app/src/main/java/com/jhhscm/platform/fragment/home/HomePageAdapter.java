@@ -10,12 +10,14 @@ import com.jhhscm.platform.bean.UserData;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
+import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.home.holder.HomePageACViewHolder;
 import com.jhhscm.platform.fragment.home.holder.HomePageADViewHolder;
 import com.jhhscm.platform.fragment.home.holder.HomePageBannerViewHolder;
 import com.jhhscm.platform.fragment.home.holder.HomePageBrandViewHolder;
 import com.jhhscm.platform.fragment.home.holder.HomePageBusinessViewHolder;
 import com.jhhscm.platform.fragment.home.holder.HomePageMsgViewHolder;
+import com.jhhscm.platform.fragment.home.holder.HomePageNewsViewHolder;
 import com.jhhscm.platform.fragment.home.holder.HomePageRecommendViewHolder;
 import com.jhhscm.platform.fragment.home.holder.HomePageSendFriendsViewHolder;
 
@@ -57,8 +59,9 @@ public class HomePageAdapter extends AbsRecyclerViewAdapter<HomePageItem> {
         mData.add(item);
     }
 
-    private void addHomePageAc() {
+    private void addHomePageAc(AdBean adBean) {
         HomePageItem item = new HomePageItem(HomePageItem.TYPE_HOME_PAGE_AC);
+        item.adBean4 = adBean;
         mData.add(item);
     }
 
@@ -67,6 +70,15 @@ public class HomePageAdapter extends AbsRecyclerViewAdapter<HomePageItem> {
      */
     private void addHomePageSendFriends() {
         HomePageItem item = new HomePageItem(HomePageItem.TYPE_HOME_PAGE_SEND_FRIENDS);
+        mData.add(item);
+    }
+
+    /**
+     * 咨询信息
+     */
+    private void addHomePageNews(GetPageArticleListBean getPageArticleListBean) {
+        HomePageItem item = new HomePageItem(HomePageItem.TYPE_HOME_PAGE_NEWS);
+        item.getPageArticleListBean = getPageArticleListBean;
         mData.add(item);
     }
 
@@ -103,13 +115,23 @@ public class HomePageAdapter extends AbsRecyclerViewAdapter<HomePageItem> {
         addHomePageBusiness(homePageItem.adBean3);
         addHomePageSendFriends();
         if (homePageItem.adBean2 != null && homePageItem.adBean2.getResult() != null && homePageItem.adBean2.getResult().size() > 0) {
-            if (homePageItem.adBean2.getResult().get(0).getUrl()!=null){
+            if (homePageItem.adBean2.getResult().get(0).getUrl() != null) {
                 addHomePageAD(homePageItem.adBean2);
             }
         }
+        //资讯信息 测试
+        if (homePageItem.getPageArticleListBean != null && homePageItem.getPageArticleListBean.getData().size() > 0) {
+            addHomePageNews(homePageItem.getPageArticleListBean);
+        }
+
         addHomePageBank(homePageItem.findBrandHomePageBean);
         addHomePageRecommend(homePageItem.findCategoryHomePageBean);
-        addHomePageAc();
+        if (homePageItem.adBean4 != null && homePageItem.adBean4.getResult() != null && homePageItem.adBean4.getResult().size() > 0) {
+            if (homePageItem.adBean4.getResult().get(0).getUrl() != null) {
+                addHomePageAc(homePageItem.adBean4);
+            }
+        }
+//        addHomePageAc();
         addHomePageMsg(homePageItem.findLabourReleaseHomePageBean);
         notifyDataSetChanged();
     }
@@ -133,6 +155,8 @@ public class HomePageAdapter extends AbsRecyclerViewAdapter<HomePageItem> {
                 return new HomePageRecommendViewHolder(mInflater.inflate(R.layout.item_home_page_recommend, parent, false));
             case HomePageItem.TYPE_HOME_PAGE_MSG:
                 return new HomePageMsgViewHolder(mInflater.inflate(R.layout.item_home_page_msg, parent, false));
+            case HomePageItem.TYPE_HOME_PAGE_NEWS:
+                return new HomePageNewsViewHolder(mInflater.inflate(R.layout.item_home_page_news, parent, false));
         }
         return null;
     }

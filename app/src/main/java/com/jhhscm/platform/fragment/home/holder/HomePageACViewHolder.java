@@ -11,6 +11,7 @@ import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,38 @@ public class HomePageACViewHolder extends AbsRecyclerViewHolder<HomePageItem> {
 
     @Override
     protected void onBindView(final HomePageItem item) {
-        mBinding.ivReport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBusUtil.post(new JumpEvent("GOLD", new AdBean.ResultBean()));
+        if (item.adBean4 != null) {
+            final List<String> list = new ArrayList<>();
+            for (AdBean.ResultBean adBean : item.adBean4.getResult()) {
+                list.add(adBean.getUrl());
             }
-        });
+//            list.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic1xjab4j30ci08cjrv.jpg");
+            if (list.size() > 0) {
+                ImageLoader.getInstance().displayImage(list.get(0), mBinding.ivReport);
+            }
+
+            mBinding.ivReport.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (list.size() > 0) {
+                        AdBean adBean = item.adBean4;
+                        if (adBean.getResult() != null) {
+                            AdBean.ResultBean resultBean = adBean.getResult().get(0);
+                            Gson gson = new Gson();
+                            AdBean.DataBean findOrderBean = gson.fromJson(resultBean.getContent(), AdBean.DataBean.class);
+                            EventBusUtil.post(new JumpEvent(findOrderBean.getTYPE(), resultBean));
+                        }
+                    }
+                }
+            });
+        }
+
+//        mBinding.ivReport.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                EventBusUtil.post(new JumpEvent("GOLD", new AdBean.ResultBean()));
+//            }
+//        });
     }
 }
 

@@ -22,6 +22,8 @@ import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
+import com.jhhscm.platform.fragment.home.bean.GetArticleDetailsBean;
+import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseDetailBean;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
 import com.jhhscm.platform.fragment.labour.FindLabourWorkListBean;
@@ -457,4 +459,25 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(CHECK_DATA)
     Call<BaseEntity<ResultBean>> checkData(@Body NetBean content);
+
+    //查首页文章列表
+    String GET_PAGEARTICLELIST = "article/getPageArticleList";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_PAGEARTICLELIST)
+    Call<BaseEntity<GetPageArticleListBean>> getPageArticleList(@Body NetBean content);
+
+    //查文章列表
+    String GET_ARTICLELIST = "article/getArticleList";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_ARTICLELIST)
+    Call<BaseEntity<GetPageArticleListBean>> getArticleList(@Body NetBean content);
+
+    //查文章详情
+    String GET_ARTICLEDETAILS = "article/getArticleDetails";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_ARTICLEDETAILS)
+    Call<BaseEntity<GetArticleDetailsBean>> getArticleDetails(@Body NetBean content);
 }

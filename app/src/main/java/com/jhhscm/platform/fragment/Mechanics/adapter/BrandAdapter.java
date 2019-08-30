@@ -43,8 +43,6 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
         holder.setData(list.get(position));
         if (list.get(position).getPic_url()!=null){
             ImageLoader.getInstance().displayImage(list.get(position).getPic_url(), holder.im_brand);
-        }else {
-            holder.im_brand.setVisibility(View.INVISIBLE);
         }
 
         holder.tv_name.setText(list.get(position).getName());
