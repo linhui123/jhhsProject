@@ -108,8 +108,14 @@ public class MyApplication extends Application {
     private static final int MAX_MEMORY_CACHE = 8 * 1024 * 1024;
 
     private synchronized void initImageLoader(Context context) {
-        DisplayImageOptions options = new DisplayImageOptions.Builder().imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).cacheInMemory(true).showImageForEmptyUri(R.drawable.default_bg).showImageOnFail(R.drawable.default_bg)
-                .showImageOnLoading(R.drawable.default_bg).cacheOnDisk(true).considerExifParams(true).build();
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .cacheInMemory(true)
+                .showImageForEmptyUri(R.mipmap.ic_site)
+                .showImageOnFail(R.mipmap.ic_site)
+                .showImageOnLoading(R.drawable.default_bg)
+                .cacheOnDisk(true).considerExifParams(true).build();
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())

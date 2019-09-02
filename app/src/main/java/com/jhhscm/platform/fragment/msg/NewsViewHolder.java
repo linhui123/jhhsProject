@@ -26,10 +26,11 @@ public class NewsViewHolder extends AbsRecyclerViewHolder<GetPageArticleListBean
             mBinding.tvTitle.setText(item.getTitle());
             mBinding.tv3.setText(item.getRelease_time());
             ImageLoader.getInstance().displayImage(item.getContent_url(), mBinding.im);
+
             mBinding.rlNews.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ArticleDetailActivity.start(itemView.getContext(),item.getId());
+                    ArticleDetailActivity.start(itemView.getContext(), item.getId());
                 }
             });
         }

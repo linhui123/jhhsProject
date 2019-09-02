@@ -62,6 +62,7 @@ import retrofit2.Response;
 public class ArticleDetailFragment extends AbsFragment<FragmentArticleDetailBinding> {
 
     private String id;
+    private Context mContect;
 
     public static ArticleDetailFragment instance() {
         ArticleDetailFragment view = new ArticleDetailFragment();
@@ -82,9 +83,8 @@ public class ArticleDetailFragment extends AbsFragment<FragmentArticleDetailBind
                         list.add(imageSelectorItem);
                     }
                 }
-                Log.e("Handler", "getContext() " + getContext());
-                if (getContext() != null) {
-                    ImageSelectorPreviewActivity.startActivity(getContext(), 0, list, 0);
+                if (mContect != null) {
+                    ImageSelectorPreviewActivity.startActivity(mContect, 0, list, 0);
                 }
             }
         }
@@ -150,10 +150,8 @@ public class ArticleDetailFragment extends AbsFragment<FragmentArticleDetailBind
             mDataBinding.tvTitle.setText(getArticleDetailsBean.getData().getTitle());
             mDataBinding.tvDate.setText(getArticleDetailsBean.getData().getRelease_time());
             mDataBinding.tvArtical.setText(Html.fromHtml(getArticleDetailsBean.getData().getContent(), new URLImageParser(mDataBinding.tvArtical), null));
-            Log.e("initView", "getContext() " + getContext());
+            mContect = getContext();
             mDataBinding.tvArtical.setMovementMethod(LinkMovementMethodExt.getInstance(handler, ImageSpan.class));
         }
     }
-
-
 }

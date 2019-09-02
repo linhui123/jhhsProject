@@ -140,6 +140,9 @@ public class PeiJianCollectListFragment extends AbsFragment<FragmentCollectListB
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
                                     initData(response.body().getData().getData(), refresh);
+                                } else if (response.body().getCode().equals("1003")) {
+                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+                                    startNewActivity(LoginActivity.class);
                                 } else {
                                     ToastUtils.show(getContext(), "error " + type + ":" + response.body().getMessage());
                                 }
@@ -162,7 +165,7 @@ public class PeiJianCollectListFragment extends AbsFragment<FragmentCollectListB
                     recAdapter.setList(resultBeans, refresh);
                 }
             }
-        }else {
+        } else {
             recAdapter.setList(resultBeans, refresh);
         }
         if (resultBeans.size() > 0) {

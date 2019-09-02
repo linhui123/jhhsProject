@@ -10,16 +10,16 @@ android {
             storePassword '123456'
         }
     }
+
     buildTypes {
         debug {
+            manifestPlaceholders = [APP_NAME: "挖矿来"]
             signingConfig signingConfigs.config
         }
         release {
             minifyEnabled false
             shrinkResources false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
-
         }
     }
 
@@ -51,29 +51,27 @@ android {
         }
     }
 
-//    sourceSets {
-//        main {
-//            jniLibs.srcDirs = ['libs']
-//        }
-//
-//    }
-    /**友盟渠道*/
-    productFlavors {
-        updata { targetSdkVersion 27 }
-        vivo { targetSdkVersion 27 }
-        oppo { targetSdkVersion 27 }
-        xiaomi { targetSdkVersion 27 }
-        huawei { targetSdkVersion 27 }
-        yingyongbao { targetSdkVersion 27 }
-        c360 { targetSdkVersion 27 }
-
-        productFlavors.all {
-            flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
-        }
-    }
-
     lintOptions {
         abortOnError false
+    }
+
+    /**友盟渠道*/
+    productFlavors {
+        updata {}
+        oppo {}
+        vivo {}
+        xiaomi {}
+        huawei {}
+        yingyongbao {}
+        cround {}
+        productFlavors.all {
+            flavor ->
+                if (name == "vivo") {
+                    flavor.manifestPlaceholders = [APP_NAME: "挖矿来机械工程", UMENG_CHANNEL_VALUE: name]
+                } else {
+                    flavor.manifestPlaceholders = [APP_NAME: "挖矿来", UMENG_CHANNEL_VALUE: name]
+                }
+        }
     }
 }
 

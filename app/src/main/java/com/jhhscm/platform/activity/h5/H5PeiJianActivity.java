@@ -409,6 +409,7 @@ public class H5PeiJianActivity extends AbsActivity {
 
                                 ToastUtils.show(getApplicationContext(), "收藏成功");
                             } else if (response.body().getCode().equals("1003")) {
+                                ToastUtils.show(getApplicationContext(), "登录信息过期，请重新登录");
                                 startNewActivity(LoginActivity.class);
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
@@ -456,7 +457,7 @@ public class H5PeiJianActivity extends AbsActivity {
                                     mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
                                 }
                             } else if (response.body().getCode().equals("1003")) {
-                                startNewActivity(LoginActivity.class);
+//                                startNewActivity(LoginActivity.class);
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
                             }

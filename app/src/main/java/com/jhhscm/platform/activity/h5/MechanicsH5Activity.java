@@ -1035,6 +1035,9 @@ public class MechanicsH5Activity extends AbsActivity {
                                 mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
 
                                 ToastUtils.show(getApplicationContext(), "收藏成功");
+                            } else if (response.body().getCode().equals("1003")) {
+                                ToastUtils.show(getApplicationContext(), "登录信息过期，请重新登录");
+                                startNewActivity(LoginActivity.class);
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
                             }
@@ -1081,8 +1084,8 @@ public class MechanicsH5Activity extends AbsActivity {
                                     mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
                                 }
                             } else if (response.body().getCode().equals("1003")) {
-                                ToastUtils.show(getApplicationContext(), "登录信息过期，请重新登录");
-                                startNewActivity(LoginActivity.class);
+//                                ToastUtils.show(getApplicationContext(), "登录信息过期，请重新登录");
+//                                startNewActivity(LoginActivity.class);
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
                             }

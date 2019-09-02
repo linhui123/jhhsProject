@@ -156,6 +156,11 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
                                         ConfigUtils.removeCurrentUser(getContext());
                                         EventBusUtil.post(new LoginOutEvent());
                                         getActivity().finish();
+                                    } else if (response.body().getCode().equals("1003")) {
+                                        ToastUtil.show(getContext(), "退出成功");
+                                        ConfigUtils.removeCurrentUser(getContext());
+                                        EventBusUtil.post(new LoginOutEvent());
+                                        getActivity().finish();
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }

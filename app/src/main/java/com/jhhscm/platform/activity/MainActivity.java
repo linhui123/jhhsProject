@@ -41,6 +41,7 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.UrlUtils;
+import com.jhhscm.platform.tool.Utils;
 import com.jhhscm.platform.views.dialog.HomeAlterDialog;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
@@ -62,7 +63,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     private List<Fragment> mFragments = new ArrayList<Fragment>();
     private HomePageFragment homeFragment;
     private MechanicsFragment mechanicsFragment;
-//        private FinancialFragment financialFragment;
+    //        private FinancialFragment financialFragment;
     private ZuLinFragment zuLinFragment;
     private MyFragment mMeFragment;
 
@@ -93,6 +94,8 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
             fragmentManager.beginTransaction().add(R.id.fl, homeFragment, "homeFragment").commit();
         }
         checkNotifySetting();
+//        Utils.getMetaDataStr(getApplicationContext(), "APP_NAME");
+//        Utils.getMetaDataStr(getApplicationContext(), "UMENG_CHANNEL_VALUE");
     }
 
     @Override

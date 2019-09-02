@@ -44,7 +44,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/padding_10"
-                    android:textSize="@dimen/sp_14" />
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/padding_15" />
             </RelativeLayout>
         </android.support.v4.widget.NestedScrollView>
     </LinearLayout>

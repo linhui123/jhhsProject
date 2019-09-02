@@ -37,6 +37,7 @@ import retrofit2.Response;
 public class NewsListFragment extends AbsFragment<FragmentNewsListBinding> {
     private UserSession userSession;
     private InnerAdapter aAdapter;
+    private GetPageArticleListBean getPushListBean;
 
     private int mShowCount = 10;
     private int mCurrentPage = 1;
@@ -72,8 +73,6 @@ public class NewsListFragment extends AbsFragment<FragmentNewsListBinding> {
         });
     }
 
-    GetPageArticleListBean getPushListBean;
-
     /**
      * 消息列表
      */
@@ -83,6 +82,7 @@ public class NewsListFragment extends AbsFragment<FragmentNewsListBinding> {
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("page", mCurrentPage);
             map.put("limit", mShowCount);
+            map.put("article_type_list", 1);
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = SignObject.getSignKey(getActivity(), map, "getArticleList");
