@@ -32,6 +32,7 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.tool.AMapUtil;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * AMap 轨迹回放demo
@@ -152,7 +153,7 @@ public class TraceReloadActivity extends FragmentActivity {
         if (mCarMarker != null) {
             mCarMarker.destroy();
         }
-
+        Log.e("drawLine", "latLngs " + latLngs.size() + " : " + latLngs.get(latLngs.size() - 1).latitude + " : " + latLngs.get(latLngs.size() - 1).longitude);
         // 添加车辆位置
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions
@@ -163,7 +164,7 @@ public class TraceReloadActivity extends FragmentActivity {
                 .anchor(0.5f, 0.5f);
         mCarMarker = mAMap.addMarker(markerOptions);
         //地图缩放度
-        mAMap.animateCamera(CameraUpdateFactory.newLatLngZoom(replayGeoPoint, 6));
+        mAMap.animateCamera(CameraUpdateFactory.newLatLngZoom(replayGeoPoint, 9));
 
         if (latLngs.size() > 1) {
             mPolyline.setPoints(latLngs);
@@ -175,22 +176,29 @@ public class TraceReloadActivity extends FragmentActivity {
                     .icon(BitmapDescriptorFactory
                             .fromBitmap(BitmapFactory
                                     .decodeResource(getResources(), R.drawable.nav_route_result_end_point))));
+        } else {
+            mAMap.addMarker(new MarkerOptions()
+                    .position(latLngs.get(latLngs.size() - 1))
+                    .icon(BitmapDescriptorFactory
+                            .fromBitmap(BitmapFactory
+                                    .decodeResource(getResources(), R.drawable.car))));
         }
     }
 
     private void setUpMap() {
         double lat = 36.6666;
         double lng = 110.8888;
-
+        mLatLngs.clear();
         for (int i = 0; i < 20; i++) {
-            mLatLngs.add(new LatLng(lat + i/2, lng + i/3));
+            mLatLngs.add(new LatLng(lat + (float) i / 10, lng + (float) i / 15));
         }
 
         // 设置进度条最大长度为数组长度
         mSeekBar.setMax(mLatLngs.size());
+        mAMap.clear();
         mAMap.setMapType(AMap.MAP_TYPE_NORMAL);
         //地图缩放度
-        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLngs.get(0), 5));
+        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLngs.get(0), 9));
 
         // 增加起点位置
         mAMap.addMarker(new MarkerOptions()
@@ -205,6 +213,8 @@ public class TraceReloadActivity extends FragmentActivity {
         // 根据按钮上的字判断当前是否在回放
         if (mButton.getText().toString().contains("回放")) {
             if (mLatLngs.size() > 0) {
+                mPolyline = null;
+                setUpMap();
                 // 假如当前已经回放到最后一点 置0
                 if (mSeekBar.getProgress() == mSeekBar.getMax()) {
                     mSeekBar.setProgress(0);

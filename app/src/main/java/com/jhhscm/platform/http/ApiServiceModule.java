@@ -61,7 +61,7 @@ public class ApiServiceModule {
     Retrofit providerApiRetrofit(Context context) {
         if (mApiFileUploadRetrofit == null) {
             mApiFileUploadRetrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL3)
+                    .baseUrl(BASE_URL5)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(providerFileUploadOkHttpClient(context))
                     .build();

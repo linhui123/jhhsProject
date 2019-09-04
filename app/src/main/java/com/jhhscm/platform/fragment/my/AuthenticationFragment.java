@@ -100,7 +100,7 @@ public class AuthenticationFragment extends AbsFragment<FragmentAuthenticationBi
     }
 
     /**
-     * 发布二手机
+     * 身份认证
      */
     private void checkData(String name, String id) {
         if (getContext() != null) {

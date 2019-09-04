@@ -113,6 +113,7 @@ public class ArticleDetailFragment extends AbsFragment<FragmentArticleDetailBind
             showDialog();
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("id", Integer.parseInt(id));
+            map.put("article_type_list", 1);
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = SignObject.getSignKey(getActivity(), map, "getArticleDetails");

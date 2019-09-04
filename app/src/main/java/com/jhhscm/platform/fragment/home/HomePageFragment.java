@@ -315,6 +315,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         Map<String, Object> map = new TreeMap<String, Object>();
         map.put("page", 1);
         map.put("limit", 5);
+        map.put("article_type_list", 1);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = SignObject.getSignKey(getActivity(), map, "getPageArticleList");

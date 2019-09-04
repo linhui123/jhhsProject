@@ -323,7 +323,9 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
 //                mDataBinding.rdFinance.setChecked(true);
             } else if ("STEWARD".equals(event.getType())) {//管家
                 MobclickAgent.onEvent(getApplicationContext(), "steward_button_home");
-                ToastUtils.show(MainActivity.this, "该功能正在建设中");
+//                ToastUtils.show(MainActivity.this, "该功能正在建设中");
+                //行驶轨迹回放
+                TraceReloadActivity.start(MainActivity.this);
             } else if ("RENT".equals(event.getType())) {//租赁
                 MobclickAgent.onEvent(getApplicationContext(), "rent_button_home");
 //                ZuLinH5Activity.start(MainActivity.this, UrlUtils.ZL, "租赁");

@@ -99,8 +99,7 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
         mDataBinding.rl3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //行驶轨迹回放
-//                TraceReloadActivity.start(getContext());
+
                 //意见反馈
                 FeedbackActivity.start(getContext());
             }
