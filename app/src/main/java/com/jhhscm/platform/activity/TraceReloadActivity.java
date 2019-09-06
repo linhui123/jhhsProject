@@ -229,5 +229,4 @@ public class TraceReloadActivity extends FragmentActivity {
             mButton.setText(" 回放 ");
         }
     }
-
 }
