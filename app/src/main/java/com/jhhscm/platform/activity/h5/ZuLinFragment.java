@@ -80,8 +80,8 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
     private String IMG_URL = "";
     private String url = "";
 
-    public static FinancialFragment instance() {
-        FinancialFragment view = new FinancialFragment();
+    public static ZuLinFragment instance() {
+        ZuLinFragment view = new ZuLinFragment();
         return view;
     }
 

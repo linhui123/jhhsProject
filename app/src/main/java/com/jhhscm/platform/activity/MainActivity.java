@@ -25,6 +25,7 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsActivity;
 import com.jhhscm.platform.activity.h5.FinancialH5Activity;
 import com.jhhscm.platform.activity.h5.H5Activity;
+import com.jhhscm.platform.activity.h5.ZuLin2Fragment;
 import com.jhhscm.platform.activity.h5.ZuLinFragment;
 import com.jhhscm.platform.activity.h5.ZuLinH5Activity;
 import com.jhhscm.platform.event.BrandResultEvent;
@@ -64,6 +65,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     private HomePageFragment homeFragment;
     private MechanicsFragment mechanicsFragment;
     //        private FinancialFragment financialFragment;
+//    private ZuLin2Fragment zuLinFragment;
     private ZuLinFragment zuLinFragment;
     private MyFragment mMeFragment;
 
