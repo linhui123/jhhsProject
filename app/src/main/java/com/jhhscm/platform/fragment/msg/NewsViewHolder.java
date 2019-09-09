@@ -24,6 +24,7 @@ public class NewsViewHolder extends AbsRecyclerViewHolder<GetPageArticleListBean
     protected void onBindView(final GetPageArticleListBean.DataBean item) {
         if (item != null) {
             mBinding.tvTitle.setText(item.getTitle());
+            mBinding.tvDetail.setText(item.getContent_text());
             mBinding.tv3.setText(item.getRelease_time());
             ImageLoader.getInstance().displayImage(item.getContent_url(), mBinding.im);
 

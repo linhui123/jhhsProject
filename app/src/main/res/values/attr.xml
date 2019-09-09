@@ -91,12 +91,15 @@
         <attr name="tabIndicatorWidth" format="dimension" />
         <attr name="tabTextSize" format="dimension" />
     </declare-styleable>
+
     <declare-styleable name="ImageSelector">
         <attr name="image_num" format="integer" />
         <attr name="colum_num" format="integer" />
         <attr name="left_margin" format="integer" />
         <attr name="with_camera" format="boolean" />
+        <attr name="is_face" format="boolean" />
     </declare-styleable>
+
     <declare-styleable name="FlikerProgressBar">
 
         <attr name="textSize" format="dimension" />

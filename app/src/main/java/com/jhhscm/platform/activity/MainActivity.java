@@ -65,8 +65,8 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     private HomePageFragment homeFragment;
     private MechanicsFragment mechanicsFragment;
     //        private FinancialFragment financialFragment;
-//    private ZuLin2Fragment zuLinFragment;
-    private ZuLinFragment zuLinFragment;
+    private ZuLin2Fragment zuLinFragment;
+//    private ZuLinFragment zuLinFragment;
     private MyFragment mMeFragment;
 
     private FragmentManager fm;
@@ -137,7 +137,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         transaction = fm.beginTransaction();
         homeFragment = (HomePageFragment) fm.findFragmentByTag("homeFragment");
         mechanicsFragment = (MechanicsFragment) fm.findFragmentByTag("mechanicsFragment");
-        zuLinFragment = (ZuLinFragment) fm.findFragmentByTag("zuLinFragment");
+        zuLinFragment = (ZuLin2Fragment) fm.findFragmentByTag("zuLinFragment");
         mMeFragment = (MyFragment) fm.findFragmentByTag("mMeFragment");
         mDataBinding.rdExpend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,7 +217,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         } else if (checkedId == R.id.rd_finance) {
             MobclickAgent.onEvent(getApplicationContext(), "financial_Fragment");
             if (zuLinFragment == null) {
-                zuLinFragment = new ZuLinFragment();
+                zuLinFragment = new ZuLin2Fragment();
                 transaction1.add(R.id.fl, zuLinFragment, "zuLinFragment");
             } else {
                 transaction1.show(zuLinFragment);

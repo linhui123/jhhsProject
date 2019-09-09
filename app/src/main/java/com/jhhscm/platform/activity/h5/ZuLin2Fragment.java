@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.LabourDetailActivity;
+import com.jhhscm.platform.activity.Lessee1Activity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentZuLin2Binding;
@@ -112,7 +113,7 @@ public class ZuLin2Fragment extends AbsFragment<FragmentZuLin2Binding> {
         mDataBinding.tvApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Lessee1Activity.start(getContext());
             }
         });
     }

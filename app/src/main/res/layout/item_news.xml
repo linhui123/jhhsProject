@@ -14,15 +14,15 @@
 
         <com.jhhscm.platform.views.OvalImageView
             android:id="@+id/im"
-            roundiv:left_bottom_radius1="5dp"
-            roundiv:left_top_radius1="5dp"
-            roundiv:right_bottom_radius1="5dp"
-            roundiv:right_top_radius1="5dp"
             android:layout_width="128dp"
             android:layout_height="90dp"
             android:layout_centerVertical="true"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_site" />
+            android:src="@mipmap/ic_site"
+            roundiv:left_bottom_radius1="5dp"
+            roundiv:left_top_radius1="5dp"
+            roundiv:right_bottom_radius1="5dp"
+            roundiv:right_top_radius1="5dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -40,6 +40,17 @@
                 android:text=""
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/tv_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_title"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text=""
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
 
             <TextView
                 android:id="@+id/tv_3"

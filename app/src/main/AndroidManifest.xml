@@ -46,15 +46,17 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:label="${APP_NAME}"
         android:icon="@mipmap/logo_icon"
+        android:label="${APP_NAME}"
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme.TranslucentStatusBar"
         tools:replace="android:label">
-
-        <activity android:name=".activity.ArticleDetailActivity"></activity>
+        <activity android:name=".activity.Lessee3Activity"></activity>
+        <activity android:name=".activity.Lessee2Activity" />
+        <activity android:name=".activity.Lessee1Activity" />
+        <activity android:name=".activity.ArticleDetailActivity" />
         <activity android:name=".activity.h5.FinancialH5Activity" />
         <activity android:name=".activity.h5.ZuLinH5Activity" />
         <activity android:name=".activity.SearchActivity" />
