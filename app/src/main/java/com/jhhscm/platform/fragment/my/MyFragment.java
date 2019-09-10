@@ -170,6 +170,13 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             }
         });
 
+        mDataBinding.rlRepay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         mDataBinding.rlTel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

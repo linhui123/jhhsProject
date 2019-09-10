@@ -3,7 +3,9 @@ package com.jhhscm.platform.http.sign;
 import android.content.Context;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.BuildConfig;
+import com.jhhscm.platform.fragment.lessee.LesseeBean;
 import com.jhhscm.platform.tool.Des;
 
 import java.util.ArrayList;
@@ -106,7 +108,7 @@ public class SignObject {
                 list.add(m);
             }
             if (m.getValue() instanceof String) {
-                if (((String)m.getValue()).length() == 0){
+                if (((String) m.getValue()).length() == 0) {
                     list.add(m);
                 }
             }
@@ -161,6 +163,22 @@ public class SignObject {
         for (int i = 0; i < list.size(); i++) {
             String key = list.get(i).getKey();
             if (i == list.size() - 1) {//拼接时，不包括最后一个&字符
+
+//                if (list.get(i).getValue() instanceof LesseeBean.WBankLeasePersonBean) {
+//                    sign = sign + key + "=" + JSON.toJSONString(list.get(i).getValue());
+//                }
+//                if (list.get(i).getValue() instanceof LesseeBean.WBankLeaseItemsBean) {
+//                    sign = sign + key + "=" + JSON.toJSONString(list.get(i).getValue());
+//                }
+//                if (list.get(i).getValue() instanceof LesseeBean.WBankleaseFileListBean) {
+//                    sign = sign + key + "=" + JSON.toJSONString(list.get(i).getValue());
+//                }
+//                if (list.get(i).getValue() instanceof Integer) {
+//                    sign = sign + key + "=" + list.get(i).getValue();
+//                }
+//                if (list.get(i).getValue() instanceof String) {
+//                    sign = sign + key + "=" + list.get(i).getValue();
+//                }
                 sign = sign + key + "=" + list.get(i).getValue();
             } else {
                 sign = sign + key + "=" + list.get(i).getValue() + "&";

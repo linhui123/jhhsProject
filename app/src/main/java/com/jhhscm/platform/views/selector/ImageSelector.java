@@ -15,6 +15,7 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.bean.UploadImage;
 import com.jhhscm.platform.event.ImageSelectorEvent;
+import com.jhhscm.platform.event.ImageSelectorUpdataEvent;
 import com.jhhscm.platform.permission.YXPermission;
 import com.jhhscm.platform.photopicker.PhotoPickerActivity;
 import com.jhhscm.platform.tool.DisplayUtils;
@@ -43,6 +44,8 @@ public class ImageSelector extends LinearLayout {
     private boolean mIsClothesSelect = false;//是否衣柜选择
     private String mUserId;
     private boolean isWithCarmera = false;
+    private boolean isUpdata = false;
+    private int position = 0;//辅助标识
 
     public ImageSelector(Context context) {
         super(context);
@@ -58,6 +61,7 @@ public class ImageSelector extends LinearLayout {
             mNumColums = a.getInt(R.styleable.ImageSelector_colum_num, 3);
             mSelectMaxImageSize = a.getInt(R.styleable.ImageSelector_image_num, 9);
             isWithCarmera = a.getBoolean(R.styleable.ImageSelector_with_camera, false);
+            isUpdata = a.getBoolean(R.styleable.ImageSelector_is_update, false);
         } finally {
             a.recycle();
         }
@@ -210,7 +214,7 @@ public class ImageSelector extends LinearLayout {
                     public void onGranted() {
                         ImageSelectorItem item = mAdapter.getItem(position);
 //                        if (item.isAddFlag()) {
-                            doCheckAdd();
+                        doCheckAdd();
 //                        } else {
 //                            ImageSelectorPreviewActivity.startActivity(getContext(), ImageSelector.this.hashCode(), getPreImages(), position);
 //                        }
@@ -312,7 +316,6 @@ public class ImageSelector extends LinearLayout {
         return preItems;
     }
 
-
     public void onEventMainThread(ImageSelectorEvent event) {
         if (event.getCode() == hashCode()) {
             switch (event.getType()) {
@@ -356,6 +359,7 @@ public class ImageSelector extends LinearLayout {
             newItems.add(ImageSelectorItem.newAddImageItem());
         }
         mAdapter.setData(newItems);
+        EventBusUtil.post(new ImageSelectorUpdataEvent(this, newItems, position));
     }
 
     private void doPhotoPickerDelEvent(String delImage) {
@@ -380,4 +384,11 @@ public class ImageSelector extends LinearLayout {
         }
     }
 
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 }

@@ -85,7 +85,7 @@ public class SingleImageSelectorAdapter extends AbsAdapter<ImageSelectorItem> {
             super(convertView);
             mItemBinding = DataBindingUtil.bind(convertView);
             ViewGroup.LayoutParams params = mItemBinding.flImage.getLayoutParams();
-            int head = (int) (((double) mItemWidth) / 1.33/2);
+            int head = (int) (((double) mItemWidth) / 1.33);
             if (params == null) {
                 params = new ViewGroup.LayoutParams(mItemWidth, head);
             } else {

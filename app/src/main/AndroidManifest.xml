@@ -53,14 +53,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme.TranslucentStatusBar"
         tools:replace="android:label">
-        <activity android:name=".activity.Lessee3Activity"></activity>
-        <activity android:name=".activity.Lessee2Activity" />
-        <activity android:name=".activity.Lessee1Activity" />
-        <activity android:name=".activity.ArticleDetailActivity" />
+        <activity
+            android:name=".activity.Lessee3Activity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".activity.Lessee2Activity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.Lessee1Activity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.ArticleDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.h5.FinancialH5Activity" />
         <activity android:name=".activity.h5.ZuLinH5Activity" />
-        <activity android:name=".activity.SearchActivity" />
-        <activity android:name=".activity.AuthenticationActivity" />
+        <activity
+            android:name=".activity.SearchActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AuthenticationActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ComparisonDetailActivity"
             android:launchMode="singleTask"

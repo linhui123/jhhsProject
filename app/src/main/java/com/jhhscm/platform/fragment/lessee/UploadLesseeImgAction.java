@@ -1,15 +1,15 @@
-package com.jhhscm.platform.fragment.Mechanics.push;
+package com.jhhscm.platform.fragment.lessee;
 
 import android.content.Context;
 import android.os.Environment;
 
+import com.jhhscm.platform.fragment.Mechanics.push.OldMechanicsUpImageBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.Fields;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.FileUtils;
 import com.jhhscm.platform.tool.ToastUtils;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -25,22 +25,18 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 
-/**
- * Created by Administrator on 2018/10/18/018.
- */
-
-public class UploadOldMechanicsImgAction extends AHttpService<OldMechanicsUpImageBean> {
+public class UploadLesseeImgAction extends AHttpService<OldMechanicsUpImageBean> {
 
     private String imagePath;
     public final long UPLOAD_IMAGE_SIZE_LIMIT = 1024 * 1024;//1M
     private File uploadImageFile;
     private String mToken;
 
-    public static UploadOldMechanicsImgAction newInstance(Context context, File file, String token) {
-        return new UploadOldMechanicsImgAction(context, file,token);
+    public static UploadLesseeImgAction newInstance(Context context, File file, String token) {
+        return new UploadLesseeImgAction(context, file,token);
     }
 
-    public UploadOldMechanicsImgAction(Context context, File file, String token) {
+    public UploadLesseeImgAction(Context context, File file, String token) {
         super(context);
         this.uploadImageFile = file;
         this.mToken=token;
@@ -55,7 +51,7 @@ public class UploadOldMechanicsImgAction extends AHttpService<OldMechanicsUpImag
         builder.addFormDataPart("file", uploadImageFile.getName(), photoRequestBody);
         List<MultipartBody.Part> parts = builder.build().parts();
 
-        return apiService.uploadImages(parts);
+        return apiService.uploadLeaseImg(parts);
     }
 
     public File imageFile() {
@@ -104,3 +100,4 @@ public class UploadOldMechanicsImgAction extends AHttpService<OldMechanicsUpImag
         return image;
     }
 }
+

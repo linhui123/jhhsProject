@@ -481,10 +481,17 @@ public interface ApiService {
     @POST(GET_ARTICLEDETAILS)
     Call<BaseEntity<GetArticleDetailsBean>> getArticleDetails(@Body NetBean content);
 
-    //二手机上传图片
+    //租赁上传图片
     String LEASE_UPLOAD_IMG = "lease/uploadImg";
 
     @Multipart
     @POST(LEASE_UPLOAD_IMG)
     Call<OldMechanicsUpImageBean> uploadLeaseImg(@Part List<MultipartBody.Part> parts);
+
+    //新增租赁
+    String LEASE_CREATE = "lease/create";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(LEASE_CREATE)
+    Call<BaseEntity<ResultBean>> createLease(@Body NetBean content);
 }

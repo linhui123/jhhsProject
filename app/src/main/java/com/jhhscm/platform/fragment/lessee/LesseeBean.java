@@ -213,7 +213,7 @@ public class LesseeBean implements Serializable {
          */
 
         private int type;
-        private int fileType;
+        private String fileType;
         private String fileUrl;
 
         public int getType() {
@@ -224,11 +224,11 @@ public class LesseeBean implements Serializable {
             this.type = type;
         }
 
-        public int getFileType() {
+        public String getFileType() {
             return fileType;
         }
 
-        public void setFileType(int fileType) {
+        public void setFileType(String fileType) {
             this.fileType = fileType;
         }
 
@@ -250,6 +250,7 @@ public class LesseeBean implements Serializable {
          * machineNum : 设备序列号
          * machinePrice : 12.00
          * machineAssess : 15.00
+         * itemUrl
          */
 
         private String name;
@@ -259,6 +260,15 @@ public class LesseeBean implements Serializable {
         private String machineNum;
         private String machinePrice;
         private String machineAssess;
+        private String itemUrl;
+
+        public String getItemUrl() {
+            return itemUrl;
+        }
+
+        public void setItemUrl(String itemUrl) {
+            this.itemUrl = itemUrl;
+        }
 
         public String getName() {
             return name;

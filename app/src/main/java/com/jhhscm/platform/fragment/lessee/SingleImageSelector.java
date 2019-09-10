@@ -242,5 +242,33 @@ public class SingleImageSelector extends LinearLayout {
         }
     }
 
+    /**
+     * 获取选择图片集
+     */
+    public List<UploadImage> getUploadImageList() {
+        List<UploadImage> images = new ArrayList<>();
+        List<ImageSelectorItem> items = mAdapter.getItems();
+        for (int i = 0; i < items.size(); i++) {
+            ImageSelectorItem item = items.get(i);
+            if (!item.isAddFlag()) {
+                images.add(new UploadImage(item.imageUrl, item.catalogues, item.allfilePath, item.imageToken));
+            }
+        }
+        return images;
+    }
+
+    public void setImageToken(UploadImage image) {
+        List<ImageSelectorItem> items = mAdapter.getItems();
+        for (int i = 0; i < items.size(); i++) {
+            ImageSelectorItem item = items.get(i);
+            if (!item.isAddFlag()) {
+                if (item.equals(image.getImageUrl())) {
+                    item.imageToken = image.getImageToken();
+                    item.allfilePath = image.getAllfilePath();
+                    item.catalogues = image.getCatalogues();
+                }
+            }
+        }
+    }
 }
 

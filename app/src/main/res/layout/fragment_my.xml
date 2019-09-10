@@ -65,9 +65,9 @@
                         android:id="@+id/im_user"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"
-                        android:layout_marginLeft="20dp"
                         android:scaleType="centerCrop"
                         android:src="@mipmap/ic_heard" />
 
@@ -127,9 +127,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/rl_user"
+                    android:orientation="vertical"
                     android:paddingLeft="@dimen/padding_15"
-                    android:paddingRight="@dimen/padding_15"
-                    android:orientation="vertical">
+                    android:paddingRight="@dimen/padding_15">
 
                     <RelativeLayout
                         android:id="@+id/rl_shoucang"
@@ -223,6 +223,32 @@
                             android:drawableLeft="@mipmap/ic_set_peijian"
                             android:drawablePadding="12dp"
                             android:text="我的配件"
+                            android:textColor="@color/acc3"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/ic_point" />
+                    </RelativeLayout>
+
+                    <View style="@style/view_h_de" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_repay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/tv_repay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@mipmap/ic_my_repay"
+                            android:drawablePadding="12dp"
+                            android:text="我的还款"
                             android:textColor="@color/acc3"
                             android:textSize="16sp" />
 
