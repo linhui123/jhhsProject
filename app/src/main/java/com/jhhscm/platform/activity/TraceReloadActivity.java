@@ -2,6 +2,7 @@ package com.jhhscm.platform.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,24 +26,31 @@ import com.amap.api.maps2d.MapsInitializer;
 import com.amap.api.maps2d.SupportMapFragment;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.LatLngBounds;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.maps2d.model.Polyline;
 import com.amap.api.maps2d.model.PolylineOptions;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.base.AbsActivity;
+import com.jhhscm.platform.databinding.ActivityMainBinding;
+import com.jhhscm.platform.databinding.ActivityTraceReloadBinding;
 import com.jhhscm.platform.tool.AMapUtil;
+import com.jhhscm.platform.tool.DataUtil;
+import com.jhhscm.platform.tool.ToastUtil;
+import com.jhhscm.platform.views.timePickets.TimePickerShow;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
  * AMap 轨迹回放demo
  */
 
-public class TraceReloadActivity extends FragmentActivity {
+public class TraceReloadActivity extends AbsActivity {
+    private ActivityTraceReloadBinding mDataBinding;
     private AMap mAMap;
-    private Button mButton;
-    private SeekBar mSeekBar;
     private Marker mCarMarker;
     private Polyline mPolyline;
     // 存放所有坐标的数组
@@ -57,10 +66,10 @@ public class TraceReloadActivity extends FragmentActivity {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
-                int pro = mSeekBar.getProgress();
-                if (pro != mSeekBar.getMax()) {
-                    mSeekBar.setProgress(pro + 1);
-                    mHandler.sendEmptyMessageDelayed(1, 100);
+                int pro = mDataBinding.processBar.getProgress();
+                if (pro != mDataBinding.processBar.getMax()) {
+                    mDataBinding.processBar.setProgress(pro + 1);
+                    mHandler.sendEmptyMessageDelayed(1, 300);
                 } else {
                     Button button = (Button) findViewById(R.id.btn_replay);
                     button.setText(" 回放 ");// 已执行到最后一个坐标 停止任务
@@ -70,24 +79,97 @@ public class TraceReloadActivity extends FragmentActivity {
     };
 
     @Override
+    protected boolean fullScreenMode() {
+        return false;
+    }
+
+    @Override
+    public boolean isSupportSwipeBack() {
+        return false;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trace_reload);
+        mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_trace_reload);
+        mDataBinding.toolbarTitle.setText("轨迹回放");
+        mDataBinding.toolbar.setTitle("");
+        setSupportActionBar(mDataBinding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        mDataBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         try {
             MapsInitializer.initialize(this);
+            //获取基站信息
+            AMapUtil.getTowerInfo(this);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
 
-        //获取基站信息
-        AMapUtil.getTowerInfo(this);
-
         initAmap();
 
-        float f = 0;
-        for (int i = 0; i < mLatLngs.size() - 1; i++) {
-            f += AMapUtils.calculateLineDistance(mLatLngs.get(i), mLatLngs.get(i + 1));
+        mDataBinding.start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerShow timePickerShow = new TimePickerShow(TraceReloadActivity.this);
+                timePickerShow.timePickerAlertDialogs("", 2);
+                timePickerShow.setOnTimePickerListener(new TimePickerShow.OnTimePickerListener() {
+                    @Override
+                    public void onClicklistener(String dataTime) {
+                        mDataBinding.start.setText(dataTime.trim());
+                    }
+                });
+            }
+        });
+
+        mDataBinding.end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerShow timePickerShow = new TimePickerShow(TraceReloadActivity.this);
+                timePickerShow.timePickerAlertDialogs("", 2);
+                timePickerShow.setOnTimePickerListener(new TimePickerShow.OnTimePickerListener() {
+                    @Override
+                    public void onClicklistener(String dataTime) {
+                        mDataBinding.end.setText(dataTime.trim());
+                    }
+                });
+            }
+        });
+
+        mDataBinding.btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDataBinding.start.getText().toString().length() > 0
+                        && mDataBinding.end.getText().toString().length() > 0) {
+                    if (DataUtil.TimeCompare(mDataBinding.start.getText().toString(), mDataBinding.end.getText().toString(), "yyyy-MM-dd")) {
+                        reload();
+                    } else {
+                        ToastUtil.show(getApplicationContext(), "结束时间不能小于开始时间");
+                    }
+                } else {
+                    ToastUtil.show(getApplicationContext(), "请先选择时间");
+                }
+            }
+        });
+    }
+
+    public void reload() {
+        if (mLatLngs.size() > 0) {
+            mPolyline = null;
+            setUpMap();
+            // 假如当前已经回放到最后一点 置0
+            if (mDataBinding.processBar.getProgress() == mDataBinding.processBar.getMax()) {
+                mDataBinding.processBar.setProgress(0);
+            }
+            // 将按钮上的字设为"停止" 开始调用定时器回放
+            mDataBinding.btnReplay.setText(" 停止 ");
+            mHandler.sendEmptyMessage(1);
         }
     }
 
@@ -95,11 +177,9 @@ public class TraceReloadActivity extends FragmentActivity {
      * 初始化AMap对象
      */
     private void initAmap() {
-        mButton = findViewById(R.id.btn_replay);
-        mSeekBar = findViewById(R.id.process_bar);
-        mSeekBar.setSelected(false);
+        mDataBinding.processBar.setSelected(false);
 
-        mSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+        mDataBinding.processBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
@@ -109,7 +189,7 @@ public class TraceReloadActivity extends FragmentActivity {
                                           boolean fromUser) {
                 if (mPolyline == null) {
                     final PolylineOptions polylineOptions = new PolylineOptions(); //绘制轨迹线
-                    polylineOptions.color(Color.GREEN).width(8.0f);
+                    polylineOptions.color(getResources().getColor(R.color.color_feb)).width(8.0f);
                     mPolyline = mAMap.addPolyline(polylineOptions);
                 }
 
@@ -160,11 +240,9 @@ public class TraceReloadActivity extends FragmentActivity {
                 .position(replayGeoPoint)
                 .icon(BitmapDescriptorFactory
                         .fromBitmap(BitmapFactory.decodeResource(
-                                getResources(), R.drawable.car)))
+                                getResources(), R.mipmap.ic_map_v)))
                 .anchor(0.5f, 0.5f);
         mCarMarker = mAMap.addMarker(markerOptions);
-        //地图缩放度
-        mAMap.animateCamera(CameraUpdateFactory.newLatLngZoom(replayGeoPoint, 9));
 
         if (latLngs.size() > 1) {
             mPolyline.setPoints(latLngs);
@@ -175,58 +253,66 @@ public class TraceReloadActivity extends FragmentActivity {
                     .position(latLngs.get(latLngs.size() - 1))
                     .icon(BitmapDescriptorFactory
                             .fromBitmap(BitmapFactory
-                                    .decodeResource(getResources(), R.drawable.nav_route_result_end_point))));
-        } else {
-            mAMap.addMarker(new MarkerOptions()
-                    .position(latLngs.get(latLngs.size() - 1))
-                    .icon(BitmapDescriptorFactory
-                            .fromBitmap(BitmapFactory
-                                    .decodeResource(getResources(), R.drawable.car))));
+                                    .decodeResource(getResources(), R.mipmap.ic_car_end)))
+                    .anchor(0.5f, 0.5f));
         }
     }
 
     private void setUpMap() {
-        double lat = 36.6666;
-        double lng = 110.8888;
         mLatLngs.clear();
-        for (int i = 0; i < 20; i++) {
-            mLatLngs.add(new LatLng(lat + (float) i / 10, lng + (float) i / 15));
-        }
+        mLatLngs.add(new LatLng(26.080648, 119.308806));
+        mLatLngs.add(new LatLng(26.084339, 119.316046));
+        mLatLngs.add(new LatLng(26.088752, 119.304117));
+        mLatLngs.add(new LatLng(26.076064, 119.32176));
+        mLatLngs.add(new LatLng(26.099719, 119.319711));
 
         // 设置进度条最大长度为数组长度
-        mSeekBar.setMax(mLatLngs.size());
+        mDataBinding.processBar.setMax(mLatLngs.size());
         mAMap.clear();
         mAMap.setMapType(AMap.MAP_TYPE_NORMAL);
         //地图缩放度
-        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLngs.get(0), 9));
-
+        LatLngBounds bounds = getLatLngBounds(mLatLngs);
+        mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 300));
         // 增加起点位置
         mAMap.addMarker(new MarkerOptions()
                 .position(mLatLngs.get(0))
                 .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                         .decodeResource(
                                 getResources(),
-                                R.drawable.nav_route_result_start_point))));
+                                R.mipmap.ic_car_start)))
+                .anchor(0.5f, 0.5f));
+    }
+
+    /**
+     * 根据自定义内容获取缩放bounds
+     */
+    private LatLngBounds getLatLngBounds(List<LatLng> pointList) {
+        LatLngBounds.Builder b = LatLngBounds.builder();
+        for (int i = 0; i < pointList.size(); i++) {
+            LatLng p = pointList.get(i);
+            b.include(p);
+        }
+        return b.build();
     }
 
     public void btn_replay_click(View v) {
         // 根据按钮上的字判断当前是否在回放
-        if (mButton.getText().toString().contains("回放")) {
+        if (mDataBinding.btnReplay.getText().toString().contains("回放")) {
             if (mLatLngs.size() > 0) {
                 mPolyline = null;
                 setUpMap();
                 // 假如当前已经回放到最后一点 置0
-                if (mSeekBar.getProgress() == mSeekBar.getMax()) {
-                    mSeekBar.setProgress(0);
+                if (mDataBinding.processBar.getProgress() == mDataBinding.processBar.getMax()) {
+                    mDataBinding.processBar.setProgress(0);
                 }
                 // 将按钮上的字设为"停止" 开始调用定时器回放
-                mButton.setText(" 停止 ");
+                mDataBinding.btnReplay.setText(" 停止 ");
                 mHandler.sendEmptyMessage(1);
             }
         } else {
             // 移除定时器的任务
             mHandler.removeMessages(1);
-            mButton.setText(" 回放 ");
+            mDataBinding.btnReplay.setText(" 回放 ");
         }
     }
 }

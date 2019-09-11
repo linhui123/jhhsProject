@@ -20,6 +20,7 @@ import com.jhhscm.platform.activity.MyLabourActivity;
 import com.jhhscm.platform.activity.MyMechanicsActivity;
 import com.jhhscm.platform.activity.MyPeiJianListActivity;
 import com.jhhscm.platform.activity.ReceiveAddressActivity;
+import com.jhhscm.platform.activity.RepaymentActivity;
 import com.jhhscm.platform.activity.SettingActivity;
 import com.jhhscm.platform.bean.LogingResultBean;
 import com.jhhscm.platform.databinding.FragmentHomePageBinding;
@@ -173,7 +174,12 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
         mDataBinding.rlRepay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    RepaymentActivity.start(getContext());
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
             }
         });
 

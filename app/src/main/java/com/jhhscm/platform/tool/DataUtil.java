@@ -216,4 +216,30 @@ public class DataUtil {
             return 4;//大于三天
         }
     }
+
+
+    /**
+     * 时间大小比较
+     * end 不小于 start
+     */
+    public static   boolean TimeCompare(String start, String end, String pattern) {
+        //格式化时间
+        SimpleDateFormat CurrentTime = new SimpleDateFormat(pattern);
+        try {
+            Date beginTime = CurrentTime.parse(start);
+            Date endTime = CurrentTime.parse(end);
+            //判断是否大于两天
+            if (endTime.getTime() >=beginTime.getTime()) {
+               //end 不小于 start;
+                return  true;
+            } else {
+                //end 小于 start;
+                return  false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return  false;
+        }
+    }
+
 }
