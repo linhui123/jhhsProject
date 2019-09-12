@@ -17,9 +17,9 @@ public class HomePageItem {
     public static final int TYPE_HOME_PAGE_PROJECT = 8;//业务项目
     public static final int TYPE_HOME_PAGE_AC = 9;//广告
     public static final int TYPE_HOME_PAGE_NEWS = 10;//咨询信息
+
     public int itemType;
 
-    public UserData userData;
     public static AdBean adBean1; //头部轮播图
     public static AdBean adBean2; //广告1
     public static AdBean adBean3; //按钮
@@ -29,7 +29,75 @@ public class HomePageItem {
     public static FindLabourReleaseHomePageBean findLabourReleaseHomePageBean;
     public static GetPageArticleListBean getPageArticleListBean;
 
+    public HomePageItem() {
+
+    }
+
     public HomePageItem(int itemType) {
         this.itemType = itemType;
+    }
+
+    public static AdBean getAdBean1() {
+        return adBean1;
+    }
+
+    public static void setAdBean1(AdBean adBean1) {
+        HomePageItem.adBean1 = adBean1;
+    }
+
+    public static AdBean getAdBean2() {
+        return adBean2;
+    }
+
+    public static void setAdBean2(AdBean adBean2) {
+        HomePageItem.adBean2 = adBean2;
+    }
+
+    public static AdBean getAdBean3() {
+        return adBean3;
+    }
+
+    public static void setAdBean3(AdBean adBean3) {
+        HomePageItem.adBean3 = adBean3;
+    }
+
+    public static AdBean getAdBean4() {
+        return adBean4;
+    }
+
+    public static void setAdBean4(AdBean adBean4) {
+        HomePageItem.adBean4 = adBean4;
+    }
+
+    public static FindBrandHomePageBean getFindBrandHomePageBean() {
+        return findBrandHomePageBean;
+    }
+
+    public static void setFindBrandHomePageBean(FindBrandHomePageBean findBrandHomePageBean) {
+        HomePageItem.findBrandHomePageBean = findBrandHomePageBean;
+    }
+
+    public static FindCategoryHomePageBean getFindCategoryHomePageBean() {
+        return findCategoryHomePageBean;
+    }
+
+    public static void setFindCategoryHomePageBean(FindCategoryHomePageBean findCategoryHomePageBean) {
+        HomePageItem.findCategoryHomePageBean = findCategoryHomePageBean;
+    }
+
+    public static FindLabourReleaseHomePageBean getFindLabourReleaseHomePageBean() {
+        return findLabourReleaseHomePageBean;
+    }
+
+    public static void setFindLabourReleaseHomePageBean(FindLabourReleaseHomePageBean findLabourReleaseHomePageBean) {
+        HomePageItem.findLabourReleaseHomePageBean = findLabourReleaseHomePageBean;
+    }
+
+    public static GetPageArticleListBean getGetPageArticleListBean() {
+        return getPageArticleListBean;
+    }
+
+    public static void setGetPageArticleListBean(GetPageArticleListBean getPageArticleListBean) {
+        HomePageItem.getPageArticleListBean = getPageArticleListBean;
     }
 }

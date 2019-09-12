@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
+import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.http.bean.UserSession;
 
 import java.util.List;
@@ -44,11 +45,14 @@ public class ConfigUtils {
     private static final String isSkip = "isSkip";
     private static final String HISTORY_SEARCH = "HistorySearch";
     private static final String NEW_MECHANICS = "newMechanics";
+    private static final String HOME = "home";
     private static UserSession mCurrentUser;
-    //    private static LocationBean mLocation;
-//    private static IsCheckBean isCheckBean;
-//    private static FindByContentTypeNameBean.HistoryBean historyBean;
     private static GetGoodsPageListBean dataBean;//新机浏览历史；最多只存5个
+    private static HomePageItem homePageItem;//首页缓存数据
+
+    public static boolean getIsLaunch(Context context) {
+        return getSharedPreferences(context).getBoolean(IS_LAUNCH, false);
+    }
 
     public static void setIsLaunch(Context context) {
         SharedPreferences.Editor edit = getSharedPreferences(context).edit();
@@ -64,21 +68,6 @@ public class ConfigUtils {
         return context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
     }
 
-    public static boolean getIsLaunch(Context context) {
-        return getSharedPreferences(context).getBoolean(IS_LAUNCH, false);
-    }
-
-    //    public static void checkVer(Context context) {
-//        int currentVersion= AppUtils.getVersionCode(context);
-//        int ver = getSharedPreferences(context).getInt(CONFIG_VER, 0);
-//        if(ver < currentVersion) {
-//            setHttpHeadersCookie(context,"");
-//            SharedPreferences.Editor edit = getSharedPreferences(context).edit();
-//            edit.remove(CURRENT_USER);
-//            edit.putInt(CONFIG_VER, currentVersion);
-//            edit.commit();
-//        }
-//    }
     public static void setCurrentUser(Context context, UserSession user) {
         removeCurrentUser(context);
 //        PushAgent.getInstance(context).setAlias(user.getMobile(), "PHONE_TYPE", new UTrack.ICallBack() {
@@ -101,14 +90,6 @@ public class ConfigUtils {
         mCurrentUser = null;
     }
 
-    public static String getSessionId(Context context) {
-        UserSession user = getCurrentUser(context);
-//        if (user != null) {
-////            return user.getSessionId();
-////        }
-        return "";
-    }
-
     public synchronized static UserSession getCurrentUser(Context context) {
         if (mCurrentUser == null) {
             String userJson = getSharedPreferences(context).getString(CURRENT_USER, "");
@@ -120,44 +101,33 @@ public class ConfigUtils {
         return mCurrentUser;
     }
 
-    //
-//    public static void setLocation(Context context, LocationBean user) {
-//        removeLocation(context);
-//        Gson gson = new Gson();
-//        String userJson = gson.toJson(user);
-//        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
-//        edit.putString(LOCATION_BEAN, userJson);
-//        edit.commit();
-//    }
-//
-//    public static void removeLocation(Context context) {
-//        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
-//        edit.remove(LOCATION_BEAN);
-//        edit.commit();
-//        mLocation = null;
-//    }
-//
-//    public synchronized static LocationBean getLocation(Context context) {
-//        if (mLocation == null) {
-//            String userJson = getSharedPreferences(context).getString(LOCATION_BEAN, "");
-//            if (!TextUtils.isEmpty(userJson)) {
-//                Gson gson = new Gson();
-//                mLocation = gson.fromJson(userJson, LocationBean.class);
-//            }
-//        }
-//        return mLocation;
-//    }
-//
-//
-//    public static void setHistorySearch(Context context, FindByContentTypeNameBean.HistoryBean user) {
-//        removeLocation(context);
-//        Gson gson = new Gson();
-//        String userJson = gson.toJson(user);
-//        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
-//        edit.putString(HISTORY_SEARCH, userJson);
-//        edit.commit();
-//    }
-//
+    public static void setHomePageItem(Context context, HomePageItem homePageItem) {
+        removeHomePageItem(context);
+        Gson gson = new Gson();
+        String homeJson = gson.toJson(homePageItem);
+        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
+        edit.putString(HOME, homeJson);
+        edit.commit();
+    }
+
+    public static void removeHomePageItem(Context context) {
+        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
+        edit.remove(HOME);
+        edit.commit();
+        homePageItem = null;
+    }
+
+    public synchronized static HomePageItem getHomePageItem(Context context) {
+        if (homePageItem == null) {
+            String userJson = getSharedPreferences(context).getString(HOME, "");
+            if (!TextUtils.isEmpty(userJson)) {
+                Gson gson = new Gson();
+                homePageItem = gson.fromJson(userJson, HomePageItem.class);
+            }
+        }
+        return homePageItem;
+    }
+
     public static void setNewMechanics(Context context, GetGoodsPageListBean dataBean) {
         Gson gson = new Gson();
         String userJson = gson.toJson(dataBean);
@@ -181,52 +151,6 @@ public class ConfigUtils {
         }
         return dataBean;
     }
-//    public static void removeHistorySearch(Context context) {
-//        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
-//        edit.remove(HISTORY_SEARCH);
-//        edit.commit();
-//        historyBean = null;
-//    }
-//
-//    public synchronized static FindByContentTypeNameBean.HistoryBean getHistorySearch(Context context) {
-//        String userJson = getSharedPreferences(context).getString(HISTORY_SEARCH, "");
-//        if (!TextUtils.isEmpty(userJson)) {
-//            Gson gson = new Gson();
-//            historyBean = gson.fromJson(userJson, FindByContentTypeNameBean.HistoryBean.class);
-//        }
-//        return historyBean;
-//    }
-//
-//
-//    public static String getToken(Context context) {
-//        UserSession user = getCurrentUser(context);
-//        if (user != null) {
-//            return user.getToken();
-//        }
-//        return "";
-//    }
-//
-//    public static boolean isStaff(Context context) {
-//        UserSession user = getCurrentUser(context);
-//        if (user != null) {
-//            return user.isStaff();
-//        }
-//        return true;
-//    }
-//
-//
-//    public static String getUserId(Context context) {
-//        UserSession user = getCurrentUser(context);
-//        if (user != null) {
-//            return user.getUserId();
-//        }
-//        return "";
-//    }
-
-//    public synchronized static boolean isUserLogin(Context context) {
-//        return getCurrentUser(context) != null;
-//    }
-
 
     public static void setHospitail(Context context, String apiUrl) {
         SharedPreferences.Editor edit = getSharedPreferences(context, SYSTEM_CONFIG).edit();
@@ -247,34 +171,6 @@ public class ConfigUtils {
     public static String getC_IM_IS_CAN_USE(Context context) {
         return getSharedPreferences(context, SYSTEM_CONFIG).getString(C_IM_IS_CAN_USE, "");
     }
-
-
-//    public static void setCheck(Context context, IsCheckBean IsCheckBean) {
-//        removeIsCheckBean(context);
-//        Gson gson = new Gson();
-//        String userJson = gson.toJson(IsCheckBean);
-//        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
-//        edit.putString(IsCheck, userJson);
-//        edit.commit();
-//    }
-//
-//    public static void removeIsCheckBean(Context context) {
-//        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
-//        edit.remove(IsCheck);
-//        edit.commit();
-//        isCheckBean = null;
-//    }
-//
-//    public static IsCheckBean getIsCheck(Context context) {
-//        if (isCheckBean == null) {
-//            String userJson = getSharedPreferences(context).getString(IsCheck, "");
-//            if (!TextUtils.isEmpty(userJson)) {
-//                Gson gson = new Gson();
-//                isCheckBean = gson.fromJson(userJson, IsCheckBean.class);
-//            }
-//        }
-//        return isCheckBean;
-//    }
 
     public static void setOrderId(Context context, String apiUrl) {
         SharedPreferences.Editor edit = getSharedPreferences(context, SYSTEM_CONFIG).edit();
@@ -413,10 +309,5 @@ public class ConfigUtils {
     public static String getUserName(Context context) {
         return getSharedPreferences(context, USERNAME).getString(HTTP_HEADERS_COOKIE, "");
     }
-
-//    public static void clearArray(Context context) {
-//        SharedPreferences.Editor editor = getSharedPreferences(context, getUserId(context)).edit();
-//        editor.clear().commit();
-//    }
 
 }

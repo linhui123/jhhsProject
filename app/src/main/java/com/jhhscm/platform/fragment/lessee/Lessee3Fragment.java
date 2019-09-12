@@ -186,10 +186,10 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
                     @Override
                     public void onCallback(int resultCode, Response<OldMechanicsUpImageBean> response, BaseErrorInfo baseErrorInfo) {
                         if (getView() != null) {
+                            closeDialog();
                             if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
                                 return;
                             }
-                            closeDialog();
                             if (response != null) {
                                 if (response.body().getErrno().equals("0")) {
                                     if ("0".equals(response.body().getData().getCode())) {

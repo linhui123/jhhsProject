@@ -27,17 +27,19 @@ public class HomePageRecommendViewHolder extends AbsRecyclerViewHolder<HomePageI
 
     @Override
     protected void onBindView(final HomePageItem item) {
-        mBinding.layoutProject.setLayoutManager(new GridLayoutManager(itemView.getContext(), 4));
-        InnerAdapter mAdapter = new InnerAdapter(itemView.getContext());
-        mBinding.layoutProject.setAdapter(mAdapter);
-        mAdapter.setData(HomePageItem.findCategoryHomePageBean.getResult());
-        mBinding.llLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MobclickAgent.onEvent(itemView.getContext(), "parts_home");
-                PeiJianActivity.start(itemView.getContext());
-            }
-        });
+        if (item.findCategoryHomePageBean!=null){
+            mBinding.layoutProject.setLayoutManager(new GridLayoutManager(itemView.getContext(), 4));
+            InnerAdapter mAdapter = new InnerAdapter(itemView.getContext());
+            mBinding.layoutProject.setAdapter(mAdapter);
+            mAdapter.setData(HomePageItem.findCategoryHomePageBean.getResult());
+            mBinding.llLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MobclickAgent.onEvent(itemView.getContext(), "parts_home");
+                    PeiJianActivity.start(itemView.getContext());
+                }
+            });
+        }
     }
 
     private class InnerAdapter extends AbsRecyclerViewAdapter<FindCategoryHomePageBean.ResultBean> {

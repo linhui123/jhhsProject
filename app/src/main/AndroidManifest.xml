@@ -53,7 +53,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme.TranslucentStatusBar"
         tools:replace="android:label">
-        <activity android:name=".activity.RepaymentActivity"></activity>
+        <activity android:name=".activity.RepaymentDetailActivity"></activity>
+        <activity android:name=".activity.RepaymentActivity" />
         <activity
             android:name=".activity.VehicleDetailsActivity"
             android:launchMode="singleTask"

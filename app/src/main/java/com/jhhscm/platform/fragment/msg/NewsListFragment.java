@@ -26,6 +26,7 @@ import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
@@ -55,7 +56,7 @@ public class NewsListFragment extends AbsFragment<FragmentNewsListBinding> {
 
     @Override
     protected void setupViews() {
-        mDataBinding.recyclerview.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
+        mDataBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         aAdapter = new InnerAdapter(getContext());
         mDataBinding.recyclerview.setAdapter(aAdapter);

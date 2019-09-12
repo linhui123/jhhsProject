@@ -4,12 +4,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginRight="@dimen/padding_15"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
     </RelativeLayout>
 
 </layout>

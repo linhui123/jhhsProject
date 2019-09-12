@@ -33,19 +33,21 @@ public class HomePageMsgViewHolder extends AbsRecyclerViewHolder<HomePageItem> {
 
     @Override
     protected void onBindView(final HomePageItem item) {
-        mBinding.layoutProject.addItemDecoration(new DividerItemStrokeDecoration(itemView.getContext()));
-        mBinding.layoutProject.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
-        InnerAdapter mAdapter = new InnerAdapter(itemView.getContext());
-        mBinding.layoutProject.setAdapter(mAdapter);
-        mAdapter.setData(HomePageItem.findLabourReleaseHomePageBean.getData());
+        if (item.findLabourReleaseHomePageBean!=null){
+            mBinding.layoutProject.addItemDecoration(new DividerItemStrokeDecoration(itemView.getContext()));
+            mBinding.layoutProject.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
+            InnerAdapter mAdapter = new InnerAdapter(itemView.getContext());
+            mBinding.layoutProject.setAdapter(mAdapter);
+            mAdapter.setData(item.findLabourReleaseHomePageBean.getData());
 
-        mBinding.rl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MobclickAgent.onEvent(itemView.getContext(), "labour_home");
-                LabourActivity.start(itemView.getContext());
-            }
-        });
+            mBinding.rl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MobclickAgent.onEvent(itemView.getContext(), "labour_home");
+                    LabourActivity.start(itemView.getContext());
+                }
+            });
+        }
     }
 
     private class InnerAdapter extends AbsRecyclerViewAdapter<FindLabourReleaseHomePageBean.DataBean> {

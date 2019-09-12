@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_15">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@color/a397" />
+
+            <LinearLayout
+                android:id="@+id/ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="@dimen/padding_15"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/bg_white_shadow"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/padding_15">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="当月待还 (元)"
+                    android:textColor="@color/acc6"
+                    android:textSize="@dimen/text_size_16" />
+
+                <TextView
+                    android:id="@+id/tv_repay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:gravity="center"
+                    android:text="100,000.00"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="15dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/circular_half_left_397" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/line_stroke" />
+
+                    <TextView
+                        android:layout_width="15dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="-15dp"
+                        android:background="@drawable/circular_half_right_397" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="@dimen/padding_15"
+                    android:paddingBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="本金"
+                        android:textColor="@color/acc6"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_benjin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="80,000.00"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View
+                    style="@style/view_h_de_1"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="@dimen/padding_15" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="@dimen/padding_15"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="利息"
+                        android:textColor="@color/acc6"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_lixi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="10,000.00"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View
+                    style="@style/view_h_de_1"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="@dimen/padding_15" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="@dimen/padding_15"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="罚息"
+                        android:textColor="@color/acc6"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_faxi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="10,000.00"
+                        android:textColor="@color/ff1a"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View
+                    style="@style/view_h_de_1"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="@dimen/padding_15" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="@dimen/padding_15"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="还款日"
+                        android:textColor="@color/acc6"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="2019-09-10"
+                        android:textColor="@color/ff1a"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View
+                    style="@style/view_h_de_1"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="@dimen/padding_15" />
+
+                <TextView
+                    android:id="@+id/tv_pay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="@dimen/padding_15"
+                    android:layout_marginBottom="@dimen/padding_15"
+                    android:background="@drawable/button_c397"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_10"
+                    android:text="立即还款"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll"
+                android:layout_marginLeft="@dimen/padding_15"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:text="全部待还3期(共24期)"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_16" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tv_1"></android.support.v7.widget.RecyclerView>
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</layout>

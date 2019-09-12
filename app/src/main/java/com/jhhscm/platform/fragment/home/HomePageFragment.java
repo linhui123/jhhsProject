@@ -51,6 +51,7 @@ import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.jpush.ExampleUtil;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
@@ -90,6 +91,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         mDataBinding.rlTop.setLayoutParams(llParams);
 
         EventBusUtil.registerEvent(this);
+//        homePageItem = new HomePageItem();
         initView();
         setUpMap();
         mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -132,6 +134,11 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                 SearchActivity.start(getContext());
             }
         });
+
+        Log.e("home", "HomePageItem :" + ConfigUtils.getHomePageItem(getContext()));
+        if (ConfigUtils.getHomePageItem(getContext()) != null) {
+            mAdapter.setDetail(ConfigUtils.getHomePageItem(getContext()));
+        }
     }
 
     private void initTel() {
@@ -210,13 +217,17 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
                                     if (position == 2) {
-                                        HomePageItem.adBean1 = response.body().getData();
+//                                        homePageItem.setAdBean1(response.body().getData());
+                                        homePageItem.adBean1 = response.body().getData();
                                     } else if (position == 3) {
-                                        HomePageItem.adBean3 = response.body().getData();
+//                                        homePageItem.setAdBean3(response.body().getData());
+                                        homePageItem.adBean3 = response.body().getData();
                                     } else if (position == 4) {
-                                        HomePageItem.adBean2 = response.body().getData();
+//                                        homePageItem.setAdBean2(response.body().getData());
+                                        homePageItem.adBean2 = response.body().getData();
                                     } else if (position == 5) {
-                                        HomePageItem.adBean4 = response.body().getData();
+//                                        homePageItem.setAdBean4(response.body().getData());
+                                        homePageItem.adBean4 = response.body().getData();
                                     } else if (position == 6) {
                                         if (response.body().getData().getResult().get(0) != null) {
                                             Gson gson = new Gson();
@@ -260,7 +271,8 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             }
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
-                                    HomePageItem.findBrandHomePageBean = response.body().getData();
+                                    homePageItem.findBrandHomePageBean = response.body().getData();
+
                                     findCategoryHomePage();
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
@@ -296,7 +308,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             }
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
-                                    HomePageItem.findCategoryHomePageBean = response.body().getData();
+                                    homePageItem.findCategoryHomePageBean = response.body().getData();
                                     findLabourReleaseHomePage();
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
@@ -334,7 +346,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             }
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
-                                    HomePageItem.getPageArticleListBean = response.body().getData();
+                                    homePageItem.getPageArticleListBean = response.body().getData();
                                     setView();
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
@@ -370,7 +382,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             }
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
-                                    HomePageItem.findLabourReleaseHomePageBean = response.body().getData();
+                                    homePageItem.findLabourReleaseHomePageBean = response.body().getData();
                                     getPageArticleList();
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
@@ -385,6 +397,10 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
     private void setView() {
         mAdapter.setDetail(homePageItem);
         mDataBinding.wrvRecycler.loadComplete(true, false);
+
+        ConfigUtils.setHomePageItem(getContext(), homePageItem);
+        Log.e("home", "setView homePageItem :" + homePageItem);
+        Log.e("home", "setView HomePageItem :" + ConfigUtils.getHomePageItem(getContext()));
     }
 
     /**
