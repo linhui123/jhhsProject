@@ -39,6 +39,7 @@ import com.jhhscm.platform.tool.AMapUtil;
 import com.jhhscm.platform.tool.DataUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.views.timePickets.TimePickerShow;
+import com.umeng.commonsdk.debug.E;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +110,8 @@ public class TraceReloadActivity extends AbsActivity {
             //获取基站信息
             AMapUtil.getTowerInfo(this);
         } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

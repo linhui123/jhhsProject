@@ -62,12 +62,14 @@ public class VehicleMonitoringFragment extends AbsFragment<FragmentVehicleMonito
     protected void setupViews() {
         try {
             MapsInitializer.initialize(getActivity());
+            //获取基站信息
+            AMapUtil.getTowerInfo(getActivity());
         } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        //获取基站信息
-        AMapUtil.getTowerInfo(getActivity());
         if (mAMap == null) {
             mAMap = mDataBinding.map.getMap();
         }
@@ -78,7 +80,6 @@ public class VehicleMonitoringFragment extends AbsFragment<FragmentVehicleMonito
         mLatLngs.add(new LatLng(26.088752, 119.304117));
         mLatLngs.add(new LatLng(26.076064, 119.32176));
         mLatLngs.add(new LatLng(26.099719, 119.319711));
-
 
         for (LatLng latLng : mLatLngs) {
             MarkerOptions markerOptions = new MarkerOptions()
