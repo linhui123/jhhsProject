@@ -1,6 +1,5 @@
 package com.jhhscm.platform.fragment.vehicle;
 
-
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -36,11 +35,8 @@ import java.util.List;
 public class VehicleMonitoringFragment extends AbsFragment<FragmentVehicleMonitoringBinding> {
 
     private AMap mAMap;
-    private Polyline mPolyline;
     // 存放所有坐标的数组
     private final ArrayList<LatLng> mLatLngs = new ArrayList<>();
-    private final ArrayList<LatLng> mTraceLatLngs = new ArrayList<>();
-    private final ArrayList<Marker> markers = new ArrayList<>();
 
     public static VehicleMonitoringFragment instance() {
         VehicleMonitoringFragment view = new VehicleMonitoringFragment();
@@ -88,8 +84,6 @@ public class VehicleMonitoringFragment extends AbsFragment<FragmentVehicleMonito
                             .decodeResource(
                                     getResources(),
                                     R.mipmap.ic_map_v)));
-
-
             mAMap.addMarker(markerOptions);
         }
         LatLngBounds bounds = getLatLngBounds(mLatLngs);
@@ -115,7 +109,6 @@ public class VehicleMonitoringFragment extends AbsFragment<FragmentVehicleMonito
         }
         return b.build();
     }
-
 
     /**
      * 方法必须重写

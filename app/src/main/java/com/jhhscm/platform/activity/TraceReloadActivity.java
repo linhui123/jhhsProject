@@ -203,7 +203,6 @@ public class TraceReloadActivity extends AbsActivity {
                     }
                     drawLine(mTraceLatLngs, progress);
                 }
-
             }
 
             @Override
