@@ -53,7 +53,7 @@ public class AMapUtil {
             @SuppressLint("MissingPermission")
             List<CellInfo> infos = tm.getAllCellInfo();
 
-            if (operator != null) {
+            if (infos != null) {
                 for (CellInfo info : infos) {
                     if (info instanceof CellInfoCdma) {
                         CellIdentityCdma cellIdentityCdma = ((CellInfoCdma) info).getCellIdentity();

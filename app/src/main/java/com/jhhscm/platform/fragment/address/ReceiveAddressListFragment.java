@@ -69,7 +69,7 @@ public class ReceiveAddressListFragment extends AbsFragment<FragmentReceiveAddre
             EventBusUtil.post(new AddressResultEvent(event.getDataBean()));
             getActivity().finish();
         } else {
-            findAddressList(true, userSession.getUserCode(), userSession.getToken());
+            mDataBinding.rlReceiveAddress.autoRefresh();
         }
     }
 
@@ -94,12 +94,12 @@ public class ReceiveAddressListFragment extends AbsFragment<FragmentReceiveAddre
         mDataBinding.rlReceiveAddress.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
-                findAddressList(true, userSession.getUserCode(), userSession.getToken());
+                findAddressList(true, ConfigUtils.getCurrentUser(getContext()).getUserCode(), ConfigUtils.getCurrentUser(getContext()).getToken());
             }
 
             @Override
             public void onLoadMore(RecyclerView view) {
-                findAddressList(false, userSession.getUserCode(), userSession.getToken());
+                findAddressList(false, ConfigUtils.getCurrentUser(getContext()).getUserCode(), ConfigUtils.getCurrentUser(getContext()).getToken());
             }
         });
 

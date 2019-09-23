@@ -58,7 +58,12 @@ public class MyApplication extends Application {
         JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(getApplicationContext());
         registerMessageReceiver();
-        Log.e("JPushInterface", "getRegistrationID : " + JPushInterface.getRegistrationID(getApplicationContext()));
+        if (JPushInterface.getRegistrationID(getApplicationContext()) != null) {
+            Log.e("JPushInterface", "getRegistrationID : " + JPushInterface.getRegistrationID(getApplicationContext()));
+        } else {
+            Log.e("JPushInterface", "getRegistrationID 为空");
+
+        }
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         closeAndroidPDialog();

@@ -82,24 +82,30 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
-        mDataBinding.wrvRecycler.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
-        mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new InnerAdapter(getContext());
-        mDataBinding.wrvRecycler.setAdapter(mAdapter);
-        mDataBinding.wrvRecycler.autoRefresh();
-        mDataBinding.wrvRecycler.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
-            @Override
-            public void onRefresh(RecyclerView view) {
-                getGoodsPageList(true);
-            }
+        if (getActivity() != null) {
+            mDataBinding.wrvRecycler.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
+            mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+            mAdapter = new InnerAdapter(getActivity());
+            mDataBinding.wrvRecycler.setAdapter(mAdapter);
+            mDataBinding.wrvRecycler.loadComplete(true, false);
+            mDataBinding.wrvRecycler.autoRefresh();
+            mDataBinding.wrvRecycler.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
+                @Override
+                public void onRefresh(RecyclerView view) {
+                    getGoodsPageList(true);
+                }
 
-            @Override
-            public void onLoadMore(RecyclerView view) {
-                getGoodsPageList(false);
-            }
-        });
+                @Override
+                public void onLoadMore(RecyclerView view) {
+                    getGoodsPageList(false);
+                }
+            });
 
-        initDrop();
+            initDrop();
+        } else {
+            mDataBinding.wrvRecycler.loadComplete(true, false);
+        }
+
         resultBeanList = new ArrayList<>();
         mDataBinding.llOhter.setOnClickListener(new View.OnClickListener() {
             @Override

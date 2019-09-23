@@ -50,6 +50,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
     private List<GetCartGoodsByUserCodeBean.ResultBean> resultBeans;
     private GetCartGoodsByUserCodeBean getCartGoodsByUserCodeBean;
     private UserSession userSession;
+    private String selectAddressID;
 
     public static CreateOrderFragment instance() {
         CreateOrderFragment view = new CreateOrderFragment();
@@ -72,7 +73,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
             startNewActivity(LoginActivity.class);
         }
 
-        findAddressList(userSession.getUserCode(), userSession.getToken());
+        findAddressList(ConfigUtils.getCurrentUser(getContext()).getUserCode(), ConfigUtils.getCurrentUser(getContext()).getToken());
 
         if (getArguments() != null) {
             getCartGoodsByUserCodeBean = (GetCartGoodsByUserCodeBean) getArguments().getSerializable("getCartGoodsByUserCodeBean");
@@ -90,7 +91,9 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
             @Override
             public void onClick(View v) {
                 if (findAddressListBean != null) {
-                    createOrder(userSession.getMobile(), getCartGoodsByUserCodeBean, userSession.getToken());
+                    if (selectAddressID != null) {
+                        createOrder(ConfigUtils.getCurrentUser(getContext()).getMobile(), getCartGoodsByUserCodeBean, ConfigUtils.getCurrentUser(getContext()).getToken());
+                    }
                 } else {
                     ToastUtils.show(getContext(), "地址不能为空");
                 }
@@ -111,6 +114,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
             mDataBinding.tvEmpty.setVisibility(View.GONE);
             mDataBinding.tvName.setText(event.getResultBean().getName());
             mDataBinding.tvTel.setText(event.getResultBean().getTel());
+            selectAddressID = event.getResultBean().getId();
             if (event.getResultBean().getIs_default().equals("1")) {
                 mDataBinding.tvDefault.setText("默认");
                 mDataBinding.tvDefault.setVisibility(View.VISIBLE);
@@ -119,7 +123,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
                 mDataBinding.tvDefault.setVisibility(View.GONE);
                 mDataBinding.tvAddress.setText(event.getResultBean().getAddress_detail());
             }
-            findAddressList(userSession.getUserCode(), userSession.getToken());
+//            findAddressList( ConfigUtils.getCurrentUser(getContext()).getUserCode(),  ConfigUtils.getCurrentUser(getContext()).getToken());
         }
     }
 
@@ -162,7 +166,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
         map.put("goodsCode", goodsCode);
         map.put("goodsList", goodsList);
         map.put("mobile", mobile);
-        map.put("addressId", findAddressListBean.getResult().getData().get(0).getId());
+        map.put("addressId", selectAddressID);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "createOrder");
@@ -240,7 +244,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
         map.put("goodsCode", goodsCode);
         map.put("goodsList", goodsList);
         map.put("mobile", mobile);
-        map.put("addressId", findAddressListBean.getResult().getData().get(0).getId());
+        map.put("addressId",selectAddressID);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "createOrder");
@@ -328,6 +332,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
             }
             mDataBinding.tvName.setText(showAddress.getName());
             mDataBinding.tvTel.setText(showAddress.getTel());
+            selectAddressID = showAddress.getId();
             if (showAddress.getIs_default().equals("1")) {
                 mDataBinding.tvDefault.setText("默认");
                 mDataBinding.tvDefault.setVisibility(View.VISIBLE);
@@ -336,7 +341,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
                 mDataBinding.tvDefault.setVisibility(View.GONE);
                 mDataBinding.tvAddress.setText(showAddress.getAddress_detail());
             }
-            calculateOrder(userSession.getMobile(), getCartGoodsByUserCodeBean, userSession.getToken());
+            calculateOrder(ConfigUtils.getCurrentUser(getContext()).getMobile(), getCartGoodsByUserCodeBean, ConfigUtils.getCurrentUser(getContext()).getToken());
         } else {
             mDataBinding.tvEmpty.setVisibility(View.VISIBLE);
         }

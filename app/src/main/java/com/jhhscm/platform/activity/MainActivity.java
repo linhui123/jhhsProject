@@ -65,8 +65,8 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     private HomePageFragment homeFragment;
     private MechanicsFragment mechanicsFragment;
     //        private FinancialFragment financialFragment;
-    private ZuLin2Fragment zuLinFragment;
-//    private ZuLinFragment zuLinFragment;
+//    private ZuLin2Fragment zuLinFragment;
+    private ZuLinFragment zuLinFragment;
     private MyFragment mMeFragment;
 
     private FragmentManager fm;
@@ -137,7 +137,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         transaction = fm.beginTransaction();
         homeFragment = (HomePageFragment) fm.findFragmentByTag("homeFragment");
         mechanicsFragment = (MechanicsFragment) fm.findFragmentByTag("mechanicsFragment");
-        zuLinFragment = (ZuLin2Fragment) fm.findFragmentByTag("zuLinFragment");
+        zuLinFragment = (ZuLinFragment) fm.findFragmentByTag("zuLinFragment");
         mMeFragment = (MyFragment) fm.findFragmentByTag("mMeFragment");
         mDataBinding.rdExpend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,7 +217,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         } else if (checkedId == R.id.rd_finance) {
             MobclickAgent.onEvent(getApplicationContext(), "financial_Fragment");
             if (zuLinFragment == null) {
-                zuLinFragment = new ZuLin2Fragment();
+                zuLinFragment = new ZuLinFragment();
                 transaction1.add(R.id.fl, zuLinFragment, "zuLinFragment");
             } else {
                 transaction1.show(zuLinFragment);
@@ -325,10 +325,10 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
 //                mDataBinding.rdFinance.setChecked(true);
             } else if ("STEWARD".equals(event.getType())) {//管家
                 MobclickAgent.onEvent(getApplicationContext(), "steward_button_home");
-//                ToastUtils.show(MainActivity.this, "该功能正在建设中");
+                ToastUtils.show(MainActivity.this, "该功能正在建设中");
                 //行驶轨迹回放
 //                TraceReloadActivity.start(MainActivity.this);
-                VehicleMonitoringActivity.start(MainActivity.this);
+//                VehicleMonitoringActivity.start(MainActivity.this);
             } else if ("RENT".equals(event.getType())) {//租赁
                 MobclickAgent.onEvent(getApplicationContext(), "rent_button_home");
 //                ZuLinH5Activity.start(MainActivity.this, UrlUtils.ZL, "租赁");
