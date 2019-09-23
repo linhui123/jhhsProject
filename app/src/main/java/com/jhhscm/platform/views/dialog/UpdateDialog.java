@@ -64,7 +64,8 @@ public class UpdateDialog extends BaseDialog {
 
     @Override
     protected void onInitView(View view) {
-        DOWNLOAD_URL = "http://wajueji.oss-cn-shenzhen.aliyuncs.com/jhhs_v1.0.1.apk?Expires=1881217110&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=XvjcBkQupSYOad6ol6Ll8iOmpWE%3D";
+        Log.e("onInitView", "DOWNLOAD_URL " + DOWNLOAD_URL);
+//        DOWNLOAD_URL = "http://wajueji.oss-cn-shenzhen.aliyuncs.com/jhhs_v1.0.1.apk?Expires=1881217110&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=XvjcBkQupSYOad6ol6Ll8iOmpWE%3D";
         mDataBinding.flikerbar.setProgress(0);
         mDataBinding.flikerbar.setBackgroundResource(R.color.color_cc);
         if (sure) {
