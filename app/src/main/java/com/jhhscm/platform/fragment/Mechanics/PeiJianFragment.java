@@ -33,6 +33,7 @@ import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -307,7 +308,7 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
      */
     private void findCategoryHomePage() {
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("app_version", "v1.0.0");
+        map.put("app_version", ExampleUtil.GetVersion(getContext()));
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "findCategoryHomePage");

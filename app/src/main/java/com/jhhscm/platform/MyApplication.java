@@ -11,7 +11,9 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.arialyy.aria.core.Aria;
+import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.jpush.MyReceiver;
+import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.views.AuthImageDownloader;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -36,7 +38,7 @@ public class MyApplication extends Application {
     private String zulinUrl;
     public static MyApplication instance;
     private static final String TAG = "JIGUANG-Example";
-
+    private static String appId = "";
     public IWXAPI api;
 
     public IWXAPI getApi() {
@@ -160,5 +162,9 @@ public class MyApplication extends Application {
 
     public void setZulinUrl(String zulinUrl) {
         this.zulinUrl = zulinUrl;
+    }
+
+    public String getAppId() {
+        return "0xxx0android" + StringUtils.getChannel(getApplicationContext()) + ExampleUtil.GetVersion(getApplicationContext());
     }
 }

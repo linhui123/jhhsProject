@@ -130,7 +130,7 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
         if (getContext() != null) {
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("mobile", ConfigUtils.getCurrentUser(getContext()).getMobile());
-            map.put("appid", "336abf9e97cd4276bf8aecde9d32ed0a");
+            map.put("appid", "336abf9e97cd4276bf8aecde9d32ed99");
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = SignObject.getSignKey(getActivity(), map, "loginOut");

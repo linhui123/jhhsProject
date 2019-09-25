@@ -34,8 +34,8 @@ android {
         applicationId "com.jhhscm.platform"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 3
-        versionName "V1.0.2"
+        versionCode 4
+        versionName "V1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
         multiDexEnabled true
@@ -61,16 +61,12 @@ android {
         oppo {}
         vivo {}
         xiaomi {}
+        c360 {}
         huawei {}
         yingyongbao {}
-        cround {}
         productFlavors.all {
             flavor ->
-                if (name == "vivo") {
-                    flavor.manifestPlaceholders = [APP_NAME: "挖矿来机械工程", UMENG_CHANNEL_VALUE: name]
-                } else {
-                    flavor.manifestPlaceholders = [APP_NAME: "挖矿来", UMENG_CHANNEL_VALUE: name]
-                }
+                flavor.manifestPlaceholders = [APP_NAME: "挖矿来", UMENG_CHANNEL_VALUE: name]
         }
     }
 }

@@ -3,7 +3,7 @@ package com.jhhscm.platform.bean;
 public class PostLoginBean {
 
     /**
-     * appid : {{appid}} "336abf9e97cd4276bf8aecde9d32ed0a"
+     * appid : {{appid}} "336abf9e97cd4276bf8aecde9d32ed99"
      * content : {{_content}}
      * sign : {{_sign}}
      */

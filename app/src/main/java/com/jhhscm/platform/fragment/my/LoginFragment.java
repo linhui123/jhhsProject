@@ -137,7 +137,7 @@ public class LoginFragment extends AbsFragment<FragmentLoginBinding> {
         map.put("secret", "27f7c720e0f440ce877e69573781d8ea");
         map.put("mobile", tel.trim());
         map.put("veriCode", code.trim());
-        map.put("appid", "336abf9e97cd4276bf8aecde9d32ed0a");
+        map.put("appid", "336abf9e97cd4276bf8aecde9d32ed99");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.LoginSign(getContext(), tel, code);
@@ -146,7 +146,7 @@ public class LoginFragment extends AbsFragment<FragmentLoginBinding> {
         netBean.setToken("");
         netBean.setSign(sign);
         netBean.setContent(content);
-        netBean.setAppid("336abf9e97cd4276bf8aecde9d32ed0a");
+        netBean.setAppid("336abf9e97cd4276bf8aecde9d32ed99");
         onNewRequestCall(LoginAction.newInstance(getContext(), netBean)
                 .request(new AHttpService.IResCallback<BaseEntity>() {
                     @Override

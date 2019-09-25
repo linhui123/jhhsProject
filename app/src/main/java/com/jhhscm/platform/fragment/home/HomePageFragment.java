@@ -55,6 +55,8 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.StringUtils;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
@@ -134,8 +136,9 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                 SearchActivity.start(getContext());
             }
         });
-
-        Log.e("home", "HomePageItem :" + ConfigUtils.getHomePageItem(getContext()));
+//ExampleUtil.GetVersion(getContext())
+        Log.e("home", "getChannel :" + StringUtils.getChannel(getContext()));
+//        ToastUtil.show(getContext(), "getChannel :" + StringUtils.getChannel(getContext()));
         if (ConfigUtils.getHomePageItem(getContext()) != null) {
             mAdapter.setDetail(ConfigUtils.getHomePageItem(getContext()));
         }
@@ -198,6 +201,9 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
     private void getAD(final int position) {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("position", position + "");
+        map.put("app_version", ExampleUtil.GetVersion(MyApplication.getInstance()));
+        map.put("app_platform", StringUtils.getChannel(MyApplication.getInstance()));
+        map.put("appid", "336abf9e97cd4276bf8aecde9d32ed99");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "getAD type:" + position);
@@ -251,7 +257,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
      */
     private void findBrandHomePage() {
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("app_version", "v1.0.0");
+        map.put("app_version", ExampleUtil.GetVersion(getContext()));
         map.put("brand_type", "1");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
@@ -289,7 +295,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
      */
     private void findCategoryHomePage() {
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("app_version", "v1.0.0");
+        map.put("app_version", ExampleUtil.GetVersion(getContext()));
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "findCategoryHomePage");
@@ -363,7 +369,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
      */
     private void findLabourReleaseHomePage() {
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("app_version", "v1.0.0");
+        map.put("app_version", ExampleUtil.GetVersion(getContext()));
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "findLabourReleaseHomePage");
@@ -467,6 +473,10 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         Log.e("", "version " + version);
         map.put("app_version", version);
         map.put("app_type", "0");
+        map.put("app_platform", StringUtils.getChannel(MyApplication.getInstance()));
+        //336abf9e97cd4276bf8aecde9d32ed99
+        //336abf9e97cd4276bf8aecde9d32ed0a
+        map.put("appid", "336abf9e97cd4276bf8aecde9d32ed99");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "checkVersion");

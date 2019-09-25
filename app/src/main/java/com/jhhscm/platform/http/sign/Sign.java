@@ -21,7 +21,7 @@ public class Sign {
     private static Sign ourInstance = new Sign();
     private static String encryptKey = "77e8de7c098d444b9ca87b20a714e025";
     private static String signKey = "e803c0a2e711435880f73e2744517263";
-    private static String appId = "336abf9e97cd4276bf8aecde9d32ed0a";
+    private static String appId = "336abf9e97cd4276bf8aecde9d32ed99";
     private static String appSecret = "27f7c720e0f440ce877e69573781d8ea";
 
     private Sign() {
@@ -46,7 +46,7 @@ public class Sign {
         //拼接
         sign = Stitching(list, method);
         //除空
-        sign = replaceAllBlank(sign);
+        sign = replaceAllBlank(sign, method);
         des = Des.md5Decode(sign).toUpperCase();
         return des;
     }
@@ -71,7 +71,7 @@ public class Sign {
         //拼接
         sign = Stitching(list, "login");
         //除空
-        sign = replaceAllBlank(sign);
+        sign = replaceAllBlank(sign, "login");
         des = Des.md5Decode(sign).toUpperCase();
         return des;
     }
@@ -89,9 +89,9 @@ public class Sign {
         //排除
         list = Exclude(list);
         //拼接
-        sign = Stitching(list, "");
+        sign = Stitching(list, "GetCode");
         //除空
-        sign = replaceAllBlank(sign);
+        sign = replaceAllBlank(sign, "GetCode");
         des = Des.md5Decode(sign).toUpperCase();
         return des;
     }
@@ -164,16 +164,16 @@ public class Sign {
                 sign = sign + key + "=" + list.get(i).getValue() + "&";
             }
         }
-        if (sign.length()>0){
+        if (sign.length() > 0) {
             sign = sign + "&key=" + signKey;
-        }else {
+        } else {
             sign = sign + "key=" + signKey;
         }
 
 
-        if (BuildConfig.DEBUG) {
-            Log.e("http :" + method, " sign :" + sign);
-        }
+//        if (BuildConfig.DEBUG) {
+//            Log.e("http :" + method, " sign :" + sign);
+//        }
         return sign;
     }
 
@@ -192,7 +192,7 @@ public class Sign {
         //拼接
         sign = WXStitching(list, method);
         //除空
-        sign = replaceAllBlank(sign);
+        sign = replaceAllBlank(sign, method);
         des = Des.md5Decode(sign).toUpperCase();
         return des;
     }
@@ -212,9 +212,9 @@ public class Sign {
         }
         //商户key
         sign = sign + "&key=" + "abcdefghABCDEFGH1234567812345678";
-        if (BuildConfig.DEBUG) {
-            Log.e("http :" + method, " sign :" + sign);
-        }
+//        if (BuildConfig.DEBUG) {
+//            Log.e("http :" + method, " sign :" + sign);
+//        }
         return sign;
     }
 
@@ -222,18 +222,21 @@ public class Sign {
     /**
      * 去除所有空格 换行
      */
-    public static String replaceAllBlank(String str) {
+    public static String replaceAllBlank(String str, String mehtod) {
         String s = "";
         if (str != null) {
 //            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
-            Pattern p = Pattern.compile("\\|\t|\r|\n");
+//            Pattern p = Pattern.compile("\\t|\r|\n");
            /*\n 回车(\u000a)
           \t 水平制表符(\u0009)
           \s 空格(\u0008)
           \r 换行(\u000d)*/
-            Matcher m = p.matcher(str);
-            s = m.replaceAll("");
+//            Matcher m = p.matcher(str);
+//            s = m.replaceAll("");
+            if (BuildConfig.DEBUG) {
+                Log.e("http :" + mehtod, " sign :" + str);
+            }
         }
-        return s;
+        return str;
     }
 }
