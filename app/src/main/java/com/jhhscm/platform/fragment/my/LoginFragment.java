@@ -133,6 +133,7 @@ public class LoginFragment extends AbsFragment<FragmentLoginBinding> {
     }
 
     private void login(final String tel, String code) {
+        showDialog();
         Map<String, String> map = new TreeMap<String, String>();
         map.put("secret", "27f7c720e0f440ce877e69573781d8ea");
         map.put("mobile", tel.trim());

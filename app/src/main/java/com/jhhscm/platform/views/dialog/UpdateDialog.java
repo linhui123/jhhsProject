@@ -89,6 +89,7 @@ public class UpdateDialog extends BaseDialog {
         mDataBinding.cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Aria.download(this).removeAllTask(true);
                 if (sure) {
                     //退出应用
                     EventBusUtil.post(new ForceCloseEvent());
@@ -129,7 +130,7 @@ public class UpdateDialog extends BaseDialog {
 
             @Override
             public void onDenied(List<String> permissions) {
-
+                dismiss();
             }
         });
 
@@ -208,6 +209,41 @@ public class UpdateDialog extends BaseDialog {
     public void onBackPressed() {
         if (mCancelable) {
             super.onBackPressed();
+        }
+    }
+
+
+    //判断文件是否存在
+    public boolean fileIsExists(String strFile) {
+        try {
+            File f = new File(strFile);
+            if (!f.exists()) {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 删除单个文件
+     *
+     * @param filePath$Name 要删除的文件的文件名
+     * @return 单个文件删除成功返回true，否则返回false
+     */
+    private boolean deleteSingleFile(String filePath$Name) {
+        File file = new File(filePath$Name);
+        // 如果文件路径所对应的文件存在，并且是一个文件，则直接删除
+        if (file.exists() && file.isFile()) {
+            if (file.delete()) {
+                Log.e("--Method--", "Copy_Delete.deleteSingleFile: 删除单个文件" + filePath$Name + "成功！");
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
         }
     }
 }

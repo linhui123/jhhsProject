@@ -13,6 +13,7 @@ import android.util.Log;
 import com.arialyy.aria.core.Aria;
 import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.jpush.MyReceiver;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.views.AuthImageDownloader;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -38,8 +39,8 @@ public class MyApplication extends Application {
     private String zulinUrl;
     public static MyApplication instance;
     private static final String TAG = "JIGUANG-Example";
-    private static String appId = "";
     public IWXAPI api;
+    private static String BASE_URL = "";
 
     public IWXAPI getApi() {
         return api;
@@ -80,6 +81,13 @@ public class MyApplication extends Application {
         //打开调试模式
 //        MobclickAgent.setDebugMode( true );
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+
+        Log.e("http","http : "+ConfigUtils.getApiUrl(getInstance().getApplicationContext()));
+        BASE_URL = ConfigUtils.getApiUrl(getInstance().getApplicationContext());
+//        if (ConfigUtils.getApiUrl(getInstance().getApplicationContext()) != null
+//                && ConfigUtils.getApiUrl(getInstance().getApplicationContext()).length() > 0) {
+//            BASE_URL = ConfigUtils.getApiUrl(getInstance().getApplicationContext());
+//        }
     }
 
     public static MyApplication getInstance() {
@@ -164,7 +172,11 @@ public class MyApplication extends Application {
         this.zulinUrl = zulinUrl;
     }
 
-    public String getAppId() {
-        return "0xxx0android" + StringUtils.getChannel(getApplicationContext()) + ExampleUtil.GetVersion(getApplicationContext());
+    public static String getBaseUrl() {
+        return BASE_URL;
+    }
+
+    public static void setBaseUrl(String baseUrl) {
+        BASE_URL = baseUrl;
     }
 }

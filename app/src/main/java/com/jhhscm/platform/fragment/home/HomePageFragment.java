@@ -52,6 +52,7 @@ import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.tool.ConfigUtils;
+import com.jhhscm.platform.tool.DataUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
@@ -496,28 +497,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
                                     CheckVersionBean checkVersionBean = response.body().getData();
-                                    if ("0".equals(checkVersionBean.getIs_update())
-//                                            && checkVersionBean.getUrl() != null
-                                    ) {//需要更新
-                                        if ("0".equals(checkVersionBean.getIs_must_update())) {//需要强制更新
-                                            final UpdateDialog alertDialog = new UpdateDialog(getContext(),
-                                                    checkVersionBean.getUrl(), new UpdateDialog.CallbackListener() {
-                                                @Override
-                                                public void clickYes() {
-                                                }
-                                            }, true);
-                                            alertDialog.show();
-                                        } else {
-                                            final UpdateDialog alertDialog = new UpdateDialog(getContext(),
-                                                    checkVersionBean.getUrl(), new UpdateDialog.CallbackListener() {
-                                                @Override
-                                                public void clickYes() {
-//                                                    startCountDownTimer();
-                                                }
-                                            }, false);
-                                            alertDialog.show();
-                                        }
-                                    }
+                                    updateToast(checkVersionBean);
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
                                 }
@@ -525,6 +505,71 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                         }
                     }
                 }));
+    }
+
+    /**
+     * 更新提示
+     * 相同更新地址；一周提醒一次
+     */
+    private void updateToast(CheckVersionBean checkVersionBean) {
+        if ("0".equals(checkVersionBean.getIs_update())) {
+            //需要更新
+            if ("0".equals(checkVersionBean.getIs_must_update())) {//需要强制更新
+                final UpdateDialog alertDialog = new UpdateDialog(getContext(),
+                        checkVersionBean.getUrl(), new UpdateDialog.CallbackListener() {
+                    @Override
+                    public void clickYes() {
+                    }
+                }, true);
+                alertDialog.show();
+            } else {
+                //相同更新地址；一周内提醒一次
+                if (ConfigUtils.getUpdataUrl(getContext()).equals(checkVersionBean.getUrl())) {
+                    //一周内提醒一次
+                    if (ConfigUtils.getUpdataTime(getContext()).length() > 0) {
+                        long time = DataUtil.getLongTime(ConfigUtils.getUpdataTime(getContext())
+                                , DataUtil.getCurDate("yyyy-MM-dd HH:mm:ss")
+                                , "yyyy-MM-dd HH:mm:ss");
+                        //getLongToMintues  getLongToHours
+                        Log.e("更新提示时间差", "小时： " + DataUtil.getLongToHours(time, "yyyy-MM-dd HH:mm:ss"));
+                        if (Integer.parseInt(DataUtil.getLongToMintues(time, "yyyy-MM-dd HH:mm:ss")) >= 168) {
+                            //时间差间隔超过12小时
+                            final UpdateDialog alertDialog = new UpdateDialog(getContext(),
+                                    checkVersionBean.getUrl(), new UpdateDialog.CallbackListener() {
+                                @Override
+                                public void clickYes() {
+                                }
+                            }, false);
+                            alertDialog.show();
+                            ConfigUtils.setUpdataTime(getContext(), DataUtil.getCurDate("yyyy-MM-dd HH:mm:ss"));
+                        }
+                    } else {
+                        ConfigUtils.setUpdataTime(getContext(), DataUtil.getCurDate("yyyy-MM-dd HH:mm:ss"));
+                        final UpdateDialog alertDialog = new UpdateDialog(getContext(),
+                                checkVersionBean.getUrl(), new UpdateDialog.CallbackListener() {
+                            @Override
+                            public void clickYes() {
+
+                            }
+                        }, false);
+                        alertDialog.show();
+                    }
+                } else {
+                    final UpdateDialog alertDialog = new UpdateDialog(getContext(),
+                            checkVersionBean.getUrl(), new UpdateDialog.CallbackListener() {
+                        @Override
+                        public void clickYes() {
+                        }
+                    }, false);
+                    alertDialog.show();
+                    ConfigUtils.setUpdataUrl(getContext(), checkVersionBean.getUrl());
+                }
+
+            }
+        }else {
+            ConfigUtils.setUpdataUrl(getContext(), "");
+            ConfigUtils.setUpdataTime(getContext(), "");
+        }
     }
 
     //天气

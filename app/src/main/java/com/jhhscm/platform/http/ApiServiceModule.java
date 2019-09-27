@@ -1,13 +1,17 @@
 package com.jhhscm.platform.http;
 
 import android.content.Context;
+import android.util.Log;
 
 
+import com.arialyy.aria.orm.annotation.Ignore;
 import com.jhhscm.platform.BuildConfig;
+import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.http.interceptor.CommonInterceptor;
 import com.jhhscm.platform.http.interceptor.FetchCookiesInterceptor;
 import com.jhhscm.platform.http.interceptor.SetCookiesInterceptor;
+import com.jhhscm.platform.tool.ConfigUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,10 +43,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiServiceModule {
     private static ApiServiceModule ourInstance = new ApiServiceModule();
     //URL定义
-    private String BASE_URL2 = "http://47.106.110.219/#/newMachine";//显示
-    private String BASE_URL3 = "http://192.168.0.233:8083/wajueji/v1-0/";//bowen 测试
-    private String BASE_URL4 = "http://120.76.101.183:9090/wajueji/v1-0/";//外网测试
-    private String BASE_URL5 = "http://api.jhhscm.cn/wajueji/v1-0/";
+    public static String BASE_URL2 = "http://47.106.110.219/#/newMachine";//显示
+    public static String BASE_URL3 = "http://192.168.0.233:8083/wajueji/v1-0/";//bowen 测试
+    public static String BASE_URL4 = "http://120.76.101.183:9090/wajueji/v1-0/";//外网测试
+    public static String BASE_URL5 = "http://api.jhhscm.cn/wajueji/v1-0/";
 
     private Retrofit mApiRetrofit = null;
     private Retrofit mApiTaskRetrofit = null;
@@ -55,16 +59,29 @@ public class ApiServiceModule {
     }
 
     public static ApiServiceModule getInstance() {
+        Log.e("http","getBaseUrl : "+ MyApplication.getBaseUrl());
+        if (MyApplication.getBaseUrl() == null) {
+            MyApplication.setBaseUrl(BASE_URL5);
+        }
         return ourInstance;
     }
 
     Retrofit providerApiRetrofit(Context context) {
         if (mApiFileUploadRetrofit == null) {
-            mApiFileUploadRetrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL5)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .client(providerFileUploadOkHttpClient(context))
-                    .build();
+            try {
+                mApiFileUploadRetrofit = new Retrofit.Builder()
+                        .baseUrl(MyApplication.getBaseUrl())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(providerFileUploadOkHttpClient(context))
+                        .build();
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+                mApiFileUploadRetrofit = new Retrofit.Builder()
+                        .baseUrl(BASE_URL5)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(providerFileUploadOkHttpClient(context))
+                        .build();
+            }
         }
         return mApiFileUploadRetrofit;
     }
