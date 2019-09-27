@@ -61,6 +61,9 @@ public class LoginFragment extends AbsFragment<FragmentLoginBinding> {
                 if (!mDataBinding.tvCode.getText().toString().contains("秒")) {
                     if (mDataBinding.etUser.getText().toString().length() > 0) {
                         getCode(mDataBinding.etUser.getText().toString());
+                        mDataBinding.etCode.setFocusable(true);
+                        mDataBinding.etCode.setFocusableInTouchMode(true);
+                        mDataBinding.etCode.requestFocus();
                         startCountDown();
                     } else {
                         ToastUtils.show(getContext(), "手机号不能为空");

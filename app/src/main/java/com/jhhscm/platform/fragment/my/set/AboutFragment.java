@@ -1,7 +1,9 @@
 package com.jhhscm.platform.fragment.my.set;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,8 +69,9 @@ public class AboutFragment extends AbsFragment<FragmentAboutBinding> {
                 mDataBinding.http.setText("当前地址：" + ApiServiceModule.BASE_URL5);
             }
 
-            mDataBinding.etHttp.setText("http://192.168.0.233:8083/wajueji/v1-0/");
+            mDataBinding.etHttp.setText(ApiServiceModule.BASE_URL3);
             mDataBinding.confirm1.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
                 @Override
                 public void onClick(View v) {
                     if (mDataBinding.etHttp.getText().toString().length() > 0) {
