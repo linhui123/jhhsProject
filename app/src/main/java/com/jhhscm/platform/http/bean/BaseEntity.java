@@ -5,11 +5,9 @@ import java.io.Serializable;
 /**
  * Created by Administrator on 2017/8/9.
  * 控制数据格式 这个根据需求更改
- *
- *
  */
 
-public class BaseEntity<T>  implements Serializable {
+public class BaseEntity<T> implements Serializable {
 
     /**
      * code : 200
@@ -23,6 +21,8 @@ public class BaseEntity<T>  implements Serializable {
     private String sign;
     private String content;
     private T data;
+    private String errno;
+    private String errmsg;
 
     public String getMessage() {
         return message;
@@ -62,5 +62,21 @@ public class BaseEntity<T>  implements Serializable {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public String getErrno() {
+        return errno;
+    }
+
+    public void setErrno(String errno) {
+        this.errno = errno;
+    }
+
+    public String getErrmsg() {
+        return errmsg;
+    }
+
+    public void setErrmsg(String errmsg) {
+        this.errmsg = errmsg;
     }
 }

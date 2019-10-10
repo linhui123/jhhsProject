@@ -38,7 +38,7 @@
                         android:id="@+id/tv_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="系统编号：1381455566"
+                        android:text="系统编号："
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
 
@@ -47,7 +47,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:text="车辆号码：测试无线02"
+                        android:text="车辆号码："
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </LinearLayout>
@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="1064464444664"
+                    android:text=""
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
             </RelativeLayout>
@@ -100,6 +100,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="10dp"
                     android:text="时间"
                     android:textColor="@color/acc6"
                     android:textSize="@dimen/text_size_16" />
@@ -109,7 +111,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="2019-09-20 14:02:15"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="20dp"
+                    android:text=""
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
             </RelativeLayout>
@@ -134,7 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="ACC"
+                    android:text=""
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
             </RelativeLayout>
@@ -164,7 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="离线"
+                    android:text=""
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
             </RelativeLayout>
@@ -299,7 +303,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="2.81v"
+                    android:text="v"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
             </RelativeLayout>
@@ -324,7 +328,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="21Ω"
+                    android:text="- Ω"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
             </RelativeLayout>
@@ -354,7 +358,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="25.94546464"
+                    android:text=""
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
             </RelativeLayout>
@@ -379,7 +383,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="32.54646847"
+                    android:text=""
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
             </RelativeLayout>
@@ -413,7 +417,7 @@
                     android:layout_marginLeft="30dp"
                     android:gravity="right"
                     android:layout_alignParentRight="true"
-                    android:text="福建省福州市闽侯县山前离京台高速/福银高速约200米"
+                    android:text=""
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
             </RelativeLayout>

@@ -20,7 +20,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="车牌：强磁06-1"
+                android:text="车牌："
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14" />
 
@@ -29,7 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="时间：2019/7/4 10:58:04"
+                android:text="时间："
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14" />
         </LinearLayout>
@@ -47,7 +47,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="速度：0Km/h"
+                android:text="速度：Km/h"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14" />
 
@@ -56,7 +56,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="状态：已停止"
+                android:text="状态："
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14" />
         </LinearLayout>
@@ -74,7 +74,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="经度：119.34157"
+                android:text="经度："
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14" />
 
@@ -83,7 +83,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="纬度：119.34157"
+                android:text="纬度："
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14" />
         </LinearLayout>
@@ -96,7 +96,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="@dimen/padding_15"
             android:maxLines="3"
-            android:text="当前位置：福建省福州市闽侯县山前离京台高速/福银高速约200米"
+            android:text="当前位置："
             android:textColor="@color/acc3"
             android:textSize="@dimen/text_size_14" />
 

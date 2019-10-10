@@ -236,7 +236,8 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
 //                                        homePageItem.setAdBean4(response.body().getData());
                                         homePageItem.adBean4 = response.body().getData();
                                     } else if (position == 6) {
-                                        if (response.body().getData().getResult().get(0) != null) {
+                                        if (response.body().getData().getResult().size() > 0 &&
+                                                response.body().getData().getResult().get(0) != null) {
                                             Gson gson = new Gson();
                                             AdBean.ResultBean adBean = gson.fromJson(response.body().getData().getResult().get(0).getContent(), AdBean.ResultBean.class);
                                             if (adBean.getPARAM() != null) {
@@ -566,7 +567,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                 }
 
             }
-        }else {
+        } else {
             ConfigUtils.setUpdataUrl(getContext(), "");
             ConfigUtils.setUpdataTime(getContext(), "");
         }

@@ -59,6 +59,9 @@ public class HomePageAdapter extends AbsRecyclerViewAdapter<HomePageItem> {
         mData.add(item);
     }
 
+    /**
+     * 活动
+     */
     private void addHomePageAc(AdBean adBean) {
         HomePageItem item = new HomePageItem(HomePageItem.TYPE_HOME_PAGE_AC);
         item.adBean4 = adBean;

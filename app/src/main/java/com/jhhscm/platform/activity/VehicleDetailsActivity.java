@@ -7,13 +7,15 @@ import android.os.Bundle;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.vehicle.GpsDetailBean;
 import com.jhhscm.platform.fragment.vehicle.VehicleDetailsFragment;
 import com.jhhscm.platform.fragment.vehicle.VehicleMonitoringFragment;
 
 public class VehicleDetailsActivity extends AbsToolbarActivity {
 
-    public static void start(Context context) {
+    public static void start(Context context, GpsDetailBean.GpsListBean gpsListBean) {
         Intent intent = new Intent(context, VehicleDetailsActivity.class);
+        intent.putExtra("gpsListBean", gpsListBean);
         context.startActivity(intent);
     }
 
@@ -55,6 +57,7 @@ public class VehicleDetailsActivity extends AbsToolbarActivity {
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putSerializable("gpsListBean", getIntent().getSerializableExtra("gpsListBean"));
         return args;
     }
 }
