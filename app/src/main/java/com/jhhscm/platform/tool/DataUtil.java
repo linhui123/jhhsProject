@@ -23,7 +23,7 @@ public class DataUtil {
     }
 
     /**
-     * 时间差计算
+     * 时间差计算: H + ":" + M + ":" + S
      * 传入字串类型 pattern
      */
     public static String getTimeExpend(String startTime, String endTime, String pattern) {
@@ -54,7 +54,7 @@ public class DataUtil {
     }
 
     /**
-     * 时间差计算
+     * 时间差计算  H + ":" + M + ":" + S
      */
     public static String getLongToTime(long longTime, String pattern) {
         long longExpend = longTime;  //获取时间差
@@ -128,7 +128,16 @@ public class DataUtil {
     }
 
     /**
-     * 时间差计算
+     * 时间差计算(天)
+     */
+    public static String getLongToDays(long longTime, String pattern) {
+        long longExpend = longTime;  //获取时间差
+        long longDays = longExpend / (60 * 60 * 1000 * 24); //根据时间差来计算天数
+        return longDays + "";
+    }
+
+    /**
+     * 时间差计算(毫秒)
      */
     public static Long getLongTime(String startTime, String endTime, String pattern) {
         long longStart = getTimeMillis(startTime, pattern); //获取开始时间毫秒数
@@ -222,23 +231,23 @@ public class DataUtil {
      * 时间大小比较
      * end 不小于 start
      */
-    public static   boolean TimeCompare(String start, String end, String pattern) {
+    public static boolean TimeCompare(String start, String end, String pattern) {
         //格式化时间
         SimpleDateFormat CurrentTime = new SimpleDateFormat(pattern);
         try {
             Date beginTime = CurrentTime.parse(start);
             Date endTime = CurrentTime.parse(end);
             //判断是否大于两天
-            if (endTime.getTime() >=beginTime.getTime()) {
-               //end 不小于 start;
-                return  true;
+            if (endTime.getTime() >= beginTime.getTime()) {
+                //end 不小于 start;
+                return true;
             } else {
                 //end 小于 start;
-                return  false;
+                return false;
             }
         } catch (ParseException e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
     }
 

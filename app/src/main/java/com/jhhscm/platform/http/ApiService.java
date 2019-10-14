@@ -33,6 +33,9 @@ import com.jhhscm.platform.fragment.my.collect.FindCollectListBean;
 import com.jhhscm.platform.fragment.my.labour.FindLabourListBean;
 import com.jhhscm.platform.fragment.my.mechanics.FindOldGoodByUserCodeBean;
 import com.jhhscm.platform.fragment.my.order.FindOrderListBean;
+import com.jhhscm.platform.fragment.repayment.ContractDetailBean;
+import com.jhhscm.platform.fragment.repayment.ContractListBean;
+import com.jhhscm.platform.fragment.repayment.ContractPayCreateOrderBean;
 import com.jhhscm.platform.fragment.sale.FindGoodsAssessBean;
 import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.fragment.sale.OldGoodOrderHistoryBean;
@@ -44,6 +47,8 @@ import com.jhhscm.platform.http.bean.SaveBean;
 import com.jhhscm.platform.http.bean.UserBean;
 
 import java.util.List;
+
+import javax.xml.transform.Result;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -502,4 +507,41 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(GPS_DETAIL)
     Call<BaseEntity<GpsDetailBean>> gpsDetail(@Body NetBean content);
+
+    //合同列表
+    String CONTRACT_LIST = "contract/list";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(CONTRACT_LIST)
+    Call<BaseEntity<ContractListBean>> contract_list(@Body NetBean content);
+
+    //还款计划
+    String CONTRACT_DETAIL = "contract/detail";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(CONTRACT_DETAIL)
+    Call<BaseEntity<ContractDetailBean>> contract_detail(@Body NetBean content);
+
+    //微信下订单
+    String CONTRACTPAY_WXPREPAY = "contractPay/wxPrePay";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(CONTRACTPAY_WXPREPAY)
+    Call<BaseEntity<ResultBean>> contractPay_wxPrePay(@Body NetBean content);
+
+    //支付宝下订单
+    String CONTRACTPAY_ALIPREPAY = "contractPay/aliPrePay";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(CONTRACTPAY_ALIPREPAY)
+    Call<BaseEntity<ResultBean>> contractpay_aliprepay(@Body NetBean content);
+
+    //创建合同订单
+    String CONTRACTPAY_CREATEORDER = "contractPay/createOrder";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(CONTRACTPAY_CREATEORDER)
+    Call<BaseEntity<ContractPayCreateOrderBean>> contractpay_createorder(@Body NetBean content);
+
+
 }

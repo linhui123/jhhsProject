@@ -14,13 +14,14 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/padding_15"
             android:drawableRight="@mipmap/ic_point"
             android:paddingLeft="@dimen/padding_15"
             android:paddingRight="@dimen/padding_15"
-            android:text="合同号：APP20190420"
+            android:text="合同号："
             android:textColor="@color/acc3"
             android:textSize="@dimen/text_size_16" />
 
@@ -49,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="快易租"
+                android:text=""
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_16" />
         </RelativeLayout>
@@ -74,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="120,000.00"
+                android:text=""
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_16" />
         </RelativeLayout>
@@ -99,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="等额本息"
+                android:text=""
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_16" />
         </RelativeLayout>

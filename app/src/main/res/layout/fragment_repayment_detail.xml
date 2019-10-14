@@ -15,6 +15,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
+                android:visibility="gone"
                 android:background="@color/a397" />
 
             <LinearLayout
@@ -26,7 +27,8 @@
                 android:layout_marginRight="12dp"
                 android:background="@drawable/bg_white_shadow"
                 android:orientation="vertical"
-                android:paddingTop="@dimen/padding_15">
+                android:paddingTop="@dimen/padding_15"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -42,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
                     android:gravity="center"
-                    android:text="100,000.00"
+                    android:text=""
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -89,7 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="80,000.00"
+                        android:text=""
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
@@ -119,7 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="10,000.00"
+                        android:text=""
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
@@ -149,7 +151,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="10,000.00"
+                        android:text=""
                         android:textColor="@color/ff1a"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
@@ -179,7 +181,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="2019-09-10"
+                        android:text=""
                         android:textColor="@color/ff1a"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>

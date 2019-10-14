@@ -34,7 +34,18 @@
             android:inputType="number"
             android:padding="@dimen/padding_10"
             android:textColor="@color/acc3"
-            android:textSize="@dimen/text_size_16" />
+            android:textSize="@dimen/text_size_16"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="@dimen/padding_15"
+            android:layout_marginRight="25dp"
+            android:text="在线支付成功后，需等待财务结算后才会更新数据"
+            android:textSize="@dimen/text_size_16"
+            android:textColor="@color/ff1a" />
 
         <RelativeLayout
             android:id="@+id/rl_ali"

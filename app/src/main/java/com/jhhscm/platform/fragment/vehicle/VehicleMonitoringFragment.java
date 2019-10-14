@@ -44,6 +44,7 @@ import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.AMapUtil;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.VehicleMessageDialog;
 
@@ -135,11 +136,11 @@ public class VehicleMonitoringFragment extends AbsFragment<FragmentVehicleMonito
     }
 
     /**
-     * 根据手机号查询gps信息 156069990899
+     * 根据手机号查询gps信息 156069990899  15927112992
      */
     private void gpsDetail() {
         Map<String, Object> map = new TreeMap<String, Object>();
-        map.put("phone", "156069990899");
+        map.put("phone", "15927112992");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = SignObject.getSignKey(getActivity(), map, "gpsDetail");
@@ -158,10 +159,15 @@ public class VehicleMonitoringFragment extends AbsFragment<FragmentVehicleMonito
                                 return;
                             }
                             if (response != null) {
-                                if (response.body().getErrno().equals("0")) {
-                                    initView(response.body().getData());
+                                if (response.body().getCode().equals("200")) {
+                                    if (response.body().getData() != null
+                                            && response.body().getData().getGpsList().size() > 0) {
+                                        initView(response.body().getData());
+                                    } else {
+                                        ToastUtil.show(getContext(), "暂无车辆信息！");
+                                    }
                                 } else if (response.body().getCode().equals("1001")) {
-                                    ToastUtils.show(getContext(), response.body().getErrmsg());
+                                    ToastUtils.show(getContext(), response.body().getMessage());
                                 } else {
                                     ToastUtils.show(getContext(), "网络异常");
                                 }

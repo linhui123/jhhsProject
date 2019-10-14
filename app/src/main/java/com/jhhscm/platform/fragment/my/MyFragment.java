@@ -171,7 +171,7 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             }
         });
 
-        mDataBinding.rlRepay.setVisibility(View.GONE);
+//        mDataBinding.rlRepay.setVisibility(View.GONE);
         mDataBinding.rlRepay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
