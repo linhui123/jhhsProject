@@ -28,6 +28,7 @@ import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.maps2d.model.Polyline;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AssessResultActivity;
+import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.databinding.FragmentLessee3Binding;
 import com.jhhscm.platform.databinding.FragmentVehicleMonitoringBinding;
 import com.jhhscm.platform.fragment.base.AbsFragment;
@@ -90,7 +91,15 @@ public class VehicleMonitoringFragment extends AbsFragment<FragmentVehicleMonito
             e.printStackTrace();
         }
 
-        gpsDetail();
+        if (ConfigUtils.getCurrentUser(getContext()) != null
+                && ConfigUtils.getCurrentUser(getContext()).getMobile() != null
+                && ConfigUtils.getCurrentUser(getContext()).getToken() != null) {
+            gpsDetail();
+        } else {
+            getActivity().finish();
+            LoginActivity.start(getActivity());
+        }
+
 
         if (mAMap == null) {
             mAMap = mDataBinding.map.getMap();
@@ -140,12 +149,13 @@ public class VehicleMonitoringFragment extends AbsFragment<FragmentVehicleMonito
      */
     private void gpsDetail() {
         Map<String, Object> map = new TreeMap<String, Object>();
-        map.put("phone", "15927112992");
+        map.put("phone", ConfigUtils.getCurrentUser(getContext()).getMobile());
+//        map.put("phone", "15927112992");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = SignObject.getSignKey(getActivity(), map, "gpsDetail");
         NetBean netBean = new NetBean();
-        netBean.setToken("");
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(GpsDetailAction.newInstance(getContext(), netBean)

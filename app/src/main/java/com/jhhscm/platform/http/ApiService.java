@@ -40,6 +40,7 @@ import com.jhhscm.platform.fragment.sale.FindGoodsAssessBean;
 import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.fragment.sale.OldGoodOrderHistoryBean;
 import com.jhhscm.platform.fragment.vehicle.GpsDetailBean;
+import com.jhhscm.platform.fragment.vehicle.GpsTrackDetailBean;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.ResultBean;
@@ -507,6 +508,14 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(GPS_DETAIL)
     Call<BaseEntity<GpsDetailBean>> gpsDetail(@Body NetBean content);
+
+    //查询设备轨迹回放
+    String GPS_TRACKDETAIL = "gps/trackDetail";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GPS_TRACKDETAIL)
+    Call<GpsTrackDetailBean> gps_trackdetail(@Body NetBean content);
+
 
     //合同列表
     String CONTRACT_LIST = "contract/list";

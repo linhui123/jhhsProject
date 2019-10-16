@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.TraceReloadActivity;
 import com.jhhscm.platform.activity.VehicleDetailsActivity;
+import com.jhhscm.platform.activity.h5.H5Activity;
 import com.jhhscm.platform.databinding.DialogLogisticsBinding;
 import com.jhhscm.platform.databinding.DialogVehicleMessageBinding;
 import com.jhhscm.platform.fragment.vehicle.GpsDetailBean;
@@ -114,7 +115,10 @@ public class VehicleMessageDialog extends BaseDialog {
         mDataBinding.reload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TraceReloadActivity.start(getContext());
+                TraceReloadActivity.start(getContext(), gpsListBean.getId());
+//                H5Activity.start(getContext(),
+//                        "http://183.62.138.30:88/808gps/open/trackReplay/Track.html?vehiIdno=500000&jsession=1bd49f53-8e49-4cad-972c-bf48cc4b3c83&begintime=2018-08-23 00:00:00&endtime=2018-08-23 23:59:59",
+//                        "轨迹回放");
                 dismiss();
             }
         });

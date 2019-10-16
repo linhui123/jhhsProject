@@ -19,6 +19,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 
+import com.alibaba.fastjson.JSON;
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.AMapUtils;
 import com.amap.api.maps2d.CameraUpdateFactory;
@@ -35,15 +36,31 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsActivity;
 import com.jhhscm.platform.databinding.ActivityMainBinding;
 import com.jhhscm.platform.databinding.ActivityTraceReloadBinding;
+import com.jhhscm.platform.fragment.vehicle.GpsDetailAction;
+import com.jhhscm.platform.fragment.vehicle.GpsDetailBean;
+import com.jhhscm.platform.fragment.vehicle.GpsTrackDetailAction;
+import com.jhhscm.platform.fragment.vehicle.GpsTrackDetailBean;
+import com.jhhscm.platform.http.AHttpService;
+import com.jhhscm.platform.http.HttpHelper;
+import com.jhhscm.platform.http.bean.BaseEntity;
+import com.jhhscm.platform.http.bean.BaseErrorInfo;
+import com.jhhscm.platform.http.bean.NetBean;
+import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.AMapUtil;
 import com.jhhscm.platform.tool.DataUtil;
+import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.ToastUtil;
+import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.timePickets.TimePickerShow;
 import com.umeng.commonsdk.debug.E;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.TreeMap;
+
+import retrofit2.Response;
 
 /**
  * AMap 轨迹回放demo
@@ -54,12 +71,18 @@ public class TraceReloadActivity extends AbsActivity {
     private AMap mAMap;
     private Marker mCarMarker;
     private Polyline mPolyline;
+
+    private String id;
+    private String startTime;
+    private String endTime;
+    private GpsTrackDetailBean gpsTrackDetailBean;
     // 存放所有坐标的数组
     private final ArrayList<LatLng> mLatLngs = new ArrayList<>();
     private final ArrayList<LatLng> mTraceLatLngs = new ArrayList<>();
 
-    public static void start(Context context) {
+    public static void start(Context context, String id) {
         Intent intent = new Intent(context, TraceReloadActivity.class);
+        intent.putExtra("id", id);
         context.startActivity(intent);
     }
 
@@ -71,9 +94,6 @@ public class TraceReloadActivity extends AbsActivity {
                 if (pro != mDataBinding.processBar.getMax()) {
                     mDataBinding.processBar.setProgress(pro + 1);
                     mHandler.sendEmptyMessageDelayed(1, 300);
-                } else {
-                    Button button = (Button) findViewById(R.id.btn_replay);
-                    button.setText(" 回放 ");// 已执行到最后一个坐标 停止任务
                 }
             }
         }
@@ -92,6 +112,8 @@ public class TraceReloadActivity extends AbsActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        id = getIntent().getStringExtra("id");
+
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_trace_reload);
         mDataBinding.toolbarTitle.setText("轨迹回放");
         mDataBinding.toolbar.setTitle("");
@@ -125,6 +147,7 @@ public class TraceReloadActivity extends AbsActivity {
                 timePickerShow.setOnTimePickerListener(new TimePickerShow.OnTimePickerListener() {
                     @Override
                     public void onClicklistener(String dataTime) {
+                        startTime = dataTime.trim();
                         mDataBinding.start.setText(dataTime.trim());
                     }
                 });
@@ -139,6 +162,7 @@ public class TraceReloadActivity extends AbsActivity {
                 timePickerShow.setOnTimePickerListener(new TimePickerShow.OnTimePickerListener() {
                     @Override
                     public void onClicklistener(String dataTime) {
+                        endTime = dataTime.trim();
                         mDataBinding.end.setText(dataTime.trim());
                     }
                 });
@@ -148,18 +172,107 @@ public class TraceReloadActivity extends AbsActivity {
         mDataBinding.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mDataBinding.start.getText().toString().length() > 0
-                        && mDataBinding.end.getText().toString().length() > 0) {
-                    if (DataUtil.TimeCompare(mDataBinding.start.getText().toString(), mDataBinding.end.getText().toString(), "yyyy-MM-dd")) {
-                        reload();
+                if (id != null && id.length() > 0) {
+                    if (mDataBinding.start.getText().toString().length() > 0
+                            && mDataBinding.end.getText().toString().length() > 0) {
+                        if (DataUtil.TimeCompare(mDataBinding.start.getText().toString(), mDataBinding.end.getText().toString(), "yyyy-MM-dd")) {
+
+                            String days = DataUtil.getLongToDays(DataUtil.getLongTime(mDataBinding.start.getText().toString(),
+                                    mDataBinding.end.getText().toString(),
+                                    "yyyy-MM-dd"), "yyyy-MM-dd");
+                            if (Integer.parseInt(days) <= 7) {
+                                reload();
+                                gpsTrackDetail();
+                            } else {
+                                ToastUtil.show(getApplicationContext(), "时间差不能超过7天");
+                            }
+                        } else {
+                            ToastUtil.show(getApplicationContext(), "结束时间不能小于开始时间");
+                        }
                     } else {
-                        ToastUtil.show(getApplicationContext(), "结束时间不能小于开始时间");
+                        ToastUtil.show(getApplicationContext(), "请先选择时间");
                     }
                 } else {
-                    ToastUtil.show(getApplicationContext(), "请先选择时间");
+                    ToastUtil.show(getApplicationContext(), "车辆设备号丢失");
+                    finish();
                 }
             }
         });
+    }
+
+    /**
+     * 获取轨迹回放
+     */
+    private void gpsTrackDetail() {
+        Map<String, Object> map = new TreeMap<String, Object>();
+        map.put("devIdno", id);
+        map.put("begintime", mDataBinding.start.getText().toString());
+        map.put("endtime", mDataBinding.end.getText().toString());
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = SignObject.getSignKey(getApplicationContext(), map, "gpsTrackDetail");
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(GpsTrackDetailAction.newInstance(getApplicationContext(), netBean)
+                .request(new AHttpService.IResCallback<GpsTrackDetailBean>() {
+
+                    @Override
+                    public void onCallback(int resultCode, Response<GpsTrackDetailBean> response, BaseErrorInfo baseErrorInfo) {
+                        if (getApplicationContext() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getApplicationContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body() != null) {
+                                    if (response.body().getTracks() != null
+                                            && response.body().getTracks().size() > 0) {
+                                        gpsTrackDetailBean = response.body();
+                                        setUpMap();
+                                    } else {
+                                        ToastUtil.show(getApplicationContext(), "暂无车辆信息！");
+                                    }
+                                } else {
+                                    ToastUtils.show(getApplicationContext(), "网络异常");
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    private void setUpMap() {
+        mLatLngs.clear();
+        //            mLatLngs.add(new LatLng(26.080648, 119.308806));
+//        mLatLngs.add(new LatLng(26.084339, 119.316046));
+//        mLatLngs.add(new LatLng(26.088752, 119.304117));
+//        mLatLngs.add(new LatLng(26.076064, 119.32176));
+//        mLatLngs.add(new LatLng(26.099719, 119.319711));
+
+        if (gpsTrackDetailBean != null
+                && gpsTrackDetailBean.getTracks() != null
+                && gpsTrackDetailBean.getTracks().size() > 0) {
+            for (GpsTrackDetailBean.TracksBean tracksBean : gpsTrackDetailBean.getTracks()) {
+                mLatLngs.add(new LatLng(Double.parseDouble(tracksBean.getMlat()), Double.parseDouble(tracksBean.getMlng())));
+            }
+            // 设置进度条最大长度为数组长度
+            mDataBinding.processBar.setMax(mLatLngs.size());
+            mAMap.clear();
+            mAMap.setMapType(AMap.MAP_TYPE_NORMAL);
+            //地图缩放度
+            LatLngBounds bounds = getLatLngBounds(mLatLngs);
+            mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 300));
+            // 增加起点位置
+            mAMap.addMarker(new MarkerOptions()
+                    .position(mLatLngs.get(0))
+                    .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                            .decodeResource(
+                                    getResources(),
+                                    R.mipmap.ic_car_start)))
+                    .anchor(0.5f, 0.5f));
+        }
     }
 
     public void reload() {
@@ -170,8 +283,6 @@ public class TraceReloadActivity extends AbsActivity {
             if (mDataBinding.processBar.getProgress() == mDataBinding.processBar.getMax()) {
                 mDataBinding.processBar.setProgress(0);
             }
-            // 将按钮上的字设为"停止" 开始调用定时器回放
-            mDataBinding.btnReplay.setText(" 停止 ");
             mHandler.sendEmptyMessage(1);
         }
     }
@@ -260,31 +371,6 @@ public class TraceReloadActivity extends AbsActivity {
         }
     }
 
-    private void setUpMap() {
-        mLatLngs.clear();
-        mLatLngs.add(new LatLng(26.080648, 119.308806));
-        mLatLngs.add(new LatLng(26.084339, 119.316046));
-        mLatLngs.add(new LatLng(26.088752, 119.304117));
-        mLatLngs.add(new LatLng(26.076064, 119.32176));
-        mLatLngs.add(new LatLng(26.099719, 119.319711));
-
-        // 设置进度条最大长度为数组长度
-        mDataBinding.processBar.setMax(mLatLngs.size());
-        mAMap.clear();
-        mAMap.setMapType(AMap.MAP_TYPE_NORMAL);
-        //地图缩放度
-        LatLngBounds bounds = getLatLngBounds(mLatLngs);
-        mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 300));
-        // 增加起点位置
-        mAMap.addMarker(new MarkerOptions()
-                .position(mLatLngs.get(0))
-                .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                        .decodeResource(
-                                getResources(),
-                                R.mipmap.ic_car_start)))
-                .anchor(0.5f, 0.5f));
-    }
-
     /**
      * 根据自定义内容获取缩放bounds
      */
@@ -295,26 +381,5 @@ public class TraceReloadActivity extends AbsActivity {
             b.include(p);
         }
         return b.build();
-    }
-
-    public void btn_replay_click(View v) {
-        // 根据按钮上的字判断当前是否在回放
-        if (mDataBinding.btnReplay.getText().toString().contains("回放")) {
-            if (mLatLngs.size() > 0) {
-                mPolyline = null;
-                setUpMap();
-                // 假如当前已经回放到最后一点 置0
-                if (mDataBinding.processBar.getProgress() == mDataBinding.processBar.getMax()) {
-                    mDataBinding.processBar.setProgress(0);
-                }
-                // 将按钮上的字设为"停止" 开始调用定时器回放
-                mDataBinding.btnReplay.setText(" 停止 ");
-                mHandler.sendEmptyMessage(1);
-            }
-        } else {
-            // 移除定时器的任务
-            mHandler.removeMessages(1);
-            mDataBinding.btnReplay.setText(" 回放 ");
-        }
     }
 }

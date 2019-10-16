@@ -152,7 +152,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
             aliPrePay();
             findOrder(false);
         }
-
+        type = ALI_PAY_FLAG;
         mDataBinding.rlAli.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

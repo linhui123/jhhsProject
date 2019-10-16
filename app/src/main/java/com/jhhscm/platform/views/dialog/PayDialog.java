@@ -72,7 +72,7 @@ public class PayDialog extends BaseDialog {
 
     private static final int ALI_PAY_FLAG = 1;
     private static final int WX_PAY_FLAG = 2;
-    private static int type = ALI_PAY_FLAG;
+    private int type = ALI_PAY_FLAG;
 
 
     @SuppressLint("HandlerLeak")
@@ -169,7 +169,7 @@ public class PayDialog extends BaseDialog {
     @Override
     protected void onInitView(View view) {
         EventBusUtil.registerEvent(this);
-
+        type = ALI_PAY_FLAG;
         mDataBinding.imClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,6 +200,7 @@ public class PayDialog extends BaseDialog {
         mDataBinding.tvPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("tvPay", "type " + type);
                 if (dataBean != null && dataBean.getOrderCode() != null) {
                     if (type == ALI_PAY_FLAG) {
                         contractPayAliPrePay(dataBean.getOrderCode());

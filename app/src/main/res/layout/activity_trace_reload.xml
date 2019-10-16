@@ -98,14 +98,6 @@
                 android:max="0"
                 android:progress="0"
                 android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btn_replay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="btn_replay_click"
-                android:text="回放"
-                android:visibility="gone" />
         </LinearLayout>
     </RelativeLayout>
 </layout>

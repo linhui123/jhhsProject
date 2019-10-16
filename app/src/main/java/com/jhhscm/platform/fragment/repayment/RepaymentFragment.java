@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentLessee1Binding;
@@ -30,6 +31,7 @@ import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.SignObject;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
@@ -44,6 +46,9 @@ import retrofit2.Response;
 
 public class RepaymentFragment extends AbsFragment<FragmentRepaymentBinding> {
     private InnerAdapter mAdapter;
+    private int mShowCount = 10;
+    private int mCurrentPage = 1;
+    private final int START_PAGE = mCurrentPage;
 
     public static RepaymentFragment instance() {
         RepaymentFragment view = new RepaymentFragment();
@@ -57,34 +62,45 @@ public class RepaymentFragment extends AbsFragment<FragmentRepaymentBinding> {
 
     @Override
     protected void setupViews() {
-        mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new InnerAdapter(getContext());
-        mDataBinding.recyclerview.setAdapter(mAdapter);
-        mDataBinding.recyclerview.autoRefresh();
-        mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
-            @Override
-            public void onRefresh(RecyclerView view) {
-                contractList(true);
-            }
+        if (ConfigUtils.getCurrentUser(getContext()) != null
+                && ConfigUtils.getCurrentUser(getContext()).getMobile() != null
+                && ConfigUtils.getCurrentUser(getContext()).getToken() != null) {
+            mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+            mAdapter = new InnerAdapter(getContext());
+            mDataBinding.recyclerview.setAdapter(mAdapter);
+            mDataBinding.recyclerview.autoRefresh();
+            mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
+                @Override
+                public void onRefresh(RecyclerView view) {
+                    contractList(true);
+                }
 
-            @Override
-            public void onLoadMore(RecyclerView view) {
-                contractList(false);
-            }
-        });
+                @Override
+                public void onLoadMore(RecyclerView view) {
+                    contractList(false);
+                }
+            });
+        } else {
+            getActivity().finish();
+            LoginActivity.start(getActivity());
+        }
     }
 
     /**
      * 合同列表 15927112992
      */
     private void contractList(final boolean refresh) {
+        mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
         Map<String, Object> map = new TreeMap<String, Object>();
-        map.put("phone", "15927112992");
+        map.put("page", mCurrentPage);
+        map.put("limit", mShowCount);
+//        map.put("phone","15927112992");
+        map.put("phone", ConfigUtils.getCurrentUser(getContext()).getMobile());
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = SignObject.getSignKey(getActivity(), map, "contractList");
         NetBean netBean = new NetBean();
-        netBean.setToken("");
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(ContractListAction.newInstance(getContext(), netBean)
@@ -111,14 +127,16 @@ public class RepaymentFragment extends AbsFragment<FragmentRepaymentBinding> {
                 }));
     }
 
+    private ContractListBean contractListBean;
+
     private void initView(ContractListBean beanList, boolean refresh) {
+        contractListBean = beanList;
         if (refresh) {
             mAdapter.setData(beanList.getData());
-            mDataBinding.recyclerview.loadComplete(true, true);
         } else {
             mAdapter.append(beanList.getData());
-            mDataBinding.recyclerview.loadComplete(true, false);
         }
+        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) contractListBean.getPage().getTotal() / (float) contractListBean.getPage().getPageSize()) > mCurrentPage);
 
     }
 
