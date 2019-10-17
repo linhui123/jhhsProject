@@ -238,7 +238,7 @@
             android:layout_marginRight="@dimen/padding_15"
             android:padding="10dp"
             app:colum_num="3"
-            app:image_num="9"></com.jhhscm.platform.views.selector.ImageSelector>
+            app:image_num="6"></com.jhhscm.platform.views.selector.ImageSelector>
 
     </LinearLayout>
 </layout>
