@@ -37,6 +37,10 @@ public class RepaymentDetailFragment extends AbsFragment<FragmentRepaymentDetail
     private InnerAdapter mAdapter;
     private String contractCode;
 
+    private int mShowCount = 10;
+    private int mCurrentPage = 1;
+    private final int START_PAGE = mCurrentPage;
+
     public static RepaymentDetailFragment instance() {
         RepaymentDetailFragment view = new RepaymentDetailFragment();
         return view;
@@ -53,7 +57,7 @@ public class RepaymentDetailFragment extends AbsFragment<FragmentRepaymentDetail
         contractCode = getArguments().getString("contractCode");
         Log.e("setupViews", "contractCode = " + contractCode);
         if (contractCode != null && contractCode.length() > 0) {
-            contractList(contractCode);
+            contractDetail(contractCode);
             mDataBinding.tvPay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -68,7 +72,7 @@ public class RepaymentDetailFragment extends AbsFragment<FragmentRepaymentDetail
 
     public void onEvent(RefreshEvent event) {
         if (contractCode != null && contractCode.length() > 0) {
-            contractList(contractCode);
+            contractDetail(contractCode);
             mDataBinding.tvPay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -81,17 +85,15 @@ public class RepaymentDetailFragment extends AbsFragment<FragmentRepaymentDetail
         }
     }
 
-
-
     /**
      * 合同列表 15927112992
      */
-    private void contractList(final String contractCode) {
+    private void contractDetail(final String contractCode) {
         Map<String, Object> map = new TreeMap<String, Object>();
         map.put("contractCode", contractCode);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = SignObject.getSignKey(getActivity(), map, "contractList");
+        String sign = SignObject.getSignKey(getActivity(), map, "ContractDetail");
         NetBean netBean = new NetBean();
         netBean.setToken("");
         netBean.setSign(sign);

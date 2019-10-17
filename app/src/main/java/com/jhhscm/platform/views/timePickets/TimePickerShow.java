@@ -43,6 +43,12 @@ public class TimePickerShow {
         return wheelMain.getTime(strYear, strMon, strDay, strHour, strMins, strSecond);
     }
 
+    /**
+     * 时间选择控件
+     * 精确到分
+     *
+     * @return
+     */
     public View timePickerView() {
         View timepickerview = View.inflate(context, R.layout.item_timepickers, null);
         wheelMain = new WheelMain(timepickerview);
@@ -95,7 +101,7 @@ public class TimePickerShow {
     }
 
     /**
-     * type=1精确到分；type=2精确到日
+     * type=1精确到分；type=2精确到日；type=3精确到秒
      */
     public View timePickerView(String dateStr, int type) {
         View timepickerview = View.inflate(context, R.layout.item_timepickers, null);
@@ -107,6 +113,7 @@ public class TimePickerShow {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int min = calendar.get(Calendar.MINUTE);
+        int s = calendar.get(Calendar.SECOND);
         wheelMain.setEND_YEAR(2088);
         // 若为空显示当前时间
         if (dateStr != null && !dateStr.equals("")) {
@@ -132,7 +139,9 @@ public class TimePickerShow {
             if (type == 1) {
                 wheelMain.initDateTimePicker(year, month, day, hour, min, -1);// 传-1表示不显示
             } else if (type == 2) {
-                wheelMain.initDateTimePicker(year, month, -1, -1, -1, -1);// 传-1表示不显示
+                wheelMain.initDateTimePicker(year, month, day, -1, -1, -1);// 传-1表示不显示
+            } else if (type == 3) {
+                wheelMain.initDateTimePicker(year, month, day, hour, min, s);// 传-1表示不显示
             }
         }
         return timepickerview;
@@ -222,6 +231,13 @@ public class TimePickerShow {
         dialog.show();
     }
 
+    /**
+     * alertDialog时间选择
+     * type = 2；时间不能大于当前时间
+     * type = 1；选择时间不能小于当前时间
+     *
+     * @param textView
+     */
     public void timePickerAlertDialogs(final String textView, final int type) {
         TimePicketAlertDialog dialog = new TimePicketAlertDialog(context);
         dialog.builder();
@@ -248,6 +264,58 @@ public class TimePickerShow {
                         return;
                     }
                     timePickerListener.onClicklistener(getTxtTime("-", "-", "", "", "", ""));
+                }
+            }
+        });
+        dialog.show();
+    }
+
+
+    /**
+     * alertDialog时间选择
+     * type = 2；时间不能大于当前时间
+     * type = 1；选择时间不能小于当前时间
+     * <p>
+     * dataType=1精确到分；dataType=2精确到日
+     *
+     * @param textView
+     */
+    public void timePickerAlertDialogs(final String textView, final int dataType, final int type) {
+        TimePicketAlertDialog dialog = new TimePicketAlertDialog(context);
+        dialog.builder();
+        if (dataType == 2 || dataType == 3) {
+            dialog.setView(timePickerView(textView, 1));
+        } else {
+            dialog.setView(timePickerView(textView, dataType));
+        }
+        dialog.setOptionTv("");
+        dialog.setNegativeButton("取消", new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+        dialog.setPositiveButton("完成", new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (type == 1) {
+                    if (StringUtils.getTimeCompareSize(getTxtTime("-", "-", " ", ":", "", ""), "yyyy-MM-dd") == 1) {
+                        ToastUtils.show(MyApplication.getInstance(), "选择时间不能小于当前时间");
+                        return;
+                    }
+                    timePickerListener.onClicklistener(getTxtTime("-", "-", " ", ":", "", ""));
+                } else if (type == 2) {
+
+                    if (StringUtils.getTimeCompareSize(getTxtTime("-", "-", "", "", "", ""), "yyyy-MM-dd HH:mm") == 3) {
+                        ToastUtils.show(MyApplication.getInstance(), "选择时间不能大于当前时间");
+                        return;
+                    }
+                    if (dataType == 2) {
+                        timePickerListener.onClicklistener(getTxtTime("-", "-", "", "", "", ""));
+                    } else if (dataType == 1) {
+                        timePickerListener.onClicklistener(getTxtTime("-", "-", " ", ":", "", ""));
+                    }
+
                 }
             }
         });

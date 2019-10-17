@@ -60,15 +60,15 @@ public class ContractDetailBean {
         private double rentMoney;
         private double principal;
         private double interest;
-        private int defaultInterest;
+        private double defaultInterest;
         private int overdueDay;
-        private int residuePrincipal;
-        private int payPrincipal;
-        private int payInterest;
-        private int payDefaultInterest;
-        private int paySumMoney;
-        private int taxDefaultInterest;
-        private int noPayMoney;
+        private double residuePrincipal;
+        private double payPrincipal;
+        private double payInterest;
+        private double payDefaultInterest;
+        private double paySumMoney;
+        private double taxDefaultInterest;
+        private double noPayMoney;
         private String addTime;
         private String updateTime;
         private int deleted;
@@ -137,11 +137,11 @@ public class ContractDetailBean {
             this.interest = interest;
         }
 
-        public int getDefaultInterest() {
+        public double getDefaultInterest() {
             return defaultInterest;
         }
 
-        public void setDefaultInterest(int defaultInterest) {
+        public void setDefaultInterest(double defaultInterest) {
             this.defaultInterest = defaultInterest;
         }
 
@@ -153,59 +153,59 @@ public class ContractDetailBean {
             this.overdueDay = overdueDay;
         }
 
-        public int getResiduePrincipal() {
+        public double getResiduePrincipal() {
             return residuePrincipal;
         }
 
-        public void setResiduePrincipal(int residuePrincipal) {
+        public void setResiduePrincipal(double residuePrincipal) {
             this.residuePrincipal = residuePrincipal;
         }
 
-        public int getPayPrincipal() {
+        public double getPayPrincipal() {
             return payPrincipal;
         }
 
-        public void setPayPrincipal(int payPrincipal) {
+        public void setPayPrincipal(double payPrincipal) {
             this.payPrincipal = payPrincipal;
         }
 
-        public int getPayInterest() {
+        public double getPayInterest() {
             return payInterest;
         }
 
-        public void setPayInterest(int payInterest) {
+        public void setPayInterest(double payInterest) {
             this.payInterest = payInterest;
         }
 
-        public int getPayDefaultInterest() {
+        public double getPayDefaultInterest() {
             return payDefaultInterest;
         }
 
-        public void setPayDefaultInterest(int payDefaultInterest) {
+        public void setPayDefaultInterest(double payDefaultInterest) {
             this.payDefaultInterest = payDefaultInterest;
         }
 
-        public int getPaySumMoney() {
+        public double getPaySumMoney() {
             return paySumMoney;
         }
 
-        public void setPaySumMoney(int paySumMoney) {
+        public void setPaySumMoney(double paySumMoney) {
             this.paySumMoney = paySumMoney;
         }
 
-        public int getTaxDefaultInterest() {
+        public double getTaxDefaultInterest() {
             return taxDefaultInterest;
         }
 
-        public void setTaxDefaultInterest(int taxDefaultInterest) {
+        public void setTaxDefaultInterest(double taxDefaultInterest) {
             this.taxDefaultInterest = taxDefaultInterest;
         }
 
-        public int getNoPayMoney() {
+        public double getNoPayMoney() {
             return noPayMoney;
         }
 
-        public void setNoPayMoney(int noPayMoney) {
+        public void setNoPayMoney(double noPayMoney) {
             this.noPayMoney = noPayMoney;
         }
 

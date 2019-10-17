@@ -173,14 +173,19 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
                 return;
             }
         } catch (Throwable e) {
-            ToastUtils.show(getContext(), "上传失败");
+            closeDialog();
+            e.printStackTrace();
+            ToastUtils.show(getContext(), "图片上传失败");
             return;
         }
     }
 
     private void doUploadImageAction(final SingleImageSelector imageSelector, final File file, final String imageUrl) {
         showDialog();
-        String token = ConfigUtils.getCurrentUser(getContext()).getToken();
+        String token = "";
+        if (ConfigUtils.getCurrentUser(getContext()) != null) {
+            token = ConfigUtils.getCurrentUser(getContext()).getToken();
+        }
         onNewRequestCall(UploadLesseeImgAction.newInstance(getContext(), file, token).
                 request(new AHttpService.IResCallback<OldMechanicsUpImageBean>() {
                     @Override
@@ -191,7 +196,7 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
                                 return;
                             }
                             if (response != null) {
-                                if (response.body().getErrno().equals("0")) {
+                                if (response.body().getCode().equals("200")) {
                                     if ("0".equals(response.body().getData().getCode())) {
 //                                        Log.e("UploadLesseeImgAction", "response : " + response.toString());
                                         doUploadImageResponse(imageSelector, imageUrl, response.body());
@@ -328,7 +333,7 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
                                         getActivity().finish();
                                     } else {
 //                                        ToastUtils.show(getContext(), response.body().getMessage());
-                                        ToastUtils.show(getContext(),"网络错误");
+                                        ToastUtils.show(getContext(), "网络错误");
                                     }
                                 }
                             }

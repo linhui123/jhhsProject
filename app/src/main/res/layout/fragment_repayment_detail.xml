@@ -217,7 +217,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="@dimen/dp_5"
-                android:text="全部待还3期(共24期)"
+                android:text="全部待还--期(共--期)"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_16" />
 

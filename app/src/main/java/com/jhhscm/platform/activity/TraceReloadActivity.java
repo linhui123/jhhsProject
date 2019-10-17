@@ -143,12 +143,13 @@ public class TraceReloadActivity extends AbsActivity {
             @Override
             public void onClick(View v) {
                 TimePickerShow timePickerShow = new TimePickerShow(TraceReloadActivity.this);
-                timePickerShow.timePickerAlertDialogs("", 2);
+                timePickerShow.timePickerAlertDialogs("", 1, 2);
                 timePickerShow.setOnTimePickerListener(new TimePickerShow.OnTimePickerListener() {
                     @Override
                     public void onClicklistener(String dataTime) {
-                        startTime = dataTime.trim();
-                        mDataBinding.start.setText(dataTime.trim());
+                        startTime = dataTime.replace(" ", "+") + ":00";
+                        mDataBinding.start.setText(dataTime.trim() + ":00");
+                        mDataBinding.start.setTag(startTime);
                     }
                 });
             }
@@ -158,12 +159,13 @@ public class TraceReloadActivity extends AbsActivity {
             @Override
             public void onClick(View v) {
                 TimePickerShow timePickerShow = new TimePickerShow(TraceReloadActivity.this);
-                timePickerShow.timePickerAlertDialogs("", 2);
+                timePickerShow.timePickerAlertDialogs("", 1, 2);
                 timePickerShow.setOnTimePickerListener(new TimePickerShow.OnTimePickerListener() {
                     @Override
                     public void onClicklistener(String dataTime) {
-                        endTime = dataTime.trim();
-                        mDataBinding.end.setText(dataTime.trim());
+                        endTime = dataTime.replace(" ", "+") + ":00";
+                        mDataBinding.end.setText(dataTime.trim() + ":00");
+                        mDataBinding.end.setTag(endTime);
                     }
                 });
             }
@@ -176,12 +178,10 @@ public class TraceReloadActivity extends AbsActivity {
                     if (mDataBinding.start.getText().toString().length() > 0
                             && mDataBinding.end.getText().toString().length() > 0) {
                         if (DataUtil.TimeCompare(mDataBinding.start.getText().toString(), mDataBinding.end.getText().toString(), "yyyy-MM-dd")) {
-
                             String days = DataUtil.getLongToDays(DataUtil.getLongTime(mDataBinding.start.getText().toString(),
                                     mDataBinding.end.getText().toString(),
                                     "yyyy-MM-dd"), "yyyy-MM-dd");
                             if (Integer.parseInt(days) <= 7) {
-                                reload();
                                 gpsTrackDetail();
                             } else {
                                 ToastUtil.show(getApplicationContext(), "时间差不能超过7天");
@@ -206,8 +206,8 @@ public class TraceReloadActivity extends AbsActivity {
     private void gpsTrackDetail() {
         Map<String, Object> map = new TreeMap<String, Object>();
         map.put("devIdno", id);
-        map.put("begintime", mDataBinding.start.getText().toString());
-        map.put("endtime", mDataBinding.end.getText().toString());
+        map.put("begintime", mDataBinding.start.getTag().toString());
+        map.put("endtime", mDataBinding.end.getTag().toString());
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = SignObject.getSignKey(getApplicationContext(), map, "gpsTrackDetail");
@@ -245,11 +245,6 @@ public class TraceReloadActivity extends AbsActivity {
 
     private void setUpMap() {
         mLatLngs.clear();
-        //            mLatLngs.add(new LatLng(26.080648, 119.308806));
-//        mLatLngs.add(new LatLng(26.084339, 119.316046));
-//        mLatLngs.add(new LatLng(26.088752, 119.304117));
-//        mLatLngs.add(new LatLng(26.076064, 119.32176));
-//        mLatLngs.add(new LatLng(26.099719, 119.319711));
 
         if (gpsTrackDetailBean != null
                 && gpsTrackDetailBean.getTracks() != null
@@ -257,6 +252,11 @@ public class TraceReloadActivity extends AbsActivity {
             for (GpsTrackDetailBean.TracksBean tracksBean : gpsTrackDetailBean.getTracks()) {
                 mLatLngs.add(new LatLng(Double.parseDouble(tracksBean.getMlat()), Double.parseDouble(tracksBean.getMlng())));
             }
+//            mLatLngs.add(new LatLng(26.080648, 119.308806));
+//            mLatLngs.add(new LatLng(26.084339, 119.316046));
+//            mLatLngs.add(new LatLng(26.088752, 119.304117));
+//            mLatLngs.add(new LatLng(26.076064, 119.32176));
+//            mLatLngs.add(new LatLng(26.099719, 119.319711));
             // 设置进度条最大长度为数组长度
             mDataBinding.processBar.setMax(mLatLngs.size());
             mAMap.clear();
@@ -272,13 +272,14 @@ public class TraceReloadActivity extends AbsActivity {
                                     getResources(),
                                     R.mipmap.ic_car_start)))
                     .anchor(0.5f, 0.5f));
+
+            reload();
         }
     }
 
     public void reload() {
         if (mLatLngs.size() > 0) {
             mPolyline = null;
-            setUpMap();
             // 假如当前已经回放到最后一点 置0
             if (mDataBinding.processBar.getProgress() == mDataBinding.processBar.getMax()) {
                 mDataBinding.processBar.setProgress(0);

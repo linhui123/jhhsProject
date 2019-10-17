@@ -111,6 +111,7 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
                 if (mAdapter.getItemCount() > 1) {
                     mAdapter.remove(mAdapter.getItemCount() - 1);
                     imageSelectors.remove(imageSelectors.size() - 1);
+                    itemsBeans.remove(mAdapter.getItemCount());
                 }
                 if (mAdapter.getItemCount() == 1) {
                     mDataBinding.tvDel.setVisibility(View.GONE);
@@ -321,6 +322,8 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
                 return;
             }
         } catch (Throwable e) {
+            closeDialog();
+            e.printStackTrace();
             ToastUtils.show(getContext(), "上传失败");
             return;
         }
@@ -328,7 +331,10 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
 
     private void doUploadImageAction(final int position, final File file, final String imageUrl) {
         showDialog();
-        String token = ConfigUtils.getCurrentUser(getContext()).getToken();
+        String token = "";
+        if (ConfigUtils.getCurrentUser(getContext()) != null) {
+            token = ConfigUtils.getCurrentUser(getContext()).getToken();
+        }
         onNewRequestCall(UploadLesseeImgAction.newInstance(getContext(), file, token).
                 request(new AHttpService.IResCallback<OldMechanicsUpImageBean>() {
                     @Override
@@ -339,7 +345,7 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
                             }
                             closeDialog();
                             if (response != null) {
-                                if (response.body().getErrno().equals("0")) {
+                                if (response.body().getCode().equals("200")) {
                                     if ("0".equals(response.body().getData().getCode())) {
 //                                        Log.e("UploadLesseeImgAction", "response : " + response.toString());
                                         doUploadImageResponse(position, imageUrl, response.body());

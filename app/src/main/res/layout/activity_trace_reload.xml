@@ -59,9 +59,12 @@
                     android:layout_weight="1"
                     android:background="@drawable/edit_bg_acc9"
                     android:hint="请选择开始时间"
-                    android:padding="@dimen/padding_10"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="@dimen/padding_10"
                     android:textColor="@color/acc3"
-                    android:textSize="@dimen/text_size_16" />
+                    android:textSize="@dimen/sp_14" />
 
                 <TextView
                     android:id="@+id/end"
@@ -70,10 +73,13 @@
                     android:layout_marginLeft="@dimen/padding_10"
                     android:layout_weight="1"
                     android:background="@drawable/edit_bg_acc9"
-                    android:textColor="@color/acc3"
                     android:hint="请选择结束时间"
-                    android:padding="@dimen/padding_10"
-                    android:textSize="@dimen/text_size_16" />
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/sp_14" />
             </LinearLayout>
 
             <Button

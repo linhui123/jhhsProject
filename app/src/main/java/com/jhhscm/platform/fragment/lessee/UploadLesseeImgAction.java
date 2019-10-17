@@ -33,25 +33,36 @@ public class UploadLesseeImgAction extends AHttpService<OldMechanicsUpImageBean>
     private String mToken;
 
     public static UploadLesseeImgAction newInstance(Context context, File file, String token) {
-        return new UploadLesseeImgAction(context, file,token);
+        return new UploadLesseeImgAction(context, file, token);
     }
 
     public UploadLesseeImgAction(Context context, File file, String token) {
         super(context);
         this.uploadImageFile = file;
-        this.mToken=token;
+        this.mToken = token;
     }
 
     @Override
     protected Call newRetrofitCall(ApiService apiService) {
-        MultipartBody.Builder builder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)//表单类型
-                .addFormDataPart(Fields.Token, ConfigUtils.getCurrentUser(context).getToken());
-        RequestBody photoRequestBody = RequestBody.create(MediaType.parse("image/jpg"), uploadImageFile);
-        builder.addFormDataPart("file", uploadImageFile.getName(), photoRequestBody);
-        List<MultipartBody.Part> parts = builder.build().parts();
+        if (ConfigUtils.getCurrentUser(context) != null
+                && ConfigUtils.getCurrentUser(context).getToken() != null) {
+            MultipartBody.Builder builder = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)//表单类型
+                    .addFormDataPart(Fields.Token, ConfigUtils.getCurrentUser(context).getToken());
+            RequestBody photoRequestBody = RequestBody.create(MediaType.parse("image/jpg"), uploadImageFile);
+            builder.addFormDataPart("file", uploadImageFile.getName(), photoRequestBody);
+            List<MultipartBody.Part> parts = builder.build().parts();
 
-        return apiService.uploadLeaseImg(parts);
+            return apiService.uploadLeaseImg(parts);
+        } else {
+            MultipartBody.Builder builder = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM);//表单类型
+            RequestBody photoRequestBody = RequestBody.create(MediaType.parse("image/jpg"), uploadImageFile);
+            builder.addFormDataPart("file", uploadImageFile.getName(), photoRequestBody);
+            List<MultipartBody.Part> parts = builder.build().parts();
+
+            return apiService.uploadLeaseImg(parts);
+        }
     }
 
     public File imageFile() {
