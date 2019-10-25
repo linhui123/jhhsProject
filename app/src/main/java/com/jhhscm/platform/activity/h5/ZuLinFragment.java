@@ -38,6 +38,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.Lessee1Activity;
 import com.jhhscm.platform.databinding.FragmentFinancialBinding;
 import com.jhhscm.platform.databinding.FragmentZuLinBinding;
 import com.jhhscm.platform.event.LoginH5Event;
@@ -263,7 +264,7 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
 
         initViews();
 
-        mDataBinding.tvDijia.setOnClickListener(new View.OnClickListener() {
+        mDataBinding.tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new TelPhoneDialog(getContext(),
@@ -273,6 +274,13 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
                                 saveMsg(phone, "9");
                             }
                         }).show();
+            }
+        });
+
+        mDataBinding.tvApply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Lessee1Activity.start(getContext());
             }
         });
     }

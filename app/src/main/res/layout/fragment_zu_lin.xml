@@ -67,30 +67,48 @@
             android:progress="50"
             android:progressDrawable="@drawable/web_progrebar" />
 
-        <RelativeLayout
+
+        <LinearLayout
             android:id="@+id/rl_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:paddingLeft="@dimen/padding_15"
-            android:paddingRight="@dimen/padding_15"
             android:background="@color/white"
             android:gravity="center_vertical"
+            android:paddingLeft="@dimen/padding_15"
+            android:orientation="horizontal"
             android:paddingTop="@dimen/dp_5"
+            android:paddingRight="@dimen/padding_15"
             android:paddingBottom="@dimen/dp_5">
 
             <TextView
-                android:id="@+id/tv_dijia"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_submit"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginRight="@dimen/padding_10"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_c397"
                 android:gravity="center"
                 android:paddingTop="@dimen/padding_10"
                 android:paddingBottom="@dimen/padding_10"
-                android:text="咨询联系"
+                android:text="提交申请"
                 android:textColor="@color/white"
                 android:visibility="visible" />
-        </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_apply"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_c397"
+                android:layout_marginLeft="@dimen/padding_10"
+                android:gravity="center"
+                android:paddingTop="@dimen/padding_10"
+                android:paddingBottom="@dimen/padding_10"
+                android:text="提交资料"
+                android:textColor="@color/white"
+                android:visibility="visible" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/rl_error"

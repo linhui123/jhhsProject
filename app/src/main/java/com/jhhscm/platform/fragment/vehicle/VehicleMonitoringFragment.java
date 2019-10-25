@@ -21,6 +21,7 @@ import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapsInitializer;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
+import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.LatLngBounds;
 import com.amap.api.maps2d.model.Marker;
@@ -210,8 +211,15 @@ public class VehicleMonitoringFragment extends AbsFragment<FragmentVehicleMonito
                                     R.mipmap.ic_map_v)));
             mAMap.addMarker(markerOptions);
         }
-        LatLngBounds bounds = getLatLngBounds(mLatLngs);
-        mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 300));
+        if (gpsDetailBean != null && gpsDetailBean.getGpsList().size() > 1) {
+            LatLngBounds bounds = getLatLngBounds(mLatLngs);
+            mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 300));//设置地图的放缩
+        } else if (gpsDetailBean.getGpsList().size() == 1) {
+            CameraPosition cameraPosition = new CameraPosition(mLatLngs.get(0), 13, 0, 0);
+            mAMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
+
+
         mAMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
