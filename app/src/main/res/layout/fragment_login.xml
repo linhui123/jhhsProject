@@ -106,7 +106,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/login"
             android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/padding_10"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="@dimen/padding_10"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -121,7 +124,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tv_1"
-                android:text="挖矿来服务条款"
+                android:gravity="center"
+                android:text="挖矿来用户协议和隐私政策"
                 android:textColor="@color/a397"
                 android:textSize="@dimen/text_size_14" />
         </LinearLayout>
