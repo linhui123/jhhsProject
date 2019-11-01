@@ -16,6 +16,8 @@ import com.jhhscm.platform.activity.AuthenticationActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.MsgActivity;
 import com.jhhscm.platform.activity.MyCollectionActivity;
+import com.jhhscm.platform.activity.MyCouponActivity;
+import com.jhhscm.platform.activity.MyInviteActivity;
 import com.jhhscm.platform.activity.MyLabourActivity;
 import com.jhhscm.platform.activity.MyMechanicsActivity;
 import com.jhhscm.platform.activity.MyPeiJianListActivity;
@@ -77,11 +79,13 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                 mDataBinding.tvName.setVisibility(View.GONE);
                 mDataBinding.username.setText(ConfigUtils.getCurrentUser(getContext()).getMobile());
                 if ("1".equals(ConfigUtils.getCurrentUser(getContext()).getIs_check())) {
-                    mDataBinding.tvCerGo.setVisibility(View.GONE);
+//                    mDataBinding.tvCerGo.setVisibility(View.GONE);
+                    mDataBinding.tvCerGo.setText("已认证");
                     mDataBinding.tvCer.setText("已认证");
                 } else {
                     mDataBinding.tvCer.setText("未认证");
-                    mDataBinding.tvCerGo.setVisibility(View.VISIBLE);
+                    mDataBinding.tvCerGo.setText("未认证");
+//                    mDataBinding.tvCerGo.setVisibility(View.VISIBLE);
                 }
             }
         }
@@ -101,7 +105,10 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
         mDataBinding.tvCerGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AuthenticationActivity.start(getContext());
+                if ("未认证".equals(mDataBinding.tvCerGo.getText().toString())) {
+                    AuthenticationActivity.start(getContext());
+                }
+
             }
         });
         mDataBinding.tvName.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +125,25 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             }
         });
 
-        mDataBinding.rlShoucang.setOnClickListener(new View.OnClickListener() {
+        mDataBinding.setImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SettingActivity.start(getActivity());
+            }
+        });
+
+        mDataBinding.llCoupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    MyCouponActivity.start(getActivity());
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
+            }
+        });
+        mDataBinding.llShoucang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ConfigUtils.getCurrentUser(getContext()) != null
@@ -130,7 +155,19 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             }
         });
 
-        mDataBinding.rlJizi.setOnClickListener(new View.OnClickListener() {
+        mDataBinding.llInvite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    MyInviteActivity.start(getContext(), 0);
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
+            }
+        });
+
+        mDataBinding.llDevice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ConfigUtils.getCurrentUser(getContext()) != null
@@ -141,7 +178,7 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                 }
             }
         });
-        mDataBinding.rlLaowu.setOnClickListener(new View.OnClickListener() {
+        mDataBinding.llLabour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ConfigUtils.getCurrentUser(getContext()) != null
@@ -152,7 +189,7 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                 }
             }
         });
-        mDataBinding.rlPeijian.setOnClickListener(new View.OnClickListener() {
+        mDataBinding.rlOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (ConfigUtils.getCurrentUser(getContext()) != null
@@ -164,15 +201,7 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             }
         });
 
-        mDataBinding.rlSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SettingActivity.start(getActivity());
-            }
-        });
-
-//        mDataBinding.rlRepay.setVisibility(View.GONE);
-        mDataBinding.rlRepay.setOnClickListener(new View.OnClickListener() {
+        mDataBinding.llRepay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ConfigUtils.getCurrentUser(getContext()) != null
@@ -222,11 +251,13 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
             if ("1".equals(ConfigUtils.getCurrentUser(getContext()).getIs_check())) {
-                mDataBinding.tvCerGo.setVisibility(View.GONE);
+//                mDataBinding.tvCerGo.setVisibility(View.GONE);
                 mDataBinding.tvCer.setText("已认证");
+                mDataBinding.tvCerGo.setText("已认证");
             } else {
                 mDataBinding.tvCer.setText("未认证");
-                mDataBinding.tvCerGo.setVisibility(View.VISIBLE);
+                mDataBinding.tvCerGo.setText("已认证");
+//                mDataBinding.tvCerGo.setVisibility(View.VISIBLE);
             }
             mDataBinding.tvName.setVisibility(View.GONE);
             mDataBinding.rlCer.setVisibility(View.VISIBLE);

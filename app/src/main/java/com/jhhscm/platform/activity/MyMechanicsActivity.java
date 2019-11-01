@@ -39,7 +39,7 @@ public class MyMechanicsActivity extends AbsToolbarActivity {
 
     @Override
     public boolean isSupportSwipeBack() {
-        return true;
+        return false;
     }
 
     @Override

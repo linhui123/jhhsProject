@@ -53,7 +53,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme.TranslucentStatusBar"
         tools:replace="android:label">
-        <activity android:name=".activity.MyCouponActivity"></activity>
+        <activity android:name=".activity.AddDeviceActivity"></activity>
+        <activity android:name=".activity.MyInviteActivity" />
+        <activity android:name=".activity.MyCouponActivity" />
         <activity android:name=".activity.InvitationRegisterActivity" />
         <activity android:name=".activity.AfterSaleActivity" />
         <activity android:name=".activity.CouponCenterActivity" />

@@ -6,17 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
-import com.jhhscm.platform.fragment.aftersale.AfterSaleFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.invitation.InvitationRegisterFragment;
+import com.jhhscm.platform.fragment.invitation.MyInviteFragment;
 
-/**
- * 邀请注册
- */
-public class InvitationRegisterActivity extends AbsToolbarActivity {
+public class MyInviteActivity extends AbsToolbarActivity {
 
-    public static void start(Context context) {
-        Intent intent = new Intent(context, InvitationRegisterActivity.class);
+    public static void start(Context context, int num) {
+        Intent intent = new Intent(context, MyInviteActivity.class);
+        intent.putExtra("num", num);
         context.startActivity(intent);
     }
 
@@ -47,17 +45,18 @@ public class InvitationRegisterActivity extends AbsToolbarActivity {
 
     @Override
     protected String getToolBarTitle() {
-        return "邀请注册";
+        return "我邀请的人(" + getIntent().getIntExtra("num", 0) + ")";
     }
 
     @Override
     protected AbsFragment onCreateContentView() {
-        return InvitationRegisterFragment.instance();
+        return MyInviteFragment.instance();
     }
 
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putInt("num", getIntent().getIntExtra("num", 0));
         return args;
     }
 }

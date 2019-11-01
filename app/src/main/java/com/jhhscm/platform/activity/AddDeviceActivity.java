@@ -6,17 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
-import com.jhhscm.platform.fragment.aftersale.AfterSaleFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.invitation.InvitationRegisterFragment;
+import com.jhhscm.platform.fragment.my.mechanics.AddDeviceFragment;
+import com.jhhscm.platform.fragment.my.mechanics.MyMechanicsFragment;
 
-/**
- * 邀请注册
- */
-public class InvitationRegisterActivity extends AbsToolbarActivity {
+public class AddDeviceActivity extends AbsToolbarActivity {
 
     public static void start(Context context) {
-        Intent intent = new Intent(context, InvitationRegisterActivity.class);
+        Intent intent = new Intent(context, AddDeviceActivity.class);
         context.startActivity(intent);
     }
 
@@ -47,12 +44,12 @@ public class InvitationRegisterActivity extends AbsToolbarActivity {
 
     @Override
     protected String getToolBarTitle() {
-        return "邀请注册";
+        return "添加设备";
     }
 
     @Override
     protected AbsFragment onCreateContentView() {
-        return InvitationRegisterFragment.instance();
+        return AddDeviceFragment.instance();
     }
 
     @Override

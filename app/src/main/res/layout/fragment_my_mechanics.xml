@@ -4,17 +4,37 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
             android:id="@+id/wrvRecycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+            android:background="@color/cf5"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/add"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+
+        <TextView
+            android:id="@+id/add"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginRight="@dimen/padding_15"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:background="@drawable/button_c397"
+            android:gravity="center"
+            android:text="添加设备"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:id="@+id/rl_case_base_null"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/add"
             android:layout_centerInParent="true"
             android:visibility="gone">
 

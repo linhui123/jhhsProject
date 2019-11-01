@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.AddDeviceActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
@@ -79,7 +80,7 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
         } else {
             startNewActivity(LoginActivity.class);
         }
-        mDataBinding.wrvRecycler.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
+//        mDataBinding.wrvRecycler.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
         mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.wrvRecycler.setAdapter(mAdapter);
@@ -93,6 +94,13 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
             @Override
             public void onLoadMore(RecyclerView view) {
                 findOldGoodByUserCode(false);
+            }
+        });
+
+        mDataBinding.add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddDeviceActivity.start(getContext());
             }
         });
     }
@@ -150,8 +158,8 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
         }
         mDataBinding.wrvRecycler.getAdapter().notifyDataSetChanged();
 //        if (mAdapter.getItemCount()>0) {
-            mDataBinding.rlCaseBaseNull.setVisibility(View.GONE);
-            mDataBinding.wrvRecycler.loadComplete(mAdapter.getItemCount() == 0, ((float) findOldGoodByUserCodeBean.getPage().getTotal() / (float) findOldGoodByUserCodeBean.getPage().getPageSize()) > mCurrentPage);
+        mDataBinding.rlCaseBaseNull.setVisibility(View.GONE);
+        mDataBinding.wrvRecycler.loadComplete(mAdapter.getItemCount() == 0, ((float) findOldGoodByUserCodeBean.getPage().getTotal() / (float) findOldGoodByUserCodeBean.getPage().getPageSize()) > mCurrentPage);
 //        } else {
 //            mDataBinding.wrvRecycler.loadComplete(true, false);
 //            mDataBinding.rlCaseBaseNull.setVisibility(View.VISIBLE);
@@ -165,7 +173,7 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
 
         @Override
         public AbsRecyclerViewHolder<FindOldGoodByUserCodeBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new MyMechanicsViewHolder(mInflater.inflate(R.layout.item_mechanics_old, parent, false));
+            return new MyMechanicsViewHolder(mInflater.inflate(R.layout.item_device, parent, false));
         }
     }
 

@@ -2,10 +2,15 @@ package com.jhhscm.platform.fragment.my.mechanics;
 
 import android.view.View;
 
+import com.jhhscm.platform.activity.AddDeviceActivity;
+import com.jhhscm.platform.activity.Lessee1Activity;
+import com.jhhscm.platform.activity.PushOldMechanicsActivity;
 import com.jhhscm.platform.activity.h5.MechanicsH5Activity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
+import com.jhhscm.platform.databinding.ItemDeviceBinding;
 import com.jhhscm.platform.databinding.ItemMechanicsOldBinding;
 import com.jhhscm.platform.tool.CalculationUtils;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -14,11 +19,11 @@ import java.text.DecimalFormat;
 
 public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindOldGoodByUserCodeBean.DataBean> {
 
-    private ItemMechanicsOldBinding mBinding;
+    private ItemDeviceBinding mBinding;
 
     public MyMechanicsViewHolder(View itemView) {
         super(itemView);
-        mBinding = ItemMechanicsOldBinding.bind(itemView);
+        mBinding = ItemDeviceBinding.bind(itemView);
     }
 
     @Override
@@ -40,13 +45,13 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindOldGoodByUs
         }
 //        String Retail_price = item.getRetail_price() == null ? "" : "首付" + CalculationUtils.wan(item.getRetail_price());
         mBinding.tv3.setText(Counter_price + Retail_price);
-        mBinding.tv4.setText("");
+        mBinding.tvType.setText("");
         if (item.getIs_sell() == 0) {
-            mBinding.tv4.setText("审核");
+            mBinding.tvType.setText("审核");
         } else if (item.getIs_sell() == 1) {
-            mBinding.tv4.setText("已售出");
+            mBinding.tvType.setText("已售出");
         } else if (item.getIs_sell() == 2) {
-            mBinding.tv4.setText("正在销售");
+            mBinding.tvType.setText("正在销售");
         }
 
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +59,37 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindOldGoodByUs
             public void onClick(View v) {
                 String url = UrlUtils.ESJXQ + "&good_code=" + item.getGood_code();
                 MechanicsH5Activity.start(itemView.getContext(), url, "二手机详情", item.getGood_code(), item.getName(), item.getPic_url(), 2);
+            }
+        });
+
+        mBinding.tvFunc1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.show(itemView.getContext(), "租赁");
+                Lessee1Activity.start(itemView.getContext());
+            }
+
+        });
+
+        mBinding.tvFunc2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.show(itemView.getContext(), "卖车");
+                PushOldMechanicsActivity.start(itemView.getContext());
+            }
+        });
+
+        mBinding.tvFunc3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddDeviceActivity.start(itemView.getContext());
+            }
+        });
+
+        mBinding.tvFunc4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.show(itemView.getContext(), "删除");
             }
         });
     }
