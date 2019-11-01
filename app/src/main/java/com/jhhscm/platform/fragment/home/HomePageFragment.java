@@ -22,7 +22,9 @@ import com.amap.api.services.weather.WeatherSearchQuery;
 import com.google.gson.Gson;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.CouponCenterActivity;
 import com.jhhscm.platform.activity.MainActivity;
+import com.jhhscm.platform.activity.MyCouponActivity;
 import com.jhhscm.platform.activity.SearchActivity;
 import com.jhhscm.platform.activity.MsgActivity;
 import com.jhhscm.platform.activity.h5.H5Activity;
@@ -156,11 +158,15 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                      * SCROLL_STATE_DRAGGING：RecyclerView目前被外部输入如用户触摸输入。
                      * SCROLL_STATE_SETTLING：RecyclerView目前动画虽然不是在最后一个位置外部控制。**/
 
-                    mDataBinding.tel.setVisibility(View.VISIBLE);
-                    imgTranslateAnimation(100, 0);
+//                    mDataBinding.tel.setVisibility(View.VISIBLE);
+//                    imgTranslateAnimation(mDataBinding.tel, 100, 0);
+                    mDataBinding.coupon.setVisibility(View.VISIBLE);
+                    imgTranslateAnimation(mDataBinding.coupon, 100, 0);
                 } else if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-                    imgTranslateAnimation(0, 100);
-                    mDataBinding.tel.setVisibility(View.GONE);
+//                    imgTranslateAnimation(mDataBinding.tel, 0, 100);
+//                    mDataBinding.tel.setVisibility(View.GONE);
+                    imgTranslateAnimation(mDataBinding.coupon, 0, 100);
+                    mDataBinding.coupon.setVisibility(View.GONE);
                 }
             }
         });
@@ -178,15 +184,23 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                 }).show();
             }
         });
+
+        mDataBinding.coupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                CouponCenterActivity.start(getActivity());
+                MyCouponActivity.start(getActivity());
+            }
+        });
     }
 
     //动画的左右进出平移动画
-    private void imgTranslateAnimation(float fromXDelta, float toXDelta) {
+    private void imgTranslateAnimation(View view, float fromXDelta, float toXDelta) {
         TranslateAnimation translateAnimation = new TranslateAnimation(fromXDelta, toXDelta, 0, 0);
         translateAnimation.setFillAfter(true);//这句话会造成imageView.setVisibility(GONE)的时候，会停留在动画最后的地方，导致还没有隐藏的假象。
         translateAnimation.setDuration(800);
-        mDataBinding.tel.setAnimation(translateAnimation);
-        mDataBinding.tel.startAnimation(translateAnimation);
+        view.setAnimation(translateAnimation);
+        view.startAnimation(translateAnimation);
     }
 
 

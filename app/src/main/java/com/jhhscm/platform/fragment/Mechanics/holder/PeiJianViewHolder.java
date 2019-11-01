@@ -24,7 +24,7 @@ public class PeiJianViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.Da
         if (item.getPic_url() != null) {
             ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.im);
         }
-
+        mBinding.tvStore.setText("合作商家名称>");
         mBinding.tv1.setText(item.getName());
         mBinding.tv2.setText(item.getCounter_price() != null ? "￥" + item.getCounter_price() : "￥ --");
         mBinding.tv3.setText(item.getSale_num() != null ? "已售出 " + item.getSale_num() + " 件" : "已售出 --件");

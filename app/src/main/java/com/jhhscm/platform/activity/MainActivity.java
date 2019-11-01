@@ -317,10 +317,18 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
                 PeiJianActivity.start(MainActivity.this);
             } else if ("AFTER_SALE".equals(event.getType())) {//售后
                 MobclickAgent.onEvent(getApplicationContext(), "after_button_home");
-                ToastUtils.show(MainActivity.this, "该功能正在建设中");
+//                ToastUtils.show(MainActivity.this, "该功能正在建设中");
+                AfterSaleActivity.start(MainActivity.this);
             } else if ("GOLD".equals(event.getType())) {//金服
                 MobclickAgent.onEvent(getApplicationContext(), "gold_button_home");
-                FinancialH5Activity.start(MainActivity.this, UrlUtils.JF, "金服");
+                Gson gson = new Gson();
+                AdBean.ResultBean adBean = gson.fromJson(event.getResultBean().getContent(), AdBean.ResultBean.class);
+                if (adBean.getPARAM() != null) {
+                    //UrlUtils.JF
+                    FinancialH5Activity.start(MainActivity.this, adBean.getPARAM().getHREF_URL(), "金服");
+                } else {
+                    ToastUtils.show(MainActivity.this, "地址为空");
+                }
 //                onCheckedChanged(mDataBinding.rgOper, R.id.rd_finance);
 //                mDataBinding.rdFinance.setChecked(true);
             } else if ("STEWARD".equals(event.getType())) {//管家
@@ -337,6 +345,8 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
             } else if ("PROJECT".equals(event.getType())) {//工程
                 MobclickAgent.onEvent(getApplicationContext(), "project_button_home");
                 ToastUtils.show(MainActivity.this, "该功能正在建设中");
+
+                InvitationRegisterActivity.start(MainActivity.this);
             } else if ("LABOUR".equals(event.getType())) {//劳务
                 MobclickAgent.onEvent(getApplicationContext(), "labour_button_home");
                 LabourActivity.start(MainActivity.this);
@@ -346,6 +356,8 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
                 if (adBean.getPARAM() != null) {
                     Log.e("WEB", "外部链接：" + adBean.getPARAM().getHREF_URL());
                     H5Activity.start(MainActivity.this, adBean.getPARAM().getHREF_URL());
+                } else {
+                    ToastUtils.show(MainActivity.this, "地址为空");
                 }
             }
         }
