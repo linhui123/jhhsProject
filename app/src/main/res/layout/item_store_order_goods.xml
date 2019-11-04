@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/padding_15"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginRight="@dimen/padding_15">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="L-HM 46/68 液压油"
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="￥2900.00"
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/text_size_14" />
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginTop="@dimen/padding_15"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/brand"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="品牌：山河智能"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+                android:id="@+id/model"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="型号：SWE18UF"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginTop="@dimen/padding_15"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/no"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="设备序列号：1EAD123123"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginTop="@dimen/padding_15"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/padding_15">
+
+            <TextView
+                android:id="@+id/gps_no"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="GPS序列号：GWE123123"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+                android:id="@+id/order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_bg_397"
+                android:paddingLeft="@dimen/padding_15"
+                android:paddingTop="@dimen/dp_3"
+                android:paddingRight="@dimen/padding_15"
+                android:paddingBottom="@dimen/dp_3"
+                android:text="查看订单"
+                android:textColor="@color/a397"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/shadow"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@color/cf5" />
+    </LinearLayout>
+</layout>

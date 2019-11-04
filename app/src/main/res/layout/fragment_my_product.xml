@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/ll_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginTop="@dimen/padding_10"
+            android:layout_marginRight="@dimen/padding_15"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/search_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/search"
+                android:background="@drawable/edit_bg_397"
+                android:hint="请输入名称，品牌，价格"
+                android:padding="@dimen/padding_10"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="-2dp"
+                android:background="@drawable/button_c397"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp"
+                android:text="查询"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_16" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_below="@+id/ll_search"
+            android:layout_marginTop="@dimen/padding_10"
+            android:background="@color/cf5" />
+
+        <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_marginRight="@dimen/padding_15"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_height="match_parent"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_15"
+        android:paddingBottom="@dimen/padding_15">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="L-HM 46/68 液压油"
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/text_size_14"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name"
+            android:layout_marginTop="@dimen/dp_5"
+            android:text="类型：油品"
+            android:textColor="@color/acc9"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:id="@+id/brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_toRightOf="@+id/type"
+            android:text="品牌：天津日石"
+            android:textColor="@color/acc9"
+            android:textSize="@dimen/text_size_14" />
+
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="￥500.00"
+            android:textColor="@color/ff1a"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</layout>

@@ -13,7 +13,9 @@ import android.widget.RelativeLayout;
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AuthenticationActivity;
+import com.jhhscm.platform.activity.InvitationRegisterActivity;
 import com.jhhscm.platform.activity.LoginActivity;
+import com.jhhscm.platform.activity.MainActivity;
 import com.jhhscm.platform.activity.MsgActivity;
 import com.jhhscm.platform.activity.MyCollectionActivity;
 import com.jhhscm.platform.activity.MyCouponActivity;
@@ -21,6 +23,7 @@ import com.jhhscm.platform.activity.MyInviteActivity;
 import com.jhhscm.platform.activity.MyLabourActivity;
 import com.jhhscm.platform.activity.MyMechanicsActivity;
 import com.jhhscm.platform.activity.MyPeiJianListActivity;
+import com.jhhscm.platform.activity.MyStoreActivity;
 import com.jhhscm.platform.activity.ReceiveAddressActivity;
 import com.jhhscm.platform.activity.RepaymentActivity;
 import com.jhhscm.platform.activity.SettingActivity;
@@ -161,6 +164,8 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                 if (ConfigUtils.getCurrentUser(getContext()) != null
                         && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
                     MyInviteActivity.start(getContext(), 0);
+//邀请注册
+//                    InvitationRegisterActivity.start(MainActivity.this);
                 } else {
                     startNewActivity(LoginActivity.class);
                 }
@@ -176,6 +181,13 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                 } else {
                     startNewActivity(LoginActivity.class);
                 }
+            }
+        });
+
+        mDataBinding.rlStore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyStoreActivity.start(getContext());
             }
         });
         mDataBinding.llLabour.setOnClickListener(new View.OnClickListener() {

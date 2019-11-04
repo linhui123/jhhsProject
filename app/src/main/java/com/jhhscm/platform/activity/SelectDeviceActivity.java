@@ -5,16 +5,15 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.lessee.Lessee1Fragment;
-import com.jhhscm.platform.fragment.vehicle.VehicleMonitoringFragment;
+import com.jhhscm.platform.fragment.my.store.SelectDeviceFragment;
+import com.jhhscm.platform.fragment.my.store.StoreOrderSubmit1Fragment;
 
-public class VehicleMonitoringActivity extends AbsToolbarActivity {
+public class SelectDeviceActivity extends AbsToolbarActivity {
 
     public static void start(Context context) {
-        Intent intent = new Intent(context, VehicleMonitoringActivity.class);
+        Intent intent = new Intent(context, SelectDeviceActivity.class);
         context.startActivity(intent);
     }
 
@@ -45,13 +44,12 @@ public class VehicleMonitoringActivity extends AbsToolbarActivity {
 
     @Override
     protected String getToolBarTitle() {
-//        return "车辆监控";
-        return "我的机子";
+        return "选择机子";
     }
 
     @Override
     protected AbsFragment onCreateContentView() {
-        return VehicleMonitoringFragment.instance();
+        return SelectDeviceFragment.instance();
     }
 
     @Override

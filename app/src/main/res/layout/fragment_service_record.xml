@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/a397">
+
+            <com.jhhscm.platform.views.CircleImageView
+                android:id="@+id/im_user"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="25dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_heard" />
+
+            <RelativeLayout
+                android:id="@+id/rl_cer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/im_user"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp_1"
+                    android:paddingBottom="@dimen/dp_1"
+                    android:text="张三"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/username"
+                    android:paddingTop="@dimen/dp_1"
+                    android:paddingBottom="@dimen/dp_1"
+                    android:text="18030001100"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_store_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/username"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:text="共3台设备记录"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="match_parent"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginRight="@dimen/padding_15"
+            android:background="@color/cf5" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginTop="@dimen/padding_15"
+            android:layout_marginRight="@dimen/padding_15"
+            android:background="@drawable/edit_bg_acc9"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingBottom="@dimen/padding_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_15"
+                android:drawableRight="@mipmap/ic_xinghao"
+                android:text="设备品牌"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
+
+            <EditText
+                android:id="@+id/brand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/padding_15"
+                android:background="@null"
+                android:hint="请输入"
+                android:textColor="@color/a397"
+                android:textSize="@dimen/text_size_14" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginTop="@dimen/padding_15"
+            android:layout_marginRight="@dimen/padding_15"
+            android:background="@drawable/edit_bg_acc9"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingBottom="@dimen/padding_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_15"
+                android:drawableRight="@mipmap/ic_xinghao"
+                android:text="设备型号"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
+
+            <EditText
+                android:id="@+id/model"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/padding_15"
+                android:background="@null"
+                android:hint="请输入"
+                android:textColor="@color/a397"
+                android:textSize="@dimen/text_size_14" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginTop="@dimen/padding_15"
+            android:layout_marginRight="@dimen/padding_15"
+            android:background="@drawable/edit_bg_acc9"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingBottom="@dimen/padding_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_15"
+                android:text="设备序列号"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
+
+            <EditText
+                android:id="@+id/no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/padding_15"
+                android:background="@null"
+                android:hint="请输入"
+                android:textColor="@color/a397"
+                android:textSize="@dimen/text_size_14" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginTop="@dimen/padding_15"
+            android:layout_marginRight="@dimen/padding_15"
+            android:background="@drawable/edit_bg_acc9"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingBottom="@dimen/padding_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_15"
+                android:text="GPS序列号"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
+
+            <EditText
+                android:id="@+id/gps_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/padding_15"
+                android:background="@null"
+                android:hint="请输入"
+                android:textColor="@color/a397"
+                android:textSize="@dimen/text_size_14" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginTop="@dimen/padding_15"
+            android:layout_marginRight="@dimen/padding_15"
+            android:layout_marginBottom="@dimen/padding_15"
+            android:background="@drawable/edit_bg_acc9"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingBottom="@dimen/padding_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_15"
+                android:text="故障类型"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+                android:id="@+id/fault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/padding_15"
+                android:hint="请选择"
+                android:textColor="@color/a397"
+                android:textSize="@dimen/text_size_14" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

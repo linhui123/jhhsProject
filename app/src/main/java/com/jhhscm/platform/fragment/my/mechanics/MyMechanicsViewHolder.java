@@ -29,12 +29,12 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindOldGoodByUs
     @Override
     protected void onBindView(final FindOldGoodByUserCodeBean.DataBean item) {
         ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.im);
-        mBinding.tv1.setText(item.getName());
+        mBinding.tv1.setText("品牌："+item.getName());
         String data = item.getFactory_time() == null ? "" : item.getFactory_time() + "年 | ";
         String Old_time = item.getOld_time() == null ? "" : item.getOld_time() + "小时 | ";
         String Province = item.getProvince() == null ? "" : item.getProvince() + "-";
         String City = item.getCity() == null ? "" : item.getCity();
-        mBinding.tv2.setText(data + Old_time + Province + City);
+        mBinding.tv2.setText("型号："+data + Old_time + Province + City);
 
         String Counter_price = item.getCounter_price() == null ? "" : CalculationUtils.wan(item.getCounter_price()) + "  ";
         String Retail_price = "";
@@ -44,7 +44,7 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindOldGoodByUs
             Retail_price = "";
         }
 //        String Retail_price = item.getRetail_price() == null ? "" : "首付" + CalculationUtils.wan(item.getRetail_price());
-        mBinding.tv3.setText(Counter_price + Retail_price);
+        mBinding.tv3.setText("出厂时间："+Counter_price + Retail_price);
         mBinding.tvType.setText("");
         if (item.getIs_sell() == 0) {
             mBinding.tvType.setText("审核");

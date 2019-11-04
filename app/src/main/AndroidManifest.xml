@@ -53,7 +53,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme.TranslucentStatusBar"
         tools:replace="android:label">
-        <activity android:name=".activity.AddDeviceActivity"></activity>
+        <activity android:name=".activity.StoreOrderActivity"></activity>
+        <activity android:name=".activity.ServiceRecordActivity" />
+        <activity android:name=".activity.SelectDeviceActivity" />
+        <activity android:name=".activity.SelectMemberActivity" />
+        <activity android:name=".activity.StoreOrderSubmit2Activity" />
+        <activity android:name=".activity.StoreOrderSubmit1Activity" />
+        <activity android:name=".activity.MyStoreActivity" />
+        <activity android:name=".activity.AddDeviceActivity" />
         <activity android:name=".activity.MyInviteActivity" />
         <activity android:name=".activity.MyCouponActivity" />
         <activity android:name=".activity.InvitationRegisterActivity" />
