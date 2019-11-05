@@ -2,6 +2,7 @@ package com.jhhscm.platform.fragment.coupon;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +12,16 @@ import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
+import com.jhhscm.platform.databinding.FragmentCaseBaseBinding;
 import com.jhhscm.platform.databinding.FragmentCouponCenterBinding;
 import com.jhhscm.platform.databinding.FragmentLabourBinding;
+import com.jhhscm.platform.databinding.FragmentMyCouponListBinding;
+import com.jhhscm.platform.databinding.FragmentMyMemberBinding;
+import com.jhhscm.platform.event.AddressResultEvent;
+import com.jhhscm.platform.event.OrderCancleEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderFragment;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderViewHolder;
 import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
@@ -23,13 +30,26 @@ import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.labour.LabourFragment;
 import com.jhhscm.platform.fragment.msg.NewsListFragment;
+import com.jhhscm.platform.fragment.my.order.DelOrderAction;
+import com.jhhscm.platform.fragment.my.order.FindOrderListAction;
+import com.jhhscm.platform.fragment.my.order.FindOrderListBean;
+import com.jhhscm.platform.fragment.my.store.MyMemberFragment;
+import com.jhhscm.platform.fragment.my.store.viewholder.MyMemberItemViewHolder;
+import com.jhhscm.platform.fragment.sale.FindOrderAction;
+import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
+import com.jhhscm.platform.http.bean.ResultBean;
+import com.jhhscm.platform.http.bean.UserSession;
+import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
+import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
@@ -44,6 +64,7 @@ import retrofit2.Response;
  * 领券中心
  */
 public class CouponCenterFragment extends AbsFragment<FragmentCouponCenterBinding> {
+
     private InnerAdapter mAdapter;
     private int mShowCount = 10;
     private int mCurrentPage = 1;
@@ -61,7 +82,7 @@ public class CouponCenterFragment extends AbsFragment<FragmentCouponCenterBindin
 
     @Override
     protected void setupViews() {
-        mDataBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext()));
+//        mDataBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.recyclerview.setAdapter(mAdapter);
@@ -106,7 +127,8 @@ public class CouponCenterFragment extends AbsFragment<FragmentCouponCenterBindin
                                 if (response != null) {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
-                                        initView(refresh);
+
+                                        initView(refresh, response.body().getData());
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
@@ -117,26 +139,28 @@ public class CouponCenterFragment extends AbsFragment<FragmentCouponCenterBindin
         }
     }
 
-    private void initView(boolean refresh) {
-//        this.getPushListBean = pushListBean;
-//        if (refresh) {
-//            mAdapter.setData(pushListBean.getData());
-//        } else {
-//            mAdapter.append(pushListBean.getData());
-//        }
-//        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage);
+    GetPageArticleListBean getPushListBean;
+
+    private void initView(boolean refresh, GetPageArticleListBean pushListBean) {
+
+        this.getPushListBean = pushListBean;
+        if (refresh) {
+            mAdapter.setData(pushListBean.getData());
+        } else {
+            mAdapter.append(pushListBean.getData());
+        }
+        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0,
+                ((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage);
     }
 
-
-    private class InnerAdapter extends AbsRecyclerViewAdapter<GetCartGoodsByUserCodeBean.ResultBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<GetPageArticleListBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<GetCartGoodsByUserCodeBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new CouponCenterViewHolder(mInflater.inflate(R.layout.item_create_order, parent, false));
+        public AbsRecyclerViewHolder<GetPageArticleListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new CouponCenterViewHolder(mInflater.inflate(R.layout.item_coupon_center, parent, false));
         }
     }
-
 }

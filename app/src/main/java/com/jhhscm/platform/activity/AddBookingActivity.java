@@ -4,17 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
-import com.jhhscm.platform.fragment.aftersale.AfterSaleFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.coupon.CouponCenterFragment;
+import com.jhhscm.platform.fragment.my.book.AddBookingFragment;
+import com.jhhscm.platform.fragment.my.book.BookingFragment;
 
-public class AfterSaleActivity extends AbsToolbarActivity {
+public class AddBookingActivity extends AbsToolbarActivity {
 
-    public static void start(Context context) {
-        Intent intent = new Intent(context, AfterSaleActivity.class);
+    public static void start(Context context, int type) {
+        Intent intent = new Intent(context, AddBookingActivity.class);
+        intent.putExtra("type", type);//0收入；1支出
         context.startActivity(intent);
     }
 
@@ -45,20 +45,22 @@ public class AfterSaleActivity extends AbsToolbarActivity {
 
     @Override
     protected String getToolBarTitle() {
-        mDataBinding.toolbar.setVisibility(View.GONE);
-        return "售后";
+        if (getIntent().getIntExtra("type", 0) == 0) {
+            return "记账收入";
+        } else {
+            return "记账支出";
+        }
     }
 
     @Override
     protected AbsFragment onCreateContentView() {
-        return AfterSaleFragment.instance();
+        return AddBookingFragment.instance();
     }
 
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putInt("type", getIntent().getIntExtra("type", 0));
         return args;
     }
 }
-
-

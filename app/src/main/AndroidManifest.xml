@@ -8,24 +8,28 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 允许程序访问WiFi网络信息 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 允许程序读写手机状态和身份 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 电话权限 -->
-    <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- <uses-permission android:name="android.permission.READ_CALL_LOG" /> -->
-    <!-- <uses-permission android:name="android.permission.WRITE_CALL_LOG" /> -->
-    <uses-permission android:name="com.android.voicemail.permission.ADD_VOICEMAIL" />
-    <uses-permission android:name="android.permission.USE_SIP" />
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" /> <!-- 短信权限 -->
-    <!-- <uses-permission android:name="android.permission.SEND_SMS" /> -->
-    <!-- <uses-permission android:name="android.permission.RECEIVE_SMS" /> -->
-    <!-- <uses-permission android:name="android.permission.READ_SMS" /> -->
-    <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH" />
-    <uses-permission android:name="android.permission.RECEIVE_MMS" /> <!-- Required -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 访问GPS等方式获取较精确的本地位置 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Required -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.NOTIFICATION_RECEIVED" />
-    <uses-permission android:name="android.permission.NOTIFICATION_OPENED" />
-
+    <uses-permission android:name="android.permission.NOTIFICATION_OPENED" /> <!-- 电话权限 -->
+    <!-- <uses-permission android:name="android.permission.CALL_PHONE" /> -->
+    <!-- <uses-permission android:name="android.permission.READ_CALL_LOG" /> -->
+    <!-- <uses-permission android:name="android.permission.WRITE_CALL_LOG" /> -->
+    <!-- <uses-permission android:name="com.android.voicemail.permission.ADD_VOICEMAIL" /> -->
+    <!-- 语音权限 -->
+    <!-- 允许程序使用SIP视频服务 -->
+    <!-- <uses-permission android:name="android.permission.USE_SIP" /> -->
+    <!-- <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" /> &lt;!&ndash; 短信权限 &ndash;&gt; -->
+    <!-- <uses-permission android:name="android.permission.SEND_SMS" /> -->
+    <!-- <uses-permission android:name="android.permission.RECEIVE_SMS" /> -->
+    <!-- <uses-permission android:name="android.permission.READ_SMS" /> -->
+    <!-- WAP推送短信权限 -->
+    <!-- <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH" /> -->
+    <!-- 监控收到的彩信 -->
+    <!-- <uses-permission android:name="android.permission.RECEIVE_MMS" /> -->
     <permission
         android:name="com.jhhscm.platform.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
@@ -36,6 +40,7 @@
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" /> <!-- Optional for location -->
+    <!-- 允许访问振动器 -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -53,7 +58,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme.TranslucentStatusBar"
         tools:replace="android:label">
-        <activity android:name=".activity.StoreOrderActivity"></activity>
+        <activity android:name=".activity.BookingDetailActivity"></activity>
+        <activity android:name=".activity.AddBookingActivity" />
+        <activity android:name=".activity.BookingActivity" />
+        <activity android:name=".activity.StoreDetailActivity" />
+        <activity android:name=".activity.StoreOrderActivity" />
         <activity android:name=".activity.ServiceRecordActivity" />
         <activity android:name=".activity.SelectDeviceActivity" />
         <activity android:name=".activity.SelectMemberActivity" />
@@ -195,6 +204,11 @@
             android:name=".aliapi.ALiPayActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".photopicker.PhotoPreviewActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".photopicker.PhotoPickerActivity"
             android:launchMode="singleTask"

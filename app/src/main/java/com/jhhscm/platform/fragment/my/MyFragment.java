@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AuthenticationActivity;
+import com.jhhscm.platform.activity.BookingActivity;
 import com.jhhscm.platform.activity.InvitationRegisterActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.MainActivity;
@@ -187,9 +188,27 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
         mDataBinding.rlStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyStoreActivity.start(getContext());
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    MyStoreActivity.start(getContext());
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
             }
         });
+
+        mDataBinding.llBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    BookingActivity.start(getContext());
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
+            }
+        });
+
         mDataBinding.llLabour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -9,12 +9,12 @@ import android.view.View;
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.aftersale.AfterSaleFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.coupon.CouponCenterFragment;
+import com.jhhscm.platform.fragment.my.book.BookingFragment;
 
-public class AfterSaleActivity extends AbsToolbarActivity {
+public class BookingActivity extends AbsToolbarActivity {
 
     public static void start(Context context) {
-        Intent intent = new Intent(context, AfterSaleActivity.class);
+        Intent intent = new Intent(context, BookingActivity.class);
         context.startActivity(intent);
     }
 
@@ -45,13 +45,12 @@ public class AfterSaleActivity extends AbsToolbarActivity {
 
     @Override
     protected String getToolBarTitle() {
-        mDataBinding.toolbar.setVisibility(View.GONE);
-        return "售后";
+        return "记账工具";
     }
 
     @Override
     protected AbsFragment onCreateContentView() {
-        return AfterSaleFragment.instance();
+        return BookingFragment.instance();
     }
 
     @Override
@@ -60,5 +59,3 @@ public class AfterSaleActivity extends AbsToolbarActivity {
         return args;
     }
 }
-
-

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_site" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_15"
+                android:layout_marginTop="@dimen/padding_10"
+                android:layout_marginRight="@dimen/padding_15"
+                android:layout_toRightOf="@+id/im"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="店铺名称"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_18"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_1"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="店铺地址"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/tv_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/button_98b"
+                    android:padding="@dimen/dp_5"
+                    android:paddingLeft="@dimen/padding_10"
+                    android:paddingRight="@dimen/padding_10"
+                    android:text="离你最近"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/tv_store"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_3"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:layout_marginRight="@dimen/dp_5"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="距离2km"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/sp_14" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/padding_10"
+                android:layout_marginTop="@dimen/padding_10"
+                android:layout_marginBottom="@dimen/padding_10"
+                android:background="@color/cf5" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_15"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:text="商家简介"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/store_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_15"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="@dimen/padding_15"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:ellipsize="end"
+                android:lineSpacingMultiplier="1.3"
+                android:maxLines="6"
+                android:text="商家简介商家简介商家简介商家简介商家简介商家简介商家简介商家简介商家简介商家简介"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

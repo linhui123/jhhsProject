@@ -188,8 +188,8 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         mDataBinding.coupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                CouponCenterActivity.start(getActivity());
-                MyCouponActivity.start(getActivity());
+                CouponCenterActivity.start(getActivity());
+//                MyCouponActivity.start(getActivity());
             }
         });
     }

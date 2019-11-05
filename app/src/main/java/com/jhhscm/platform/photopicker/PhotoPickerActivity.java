@@ -155,6 +155,11 @@ public class PhotoPickerActivity extends AbsToolbarActivity {
     }
 
     @Override
+    public boolean isSupportSwipeBack() {
+        return false;
+    }
+
+    @Override
     protected String getToolBarTitle() {
         return getString(R.string.title_select_albums);
     }

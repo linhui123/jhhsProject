@@ -1,9 +1,12 @@
 package com.jhhscm.platform.tool;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -251,4 +254,61 @@ public class DataUtil {
         }
     }
 
+    // 获得上月第一天时间
+    public static String getLastMonthmorning() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) - 1, cal.get(Calendar.DAY_OF_MONTH));
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+        return getDateStr(cal.getTime(), "yyyy.MM.dd");
+    }
+
+    // 获得上月最后一天时间
+    public static String getLastMonthnight() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) - 1, cal.get(Calendar.DAY_OF_MONTH));
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return getDateStr(cal.getTime(), "yyyy.MM.dd");
+    }
+
+    // 获得本月第一天时间
+    public static String getTimesMonthmorning() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+        return getDateStr(cal.getTime(), "yyyy.MM.dd");
+    }
+
+    // 获得本月最后一天时间
+    public static String getTimesMonthnight() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return getDateStr(cal.getTime(), "yyyy.MM.dd");
+    }
+
+    // 获得本年第一天时间
+    public static String getTimesYearmorning() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+        cal.set(Calendar.MONTH, cal.getActualMinimum(Calendar.MONTH));
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+        return getDateStr(cal.getTime(), "yyyy.MM.dd");
+    }
+
+    // 获得本年最后一天时间
+    public static String getTimesYearnight() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+        cal.set(Calendar.MONTH, cal.getActualMaximum(Calendar.MONTH));
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return getDateStr(cal.getTime(), "yyyy.MM.dd");
+    }
+
+    public static String getDateStr(Date date, String format) {
+        if (format == null || format.isEmpty()) {
+            format = "yyyy-MM-dd HH:mm:ss";
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat(format);
+        return formatter.format(date);
+    }
 }

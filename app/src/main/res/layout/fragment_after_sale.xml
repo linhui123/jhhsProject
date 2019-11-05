@@ -4,12 +4,108 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rl_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/a397"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingBottom="@dimen/padding_10">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_10"
+                android:padding="@dimen/dp_5"
+                android:src="@mipmap/ic_back" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="售后"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="right"
+                android:paddingLeft="@dimen/padding_10"
+                android:layout_marginRight="@dimen/padding_10"
+                android:layout_toRightOf="@+id/title">
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_location_white"
+                    android:drawableRight="@mipmap/ic_drop_white"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:ellipsize="end"
+                    android:padding="@dimen/dp_5"
+                    android:singleLine="true"
+                    android:text="选择地区"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingRight="@dimen/padding_15"
+            android:layout_below="@+id/rl_top"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+
+        <ImageView
+            android:id="@+id/tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="50dp"
+            android:animateLayoutChanges="true"
+            android:src="@mipmap/ic_join" />
+
+        <LinearLayout
+            android:id="@+id/ll_area"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_top"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/padding_15"
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rl_privince"
+                android:layout_width="140dp"
+                android:layout_height="match_parent"
+                android:background="@color/cf5"
+                android:paddingLeft="@dimen/padding_15"
+                android:paddingBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rl_city"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/padding_15"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:background="@color/white"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
     </RelativeLayout>
 
 </layout>

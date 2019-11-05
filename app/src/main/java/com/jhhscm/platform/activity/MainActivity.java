@@ -125,6 +125,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
 
             @Override
             public void onDenied(List<String> permissions) {
+
                 finish();
             }
         });
@@ -327,7 +328,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
                     //UrlUtils.JF
                     FinancialH5Activity.start(MainActivity.this, adBean.getPARAM().getHREF_URL(), "金服");
                 } else {
-                    ToastUtils.show(MainActivity.this, "地址为空");
+//                    ToastUtils.show(MainActivity.this, "地址为空");
                 }
 //                onCheckedChanged(mDataBinding.rgOper, R.id.rd_finance);
 //                mDataBinding.rdFinance.setChecked(true);
@@ -357,7 +358,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
                     Log.e("WEB", "外部链接：" + adBean.getPARAM().getHREF_URL());
                     H5Activity.start(MainActivity.this, adBean.getPARAM().getHREF_URL());
                 } else {
-                    ToastUtils.show(MainActivity.this, "地址为空");
+//                    ToastUtils.show(MainActivity.this, "地址为空");
                 }
             }
         }

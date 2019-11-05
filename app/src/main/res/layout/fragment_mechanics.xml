@@ -27,6 +27,7 @@
                     android:id="@+id/tv_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_location_white"
                     android:drawableRight="@mipmap/ic_drop_white"
                     android:drawablePadding="@dimen/dp_5"
                     android:ellipsize="end"
@@ -98,7 +99,6 @@
             android:layout_below="@+id/rl_top"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/padding_15"
             android:paddingRight="@dimen/padding_15"
             android:visibility="gone">
 
@@ -106,14 +106,15 @@
                 android:id="@+id/rl_privince"
                 android:layout_width="140dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/dp_5"
-                android:layout_marginBottom="@dimen/dp_5"
-                android:background="@color/cf5"></android.support.v7.widget.RecyclerView>
+                android:paddingBottom="@dimen/dp_5"
+                android:background="@color/cf5"
+                android:paddingLeft="@dimen/padding_15"></android.support.v7.widget.RecyclerView>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rl_city"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/padding_15"
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_marginBottom="@dimen/dp_5"
                 android:background="@color/white"></android.support.v7.widget.RecyclerView>

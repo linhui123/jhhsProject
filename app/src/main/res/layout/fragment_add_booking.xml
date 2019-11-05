@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/save"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_income"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_15"
+                    android:paddingTop="@dimen/padding_15"
+                    android:paddingRight="@dimen/padding_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="应收金额"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <EditText
+                        android:id="@+id/income"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@null"
+                        android:hint="请输入"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:layout_below="@+id/income"
+                        android:layout_marginTop="@dimen/padding_15"
+                        android:background="@color/cf5" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_un_income"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_15"
+                    android:paddingTop="@dimen/padding_15"
+                    android:paddingRight="@dimen/padding_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="未收金额"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <EditText
+                        android:id="@+id/un_income"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@null"
+                        android:hint="请输入"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:layout_below="@+id/un_income"
+                        android:layout_marginTop="@dimen/padding_15"
+                        android:background="@color/cf5" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_pay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_15"
+                    android:paddingTop="@dimen/padding_15"
+                    android:paddingRight="@dimen/padding_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="支出金额"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <EditText
+                        android:id="@+id/pay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@null"
+                        android:hint="请输入"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:layout_below="@+id/pay"
+                        android:layout_marginTop="@dimen/padding_15"
+                        android:background="@color/cf5" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_data_income"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_15"
+                    android:paddingTop="@dimen/padding_15"
+                    android:paddingRight="@dimen/padding_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="日期"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/data_income"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/ic_point"
+                        android:drawablePadding="@dimen/dp_5"
+                        android:hint="请选择"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:layout_below="@+id/data_income"
+                        android:layout_marginTop="@dimen/padding_15"
+                        android:background="@color/cf5" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_type_income"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_15"
+                    android:paddingTop="@dimen/padding_15"
+                    android:paddingRight="@dimen/padding_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="收入类别"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/type_income"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/ic_point"
+                        android:drawablePadding="@dimen/dp_5"
+                        android:hint="请选择"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:layout_below="@+id/type_income"
+                        android:layout_marginTop="@dimen/padding_15"
+                        android:background="@color/cf5" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_type_pay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_15"
+                    android:paddingTop="@dimen/padding_15"
+                    android:paddingRight="@dimen/padding_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="支出类别"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/type_pay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/ic_point"
+                        android:drawablePadding="@dimen/dp_5"
+                        android:hint="请选择"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:layout_below="@+id/type_pay"
+                        android:layout_marginTop="@dimen/padding_15"
+                        android:background="@color/cf5" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_15"
+                    android:paddingTop="@dimen/padding_15"
+                    android:paddingBottom="@dimen/padding_15"
+                    android:text="工作内容"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <EditText
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="@dimen/padding_15"
+                    android:background="@drawable/edit_bg_acc9"
+                    android:gravity="left|top"
+                    android:hint="简要描述工作内容..."
+                    android:minLines="6"
+                    android:padding="@dimen/padding_10"
+                    android:textSize="@dimen/text_size_16" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_15"
+                    android:paddingTop="@dimen/padding_15"
+                    android:paddingRight="@dimen/padding_15"
+                    android:paddingBottom="@dimen/padding_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="备注"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <EditText
+                        android:id="@+id/remark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@null"
+                        android:hint="请输入"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/padding_10"
+                    android:background="@color/cf5" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_15"
+                    android:paddingTop="@dimen/padding_15"
+                    android:paddingBottom="@dimen/padding_15"
+                    android:text="上传票据"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <com.jhhscm.platform.views.selector.ImageSelector
+                    android:id="@+id/isSchemeImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="@dimen/padding_15"
+                    app:colum_num="3"
+                    app:image_num="6"></com.jhhscm.platform.views.selector.ImageSelector>
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+
+        <TextView
+            android:id="@+id/save"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginRight="@dimen/padding_15"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:background="@drawable/button_c397"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+</layout>
