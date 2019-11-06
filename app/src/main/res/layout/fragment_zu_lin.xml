@@ -67,6 +67,16 @@
             android:progress="50"
             android:progressDrawable="@drawable/web_progrebar" />
 
+        <ImageView
+            android:id="@+id/tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="60dp"
+            android:animateLayoutChanges="true"
+            android:src="@mipmap/ic_tel_red" />
 
         <LinearLayout
             android:id="@+id/rl_bottom"
@@ -93,7 +103,7 @@
                 android:paddingBottom="@dimen/padding_10"
                 android:text="提交申请"
                 android:textColor="@color/white"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_apply"

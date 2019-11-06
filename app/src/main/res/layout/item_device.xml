@@ -103,7 +103,7 @@
                     android:layout_marginTop="@dimen/dp_3"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:text="出产时间："
+                    android:text="出厂时间："
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/sp_14" />
             </LinearLayout>

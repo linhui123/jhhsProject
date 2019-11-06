@@ -1,5 +1,6 @@
 package com.jhhscm.platform.fragment.my.mechanics;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class FindGoodsOwnerBean {
@@ -134,7 +135,7 @@ public class FindGoodsOwnerBean {
         }
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * name : 设备名称
          * code : 设备编码

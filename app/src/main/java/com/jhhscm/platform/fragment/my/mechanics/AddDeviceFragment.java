@@ -16,6 +16,9 @@ import com.jhhscm.platform.activity.TraceReloadActivity;
 import com.jhhscm.platform.bean.UploadImage;
 import com.jhhscm.platform.databinding.FragmentAddDeviceBinding;
 import com.jhhscm.platform.databinding.FragmentMyMechanicsBinding;
+import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
+import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.Mechanics.push.OldMechanicsUpImageBean;
 import com.jhhscm.platform.fragment.Mechanics.push.UpdateImageBean;
 import com.jhhscm.platform.fragment.Mechanics.push.UploadOldMechanicsImgAction;
@@ -33,6 +36,7 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.dialog.DropTDialog;
 import com.jhhscm.platform.views.timePickets.TimePickerShow;
 
 import java.io.File;
@@ -53,6 +57,7 @@ import top.zibin.luban.Luban;
 
 public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
     private int type;
+    FindGoodsOwnerBean.DataBean dataBean;
     private boolean updateImgResult;
     /**
      * 二手车上传图片
@@ -72,6 +77,8 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
     @Override
     protected void setupViews() {
         type = getArguments().getInt("type", 0);
+        dataBean = new FindGoodsOwnerBean.DataBean();
+        findBrand();
         updateImageBeanList1 = new ArrayList<>();
         mDataBinding.data.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +104,11 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
                                 updateImgResult = true;
                                 doUploadAImagesAction1();
                             } else {
-                                addGoodsOwner();
+                                if (type == 0) {
+                                    addGoodsOwner();
+                                } else {
+                                    updataGoodsOwner();
+                                }
                             }
                         } else {
                             ToastUtil.show(getContext(), "型号不能为空");
@@ -111,7 +122,85 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
             }
         });
 
+        mDataBinding.brand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DropTDialog(getContext(), "品牌", list, new DropTDialog.CallbackListener() {
+                    @Override
+                    public void clickResult(String id, String Nmae) {
+                        mDataBinding.brand.setText(Nmae);
+                        mDataBinding.brand.setTag(id);
+                    }
+                }).show();
+            }
+        });
+
+        if (type == 1) {
+            dataBean = (FindGoodsOwnerBean.DataBean) getArguments().getSerializable("data");
+            if (dataBean != null) {
+                mDataBinding.brand.setText(dataBean.getBrand_name());
+                mDataBinding.brand.setTag(dataBean.getBrand_id());
+                mDataBinding.model.setText(dataBean.getFixp17());
+                mDataBinding.name.setText(dataBean.getName());
+                if (dataBean.getFcatory_time() != null && dataBean.getFcatory_time().length() > 10) {
+                    mDataBinding.data.setText(dataBean.getFcatory_time().substring(0, 10));
+                }
+
+
+            }
+        }
+
     }
+
+    /**
+     * 获取品牌列表
+     */
+    private void findBrand() {
+        if (getContext() != null) {
+            Map<String, String> map = new TreeMap<String, String>();
+            map.put("brand_type", "1");
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = Sign.getSignKey(getActivity(), map, "findBrand");
+            NetBean netBean = new NetBean();
+            netBean.setToken("");
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(FindBrandAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<FindBrandBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<FindBrandBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                        doSuccessResponse(response.body().getData());
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
+    }
+
+    private FindBrandBean findBrandBean;
+    private List<GetComboBoxBean.ResultBean> list;
+
+    private void doSuccessResponse(FindBrandBean categoryBean) {
+        this.findBrandBean = categoryBean;
+        list = new ArrayList<>();
+        for (FindBrandBean.ResultBean resultBean : findBrandBean.getResult()) {
+            list.add(new GetComboBoxBean.ResultBean(resultBean.getId(), resultBean.getName()));
+        }
+    }
+
 
     protected void doUploadAImagesAction1() {
         showDialog();
@@ -257,7 +346,11 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
                         updateImageBeanList1.add(updateImageBean);
                     }
                     if (updateImgResult) {
-                        addGoodsOwner();
+                        if (type == 0) {
+                            addGoodsOwner();
+                        } else {
+                            updataGoodsOwner();
+                        }
                     } else {
                         ToastUtils.show(getContext(), "图片上传失败,请重新提交");
                     }
@@ -275,7 +368,7 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
 
 
     /**
-     * 个人中心我的设备列表
+     * 个人中心我的设备 添加
      */
     private void addGoodsOwner() {
         if (getContext() != null) {
@@ -293,10 +386,10 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
 
             Map<String, String> map = new TreeMap<String, String>();
             map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
-            map.put("name", mDataBinding.name.getText().toString());
-            map.put("fixp17", mDataBinding.model.getText().toString());
-            map.put("brand_id", mDataBinding.brand.getText().toString());
-            map.put("fcatory_time", mDataBinding.data.getText().toString());
+            map.put("name", mDataBinding.name.getText().toString().trim());
+            map.put("fixp17", mDataBinding.model.getText().toString().trim());
+            map.put("brand_id", mDataBinding.brand.getTag().toString().trim());
+            map.put("fcatory_time", mDataBinding.data.getText().toString().trim());
             map.put("status", "1");
             map.put("pic", "[" + jsonString1 + "]");
             String content = JSON.toJSONString(map);
@@ -307,6 +400,64 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
             netBean.setSign(sign);
             netBean.setContent(content);
             onNewRequestCall(AddGoodsOwnerAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                        ToastUtils.show(getContext(), "保存成功");
+                                        getActivity().finish();
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
+    }
+
+    /**
+     * 个人中心我的设备 更新
+     */
+    private void updataGoodsOwner() {
+        if (getContext() != null) {
+            showDialog();
+            String jsonString1 = "";
+            if (mDataBinding.isSchemeImage.getUploadImageList().size() > 0) {
+                for (UpdateImageBean updateImageBean : updateImageBeanList1) {
+                    if (jsonString1.length() > 0) {
+                        jsonString1 = jsonString1 + "," + "\"" + updateImageBean.getIMG_URL() + "\"";
+                    } else {
+                        jsonString1 = "\"" + updateImageBean.getIMG_URL() + "\"";
+                    }
+                }
+            }
+
+            Map<String, String> map = new TreeMap<String, String>();
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("code", dataBean.getCode());
+            map.put("name", mDataBinding.name.getText().toString().trim());
+            map.put("fixp17", mDataBinding.model.getText().toString().trim());
+            map.put("brand_id", mDataBinding.brand.getTag().toString().trim());
+            map.put("fcatory_time", mDataBinding.data.getText().toString().trim());
+            map.put("status", "1");
+            map.put("pic", "[" + jsonString1 + "]");
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = Sign.getSignKey(getActivity(), map, "updateGoodsOwner");
+            NetBean netBean = new NetBean();
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(UpdateGoodsOwnerAction.newInstance(getContext(), netBean)
                     .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
                         @Override
                         public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response,
