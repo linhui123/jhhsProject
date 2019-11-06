@@ -149,7 +149,7 @@
                                 android:layout_marginTop="@dimen/dp_5"
                                 android:drawableRight="@mipmap/ic_ques"
                                 android:drawablePadding="12dp"
-                                android:text="店铺积分：1000"
+                                android:text="店铺积分：0"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
                         </RelativeLayout>
@@ -185,7 +185,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_5"
-                                android:text="1000"
+                                android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -215,7 +215,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_5"
-                                android:text="1000"
+                                android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -243,7 +243,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_5"
-                                android:text="1000"
+                                android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -271,7 +271,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_5"
-                                android:text="1000"
+                                android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -290,6 +290,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_store"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/padding_10"
@@ -354,7 +355,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_5"
-                                android:text="1000"
+                                android:text="-"
                                 android:textColor="@color/acc3"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -382,7 +383,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_5"
-                                android:text="1000"
+                                android:text="-"
                                 android:textColor="@color/acc3"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -410,7 +411,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_5"
-                                android:text="1000"
+                                android:text="-"
                                 android:textColor="@color/acc3"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />

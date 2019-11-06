@@ -54,6 +54,8 @@ import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -104,8 +106,144 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
             getUser();
+            getUserConter();
+            getBusCount();
+        } else {
+            mDataBinding.llStore.setVisibility(View.GONE);
+            mDataBinding.llStore.setVisibility(View.GONE);
         }
 
+        initOnClick();
+    }
+
+    private void getUser() {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("mobile", ConfigUtils.getCurrentUser(getContext()).getMobile());
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "getUser");
+        NetBean netBean = new NetBean();
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(GetUserAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<UserBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<UserBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+
+                                } else if (response.body().getCode().equals("1003")) {
+                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+                                    startNewActivity(LoginActivity.class);
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    private void getUserConter() {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "getUserConter");
+        NetBean netBean = new NetBean();
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(UserCenterAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<UserCenterBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<UserCenterBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    if (response.body().getData().getResult() != null) {
+                                        UserSession userSession = ConfigUtils.getCurrentUser(getContext());
+                                        userSession.setIs_bus(response.body().getData().getResult().getIs_bus());
+                                        ConfigUtils.setCurrentUser(getContext(), userSession);
+
+                                        if (response.body().getData().getResult().getIs_bus() == 0) {
+                                            mDataBinding.llStore.setVisibility(View.GONE);
+                                            mDataBinding.tvStoreNum.setVisibility(View.GONE);
+                                        } else {
+                                            mDataBinding.llStore.setVisibility(View.VISIBLE);
+                                            mDataBinding.tvStoreNum.setVisibility(View.VISIBLE);
+                                            mDataBinding.tvStoreNum.setText("店铺积分：" + response.body().getData().getResult().getBus_points());
+                                        }
+                                        mDataBinding.tvPersonNum.setText(response.body().getData().getResult().getUser_points() + "");
+                                        mDataBinding.tvCouponNum.setText(response.body().getData().getResult().getCoupons_count() + "");
+                                        mDataBinding.tvShoucangNum.setText(response.body().getData().getResult().getCollect_count() + "");
+                                        mDataBinding.tvInviteNum.setText(response.body().getData().getResult().getBususer_count() + "");
+                                    }
+
+                                } else if (response.body().getCode().equals("1003")) {
+                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+                                    startNewActivity(LoginActivity.class);
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    private void getBusCount() {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "getBusCount");
+        NetBean netBean = new NetBean();
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(BusCountAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<BusCountBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<BusCountBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    if (response.body().getData().getResult() != null &&
+                                            response.body().getData().getResult().getData().size() > 0 &&
+                                            response.body().getData().getResult().getData().get(0) != null) {
+                                        mDataBinding.tvMemberNum.setText(response.body().getData().getResult().getData().get(0).getUsers_num() + "");
+                                        mDataBinding.tvOrderNum.setText(response.body().getData().getResult().getData().get(0).getOrder_num() + "");
+                                        mDataBinding.tvProjectNum.setText(response.body().getData().getResult().getData().get(0).getGoods_num() + "");
+                                    }
+                                } else if (response.body().getCode().equals("1003")) {
+                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+                                    startNewActivity(LoginActivity.class);
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+//                                    ToastUtils.show(getContext(), "网络错误");
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    private void initOnClick() {
         mDataBinding.tvCerGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +302,7 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             public void onClick(View v) {
                 if (ConfigUtils.getCurrentUser(getContext()) != null
                         && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
-                    MyInviteActivity.start(getContext(), 0);
+                    MyInviteActivity.start(getContext(), Integer.parseInt(mDataBinding.tvInviteNum.getText().toString()));
 //邀请注册
 //                    InvitationRegisterActivity.start(MainActivity.this);
                 } else {
@@ -244,33 +382,32 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             }
         });
 
-        mDataBinding.rlTel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //6.0权限处理
-                YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
-                        .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
-                        .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
-                        .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "拨打电话"))
-                        .setPermissions(Manifest.permission.CALL_PHONE).build(), new AcpListener() {
-                    @Override
-                    public void onGranted() {
-                        Uri uriScheme = Uri.parse("tel:" + "0591-88390068");
-                        Intent it = new Intent(Intent.ACTION_CALL, uriScheme);
-                        getContext().startActivity(it);
-                    }
-
-
-                    @Override
-                    public void onDenied(List<String> permissions) {
-
-                    }
-                });
-
-            }
-        });
+//        mDataBinding.rlTel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //6.0权限处理
+//                YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
+//                        .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
+//                        .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
+//                        .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "拨打电话"))
+//                        .setPermissions(Manifest.permission.CALL_PHONE).build(), new AcpListener() {
+//                    @Override
+//                    public void onGranted() {
+//                        Uri uriScheme = Uri.parse("tel:" + "0591-88390068");
+//                        Intent it = new Intent(Intent.ACTION_CALL, uriScheme);
+//                        getContext().startActivity(it);
+//                    }
+//
+//
+//                    @Override
+//                    public void onDenied(List<String> permissions) {
+//
+//                    }
+//                });
+//
+//            }
+//        });
     }
-
 
     @Override
     public void onResume() {
@@ -290,6 +427,14 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                 mDataBinding.tvCerGo.setText("已认证");
 //                mDataBinding.tvCerGo.setVisibility(View.VISIBLE);
             }
+
+            if (ConfigUtils.getCurrentUser(getContext()).getIs_bus() == 0) {
+                mDataBinding.llStore.setVisibility(View.GONE);
+                mDataBinding.tvStoreNum.setVisibility(View.GONE);
+            } else {
+                mDataBinding.llStore.setVisibility(View.VISIBLE);
+                mDataBinding.tvStoreNum.setVisibility(View.VISIBLE);
+            }
             mDataBinding.tvName.setVisibility(View.GONE);
             mDataBinding.rlCer.setVisibility(View.VISIBLE);
             mDataBinding.username.setText(ConfigUtils.getCurrentUser(getContext()).getMobile());
@@ -303,46 +448,14 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
 
     public void onEvent(LoginOutEvent event) {
         initUser();
+        mDataBinding.llStore.setVisibility(View.GONE);
+        mDataBinding.tvStoreNum.setVisibility(View.GONE);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBusUtil.unregisterEvent(this);
-    }
-
-    private void getUser() {
-        Map<String, String> map = new TreeMap<String, String>();
-        map.put("mobile", ConfigUtils.getCurrentUser(getContext()).getMobile());
-        String content = JSON.toJSONString(map);
-        content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getContext(), map, "getUser");
-        NetBean netBean = new NetBean();
-        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
-        netBean.setSign(sign);
-        netBean.setContent(content);
-        onNewRequestCall(GetUserAction.newInstance(getContext(), netBean)
-                .request(new AHttpService.IResCallback<BaseEntity<UserBean>>() {
-                    @Override
-                    public void onCallback(int resultCode, Response<BaseEntity<UserBean>> response, BaseErrorInfo baseErrorInfo) {
-                        if (getView() != null) {
-                            closeDialog();
-                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
-                                return;
-                            }
-                            if (response != null) {
-                                if (response.body().getCode().equals("200")) {
-
-                                } else if (response.body().getCode().equals("1003")) {
-                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
-                                    startNewActivity(LoginActivity.class);
-                                } else {
-                                    ToastUtils.show(getContext(), response.body().getMessage());
-                                }
-                            }
-                        }
-                    }
-                }));
     }
 
 }

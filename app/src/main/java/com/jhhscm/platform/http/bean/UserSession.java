@@ -13,6 +13,15 @@ public class UserSession {
     private String status;
     private String avatar;
     private String is_check;//是否实名 0：未认证 1是已认证
+    private int is_bus;//是否商户 0 不是 1是
+
+    public int getIs_bus() {
+        return is_bus;
+    }
+
+    public void setIs_bus(int is_bus) {
+        this.is_bus = is_bus;
+    }
 
     public String getIs_check() {
         return is_check;

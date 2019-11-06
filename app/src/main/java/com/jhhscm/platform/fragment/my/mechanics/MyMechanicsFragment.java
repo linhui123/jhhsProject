@@ -88,28 +88,27 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
         mDataBinding.wrvRecycler.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
-                findOldGoodByUserCode(true);
+                findGoodsOwner(true);
             }
 
             @Override
             public void onLoadMore(RecyclerView view) {
-                findOldGoodByUserCode(false);
+                findGoodsOwner(false);
             }
         });
 
         mDataBinding.add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddDeviceActivity.start(getContext());
+                AddDeviceActivity.start(getContext(),0);
             }
         });
     }
 
-
     /**
-     * 获取新机列表
+     * 个人中心我的设备列表
      */
-    private void findOldGoodByUserCode(final boolean refresh) {
+    private void findGoodsOwner(final boolean refresh) {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, String> map = new TreeMap<String, String>();
@@ -120,13 +119,13 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
             content = Des.encryptByDes(content);
             String sign = Sign.getSignKey(getActivity(), map, "findOldGoodByUserCode");
             NetBean netBean = new NetBean();
-            netBean.setToken(userSession.getToken());
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
-            onNewRequestCall(FindOldGoodByUserCodeAction.newInstance(getContext(), netBean)
-                    .request(new AHttpService.IResCallback<BaseEntity<FindOldGoodByUserCodeBean>>() {
+            onNewRequestCall(FindGoodsOwnerAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<FindGoodsOwnerBean>>() {
                         @Override
-                        public void onCallback(int resultCode, Response<BaseEntity<FindOldGoodByUserCodeBean>> response,
+                        public void onCallback(int resultCode, Response<BaseEntity<FindGoodsOwnerBean>> response,
                                                BaseErrorInfo baseErrorInfo) {
                             if (getView() != null) {
                                 closeDialog();
@@ -147,9 +146,10 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
         }
     }
 
-    FindOldGoodByUserCodeBean findOldGoodByUserCodeBean;
 
-    private void doSuccessResponse(boolean refresh, FindOldGoodByUserCodeBean getGoodsPageList) {
+    FindGoodsOwnerBean findOldGoodByUserCodeBean;
+
+    private void doSuccessResponse(boolean refresh, FindGoodsOwnerBean getGoodsPageList) {
         this.findOldGoodByUserCodeBean = getGoodsPageList;
         if (refresh) {
             mAdapter.setData(getGoodsPageList.getData());
@@ -157,22 +157,16 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
             mAdapter.append(getGoodsPageList.getData());
         }
         mDataBinding.wrvRecycler.getAdapter().notifyDataSetChanged();
-//        if (mAdapter.getItemCount()>0) {
-        mDataBinding.rlCaseBaseNull.setVisibility(View.GONE);
         mDataBinding.wrvRecycler.loadComplete(mAdapter.getItemCount() == 0, ((float) findOldGoodByUserCodeBean.getPage().getTotal() / (float) findOldGoodByUserCodeBean.getPage().getPageSize()) > mCurrentPage);
-//        } else {
-//            mDataBinding.wrvRecycler.loadComplete(true, false);
-//            mDataBinding.rlCaseBaseNull.setVisibility(View.VISIBLE);
-//        }
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<FindOldGoodByUserCodeBean.DataBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<FindGoodsOwnerBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<FindOldGoodByUserCodeBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+        public AbsRecyclerViewHolder<FindGoodsOwnerBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new MyMechanicsViewHolder(mInflater.inflate(R.layout.item_device, parent, false));
         }
     }

@@ -76,7 +76,8 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
 
     private OldGoodOrderHistoryBean oldGoodOrderHistoryBean;
     private String brand_id, goods_factory, fix_p_9, factory_time, fix_p_13, fix_p_14, province, city;
-    private String tel, old_time, price, biaopai, name;    private UserSession userSession;
+    private String tel, old_time, price, biaopai, name;
+    private UserSession userSession;
 
     private GetComboBoxBean getComboBoxBean;
     private boolean updateImgResult;

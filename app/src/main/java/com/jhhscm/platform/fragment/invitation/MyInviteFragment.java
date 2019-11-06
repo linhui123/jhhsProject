@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
@@ -33,6 +34,7 @@ import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.SignObject;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -74,12 +76,12 @@ public class MyInviteFragment extends AbsFragment<FragmentMyInviteBinding> {
         mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
-                getCouponList(true);
+                getReqList(true);
             }
 
             @Override
             public void onLoadMore(RecyclerView view) {
-                getCouponList(false);
+                getReqList(false);
             }
         });
 
@@ -88,6 +90,8 @@ public class MyInviteFragment extends AbsFragment<FragmentMyInviteBinding> {
             public void onClick(View v) {
                 if (mDataBinding.searchContent.getText().toString().length() > 0) {
                     mDataBinding.recyclerview.autoRefresh();
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
                 } else {
                     ToastUtil.show(getContext(), "输入内容不能为空");
                 }
@@ -95,24 +99,25 @@ public class MyInviteFragment extends AbsFragment<FragmentMyInviteBinding> {
         });
     }
 
-    private void getCouponList(final boolean refresh) {
+    private void getReqList(final boolean refresh) {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("page", mCurrentPage);
             map.put("limit", mShowCount);
-            map.put("article_type_list", 1);
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("keyword", mDataBinding.searchContent.getText().toString());
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
-            String sign = SignObject.getSignKey(getActivity(), map, "getArticleList");
+            String sign = SignObject.getSignKey(getActivity(), map, "getReqList");
             NetBean netBean = new NetBean();
             netBean.setToken("");
             netBean.setSign(sign);
             netBean.setContent(content);
-            onNewRequestCall(GetArticleListAction.newInstance(getContext(), netBean)
-                    .request(new AHttpService.IResCallback<BaseEntity<GetPageArticleListBean>>() {
+            onNewRequestCall(ReqListAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<ReqListBean>>() {
                         @Override
-                        public void onCallback(int resultCode, Response<BaseEntity<GetPageArticleListBean>> response,
+                        public void onCallback(int resultCode, Response<BaseEntity<ReqListBean>> response,
                                                BaseErrorInfo baseErrorInfo) {
                             if (getView() != null) {
                                 closeDialog();
@@ -134,28 +139,28 @@ public class MyInviteFragment extends AbsFragment<FragmentMyInviteBinding> {
         }
     }
 
-    GetPageArticleListBean getPushListBean;
+    ReqListBean getPushListBean;
 
-    private void initView(boolean refresh, GetPageArticleListBean pushListBean) {
+    private void initView(boolean refresh, ReqListBean pushListBean) {
 
         this.getPushListBean = pushListBean;
         if (refresh) {
-            mAdapter.setData(pushListBean.getData());
+            mAdapter.setData(pushListBean.getResult().getData());
         } else {
-            mAdapter.append(pushListBean.getData());
+            mAdapter.append(pushListBean.getResult().getData());
         }
         mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0,
-                ((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage);
+                ((float) getPushListBean.getResult().getPage().getTotal() / (float) getPushListBean.getResult().getPage().getPageSize()) > mCurrentPage);
     }
 
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<GetPageArticleListBean.DataBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<ReqListBean.ResultBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<GetPageArticleListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+        public AbsRecyclerViewHolder<ReqListBean.ResultBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new InviteItemViewHolder(mInflater.inflate(R.layout.item_invite, parent, false));
         }
     }

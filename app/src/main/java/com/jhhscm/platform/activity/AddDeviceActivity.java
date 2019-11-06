@@ -12,8 +12,9 @@ import com.jhhscm.platform.fragment.my.mechanics.MyMechanicsFragment;
 
 public class AddDeviceActivity extends AbsToolbarActivity {
 
-    public static void start(Context context) {
+    public static void start(Context context, int type) {
         Intent intent = new Intent(context, AddDeviceActivity.class);
+        intent.putExtra("type", type);
         context.startActivity(intent);
     }
 
@@ -44,7 +45,12 @@ public class AddDeviceActivity extends AbsToolbarActivity {
 
     @Override
     protected String getToolBarTitle() {
-        return "添加设备";
+        if (getIntent().getIntExtra("type", 0) == 0) {
+            return "添加设备";
+        } else {
+            return "编辑设备";
+        }
+
     }
 
     @Override
@@ -55,6 +61,7 @@ public class AddDeviceActivity extends AbsToolbarActivity {
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putInt("type", getIntent().getIntExtra("type", 0));
         return args;
     }
 }

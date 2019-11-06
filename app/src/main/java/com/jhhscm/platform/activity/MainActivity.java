@@ -116,8 +116,8 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
                 .setDeniedSettingBtn(getApplicationContext().getString(R.string.permission_dlg_settings_txt))
                 .setDeniedMessage(getApplicationContext().getString(R.string.permission_denied_txt, "读写"))
                 .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).build(), new AcpListener() {
+                        Manifest.permission.CAMERA, Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION).build(), new AcpListener() {
             @Override
             public void onGranted() {
                 initView();
@@ -125,8 +125,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
 
             @Override
             public void onDenied(List<String> permissions) {
-
-                finish();
+               finish();
             }
         });
     }
