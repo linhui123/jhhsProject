@@ -57,6 +57,7 @@ import top.zibin.luban.Luban;
 
 public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
     private int type;
+    FindGoodsOwnerBean.DataBean dataBean;
     private boolean updateImgResult;
     /**
      * 二手车上传图片
@@ -77,6 +78,8 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
     @Override
     protected void setupViews() {
         type = getArguments().getInt("type", 0);
+        dataBean = new FindGoodsOwnerBean.DataBean();
+        findBrand();
         updateImageBeanList1 = new ArrayList<>();
         dataBean = new FindGoodsOwnerBean.DataBean();
         findBrand();
@@ -200,6 +203,7 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
             list.add(new GetComboBoxBean.ResultBean(resultBean.getId(), resultBean.getName()));
         }
     }
+
 
     protected void doUploadAImagesAction1() {
         showDialog();
