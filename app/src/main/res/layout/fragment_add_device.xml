@@ -38,7 +38,7 @@
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_14" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/brand"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -190,6 +190,7 @@
                     android:layout_marginRight="@dimen/padding_15"
                     app:colum_num="3"
                     app:image_num="9"></com.jhhscm.platform.views.selector.ImageSelector>
+
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 

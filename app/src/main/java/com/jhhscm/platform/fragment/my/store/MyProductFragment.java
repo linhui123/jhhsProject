@@ -16,6 +16,8 @@ import com.jhhscm.platform.databinding.FragmentMyProductBinding;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
+import com.jhhscm.platform.fragment.my.store.action.BusinessFindcategorybyBuscodeAction;
+import com.jhhscm.platform.fragment.my.store.action.BusinessFindcategorybyBuscodeBean;
 import com.jhhscm.platform.fragment.my.store.viewholder.ProductItemViewHolder;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -23,6 +25,7 @@ import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.SignObject;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -62,12 +65,12 @@ public class MyProductFragment extends AbsFragment<FragmentMyProductBinding> {
         mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
-                getCouponList(true);
+                businessFindcategorybyBuscode(true);
             }
 
             @Override
             public void onLoadMore(RecyclerView view) {
-                getCouponList(false);
+                businessFindcategorybyBuscode(false);
             }
         });
 
@@ -83,24 +86,24 @@ public class MyProductFragment extends AbsFragment<FragmentMyProductBinding> {
         });
     }
 
-    private void getCouponList(final boolean refresh) {
+    private void businessFindcategorybyBuscode(final boolean refresh) {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("page", mCurrentPage);
             map.put("limit", mShowCount);
-            map.put("article_type_list", 1);
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
-            String sign = SignObject.getSignKey(getActivity(), map, "getArticleList");
+            String sign = SignObject.getSignKey(getActivity(), map, "businessFindcategorybyBuscode");
             NetBean netBean = new NetBean();
-            netBean.setToken("");
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
-            onNewRequestCall(GetArticleListAction.newInstance(getContext(), netBean)
-                    .request(new AHttpService.IResCallback<BaseEntity<GetPageArticleListBean>>() {
+            onNewRequestCall(BusinessFindcategorybyBuscodeAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<BusinessFindcategorybyBuscodeBean>>() {
                         @Override
-                        public void onCallback(int resultCode, Response<BaseEntity<GetPageArticleListBean>> response,
+                        public void onCallback(int resultCode, Response<BaseEntity<BusinessFindcategorybyBuscodeBean>> response,
                                                BaseErrorInfo baseErrorInfo) {
                             if (getView() != null) {
                                 closeDialog();
@@ -122,9 +125,9 @@ public class MyProductFragment extends AbsFragment<FragmentMyProductBinding> {
         }
     }
 
-    GetPageArticleListBean getPushListBean;
+    BusinessFindcategorybyBuscodeBean getPushListBean;
 
-    private void initView(boolean refresh, GetPageArticleListBean pushListBean) {
+    private void initView(boolean refresh, BusinessFindcategorybyBuscodeBean pushListBean) {
 
         this.getPushListBean = pushListBean;
         if (refresh) {
@@ -137,13 +140,13 @@ public class MyProductFragment extends AbsFragment<FragmentMyProductBinding> {
     }
 
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<GetPageArticleListBean.DataBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<BusinessFindcategorybyBuscodeBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<GetPageArticleListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+        public AbsRecyclerViewHolder<BusinessFindcategorybyBuscodeBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new ProductItemViewHolder(mInflater.inflate(R.layout.item_store_product, parent, false));
         }
     }

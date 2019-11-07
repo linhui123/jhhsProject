@@ -111,7 +111,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toRightOf="@+id/tv_income"
-                                android:text="1000元"
+                                android:text="0元"
                                 android:textColor="@color/white"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -133,7 +133,7 @@
                                 android:layout_below="@+id/tv_income"
                                 android:layout_marginTop="@dimen/dp_5"
                                 android:layout_toRightOf="@+id/tv_m_income"
-                                android:text="1000元"
+                                android:text="0元"
                                 android:textColor="@color/white"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -159,7 +159,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toRightOf="@+id/tv_member"
-                                android:text="1000人"
+                                android:text="0人"
                                 android:textColor="@color/white"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -181,7 +181,7 @@
                                 android:layout_below="@+id/tv_member"
                                 android:layout_marginTop="@dimen/dp_5"
                                 android:layout_toRightOf="@+id/tv_m_member"
-                                android:text="1000人"
+                                android:text="0人"
                                 android:textColor="@color/white"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />

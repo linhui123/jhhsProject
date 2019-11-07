@@ -1,13 +1,12 @@
-package com.jhhscm.platform.fragment.my.mechanics;
+package com.jhhscm.platform.fragment.my.store.action;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class FindGoodsOwnerBean {
+public class BusinessFindcategorybyBuscodeBean {
 
     /**
-     * data : [{"pic_gallery_url_list":"[\"http://wajueji.oss-cn-shenzhen.aliyuncs.com/oldGood_water/53df10708e474b4fa9f46a32f28692e3.jpg?Expires=1888470463&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=QzToW6wao6ASC2LC3kdrQL5oaH8%3D\"]","code":"20191107150950000041262251","fcatory_time":"2019-11-07 00:00:00","name":"002","brand_name":"三一","fixp17":"001","brand_id":3,"status":1},{"pic_gallery_url_list":"[\"http://wajueji.oss-cn-shenzhen.aliyuncs.com/oldGood_water/3e7775ab9d0444378410bfd2f42b964a.jpg?Expires=1888469613&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=bUUTPt21KRvZvyystuYs77rayEo%3D\"]","code":"20191107145310000609959745","fcatory_time":"2019-11-07 00:00:00","name":"001","brand_name":"三一","fixp17":"项圈","brand_id":3,"status":1}]
-     * page : {"total":2,"startRow":1,"size":2,"navigateFirstPageNums":1,"prePage":0,"endRow":2,"pageSize":10,"pageNum":1,"navigateLastPageNums":1,"navigatePageNums":[1]}
+     * data : [{"categoryName":"类目","brandName":"天津日石","good_code":"20190822150130002000225867","sale_num":0,"counter_price":450,"name":"柴机油 CI-4 15W-40/20W-50","id":242,"pic_url":"http://wajueji.oss-cn-shenzhen.aliyuncs.com/category/a85212cbb3b3472dabf0b648767c1351.jpg?Expires=1881713326&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=S4Gj2S7Wv81fsrOzwsInrsIMZ6w%3D","brand_id":10}]
+     * page : {"total":1,"startRow":1,"size":1,"navigateFirstPageNums":1,"prePage":0,"endRow":1,"pageSize":5,"pageNum":1,"navigateLastPageNums":1,"navigatePageNums":[1]}
      */
 
     private PageBean page;
@@ -31,13 +30,13 @@ public class FindGoodsOwnerBean {
 
     public static class PageBean {
         /**
-         * total : 2
+         * total : 1
          * startRow : 1
-         * size : 2
+         * size : 1
          * navigateFirstPageNums : 1
          * prePage : 0
-         * endRow : 2
-         * pageSize : 10
+         * endRow : 1
+         * pageSize : 5
          * pageNum : 1
          * navigateLastPageNums : 1
          * navigatePageNums : [1]
@@ -135,49 +134,67 @@ public class FindGoodsOwnerBean {
         }
     }
 
-    public static class DataBean implements Serializable {
+    public static class DataBean {
         /**
-         * pic_gallery_url_list : ["http://wajueji.oss-cn-shenzhen.aliyuncs.com/oldGood_water/53df10708e474b4fa9f46a32f28692e3.jpg?Expires=1888470463&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=QzToW6wao6ASC2LC3kdrQL5oaH8%3D"]
-         * code : 20191107150950000041262251
-         * fcatory_time : 2019-11-07 00:00:00
-         * name : 002
-         * brand_name : 三一
-         * fixp17 : 001
-         * brand_id : 3
-         * status : 1
+         * categoryName : 类目
+         * brandName : 天津日石
+         * good_code : 20190822150130002000225867
+         * sale_num : 0
+         * counter_price : 450.0
+         * name : 柴机油 CI-4 15W-40/20W-50
+         * id : 242
+         * pic_url : http://wajueji.oss-cn-shenzhen.aliyuncs.com/category/a85212cbb3b3472dabf0b648767c1351.jpg?Expires=1881713326&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=S4Gj2S7Wv81fsrOzwsInrsIMZ6w%3D
+         * brand_id : 10
          */
 
-        private String pic_gallery_url_list;
-        private String code;
-        private String fcatory_time;
+        private String categoryName;
+        private String brandName;
+        private String good_code;
+        private int sale_num;
+        private double counter_price;
         private String name;
-        private String brand_name;
-        private String fixp17;
+        private int id;
+        private String pic_url;
         private int brand_id;
-        private int status;
 
-        public String getPic_gallery_url_list() {
-            return pic_gallery_url_list;
+        public String getCategoryName() {
+            return categoryName;
         }
 
-        public void setPic_gallery_url_list(String pic_gallery_url_list) {
-            this.pic_gallery_url_list = pic_gallery_url_list;
+        public void setCategoryName(String categoryName) {
+            this.categoryName = categoryName;
         }
 
-        public String getCode() {
-            return code;
+        public String getBrandName() {
+            return brandName;
         }
 
-        public void setCode(String code) {
-            this.code = code;
+        public void setBrandName(String brandName) {
+            this.brandName = brandName;
         }
 
-        public String getFcatory_time() {
-            return fcatory_time;
+        public String getGood_code() {
+            return good_code;
         }
 
-        public void setFcatory_time(String fcatory_time) {
-            this.fcatory_time = fcatory_time;
+        public void setGood_code(String good_code) {
+            this.good_code = good_code;
+        }
+
+        public int getSale_num() {
+            return sale_num;
+        }
+
+        public void setSale_num(int sale_num) {
+            this.sale_num = sale_num;
+        }
+
+        public double getCounter_price() {
+            return counter_price;
+        }
+
+        public void setCounter_price(double counter_price) {
+            this.counter_price = counter_price;
         }
 
         public String getName() {
@@ -188,20 +205,20 @@ public class FindGoodsOwnerBean {
             this.name = name;
         }
 
-        public String getBrand_name() {
-            return brand_name;
+        public int getId() {
+            return id;
         }
 
-        public void setBrand_name(String brand_name) {
-            this.brand_name = brand_name;
+        public void setId(int id) {
+            this.id = id;
         }
 
-        public String getFixp17() {
-            return fixp17;
+        public String getPic_url() {
+            return pic_url;
         }
 
-        public void setFixp17(String fixp17) {
-            this.fixp17 = fixp17;
+        public void setPic_url(String pic_url) {
+            this.pic_url = pic_url;
         }
 
         public int getBrand_id() {
@@ -210,14 +227,6 @@ public class FindGoodsOwnerBean {
 
         public void setBrand_id(int brand_id) {
             this.brand_id = brand_id;
-        }
-
-        public int getStatus() {
-            return status;
-        }
-
-        public void setStatus(int status) {
-            this.status = status;
         }
     }
 }

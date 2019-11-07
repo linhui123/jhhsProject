@@ -37,6 +37,8 @@ import com.jhhscm.platform.fragment.my.labour.FindLabourListBean;
 import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
 import com.jhhscm.platform.fragment.my.mechanics.FindOldGoodByUserCodeBean;
 import com.jhhscm.platform.fragment.my.order.FindOrderListBean;
+import com.jhhscm.platform.fragment.my.store.action.BusinessFindcategorybyBuscodeBean;
+import com.jhhscm.platform.fragment.my.store.action.BusinessSumdataBean;
 import com.jhhscm.platform.fragment.repayment.ContractDetailBean;
 import com.jhhscm.platform.fragment.repayment.ContractListBean;
 import com.jhhscm.platform.fragment.repayment.ContractPayCreateOrderBean;
@@ -604,4 +606,18 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(DEL_GOODSOWNER)
     Call<BaseEntity<ResultBean>> delGoodsOwner(@Body NetBean content);
+
+    //我的店铺信息统计
+    String BUSINESS_SUMDATA = "v1-3/business/sumdata";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(BUSINESS_SUMDATA)
+    Call<BaseEntity<BusinessSumdataBean>> business_sumdata(@Body NetBean content);
+
+    //我的店铺信息统计
+    String BUSINESS_FINDCATEGORYBYBUSCODE = "v1-3/business/findCategoryByBusCode";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(BUSINESS_FINDCATEGORYBYBUSCODE)
+    Call<BaseEntity<BusinessFindcategorybyBuscodeBean>> business_findcategorybybuscode(@Body NetBean content);
 }

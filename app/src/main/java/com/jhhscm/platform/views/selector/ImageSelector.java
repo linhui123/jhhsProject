@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,7 +131,6 @@ public class ImageSelector extends LinearLayout {
 //        mAdapter.setData(items);
 //    }
 
-
     /**
      * 设置图片集信息
      *
@@ -152,13 +152,17 @@ public class ImageSelector extends LinearLayout {
         mAdapter.setData(items);
     }
 
+    private List<ImageSelectorItem> imageSelectorItems;
+
     public void setImageList(List<ImageSelectorItem> items) {
         if (items == null) return;
         if (items.size() <= 0 || items.size() < mSelectMaxImageSize) {
             items.add(ImageSelectorItem.newAddImageItem());
         }
+        imageSelectorItems = items;
         mAdapter.setData(items);
     }
+
 
     public void setImageToken(UploadImage image) {
         List<ImageSelectorItem> items = mAdapter.getItems();
@@ -213,11 +217,11 @@ public class ImageSelector extends LinearLayout {
                     @Override
                     public void onGranted() {
                         ImageSelectorItem item = mAdapter.getItem(position);
-//                        if (item.isAddFlag()) {
-                        doCheckAdd();
-//                        } else {
-//                            ImageSelectorPreviewActivity.startActivity(getContext(), ImageSelector.this.hashCode(), getPreImages(), position);
-//                        }
+                        if (item.isAddFlag()) {
+                            doCheckAdd();
+                        } else {
+                            ImageSelectorPreviewActivity.startActivity(getContext(), ImageSelector.this.hashCode(), getPreImages(), position);
+                        }
                     }
 
                     @Override
@@ -242,7 +246,6 @@ public class ImageSelector extends LinearLayout {
 
         addView(mGvImages, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
-
 
     private ChoiceDialog mAddDialog;
     private final static int CODE_ALBUM = 1;
@@ -284,9 +287,11 @@ public class ImageSelector extends LinearLayout {
                 //本地图片
                 if (!isClothesImage(item)) {
                     images.add(item.imageUrl);
+                    Log.e("item ","item.imageUrl "+item.imageUrl);
                 }
             }
         }
+
         return images;
     }
 

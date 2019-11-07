@@ -15,6 +15,8 @@ import com.jhhscm.platform.databinding.FragmentMyMemberBinding;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
+import com.jhhscm.platform.fragment.invitation.ReqListAction;
+import com.jhhscm.platform.fragment.invitation.ReqListBean;
 import com.jhhscm.platform.fragment.my.store.viewholder.MyMemberItemViewHolder;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -22,6 +24,7 @@ import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.SignObject;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -60,12 +63,12 @@ public class MyMemberFragment extends AbsFragment<FragmentMyMemberBinding> {
         mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
-                getCouponList(true);
+                reqlist(true);
             }
 
             @Override
             public void onLoadMore(RecyclerView view) {
-                getCouponList(false);
+                reqlist(false);
             }
         });
 
@@ -81,24 +84,25 @@ public class MyMemberFragment extends AbsFragment<FragmentMyMemberBinding> {
         });
     }
 
-    private void getCouponList(final boolean refresh) {
+    private void reqlist(final boolean refresh) {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("page", mCurrentPage);
             map.put("limit", mShowCount);
-            map.put("article_type_list", 1);
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("keyword", mDataBinding.searchContent.getText().toString().trim());
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
-            String sign = SignObject.getSignKey(getActivity(), map, "getArticleList");
+            String sign = SignObject.getSignKey(getActivity(), map, "reqlist");
             NetBean netBean = new NetBean();
-            netBean.setToken("");
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
-            onNewRequestCall(GetArticleListAction.newInstance(getContext(), netBean)
-                    .request(new AHttpService.IResCallback<BaseEntity<GetPageArticleListBean>>() {
+            onNewRequestCall(ReqListAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<ReqListBean>>() {
                         @Override
-                        public void onCallback(int resultCode, Response<BaseEntity<GetPageArticleListBean>> response,
+                        public void onCallback(int resultCode, Response<BaseEntity<ReqListBean>> response,
                                                BaseErrorInfo baseErrorInfo) {
                             if (getView() != null) {
                                 closeDialog();
@@ -120,27 +124,27 @@ public class MyMemberFragment extends AbsFragment<FragmentMyMemberBinding> {
         }
     }
 
-    GetPageArticleListBean getPushListBean;
+    ReqListBean getPushListBean;
 
-    private void initView(boolean refresh, GetPageArticleListBean pushListBean) {
+    private void initView(boolean refresh, ReqListBean pushListBean) {
 
         this.getPushListBean = pushListBean;
         if (refresh) {
-            mAdapter.setData(pushListBean.getData());
+            mAdapter.setData(pushListBean.getResult().getData());
         } else {
-            mAdapter.append(pushListBean.getData());
+            mAdapter.append(pushListBean.getResult().getData());
         }
         mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0,
-                ((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage);
+                ((float) getPushListBean.getResult().getPage().getTotal() / (float) getPushListBean.getResult().getPage().getPageSize()) > mCurrentPage);
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<GetPageArticleListBean.DataBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<ReqListBean.ResultBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<GetPageArticleListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+        public AbsRecyclerViewHolder<ReqListBean.ResultBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new MyMemberItemViewHolder(mInflater.inflate(R.layout.item_store_member, parent, false));
         }
     }

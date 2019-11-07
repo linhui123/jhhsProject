@@ -55,24 +55,44 @@
             android:paddingRight="@dimen/padding_15"
             android:paddingBottom="@dimen/padding_15">
 
-            <com.jhhscm.platform.views.OvalImageView
-                android:id="@+id/im"
+            <RelativeLayout
+                android:id="@+id/rl_im"
                 android:layout_width="128dp"
-                android:layout_height="90dp"
-                android:layout_centerVertical="true"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_site"
-                roundiv:left_bottom_radius1="5dp"
-                roundiv:left_top_radius1="5dp"
-                roundiv:right_bottom_radius1="5dp"
-                roundiv:right_top_radius1="5dp" />
+                android:layout_height="90dp">
+
+                <com.jhhscm.platform.views.OvalImageView
+                    android:id="@+id/im"
+                    android:layout_width="128dp"
+                    android:layout_height="90dp"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_site"
+                    roundiv:left_bottom_radius1="5dp"
+                    roundiv:left_top_radius1="5dp"
+                    roundiv:right_bottom_radius1="5dp"
+                    roundiv:right_top_radius1="5dp" />
+
+                <TextView
+                    android:id="@+id/num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="@dimen/dp_5"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:background="@drawable/button_pure"
+                    android:padding="@dimen/dp_5"
+                    android:text="1张"
+                    android:visibility="invisible"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/padding_10"
-                android:layout_toRightOf="@+id/im"
+                android:layout_toRightOf="@+id/rl_im"
                 android:orientation="vertical">
 
                 <TextView
@@ -113,8 +133,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:weightSum="4"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="4">
 
             <TextView
                 android:id="@+id/tv_func_1"

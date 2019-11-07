@@ -419,6 +419,7 @@ public class PhotoPickerActivity extends AbsToolbarActivity {
 
         private void getPhotosSuccess() {
             mPhotoLists.addAll(mFloderMap.get(ALL_PHOTO).getPhotoList());
+            mPhotoLists.addAll(mFloderMap.get(ALL_PHOTO).getPhotoList());
 
             mPhotoAdapter = new PhotoAdapter(getActivity(), mPhotoLists, getItemImageWidth());
             mPhotoAdapter.setIsShowCamera(mIsShowCamera);
@@ -577,6 +578,4 @@ public class PhotoPickerActivity extends AbsToolbarActivity {
         }
 
     }
-
-
 }

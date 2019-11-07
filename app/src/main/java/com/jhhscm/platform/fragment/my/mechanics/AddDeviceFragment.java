@@ -13,9 +13,12 @@ import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.TraceReloadActivity;
+import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.bean.UploadImage;
 import com.jhhscm.platform.databinding.FragmentAddDeviceBinding;
 import com.jhhscm.platform.databinding.FragmentMyMechanicsBinding;
+import com.jhhscm.platform.event.DelPhotoEvent;
+import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
@@ -33,11 +36,15 @@ import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.DropTDialog;
+import com.jhhscm.platform.views.selector.ImageSelector;
+import com.jhhscm.platform.views.selector.ImageSelectorItem;
 import com.jhhscm.platform.views.timePickets.TimePickerShow;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 import java.net.URI;
@@ -63,7 +70,6 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
      * 二手车上传图片
      */
     private List<UpdateImageBean> updateImageBeanList1;
-    FindGoodsOwnerBean.DataBean dataBean;
 
     public static AddDeviceFragment instance() {
         AddDeviceFragment view = new AddDeviceFragment();
@@ -77,6 +83,8 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
 
     @Override
     protected void setupViews() {
+        EventBusUtil.registerEvent(this);
+
         type = getArguments().getInt("type", 0);
         dataBean = new FindGoodsOwnerBean.DataBean();
         findBrand();
@@ -149,10 +157,27 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
                     mDataBinding.data.setText(dataBean.getFcatory_time().substring(0, 10));
                 }
 
-
+                if (dataBean.getPic_gallery_url_list() != null && dataBean.getPic_gallery_url_list().length() > 10) {
+                    List<PbImage> items = new ArrayList<>();
+                    String listString = dataBean.getPic_gallery_url_list().replace("[\"", "").replace("\"]", "");
+                    String[] strs = listString.split("\",\"");
+                    if (strs.length > 0) {
+                        for (int i = 0; i < strs.length; i++) {
+                            PbImage pbImage = new PbImage();
+                            pbImage.setmUrl(strs[i].trim());
+                            pbImage.setmToken(strs[i].trim());
+                            items.add(pbImage);
+                        }
+                        mDataBinding.isSchemeImage.setPbImageList(items);
+                    }
+                }
             }
         }
+    }
 
+    public void onEvent(DelPhotoEvent event) {
+        if (event.getUrl() != null) {
+        }
     }
 
     /**
@@ -203,7 +228,6 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
             list.add(new GetComboBoxBean.ResultBean(resultBean.getId(), resultBean.getName()));
         }
     }
-
 
     protected void doUploadAImagesAction1() {
         showDialog();
@@ -342,11 +366,19 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
                 if (uploadAImages.size() == imageATokens.size()) {
                     updateImageBeanList1.clear();
                     for (int i = 0; i < uploadAImages.size(); i++) {
-                        UpdateImageBean updateImageBean = new UpdateImageBean();
-                        updateImageBean.setIMG_URL(uploadAImages.get(i).getAllfilePath());
-                        updateImageBean.setMENU_CATALOGUES(uploadAImages.get(i).getCatalogues());
-                        updateImageBean.setPATIENT_IMAGE_NODE("1");
-                        updateImageBeanList1.add(updateImageBean);
+                        if (uploadAImages.get(i).getImageUrl() != null && uploadAImages.get(i).getImageUrl().contains("http://")) {
+                            UpdateImageBean updateImageBean = new UpdateImageBean();
+                            updateImageBean.setIMG_URL(uploadAImages.get(i).getImageUrl());
+                            updateImageBean.setPATIENT_IMAGE_NODE("1");
+                            updateImageBeanList1.add(updateImageBean);
+                        } else {
+                            UpdateImageBean updateImageBean = new UpdateImageBean();
+                            updateImageBean.setIMG_URL(uploadAImages.get(i).getAllfilePath());
+                            updateImageBean.setMENU_CATALOGUES(uploadAImages.get(i).getCatalogues());
+                            updateImageBean.setPATIENT_IMAGE_NODE("1");
+                            updateImageBeanList1.add(updateImageBean);
+                        }
+
                     }
                     if (updateImgResult) {
                         if (type == 0) {
@@ -394,7 +426,9 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
             map.put("brand_id", mDataBinding.brand.getTag().toString().trim());
             map.put("fcatory_time", mDataBinding.data.getText().toString().trim());
             map.put("status", "1");
-            map.put("pic", "[" + jsonString1 + "]");
+//            map.put("pic", "[" + jsonString1 + "]");
+            map.put("pic_gallery_url_list", "[" + jsonString1 + "]");
+
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = Sign.getSignKey(getActivity(), map, "addGoodsOwner");
@@ -416,6 +450,7 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         ToastUtils.show(getContext(), "保存成功");
+                                        EventBusUtil.post(new RefreshEvent());
                                         getActivity().finish();
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
@@ -446,13 +481,15 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
 
             Map<String, String> map = new TreeMap<String, String>();
             map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
-            map.put("code", dataBean.getCode());
+//            map.put("code", dataBean.getCode());
+            map.put("goods_owner_code", dataBean.getCode());
             map.put("name", mDataBinding.name.getText().toString().trim());
             map.put("fixp17", mDataBinding.model.getText().toString().trim());
             map.put("brand_id", mDataBinding.brand.getTag().toString().trim());
             map.put("fcatory_time", mDataBinding.data.getText().toString().trim());
-            map.put("status", "1");
-            map.put("pic", "[" + jsonString1 + "]");
+            map.put("status", dataBean.getStatus() + "");
+//            map.put("pic", "[" + jsonString1 + "]");
+            map.put("pic_gallery_url_list", "[" + jsonString1 + "]");
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = Sign.getSignKey(getActivity(), map, "updateGoodsOwner");
@@ -474,6 +511,7 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         ToastUtils.show(getContext(), "保存成功");
+                                        EventBusUtil.post(new RefreshEvent());
                                         getActivity().finish();
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
@@ -483,5 +521,11 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
                         }
                     }));
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregisterEvent(this);
     }
 }

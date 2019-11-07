@@ -7,10 +7,11 @@ import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemInviteBinding;
 import com.jhhscm.platform.databinding.ItemStoreMemberBinding;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
+import com.jhhscm.platform.fragment.invitation.ReqListBean;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 
-public class MyMemberItemViewHolder extends AbsRecyclerViewHolder<GetPageArticleListBean.DataBean> {
+public class MyMemberItemViewHolder extends AbsRecyclerViewHolder<ReqListBean.ResultBean.DataBean> {
 
     private ItemStoreMemberBinding mBinding;
 
@@ -20,7 +21,7 @@ public class MyMemberItemViewHolder extends AbsRecyclerViewHolder<GetPageArticle
     }
 
     @Override
-    protected void onBindView(final GetPageArticleListBean.DataBean item) {
+    protected void onBindView(final ReqListBean.ResultBean.DataBean item) {
         mBinding.llMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

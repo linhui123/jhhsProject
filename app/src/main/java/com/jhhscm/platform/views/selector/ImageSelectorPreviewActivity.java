@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.databinding.FragmentPhotopreviewBinding;
+import com.jhhscm.platform.event.DelPhotoEvent;
 import com.jhhscm.platform.event.ImageSelectorEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.photopicker.ConfirmDialog;
@@ -121,8 +122,6 @@ public class ImageSelectorPreviewActivity extends AbsToolbarActivity {
         mDelDialog.show();
     }
 
-    public class DelPhotoEvent implements EventBusUtil.IEvent {
-    }
 
     public static class PhotoFragment extends AbsFragment<FragmentPhotopreviewBinding> {
 //        private FragmentPhotopreviewBinding mDataBinding;
@@ -200,6 +199,7 @@ public class ImageSelectorPreviewActivity extends AbsToolbarActivity {
                 @Override
                 public void onPageSelected(int position) {
                     ((ImageSelectorPreviewActivity) getActivity()).setToolBarTitle((mDataBinding.viewPager.getCurrentItem() + 1) + "/" + mAdapter.getCount());
+
                 }
 
                 @Override

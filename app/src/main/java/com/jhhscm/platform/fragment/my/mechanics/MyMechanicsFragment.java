@@ -24,6 +24,7 @@ import com.jhhscm.platform.databinding.FragmentMechanicsBinding;
 import com.jhhscm.platform.databinding.FragmentMyMechanicsBinding;
 import com.jhhscm.platform.event.DelDeviceEvent;
 import com.jhhscm.platform.event.GetRegionEvent;
+import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.Mechanics.MechanicsFragment;
 import com.jhhscm.platform.fragment.Mechanics.NewMechanicsFragment;
 import com.jhhscm.platform.fragment.Mechanics.OldMechanicsFragment;
@@ -84,9 +85,10 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
         } else {
             startNewActivity(LoginActivity.class);
         }
-//        mDataBinding.wrvRecycler.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
+
         mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
+        mAdapter.setHasStableIds(true);
         mDataBinding.wrvRecycler.setAdapter(mAdapter);
         mDataBinding.wrvRecycler.autoRefresh();
         mDataBinding.wrvRecycler.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
@@ -170,6 +172,11 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
         }
     }
 
+    public void onEvent(RefreshEvent event) {
+        mAdapter.clear();
+        mDataBinding.wrvRecycler.autoRefresh();
+    }
+
     /**
      * 个人中心我的设备 删除
      */
@@ -177,7 +184,7 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
         if (getContext() != null) {
             Map<String, String> map = new TreeMap<String, String>();
             map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
-            map.put("code", code);
+            map.put("goods_owner_code", code);
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = Sign.getSignKey(getActivity(), map, "delGoodsOwner");
@@ -210,10 +217,14 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
         }
     }
 
-
     private class InnerAdapter extends AbsRecyclerViewAdapter<FindGoodsOwnerBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
         }
 
         @Override

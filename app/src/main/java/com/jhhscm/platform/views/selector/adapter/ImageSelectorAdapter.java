@@ -2,6 +2,7 @@ package com.jhhscm.platform.views.selector.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -10,6 +11,10 @@ import com.jhhscm.platform.adater.AbsAdapter;
 import com.jhhscm.platform.adater.AbsViewHolder;
 import com.jhhscm.platform.databinding.ItemImageSelectorAddBinding;
 import com.jhhscm.platform.databinding.ItemImageSelectorBinding;
+import com.jhhscm.platform.event.DelDeviceEvent;
+import com.jhhscm.platform.event.DelPhotoEvent;
+import com.jhhscm.platform.photopicker.PhotoPreviewActivity;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.views.selector.ImageSelectorItem;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -29,18 +34,18 @@ public class ImageSelectorAdapter extends AbsAdapter<ImageSelectorItem> {
 
     public ImageSelectorAdapter(Context context, int itemWidth, int code) {
         super(context);
-        this.context=context;
+        this.context = context;
         mItemWidth = itemWidth;
-        mCode=code;
+        mCode = code;
     }
 
-    public void defaultInit(){
+    public void defaultInit() {
         List<ImageSelectorItem> items = new ArrayList<>();
         items.add(ImageSelectorItem.newAddImageItem());
         setData(items);
     }
 
-    public List<ImageSelectorItem> getItems(){
+    public List<ImageSelectorItem> getItems() {
         return mData;
     }
 
@@ -76,7 +81,7 @@ public class ImageSelectorAdapter extends AbsAdapter<ImageSelectorItem> {
             super(convertView);
             mItemBinding = DataBindingUtil.bind(convertView);
             ViewGroup.LayoutParams params = mItemBinding.flImage.getLayoutParams();
-            int head=(int)(((double) mItemWidth)/1.33);
+            int head = (int) (((double) mItemWidth) / 1.33);
             if (params == null) {
                 params = new ViewGroup.LayoutParams(mItemWidth, head);
             } else {
@@ -89,9 +94,9 @@ public class ImageSelectorAdapter extends AbsAdapter<ImageSelectorItem> {
 
         @Override
         protected void onBindView(ImageSelectorItem item) {
-            if(getItems().size()-1==0){
+            if (getItems().size() - 1 == 0) {
                 mItemBinding.tvSubscript.setText("添加图片");
-            }else {
+            } else {
                 mItemBinding.tvSubscript.setText(context.getString(R.string.image_subscript, getItems().size() - 1));
             }
         }
@@ -104,7 +109,7 @@ public class ImageSelectorAdapter extends AbsAdapter<ImageSelectorItem> {
             super(convertView);
             mItemBinding = DataBindingUtil.bind(convertView);
             ViewGroup.LayoutParams params = mItemBinding.flImage.getLayoutParams();
-            int head=(int)(((double) mItemWidth)/1.33);
+            int head = (int) (((double) mItemWidth) / 1.33);
             if (params == null) {
                 params = new ViewGroup.LayoutParams(mItemWidth, head);
             } else {
@@ -117,6 +122,17 @@ public class ImageSelectorAdapter extends AbsAdapter<ImageSelectorItem> {
         @Override
         protected void onBindView(final ImageSelectorItem item) {
             ImageLoader.getInstance().displayImage(StringUtils.filterNullAndTrim(item.imageUrl), mItemBinding.ivImage);
+
+            mItemBinding.ivPressed.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (item.imageUrl != null) {
+                        EventBusUtil.post(new DelPhotoEvent(item.imageUrl));
+                        getItems().remove(item);
+                        notifyDataSetChanged();
+                    }
+                }
+            });
         }
     }
 

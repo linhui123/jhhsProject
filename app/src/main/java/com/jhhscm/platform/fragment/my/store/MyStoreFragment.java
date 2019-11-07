@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.StoreOrderSubmit1Activity;
@@ -17,13 +18,29 @@ import com.jhhscm.platform.databinding.FragmentMyBinding;
 import com.jhhscm.platform.databinding.FragmentMyStoreBinding;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.coupon.MyCouponListFragment;
+import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
+import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.my.MyFragment;
+import com.jhhscm.platform.fragment.my.store.action.BusinessSumdataAction;
+import com.jhhscm.platform.fragment.my.store.action.BusinessSumdataBean;
+import com.jhhscm.platform.http.AHttpService;
+import com.jhhscm.platform.http.HttpHelper;
+import com.jhhscm.platform.http.bean.BaseEntity;
+import com.jhhscm.platform.http.bean.BaseErrorInfo;
+import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.UserSession;
+import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
+import com.jhhscm.platform.tool.Des;
+import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import retrofit2.Response;
 
 public class MyStoreFragment extends AbsFragment<FragmentMyStoreBinding> {
     private UserSession userSession;
@@ -72,6 +89,7 @@ public class MyStoreFragment extends AbsFragment<FragmentMyStoreBinding> {
                 StoreOrderSubmit1Activity.start(getContext());
             }
         });
+        businessSumdata();
     }
 
     /**
@@ -112,5 +130,46 @@ public class MyStoreFragment extends AbsFragment<FragmentMyStoreBinding> {
         });
     }
 
-
+    private void businessSumdata() {
+        if (getContext() != null) {
+            Map<String, Object> map = new TreeMap<String, Object>();
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = SignObject.getSignKey(getActivity(), map, "businessSumdata");
+            NetBean netBean = new NetBean();
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(BusinessSumdataAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<BusinessSumdataBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<BusinessSumdataBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                        if (response.body().getData().getResult() != null
+                                                && response.body().getData().getResult().size() > 0) {
+                                            mDataBinding.tvIncomeNum.setText(response.body().getData().getResult().get(0).getSum_goods_price());
+                                            mDataBinding.tvMIncomeNum.setText(response.body().getData().getResult().get(0).getSum_goods_price_all());
+                                            mDataBinding.tvMMemberNum.setText(response.body().getData().getResult().get(0).getSum_users());
+                                            mDataBinding.tvGMemberNum.setText(response.body().getData().getResult().get(0).getSum_users_all());
+                                            mDataBinding.username.setText(response.body().getData().getResult().get(0).getBus_name());
+                                            mDataBinding.tvStoreNum.setText(response.body().getData().getResult().get(0).getBus_name());
+                                        }
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
+    }
 }
