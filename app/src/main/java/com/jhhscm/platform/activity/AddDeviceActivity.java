@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.my.mechanics.AddDeviceFragment;
+import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
 import com.jhhscm.platform.fragment.my.mechanics.MyMechanicsFragment;
 
 public class AddDeviceActivity extends AbsToolbarActivity {
@@ -15,6 +16,13 @@ public class AddDeviceActivity extends AbsToolbarActivity {
     public static void start(Context context, int type) {
         Intent intent = new Intent(context, AddDeviceActivity.class);
         intent.putExtra("type", type);
+        context.startActivity(intent);
+    }
+
+    public static void start(Context context, int type, FindGoodsOwnerBean.DataBean dataBean) {
+        Intent intent = new Intent(context, AddDeviceActivity.class);
+        intent.putExtra("type", type);
+        intent.putExtra("data", dataBean);
         context.startActivity(intent);
     }
 
@@ -62,6 +70,7 @@ public class AddDeviceActivity extends AbsToolbarActivity {
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
         args.putInt("type", getIntent().getIntExtra("type", 0));
+        args.putSerializable("data", (FindGoodsOwnerBean.DataBean) getIntent().getSerializableExtra("data"));
         return args;
     }
 }

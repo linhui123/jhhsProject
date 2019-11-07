@@ -50,16 +50,18 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="个人信息"
-                        android:textColor="@color/acc9"
-                        android:textSize="@dimen/text_size_16" />
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:text="设备信息"
-                        android:textColor="@color/acc9"
-                        android:textSize="@dimen/text_size_16" />
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -120,7 +122,8 @@
                     android:padding="10dp"
                     app:colum_num="1"
                     app:image_num="1"
-                    app:is_face="true" />
+                    app:is_face="true"
+                    app:with_camera="true" />
 
                 <!--<TextView-->
                 <!--android:layout_width="wrap_content"-->
@@ -150,7 +153,8 @@
                     android:padding="10dp"
                     app:colum_num="1"
                     app:image_num="1"
-                    app:is_face="false" />
+                    app:is_face="false"
+                    app:with_camera="true" />
 
                 <!--<TextView-->
                 <!--android:layout_width="wrap_content"-->

@@ -48,7 +48,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="个人信息"
-                        android:textColor="@color/acc9"
+                        android:textColor="@color/acc3"
+                        android:textStyle="bold"
                         android:textSize="@dimen/text_size_16" />
 
                     <TextView

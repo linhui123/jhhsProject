@@ -9,7 +9,9 @@ import com.jhhscm.platform.activity.h5.MechanicsH5Activity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemDeviceBinding;
 import com.jhhscm.platform.databinding.ItemMechanicsOldBinding;
+import com.jhhscm.platform.event.DelDeviceEvent;
 import com.jhhscm.platform.tool.CalculationUtils;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -61,7 +63,13 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindGoodsOwnerB
 //                MechanicsH5Activity.start(itemView.getContext(), url, "二手机详情", item.getGood_code(), item.getName(), item.getPic_url(), 2);
 //            }
 //        });
-
+        if (item != null) {
+            mBinding.tvName.setText(item.getName());
+            mBinding.tv1.setText("品牌：" + item.getBrand_name());
+            mBinding.tv2.setText("型号：" + item.getFixp17());
+            mBinding.tv3.setText("出厂时间：" + item.getFcatory_time());
+            mBinding.tvType.setText(item.getStatus());
+        }
         mBinding.tvFunc1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,17 +86,17 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindGoodsOwnerB
                 PushOldMechanicsActivity.start(itemView.getContext());
             }
         });
-
         mBinding.tvFunc3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddDeviceActivity.start(itemView.getContext(),1);
+                AddDeviceActivity.start(itemView.getContext(), 1, item);
             }
         });
 
         mBinding.tvFunc4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EventBusUtil.post(new DelDeviceEvent(item.getCode()));
                 ToastUtil.show(itemView.getContext(), "删除");
             }
         });

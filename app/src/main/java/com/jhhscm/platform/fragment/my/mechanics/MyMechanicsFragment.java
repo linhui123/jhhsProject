@@ -22,6 +22,7 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentMechanicsBinding;
 import com.jhhscm.platform.databinding.FragmentMyMechanicsBinding;
+import com.jhhscm.platform.event.DelDeviceEvent;
 import com.jhhscm.platform.event.GetRegionEvent;
 import com.jhhscm.platform.fragment.Mechanics.MechanicsFragment;
 import com.jhhscm.platform.fragment.Mechanics.NewMechanicsFragment;
@@ -38,12 +39,14 @@ import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
+import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
@@ -74,6 +77,7 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
 
     @Override
     protected void setupViews() {
+        EventBusUtil.registerEvent(this);
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
             userSession = ConfigUtils.getCurrentUser(getContext());
@@ -100,7 +104,7 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
         mDataBinding.add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddDeviceActivity.start(getContext(),0);
+                AddDeviceActivity.start(getContext(), 0);
             }
         });
     }
@@ -112,7 +116,7 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, String> map = new TreeMap<String, String>();
-            map.put("user_code", userSession.getUserCode());
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
             map.put("page", mCurrentPage + "");
             map.put("limit", mShowCount + "");
             String content = JSON.toJSONString(map);
@@ -160,6 +164,53 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
         mDataBinding.wrvRecycler.loadComplete(mAdapter.getItemCount() == 0, ((float) findOldGoodByUserCodeBean.getPage().getTotal() / (float) findOldGoodByUserCodeBean.getPage().getPageSize()) > mCurrentPage);
     }
 
+    public void onEvent(DelDeviceEvent event) {
+        if (event.code != null) {
+            delGoodsOwner(event.code);
+        }
+    }
+
+    /**
+     * 个人中心我的设备 删除
+     */
+    private void delGoodsOwner(String code) {
+        if (getContext() != null) {
+            Map<String, String> map = new TreeMap<String, String>();
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("code", code);
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = Sign.getSignKey(getActivity(), map, "delGoodsOwner");
+            NetBean netBean = new NetBean();
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(DelGoodsOwnerAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                        mDataBinding.wrvRecycler.autoRefresh();
+                                        ToastUtil.show(getContext(), "删除成功");
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
+    }
+
+
     private class InnerAdapter extends AbsRecyclerViewAdapter<FindGoodsOwnerBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
@@ -171,4 +222,9 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregisterEvent(this);
+    }
 }
