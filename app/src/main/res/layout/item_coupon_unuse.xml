@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="100元"
+                android:text="--元"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_16"
                 android:textStyle="bold" />
@@ -34,7 +34,7 @@
                 android:layout_below="@+id/tv_count"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/padding_15"
-                android:text="满100元可用"
+                android:text="满--元可用"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_14" />
         </RelativeLayout>
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_name"
                 android:layout_marginTop="@dimen/padding_15"
-                android:text="2019.10.08 至 2019.10.30"
+                android:text="-- 至 --"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14" />
         </RelativeLayout>

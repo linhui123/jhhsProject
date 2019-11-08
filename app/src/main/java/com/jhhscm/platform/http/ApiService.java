@@ -18,6 +18,8 @@ import com.jhhscm.platform.fragment.Mechanics.bean.GetOldPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
 import com.jhhscm.platform.fragment.Mechanics.push.OldMechanicsUpImageBean;
 import com.jhhscm.platform.fragment.Mechanics.push.UploadInvalidOrderImgEntity;
+import com.jhhscm.platform.fragment.coupon.CouponGetListBean;
+import com.jhhscm.platform.fragment.coupon.CouponListBean;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
@@ -25,6 +27,7 @@ import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.GetArticleDetailsBean;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.invitation.ReqListBean;
+import com.jhhscm.platform.fragment.invitation.UserShareUrlBean;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseDetailBean;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
 import com.jhhscm.platform.fragment.labour.FindLabourWorkListBean;
@@ -39,6 +42,7 @@ import com.jhhscm.platform.fragment.my.mechanics.FindOldGoodByUserCodeBean;
 import com.jhhscm.platform.fragment.my.order.FindOrderListBean;
 import com.jhhscm.platform.fragment.my.store.action.BusinessFindcategorybyBuscodeBean;
 import com.jhhscm.platform.fragment.my.store.action.BusinessSumdataBean;
+import com.jhhscm.platform.fragment.my.store.action.FindBusUserServerListBean;
 import com.jhhscm.platform.fragment.repayment.ContractDetailBean;
 import com.jhhscm.platform.fragment.repayment.ContractListBean;
 import com.jhhscm.platform.fragment.repayment.ContractPayCreateOrderBean;
@@ -620,4 +624,39 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(BUSINESS_FINDCATEGORYBYBUSCODE)
     Call<BaseEntity<BusinessFindcategorybyBuscodeBean>> business_findcategorybybuscode(@Body NetBean content);
+
+    //个人中心邀请码URL
+    String USERS_SHAREURL = "v1-3/users/shareurl";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(USERS_SHAREURL)
+    Call<BaseEntity<UserShareUrlBean>> users_shareurl(@Body NetBean content);
+
+    //我的券列表
+    String COUPON_LIST = "v1-3/coupon/list";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(COUPON_LIST)
+    Call<BaseEntity<CouponListBean>> coupon_list(@Body NetBean content);
+
+    //券领取列表
+    String COUPON_GETLIST = "v1-3/coupon/getlist";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(COUPON_GETLIST)
+    Call<BaseEntity<CouponGetListBean>> coupon_getlist(@Body NetBean content);
+
+    //券领取
+    String GET_COUPON = "v1-3/coupon/get";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_COUPON)
+    Call<BaseEntity<ResultBean>> get_coupon(@Body NetBean content);
+
+    //我的店铺分员服务记录
+    String FIND_BUSUSERSERVERLIST = "v1-3/business/findBusUserServerList";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_BUSUSERSERVERLIST)
+    Call<BaseEntity<FindBusUserServerListBean>> findBusUserServerList(@Body NetBean content);
 }

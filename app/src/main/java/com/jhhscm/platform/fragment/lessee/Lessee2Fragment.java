@@ -15,9 +15,11 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.Lessee3Activity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
+import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.bean.UploadImage;
 import com.jhhscm.platform.databinding.FragmentLessee1Binding;
 import com.jhhscm.platform.databinding.FragmentLessee2Binding;
+import com.jhhscm.platform.event.DelPhotoEvent;
 import com.jhhscm.platform.event.ImageSelectorUpdataEvent;
 import com.jhhscm.platform.event.LesseeFinishEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
@@ -31,6 +33,7 @@ import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
 import com.jhhscm.platform.fragment.labour.LabourFragment;
 import com.jhhscm.platform.fragment.labour.LabourViewHolder;
+import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -69,7 +72,8 @@ import rx.schedulers.Schedulers;
 import top.zibin.luban.Luban;
 
 public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
-    private FindLabourReleaseListBean.DataBean dataBean;
+    private FindGoodsOwnerBean.DataBean data;
+
     private int type;
     private UserSession userSession;
     private String id;
@@ -92,7 +96,12 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
         findBrand();
-        lesseeBean = (LesseeBean) getArguments().getSerializable("lesseeBean");
+
+        if ((LesseeBean) getArguments().getSerializable("lesseeBean") != null) {
+            lesseeBean = (LesseeBean) getArguments().getSerializable("lesseeBean");
+        } else {
+            lesseeBean = new LesseeBean();
+        }
 
         mDataBinding.tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,10 +186,29 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
 
         itemsBeans = new ArrayList<>();
         imageSelectors = new ArrayList<>();
-        LesseeBean.WBankLeaseItemsBean dataBean = new LesseeBean.WBankLeaseItemsBean();
-        itemsBeans.add(dataBean);
-        mAdapter.setData(itemsBeans);
-        imageSelectors.add(new ImageSelector(getContext()));
+
+        initData();
+    }
+
+    private void initData() {
+        data = (FindGoodsOwnerBean.DataBean) getArguments().getSerializable("data");
+        if (data != null) {
+            LesseeBean.WBankLeaseItemsBean dataBean = new LesseeBean.WBankLeaseItemsBean();
+            dataBean.setItemUrl(data.getPic_gallery_url_list());
+            dataBean.setBrandId(data.getBrand_id() + "");
+            dataBean.setBrandName(data.getBrand_name());
+            dataBean.setName(data.getName());
+            dataBean.setFixP17(data.getFixp17());
+            dataBean.setFactoryTime(data.getFcatory_time());
+            itemsBeans.add(dataBean);
+            mAdapter.add(dataBean);
+            imageSelectors.add(new ImageSelector(getContext()));
+        } else {
+            LesseeBean.WBankLeaseItemsBean dataBean = new LesseeBean.WBankLeaseItemsBean();
+            itemsBeans.add(dataBean);
+            mAdapter.setData(itemsBeans);
+            imageSelectors.add(new ImageSelector(getContext()));
+        }
     }
 
     /**
@@ -240,6 +268,12 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
                 updateImgResult = true;
                 doUploadAImagesAction(event.getPosition());
             }
+        }
+    }
+
+    public void onEvent(DelPhotoEvent event) {
+        if (event.getUrl() != null) {
+
         }
     }
 

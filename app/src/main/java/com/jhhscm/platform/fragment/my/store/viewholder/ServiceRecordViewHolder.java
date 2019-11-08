@@ -9,9 +9,10 @@ import com.jhhscm.platform.databinding.ItemServiceRecordBinding;
 import com.jhhscm.platform.databinding.ItemStoreSelectMemberBinding;
 import com.jhhscm.platform.event.FinishEvent;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
+import com.jhhscm.platform.fragment.my.store.action.FindBusUserServerListBean;
 import com.jhhscm.platform.tool.EventBusUtil;
 
-public class ServiceRecordViewHolder extends AbsRecyclerViewHolder<GetPageArticleListBean.DataBean> {
+public class ServiceRecordViewHolder extends AbsRecyclerViewHolder<FindBusUserServerListBean.ResultBean.DataBean> {
 
     private ItemServiceRecordBinding mBinding;
     private boolean isSelect;
@@ -22,7 +23,7 @@ public class ServiceRecordViewHolder extends AbsRecyclerViewHolder<GetPageArticl
     }
 
     @Override
-    protected void onBindView(final GetPageArticleListBean.DataBean item) {
+    protected void onBindView(final FindBusUserServerListBean.ResultBean.DataBean item) {
         mBinding.order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -9,12 +9,19 @@ import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.labour.LabourDetailFragment;
 import com.jhhscm.platform.fragment.lessee.Lessee1Fragment;
+import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
 import com.jhhscm.platform.fragment.my.set.FeedbackFragment;
 
 public class Lessee1Activity extends AbsToolbarActivity {
 
     public static void start(Context context) {
         Intent intent = new Intent(context, Lessee1Activity.class);
+        context.startActivity(intent);
+    }
+
+    public static void start(Context context, FindGoodsOwnerBean.DataBean dataBean) {
+        Intent intent = new Intent(context, Lessee1Activity.class);
+        intent.putExtra("data", dataBean);
         context.startActivity(intent);
     }
 
@@ -56,6 +63,7 @@ public class Lessee1Activity extends AbsToolbarActivity {
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putSerializable("data", getIntent().getSerializableExtra("data"));
         return args;
     }
 }

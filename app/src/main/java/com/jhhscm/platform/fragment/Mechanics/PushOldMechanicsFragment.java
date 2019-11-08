@@ -19,6 +19,7 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.BrandActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.MechanicsByBrandActivity;
+import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.bean.UploadImage;
 import com.jhhscm.platform.databinding.FragmentPushOldMechanicsBinding;
 import com.jhhscm.platform.event.BrandResultEvent;
@@ -33,6 +34,7 @@ import com.jhhscm.platform.fragment.Mechanics.push.UpdateImageBean;
 import com.jhhscm.platform.fragment.Mechanics.push.UploadOldMechanicsImgAction;
 import com.jhhscm.platform.fragment.Mechanics.push.UploadInvalidOrderImgEntity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
 import com.jhhscm.platform.fragment.sale.OldGoodOrderHistoryBean;
 import com.jhhscm.platform.fragment.sale.SaleMachineAdapter;
 import com.jhhscm.platform.http.AHttpService;
@@ -73,7 +75,7 @@ import rx.schedulers.Schedulers;
 import top.zibin.luban.Luban;
 
 public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechanicsBinding> implements View.OnClickListener {
-
+    private FindGoodsOwnerBean.DataBean dataBean;
     private OldGoodOrderHistoryBean oldGoodOrderHistoryBean;
     private String brand_id, goods_factory, fix_p_9, factory_time, fix_p_13, fix_p_14, province, city;
     private String tel, old_time, price, biaopai, name;
@@ -95,7 +97,6 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
-        checkDeviceHasNavigationBar(getActivity());
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
             userSession = ConfigUtils.getCurrentUser(getContext());
@@ -103,8 +104,45 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
             startNewActivity(LoginActivity.class);
         }
         updateImageBeanList1 = new ArrayList<>();
+
+        initData();
         initView();
         judgeButton();
+    }
+
+    private void initData() {
+        dataBean = (FindGoodsOwnerBean.DataBean) getArguments().getSerializable("data");
+        if (dataBean != null) {
+            brand_id = dataBean.getBrand_id() + "";
+            fix_p_9 = dataBean.getFixp17().trim();
+            name = dataBean.getName().trim();
+            mDataBinding.tv1.setText(dataBean.getBrand_name());
+            mDataBinding.tv1.setTag(dataBean.getBrand_id());
+            mDataBinding.tv2.setText(dataBean.getFixp17());
+            if (dataBean.getFcatory_time() != null && dataBean.getFcatory_time().length() > 10) {
+                mDataBinding.tv4.setText(dataBean.getFcatory_time().substring(0, 10));
+                factory_time = dataBean.getFcatory_time().substring(0, 10).trim();
+            } else {
+                mDataBinding.tv4.setText(dataBean.getFcatory_time());
+                factory_time = dataBean.getFcatory_time().trim();
+            }
+            mDataBinding.tvName.setText(dataBean.getName());
+
+            if (dataBean.getPic_gallery_url_list() != null && dataBean.getPic_gallery_url_list().length() > 10) {
+                List<PbImage> items = new ArrayList<>();
+                String listString = dataBean.getPic_gallery_url_list().replace("[\"", "").replace("\"]", "");
+                String[] strs = listString.split("\",\"");
+                if (strs.length > 0) {
+                    for (int i = 0; i < strs.length; i++) {
+                        PbImage pbImage = new PbImage();
+                        pbImage.setmUrl(strs[i].trim());
+                        pbImage.setmToken(strs[i].trim());
+                        items.add(pbImage);
+                    }
+                    mDataBinding.selector.setPbImageList(items);
+                }
+            }
+        }
     }
 
     private void initView() {
@@ -532,11 +570,18 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                 if (uploadAImages.size() == imageATokens.size()) {
                     updateImageBeanList1.clear();
                     for (int i = 0; i < uploadAImages.size(); i++) {
-                        UpdateImageBean updateImageBean = new UpdateImageBean();
-                        updateImageBean.setIMG_URL(uploadAImages.get(i).getAllfilePath());
-                        updateImageBean.setMENU_CATALOGUES(uploadAImages.get(i).getCatalogues());
-                        updateImageBean.setPATIENT_IMAGE_NODE("1");
-                        updateImageBeanList1.add(updateImageBean);
+                        if (uploadAImages.get(i).getImageUrl() != null && uploadAImages.get(i).getImageUrl().contains("http://")) {
+                            UpdateImageBean updateImageBean = new UpdateImageBean();
+                            updateImageBean.setIMG_URL(uploadAImages.get(i).getImageUrl());
+                            updateImageBean.setPATIENT_IMAGE_NODE("1");
+                            updateImageBeanList1.add(updateImageBean);
+                        } else {
+                            UpdateImageBean updateImageBean = new UpdateImageBean();
+                            updateImageBean.setIMG_URL(uploadAImages.get(i).getAllfilePath());
+                            updateImageBean.setMENU_CATALOGUES(uploadAImages.get(i).getCatalogues());
+                            updateImageBean.setPATIENT_IMAGE_NODE("1");
+                            updateImageBeanList1.add(updateImageBean);
+                        }
                     }
                     if (updateImgResult) {
                         saveOldGood();
@@ -562,15 +607,18 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
         if (getContext() != null) {
             showDialog();
             String jsonString1 = "";
-            for (UpdateImageBean updateImageBean : updateImageBeanList1) {
-                if (jsonString1.length() > 0) {
-                    jsonString1 = jsonString1 + "," + "\"" + updateImageBean.getIMG_URL() + "\"";
-                } else {
-                    jsonString1 = "\"" + updateImageBean.getIMG_URL() + "\"";
+
+            if (mDataBinding.selector.getUploadImageList().size() > 0) {
+                for (UpdateImageBean updateImageBean : updateImageBeanList1) {
+                    if (jsonString1.length() > 0) {
+                        jsonString1 = jsonString1 + "," + "\"" + updateImageBean.getIMG_URL() + "\"";
+                    } else {
+                        jsonString1 = "\"" + updateImageBean.getIMG_URL() + "\"";
+                    }
                 }
             }
             Map<String, Object> map = new TreeMap<String, Object>();
-            map.put("user_code", userSession.getUserCode());
+            map.put("user_code",ConfigUtils.getCurrentUser(getContext()).getUserCode());
             map.put("name", name);
             map.put("brand_id", brand_id);
             map.put("fix_p_17", fix_p_9);
@@ -589,7 +637,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
             content = Des.encryptByDes(content);
             String sign = SignObject.getSignKey(getActivity(), map, "saveOldGood");
             NetBean netBean = new NetBean();
-            netBean.setToken(userSession.getToken());
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
             onNewRequestCall(SaveOldGoodAction.newInstance(getContext(), netBean)
@@ -619,56 +667,6 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
 
     public void error() {
         ToastUtils.show(getContext(), R.string.error_net);
-    }
-
-    /**
-     * 判断是否存在NavigationBar
-     *
-     * @param context：上下文环境
-     * @return：返回是否存在(true/false)
-     */
-    public boolean checkDeviceHasNavigationBar(Context context) {
-        boolean hasNavigationBar = false;
-        Resources rs = context.getResources();
-        int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
-        if (id > 0) {
-            hasNavigationBar = rs.getBoolean(id);
-        }
-        try {
-            Class systemPropertiesClass = Class.forName("android.os.SystemProperties");
-            Method m = systemPropertiesClass.getMethod("get", String.class);
-            String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
-            if ("1".equals(navBarOverride)) {
-                //不存在虚拟按键
-                hasNavigationBar = false;
-//                ToastUtil.show(context, "不存在虚拟按键");
-            } else if ("0".equals(navBarOverride)) {
-                //存在虚拟按键
-                hasNavigationBar = true;
-                //手动设置控件的margin
-                //linebutton是一个linearlayout,里面包含了两个Button
-                RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) mDataBinding.rlBottom.getLayoutParams();
-                //setMargins：顺序是左、上、右、下
-                layout.setMargins(15, 0, 15, getNavigationBarHeight(getActivity()) + 10);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return hasNavigationBar;
-    }
-
-
-    /**
-     * 测量底部导航栏的高度
-     *
-     * @param mActivity:上下文环境
-     * @return：返回测量出的底部导航栏高度
-     */
-    private int getNavigationBarHeight(Activity mActivity) {
-        Resources resources = mActivity.getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        int height = resources.getDimensionPixelSize(resourceId);
-        return height;
     }
 }
 

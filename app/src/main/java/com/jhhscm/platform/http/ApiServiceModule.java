@@ -59,7 +59,7 @@ public class ApiServiceModule {
     }
 
     public static ApiServiceModule getInstance() {
-        Log.e("http","getBaseUrl : "+ MyApplication.getBaseUrl());
+//        Log.e("http","getBaseUrl : "+ MyApplication.getBaseUrl());
         if (MyApplication.getBaseUrl() == null) {
             MyApplication.setBaseUrl(BASE_URL5);
         }

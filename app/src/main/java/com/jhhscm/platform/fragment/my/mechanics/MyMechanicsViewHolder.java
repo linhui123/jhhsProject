@@ -5,6 +5,7 @@ import android.view.View;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AddDeviceActivity;
 import com.jhhscm.platform.activity.Lessee1Activity;
+import com.jhhscm.platform.activity.Lessee2Activity;
 import com.jhhscm.platform.activity.PushOldMechanicsActivity;
 import com.jhhscm.platform.activity.h5.MechanicsH5Activity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
@@ -69,12 +70,12 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindGoodsOwnerB
 
                         }
                     });
-                }else {
+                } else {
                     mBinding.num.setText("0张");
                     mBinding.num.setVisibility(View.INVISIBLE);
                     mBinding.im.setImageResource(R.mipmap.ic_site);
                 }
-            }else {
+            } else {
                 mBinding.num.setText("0张");
                 mBinding.num.setVisibility(View.INVISIBLE);
                 mBinding.im.setImageResource(R.mipmap.ic_site);
@@ -83,8 +84,9 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindGoodsOwnerB
             mBinding.tvFunc1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtil.show(itemView.getContext(), "租赁");
-                    Lessee1Activity.start(itemView.getContext());
+//                    ToastUtil.show(itemView.getContext(), "租赁");
+                    Lessee1Activity.start(itemView.getContext(), item);
+//                    Lessee2Activity.start(itemView.getContext(), null, item);
                 }
 
             });
@@ -92,8 +94,8 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindGoodsOwnerB
             mBinding.tvFunc2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtil.show(itemView.getContext(), "卖车");
-                    PushOldMechanicsActivity.start(itemView.getContext());
+//                    ToastUtil.show(itemView.getContext(), "卖车");
+                    PushOldMechanicsActivity.start(itemView.getContext(), item);
                 }
             });
             mBinding.tvFunc3.setOnClickListener(new View.OnClickListener() {

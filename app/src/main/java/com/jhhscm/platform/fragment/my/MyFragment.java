@@ -76,42 +76,11 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        Log.e("MyFragment", "setUserVisibleHint");
-        if (isVisibleToUser) {
-            if (ConfigUtils.getCurrentUser(getContext()) != null
-                    && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
-                mDataBinding.tvName.setVisibility(View.GONE);
-                mDataBinding.username.setText(ConfigUtils.getCurrentUser(getContext()).getMobile());
-                if ("1".equals(ConfigUtils.getCurrentUser(getContext()).getIs_check())) {
-//                    mDataBinding.tvCerGo.setVisibility(View.GONE);
-                    mDataBinding.tvCerGo.setText("已认证");
-                    mDataBinding.tvCer.setText("已认证");
-                } else {
-                    mDataBinding.tvCer.setText("未认证");
-                    mDataBinding.tvCerGo.setText("未认证");
-//                    mDataBinding.tvCerGo.setVisibility(View.VISIBLE);
-                }
-            }
-        }
-    }
-
-    @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
         LinearLayout.LayoutParams llParams = (LinearLayout.LayoutParams) mDataBinding.rlTop.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.rlTop.setLayoutParams(llParams);
-        if (ConfigUtils.getCurrentUser(getContext()) != null
-                && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
-            getUser();
-            getUserConter();
-            getBusCount();
-        } else {
-            mDataBinding.llStore.setVisibility(View.GONE);
-            mDataBinding.llStore.setVisibility(View.GONE);
-        }
 
         initOnClick();
     }
@@ -303,8 +272,6 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                 if (ConfigUtils.getCurrentUser(getContext()) != null
                         && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
                     MyInviteActivity.start(getContext(), Integer.parseInt(mDataBinding.tvInviteNum.getText().toString()));
-//邀请注册
-//                    InvitationRegisterActivity.start(MainActivity.this);
                 } else {
                     startNewActivity(LoginActivity.class);
                 }
@@ -410,6 +377,19 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {//可见
+            initUser();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         initUser();
@@ -419,15 +399,15 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
             if ("1".equals(ConfigUtils.getCurrentUser(getContext()).getIs_check())) {
-//                mDataBinding.tvCerGo.setVisibility(View.GONE);
                 mDataBinding.tvCer.setText("已认证");
                 mDataBinding.tvCerGo.setText("已认证");
             } else {
                 mDataBinding.tvCer.setText("未认证");
                 mDataBinding.tvCerGo.setText("已认证");
-//                mDataBinding.tvCerGo.setVisibility(View.VISIBLE);
             }
-
+            getUser();
+            getUserConter();
+            getBusCount();
             if (ConfigUtils.getCurrentUser(getContext()).getIs_bus() == 0) {
                 mDataBinding.llStore.setVisibility(View.GONE);
                 mDataBinding.tvStoreNum.setVisibility(View.GONE);
@@ -443,13 +423,13 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             mDataBinding.imUser.setImageResource(R.mipmap.ic_heard);
             mDataBinding.tvName.setVisibility(View.VISIBLE);
             mDataBinding.rlCer.setVisibility(View.GONE);
+            mDataBinding.llStore.setVisibility(View.GONE);
+            mDataBinding.tvStoreNum.setVisibility(View.GONE);
         }
     }
 
     public void onEvent(LoginOutEvent event) {
         initUser();
-        mDataBinding.llStore.setVisibility(View.GONE);
-        mDataBinding.tvStoreNum.setVisibility(View.GONE);
     }
 
     @Override

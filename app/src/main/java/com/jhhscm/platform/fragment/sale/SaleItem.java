@@ -1,5 +1,6 @@
 package com.jhhscm.platform.fragment.sale;
 
+import com.jhhscm.platform.fragment.coupon.CouponListBean;
 import com.jhhscm.platform.fragment.my.order.FindOrderListBean;
 
 public class SaleItem {
@@ -21,6 +22,9 @@ public class SaleItem {
     public FindOrderListBean findOrderListBean;
     public FindOrderListBean.DataBean orderBean;
 
+    public CouponListBean couponListBean;
+    public CouponListBean.ResultBean couponResult
+            ;
     public SaleItem(int itemType) {
         this.itemType = itemType;
     }

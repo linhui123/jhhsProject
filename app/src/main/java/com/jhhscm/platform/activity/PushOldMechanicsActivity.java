@@ -8,12 +8,19 @@ import android.os.Bundle;
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.Mechanics.PushOldMechanicsFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
 import com.jhhscm.platform.fragment.my.mechanics.MyMechanicsFragment;
 
 public class PushOldMechanicsActivity extends AbsToolbarActivity {
 
     public static void start(Context context) {
         Intent intent = new Intent(context, PushOldMechanicsActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void start(Context context, FindGoodsOwnerBean.DataBean dataBean) {
+        Intent intent = new Intent(context, PushOldMechanicsActivity.class);
+        intent.putExtra("data", dataBean);
         context.startActivity(intent);
     }
 
@@ -39,7 +46,7 @@ public class PushOldMechanicsActivity extends AbsToolbarActivity {
 
     @Override
     public boolean isSupportSwipeBack() {
-        return true;
+        return false;
     }
 
     @Override
@@ -55,6 +62,7 @@ public class PushOldMechanicsActivity extends AbsToolbarActivity {
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putSerializable("data", getIntent().getSerializableExtra("data"));
         return args;
     }
 }

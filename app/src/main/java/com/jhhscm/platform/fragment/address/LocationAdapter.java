@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jhhscm.platform.R;
@@ -58,7 +59,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
             holder.im_select.setVisibility(View.GONE);
         }
         holder.tv_name.setText(list.get(position).getName());
-        holder.tv_name.setOnClickListener(new View.OnClickListener() {
+        holder.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 for (int i = 0; i < list.size(); i++) {
@@ -87,9 +88,11 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         GetRegionBean.ResultBean item;
         TextView tv_name;
         ImageView im_select;
+        RelativeLayout rl;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            rl = (RelativeLayout) itemView.findViewById(R.id.rl);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             im_select = (ImageView) itemView.findViewById(R.id.im_select);
             tv_name.setOnClickListener(this);

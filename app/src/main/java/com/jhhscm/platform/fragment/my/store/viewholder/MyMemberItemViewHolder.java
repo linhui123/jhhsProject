@@ -26,7 +26,7 @@ public class MyMemberItemViewHolder extends AbsRecyclerViewHolder<ReqListBean.Re
             @Override
             public void onClick(View v) {
                 ToastUtil.show(itemView.getContext(), "查看");
-                ServiceRecordActivity.start(itemView.getContext());
+                ServiceRecordActivity.start(itemView.getContext(),item.getBus_code());
             }
         });
     }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.Lessee2Activity;
+import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.databinding.FragmentLabourDetailBinding;
 import com.jhhscm.platform.databinding.FragmentLessee1Binding;
 import com.jhhscm.platform.event.LesseeFinishEvent;
@@ -16,6 +17,7 @@ import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
 import com.jhhscm.platform.fragment.labour.LabourDetailFragment;
+import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
@@ -27,6 +29,7 @@ import java.util.List;
 public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
     private LesseeBean lesseeBean;
     private LesseeBean.WBankLeasePersonBean personBean;
+    private FindGoodsOwnerBean.DataBean dataBean;
 
     public static Lessee1Fragment instance() {
         Lessee1Fragment view = new Lessee1Fragment();
@@ -41,6 +44,7 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
+        dataBean = (FindGoodsOwnerBean.DataBean) getArguments().getSerializable("data");
         lesseeBean = new LesseeBean();
         personBean = new LesseeBean.WBankLeasePersonBean();
         mDataBinding.tvNext.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +62,11 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
                                 lesseeBean.setWBankLeasePerson(personBean);
                                 if (mDataBinding.tvSex.getText().toString().trim().length() > 0) {
                                     if (mDataBinding.tvMarray.getText().toString().trim().length() > 0) {
-                                        Lessee2Activity.start(getContext(), lesseeBean);
+                                        if (dataBean!=null){
+                                            Lessee2Activity.start(getContext(), lesseeBean);
+                                        }else {
+                                            Lessee2Activity.start(getContext(), lesseeBean);
+                                        }
                                     } else {
                                         ToastUtil.show(getActivity(), "婚姻情况不能为空");
                                     }

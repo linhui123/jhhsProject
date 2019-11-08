@@ -9,6 +9,7 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.BrandActivity;
 import com.jhhscm.platform.activity.LabourDetailActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
+import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.databinding.ItemLabourBinding;
 import com.jhhscm.platform.databinding.ItemLesseeMechanicsBinding;
 import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
@@ -27,6 +28,7 @@ import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.DropTDialog;
 import com.jhhscm.platform.views.timePickets.TimePickerShow;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -48,6 +50,34 @@ public class LesseeViewHolder extends AbsRecyclerViewHolder<LesseeBean.WBankLeas
 
     @Override
     protected void onBindView(final LesseeBean.WBankLeaseItemsBean item) {
+        if (item != null) {
+            mBinding.etName.setText(item.getName());
+            mBinding.etXinghao.setText(item.getFixP17());
+            mBinding.tvBrand.setText(item.getBrandName());
+            if (item.getFactoryTime() != null && item.getFactoryTime().length() > 10) {
+                mBinding.tvData.setText(item.getFactoryTime().substring(0, 10));
+                item.setFactoryTime(item.getFactoryTime().substring(0, 10));
+            } else {
+                mBinding.tvData.setText(item.getFactoryTime());
+                item.setFactoryTime(item.getFactoryTime());
+            }
+            if (item.getItemUrl() != null && item.getItemUrl().length() > 10) {
+                List<PbImage> items = new ArrayList<>();
+                String listString = item.getItemUrl().replace("[\"", "").replace("\"]", "");
+                String[] strs = listString.split("\",\"");
+                if (strs.length > 0) {
+                    for (int i = 0; i < strs.length; i++) {
+                        PbImage pbImage = new PbImage();
+                        pbImage.setmUrl(strs[i].trim());
+                        pbImage.setmToken(strs[i].trim());
+                        items.add(pbImage);
+                    }
+                    mBinding.isSchemeImage.setPbImageList(items);
+                } else {
+                    mBinding.isSchemeImage.setPbImageList(items);
+                }
+            }
+        }
         mBinding.isSchemeImage.setPosition(getAdapterPosition());
         mBinding.tvBrand.setOnClickListener(new View.OnClickListener() {
             @Override

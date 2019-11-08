@@ -110,7 +110,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingTop="@dimen/dp_1"
                                 android:paddingBottom="@dimen/dp_1"
-                                android:text="158****3065"
+                                android:text=""
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/text_size_16"
                                 android:textStyle="bold" />

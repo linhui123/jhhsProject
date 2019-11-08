@@ -10,12 +10,20 @@ import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.lessee.Lessee2Fragment;
 import com.jhhscm.platform.fragment.lessee.LesseeBean;
+import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
 import com.jhhscm.platform.fragment.my.set.FeedbackFragment;
 
 public class Lessee2Activity extends AbsToolbarActivity {
 
     public static void start(Context context, LesseeBean lesseeBean) {
         Intent intent = new Intent(context, Lessee2Activity.class);
+        intent.putExtra("lesseeBean", lesseeBean);
+        context.startActivity(intent);
+    }
+
+    public static void start(Context context, LesseeBean lesseeBean, FindGoodsOwnerBean.DataBean dataBean) {
+        Intent intent = new Intent(context, Lessee2Activity.class);
+        intent.putExtra("data", dataBean);
         intent.putExtra("lesseeBean", lesseeBean);
         context.startActivity(intent);
     }
@@ -59,6 +67,7 @@ public class Lessee2Activity extends AbsToolbarActivity {
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
         args.putSerializable("lesseeBean", getIntent().getSerializableExtra("lesseeBean"));
+        args.putSerializable("data", getIntent().getSerializableExtra("data"));
         return args;
     }
 }

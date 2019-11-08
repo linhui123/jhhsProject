@@ -50,7 +50,7 @@ public class MyCouponFragment extends AbsFragment<FragmentMyCouponBinding> {
             startNewActivity(LoginActivity.class);
         }
 
-        unCounponFragment = MyCouponListFragment.instance("");
+        unCounponFragment = MyCouponListFragment.instance("0");
         useCounponFragment = MyCouponListFragment.instance("1");
         oldCounponFragment = MyCouponListFragment.instance("2");
 

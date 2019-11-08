@@ -255,12 +255,21 @@ public class LesseeBean implements Serializable {
 
         private String name;
         private String brandId;
+        private String brandName;
         private String fixP17;
         private String factoryTime;
         private String machineNum;
         private String machinePrice;
         private String machineAssess;
         private String itemUrl;
+
+        public String getBrandName() {
+            return brandName;
+        }
+
+        public void setBrandName(String brandName) {
+            this.brandName = brandName;
+        }
 
         public String getItemUrl() {
             return itemUrl;

@@ -28,57 +28,68 @@ public class MyCouponListAdapter extends AbsRecyclerViewAdapter<SaleItem> {
     /**
      * 未使用
      */
-    private void addUnCoupon(FindOrderListBean.DataBean dataBean) {
+    private void addUnCoupon(CouponListBean.ResultBean dataBean) {
         SaleItem item = new SaleItem(SaleItem.TYPE_SALE_1);
-        item.orderBean = dataBean;
+        item.couponResult = dataBean;
         mData.add(item);
     }
 
     /**
      * 已使用
      */
-    private void addUseCoupon(FindOrderListBean.DataBean dataBean) {
+    private void addUseCoupon(CouponListBean.ResultBean dataBean) {
         SaleItem item = new SaleItem(SaleItem.TYPE_SALE_2);
-        item.orderBean = dataBean;
+        item.couponResult = dataBean;
         mData.add(item);
     }
 
     /**
      * 已过期
      */
-    private void addOldCoupon(FindOrderListBean.DataBean dataBean) {
+    private void addOldCoupon(CouponListBean.ResultBean dataBean) {
         SaleItem item = new SaleItem(SaleItem.TYPE_SALE_3);
-        item.orderBean = dataBean;
+        item.couponResult = dataBean;
         mData.add(item);
     }
 
 
-    public void setDetail(FindOrderListBean listBean, String type) {
+    public void setDetail(CouponListBean listBean, String type) {
         mData.clear();
-        if (listBean.getData() != null) {
-            for (FindOrderListBean.DataBean dataBean : listBean.getData()) {
-                if ("1".equals(type)) {
-                    addUseCoupon(dataBean);
-                } else if ("2".equals(type)) {
-                    addOldCoupon(dataBean);
+        if (listBean.getResult() != null) {
+            for (CouponListBean.ResultBean dataBean : listBean.getResult()) {
+                if ("0".equals(type)) {
+                    if (dataBean.getStatus() == 0) {
+                        addUnCoupon(dataBean);
+                    }
+                } else if ("1".equals(type)) {
+                    if (dataBean.getStatus() == 1) {
+                        addUseCoupon(dataBean);
+                    }
                 } else {
-                    addUnCoupon(dataBean);
+                    if (dataBean.getStatus() == 2) {
+                        addOldCoupon(dataBean);
+                    }
                 }
-
             }
         }
         notifyDataSetChanged();
     }
 
-    public void setExpend(FindOrderListBean listBean, String type) {
-        if (listBean.getData() != null) {
-            for (int i = 0; i < listBean.getData().size(); i++) {
-                if ("1".equals(type)) {
-                    addUseCoupon(listBean.getData().get(i));
-                } else if ("2".equals(type)) {
-                    addOldCoupon(listBean.getData().get(i));
+    public void setExpend(CouponListBean listBean, String type) {
+        if (listBean.getResult() != null) {
+            for (int i = 0; i < listBean.getResult().size(); i++) {
+                if ("0".equals(type)) {
+                    if (listBean.getResult().get(i).getStatus() == 0) {
+                        addUnCoupon(listBean.getResult().get(i));
+                    }
+                } else if ("1".equals(type)) {
+                    if (listBean.getResult().get(i).getStatus() == 1) {
+                        addUseCoupon(listBean.getResult().get(i));
+                    }
                 } else {
-                    addUnCoupon(listBean.getData().get(i));
+                    if (listBean.getResult().get(i).getStatus() == 2) {
+                        addOldCoupon(listBean.getResult().get(i));
+                    }
                 }
             }
         }

@@ -21,6 +21,7 @@ import com.jhhscm.platform.databinding.FragmentLabourBinding;
 import com.jhhscm.platform.databinding.FragmentMyCouponListBinding;
 import com.jhhscm.platform.databinding.FragmentMyMemberBinding;
 import com.jhhscm.platform.event.AddressResultEvent;
+import com.jhhscm.platform.event.GetCouponEvent;
 import com.jhhscm.platform.event.OrderCancleEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderFragment;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderViewHolder;
@@ -82,6 +83,7 @@ public class CouponCenterFragment extends AbsFragment<FragmentCouponCenterBindin
 
     @Override
     protected void setupViews() {
+        EventBusUtil.registerEvent(this);
 //        mDataBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
@@ -90,34 +92,50 @@ public class CouponCenterFragment extends AbsFragment<FragmentCouponCenterBindin
         mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
-                getCouponList(true);
+                getCouponGetList(true);
             }
 
             @Override
             public void onLoadMore(RecyclerView view) {
-                getCouponList(false);
+                getCouponGetList(false);
             }
         });
     }
 
-    private void getCouponList(final boolean refresh) {
+    public void onEvent(GetCouponEvent event) {
+        if (event.coupon_code != null
+                && event.start != null && event.end != null) {
+            getCoupon(event.coupon_code, event.start, event.end);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregisterEvent(this);
+    }
+
+    /**
+     * 获取领券列表
+     */
+    private void getCouponGetList(final boolean refresh) {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("page", mCurrentPage);
             map.put("limit", mShowCount);
-            map.put("article_type_list", 1);
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
-            String sign = SignObject.getSignKey(getActivity(), map, "getArticleList");
+            String sign = SignObject.getSignKey(getActivity(), map, "getCouponGetList");
             NetBean netBean = new NetBean();
-            netBean.setToken("");
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
-            onNewRequestCall(GetArticleListAction.newInstance(getContext(), netBean)
-                    .request(new AHttpService.IResCallback<BaseEntity<GetPageArticleListBean>>() {
+            onNewRequestCall(CouponGetListAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<CouponGetListBean>>() {
                         @Override
-                        public void onCallback(int resultCode, Response<BaseEntity<GetPageArticleListBean>> response,
+                        public void onCallback(int resultCode, Response<BaseEntity<CouponGetListBean>> response,
                                                BaseErrorInfo baseErrorInfo) {
                             if (getView() != null) {
                                 closeDialog();
@@ -139,27 +157,69 @@ public class CouponCenterFragment extends AbsFragment<FragmentCouponCenterBindin
         }
     }
 
-    GetPageArticleListBean getPushListBean;
+    CouponGetListBean getPushListBean;
 
-    private void initView(boolean refresh, GetPageArticleListBean pushListBean) {
+    private void initView(boolean refresh, CouponGetListBean pushListBean) {
 
         this.getPushListBean = pushListBean;
         if (refresh) {
-            mAdapter.setData(pushListBean.getData());
+            mAdapter.setData(pushListBean.getResult().getData());
         } else {
-            mAdapter.append(pushListBean.getData());
+            mAdapter.append(pushListBean.getResult().getData());
         }
-        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0,
-                ((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage);
+        mDataBinding.recyclerview.loadComplete(false, false);
+//        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0,
+//                ((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage);
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<GetPageArticleListBean.DataBean> {
+    /**
+     * 领取优惠卷
+     */
+    private void getCoupon(String coupon_code, String start, String end) {
+        if (getContext() != null) {
+            Map<String, Object> map = new TreeMap<String, Object>();
+            map.put("coupon_code", coupon_code);
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("coupon_b_time", start);
+            map.put("coupon_e_time", end);
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = SignObject.getSignKey(getActivity(), map, "getCoupon");
+            NetBean netBean = new NetBean();
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(GetCouponAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                        mDataBinding.recyclerview.autoRefresh();
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
+    }
+
+    private class InnerAdapter extends AbsRecyclerViewAdapter<CouponGetListBean.ResultBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<GetPageArticleListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+        public AbsRecyclerViewHolder<CouponGetListBean.ResultBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new CouponCenterViewHolder(mInflater.inflate(R.layout.item_coupon_center, parent, false));
         }
     }

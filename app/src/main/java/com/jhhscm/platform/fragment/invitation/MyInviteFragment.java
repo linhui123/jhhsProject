@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.InvitationRegisterActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentMyBinding;
@@ -95,6 +96,14 @@ public class MyInviteFragment extends AbsFragment<FragmentMyInviteBinding> {
                 } else {
                     ToastUtil.show(getContext(), "输入内容不能为空");
                 }
+            }
+        });
+
+        mDataBinding.invite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //邀请注册
+                InvitationRegisterActivity.start(getContext());
             }
         });
     }
