@@ -330,12 +330,59 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             public void onClick(View view) {
                 if (ConfigUtils.getCurrentUser(getContext()) != null
                         && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
-                    MyPeiJianListActivity.start(getContext());
+                    MyPeiJianListActivity.start(getContext(), 0);
                 } else {
                     startNewActivity(LoginActivity.class);
                 }
             }
         });
+
+        mDataBinding.llOrder1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    MyPeiJianListActivity.start(getContext(), 1);
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
+            }
+        });
+        mDataBinding.llOrder2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    MyPeiJianListActivity.start(getContext(), 2);
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
+            }
+        });
+
+        mDataBinding.llOrder3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    MyPeiJianListActivity.start(getContext(), 3);
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
+            }
+        });
+        mDataBinding.llOrder4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    MyPeiJianListActivity.start(getContext(), 4);
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
+            }
+        });
+
 
         mDataBinding.llRepay.setOnClickListener(new View.OnClickListener() {
             @Override

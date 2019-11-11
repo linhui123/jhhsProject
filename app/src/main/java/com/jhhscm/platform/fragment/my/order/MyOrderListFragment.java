@@ -44,7 +44,7 @@ import java.util.List;
 public class MyOrderListFragment extends AbsFragment<FragmentMyOrderListBinding> {
     private UserSession userSession;
     private int mScreenWidth = 0; // 屏幕宽度
-
+    private int type;
     private OrderStatusFragment allListFragment;
     private OrderStatusFragment fukuangListFragment;
     private OrderStatusFragment dahuoListFragment;
@@ -117,6 +117,10 @@ public class MyOrderListFragment extends AbsFragment<FragmentMyOrderListBinding>
                 return mDataBinding.enhanceTabLayout.getTabLayout().getTabAt(position).getText();
             }
         });
+
+        type = getArguments().getInt("type", 0);
+//        mDataBinding.vpM.setCurrentItem(type);
+        mDataBinding.enhanceTabLayout.getTabLayout().getTabAt(type).select();
     }
 
 }

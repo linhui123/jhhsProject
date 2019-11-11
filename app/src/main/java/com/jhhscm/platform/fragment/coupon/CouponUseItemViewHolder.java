@@ -7,6 +7,7 @@ import com.jhhscm.platform.databinding.ItemCouponUnuseBinding;
 import com.jhhscm.platform.databinding.ItemCouponUseBinding;
 import com.jhhscm.platform.fragment.sale.SaleItem;
 import com.jhhscm.platform.views.dialog.NewCouponDialog;
+import com.jhhscm.platform.views.dialog.NewCouponListDialog;
 
 public class CouponUseItemViewHolder extends AbsRecyclerViewHolder<SaleItem> {
 
@@ -33,6 +34,13 @@ public class CouponUseItemViewHolder extends AbsRecyclerViewHolder<SaleItem> {
                 mBinding.tvData.append(item.couponResult.getEnd_time());
             }
             mBinding.tvCondition.setText(item.couponResult.getDesc());
+
+            mBinding.ll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
     }
 }

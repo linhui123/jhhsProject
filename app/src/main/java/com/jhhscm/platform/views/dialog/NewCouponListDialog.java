@@ -2,25 +2,29 @@ package com.jhhscm.platform.views.dialog;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
 
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.databinding.DialogCouponListNewBinding;
 import com.jhhscm.platform.databinding.DialogCouponNewBinding;
-import com.jhhscm.platform.databinding.DialogSimpleBinding;
+import com.jhhscm.platform.fragment.address.LocationAdapter;
+import com.jhhscm.platform.fragment.coupon.CouponListBean;
+import com.jhhscm.platform.fragment.coupon.CouponListDialogAdapter;
 
-public class NewCouponDialog extends BaseDialog {
-    private DialogCouponNewBinding mDataBinding;
+import java.util.List;
+
+public class NewCouponListDialog extends BaseDialog {
+    private DialogCouponListNewBinding mDataBinding;
     private String title;
     private String count;
     private String condition;
     private boolean isCheck;
+    List<CouponListBean.ResultBean> list;
 
+    private CouponListDialogAdapter pAdapter;
     private CallbackListener mListener;
     private boolean mCancelable = true;
 
@@ -28,30 +32,30 @@ public class NewCouponDialog extends BaseDialog {
         void clickYes();
     }
 
-    public NewCouponDialog(Context context, CallbackListener listener) {
-        this(context, null, null, null, listener);
+    public NewCouponListDialog(Context context, CallbackListener listener) {
+        this(context, null, null, listener);
     }
 
-    public NewCouponDialog(Context context, String title, String count, String condition, CallbackListener listener) {
+    public NewCouponListDialog(Context context, String title, List<CouponListBean.ResultBean> list, CallbackListener listener) {
         super(context);
         setCanceledOnTouchOutside(true);
-        this.condition = condition;
+        this.list = list;
         this.mListener = listener;
         this.title = title;
-        this.count = count;
     }
 
     @Override
     protected View onInflateView(LayoutInflater inflater) {
-        mDataBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_coupon_new, null, false);
+        mDataBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_coupon_list_new, null, false);
         return mDataBinding.getRoot();
     }
 
     @Override
     protected void onInitView(View view) {
-        mDataBinding.count.setText(count);
-        mDataBinding.condition.setText(condition);
-
+        mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        pAdapter = new CouponListDialogAdapter(getContext());
+        mDataBinding.recyclerview.setAdapter(pAdapter);
+        pAdapter.setData(list);
         mDataBinding.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -63,7 +67,7 @@ public class NewCouponDialog extends BaseDialog {
             @Override
             public void onClick(View v) {
                 if (mListener != null) mListener.clickYes();
-                dismiss();
+//                dismiss();
             }
         });
 

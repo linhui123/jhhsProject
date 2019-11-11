@@ -38,6 +38,7 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.dialog.NewCouponListDialog;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.util.Map;
@@ -161,7 +162,16 @@ public class MyCouponListFragment extends AbsFragment<FragmentMyCouponListBindin
             mAdapter.setExpend(categoryBean, type);
         }
         mDataBinding.recyclerview.getAdapter().notifyDataSetChanged();
-        mDataBinding.recyclerview.loadComplete(true,false);
+        mDataBinding.recyclerview.loadComplete(true, false);
+        if (type.equals("1")) {
+            new NewCouponListDialog(getContext(), "", categoryBean.getResult(), new NewCouponListDialog.CallbackListener() {
+                @Override
+                public void clickYes() {
+
+                }
+            }).show();
+        }
+
 //        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findOrderListBean.getPage().getTotal() / (float) findOrderListBean.getPage().getPageSize()) > mCurrentPage);
     }
 }

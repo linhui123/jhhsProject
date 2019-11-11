@@ -49,6 +49,15 @@ public class CouponListBean {
         private int status;
         private int discount;
         private String desc;
+        private boolean isSelect;
+
+        public boolean isSelect() {
+            return isSelect;
+        }
+
+        public void setSelect(boolean select) {
+            isSelect = select;
+        }
 
         public String getOrder_code() {
             return order_code;

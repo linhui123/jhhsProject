@@ -12,8 +12,9 @@ import com.jhhscm.platform.fragment.my.order.MyPeiJianListFragment;
 
 public class MyPeiJianListActivity extends AbsToolbarActivity {
 
-    public static void start(Context context) {
+    public static void start(Context context, int type) {
         Intent intent = new Intent(context, MyPeiJianListActivity.class);
+        intent.putExtra("type", type);
         context.startActivity(intent);
     }
 
@@ -44,7 +45,7 @@ public class MyPeiJianListActivity extends AbsToolbarActivity {
 
     @Override
     protected String getToolBarTitle() {
-        return "我的配件";
+        return "我的订单";
     }
 
     @Override
@@ -55,6 +56,7 @@ public class MyPeiJianListActivity extends AbsToolbarActivity {
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putInt("type", getIntent().getIntExtra("type", 0));
         return args;
     }
 }

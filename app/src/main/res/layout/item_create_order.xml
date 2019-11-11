@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto">
+
     <RelativeLayout
         android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:paddingTop="@dimen/dp_5"
-        android:paddingBottom="@dimen/dp_5"
         android:background="@color/white"
         android:clickable="true"
-        android:paddingLeft="@dimen/padding_10"
-        android:paddingRight="@dimen/padding_10">
+        android:paddingTop="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_5">
 
-        <ImageView
+        <com.jhhscm.platform.views.OvalImageView
             android:id="@+id/im"
             android:layout_width="128dp"
             android:layout_height="90dp"
             android:layout_toRightOf="@+id/tv_select"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_order_repair"
+            roundiv:left_bottom_radius1="5dp"
+            roundiv:left_top_radius1="5dp"
+            roundiv:right_bottom_radius1="5dp"
+            roundiv:right_top_radius1="5dp" />
 
         <TextView
             android:id="@+id/tv_title"
