@@ -50,6 +50,7 @@ public class MyCollectionFragment extends AbsFragment<FragmentMyCollectionBindin
             userSession = ConfigUtils.getCurrentUser(getContext());
         } else {
             startNewActivity(LoginActivity.class);
+            getActivity().finish();
         }
 
         final FragmentManager fragmentManager = getChildFragmentManager();

@@ -248,7 +248,7 @@ public class H5PeiJianActivity extends AbsActivity {
                         && userSession.getToken() != null) {
                     if (goodCode != null && goodCode.length() > 0) {
                         MobclickAgent.onEvent(getApplicationContext(), "parts_collect");
-                        save(userSession.getUserCode(), goodCode, userSession.getToken());
+                        save(ConfigUtils.getCurrentUser(getApplicationContext()).getUserCode(), goodCode, ConfigUtils.getCurrentUser(getApplicationContext()).getToken());
                     }
                 } else {
                     startNewActivity(LoginActivity.class);

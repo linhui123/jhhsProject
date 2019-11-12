@@ -315,7 +315,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getContext(), map, "wxPrePay");
         NetBean netBean = new NetBean();
-        netBean.setToken(userSession.getToken());
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(WxPrePayAction.newInstance(getContext(), netBean)
@@ -356,7 +356,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getContext(), map, "aliPrePay");
         NetBean netBean = new NetBean();
-        netBean.setToken(userSession.getToken());
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(AliPrePayAction.newInstance(getContext(), netBean)
@@ -395,7 +395,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getContext(), map, "findOrder");
         NetBean netBean = new NetBean();
-        netBean.setToken(userSession.getToken());
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(FindOrderAction.newInstance(getContext(), netBean)

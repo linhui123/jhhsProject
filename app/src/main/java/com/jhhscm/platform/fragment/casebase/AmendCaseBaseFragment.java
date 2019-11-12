@@ -39,7 +39,7 @@
 //import com.westcoast.blsapp.utils.ToastUtils;
 //import com.westcoast.blsapp.views.bottommenu.BottomMenuShow;
 //import com.westcoast.blsapp.views.bottommenu.bean.MenuData;
-//import com.westcoast.blsapp.views.dialog.ConfirmDialog;
+//import com.westcoast.blsapp.views.dialog.ConfirmOrderDialog;
 //
 //import java.io.File;
 //import java.net.URI;
@@ -304,11 +304,11 @@
 //            public void onClick(View v) {
 //                int viewId = v.getId();
 //                if(R.id.btn_amend==viewId){
-//                    ConfirmDialog mDelDialog=null;
+//                    ConfirmOrderDialog mDelDialog=null;
 //                        if (mDelDialog == null) {
-//                            mDelDialog = new ConfirmDialog(getContext(), "是否确认删除案例？", getString(R.string.photopicker_del_cancel), getString(R.string.photopicker_del_sure));
+//                            mDelDialog = new ConfirmOrderDialog(getContext(), "是否确认删除案例？", getString(R.string.photopicker_del_cancel), getString(R.string.photopicker_del_sure));
 //                        }
-//                        mDelDialog.setCallbackListener(new ConfirmDialog.CallbackListener() {
+//                        mDelDialog.setCallbackListener(new ConfirmOrderDialog.CallbackListener() {
 //                            @Override
 //                            public void clickNo() {
 //

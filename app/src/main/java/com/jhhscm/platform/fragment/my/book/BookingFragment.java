@@ -4,22 +4,29 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.alibaba.fastjson.JSON;
+import com.donkingliang.labels.LabelsView;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AddBookingActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentBookingBinding;
 import com.jhhscm.platform.databinding.FragmentMyMemberBinding;
+import com.jhhscm.platform.fragment.Mechanics.action.GetComboBoxAction;
+import com.jhhscm.platform.fragment.Mechanics.adapter.SXDropAdapter;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
@@ -30,6 +37,7 @@ import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
+import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.DataUtil;
 import com.jhhscm.platform.tool.Des;
@@ -41,6 +49,7 @@ import com.jhhscm.platform.views.timePickets.TimePickerShow;
 import com.jhhscm.platform.views.timePickets.TimePicketAlertDialog;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
@@ -66,7 +75,6 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
 
     @Override
     protected void setupViews() {
-
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.recyclerview.setAdapter(mAdapter);
@@ -98,6 +106,9 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
                 AddBookingActivity.start(getContext(), 1);
             }
         });
+
+        getComboBox("goods_power");
+        getComboBox("goods_ton");
     }
 
     private void initSelect() {
@@ -202,21 +213,35 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
                 mDataBinding.recyclerview.autoRefresh();
             }
         });
+
         mDataBinding.tvData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDataBinding.llXiala.setVisibility(View.VISIBLE);
-                mDataBinding.llTime.setVisibility(View.VISIBLE);
-                mDataBinding.llType.setVisibility(View.GONE);
+                if (mDataBinding.llTime.getVisibility() == View.GONE) {
+                    mDataBinding.llXiala.setVisibility(View.VISIBLE);
+                    mDataBinding.llTime.setVisibility(View.VISIBLE);
+                    mDataBinding.llType.setVisibility(View.GONE);
+                } else {
+                    mDataBinding.llXiala.setVisibility(View.GONE);
+                    mDataBinding.llTime.setVisibility(View.GONE);
+                    mDataBinding.llType.setVisibility(View.GONE);
+                }
             }
         });
 
         mDataBinding.tvType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDataBinding.llXiala.setVisibility(View.VISIBLE);
-                mDataBinding.llTime.setVisibility(View.GONE);
-                mDataBinding.llType.setVisibility(View.VISIBLE);
+                if (mDataBinding.llType.getVisibility() == View.GONE) {
+                    mDataBinding.llXiala.setVisibility(View.VISIBLE);
+                    mDataBinding.llTime.setVisibility(View.GONE);
+                    mDataBinding.llType.setVisibility(View.VISIBLE);
+                } else {
+                    mDataBinding.llXiala.setVisibility(View.GONE);
+                    mDataBinding.llTime.setVisibility(View.GONE);
+                    mDataBinding.llType.setVisibility(View.GONE);
+                }
+
             }
         });
 
@@ -292,5 +317,82 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
         public AbsRecyclerViewHolder<GetPageArticleListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new ItemBookingViewHolder(mInflater.inflate(R.layout.item_booking, parent, false));
         }
+    }
+
+    /**
+     * 获取下拉框
+     */
+    private void getComboBox(final String name) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("key_group_name", name);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getActivity(), map, "getComboBox:" + "name");
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(GetComboBoxAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<GetComboBoxBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<GetComboBoxBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    if ("goods_power".equals(name)) {
+                                        income(response.body().getData());
+                                    } else if ("goods_ton".equals(name)) {
+                                        pay(response.body().getData());
+                                    }
+                                } else {
+                                    ToastUtils.show(getContext(), "error " + name + ":" + response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    /**
+     * 下拉筛选
+     */
+    private void income(final GetComboBoxBean getComboBoxBean) {
+        getComboBoxBean.getResult().add(0, new GetComboBoxBean.ResultBean("", "不限"));
+        mDataBinding.incomeLabels.setLabels(getComboBoxBean.getResult(), new LabelsView.LabelTextProvider<GetComboBoxBean.ResultBean>() {
+            @Override
+            public CharSequence getLabelText(TextView label, int position, GetComboBoxBean.ResultBean data) {
+                //根据data和position返回label需要显示的数据。
+                return data.getKey_value();
+            }
+        });
+
+        mDataBinding.incomeLabels.setOnLabelSelectChangeListener(new LabelsView.OnLabelSelectChangeListener() {
+            @Override
+            public void onLabelSelectChange(TextView label, Object data, boolean isSelect, int position) {
+
+            }
+        });
+    }
+
+    private void pay(final GetComboBoxBean getComboBoxBean) {
+        getComboBoxBean.getResult().add(0, new GetComboBoxBean.ResultBean("", "不限"));
+        mDataBinding.payLabels.setLabels(getComboBoxBean.getResult(), new LabelsView.LabelTextProvider<GetComboBoxBean.ResultBean>() {
+            @Override
+            public CharSequence getLabelText(TextView label, int position, GetComboBoxBean.ResultBean data) {
+                //根据data和position返回label需要显示的数据。
+                return data.getKey_value();
+            }
+        });
+
+        mDataBinding.payLabels.setOnLabelSelectChangeListener(new LabelsView.OnLabelSelectChangeListener() {
+            @Override
+            public void onLabelSelectChange(TextView label, Object data, boolean isSelect, int position) {
+
+            }
+        });
     }
 }

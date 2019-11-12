@@ -15,7 +15,11 @@ import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.databinding.FragmentOrderStatusBinding;
 import com.jhhscm.platform.event.AddressResultEvent;
 import com.jhhscm.platform.event.OrderCancleEvent;
+import com.jhhscm.platform.event.PayEvent;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.coupon.CouponListAction;
+import com.jhhscm.platform.fragment.coupon.CouponListBean;
 import com.jhhscm.platform.fragment.sale.FindOrderAction;
 import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.http.AHttpService;
@@ -30,8 +34,14 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.dialog.NewCouponListDialog;
+import com.jhhscm.platform.views.dialog.PayWithCouponDialog;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
+import org.apache.commons.lang3.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -45,6 +55,9 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
     private final int START_PAGE = mCurrentPage;
 
     private String type = "";
+
+    private List<GetComboBoxBean.ResultBean> list;
+    private FindOrderListBean findOrderListBean;
 
     public static OrderStatusFragment instance(String type) {
         OrderStatusFragment view = new OrderStatusFragment();
@@ -73,7 +86,7 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
         } else {
             startNewActivity(LoginActivity.class);
         }
-
+        getCouponList();
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new MyPeiJianListAdapter(getContext());
         mDataBinding.recyclerview.setAdapter(mAdapter);
@@ -100,6 +113,12 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
 
     public void onEvent(AddressResultEvent messageEvent) {
         mDataBinding.recyclerview.autoRefresh();
+    }
+
+    public void onEvent(PayEvent event) {
+        if (event.order_code != null && type.equals(event.type) && list != null) {
+            new PayWithCouponDialog(getContext(), getActivity(), event.order_code, list).show();
+        }
     }
 
     public void onEvent(OrderCancleEvent event) {
@@ -158,7 +177,6 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
                 }));
     }
 
-    FindOrderListBean findOrderListBean;
 
     private void doSuccessResponse(final boolean refresh, final FindOrderListBean categoryBean) {
         this.findOrderListBean = categoryBean;
@@ -278,6 +296,56 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
                         }
                     }
                 }));
+    }
+
+    /**
+     * 获取优惠券列表
+     */
+    private void getCouponList() {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getActivity(), map, "getCouponList");
+        NetBean netBean = new NetBean();
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(CouponListAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<CouponListBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<CouponListBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    doSuccessResponse(response.body().getData());
+                                } else if (response.body().getCode().equals("1003")) {
+                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+                                    startNewActivity(LoginActivity.class);
+                                } else {
+                                    ToastUtils.show(getContext(), "error " + type + ":" + response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    private void doSuccessResponse(final CouponListBean couponListBean) {
+        list = new ArrayList<>();
+        if (couponListBean != null && couponListBean.getResult() != null && couponListBean.getResult().size() > 0) {
+            for (CouponListBean.ResultBean resultBean : couponListBean.getResult()) {
+                if (resultBean.getStatus() == 0) {
+                    GetComboBoxBean.ResultBean resultBean1 = new GetComboBoxBean.ResultBean(resultBean.getOrder_code(), resultBean.getName());
+                    list.add(resultBean1);
+                }
+            }
+        }
+        list.add(new GetComboBoxBean.ResultBean("", "不使用优惠券"));
     }
 }
 

@@ -126,7 +126,7 @@ public class WXPayEntryFragment extends AbsFragment<FragmentWxpayEntryBinding> {
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getContext(), map, "wxPrePay");
         NetBean netBean = new NetBean();
-        netBean.setToken(userSession.getToken());
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(WxPrePayAction.newInstance(getContext(), netBean)

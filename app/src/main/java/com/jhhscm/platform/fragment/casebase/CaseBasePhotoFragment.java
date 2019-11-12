@@ -10,7 +10,7 @@
 //import com.jhhscm.platform.bean.UploadImage;
 //import com.jhhscm.platform.databinding.FragmentCaseBasePhotoBinding;
 //import com.jhhscm.platform.fragment.base.AbsFragment;
-//import com.jhhscm.platform.photopicker.ConfirmDialog;
+//import com.jhhscm.platform.photopicker.ConfirmOrderDialog;
 //
 //
 //import java.util.ArrayList;
@@ -32,7 +32,7 @@
 //    private String mType;
 //    private SelectCaseNodeEntity mSelectCaseNodeEntity;
 //    private String mTimeNodeId;
-//    private ConfirmDialog mDelDialog;
+//    private ConfirmOrderDialog mDelDialog;
 //
 //    public static CaseBasePhotoFragment instance() {
 //        CaseBasePhotoFragment view = new CaseBasePhotoFragment();
@@ -352,9 +352,9 @@
 //
 //    private void showDelAllPhotoDialog() {
 //        if (mDelDialog == null) {
-//            mDelDialog = new ConfirmDialog(getContext(), "是否确认删除？", getString(R.string.photopicker_del_cancel), getString(R.string.photopicker_del_sure));
+//            mDelDialog = new ConfirmOrderDialog(getContext(), "是否确认删除？", getString(R.string.photopicker_del_cancel), getString(R.string.photopicker_del_sure));
 //        }
-//        mDelDialog.setCallbackListener(new ConfirmDialog.CallbackListener() {
+//        mDelDialog.setCallbackListener(new ConfirmOrderDialog.CallbackListener() {
 //            @Override
 //            public void clickNo() {
 //
@@ -370,9 +370,9 @@
 //
 //    private void showDeletelNodeDialog(final String nodeId) {
 //        if (mDelDialog == null) {
-//            mDelDialog = new ConfirmDialog(getContext(), "是否确认删除？", getString(R.string.photopicker_del_cancel), getString(R.string.photopicker_del_sure));
+//            mDelDialog = new ConfirmOrderDialog(getContext(), "是否确认删除？", getString(R.string.photopicker_del_cancel), getString(R.string.photopicker_del_sure));
 //        }
-//        mDelDialog.setCallbackListener(new ConfirmDialog.CallbackListener() {
+//        mDelDialog.setCallbackListener(new ConfirmOrderDialog.CallbackListener() {
 //            @Override
 //            public void clickNo() {
 //

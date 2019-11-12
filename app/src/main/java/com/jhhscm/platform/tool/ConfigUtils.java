@@ -26,6 +26,7 @@ public class ConfigUtils {
     private static final String API_URL = "api_url";
     private static final String NEW_MECHANICS = "newMechanics";
     private static final String HOME = "home";
+    private static final String LOGIN_TIME = "login_time";//登录时间
     private static final String UPDATA_TIME = "updata_time";//更新提示时间
     private static final String UPDATA_URL = "updata_url";//更新下载安装包地址
     private static String url;

@@ -145,6 +145,25 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         if (ConfigUtils.getHomePageItem(getContext()) != null) {
             mAdapter.setDetail(ConfigUtils.getHomePageItem(getContext()));
         }
+
+        //用户信息保存24小时
+        initUser();
+    }
+
+    private void initUser() {
+        //24小时保存用户信息
+        if (ConfigUtils.getCurrentUser(getContext()) != null) {
+            if (ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                Log.e("initUser", "Timestamp : "+ConfigUtils.getCurrentUser(getContext()).getTimestamp());
+//                long time = DataUtil.getLongTime(ConfigUtils.getUpdataTime(getContext())
+//                        , DataUtil.getCurDate("yyyy-MM-dd HH:mm:ss")
+//                        , "yyyy-MM-dd HH:mm:ss");
+//                Log.e("更新提示时间差", "小时： " + DataUtil.getLongToHours(time, "yyyy-MM-dd HH:mm:ss"));
+//                if (Integer.parseInt(DataUtil.getLongToMintues(time, "yyyy-MM-dd HH:mm:ss")) >= 24) {
+//
+//                }
+            }
+        }
     }
 
     private void initTel() {

@@ -31,6 +31,7 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.UrlUtils;
+import com.tencent.mm.opensdk.utils.Log;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -197,8 +198,9 @@ public class LoginFragment extends AbsFragment<FragmentLoginBinding> {
                             }
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
-                                    UserBean userBean = response.body().getData();
 
+                                    UserBean userBean = response.body().getData();
+                                    Log.e("initUser", "UserBean Timestamp : "+userBean.getTimestamp());
                                     UserSession userSession = new UserSession();
                                     userSession.setToken(logingResultBean.getToken());
                                     userSession.setExpire(logingResultBean.getExpire());

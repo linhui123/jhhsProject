@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
@@ -124,9 +125,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:gravity="center"
                         android:singleLine="true"
-                        android:layout_marginTop="@dimen/dp_5"
                         android:text="已收 (元)"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
@@ -153,9 +154,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:gravity="center"
                         android:singleLine="true"
-                        android:layout_marginTop="@dimen/dp_5"
                         android:text="支出 (元)"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
@@ -207,7 +208,8 @@
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/padding_15"
                 android:paddingRight="@dimen/padding_15"
-                android:paddingBottom="@dimen/padding_15">
+                android:paddingBottom="@dimen/padding_15"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -343,7 +345,8 @@
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/padding_15"
                 android:paddingRight="@dimen/padding_15"
-                android:paddingBottom="20dp">
+                android:paddingBottom="20dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -360,16 +363,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="@dimen/dp_5"
+                        android:paddingTop="@dimen/padding_10"
                         android:text="支出"
                         android:textColor="@color/acc6"
-                        android:textSize="@dimen/text_size_14" />
+                        android:textSize="@dimen/text_size_16" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/pay_recycleview"
+                    <com.donkingliang.labels.LabelsView
+                        android:id="@+id/pay_labels"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/padding_10"></android.support.v7.widget.RecyclerView>
+                        android:layout_marginLeft="@dimen/padding_10"
+                        app:labelBackground="@drawable/label_bg"
+                        app:labelTextColor="@drawable/label_text_color"
+                        app:labelTextPaddingBottom="10dp"
+                        app:labelTextPaddingLeft="10dp"
+                        app:labelTextPaddingRight="10dp"
+                        app:labelTextPaddingTop="10dp"
+                        app:labelTextSize="16sp"
+                        app:lineMargin="10dp"
+                        app:maxSelect="5"
+                        app:selectType="SINGLE"
+                        app:wordMargin="10dp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -382,16 +397,27 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="@dimen/dp_5"
+                        android:paddingTop="@dimen/padding_10"
                         android:text="收入"
                         android:textColor="@color/acc6"
-                        android:textSize="@dimen/text_size_14" />
+                        android:textSize="@dimen/text_size_16" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/income_recycleview"
+                    <com.donkingliang.labels.LabelsView
+                        android:id="@+id/income_labels"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/padding_10"></android.support.v7.widget.RecyclerView>
+                        android:layout_marginLeft="@dimen/padding_10"
+                        app:labelBackground="@drawable/label_bg"
+                        app:labelTextColor="@drawable/label_text_color"
+                        app:labelTextPaddingBottom="10dp"
+                        app:labelTextPaddingLeft="10dp"
+                        app:labelTextPaddingRight="10dp"
+                        app:labelTextPaddingTop="10dp"
+                        app:labelTextSize="16sp"
+                        app:lineMargin="10dp"
+                        app:maxSelect="5"
+                        app:selectType="SINGLE"
+                        app:wordMargin="10dp" />
                 </LinearLayout>
 
                 <TextView

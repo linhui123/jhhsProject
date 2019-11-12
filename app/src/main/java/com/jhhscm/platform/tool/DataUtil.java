@@ -257,7 +257,11 @@ public class DataUtil {
     // 获得上月第一天时间
     public static String getLastMonthmorning() {
         Calendar cal = Calendar.getInstance();
-        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) - 1, cal.get(Calendar.DAY_OF_MONTH));
+        if (Calendar.MONTH > 1) {//大于一月
+            cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) - 1, cal.get(Calendar.DAY_OF_MONTH));
+        } else {//一月，提前一年
+            cal.set(cal.get(Calendar.YEAR) - 1, cal.get(Calendar.MONTH) - 1, cal.get(Calendar.DAY_OF_MONTH));
+        }
         cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
         return getDateStr(cal.getTime(), "yyyy.MM.dd");
     }

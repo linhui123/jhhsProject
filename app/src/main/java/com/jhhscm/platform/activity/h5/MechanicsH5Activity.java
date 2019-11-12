@@ -204,7 +204,7 @@ public class MechanicsH5Activity extends AbsActivity {
                         } else {
                             MobclickAgent.onEvent(getApplicationContext(), "old_mechanics_collect");
                         }
-                        save(userSession.getUserCode(), goodCode, userSession.getToken());
+                        save(ConfigUtils.getCurrentUser(getApplicationContext()).getUserCode(), goodCode, ConfigUtils.getCurrentUser(getApplicationContext()).getToken());
                     }
                 } else {
                     startNewActivity(LoginActivity.class);

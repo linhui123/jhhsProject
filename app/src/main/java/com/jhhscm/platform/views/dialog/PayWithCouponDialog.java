@@ -8,12 +8,14 @@ import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -22,11 +24,16 @@ import com.alibaba.fastjson.JSON;
 import com.alipay.sdk.app.PayTask;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
+import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.aliapi.OrderInfoUtil2_0;
 import com.jhhscm.platform.aliapi.PayResult;
 import com.jhhscm.platform.databinding.DialogPayBinding;
+import com.jhhscm.platform.databinding.DialogPayWithCouponBinding;
+import com.jhhscm.platform.databinding.ItemLocationBinding;
 import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.event.WXResultEvent;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.repayment.ContractAliPrePayAction;
 import com.jhhscm.platform.fragment.repayment.ContractPayCreateOrderAction;
 import com.jhhscm.platform.fragment.repayment.ContractPayCreateOrderBean;
@@ -43,23 +50,25 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.tencent.mm.opensdk.modelbase.BaseReq;
+import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import retrofit2.Response;
 
-public class PayDialog extends BaseDialog {
-    private DialogPayBinding mDataBinding;
+public class PayWithCouponDialog extends BaseDialog {
+    private DialogPayWithCouponBinding mDataBinding;
     private boolean mCancelable = true;
     private CallbackListener mListener;
     private Activity activity;
     private String orderId = "";
+    private List<GetComboBoxBean.ResultBean> list;
     private ContractPayCreateOrderBean.DataBean dataBean;
     private String prepayid = "";
     private String data = "";
@@ -119,20 +128,21 @@ public class PayDialog extends BaseDialog {
     };
 
     public interface CallbackListener {
-        void clickY();
+        void clickResult(String id, String Nmae);
     }
 
-    public PayDialog(Context context) {
+    public PayWithCouponDialog(Context context) {
         super(context);
     }
 
-    public PayDialog(Context context, Activity activity, String orderId) {
+    public PayWithCouponDialog(Context context, Activity activity, String orderId, List<GetComboBoxBean.ResultBean> list) {
         super(context);
         this.orderId = orderId;
+        this.list = list;
         this.activity = activity;
     }
 
-    public PayDialog(Context context, CallbackListener listener) {
+    public PayWithCouponDialog(Context context, CallbackListener listener) {
         this(context);
         setCanceledOnTouchOutside(false);
         this.mListener = listener;
@@ -161,7 +171,7 @@ public class PayDialog extends BaseDialog {
 
     @Override
     protected View onInflateView(LayoutInflater inflater) {
-        mDataBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_pay, null, false);
+        mDataBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_pay_with_coupon, null, false);
         return mDataBinding.getRoot();
     }
 
@@ -176,7 +186,33 @@ public class PayDialog extends BaseDialog {
             }
         });
         dataBean = new ContractPayCreateOrderBean.DataBean();
-        contractpayCreateorder(orderId);
+        if (orderId != null) {
+            contractpayCreateorder(orderId);
+        } else {
+            ToastUtil.show(getContext(), "订单Id为空");
+            mDataBinding.tvPay.setEnabled(false);
+            mDataBinding.tvPay.setBackgroundResource(R.drawable.button_98b);
+        }
+        if (list != null) {
+            initDrop();
+        }
+        mDataBinding.coupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDataBinding.recyvleview.getVisibility() == View.GONE) {
+                    mDataBinding.recyvleview.setVisibility(View.VISIBLE);
+                } else {
+                    mDataBinding.recyvleview.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        mDataBinding.imClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
         mDataBinding.rlAli.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,6 +248,16 @@ public class PayDialog extends BaseDialog {
 //                dismiss();
             }
         });
+    }
+
+    private InnerAdapter pAdapter;
+
+    private void initDrop() {
+        mDataBinding.recyvleview.addItemDecoration(new DividerItemDecoration(getContext()));
+        mDataBinding.recyvleview.setLayoutManager(new LinearLayoutManager(getContext()));
+        pAdapter = new InnerAdapter(getContext());
+        mDataBinding.recyvleview.setAdapter(pAdapter);
+        pAdapter.setData(list);
     }
 
     @Override
@@ -256,6 +302,8 @@ public class PayDialog extends BaseDialog {
                                     dataBean = response.body().getData().getData();
                                 } else if (response.body().getCode().equals("1001")) {
                                     ToastUtils.show(getContext(), response.body().getMessage());
+                                    mDataBinding.tvPay.setEnabled(false);
+                                    mDataBinding.tvPay.setBackgroundResource(R.drawable.button_98b);
                                 } else {
                                     ToastUtils.show(getContext(), "网络异常");
                                 }
@@ -264,7 +312,6 @@ public class PayDialog extends BaseDialog {
                     }
                 }));
     }
-
 
     /**
      * 获取微信支付订单号 预支付
@@ -412,7 +459,6 @@ public class PayDialog extends BaseDialog {
         payThread.start();
     }
 
-
     private static void showAlert(Context ctx, String info) {
         showAlert(ctx, info, null);
     }
@@ -441,5 +487,41 @@ public class PayDialog extends BaseDialog {
         EventBusUtil.post(new RefreshEvent());
         dismiss();
     }
-}
 
+    private class InnerAdapter extends AbsRecyclerViewAdapter<GetComboBoxBean.ResultBean> {
+        public InnerAdapter(Context context) {
+            super(context);
+        }
+
+        @Override
+        public AbsRecyclerViewHolder<GetComboBoxBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new DropViewHolder(mInflater.inflate(R.layout.item_location, parent, false));
+        }
+    }
+
+    public class DropViewHolder extends AbsRecyclerViewHolder<GetComboBoxBean.ResultBean> {
+
+        private ItemLocationBinding mBinding;
+
+        public DropViewHolder(View itemView) {
+            super(itemView);
+            mBinding = ItemLocationBinding.bind(itemView);
+        }
+
+        @Override
+        protected void onBindView(final GetComboBoxBean.ResultBean item) {
+            mBinding.tvName.setText(item.getKey_value());
+            mBinding.imSelect.setVisibility(View.GONE);
+            mBinding.rl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDataBinding.coupon.setText(item.getKey_value());
+                    mDataBinding.recyvleview.setVisibility(View.GONE);
+                    if (mListener != null) {
+                        mListener.clickResult(item.getKey_name(), item.getKey_value());
+                    }
+                }
+            });
+        }
+    }
+}

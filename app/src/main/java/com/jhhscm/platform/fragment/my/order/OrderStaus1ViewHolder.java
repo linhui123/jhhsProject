@@ -12,11 +12,14 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemOrderStatus1Binding;
 import com.jhhscm.platform.event.OrderCancleEvent;
+import com.jhhscm.platform.event.PayEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
 import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.fragment.sale.SaleItem;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.views.dialog.ConfirmOrderDialog;
 import com.jhhscm.platform.views.dialog.LogisticsDialog;
+import com.jhhscm.platform.views.dialog.PayWithCouponDialog;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 
 public class OrderStaus1ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
@@ -82,7 +85,15 @@ public class OrderStaus1ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
                         OrderDetailActivity.start(itemView.getContext(), item.orderBean.getOrder_code(), 3);
                     } else if (item.orderBean.getOrder_status().contains("40")) {
                         OrderDetailActivity.start(itemView.getContext(), item.orderBean.getOrder_code(), 4);
+                    } else {
+                        OrderDetailActivity.start(itemView.getContext(), item.orderBean.getOrder_code(), 1);
                     }
+                }
+            });
+            mBinding.confirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new ConfirmOrderDialog(itemView.getContext()).show();
                 }
             });
 
@@ -96,7 +107,8 @@ public class OrderStaus1ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
             mBinding.pay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CashierActivity.start(itemView.getContext(), new CreateOrderResultBean(new CreateOrderResultBean.DataBean(item.orderBean.getOrder_code())));
+//                    CashierActivity.start(itemView.getContext(), new CreateOrderResultBean(new CreateOrderResultBean.DataBean(item.orderBean.getOrder_code())));
+                    EventBusUtil.post(new PayEvent(item.orderBean.getId(), type));
                 }
             });
 

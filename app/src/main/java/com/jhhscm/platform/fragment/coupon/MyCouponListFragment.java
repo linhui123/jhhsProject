@@ -111,8 +111,7 @@ public class MyCouponListFragment extends AbsFragment<FragmentMyCouponListBindin
     }
 
     /**
-     * 获取订单列表
-     * 获取列表后，遍历商品信息
+     * 获取优惠券列表
      */
     private void getCouponList(final boolean refresh) {
         mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
