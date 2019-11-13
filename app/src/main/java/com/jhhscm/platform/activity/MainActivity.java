@@ -85,7 +85,8 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         super.onCreate(savedInstanceState);
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         instance = this;
-        initPermission();
+//        initPermission();
+        initView();
         registerMessageReceiver();
 //        JPushInterface.init(getApplicationContext());// used for receive msg
         if (savedInstanceState == null) {
@@ -111,13 +112,14 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     }
 
     private void initPermission() {
+        // Manifest.permission.CAMERA,
+        // Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
+        // Manifest.permission.READ_PHONE_STATE,
         YXPermission.getInstance(getApplicationContext()).request(new AcpOptions.Builder()
                 .setDeniedCloseBtn(getApplicationContext().getString(R.string.permission_dlg_close_txt))
                 .setDeniedSettingBtn(getApplicationContext().getString(R.string.permission_dlg_settings_txt))
                 .setDeniedMessage(getApplicationContext().getString(R.string.permission_denied_txt, "读写"))
-                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA, Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION).build(), new AcpListener() {
+                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).build(), new AcpListener() {
             @Override
             public void onGranted() {
                 initView();
@@ -125,7 +127,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
 
             @Override
             public void onDenied(List<String> permissions) {
-               finish();
+                initView();
             }
         });
     }

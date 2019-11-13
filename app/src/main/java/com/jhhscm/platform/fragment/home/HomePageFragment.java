@@ -1,5 +1,6 @@
 package com.jhhscm.platform.fragment.home;
 
+import android.Manifest;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -53,6 +54,7 @@ import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.jpush.ExampleUtil;
+import com.jhhscm.platform.permission.YXPermission;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.DataUtil;
 import com.jhhscm.platform.tool.Des;
@@ -65,9 +67,12 @@ import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
 import com.jhhscm.platform.views.dialog.UpdateDialog;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
+import com.mylhyl.acp.AcpListener;
+import com.mylhyl.acp.AcpOptions;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -97,8 +102,31 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
 
         EventBusUtil.registerEvent(this);
 //        homePageItem = new HomePageItem();
-        initView();
-        setUpMap();
+//        initView();
+        YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
+                .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
+                .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
+                .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "读写"))
+                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        , Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).build(), new AcpListener() {
+            @Override
+            public void onGranted() {
+                initView();
+            }
+
+            @Override
+            public void onDenied(List<String> permissions) {
+                if (permissions.contains(Manifest.permission.ACCESS_COARSE_LOCATION) &&
+                        permissions.contains(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    mDataBinding.wetherDate.setVisibility(View.GONE);
+                    mDataBinding.wetherTemperature.setVisibility(View.GONE);
+                    mDataBinding.wetherImg.setVisibility(View.GONE);
+                } else {
+                    initView();
+                }
+            }
+        });
+//        setUpMap();
         mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new HomePageAdapter(getContext());
         mDataBinding.wrvRecycler.setAdapter(mAdapter);
@@ -624,6 +652,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         mLocationClient = new AMapLocationClient(getActivity());
         //设置定位回调监听
         mLocationClient.setLocationListener(mLocationListener);//设置其为定位完成后的回调函数
+        setUpMap();
     }
 
     private void setUpMap() {
