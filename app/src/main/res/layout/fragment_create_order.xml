@@ -89,14 +89,15 @@
                     android:scaleType="fitXY"
                     android:src="@mipmap/ic_location_line" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/padding_10"
+                    android:background="@color/cf5" />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/padding_10"
-                    android:layout_marginBottom="@dimen/padding_10"
-                    android:paddingLeft="@dimen/padding_15"
-                    android:paddingRight="@dimen/padding_15">
+                    android:layout_height="wrap_content">
 
                 </android.support.v7.widget.RecyclerView>
 
@@ -106,7 +107,8 @@
                     android:layout_marginTop="20dp"
                     android:paddingLeft="@dimen/padding_15"
                     android:paddingRight="@dimen/padding_15"
-                    android:paddingBottom="@dimen/padding_10">
+                    android:paddingBottom="@dimen/padding_10"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -123,7 +125,9 @@
                         android:text="￥" />
                 </RelativeLayout>
 
-                <View style="@style/view_h_de" />
+                <View
+                    style="@style/view_h_de"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -131,7 +135,8 @@
                     android:layout_marginTop="@dimen/padding_10"
                     android:paddingLeft="@dimen/padding_15"
                     android:paddingRight="@dimen/padding_15"
-                    android:paddingBottom="@dimen/padding_10">
+                    android:paddingBottom="@dimen/padding_10"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -151,87 +156,102 @@
 
                 <View style="@style/view_h_de" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/padding_10"
-                    android:paddingLeft="@dimen/padding_15"
-                    android:paddingRight="@dimen/padding_15"
-                    android:paddingBottom="@dimen/padding_10">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="优惠券" />
-
-                    <TextView
-                        android:id="@+id/tv_youhui"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:text="-￥"
-                        android:textColor="@color/ff1a" />
-                </RelativeLayout>
-
-                <View style="@style/view_h_de" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/rl_bottom"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_alignParentBottom="true">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_quanxuan"
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/padding_10"
-                android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@+id/tv_1"
-                android:layout_toRightOf="@+id/im_quanxuan"
-                android:gravity="center_vertical"
-                android:text="共计2件商品"
-                android:textColor="@color/acc3"
-                android:textSize="@dimen/text_size_12" />
+            <View style="@style/view_h_de" />
 
-            <TextView
-                android:id="@+id/tv_1"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@+id/tv_sum"
-                android:text="合计："
-                android:textColor="@color/acc3"
-                android:textSize="@dimen/text_size_12" />
+                android:layout_marginTop="@dimen/dp_1"
+                android:paddingLeft="@dimen/padding_15"
+                android:paddingTop="@dimen/padding_10"
+                android:paddingRight="@dimen/padding_15"
+                android:paddingBottom="@dimen/padding_10">
 
-            <TextView
-                android:id="@+id/tv_sum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@+id/tv_tijiao"
-                android:text="￥0.00"
-                android:textColor="@color/ff1a"
-                android:textSize="@dimen/sp_14" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="平台优惠券" />
 
-            <TextView
-                android:id="@+id/tv_tijiao"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/padding_10"
-                android:background="@drawable/button_c397"
-                android:gravity="center"
-                android:text="提交订单"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_16" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_youhui"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:drawableRight="@mipmap/ic_point"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:hint="选择优惠券"
+                    android:textColor="@color/ff1a" />
+            </RelativeLayout>
+
+            <View style="@style/view_h_de" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="@dimen/dp_1">
+
+                <TextView
+                    android:id="@+id/tv_quanxuan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="22dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/padding_10"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/tv_1"
+                    android:layout_toRightOf="@+id/im_quanxuan"
+                    android:gravity="center_vertical"
+                    android:text="共计2件商品"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/tv_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/tv_sum"
+                    android:text="合计："
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/tv_sum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/tv_tijiao"
+                    android:text="￥0.00"
+                    android:textColor="@color/ff1a"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/tv_tijiao"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/padding_10"
+                    android:background="@drawable/button_c397"
+                    android:gravity="center"
+                    android:text="提交订单"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
+            </RelativeLayout>
+        </LinearLayout>
+
     </RelativeLayout>
 
 </layout>

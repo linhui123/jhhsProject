@@ -6,29 +6,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/refreshlayout"
+        <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
+        <!--android:id="@+id/refreshlayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_above="@+id/rl_bottom">-->
+
+        <!--<com.scwang.smartrefresh.layout.header.ClassicsHeader-->
+        <!--android:id="@+id/refresh"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/rv_gouwuche"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--</android.support.v7.widget.RecyclerView>-->
+
+        <!--<com.scwang.smartrefresh.layout.header.ClassicsHeader-->
+        <!--android:id="@+id/load"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+        <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
+
+        <ExpandableListView
+            android:id="@+id/cart_expandablelistview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/rl_bottom">
-
-            <com.scwang.smartrefresh.layout.header.ClassicsHeader
-                android:id="@+id/refresh"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_gouwuche"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </android.support.v7.widget.RecyclerView>
-
-            <com.scwang.smartrefresh.layout.header.ClassicsHeader
-                android:id="@+id/load"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            android:layout_above="@+id/rl_bottom"
+            android:paddingBottom="15dp"
+            android:scrollbars="none"></ExpandableListView>
 
         <RelativeLayout
             android:id="@+id/rl_case_base_null"

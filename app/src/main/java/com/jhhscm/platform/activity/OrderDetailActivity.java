@@ -40,7 +40,7 @@ public class OrderDetailActivity extends AbsToolbarActivity {
 
     @Override
     public boolean isSupportSwipeBack() {
-        return true;
+        return false;
     }
 
     @Override

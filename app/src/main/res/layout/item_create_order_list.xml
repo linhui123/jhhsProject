@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingRight="@dimen/padding_15"
+            android:paddingBottom="@dimen/padding_10">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/ic_order_store"
+                android:drawablePadding="@dimen/dp_5"
+                android:text="骏惠惠商"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/sp_14" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/line_stroke" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingRight="@dimen/padding_15"
+            android:paddingBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingRight="@dimen/padding_15"
+            android:paddingBottom="@dimen/padding_10">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/line_stroke" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_15"
+                android:text="店铺优惠券"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/store_coupon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/padding_15"
+                android:drawableRight="@mipmap/ic_point"
+                android:drawablePadding="@dimen/dp_5"
+                android:hint="选择优惠券"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/sp_14" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingRight="@dimen/padding_15"
+            android:paddingBottom="@dimen/padding_10">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/line_stroke" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_15"
+                android:text="运费"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/yunfei"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/padding_15"
+                android:text="￥--"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/sp_14" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingRight="@dimen/padding_15"
+            android:paddingBottom="@dimen/padding_10">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/line_stroke" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_15"
+                android:text="小计"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/padding_15"
+                android:text="￥--"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/sp_14" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/padding_10"
+            android:background="@color/cf5" />
+    </LinearLayout>
+</layout>

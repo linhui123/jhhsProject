@@ -36,6 +36,8 @@ public class OrderListViewHolder extends AbsRecyclerViewHolder<FindOrderBean.Goo
                     OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 3);
                 } else if (item.getOrder_status().contains("40")) {
                     OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 4);
+                }else {
+
                 }
 
 //                if ("未付款".equals(item.getOrder_text())) {

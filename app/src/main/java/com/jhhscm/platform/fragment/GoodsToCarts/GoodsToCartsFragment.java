@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
@@ -29,6 +30,12 @@ import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.shoppingcast.adapter.CartExpandAdapter;
+import com.jhhscm.platform.shoppingcast.callback.OnClickAddCloseListenter;
+import com.jhhscm.platform.shoppingcast.callback.OnClickDeleteListenter;
+import com.jhhscm.platform.shoppingcast.callback.OnClickListenterModel;
+import com.jhhscm.platform.shoppingcast.callback.OnViewItemClickListener;
+import com.jhhscm.platform.shoppingcast.entity.CartInfo;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
@@ -59,6 +66,10 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
     List<GetCartGoodsByUserCodeBean.ResultBean> list;
     private boolean total;
     private UserSession userSession;
+    CartInfo cartInfo;
+    CartExpandAdapter cartExpandAdapter;
+    double price;
+    int num;
 
     public static GoodsToCartsFragment instance() {
         GoodsToCartsFragment view = new GoodsToCartsFragment();
@@ -82,26 +93,25 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
             startNewActivity(LoginActivity.class);
         }
 
-        mDataBinding.refresh.setEnableLastTime(false);
-        mDataBinding.load.setEnableLastTime(false);
-        mDataBinding.refreshlayout.setEnableRefresh(true);
-        mDataBinding.refreshlayout.setEnableLoadMore(false);
-        mDataBinding.refreshlayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getCartGoodsByUserCode(userSession.getUserCode(), userSession.getToken(), true);
-            }
-        });
-
-        mDataBinding.refreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                getCartGoodsByUserCode(userSession.getUserCode(), userSession.getToken(), false);
-
-            }
-        });
-        getCartGoodsByUserCode(userSession.getUserCode(), userSession.getToken(), true);
-        initView();
+//        mDataBinding.refresh.setEnableLastTime(false);
+//        mDataBinding.load.setEnableLastTime(false);
+//        mDataBinding.refreshlayout.setEnableRefresh(true);
+//        mDataBinding.refreshlayout.setEnableLoadMore(false);
+//        mDataBinding.refreshlayout.setOnRefreshListener(new OnRefreshListener() {
+//            @Override
+//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//                getCartGoodsByUserCode(userSession.getUserCode(), userSession.getToken(), true);
+//            }
+//        });
+//
+//        mDataBinding.refreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+//                getCartGoodsByUserCode(userSession.getUserCode(), userSession.getToken(), false);
+//
+//            }
+//        });
+        getCartGoodsByUserCode(ConfigUtils.getCurrentUser(getContext()).getUserCode(), ConfigUtils.getCurrentUser(getContext()).getToken(), true);
         initBottom();
     }
 
@@ -139,9 +149,9 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
             public void onClick(View v) {
                 List<GetCartGoodsByUserCodeBean.ResultBean> list = new ArrayList<>();
                 for (GetCartGoodsByUserCodeBean.ResultBean r : getCartGoodsByUserCodeBean) {
-                    if (r.isSelect()) {
+//                    if (r.isSelect()) {
                         list.add(r);
-                    }
+//                    }
                 }
                 if (list != null && list.size() > 0) {
                     GetCartGoodsByUserCodeBean g = new GetCartGoodsByUserCodeBean();
@@ -155,39 +165,19 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
         });
     }
 
-    List<GetCartGoodsByUserCodeBean.ResultBean> getCartGoodsByUserCodeBean;
-
-    private void initData(List<GetCartGoodsByUserCodeBean.ResultBean> resultBeans, boolean refresh) {
-        recAdapter.setList(resultBeans, refresh);
-        if (refresh) {
-            getCartGoodsByUserCodeBean = resultBeans;
-            mDataBinding.refreshlayout.finishRefresh(1000);
-        } else {
-            getCartGoodsByUserCodeBean.addAll(resultBeans);
-            mDataBinding.refreshlayout.finishLoadMore(1000);
-        }
-
-        if (recAdapter.getItemCount() == 0) {
-            mDataBinding.rlCaseBaseNull.setVisibility(View.VISIBLE);
-        } else {
-            mDataBinding.rlCaseBaseNull.setVisibility(View.GONE);
-        }
-    }
-
-    private void initView() {
-        mDataBinding.rvGouwuche.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
-        mDataBinding.rvGouwuche.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recAdapter = new RecOtherTypeAdapter(getContext());
-        recAdapter.setDeletedItemListener(this);
-        recAdapter.setChangeListener(this);
-        recAdapter.setSelectedListener(this);
-        mDataBinding.rvGouwuche.setAdapter(recAdapter);
-
-        PlusItemSlideCallback callback = new PlusItemSlideCallback();
-        WItemTouchHelperPlus extension = new WItemTouchHelperPlus(callback);
-        extension.attachToRecyclerView(mDataBinding.rvGouwuche);
-    }
-
+//    private void initView() {
+//        mDataBinding.rvGouwuche.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
+//        mDataBinding.rvGouwuche.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        recAdapter = new RecOtherTypeAdapter(getContext());
+//        recAdapter.setDeletedItemListener(this);
+//        recAdapter.setChangeListener(this);
+//        recAdapter.setSelectedListener(this);
+//        mDataBinding.rvGouwuche.setAdapter(recAdapter);
+//
+//        PlusItemSlideCallback callback = new PlusItemSlideCallback();
+//        WItemTouchHelperPlus extension = new WItemTouchHelperPlus(callback);
+//        extension.attachToRecyclerView(mDataBinding.rvGouwuche);
+//    }
 
     /**
      * 更新地区选择
@@ -200,7 +190,6 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
      */
     private void getCartGoodsByUserCode(String userCode, String token, final boolean refrash) {
         Log.e("getCartGoodsByUserCode", " token :" + token);
-
         Map<String, String> map = new TreeMap<String, String>();
         map.put("userCode", userCode);
         String content = JSON.toJSONString(map);
@@ -223,6 +212,7 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
                             if (response != null) {
                                 new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                 if (response.body().getCode().equals("200")) {
+                                    getCartGoodsByUserCodeBean = response.body().getData().getResult();
                                     initData(response.body().getData().getResult(), refrash);
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
@@ -231,6 +221,156 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
                         }
                     }
                 }));
+    }
+
+    List<GetCartGoodsByUserCodeBean.ResultBean> getCartGoodsByUserCodeBean;
+
+    private void initData(List<GetCartGoodsByUserCodeBean.ResultBean> resultBeans, boolean refresh) {
+//        recAdapter.setList(resultBeans, refresh);
+//        if (refresh) {
+//            getCartGoodsByUserCodeBean = resultBeans;
+//            mDataBinding.refreshlayout.finishRefresh(1000);
+//        } else {
+//            getCartGoodsByUserCodeBean.addAll(resultBeans);
+//            mDataBinding.refreshlayout.finishLoadMore(1000);
+//        }
+
+//        if (recAdapter.getItemCount() == 0) {
+//            mDataBinding.rlCaseBaseNull.setVisibility(View.VISIBLE);
+//        } else {
+//            mDataBinding.rlCaseBaseNull.setVisibility(View.GONE);
+//        }
+
+        initView();
+    }
+
+
+    private void initView() {
+        mDataBinding.cartExpandablelistview.setGroupIndicator(null);
+        showData();
+    }
+
+    private void showData() {
+        cartInfo = JSON.parseObject("{\"errcode\":0,\"errmsg\":\"success\",\"data\":[{\"shop_id\":\"1636\",\"shop_name\":\"水城县阳光佳美食材经营部\",\"items\":[{\"itemid\":\"100189\",\"quantity\":\"1\",\"thumb\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/thumb\\/2017\\/06\\/20170609105502145359.jpg\",\"image\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/photo\\/2017\\/06\\/20170609105502145359.jpg\",\"price\":\"3.00\",\"title\":\"油菜一斤\"}]},{\"shop_id\":\"1778\",\"shop_name\":\"商品测试专卖店\",\"items\":[{\"itemid\":\"103677\",\"quantity\":\"2\",\"thumb\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/thumb\\/2017\\/09\\/20170926150650687701.jpg\",\"image\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/photo\\/2017\\/09\\/20170926150650687701.jpg\",\"price\":\"0.10\",\"title\":\"测试商品1\"},{\"itemid\":\"103629\",\"quantity\":\"1\",\"thumb\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/thumb\\/2017\\/10\\/20171016134627837135.jpg\",\"image\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/photo\\/2017\\/10\\/20171016134627837135.jpg\",\"price\":\"2.50\",\"title\":\"测试商品2\"},{\"itemid\":\"104015\",\"quantity\":\"1\",\"thumb\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/thumb\\/2017\\/10\\/20171016135318646327.jpg\",\"image\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/photo\\/2017\\/10\\/20171016135318646327.jpg\",\"price\":\"1.00\",\"title\":\"测试商品3\"}]}]}"
+                , CartInfo.class);
+        if (cartInfo != null && cartInfo.getData().size() > 0) {
+            cartExpandAdapter = null;
+            showExpandData();
+        } else {
+            try {
+                cartExpandAdapter.notifyDataSetChanged();
+            } catch (Exception e) {
+                return;
+            }
+        }
+    }
+
+    private void showExpandData() {
+        cartExpandAdapter = new CartExpandAdapter(getContext(), mDataBinding.cartExpandablelistview, cartInfo.getData());
+        mDataBinding.cartExpandablelistview.setAdapter(cartExpandAdapter);
+        int intgroupCount = mDataBinding.cartExpandablelistview.getCount();
+        for (int i = 0; i < intgroupCount; i++) {
+            mDataBinding.cartExpandablelistview.expandGroup(i);
+        }
+        /**
+         * 全选
+         */
+        cartExpandAdapter.setOnItemClickListener(new OnViewItemClickListener() {
+            @Override
+            public void onItemClick(boolean isFlang, View view, int position) {
+                cartInfo.getData().get(position).setIscheck(isFlang);
+                int length = cartInfo.getData().get(position).getItems().size();
+                for (int i = 0; i < length; i++) {
+                    cartInfo.getData().get(position).getItems().get(i).setIscheck(isFlang);
+                }
+                cartExpandAdapter.notifyDataSetChanged();
+                showCommodityCalculation();
+            }
+        });
+
+        /**
+         * 单选
+         */
+        cartExpandAdapter.setOnClickListenterModel(new OnClickListenterModel() {
+            @Override
+            public void onItemClick(boolean isFlang, View view, int onePosition, int position) {
+                cartInfo.getData().get(onePosition).getItems().get(position).setIscheck(isFlang);
+                int length = cartInfo.getData().get(onePosition).getItems().size();
+                for (int i = 0; i < length; i++) {
+                    if (!cartInfo.getData().get(onePosition).getItems().get(i).ischeck()) {
+                        if (!isFlang) {
+                            cartInfo.getData().get(onePosition).setIscheck(isFlang);
+                        }
+                        cartExpandAdapter.notifyDataSetChanged();
+                        showCommodityCalculation();
+                        return;
+                    } else {
+                        if (i == (length - 1)) {
+                            cartInfo.getData().get(onePosition).setIscheck(isFlang);
+                            cartExpandAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+                showCommodityCalculation();
+            }
+        });
+        cartExpandAdapter.setOnClickDeleteListenter(new OnClickDeleteListenter() {
+            @Override
+            public void onItemClick(View view, int onePosition, int position) {
+
+                //具体代码没写， 只要删除商品，刷新数据即可
+//                Toast.makeText(MainActivity.this, "删除操作", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        /***
+         * 数量增加和减少
+         */
+        cartExpandAdapter.setOnClickAddCloseListenter(new OnClickAddCloseListenter() {
+            @Override
+            public void onItemClick(View view, int index, int onePosition, int position, int num) {
+                if (index == 1) {
+                    if (num > 1) {
+                        cartInfo.getData().get(onePosition).getItems().get(position).setNum((num - 1));
+                        cartExpandAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    cartInfo.getData().get(onePosition).getItems().get(position).setNum((num + 1));
+                    cartExpandAdapter.notifyDataSetChanged();
+                }
+                showCommodityCalculation();
+            }
+        });
+        showCommodityCalculation();
+    }
+
+    private void showCommodityCalculation() {
+        price = 0;
+        num = 0;
+        for (int i = 0; i < cartInfo.getData().size(); i++) {
+            for (int j = 0; j < cartInfo.getData().get(i).getItems().size(); j++) {
+                if (cartInfo.getData().get(i).getItems().get(j).ischeck()) {
+                    price += Double.valueOf((cartInfo.getData().get(i).getItems().get(j).getNum() * Double.valueOf(cartInfo.getData().get(i).getItems().get(j).getPrice())));
+                    num++;
+                }
+            }
+        }
+        if (price == 0.0) {
+//            mDataBinding.cartNum.setText("共0件商品");
+            mDataBinding.tvSum.setText("¥ 0.0");
+            return;
+        }
+        try {
+            String money = String.valueOf(price);
+//            cartNum.setText("共" + num + "件商品");
+            if (money.substring(money.indexOf("."), money.length()).length() > 2) {
+                mDataBinding.tvSum.setText("¥ " + money.substring(0, (money.indexOf(".") + 3)));
+                return;
+            }
+            mDataBinding.tvSum.setText("¥ " + money.substring(0, (money.indexOf(".") + 2)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

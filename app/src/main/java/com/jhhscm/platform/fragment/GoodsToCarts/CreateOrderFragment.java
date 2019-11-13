@@ -22,6 +22,7 @@ import com.jhhscm.platform.fragment.GoodsToCarts.action.CalculateOrderAction;
 import com.jhhscm.platform.fragment.GoodsToCarts.action.CreateOrderAction;
 import com.jhhscm.platform.fragment.GoodsToCarts.action.FindAddressListAction;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.my.order.OrderStaus1ViewHolder;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -81,7 +82,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
             getCartGoodsByUserCodeBean = new GetCartGoodsByUserCodeBean();
         }
 
-        mDataBinding.rv.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
+//        mDataBinding.rv.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
         mDataBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.rv.setAdapter(mAdapter);
@@ -140,7 +141,9 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
 
         @Override
         public AbsRecyclerViewHolder<GetCartGoodsByUserCodeBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new CreateOrderViewHolder(mInflater.inflate(R.layout.item_create_order, parent, false));
+//            return new CreateOrderViewHolder(mInflater.inflate(R.layout.item_create_order, parent, false));
+            return new CreateOrderItemViewHolder(mInflater.inflate(R.layout.item_create_order_list, parent, false));
+
         }
     }
 
@@ -222,7 +225,6 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
             mDataBinding.tvSum.setText("￥" + b.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
         }
     }
-
 
     /**
      * 创建订单

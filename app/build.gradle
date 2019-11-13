@@ -143,6 +143,7 @@ dependencies {
     implementation 'com.github.chrisbanes.photoview:library:1.2.3'
     implementation files('libs/zxing.jar')
     implementation 'com.github.donkingliang:LabelsView:1.4.1'
+    implementation files('libs/nineoldandroids-2.4.0.jar')
 //    implementation files('libs/AMap3DMap_6.0.1_AMapSearch_5.7.0_AMapLocation_3.8.0_20180309.jar')
 //    implementation 'com.github.maning0303:MNUpdateAPK:V2.0.3'
 }

@@ -82,7 +82,6 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
-        checkDeviceHasNavigationBar(getActivity());
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
             userSession = ConfigUtils.getCurrentUser(getContext());
@@ -214,7 +213,6 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
             mDataBinding.orderType.setText(findOrderBean.getOrder().getOrder_text());
             //剩余支付时间
             startCountDown();
-//            mDataBinding.tvInfo.setText("剩1小时17分钟将自动关闭");
             mDataBinding.tvCancle.setVisibility(View.VISIBLE);
             mDataBinding.tvTijiao.setVisibility(View.VISIBLE);
             mDataBinding.rlWuliu.setVisibility(View.GONE);
@@ -292,52 +290,6 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         public AbsRecyclerViewHolder<FindOrderBean.GoodsListBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new OrderListViewHolder(mInflater.inflate(R.layout.item_create_order, parent, false));
         }
-    }
-
-    /**
-     * 判断是否存在NavigationBar
-     *
-     * @param context：上下文环境
-     * @return：返回是否存在(true/false)
-     */
-    public boolean checkDeviceHasNavigationBar(Context context) {
-        boolean hasNavigationBar = false;
-        Resources rs = context.getResources();
-        int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
-        if (id > 0) {
-            hasNavigationBar = rs.getBoolean(id);
-        }
-        try {
-            Class systemPropertiesClass = Class.forName("android.os.SystemProperties");
-            Method m = systemPropertiesClass.getMethod("get", String.class);
-            String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
-            if ("1".equals(navBarOverride)) {
-                //不存在虚拟按键
-                hasNavigationBar = false;
-            } else if ("0".equals(navBarOverride)) {
-                //存在虚拟按键
-                hasNavigationBar = true;
-                RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) mDataBinding.rlBottom.getLayoutParams();
-                //setMargins：顺序是左、上、右、下
-                layout.setMargins(15, 0, 15, getNavigationBarHeight(getActivity()) + 10);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return hasNavigationBar;
-    }
-
-    /**
-     * 测量底部导航栏的高度
-     *
-     * @param mActivity:上下文环境
-     * @return：返回测量出的底部导航栏高度
-     */
-    private int getNavigationBarHeight(Activity mActivity) {
-        Resources resources = mActivity.getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        int height = resources.getDimensionPixelSize(resourceId);
-        return height;
     }
 
     /**

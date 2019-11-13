@@ -44,9 +44,6 @@ public class MyPeiJianListAdapter extends AbsRecyclerViewAdapter<SaleItem> {
 
     public void setExpend(FindOrderListBean listBean) {
         if (listBean.getData() != null) {
-//            for (FindOrderListBean.DataBean dataBean : listBean.getData()) {
-//                addOederStaus1(dataBean);
-//            }
             for (int i=0;i<listBean.getData().size();i++){
                 addOederStaus1(listBean.getData().get(i));
             }
