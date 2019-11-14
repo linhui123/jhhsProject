@@ -23,6 +23,14 @@
                 android:layout_marginRight="@dimen/dp_5"
                 android:layout_toLeftOf="@+id/ll">
 
+                <ImageView
+                    android:id="@+id/im_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_5"
+                    android:src="@mipmap/ic_back"
+                    android:visibility="gone" />
+
                 <TextView
                     android:id="@+id/tv_area"
                     android:layout_width="wrap_content"
@@ -38,6 +46,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_14"
                     android:visibility="gone" />
+
             </LinearLayout>
 
 
@@ -106,9 +115,9 @@
                 android:id="@+id/rl_privince"
                 android:layout_width="140dp"
                 android:layout_height="match_parent"
-                android:paddingBottom="@dimen/dp_5"
                 android:background="@color/cf5"
-                android:paddingLeft="@dimen/padding_15"></android.support.v7.widget.RecyclerView>
+                android:paddingLeft="@dimen/padding_15"
+                android:paddingBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rl_city"

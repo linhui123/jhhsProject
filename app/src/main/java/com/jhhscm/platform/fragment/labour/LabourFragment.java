@@ -36,6 +36,7 @@ import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
@@ -381,15 +382,18 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
      */
     private void findLabourWorkList(final boolean refresh) {
         if (getContext() != null) {
-            Map<String, String> map = new TreeMap<String, String>();
+            mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
+            Map<String, Object> map = new TreeMap<String, Object>();
             map.put("province", province);
             map.put("city", city);
             map.put("job", job);
             map.put("salay_money", salay_money);
             map.put("work_time", work_time);
+            map.put("page", mCurrentPage );
+            map.put("limit", mShowCount );
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
-            String sign = Sign.getSignKey(getActivity(), map, "findLabourWorkList");
+            String sign = SignObject.getSignKey(getActivity(), map, "findLabourWorkList");
             NetBean netBean = new NetBean();
             netBean.setToken("");
             netBean.setSign(sign);
@@ -427,12 +431,11 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
     private void doSuccessResponse(boolean refresh, FindLabourReleaseListBean categoryBean) {
         this.findCategoryBean = categoryBean;
         if (refresh) {
-            mAdapter.clear();
+//            mAdapter.clear();
             mAdapter.setData(categoryBean.getData());
         } else {
             mAdapter.append(categoryBean.getData());
         }
-        mDataBinding.rv.getAdapter().notifyDataSetChanged();
         mDataBinding.rv.loadComplete(mAdapter.getItemCount() == 0, ((float) findCategoryBean.getPage().getTotal() / (float) findCategoryBean.getPage().getPageSize()) > mCurrentPage);
     }
 

@@ -25,7 +25,7 @@
                 android:maxEms="13"
                 android:singleLine="true"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/ivShare"

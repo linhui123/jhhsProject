@@ -1,6 +1,9 @@
 package com.jhhscm.platform.fragment.labour;
 
 
+import android.Manifest;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,14 +29,19 @@ import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
+import com.jhhscm.platform.permission.YXPermission;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.UdaUtils;
+import com.jhhscm.platform.views.dialog.ConfirmCallPhoneDialog;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
+import com.mylhyl.acp.AcpListener;
+import com.mylhyl.acp.AcpOptions;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -200,14 +208,30 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
             mDataBinding.phone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new TelPhoneDialog(getContext(), new TelPhoneDialog.CallbackListener() {
-
+                    new ConfirmCallPhoneDialog(getContext(), dataBean.getContact_msg(), new ConfirmCallPhoneDialog.CallbackListener() {
                         @Override
-                        public void clickYes(String phone) {
-                            saveMsg(phone, "7");
+                        public void clickResult() {
+                            //6.0权限处理
+                            YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
+                                    .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
+                                    .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
+                                    .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "拨打电话"))
+                                    .setPermissions(Manifest.permission.CALL_PHONE).build(), new AcpListener() {
+                                @Override
+                                public void onGranted() {
+                                    Uri uriScheme = Uri.parse("tel:" + dataBean.getContact_msg());
+                                    Intent it = new Intent(Intent.ACTION_CALL, uriScheme);
+                                    getContext().startActivity(it);
+                                }
+
+
+                                @Override
+                                public void onDenied(List<String> permissions) {
+
+                                }
+                            });
                         }
                     }).show();
-
                 }
             });
         }
@@ -287,11 +311,28 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
             mDataBinding.phone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new TelPhoneDialog(getContext(), new TelPhoneDialog.CallbackListener() {
-
+                    new ConfirmCallPhoneDialog(getContext(), dataBean.getContact_msg(), new ConfirmCallPhoneDialog.CallbackListener() {
                         @Override
-                        public void clickYes(String phone) {
-                            saveMsg(phone, "8");
+                        public void clickResult() {
+                            //6.0权限处理
+                            YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
+                                    .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
+                                    .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
+                                    .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "拨打电话"))
+                                    .setPermissions(Manifest.permission.CALL_PHONE).build(), new AcpListener() {
+                                @Override
+                                public void onGranted() {
+                                    Uri uriScheme = Uri.parse("tel:" + dataBean.getContact_msg());
+                                    Intent it = new Intent(Intent.ACTION_CALL, uriScheme);
+                                    getContext().startActivity(it);
+                                }
+
+
+                                @Override
+                                public void onDenied(List<String> permissions) {
+
+                                }
+                            });
                         }
                     }).show();
                 }

@@ -18,6 +18,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,7 +44,9 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.Lessee1Activity;
 import com.jhhscm.platform.databinding.FragmentFinancialBinding;
 import com.jhhscm.platform.databinding.FragmentZuLinBinding;
+import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.event.LoginH5Event;
+import com.jhhscm.platform.event.ShowBackEvent;
 import com.jhhscm.platform.event.WebTitleEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
@@ -58,6 +61,7 @@ import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.NETUtils;
 import com.jhhscm.platform.tool.ShareUtils;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.YXProgressDialog;
@@ -246,6 +250,8 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
 
     @Override
     protected void setupViews() {
+        EventBusUtil.registerEvent(this);
+        mDataBinding.toolbar.setTitle("");
         RelativeLayout.LayoutParams llParams = (RelativeLayout.LayoutParams) mDataBinding.toolbar.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.toolbar.setLayoutParams(llParams);
@@ -380,8 +386,22 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
         EventBusUtil.unregisterEvent(this);
     }
 
-    public void onEvent(LoginH5Event event) {
-
+    public void onEvent(ShowBackEvent event) {
+        if (event.getType() == 1) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mDataBinding.toolbar);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+            mDataBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBusUtil.post(new JumpEvent("HOME_PAGE", null));
+                }
+            });
+        } else if (event.getType() == 0) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mDataBinding.toolbar);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(false);
+        }
     }
 
     @Override
@@ -394,8 +414,6 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
     }
 
     private void initViews() {
-        EventBusUtil.registerEvent(this);
-
         mDataBinding.webView.setVisibility(View.GONE);
         WebSettings settings = mDataBinding.webView.getSettings();
         settings.setJavaScriptEnabled(true); //与js交互必须设置
@@ -452,7 +470,6 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
                 @Override
                 public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                     if (getView() != null) {
-                        ;
                         mDataBinding.webView.setVisibility(View.GONE);
                         mDataBinding.rlError.setVisibility(View.VISIBLE);
                         mDataBinding.tvReload.setOnClickListener(new View.OnClickListener() {

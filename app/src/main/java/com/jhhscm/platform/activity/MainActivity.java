@@ -31,6 +31,7 @@ import com.jhhscm.platform.activity.h5.ZuLinH5Activity;
 import com.jhhscm.platform.event.BrandResultEvent;
 import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.activity.h5.FinancialFragment;
+import com.jhhscm.platform.event.ShowBackEvent;
 import com.jhhscm.platform.fragment.Mechanics.MechanicsFragment;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.HomePageFragment;
@@ -209,6 +210,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
 
         } else if (checkedId == R.id.rd_educationadmin) {
             MobclickAgent.onEvent(getApplicationContext(), "mechanics_Fragment");
+            EventBusUtil.post(new ShowBackEvent(0));
             if (mechanicsFragment == null) {
                 mechanicsFragment = new MechanicsFragment();
                 transaction1.add(R.id.fl, mechanicsFragment, "mechanicsFragment");
@@ -218,6 +220,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
 
         } else if (checkedId == R.id.rd_finance) {
             MobclickAgent.onEvent(getApplicationContext(), "financial_Fragment");
+            EventBusUtil.post(new ShowBackEvent(0));
             if (zuLinFragment == null) {
                 zuLinFragment = new ZuLinFragment();
                 transaction1.add(R.id.fl, zuLinFragment, "zuLinFragment");
@@ -314,12 +317,12 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
                 }
                 onCheckedChanged(mDataBinding.rgOper, R.id.rd_educationadmin);
                 mDataBinding.rdEducationadmin.setChecked(true);
+                EventBusUtil.post(new ShowBackEvent(2));
             } else if ("PARTS".equals(event.getType())) {//配件
                 MobclickAgent.onEvent(getApplicationContext(), "parts_button_home");
                 PeiJianActivity.start(MainActivity.this);
             } else if ("AFTER_SALE".equals(event.getType())) {//售后
                 MobclickAgent.onEvent(getApplicationContext(), "after_button_home");
-//                ToastUtils.show(MainActivity.this, "该功能正在建设中");
                 AfterSaleActivity.start(MainActivity.this);
             } else if ("GOLD".equals(event.getType())) {//金服
                 MobclickAgent.onEvent(getApplicationContext(), "gold_button_home");
@@ -335,20 +338,16 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
 //                mDataBinding.rdFinance.setChecked(true);
             } else if ("STEWARD".equals(event.getType())) {//管家
                 MobclickAgent.onEvent(getApplicationContext(), "steward_button_home");
-//                ToastUtils.show(MainActivity.this, "该功能正在建设中");
-                //行驶轨迹回放
-//                TraceReloadActivity.start(MainActivity.this);
                 VehicleMonitoringActivity.start(MainActivity.this);
             } else if ("RENT".equals(event.getType())) {//租赁
                 MobclickAgent.onEvent(getApplicationContext(), "rent_button_home");
 //                ZuLinH5Activity.start(MainActivity.this, UrlUtils.ZL, "租赁");
                 onCheckedChanged(mDataBinding.rgOper, R.id.rd_finance);
                 mDataBinding.rdFinance.setChecked(true);
+                EventBusUtil.post(new ShowBackEvent(1));
             } else if ("PROJECT".equals(event.getType())) {//工程
                 MobclickAgent.onEvent(getApplicationContext(), "project_button_home");
                 ToastUtils.show(MainActivity.this, "该功能正在建设中");
-
-                InvitationRegisterActivity.start(MainActivity.this);
             } else if ("LABOUR".equals(event.getType())) {//劳务
                 MobclickAgent.onEvent(getApplicationContext(), "labour_button_home");
                 LabourActivity.start(MainActivity.this);

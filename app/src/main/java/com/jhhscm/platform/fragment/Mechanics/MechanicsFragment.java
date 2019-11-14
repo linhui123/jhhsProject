@@ -4,6 +4,7 @@ package com.jhhscm.platform.fragment.Mechanics;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentMechanicsBinding;
 import com.jhhscm.platform.event.BrandResultEvent;
 import com.jhhscm.platform.event.GetRegionEvent;
+import com.jhhscm.platform.event.JumpEvent;
+import com.jhhscm.platform.event.ShowBackEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.GetRegionAction;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
 import com.jhhscm.platform.fragment.Mechanics.holder.GetRegionViewHolder;
@@ -32,6 +35,8 @@ import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.MapUtil;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 
@@ -47,6 +52,7 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
     private FragmentManager fm;
     FragmentTransaction transaction;
 
+    private boolean isShowBack;
     String pID = "";
     String cID = "";
 
@@ -74,6 +80,9 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
         mDataBinding.tvNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (isShowBack) {
+                    mDataBinding.imBack.setVisibility(View.VISIBLE);
+                }
                 mDataBinding.tvNew.setBackgroundResource(R.color.white);
                 mDataBinding.tvNew.setTextColor(getResources().getColor(R.color.a397));
                 mDataBinding.tvOld.setTextColor(getResources().getColor(R.color.white));
@@ -98,6 +107,7 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
         mDataBinding.tvOld.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mDataBinding.imBack.setVisibility(View.GONE);
                 mDataBinding.tvOld.setBackgroundResource(R.color.white);
                 mDataBinding.tvOld.setTextColor(getResources().getColor(R.color.a397));
                 mDataBinding.tvNew.setBackgroundResource(R.drawable.bg_397_left_ovel);
@@ -134,6 +144,13 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
                 SearchActivity.start(getContext());
             }
         });
+
+        mDataBinding.imBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBusUtil.post(new JumpEvent("HOME_PAGE", null));
+            }
+        });
         initPrivince();
         getRegion("1", "");
     }
@@ -153,6 +170,16 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
     public void onEvent(BrandResultEvent event) {
         if (event != null && event.getBrand_id() != null) {
             mDataBinding.tvNew.performClick();
+        }
+    }
+
+    public void onEvent(ShowBackEvent event) {
+        if (event.getType() == 2) {
+            isShowBack = true;
+            mDataBinding.imBack.setVisibility(View.VISIBLE);
+        } else if (event.getType() == 0) {
+            isShowBack = false;
+            mDataBinding.imBack.setVisibility(View.GONE);
         }
     }
 

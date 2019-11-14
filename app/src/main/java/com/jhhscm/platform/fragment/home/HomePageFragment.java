@@ -168,7 +168,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
             }
         });
 //ExampleUtil.GetVersion(getContext())
-        Log.e("home", "getChannel :" + StringUtils.getChannel(getContext()));
+//        Log.e("home", "getChannel :" + StringUtils.getChannel(getContext()));
 //        ToastUtil.show(getContext(), "getChannel :" + StringUtils.getChannel(getContext()));
         if (ConfigUtils.getHomePageItem(getContext()) != null) {
             mAdapter.setDetail(ConfigUtils.getHomePageItem(getContext()));
@@ -182,7 +182,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         //24小时保存用户信息
         if (ConfigUtils.getCurrentUser(getContext()) != null) {
             if (ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
-                Log.e("initUser", "Timestamp : "+ConfigUtils.getCurrentUser(getContext()).getTimestamp());
+                Log.e("initUser", "Timestamp : " + ConfigUtils.getCurrentUser(getContext()).getTimestamp());
 //                long time = DataUtil.getLongTime(ConfigUtils.getUpdataTime(getContext())
 //                        , DataUtil.getCurDate("yyyy-MM-dd HH:mm:ss")
 //                        , "yyyy-MM-dd HH:mm:ss");
@@ -236,7 +236,6 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
             @Override
             public void onClick(View v) {
                 CouponCenterActivity.start(getActivity());
-//                MyCouponActivity.start(getActivity());
             }
         });
     }
@@ -249,7 +248,6 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         view.setAnimation(translateAnimation);
         view.startAnimation(translateAnimation);
     }
-
 
     @Override
     public void onDestroy() {
