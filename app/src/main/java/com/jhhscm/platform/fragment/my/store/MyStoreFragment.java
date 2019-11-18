@@ -108,7 +108,6 @@ public class MyStoreFragment extends AbsFragment<FragmentMyStoreBinding> {
         fragments.add(useCounponFragment);
         fragments.add(oldCounponFragment);
 
-
         mDataBinding.vpM.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mDataBinding.enhanceTabLayout.getTabLayout()));
         mDataBinding.vpM.setOffscreenPageLimit(3);
         mDataBinding.enhanceTabLayout.setupWithViewPager(mDataBinding.vpM);
@@ -156,10 +155,10 @@ public class MyStoreFragment extends AbsFragment<FragmentMyStoreBinding> {
                                     if (response.body().getCode().equals("200")) {
                                         if (response.body().getData().getResult() != null
                                                 && response.body().getData().getResult().size() > 0) {
-                                            mDataBinding.tvIncomeNum.setText(response.body().getData().getResult().get(0).getSum_goods_price());
-                                            mDataBinding.tvMIncomeNum.setText(response.body().getData().getResult().get(0).getSum_goods_price_all());
-                                            mDataBinding.tvMMemberNum.setText(response.body().getData().getResult().get(0).getSum_users());
-                                            mDataBinding.tvGMemberNum.setText(response.body().getData().getResult().get(0).getSum_users_all());
+                                            mDataBinding.tvIncomeNum.setText(response.body().getData().getResult().get(0).getSum_goods_price()+"");
+                                            mDataBinding.tvMIncomeNum.setText(response.body().getData().getResult().get(0).getSum_goods_price_all()+"");
+                                            mDataBinding.tvMMemberNum.setText(response.body().getData().getResult().get(0).getSum_users()+"");
+                                            mDataBinding.tvGMemberNum.setText(response.body().getData().getResult().get(0).getSum_users_all()+"");
                                             mDataBinding.username.setText(response.body().getData().getResult().get(0).getBus_name());
                                             mDataBinding.tvStoreNum.setText(response.body().getData().getResult().get(0).getBus_name());
                                         }

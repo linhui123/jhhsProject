@@ -55,12 +55,12 @@ public class CouponUnUseItemViewHolder extends AbsRecyclerViewHolder<SaleItem> {
             mBinding.ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new NewCouponDialog(itemView.getContext(), item.couponResult.getName(), item.couponResult.getDiscount() + "", item.couponResult.getDesc(), new NewCouponDialog.CallbackListener() {
-                        @Override
-                        public void clickYes() {
-
-                        }
-                    }).show();
+//                    new NewCouponDialog(itemView.getContext(), item.couponResult.getName(), item.couponResult.getDiscount() + "", item.couponResult.getDesc(), new NewCouponDialog.CallbackListener() {
+//                        @Override
+//                        public void clickYes() {
+//
+//                        }
+//                    }).show();
 
                 }
             });

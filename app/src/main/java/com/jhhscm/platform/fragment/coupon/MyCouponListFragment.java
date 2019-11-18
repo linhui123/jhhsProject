@@ -162,14 +162,14 @@ public class MyCouponListFragment extends AbsFragment<FragmentMyCouponListBindin
         }
         mDataBinding.recyclerview.getAdapter().notifyDataSetChanged();
         mDataBinding.recyclerview.loadComplete(true, false);
-        if (type.equals("1")) {
-            new NewCouponListDialog(getContext(), "", categoryBean.getResult(), new NewCouponListDialog.CallbackListener() {
-                @Override
-                public void clickYes() {
-
-                }
-            }).show();
-        }
+//        if (type.equals("1")) {
+//            new NewCouponListDialog(getContext(), "", categoryBean.getResult(), new NewCouponListDialog.CallbackListener() {
+//                @Override
+//                public void clickYes() {
+//
+//                }
+//            }).show();
+//        }
 
 //        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findOrderListBean.getPage().getTotal() / (float) findOrderListBean.getPage().getPageSize()) > mCurrentPage);
     }

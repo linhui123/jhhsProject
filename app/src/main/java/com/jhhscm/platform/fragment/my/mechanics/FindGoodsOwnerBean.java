@@ -155,6 +155,15 @@ public class FindGoodsOwnerBean {
         private String fixp17;
         private int brand_id;
         private int status;
+        private boolean isSelect;
+
+        public boolean isSelect() {
+            return isSelect;
+        }
+
+        public void setSelect(boolean select) {
+            isSelect = select;
+        }
 
         public String getPic_gallery_url_list() {
             return pic_gallery_url_list;

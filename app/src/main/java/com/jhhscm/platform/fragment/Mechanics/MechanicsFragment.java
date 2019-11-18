@@ -49,12 +49,15 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
     private NewMechanicsFragment newMechanicsFragment;
     private OldMechanicsFragment oldMechanicsFragment;
 
+    private FragmentManager fragmentManager;
     private FragmentManager fm;
-    FragmentTransaction transaction;
+    private FragmentTransaction transaction;
 
     private boolean isShowBack;
-    String pID = "";
-    String cID = "";
+    private String pID = "";
+    private String cID = "";
+    private String pName;
+    private String cName;
 
     public static MechanicsFragment instance() {
         MechanicsFragment view = new MechanicsFragment();
@@ -74,7 +77,7 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.rlTop.setLayoutParams(llParams);
 
-        final FragmentManager fragmentManager = getChildFragmentManager();
+        fragmentManager = getChildFragmentManager();
         newMechanicsFragment = new NewMechanicsFragment();
         fragmentManager.beginTransaction().replace(R.id.fl, newMechanicsFragment, "NewMechanicsFragment").commit();
         mDataBinding.tvNew.setOnClickListener(new View.OnClickListener() {
@@ -161,9 +164,6 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
         EventBusUtil.unregisterEvent(this);
     }
 
-    private String pName;
-    private String cName;
-
     /**
      * 品牌跳转
      */
@@ -177,6 +177,7 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
         if (event.getType() == 2) {
             isShowBack = true;
             mDataBinding.imBack.setVisibility(View.VISIBLE);
+            mDataBinding.tvNew.performClick();
         } else if (event.getType() == 0) {
             isShowBack = false;
             mDataBinding.imBack.setVisibility(View.GONE);

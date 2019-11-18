@@ -19,6 +19,14 @@ public class ProductItemViewHolder extends AbsRecyclerViewHolder<BusinessFindcat
 
     @Override
     protected void onBindView(final BusinessFindcategorybyBuscodeBean.DataBean item) {
+        if (item != null) {
+            mBinding.name.setText(item.getName());
+            mBinding.brand.setText("品牌：" + item.getBrandName());
+            if (item.getCategoryName()!=null){
+                mBinding.type.setText("类型：" + item.getCategoryName());
+            }
 
+            mBinding.price.setText(item.getCounter_price() + "");
+        }
     }
 }

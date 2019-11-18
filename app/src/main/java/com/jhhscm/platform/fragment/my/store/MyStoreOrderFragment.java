@@ -16,6 +16,8 @@ import com.jhhscm.platform.databinding.FragmentMyStoreOrderBinding;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
+import com.jhhscm.platform.fragment.my.store.action.FindBusOrderListAction;
+import com.jhhscm.platform.fragment.my.store.action.FindBusOrderListBean;
 import com.jhhscm.platform.fragment.my.store.viewholder.StoreOrderItemViewHolder;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -23,6 +25,7 @@ import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.SignObject;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
@@ -62,12 +65,12 @@ public class MyStoreOrderFragment extends AbsFragment<FragmentMyStoreOrderBindin
         mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
-                getCouponList(true);
+                findBusOrderList(true);
             }
 
             @Override
             public void onLoadMore(RecyclerView view) {
-                getCouponList(false);
+                findBusOrderList(false);
             }
         });
 
@@ -114,24 +117,25 @@ public class MyStoreOrderFragment extends AbsFragment<FragmentMyStoreOrderBindin
         });
     }
 
-    private void getCouponList(final boolean refresh) {
+    private void findBusOrderList(final boolean refresh) {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("page", mCurrentPage);
             map.put("limit", mShowCount);
-            map.put("article_type_list", 1);
+            map.put("bus_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("order_status", "");
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
-            String sign = SignObject.getSignKey(getActivity(), map, "getArticleList");
+            String sign = SignObject.getSignKey(getActivity(), map, "findBusOrderList");
             NetBean netBean = new NetBean();
-            netBean.setToken("");
+            netBean.setToken( ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
-            onNewRequestCall(GetArticleListAction.newInstance(getContext(), netBean)
-                    .request(new AHttpService.IResCallback<BaseEntity<GetPageArticleListBean>>() {
+            onNewRequestCall(FindBusOrderListAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<FindBusOrderListBean>>() {
                         @Override
-                        public void onCallback(int resultCode, Response<BaseEntity<GetPageArticleListBean>> response,
+                        public void onCallback(int resultCode, Response<BaseEntity<FindBusOrderListBean>> response,
                                                BaseErrorInfo baseErrorInfo) {
                             if (getView() != null) {
                                 closeDialog();
@@ -153,28 +157,28 @@ public class MyStoreOrderFragment extends AbsFragment<FragmentMyStoreOrderBindin
         }
     }
 
-    GetPageArticleListBean getPushListBean;
+    FindBusOrderListBean getPushListBean;
 
-    private void initView(boolean refresh, GetPageArticleListBean pushListBean) {
+    private void initView(boolean refresh, FindBusOrderListBean pushListBean) {
 
         this.getPushListBean = pushListBean;
         if (refresh) {
-            mAdapter.setData(pushListBean.getData());
+            mAdapter.setData(pushListBean.getResult().getData());
         } else {
-            mAdapter.append(pushListBean.getData());
+            mAdapter.append(pushListBean.getResult().getData());
         }
         mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0,
                 ((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage);
     }
 
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<GetPageArticleListBean.DataBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<FindBusOrderListBean.ResultBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<GetPageArticleListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+        public AbsRecyclerViewHolder<FindBusOrderListBean.ResultBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new StoreOrderItemViewHolder(mInflater.inflate(R.layout.item_store_order, parent, false));
         }
     }

@@ -31,7 +31,6 @@ public class CouponCenterViewHolder extends AbsRecyclerViewHolder<CouponGetListB
             mBinding.tvReceive.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtil.show(itemView.getContext(), "领取");
                     EventBusUtil.post(new GetCouponEvent(item.getCode(), item.getStartTime(), item.getEndTime()));
                 }
             });

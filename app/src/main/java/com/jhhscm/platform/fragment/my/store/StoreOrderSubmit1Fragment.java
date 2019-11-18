@@ -14,8 +14,11 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentStoreOrderSubmit1Binding;
 import com.jhhscm.platform.event.FinishEvent;
+import com.jhhscm.platform.event.StoreDeviceEvent;
+import com.jhhscm.platform.event.StoreUserEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.lessee.LesseeBean;
+import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
 import com.jhhscm.platform.fragment.my.store.viewholder.ItemFaultDeviceViewHolder;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;
@@ -27,8 +30,15 @@ import java.util.List;
 public class StoreOrderSubmit1Fragment extends AbsFragment<FragmentStoreOrderSubmit1Binding> {
     private InnerAdapter mAdapter;
     private LesseeBean lesseeBean;
-    private List<LesseeBean.WBankLeaseItemsBean> itemsBeans;
+    private List<FindGoodsOwnerBean.DataBean> itemsBeans;
 
+    private String userName;
+    private String userCode;
+    private String userMobile;
+
+    private List<String> goodsOwnerV1s;//设备序列号
+    private List<String> goodsOwnerV2s;//gps序列号
+    private List<String> goodsOwnerV3s;//故障类型
 
     public static StoreOrderSubmit1Fragment instance() {
         StoreOrderSubmit1Fragment view = new StoreOrderSubmit1Fragment();
@@ -48,7 +58,7 @@ public class StoreOrderSubmit1Fragment extends AbsFragment<FragmentStoreOrderSub
         mDataBinding.tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LesseeBean.WBankLeaseItemsBean dataBean = new LesseeBean.WBankLeaseItemsBean();
+                FindGoodsOwnerBean.DataBean dataBean = new FindGoodsOwnerBean.DataBean();
                 itemsBeans.add(dataBean);
                 mAdapter.add(dataBean);
                 mDataBinding.tvDel.setVisibility(View.VISIBLE);
@@ -102,40 +112,49 @@ public class StoreOrderSubmit1Fragment extends AbsFragment<FragmentStoreOrderSub
         mDataBinding.rv.setAdapter(mAdapter);
 
         itemsBeans = new ArrayList<>();
-        LesseeBean.WBankLeaseItemsBean dataBean = new LesseeBean.WBankLeaseItemsBean();
+        FindGoodsOwnerBean.DataBean dataBean = new FindGoodsOwnerBean.DataBean();
         itemsBeans.add(dataBean);
         mAdapter.setData(itemsBeans);
     }
 
 
     private boolean judge() {
-        for (LesseeBean.WBankLeaseItemsBean wBankLeaseItemsBean : itemsBeans) {
-            if (StringUtils.isNullEmpty(wBankLeaseItemsBean.getBrandId())) {
+        for (FindGoodsOwnerBean.DataBean wBankLeaseItemsBean : itemsBeans) {
+            if (StringUtils.isNullEmpty(wBankLeaseItemsBean.getBrand_name())) {
                 ToastUtil.show(getContext(), "设备品牌不能为空");
                 return false;
             }
-            if (StringUtils.isNullEmpty(wBankLeaseItemsBean.getFactoryTime())) {
-                ToastUtil.show(getContext(), "出厂日期不能为空");
-                return false;
-            }
-            if (StringUtils.isNullEmpty(wBankLeaseItemsBean.getMachinePrice())) {
-                ToastUtil.show(getContext(), "单价不能为空");
-                return false;
-            }
-            if (StringUtils.isNullEmpty(wBankLeaseItemsBean.getMachineNum())) {
-                ToastUtil.show(getContext(), "设备序列号不能为空");
-                return false;
-            }
-            if (StringUtils.isNullEmpty(wBankLeaseItemsBean.getName())) {
-                ToastUtil.show(getContext(), "设备名称不能为空");
-                return false;
-            }
-            if (StringUtils.isNullEmpty(wBankLeaseItemsBean.getFixP17())) {
-                ToastUtil.show(getContext(), "设备型号不能为空");
+            if (StringUtils.isNullEmpty(wBankLeaseItemsBean.getFixp17())) {
+                ToastUtil.show(getContext(), "型号不能为空");
                 return false;
             }
         }
+
+        if (StringUtils.isNullEmpty(userName)) {
+            ToastUtil.show(getContext(), "用户姓名不能为空");
+            return false;
+        }
+        if (StringUtils.isNullEmpty(userMobile)) {
+            ToastUtil.show(getContext(), "用户手机号不能为空");
+            return false;
+        }
         return true;
+    }
+
+    public void onEvent(StoreUserEvent event) {
+        if (event.userCode != null) {
+            userCode = event.userCode;
+            userMobile = event.userMobile;
+            userName = event.userName;
+            mDataBinding.name.setText(event.userName);
+            mDataBinding.phone.setText(event.userMobile);
+        }
+    }
+
+    public void onEvent(StoreDeviceEvent event) {
+        if (event.dataBeans != null && event.dataBeans.size() > 0) {
+            mAdapter.setData(event.dataBeans);
+        }
     }
 
     public void onEvent(FinishEvent event) {
@@ -150,14 +169,14 @@ public class StoreOrderSubmit1Fragment extends AbsFragment<FragmentStoreOrderSub
         EventBusUtil.unregisterEvent(this);
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<LesseeBean.WBankLeaseItemsBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<FindGoodsOwnerBean.DataBean> {
 
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<LesseeBean.WBankLeaseItemsBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+        public AbsRecyclerViewHolder<FindGoodsOwnerBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new ItemFaultDeviceViewHolder(mInflater.inflate(R.layout.item_fault_devices, parent, false));
         }
     }

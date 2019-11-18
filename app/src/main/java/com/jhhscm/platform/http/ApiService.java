@@ -18,8 +18,10 @@ import com.jhhscm.platform.fragment.Mechanics.bean.GetOldPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
 import com.jhhscm.platform.fragment.Mechanics.push.OldMechanicsUpImageBean;
 import com.jhhscm.platform.fragment.Mechanics.push.UploadInvalidOrderImgEntity;
+import com.jhhscm.platform.fragment.aftersale.FindBusListBean;
 import com.jhhscm.platform.fragment.coupon.CouponGetListBean;
 import com.jhhscm.platform.fragment.coupon.CouponListBean;
+import com.jhhscm.platform.fragment.coupon.GetNewCouponslistBean;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
@@ -42,6 +44,7 @@ import com.jhhscm.platform.fragment.my.mechanics.FindOldGoodByUserCodeBean;
 import com.jhhscm.platform.fragment.my.order.FindOrderListBean;
 import com.jhhscm.platform.fragment.my.store.action.BusinessFindcategorybyBuscodeBean;
 import com.jhhscm.platform.fragment.my.store.action.BusinessSumdataBean;
+import com.jhhscm.platform.fragment.my.store.action.FindBusOrderListBean;
 import com.jhhscm.platform.fragment.my.store.action.FindBusUserServerListBean;
 import com.jhhscm.platform.fragment.repayment.ContractDetailBean;
 import com.jhhscm.platform.fragment.repayment.ContractListBean;
@@ -259,6 +262,12 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(FIND_CATEGORY)
     Call<BaseEntity<FindCategoryBean>> findCategory(@Body NetBean content);
+
+    String FIND_CATEGORY_v3 = "v1-3/search/findCategory";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_CATEGORY_v3)
+    Call<BaseEntity<FindCategoryBean>> findCategory_v3(@Body NetBean content);
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(FIND_CATEGORYDETAIL)
@@ -659,4 +668,32 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(FIND_BUSUSERSERVERLIST)
     Call<BaseEntity<FindBusUserServerListBean>> findBusUserServerList(@Body NetBean content);
+
+    //售后列表（店铺列表）
+    String FIND_BUSLIST = "v1-3/search/findBusList";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_BUSLIST)
+    Call<BaseEntity<FindBusListBean>> findBusList(@Body NetBean content);
+
+    //我的店铺订单列表（商户角度查询）
+    String FIND_BUSORDERLIST = "v1-3/business/findBusOrderList";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_BUSORDERLIST)
+    Call<BaseEntity<FindBusOrderListBean>> findBusOrderList(@Body NetBean content);
+
+    //首页判断是否是新人
+    String ISNEWUSER = "v1-3/coupon/isNewUser";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(ISNEWUSER)
+    Call<BaseEntity<ResultBean>> isNewUser(@Body NetBean content);
+
+    //我的券列表-弹出首页券列表
+    String GET_FIRSTPAGECOUPONSLIST = "v1-3/coupon/getFirstPageCouponslist";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_FIRSTPAGECOUPONSLIST)
+    Call<BaseEntity<GetNewCouponslistBean>> getFirstPageCouponslist(@Body NetBean content);
 }

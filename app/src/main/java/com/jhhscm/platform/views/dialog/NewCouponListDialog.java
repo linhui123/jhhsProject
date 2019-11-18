@@ -2,9 +2,13 @@ package com.jhhscm.platform.views.dialog;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.support.constraint.solver.GoalRow;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 
 import com.jhhscm.platform.R;
@@ -13,7 +17,10 @@ import com.jhhscm.platform.databinding.DialogCouponNewBinding;
 import com.jhhscm.platform.fragment.address.LocationAdapter;
 import com.jhhscm.platform.fragment.coupon.CouponListBean;
 import com.jhhscm.platform.fragment.coupon.CouponListDialogAdapter;
+import com.jhhscm.platform.fragment.coupon.GetNewCouponslistBean;
+import com.jhhscm.platform.tool.ConfigUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewCouponListDialog extends BaseDialog {
@@ -22,7 +29,7 @@ public class NewCouponListDialog extends BaseDialog {
     private String count;
     private String condition;
     private boolean isCheck;
-    List<CouponListBean.ResultBean> list;
+    List<GetNewCouponslistBean.ResultBean.DataBean> list;
 
     private CouponListDialogAdapter pAdapter;
     private CallbackListener mListener;
@@ -36,9 +43,9 @@ public class NewCouponListDialog extends BaseDialog {
         this(context, null, null, listener);
     }
 
-    public NewCouponListDialog(Context context, String title, List<CouponListBean.ResultBean> list, CallbackListener listener) {
+    public NewCouponListDialog(Context context, String title, List<GetNewCouponslistBean.ResultBean.DataBean> list, CallbackListener listener) {
         super(context);
-        setCanceledOnTouchOutside(true);
+        setCanceledOnTouchOutside(false);
         this.list = list;
         this.mListener = listener;
         this.title = title;
@@ -51,11 +58,27 @@ public class NewCouponListDialog extends BaseDialog {
     }
 
     @Override
+    public void show() {
+        super.show();
+//        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+//        layoutParams.gravity = Gravity.CENTER;
+//        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+//        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+//        getWindow().getDecorView().setPadding(0, 0, 0, 0);
+//        getWindow().setAttributes(layoutParams);
+    }
+
+    @Override
     protected void onInitView(View view) {
+        if (title!=null){
+            mDataBinding.title.setText(title);
+        }
+
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         pAdapter = new CouponListDialogAdapter(getContext());
         mDataBinding.recyclerview.setAdapter(pAdapter);
         pAdapter.setData(list);
+
         mDataBinding.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -67,13 +90,28 @@ public class NewCouponListDialog extends BaseDialog {
             @Override
             public void onClick(View v) {
                 if (mListener != null) mListener.clickYes();
-//                dismiss();
             }
         });
 
         mDataBinding.imClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mDataBinding.check.isChecked()) {
+                    List<String> resultBean = ConfigUtils.getCoupon(getContext());
+                    if (resultBean != null && resultBean.size() > 0) {
+                        for (GetNewCouponslistBean.ResultBean.DataBean dataBean : list) {
+                            if (!resultBean.contains(dataBean.getCode())) {
+                                resultBean.add(dataBean.getCode());
+                            }
+                        }
+                    } else {
+                        resultBean = new ArrayList<>();
+                        for (GetNewCouponslistBean.ResultBean.DataBean dataBean : list) {
+                            resultBean.add(dataBean.getCode());
+                        }
+                    }
+                    ConfigUtils.setCoupon(getContext(), resultBean);
+                }
                 dismiss();
             }
         });

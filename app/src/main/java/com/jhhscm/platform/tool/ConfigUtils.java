@@ -6,11 +6,18 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
+import com.jhhscm.platform.fragment.coupon.GetNewCouponslistBean;
 import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.http.bean.UserSession;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -29,6 +36,9 @@ public class ConfigUtils {
     private static final String LOGIN_TIME = "login_time";//登录时间
     private static final String UPDATA_TIME = "updata_time";//更新提示时间
     private static final String UPDATA_URL = "updata_url";//更新下载安装包地址
+
+    private static final String COUPON_NO_SEE_DATA = "COUPON_NO_SEE_DATA";
+    private static List<String> couponList;
     private static String url;
     private static UserSession mCurrentUser;
     private static GetGoodsPageListBean dataBean;//新机浏览历史；最多只存5个
@@ -77,6 +87,38 @@ public class ConfigUtils {
             }
         }
         return mCurrentUser;
+    }
+
+    public static void setCoupon(Context context, List<String> coupon_list) {
+        removeCoupon(context);
+        Gson gson = new Gson();
+        String userJson = gson.toJson(coupon_list);
+        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
+        edit.putString(COUPON_NO_SEE_DATA, userJson);
+        edit.commit();
+    }
+
+    public static void removeCoupon(Context context) {
+        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
+        edit.remove(COUPON_NO_SEE_DATA);
+        edit.commit();
+        couponList = null;
+    }
+
+    public synchronized static List<String> getCoupon(Context context) {
+        if (couponList == null) {
+            String userJson = getSharedPreferences(context).getString(COUPON_NO_SEE_DATA, "");
+            if (!TextUtils.isEmpty(userJson)) {
+                try {
+                    Gson gson = new Gson();
+                    couponList = gson.fromJson(userJson, new TypeToken<List<String>>() {
+                    }.getType());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return couponList;
     }
 
     public static void setHomePageItem(Context context, HomePageItem homePageItem) {

@@ -58,6 +58,7 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
         try {
             DataCleanManager.getTotalCacheSize(getContext());
             mDataBinding.tvCache.setText(DataCleanManager.getTotalCacheSize(getContext()));
+            ConfigUtils.removeCoupon(getContext());
         } catch (Exception e) {
             e.printStackTrace();
             mDataBinding.tvCache.setText("0.0M");

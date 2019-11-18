@@ -152,7 +152,6 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
         }
     }
 
-
     FindGoodsOwnerBean findOldGoodByUserCodeBean;
 
     private void doSuccessResponse(boolean refresh, FindGoodsOwnerBean getGoodsPageList) {

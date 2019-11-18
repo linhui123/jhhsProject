@@ -22,12 +22,17 @@ public class MyMemberItemViewHolder extends AbsRecyclerViewHolder<ReqListBean.Re
 
     @Override
     protected void onBindView(final ReqListBean.ResultBean.DataBean item) {
-        mBinding.llMember.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.show(itemView.getContext(), "查看");
-                ServiceRecordActivity.start(itemView.getContext(),item.getBus_code());
-            }
-        });
+        if (item != null) {
+            mBinding.name.setText(item.getNickname());
+            mBinding.phone.setText(item.getMobile());
+            mBinding.llMember.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ToastUtil.show(itemView.getContext(), "查看");
+                    ServiceRecordActivity.start(itemView.getContext(), item.getBus_code());
+                }
+            });
+        }
+
     }
 }

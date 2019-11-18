@@ -156,6 +156,24 @@ public class BusinessFindcategorybyBuscodeBean {
         private int id;
         private String pic_url;
         private int brand_id;
+        private boolean isSelect;
+        private int num;
+
+        public int getNum() {
+            return num;
+        }
+
+        public void setNum(int num) {
+            this.num = num;
+        }
+
+        public boolean isSelect() {
+            return isSelect;
+        }
+
+        public void setSelect(boolean select) {
+            isSelect = select;
+        }
 
         public String getCategoryName() {
             return categoryName;

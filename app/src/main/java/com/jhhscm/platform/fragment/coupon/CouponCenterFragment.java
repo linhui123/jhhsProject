@@ -202,6 +202,13 @@ public class CouponCenterFragment extends AbsFragment<FragmentCouponCenterBindin
                                 if (response != null) {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
+                                        if ("0".equals(response.body().getData().getResult())) {
+                                            ToastUtil.show(getContext(), "领取成功");
+                                        } else if ("2".equals(response.body().getData().getResult())) {
+                                            ToastUtil.show(getContext(), "该券已领取完");
+                                        } else {
+                                            ToastUtil.show(getContext(), "领取失败");
+                                        }
                                         mDataBinding.recyclerview.autoRefresh();
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());

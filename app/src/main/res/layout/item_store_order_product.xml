@@ -26,7 +26,7 @@
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="L-HM 46/68 液压油"
+                android:text=""
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14"
                 android:textStyle="bold" />
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/name"
                 android:layout_marginTop="@dimen/dp_5"
-                android:text="类型：油品"
+                android:text="类型：--"
                 android:textColor="@color/acc9"
                 android:textSize="@dimen/text_size_14" />
 
@@ -49,7 +49,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_toRightOf="@+id/type"
-                android:text="品牌：天津日石"
+                android:text="品牌："
                 android:textColor="@color/acc9"
                 android:textSize="@dimen/text_size_14" />
 

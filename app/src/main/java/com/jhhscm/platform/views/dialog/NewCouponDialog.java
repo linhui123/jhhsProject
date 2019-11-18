@@ -6,19 +6,26 @@ import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.DialogCouponNewBinding;
 import com.jhhscm.platform.databinding.DialogSimpleBinding;
+import com.jhhscm.platform.fragment.coupon.GetNewCouponslistBean;
+import com.jhhscm.platform.tool.ConfigUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewCouponDialog extends BaseDialog {
     private DialogCouponNewBinding mDataBinding;
-    private String title;
-    private String count;
-    private String condition;
+    private GetNewCouponslistBean.ResultBean.DataBean dataBean;
+
     private boolean isCheck;
 
     private CallbackListener mListener;
@@ -29,16 +36,25 @@ public class NewCouponDialog extends BaseDialog {
     }
 
     public NewCouponDialog(Context context, CallbackListener listener) {
-        this(context, null, null, null, listener);
+        this(context, null, listener);
     }
 
-    public NewCouponDialog(Context context, String title, String count, String condition, CallbackListener listener) {
+    public NewCouponDialog(Context context, GetNewCouponslistBean.ResultBean.DataBean dataBean, CallbackListener listener) {
         super(context);
-        setCanceledOnTouchOutside(true);
-        this.condition = condition;
+        setCanceledOnTouchOutside(false);
+        this.dataBean = dataBean;
         this.mListener = listener;
-        this.title = title;
-        this.count = count;
+    }
+
+    @Override
+    public void show() {
+        super.show();
+//        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+//        layoutParams.gravity = Gravity.CENTER;
+//        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+//        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+//        getWindow().getDecorView().setPadding(0, 0, 0, 0);
+//        getWindow().setAttributes(layoutParams);
     }
 
     @Override
@@ -49,8 +65,8 @@ public class NewCouponDialog extends BaseDialog {
 
     @Override
     protected void onInitView(View view) {
-        mDataBinding.count.setText(count);
-        mDataBinding.condition.setText(condition);
+        mDataBinding.count.setText(dataBean.getDiscount() + "");
+        mDataBinding.condition.setText(dataBean.getDesc());
 
         mDataBinding.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -70,6 +86,18 @@ public class NewCouponDialog extends BaseDialog {
         mDataBinding.imClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mDataBinding.check.isChecked()) {
+                    List<String> resultBean = ConfigUtils.getCoupon(getContext());
+                    if (resultBean != null && resultBean.size() > 0) {
+                        if (!resultBean.contains(dataBean.getCode())) {
+                            resultBean.add(dataBean.getCode());
+                        }
+                    } else {
+                        resultBean = new ArrayList<>();
+                        resultBean.add(dataBean.getCode());
+                    }
+                    ConfigUtils.setCoupon(getContext(), resultBean);
+                }
                 dismiss();
             }
         });

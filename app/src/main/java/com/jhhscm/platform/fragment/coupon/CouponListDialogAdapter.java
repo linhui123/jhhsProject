@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.event.GetCouponEvent;
 import com.jhhscm.platform.event.GetRegionEvent;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
 import com.jhhscm.platform.fragment.address.LocationAdapter;
@@ -21,7 +22,7 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import java.util.List;
 
 public class CouponListDialogAdapter extends RecyclerView.Adapter<CouponListDialogAdapter.ViewHolder> {
-    private List<CouponListBean.ResultBean> list;
+    private List<GetNewCouponslistBean.ResultBean.DataBean> list;
     private Context mContext;
     private ItemListener myListener;
 
@@ -29,7 +30,7 @@ public class CouponListDialogAdapter extends RecyclerView.Adapter<CouponListDial
         this.mContext = mContext;
     }
 
-    public CouponListDialogAdapter(List<CouponListBean.ResultBean> list, Context mContext) {
+    public CouponListDialogAdapter(List<GetNewCouponslistBean.ResultBean.DataBean> list, Context mContext) {
         this.list = list;
         this.mContext = mContext;
     }
@@ -38,7 +39,7 @@ public class CouponListDialogAdapter extends RecyclerView.Adapter<CouponListDial
         this.myListener = myListener;
     }
 
-    public void setData(List<CouponListBean.ResultBean> list) {
+    public void setData(List<GetNewCouponslistBean.ResultBean.DataBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -59,29 +60,29 @@ public class CouponListDialogAdapter extends RecyclerView.Adapter<CouponListDial
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.setData(list.get(position));
-//        if (list.get(position).isSelect()) {
-//            holder.tv_name.setTextColor(Color.parseColor("#3977FE"));
-//            holder.im_select.setVisibility(View.VISIBLE);
-//        } else {
-//            holder.tv_name.setTextColor(Color.parseColor("#333333"));
-//            holder.im_select.setVisibility(View.GONE);
-//        }
+        if (list.get(position).isSelect()) {
+            holder.tv_receive.setTextColor(Color.parseColor("#333333"));
+            holder.tv_receive.setBackgroundResource(R.drawable.edit_bg_acc9);
+            holder.tv_receive.setText("已领取");
+        } else {
+            holder.tv_receive.setTextColor(Color.parseColor("#3977FE"));
+            holder.tv_receive.setBackgroundResource(R.drawable.edit_bg_397);
+            holder.tv_receive.setText("领取");
+        }
         holder.tv_name.setText(list.get(position).getName());
         holder.tv_condition.setText(list.get(position).getDesc());
         holder.tv_count.setText(list.get(position).getDiscount() + "元");
-        holder.tv_data.setText(list.get(position).getStart_time().substring(0, 10) + "至"
-                + list.get(position).getEnd_time().substring(0, 10));
+        holder.tv_data.setText(list.get(position).getStartTime().substring(0, 10) + "至"
+                + list.get(position).getEndTime().substring(0, 10));
 
-        holder.rl.setOnClickListener(new View.OnClickListener() {
+        holder.tv_receive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < list.size(); i++) {
-                    list.get(i).setSelect(false);
-                }
                 list.get(position).setSelect(true);
-                if (myListener != null) {
-                    myListener.onItemClick(list.get(position));
-                }
+                EventBusUtil.post(new GetCouponEvent(list.get(position).getCode(), list.get(position).getStartTime(), list.get(position).getEndTime()));
+//                if (myListener != null) {
+//                    myListener.onItemClick(list.get(position));
+//                }
                 notifyDataSetChanged();
             }
         });
@@ -97,9 +98,10 @@ public class CouponListDialogAdapter extends RecyclerView.Adapter<CouponListDial
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        CouponListBean.ResultBean item;
+        GetNewCouponslistBean.ResultBean.DataBean item;
         TextView tv_condition;
         TextView tv_count;
+        TextView tv_receive;
         TextView tv_name;
         TextView tv_data;
         LinearLayout rl;
@@ -109,12 +111,13 @@ public class CouponListDialogAdapter extends RecyclerView.Adapter<CouponListDial
             rl = (LinearLayout) itemView.findViewById(R.id.ll);
             tv_condition = (TextView) itemView.findViewById(R.id.tv_condition);
             tv_count = (TextView) itemView.findViewById(R.id.tv_count);
+            tv_receive = (TextView) itemView.findViewById(R.id.tv_receive);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_data = (TextView) itemView.findViewById(R.id.tv_data);
             tv_name.setOnClickListener(this);
         }
 
-        public void setData(CouponListBean.ResultBean item) {
+        public void setData(GetNewCouponslistBean.ResultBean.DataBean item) {
             this.item = item;
 
         }
@@ -128,7 +131,7 @@ public class CouponListDialogAdapter extends RecyclerView.Adapter<CouponListDial
     }
 
     public interface ItemListener {
-        void onItemClick(CouponListBean.ResultBean item);
+        void onItemClick(GetNewCouponslistBean.ResultBean.DataBean item);
     }
 }
 

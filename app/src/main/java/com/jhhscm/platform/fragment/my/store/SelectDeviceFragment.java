@@ -14,22 +14,29 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentSelectDeviceBinding;
 import com.jhhscm.platform.event.FinishEvent;
+import com.jhhscm.platform.event.StoreDeviceEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
+import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerAction;
+import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
 import com.jhhscm.platform.fragment.my.store.viewholder.MyDeviceSelectItemViewHolder;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
+import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -63,41 +70,51 @@ public class SelectDeviceFragment extends AbsFragment<FragmentSelectDeviceBindin
         mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
-                getCouponList(true);
+                findGoodsOwner(true);
             }
 
             @Override
             public void onLoadMore(RecyclerView view) {
-                getCouponList(false);
+                findGoodsOwner(false);
             }
         });
 
         mDataBinding.tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                List<FindGoodsOwnerBean.DataBean> dataBeans = new ArrayList<>();
+                for (int i = 0; i < mAdapter.getItemCount(); i++) {
+                    if (mAdapter.get(i).isSelect()) {
+                        dataBeans.add(mAdapter.get(i));
+                    }
+                }
+                EventBusUtil.post(new StoreDeviceEvent(dataBeans));
                 getActivity().finish();
             }
         });
     }
 
-    private void getCouponList(final boolean refresh) {
+    /**
+     * 个人中心我的设备列表
+     */
+    private void findGoodsOwner(final boolean refresh) {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
-            Map<String, Object> map = new TreeMap<String, Object>();
-            map.put("page", mCurrentPage);
-            map.put("limit", mShowCount);
-            map.put("article_type_list", 1);
+            Map<String, String> map = new TreeMap<String, String>();
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("page", mCurrentPage + "");
+            map.put("limit", mShowCount + "");
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
-            String sign = SignObject.getSignKey(getActivity(), map, "getArticleList");
+            String sign = Sign.getSignKey(getActivity(), map, "findOldGoodByUserCode");
             NetBean netBean = new NetBean();
-            netBean.setToken("");
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
-            onNewRequestCall(GetArticleListAction.newInstance(getContext(), netBean)
-                    .request(new AHttpService.IResCallback<BaseEntity<GetPageArticleListBean>>() {
+            onNewRequestCall(FindGoodsOwnerAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<FindGoodsOwnerBean>>() {
                         @Override
-                        public void onCallback(int resultCode, Response<BaseEntity<GetPageArticleListBean>> response,
+                        public void onCallback(int resultCode, Response<BaseEntity<FindGoodsOwnerBean>> response,
                                                BaseErrorInfo baseErrorInfo) {
                             if (getView() != null) {
                                 closeDialog();
@@ -107,8 +124,7 @@ public class SelectDeviceFragment extends AbsFragment<FragmentSelectDeviceBindin
                                 if (response != null) {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
-
-                                        initView(refresh, response.body().getData());
+                                        doSuccessResponse(refresh, response.body().getData());
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
@@ -119,18 +135,17 @@ public class SelectDeviceFragment extends AbsFragment<FragmentSelectDeviceBindin
         }
     }
 
-    GetPageArticleListBean getPushListBean;
+    FindGoodsOwnerBean findOldGoodByUserCodeBean;
 
-    private void initView(boolean refresh, GetPageArticleListBean pushListBean) {
-
-        this.getPushListBean = pushListBean;
+    private void doSuccessResponse(boolean refresh, FindGoodsOwnerBean getGoodsPageList) {
+        this.findOldGoodByUserCodeBean = getGoodsPageList;
         if (refresh) {
-            mAdapter.setData(pushListBean.getData());
+            mAdapter.setData(getGoodsPageList.getData());
         } else {
-            mAdapter.append(pushListBean.getData());
+            mAdapter.append(getGoodsPageList.getData());
         }
-        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0,
-                ((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage);
+        mDataBinding.recyclerview.getAdapter().notifyDataSetChanged();
+        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findOldGoodByUserCodeBean.getPage().getTotal() / (float) findOldGoodByUserCodeBean.getPage().getPageSize()) > mCurrentPage);
     }
 
     public void onEvent(FinishEvent event) {
@@ -145,13 +160,13 @@ public class SelectDeviceFragment extends AbsFragment<FragmentSelectDeviceBindin
         EventBusUtil.unregisterEvent(this);
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<GetPageArticleListBean.DataBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<FindGoodsOwnerBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<GetPageArticleListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+        public AbsRecyclerViewHolder<FindGoodsOwnerBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new MyDeviceSelectItemViewHolder(mInflater.inflate(R.layout.item_store_select_device, parent, false));
         }
     }

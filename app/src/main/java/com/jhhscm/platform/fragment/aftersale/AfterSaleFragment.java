@@ -1,8 +1,15 @@
 package com.jhhscm.platform.fragment.aftersale;
 
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +43,7 @@ import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
+import com.jhhscm.platform.permission.YXPermission;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
@@ -43,7 +51,11 @@ import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
+import com.mylhyl.acp.AcpListener;
+import com.mylhyl.acp.AcpOptions;
+import com.tencent.mm.opensdk.utils.Log;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -66,6 +78,9 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
 
     GetRegionBean pRegionBean;
     GetRegionBean cRegionBean;
+
+    private double latitude = 0.0;
+    private double longitude = 0.0;
 
     public static AfterSaleFragment instance() {
         AfterSaleFragment view = new AfterSaleFragment();
@@ -93,17 +108,16 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
         mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
-                getCouponList(true);
+                findBusList(true);
             }
 
             @Override
             public void onLoadMore(RecyclerView view) {
-                getCouponList(false);
+                findBusList(false);
             }
         });
 
         initPrivince();
-        getRegion("1", "");
 
         mDataBinding.back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +125,7 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
                 getActivity().finish();
             }
         });
-
+        getRegion("1", "");
         mDataBinding.location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,27 +136,101 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
                 }
             }
         });
+
+        YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
+                .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
+                .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
+                .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "读写"))
+                .setPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).build(), new AcpListener() {
+            @Override
+            public void onGranted() {
+                getLocation();
+            }
+
+            @Override
+            public void onDenied(List<String> permissions) {
+                if (permissions.contains(Manifest.permission.ACCESS_COARSE_LOCATION) &&
+                        permissions.contains(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    longitude = 0.0;
+                    latitude = 0.0;
+                } else {
+                    getLocation();
+                }
+            }
+        });
     }
 
+    @SuppressLint("MissingPermission")
+    private void getLocation() {
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (location != null) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+            }
+        } else {
+            LocationListener locationListener = new LocationListener() {
 
-    private void getCouponList(final boolean refresh) {
+                // Provider的状态在可用、暂时不可用和无服务三个状态直接切换时触发此函数
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                }
+
+                // Provider被enable时触发此函数，比如GPS被打开
+                @Override
+                public void onProviderEnabled(String provider) {
+
+                }
+
+                // Provider被disable时触发此函数，比如GPS被关闭
+                @Override
+                public void onProviderDisabled(String provider) {
+
+                }
+
+                //当坐标改变时触发此函数，如果Provider传进相同的坐标，它就不会被触发
+                @Override
+                public void onLocationChanged(Location location) {
+                    if (location != null) {
+                        Log.e("Map", "Location changed : Lat: "
+                                + location.getLatitude() + " Lng: "
+                                + location.getLongitude());
+                    }
+                }
+            };
+
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (location != null) {
+                latitude = location.getLatitude(); //经度
+                longitude = location.getLongitude(); //纬度
+            }
+        }
+    }
+
+    private void findBusList(final boolean refresh) {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("page", mCurrentPage);
             map.put("limit", mShowCount);
-            map.put("article_type_list", 1);
+            map.put("v1", longitude + "");
+            map.put("v2", latitude + "");
+            map.put("province", pID);
+            map.put("city", cID);
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
-            String sign = SignObject.getSignKey(getActivity(), map, "getArticleList");
+            String sign = SignObject.getSignKey(getActivity(), map, "findBusList");
             NetBean netBean = new NetBean();
             netBean.setToken("");
             netBean.setSign(sign);
             netBean.setContent(content);
-            onNewRequestCall(GetArticleListAction.newInstance(getContext(), netBean)
-                    .request(new AHttpService.IResCallback<BaseEntity<GetPageArticleListBean>>() {
+            onNewRequestCall(FindBusListAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<FindBusListBean>>() {
                         @Override
-                        public void onCallback(int resultCode, Response<BaseEntity<GetPageArticleListBean>> response,
+                        public void onCallback(int resultCode, Response<BaseEntity<FindBusListBean>> response,
                                                BaseErrorInfo baseErrorInfo) {
                             if (getView() != null) {
                                 closeDialog();
@@ -164,9 +252,9 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
         }
     }
 
-    GetPageArticleListBean getPushListBean;
+    FindBusListBean getPushListBean;
 
-    private void initView(boolean refresh, GetPageArticleListBean pushListBean) {
+    private void initView(boolean refresh, FindBusListBean pushListBean) {
 
         this.getPushListBean = pushListBean;
         if (refresh) {
@@ -178,13 +266,13 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
                 ((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage);
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<GetPageArticleListBean.DataBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<FindBusListBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<GetPageArticleListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+        public AbsRecyclerViewHolder<FindBusListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new AfterSaleViewHolder(mInflater.inflate(R.layout.item_aftersale_store, parent, false));
         }
     }
@@ -205,8 +293,8 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
                 mDataBinding.llArea.setVisibility(View.GONE);
                 mDataBinding.recyclerview.autoRefresh();
             } else if (event.type.equals("0")) {//全部点击
-                cID = event.pid;
-                cName = event.name;
+                cID = "";
+                pID = "";
                 mDataBinding.location.setText("选择地区");
                 mDataBinding.llArea.setVisibility(View.GONE);
                 mDataBinding.recyclerview.autoRefresh();
@@ -251,7 +339,7 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
                                                 resultBean.setId(0);
                                                 resultBean.setType(0);
                                                 pRegionBean.getResult().add(0, resultBean);
-                                                pID = getRegionBean.getResult().get(0).getId() + "";
+                                                pID = "";
                                                 pAdapter.setData(pRegionBean.getResult());
                                                 getRegion("2", getRegionBean.getResult().get(0).getId() + "");
                                             } else {

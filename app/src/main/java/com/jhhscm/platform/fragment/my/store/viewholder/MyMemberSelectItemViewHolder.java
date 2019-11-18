@@ -7,11 +7,13 @@ import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemStoreMemberBinding;
 import com.jhhscm.platform.databinding.ItemStoreSelectMemberBinding;
 import com.jhhscm.platform.event.FinishEvent;
+import com.jhhscm.platform.event.StoreUserEvent;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
+import com.jhhscm.platform.fragment.invitation.ReqListBean;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 
-public class MyMemberSelectItemViewHolder extends AbsRecyclerViewHolder<GetPageArticleListBean.DataBean> {
+public class MyMemberSelectItemViewHolder extends AbsRecyclerViewHolder<ReqListBean.ResultBean.DataBean> {
 
     private ItemStoreSelectMemberBinding mBinding;
     private boolean isSelect;
@@ -22,9 +24,10 @@ public class MyMemberSelectItemViewHolder extends AbsRecyclerViewHolder<GetPageA
     }
 
     @Override
-    protected void onBindView(final GetPageArticleListBean.DataBean item) {
+    protected void onBindView(final ReqListBean.ResultBean.DataBean item) {
 
-
+        mBinding.name.setText(item.getNickname());
+        mBinding.phone.setText(item.getMobile());
         if (isSelect) {
             mBinding.tvSelect.setImageResource(R.mipmap.ic_shoping_s1);
         } else {
@@ -42,6 +45,7 @@ public class MyMemberSelectItemViewHolder extends AbsRecyclerViewHolder<GetPageA
                     isSelect = true;
                     mBinding.tvSelect.setImageResource(R.mipmap.ic_shoping_s1);
                 }
+                EventBusUtil.post(new StoreUserEvent(item.getUser_code(), item.getNickname(), item.getMobile()));
                 EventBusUtil.post(new FinishEvent(1));
             }
         });

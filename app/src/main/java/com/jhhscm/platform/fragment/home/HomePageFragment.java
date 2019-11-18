@@ -33,7 +33,12 @@ import com.jhhscm.platform.databinding.FragmentHomePageBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.event.FinishEvent;
 import com.jhhscm.platform.event.ForceCloseEvent;
+import com.jhhscm.platform.event.GetCouponEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.coupon.GetCouponAction;
+import com.jhhscm.platform.fragment.coupon.GetNewCouponslistAction;
+import com.jhhscm.platform.fragment.coupon.GetNewCouponslistBean;
+import com.jhhscm.platform.fragment.coupon.IsNewUserAction;
 import com.jhhscm.platform.fragment.home.action.FindBrandHomePageAction;
 import com.jhhscm.platform.fragment.home.action.FindCategoryHomePageAction;
 import com.jhhscm.platform.fragment.home.action.FindLabourReleaseHomePageAction;
@@ -51,6 +56,7 @@ import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
+import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.jpush.ExampleUtil;
@@ -63,6 +69,8 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.dialog.NewCouponDialog;
+import com.jhhscm.platform.views.dialog.NewCouponListDialog;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
 import com.jhhscm.platform.views.dialog.UpdateDialog;
@@ -71,6 +79,7 @@ import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -143,6 +152,9 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                 getAD(5);//首页活动位
                 getAD(6);
                 findBrandHomePage();
+
+                isNewUser();
+                getCouponslist();
             }
 
             @Override
@@ -152,6 +164,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
 
         initTel();
         checkVersion();
+
         mDataBinding.msgImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -522,6 +535,256 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                     }
                 }));
     }
+
+    /**
+     * 判断是否新人
+     */
+    private void isNewUser() {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+        map.put("type", "0");
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getActivity(), map, "isNewUser");
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(IsNewUserAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    if ("0".equals(response.body().getData().getResult())) {
+                                        getNewCouponslist();
+                                    }
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    /**
+     * 新人优惠券GetNewCouponslistAction
+     */
+    private void getNewCouponslist() {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+        map.put("type", "1");
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getActivity(), map, "isNewUser 新人");
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(GetNewCouponslistAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<GetNewCouponslistBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<GetNewCouponslistBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    initShowNewCouponDialog(response.body().getData());
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    private void initShowNewCouponDialog(GetNewCouponslistBean getNewCouponslistBean) {
+        //缓存本地
+        List<String> resultBean = ConfigUtils.getCoupon(getContext());
+        boolean is_show = false;
+
+        if (getNewCouponslistBean != null &&
+                getNewCouponslistBean.getResult() != null
+                && getNewCouponslistBean.getResult().getData() != null) {
+            if (getNewCouponslistBean.getResult().getData().size() > 1) {
+                if (resultBean != null && resultBean.size() > 0) {
+
+                    for (GetNewCouponslistBean.ResultBean.DataBean dataBean2 : getNewCouponslistBean.getResult().getData()) {
+                        if (!resultBean.contains(dataBean2.getCode())) {
+                            is_show = true;
+                        }
+                    }
+
+                } else {
+                    is_show = true;
+                }
+                if (is_show) {
+                    new NewCouponListDialog(getContext(), "新人专享券", getNewCouponslistBean.getResult().getData(),
+                            new NewCouponListDialog.CallbackListener() {
+                                @Override
+                                public void clickYes() {
+
+                                }
+                            }).show();
+                }
+
+            } else {
+                if (resultBean != null && !resultBean.contains(getNewCouponslistBean.getResult().getData().get(0).getCode())) {
+                    new NewCouponDialog(getContext(),
+                            getNewCouponslistBean.getResult().getData().get(0),
+                            new NewCouponDialog.CallbackListener() {
+                                @Override
+                                public void clickYes() {
+
+                                }
+                            }).show();
+                } else {
+                    new NewCouponDialog(getContext(),
+                            getNewCouponslistBean.getResult().getData().get(0),
+                            new NewCouponDialog.CallbackListener() {
+                                @Override
+                                public void clickYes() {
+
+                                }
+                            }).show();
+                }
+            }
+        }
+    }
+
+    /**
+     * 满减优惠券
+     */
+    private void getCouponslist() {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+        map.put("type", "0");
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getActivity(), map, "isNewUser 满减");
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(GetNewCouponslistAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<GetNewCouponslistBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<GetNewCouponslistBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    initShowCouponDialog(response.body().getData());
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    private void initShowCouponDialog(GetNewCouponslistBean getNewCouponslistBean) {
+        //缓存本地
+        List<String> resultBean = ConfigUtils.getCoupon(getContext());
+        boolean is_show = false;
+
+        if (getNewCouponslistBean != null &&
+                getNewCouponslistBean.getResult() != null
+                && getNewCouponslistBean.getResult().getData() != null) {
+            if (getNewCouponslistBean.getResult().getData().size() > 1) {
+                if (resultBean != null && resultBean.size() > 0) {
+
+                    for (GetNewCouponslistBean.ResultBean.DataBean dataBean2 : getNewCouponslistBean.getResult().getData()) {
+                        if (!resultBean.contains(dataBean2.getCode())) {
+                            is_show = true;
+                        }
+                    }
+
+                } else {
+                    is_show = true;
+                }
+                if (is_show) {
+                    new NewCouponListDialog(getContext(), "满减优惠券", getNewCouponslistBean.getResult().getData(),
+                            new NewCouponListDialog.CallbackListener() {
+                                @Override
+                                public void clickYes() {
+
+                                }
+                            }).show();
+                }
+
+            }
+        }
+    }
+
+    public void onEvent(GetCouponEvent event) {
+        if (event.coupon_code != null
+                && event.start != null && event.end != null) {
+            getCoupon(event.coupon_code, event.start, event.end);
+        }
+    }
+
+    /**
+     * 领取优惠卷
+     */
+    private void getCoupon(String coupon_code, String start, String end) {
+        if (getContext() != null) {
+            Map<String, Object> map = new TreeMap<String, Object>();
+            map.put("coupon_code", coupon_code);
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("coupon_b_time", start);
+            map.put("coupon_e_time", end);
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = SignObject.getSignKey(getActivity(), map, "getCoupon");
+            NetBean netBean = new NetBean();
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(GetCouponAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                        if ("0".equals(response.body().getData().getResult())) {
+                                            ToastUtil.show(getContext(), "领取成功");
+                                        } else if ("2".equals(response.body().getData().getResult())) {
+                                            ToastUtil.show(getContext(), "该券已领取完");
+                                        } else {
+                                            ToastUtil.show(getContext(), "领取失败");
+                                        }
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
+    }
+
 
     /**
      * 版本更新查询

@@ -25,6 +25,6 @@ public class FindCategoryAction extends AHttpService<BaseEntity<FindCategoryBean
 
     @Override
     protected Call newRetrofitCall(ApiService apiService) {
-        return apiService.findCategory(netBean);
+        return apiService.findCategory_v3(netBean);
     }
 }

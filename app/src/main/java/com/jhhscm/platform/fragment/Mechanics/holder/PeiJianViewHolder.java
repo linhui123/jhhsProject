@@ -3,6 +3,7 @@ package com.jhhscm.platform.fragment.Mechanics.holder;
 import android.view.View;
 
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.StoreDetailActivity;
 import com.jhhscm.platform.activity.h5.H5PeiJianActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemMechanicsPeijianBinding;
@@ -24,7 +25,18 @@ public class PeiJianViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.Da
         if (item.getPic_url() != null) {
             ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.im);
         }
-        mBinding.tvStore.setText("合作商家名称>");
+        if (item.getBus_name() != null && item.getBus_name().length() > 0) {
+            mBinding.tvStore.setText(item.getBus_name() + ">");
+            mBinding.tvStore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    StoreDetailActivity.start(itemView.getContext());
+                }
+            });
+        } else {
+            mBinding.tvStore.setText("骏惠自营>");
+        }
+
         mBinding.tv1.setText(item.getName());
         mBinding.tv2.setText(item.getCounter_price() != null ? "￥" + item.getCounter_price() : "￥ --");
         mBinding.tv3.setText(item.getSale_num() != null ? "已售出 " + item.getSale_num() + " 件" : "已售出 --件");

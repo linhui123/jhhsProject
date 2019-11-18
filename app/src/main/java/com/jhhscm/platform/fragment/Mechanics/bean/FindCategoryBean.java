@@ -141,6 +141,7 @@ public class FindCategoryBean implements Serializable {
          * counter_price : 0
          * name : 履带轮子01
          * id : 27
+         *  "bus_name":"小崔商户"
          * pic_url : https://wajuejifiles.oss-cn-beijing.aliyuncs.com/C%3A%5CUsers%5CAdministrator%5CDesktop%5C%E5%B7%A5%E5%85%B7%E7%AE%B1%5Ctest.png
          */
         private String good_code;
@@ -149,6 +150,15 @@ public class FindCategoryBean implements Serializable {
         private String name;
         private String id;
         private String pic_url;
+        private String bus_name;
+
+        public String getBus_name() {
+            return bus_name;
+        }
+
+        public void setBus_name(String bus_name) {
+            this.bus_name = bus_name;
+        }
 
         public String getGood_code() {
             return good_code;

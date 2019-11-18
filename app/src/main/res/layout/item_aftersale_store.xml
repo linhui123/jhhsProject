@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="店铺名称"
+                android:text=""
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
 
@@ -47,7 +47,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:layout_marginTop="@dimen/dp_5"
-                android:text="店铺地址"
+                android:text=""
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14" />
 
@@ -72,7 +72,7 @@
                 android:layout_alignParentBottom="true"
                 android:maxLines="1"
                 android:layout_marginRight="@dimen/dp_5"
-                android:text="距离2km"
+                android:text="距离-km"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
         </RelativeLayout>
