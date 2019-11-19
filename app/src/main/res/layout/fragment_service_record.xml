@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/dp_1"
                     android:paddingBottom="@dimen/dp_1"
-                    android:text="张三"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_16"
                     android:textStyle="bold" />
@@ -47,12 +47,11 @@
                 <TextView
                     android:id="@+id/phone"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="@dimen/padding_15"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/username"
                     android:paddingTop="@dimen/dp_1"
                     android:paddingBottom="@dimen/dp_1"
-                    android:text="18030001100"
+                    android:text="180"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_16"
                     android:textStyle="bold" />
@@ -63,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/username"
                     android:layout_marginTop="@dimen/dp_5"
-                    android:text="共3台设备记录"
+                    android:text="共--台设备记录"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
             </RelativeLayout>

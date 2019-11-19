@@ -38,7 +38,7 @@ public class StoreOrderProductItemViewHolder extends AbsRecyclerViewHolder<Busin
         mBinding.price.setText("品牌：" + item.getCounter_price() + "");
 
 
-        mBinding.ll.setOnClickListener(new View.OnClickListener() {
+        mBinding.tvSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (item.isSelect()) {
@@ -47,6 +47,7 @@ public class StoreOrderProductItemViewHolder extends AbsRecyclerViewHolder<Busin
                 } else {
                     item.setSelect(true);
                     mBinding.tvSelect.setImageResource(R.mipmap.ic_shoping_s1);
+                    item.setNum(Integer.parseInt(mBinding.tvNum.getText().toString()));
                 }
                 EventBusUtil.post(new RefreshEvent());
             }

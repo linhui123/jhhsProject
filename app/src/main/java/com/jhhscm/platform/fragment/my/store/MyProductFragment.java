@@ -92,6 +92,7 @@ public class MyProductFragment extends AbsFragment<FragmentMyProductBinding> {
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("page", mCurrentPage);
             map.put("limit", mShowCount);
+            map.put("keyword", mDataBinding.searchContent.getText().toString().trim());
             map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.InvitationRegisterActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.StoreOrderSubmit1Activity;
 import com.jhhscm.platform.activity.StoreOrderSubmit2Activity;
@@ -79,7 +80,8 @@ public class MyStoreFragment extends AbsFragment<FragmentMyStoreBinding> {
         mDataBinding.invite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //邀请注册
+                InvitationRegisterActivity.start(getContext());
             }
         });
 
@@ -155,12 +157,14 @@ public class MyStoreFragment extends AbsFragment<FragmentMyStoreBinding> {
                                     if (response.body().getCode().equals("200")) {
                                         if (response.body().getData().getResult() != null
                                                 && response.body().getData().getResult().size() > 0) {
-                                            mDataBinding.tvIncomeNum.setText(response.body().getData().getResult().get(0).getSum_goods_price()+"");
-                                            mDataBinding.tvMIncomeNum.setText(response.body().getData().getResult().get(0).getSum_goods_price_all()+"");
-                                            mDataBinding.tvMMemberNum.setText(response.body().getData().getResult().get(0).getSum_users()+"");
-                                            mDataBinding.tvGMemberNum.setText(response.body().getData().getResult().get(0).getSum_users_all()+"");
+                                            mDataBinding.tvIncomeNum.setText(response.body().getData().getResult().get(0).getSum_goods_price() + "");
+                                            mDataBinding.tvMIncomeNum.setText(response.body().getData().getResult().get(0).getSum_goods_price_all() + "");
+                                            mDataBinding.tvMMemberNum.setText(response.body().getData().getResult().get(0).getSum_users() + "");
+                                            mDataBinding.tvGMemberNum.setText(response.body().getData().getResult().get(0).getSum_users_all() + "");
                                             mDataBinding.username.setText(response.body().getData().getResult().get(0).getBus_name());
-                                            mDataBinding.tvStoreNum.setText(response.body().getData().getResult().get(0).getBus_name());
+                                            mDataBinding.tvStoreNum.setText(response.body().getData().getResult().get(0).getProvince_name()
+                                                    + " " + response.body().getData().getResult().get(0).getCity_name()
+                                                    + " " + response.body().getData().getResult().get(0).getAddress_detail());
                                         }
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());

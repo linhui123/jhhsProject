@@ -141,7 +141,7 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
     private void findOrderList(final boolean refresh, final String type) {
         mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("user_code", userSession.getUserCode());
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         map.put("order_type", type);
         map.put("page", mCurrentPage + "");
         map.put("limit", mShowCount + "");
@@ -149,7 +149,7 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "findOrderList: " + "type");
         NetBean netBean = new NetBean();
-        netBean.setToken(userSession.getToken());
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(FindOrderListAction.newInstance(getContext(), netBean)
@@ -225,7 +225,7 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getContext(), map, "findOrder");
         NetBean netBean = new NetBean();
-        netBean.setToken(userSession.getToken());
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(FindOrderAction.newInstance(getContext(), netBean)
@@ -272,7 +272,7 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getContext(), map, "delOrder");
         NetBean netBean = new NetBean();
-        netBean.setToken(userSession.getToken());
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(DelOrderAction.newInstance(getContext(), netBean)

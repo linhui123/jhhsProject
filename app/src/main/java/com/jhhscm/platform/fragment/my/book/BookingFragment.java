@@ -24,6 +24,7 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentBookingBinding;
 import com.jhhscm.platform.databinding.FragmentMyMemberBinding;
+import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.GetComboBoxAction;
 import com.jhhscm.platform.fragment.Mechanics.adapter.SXDropAdapter;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
@@ -39,8 +40,10 @@ import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.DataUtil;
 import com.jhhscm.platform.tool.Des;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
@@ -63,6 +66,9 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
     private int mCurrentPage = 1;
     private final int START_PAGE = mCurrentPage;
 
+    private String incomeType = "";
+    private String payType = "";
+
     public static BookingFragment instance() {
         BookingFragment view = new BookingFragment();
         return view;
@@ -75,6 +81,7 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
 
     @Override
     protected void setupViews() {
+        EventBusUtil.registerEvent(this);
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.recyclerview.setAdapter(mAdapter);
@@ -92,6 +99,7 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
         });
 
         initSelect();
+        allSum();
 
         mDataBinding.income.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,8 +115,8 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
             }
         });
 
-        getComboBox("goods_power");
-        getComboBox("goods_ton");
+        getComboBox("bus_tool_in");
+        getComboBox("bus_tool_out");
     }
 
     private void initSelect() {
@@ -200,7 +208,7 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
                 mDataBinding.llType.setVisibility(View.GONE);
                 mDataBinding.recyclerview.autoRefresh();
                 mDataBinding.data.setText(mDataBinding.startTime.getText().toString() + " - " + mDataBinding.endTime.getText().toString() + " 明细");
-
+                allSum();
             }
         });
 
@@ -211,6 +219,7 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
                 mDataBinding.llTime.setVisibility(View.GONE);
                 mDataBinding.llType.setVisibility(View.GONE);
                 mDataBinding.recyclerview.autoRefresh();
+                allSum();
             }
         });
 
@@ -253,6 +262,50 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
                 mDataBinding.llType.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void allSum() {
+        if (getContext() != null) {
+            Map<String, Object> map = new TreeMap<String, Object>();
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("in_type", incomeType);
+            map.put("out_type", payType);
+            map.put("startTime", mDataBinding.startTime.getText().toString().trim());
+            map.put("endTime", mDataBinding.endTime.getText().toString().trim());
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = SignObject.getSignKey(getActivity(), map, "allSum");
+            NetBean netBean = new NetBean();
+            netBean.setToken("");
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(AllSumAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<AllSumBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<AllSumBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                        AllSumBean allSumBean = response.body().getData();
+                                        if (allSumBean != null && allSumBean.getData() != null) {
+                                            mDataBinding.tvUn.setText(allSumBean.getData().getPrice_2());
+                                            mDataBinding.tvAccepted.setText(allSumBean.getData().getPrice_1());
+                                            mDataBinding.tvPay.setText(allSumBean.getData().getPrice_3());
+                                        }
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
     }
 
     private void getCouponList(final boolean refresh) {
@@ -327,7 +380,7 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
         map.put("key_group_name", name);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "getComboBox:" + "name");
+        String sign = Sign.getSignKey(getActivity(), map, "getComboBox:" + name);
         NetBean netBean = new NetBean();
         netBean.setToken("");
         netBean.setSign(sign);
@@ -343,9 +396,9 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
                             }
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
-                                    if ("goods_power".equals(name)) {
+                                    if ("bus_tool_in".equals(name)) {
                                         income(response.body().getData());
-                                    } else if ("goods_ton".equals(name)) {
+                                    } else if ("bus_tool_out".equals(name)) {
                                         pay(response.body().getData());
                                     }
                                 } else {
@@ -373,7 +426,9 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
         mDataBinding.incomeLabels.setOnLabelSelectChangeListener(new LabelsView.OnLabelSelectChangeListener() {
             @Override
             public void onLabelSelectChange(TextView label, Object data, boolean isSelect, int position) {
-
+                GetComboBoxBean.ResultBean re = (GetComboBoxBean.ResultBean) data;
+                incomeType = re.getKey_name();
+                allSum();
             }
         });
     }
@@ -391,8 +446,20 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
         mDataBinding.payLabels.setOnLabelSelectChangeListener(new LabelsView.OnLabelSelectChangeListener() {
             @Override
             public void onLabelSelectChange(TextView label, Object data, boolean isSelect, int position) {
-
+                GetComboBoxBean.ResultBean re = (GetComboBoxBean.ResultBean) data;
+                payType = re.getKey_name();
+                allSum();
             }
         });
+    }
+
+    public void onEvent(RefreshEvent event) {
+        allSum();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregisterEvent(this);
     }
 }

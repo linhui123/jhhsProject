@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
@@ -15,6 +16,8 @@ import com.jhhscm.platform.event.FinishEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
+import com.jhhscm.platform.fragment.my.store.action.FindBusGoodsOwnerListByUserCodeAction;
+import com.jhhscm.platform.fragment.my.store.action.FindBusGoodsOwnerListByUserCodeBean;
 import com.jhhscm.platform.fragment.my.store.action.FindBusUserServerListAction;
 import com.jhhscm.platform.fragment.my.store.action.FindBusUserServerListBean;
 import com.jhhscm.platform.fragment.my.store.viewholder.ServiceRecordViewHolder;
@@ -38,6 +41,10 @@ import retrofit2.Response;
 public class ServiceRecordFragment extends AbsFragment<FragmentServiceRecordBinding> {
 
     private String busCode;
+
+    private String user_code = "";
+    private String name = "";
+    private String phone = "";
     private InnerAdapter mAdapter;
     private int mShowCount = 10;
     private int mCurrentPage = 1;
@@ -58,7 +65,15 @@ public class ServiceRecordFragment extends AbsFragment<FragmentServiceRecordBind
         EventBusUtil.registerEvent(this);
 //        mDataBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext()));
         busCode = getArguments().getString("code");
-        if (busCode != null) {
+        name = getArguments().getString("name");
+        phone = getArguments().getString("phone");
+        user_code = getArguments().getString("user_code");
+        if (name != null) {
+            mDataBinding.username.setText(name + " ");
+        }
+        mDataBinding.phone.setText(phone);
+
+        if (busCode != null && user_code != null) {
             mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
             mAdapter = new InnerAdapter(getContext());
             mDataBinding.recyclerview.setAdapter(mAdapter);
@@ -66,36 +81,36 @@ public class ServiceRecordFragment extends AbsFragment<FragmentServiceRecordBind
             mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
                 @Override
                 public void onRefresh(RecyclerView view) {
-                    findBusUserServerList(true);
+                    findBusGoodsOwnerListByUserCode(true);
                 }
 
                 @Override
                 public void onLoadMore(RecyclerView view) {
-                    findBusUserServerList(false);
+                    findBusGoodsOwnerListByUserCode(false);
                 }
             });
         }
     }
 
-    private void findBusUserServerList(final boolean refresh) {
+    private void findBusGoodsOwnerListByUserCode(final boolean refresh) {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("page", mCurrentPage);
             map.put("limit", mShowCount);
-            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
-            map.put("bus_code", busCode);
+            map.put("user_code", user_code);
+            map.put("bus_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
-            String sign = SignObject.getSignKey(getActivity(), map, "findBusUserServerList");
+            String sign = SignObject.getSignKey(getActivity(), map, "findBusGoodsOwnerListByUserCode");
             NetBean netBean = new NetBean();
             netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
-            onNewRequestCall(FindBusUserServerListAction.newInstance(getContext(), netBean)
-                    .request(new AHttpService.IResCallback<BaseEntity<FindBusUserServerListBean>>() {
+            onNewRequestCall(FindBusGoodsOwnerListByUserCodeAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<FindBusGoodsOwnerListByUserCodeBean>>() {
                         @Override
-                        public void onCallback(int resultCode, Response<BaseEntity<FindBusUserServerListBean>> response,
+                        public void onCallback(int resultCode, Response<BaseEntity<FindBusGoodsOwnerListByUserCodeBean>> response,
                                                BaseErrorInfo baseErrorInfo) {
                             if (getView() != null) {
                                 closeDialog();
@@ -117,17 +132,17 @@ public class ServiceRecordFragment extends AbsFragment<FragmentServiceRecordBind
         }
     }
 
-    FindBusUserServerListBean getPushListBean;
+    FindBusGoodsOwnerListByUserCodeBean getPushListBean;
 
-    private void initView(boolean refresh, FindBusUserServerListBean pushListBean) {
-
+    private void initView(boolean refresh, FindBusGoodsOwnerListByUserCodeBean pushListBean) {
+        mDataBinding.tvStoreNum.setText("共" + pushListBean.getSum() + "台设备记录");
         this.getPushListBean = pushListBean;
         if (refresh) {
             mAdapter.setData(pushListBean.getResult().getData());
         } else {
             mAdapter.append(pushListBean.getResult().getData());
         }
-        mDataBinding.recyclerview.loadComplete(false,false);
+        mDataBinding.recyclerview.loadComplete(false, false);
 //        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0,
 //                ((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage);
     }
@@ -144,14 +159,14 @@ public class ServiceRecordFragment extends AbsFragment<FragmentServiceRecordBind
         EventBusUtil.unregisterEvent(this);
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<FindBusUserServerListBean.ResultBean.DataBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<FindBusGoodsOwnerListByUserCodeBean.ResultBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<FindBusUserServerListBean.ResultBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ServiceRecordViewHolder(mInflater.inflate(R.layout.item_service_record, parent, false));
+        public AbsRecyclerViewHolder<FindBusGoodsOwnerListByUserCodeBean.ResultBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new ServiceRecordViewHolder(mInflater.inflate(R.layout.item_service_record, parent, false), user_code);
         }
     }
 }

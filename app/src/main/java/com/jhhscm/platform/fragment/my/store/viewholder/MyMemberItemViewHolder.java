@@ -28,8 +28,8 @@ public class MyMemberItemViewHolder extends AbsRecyclerViewHolder<ReqListBean.Re
             mBinding.llMember.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtil.show(itemView.getContext(), "查看");
-                    ServiceRecordActivity.start(itemView.getContext(), item.getBus_code());
+                    ServiceRecordActivity.start(itemView.getContext(), item.getBus_code(), item.getUser_code()
+                            , item.getNickname(), item.getMobile());
                 }
             });
         }

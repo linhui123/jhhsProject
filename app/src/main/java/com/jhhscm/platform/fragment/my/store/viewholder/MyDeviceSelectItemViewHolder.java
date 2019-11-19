@@ -9,6 +9,7 @@ import com.jhhscm.platform.databinding.ItemStoreSelectMemberBinding;
 import com.jhhscm.platform.event.FinishEvent;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
+import com.jhhscm.platform.fragment.my.store.action.FindUserGoodsOwnerBean;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.views.selector.ImageSelectorItem;
 import com.jhhscm.platform.views.selector.ImageSelectorPreviewActivity;
@@ -16,7 +17,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
-public class MyDeviceSelectItemViewHolder extends AbsRecyclerViewHolder<FindGoodsOwnerBean.DataBean> {
+public class MyDeviceSelectItemViewHolder extends AbsRecyclerViewHolder<FindUserGoodsOwnerBean.DataBean> {
 
     private ItemStoreSelectDeviceBinding mBinding;
 
@@ -26,11 +27,11 @@ public class MyDeviceSelectItemViewHolder extends AbsRecyclerViewHolder<FindGood
     }
 
     @Override
-    protected void onBindView(final FindGoodsOwnerBean.DataBean item) {
-        mBinding.tvName.setText(item.getName());
-        mBinding.tv1.setText(item.getBrand_name());
-        mBinding.tv2.setText(item.getFixp17());
-        mBinding.tv3.setText(item.getFcatory_time());
+    protected void onBindView(final FindUserGoodsOwnerBean.DataBean item) {
+        mBinding.tvName.setText("设备名称："+item.getName());
+        mBinding.tv1.setText("品牌："+item.getBrand_name());
+        mBinding.tv2.setText("型号："+item.getFixp17());
+        mBinding.tv3.setText("出厂时间："+item.getFcatory_time());
         if (item.getPic_gallery_url_list() != null && item.getPic_gallery_url_list().length() > 10) {
             String listString = item.getPic_gallery_url_list().replace("[\"", "").replace("\"]", "");
             final String[] strs = listString.split("\",\"");

@@ -68,9 +68,9 @@
             <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/padding_15"
-                android:layout_marginRight="15dp"
-                android:layout_height="wrap_content"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+                android:layout_marginRight="15dp"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
 
         </LinearLayout>
 
@@ -99,7 +99,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="配件费"
+                    android:text="配件费（元）"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_14" />
 
@@ -108,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="￥1600.00"
+                    android:text="0.0"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_14" />
 
@@ -132,7 +132,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="工时费"
+                    android:text="工时费（元）"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_14" />
 
@@ -167,7 +167,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="合计"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="0dp"
+                    android:text="合计(元)"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_14" />
 
@@ -176,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="￥1600.00"
+                    android:text="0.0"
                     android:textColor="@color/ff1a"
                     android:textSize="@dimen/text_size_14" />
 

@@ -20,6 +20,8 @@ import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerAction;
 import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
+import com.jhhscm.platform.fragment.my.store.action.FindUserGoodsOwnerAction;
+import com.jhhscm.platform.fragment.my.store.action.FindUserGoodsOwnerBean;
 import com.jhhscm.platform.fragment.my.store.viewholder.MyDeviceSelectItemViewHolder;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -31,6 +33,7 @@ import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
@@ -48,6 +51,7 @@ public class SelectDeviceFragment extends AbsFragment<FragmentSelectDeviceBindin
     private int mShowCount = 10;
     private int mCurrentPage = 1;
     private final int START_PAGE = mCurrentPage;
+    private String phone;
 
     public static SelectDeviceFragment instance() {
         SelectDeviceFragment view = new SelectDeviceFragment();
@@ -62,59 +66,68 @@ public class SelectDeviceFragment extends AbsFragment<FragmentSelectDeviceBindin
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
-        mDataBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext()));
-        mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new InnerAdapter(getContext());
-        mDataBinding.recyclerview.setAdapter(mAdapter);
-        mDataBinding.recyclerview.autoRefresh();
-        mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
-            @Override
-            public void onRefresh(RecyclerView view) {
-                findGoodsOwner(true);
-            }
-
-            @Override
-            public void onLoadMore(RecyclerView view) {
-                findGoodsOwner(false);
-            }
-        });
-
-        mDataBinding.tvNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<FindGoodsOwnerBean.DataBean> dataBeans = new ArrayList<>();
-                for (int i = 0; i < mAdapter.getItemCount(); i++) {
-                    if (mAdapter.get(i).isSelect()) {
-                        dataBeans.add(mAdapter.get(i));
-                    }
+        phone = getArguments().getString("phone");
+        if (phone != null && phone.length() > 0) {
+            mDataBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext()));
+            mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+            mAdapter = new InnerAdapter(getContext());
+            mDataBinding.recyclerview.setAdapter(mAdapter);
+            mDataBinding.recyclerview.autoRefresh();
+            mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
+                @Override
+                public void onRefresh(RecyclerView view) {
+                    findUserGoodsOwner(true);
                 }
-                EventBusUtil.post(new StoreDeviceEvent(dataBeans));
-                getActivity().finish();
-            }
-        });
+
+                @Override
+                public void onLoadMore(RecyclerView view) {
+                    findUserGoodsOwner(false);
+                }
+            });
+
+            mDataBinding.tvNext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    List<FindUserGoodsOwnerBean.DataBean> dataBeans = new ArrayList<>();
+                    for (int i = 0; i < mAdapter.getItemCount(); i++) {
+                        if (mAdapter.get(i).isSelect()) {
+                            dataBeans.add(mAdapter.get(i));
+                        }
+                    }
+                    EventBusUtil.post(new StoreDeviceEvent(dataBeans));
+                    getActivity().finish();
+                }
+            });
+        } else {
+            ToastUtil.show(getContext(), "用户手机号不能为空");
+            getActivity().finish();
+        }
+
+
     }
 
     /**
-     * 个人中心我的设备列表
+     * v1-3/busorder/findUserGoodsOwner
+     * 商户创建订单选择用户列表
      */
-    private void findGoodsOwner(final boolean refresh) {
+    private void findUserGoodsOwner(final boolean refresh) {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, String> map = new TreeMap<String, String>();
-            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("mobile", phone);
             map.put("page", mCurrentPage + "");
             map.put("limit", mShowCount + "");
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
-            String sign = Sign.getSignKey(getActivity(), map, "findOldGoodByUserCode");
+            String sign = Sign.getSignKey(getActivity(), map, "findUserGoodsOwner");
             NetBean netBean = new NetBean();
             netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
-            onNewRequestCall(FindGoodsOwnerAction.newInstance(getContext(), netBean)
-                    .request(new AHttpService.IResCallback<BaseEntity<FindGoodsOwnerBean>>() {
+            onNewRequestCall(FindUserGoodsOwnerAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<FindUserGoodsOwnerBean>>() {
                         @Override
-                        public void onCallback(int resultCode, Response<BaseEntity<FindGoodsOwnerBean>> response,
+                        public void onCallback(int resultCode, Response<BaseEntity<FindUserGoodsOwnerBean>> response,
                                                BaseErrorInfo baseErrorInfo) {
                             if (getView() != null) {
                                 closeDialog();
@@ -135,17 +148,17 @@ public class SelectDeviceFragment extends AbsFragment<FragmentSelectDeviceBindin
         }
     }
 
-    FindGoodsOwnerBean findOldGoodByUserCodeBean;
+    FindUserGoodsOwnerBean findOldGoodByUserCodeBean;
 
-    private void doSuccessResponse(boolean refresh, FindGoodsOwnerBean getGoodsPageList) {
+    private void doSuccessResponse(boolean refresh, FindUserGoodsOwnerBean getGoodsPageList) {
         this.findOldGoodByUserCodeBean = getGoodsPageList;
         if (refresh) {
             mAdapter.setData(getGoodsPageList.getData());
         } else {
             mAdapter.append(getGoodsPageList.getData());
         }
-        mDataBinding.recyclerview.getAdapter().notifyDataSetChanged();
-        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findOldGoodByUserCodeBean.getPage().getTotal() / (float) findOldGoodByUserCodeBean.getPage().getPageSize()) > mCurrentPage);
+        mDataBinding.recyclerview.loadComplete(true,false);
+//        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findOldGoodByUserCodeBean.getPage().getTotal() / (float) findOldGoodByUserCodeBean.getPage().getPageSize()) > mCurrentPage);
     }
 
     public void onEvent(FinishEvent event) {
@@ -160,13 +173,13 @@ public class SelectDeviceFragment extends AbsFragment<FragmentSelectDeviceBindin
         EventBusUtil.unregisterEvent(this);
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<FindGoodsOwnerBean.DataBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<FindUserGoodsOwnerBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<FindGoodsOwnerBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+        public AbsRecyclerViewHolder<FindUserGoodsOwnerBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new MyDeviceSelectItemViewHolder(mInflater.inflate(R.layout.item_store_select_device, parent, false));
         }
     }

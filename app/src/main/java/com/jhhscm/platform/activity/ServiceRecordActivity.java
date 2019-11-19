@@ -10,9 +10,12 @@ import com.jhhscm.platform.fragment.my.store.ServiceRecordFragment;
 
 public class ServiceRecordActivity extends AbsToolbarActivity {
 
-    public static void start(Context context, String bus_code) {
+    public static void start(Context context, String bus_code,String user_code, String name, String phone) {
         Intent intent = new Intent(context, ServiceRecordActivity.class);
         intent.putExtra("code", bus_code);
+        intent.putExtra("user_code", user_code);
+        intent.putExtra("name", name);
+        intent.putExtra("phone", phone);
         context.startActivity(intent);
     }
 
@@ -55,6 +58,9 @@ public class ServiceRecordActivity extends AbsToolbarActivity {
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
         args.putString("code", getIntent().getStringExtra("code"));
+        args.putString("user_code", getIntent().getStringExtra("user_code"));
+        args.putString("name", getIntent().getStringExtra("name"));
+        args.putString("phone", getIntent().getStringExtra("phone"));
         return args;
     }
 }

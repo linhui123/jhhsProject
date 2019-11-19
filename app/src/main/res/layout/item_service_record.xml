@@ -19,7 +19,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="品牌：山河智能"
+                android:text="品牌："
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14" />
 
@@ -28,7 +28,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="型号：SWE18UF"
+                android:text="型号："
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14" />
         </LinearLayout>
@@ -46,7 +46,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="设备序列号：1EAD123123"
+                android:text="设备序列号："
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14" />
         </LinearLayout>
@@ -65,7 +65,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="GPS序列号：GWE123123"
+                android:text="GPS序列号："
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14" />
 

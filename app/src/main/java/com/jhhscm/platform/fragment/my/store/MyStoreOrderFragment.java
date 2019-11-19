@@ -13,11 +13,13 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentMyStoreOrderBinding;
+import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.my.store.action.FindBusOrderListAction;
 import com.jhhscm.platform.fragment.my.store.action.FindBusOrderListBean;
+import com.jhhscm.platform.fragment.my.store.viewholder.MyStoreOrderItemViewHolder;
 import com.jhhscm.platform.fragment.my.store.viewholder.StoreOrderItemViewHolder;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -27,6 +29,7 @@ import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
@@ -58,6 +61,7 @@ public class MyStoreOrderFragment extends AbsFragment<FragmentMyStoreOrderBindin
     @Override
     protected void setupViews() {
 //        mDataBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext()));
+        EventBusUtil.registerEvent(this);
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.recyclerview.setAdapter(mAdapter);
@@ -115,6 +119,7 @@ public class MyStoreOrderFragment extends AbsFragment<FragmentMyStoreOrderBindin
                 mDataBinding.recyclerview.autoRefresh();
             }
         });
+
     }
 
     private void findBusOrderList(final boolean refresh) {
@@ -129,7 +134,7 @@ public class MyStoreOrderFragment extends AbsFragment<FragmentMyStoreOrderBindin
             content = Des.encryptByDes(content);
             String sign = SignObject.getSignKey(getActivity(), map, "findBusOrderList");
             NetBean netBean = new NetBean();
-            netBean.setToken( ConfigUtils.getCurrentUser(getContext()).getToken());
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
             onNewRequestCall(FindBusOrderListAction.newInstance(getContext(), netBean)
@@ -160,27 +165,36 @@ public class MyStoreOrderFragment extends AbsFragment<FragmentMyStoreOrderBindin
     FindBusOrderListBean getPushListBean;
 
     private void initView(boolean refresh, FindBusOrderListBean pushListBean) {
-
         this.getPushListBean = pushListBean;
         if (refresh) {
-            mAdapter.setData(pushListBean.getResult().getData());
+            mAdapter.setData(pushListBean.getData());
         } else {
-            mAdapter.append(pushListBean.getResult().getData());
+            mAdapter.append(pushListBean.getData());
         }
+//        mDataBinding.recyclerview.loadComplete(true, false);
         mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0,
                 ((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage);
+
     }
 
-
-    private class InnerAdapter extends AbsRecyclerViewAdapter<FindBusOrderListBean.ResultBean.DataBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<FindBusOrderListBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<FindBusOrderListBean.ResultBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new StoreOrderItemViewHolder(mInflater.inflate(R.layout.item_store_order, parent, false));
+        public AbsRecyclerViewHolder<FindBusOrderListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new MyStoreOrderItemViewHolder(mInflater.inflate(R.layout.item_store_order, parent, false));
         }
     }
 
+    public void onEvent(RefreshEvent event) {
+        mDataBinding.recyclerview.autoRefresh();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregisterEvent(this);
+    }
 }

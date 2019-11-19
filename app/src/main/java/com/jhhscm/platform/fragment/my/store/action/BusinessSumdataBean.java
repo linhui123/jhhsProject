@@ -22,14 +22,53 @@ public class BusinessSumdataBean {
          * sum_goods_price : 1
          * sum_goods_price_all : 2
          * bus_name : xxxxx
+         * "county_name":"鼓楼区",
+         * "province_name":"福建省",
+         * "address_detail":"宁德大厦100楼","
+         * "city_name":"福州市",
          */
-
+        private String county_name;
+        private String province_name;
+        private String address_detail;
+        private String city_name;
         private String user_code;
         private int sum_users;
         private int sum_users_all;
         private int sum_goods_price;
         private int sum_goods_price_all;
         private String bus_name;
+
+        public String getCounty_name() {
+            return county_name;
+        }
+
+        public void setCounty_name(String county_name) {
+            this.county_name = county_name;
+        }
+
+        public String getProvince_name() {
+            return province_name;
+        }
+
+        public void setProvince_name(String province_name) {
+            this.province_name = province_name;
+        }
+
+        public String getAddress_detail() {
+            return address_detail;
+        }
+
+        public void setAddress_detail(String address_detail) {
+            this.address_detail = address_detail;
+        }
+
+        public String getCity_name() {
+            return city_name;
+        }
+
+        public void setCity_name(String city_name) {
+            this.city_name = city_name;
+        }
 
         public String getUser_code() {
             return user_code;

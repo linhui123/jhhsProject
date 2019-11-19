@@ -37,6 +37,7 @@ import com.jhhscm.platform.fragment.msg.GetPushListBean;
 import com.jhhscm.platform.fragment.my.BusCountBean;
 import com.jhhscm.platform.fragment.my.CheckVersionBean;
 import com.jhhscm.platform.fragment.my.UserCenterBean;
+import com.jhhscm.platform.fragment.my.book.AllSumBean;
 import com.jhhscm.platform.fragment.my.collect.FindCollectListBean;
 import com.jhhscm.platform.fragment.my.labour.FindLabourListBean;
 import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
@@ -44,8 +45,11 @@ import com.jhhscm.platform.fragment.my.mechanics.FindOldGoodByUserCodeBean;
 import com.jhhscm.platform.fragment.my.order.FindOrderListBean;
 import com.jhhscm.platform.fragment.my.store.action.BusinessFindcategorybyBuscodeBean;
 import com.jhhscm.platform.fragment.my.store.action.BusinessSumdataBean;
+import com.jhhscm.platform.fragment.my.store.action.FindBusGoodsOwnerListByUserCodeBean;
+import com.jhhscm.platform.fragment.my.store.action.FindBusGoodsOwnerOrderListByUserCodeBean;
 import com.jhhscm.platform.fragment.my.store.action.FindBusOrderListBean;
 import com.jhhscm.platform.fragment.my.store.action.FindBusUserServerListBean;
+import com.jhhscm.platform.fragment.my.store.action.FindUserGoodsOwnerBean;
 import com.jhhscm.platform.fragment.repayment.ContractDetailBean;
 import com.jhhscm.platform.fragment.repayment.ContractListBean;
 import com.jhhscm.platform.fragment.repayment.ContractPayCreateOrderBean;
@@ -696,4 +700,48 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(GET_FIRSTPAGECOUPONSLIST)
     Call<BaseEntity<GetNewCouponslistBean>> getFirstPageCouponslist(@Body NetBean content);
+
+    //商户创建订单选择用户列表
+    String FIND_USERGOODSOWNER = "v1-3/busorder/findUserGoodsOwner";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_USERGOODSOWNER)
+    Call<BaseEntity<FindUserGoodsOwnerBean>> findUserGoodsOwner(@Body NetBean content);
+
+    //我的店铺商户提交订单
+    String BUSORDER_CREATEORDER = "v1-3/busorder/createOrder";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(BUSORDER_CREATEORDER)
+    Call<BaseEntity<ResultBean>> busorder_createOrder(@Body NetBean content);
+
+    //我的店铺分员服务记录
+    String FIND_BUSGOODSOWNERLISTBYUSERCODE = "v1-3/business/findBusGoodsOwnerListByUserCode";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_BUSGOODSOWNERLISTBYUSERCODE)
+    Call<BaseEntity<FindBusGoodsOwnerListByUserCodeBean>> findBusGoodsOwnerListByUserCode(@Body NetBean content);
+
+    //我的店铺分员服务记录-通过点击设备列表查看订单
+    String FIND_BUSGOODSOWNERORDERLISTBYUSERCODE = "v1-3/business/findBusGoodsOwnerOrderListByUserCode";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_BUSGOODSOWNERORDERLISTBYUSERCODE)
+    Call<BaseEntity<FindBusGoodsOwnerOrderListByUserCodeBean>> findBusGoodsOwnerOrderListByUserCode(@Body NetBean content);
+
+    //我的工具首页汇总统计
+    String ALL_SUM = "v1-3/tool/allSum";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(ALL_SUM)
+    Call<BaseEntity<AllSumBean>> allSum(@Body NetBean content);
+
+    //我的工具收入支出添加
+    String TOOL_ADD = "v1-3/tool/add";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(TOOL_ADD)
+    Call<BaseEntity<ResultBean>> tool_add(@Body NetBean content);
+
+
 }

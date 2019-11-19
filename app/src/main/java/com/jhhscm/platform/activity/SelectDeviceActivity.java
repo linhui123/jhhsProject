@@ -12,8 +12,9 @@ import com.jhhscm.platform.fragment.my.store.StoreOrderSubmit1Fragment;
 
 public class SelectDeviceActivity extends AbsToolbarActivity {
 
-    public static void start(Context context) {
+    public static void start(Context context, String phone) {
         Intent intent = new Intent(context, SelectDeviceActivity.class);
+        intent.putExtra("phone", phone);
         context.startActivity(intent);
     }
 
@@ -55,6 +56,7 @@ public class SelectDeviceActivity extends AbsToolbarActivity {
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putString("phone", getIntent().getStringExtra("phone"));
         return args;
     }
 }

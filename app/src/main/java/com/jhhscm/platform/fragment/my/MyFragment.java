@@ -3,7 +3,6 @@ package com.jhhscm.platform.fragment.my;
 import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +52,7 @@ import com.jhhscm.platform.tool.ToastUtils;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tencent.mm.opensdk.utils.Log;
 
 import org.apache.commons.lang3.ObjectUtils;
 
@@ -106,7 +106,18 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                             }
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
-
+                                    UserBean userBean = response.body().getData();
+                                    UserSession userSession = new UserSession();
+                                    userSession.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+                                    userSession.setExpire(ConfigUtils.getCurrentUser(getContext()).getExpire());
+                                    userSession.setAvatar(userBean.getData().getAvatar());
+                                    userSession.setMobile(userBean.getData().getMobile());
+                                    userSession.setTimestamp(userBean.getTimestamp());
+                                    userSession.setUserCode(userBean.getData().getUserCode());
+                                    userSession.setStatus(userBean.getData().getStatus() + "");
+                                    userSession.setNickname(userBean.getData().getNickname());
+                                    userSession.setIs_check(userBean.getData().getIs_check());
+                                    ConfigUtils.setCurrentUser(getContext(), userSession);
                                 } else if (response.body().getCode().equals("1003")) {
                                     ToastUtils.show(getContext(), "登录信息过期，请重新登录");
                                     startNewActivity(LoginActivity.class);

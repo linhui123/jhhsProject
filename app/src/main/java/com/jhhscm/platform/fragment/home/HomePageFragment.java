@@ -153,8 +153,11 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                 getAD(6);
                 findBrandHomePage();
 
-                isNewUser();
-                getCouponslist();
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    isNewUser();
+                    getCouponslist();
+                }
             }
 
             @Override
