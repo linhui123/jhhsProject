@@ -60,6 +60,7 @@ public class ApiServiceModule {
 
     public static ApiServiceModule getInstance() {
 //        Log.e("http","getBaseUrl : "+ MyApplication.getBaseUrl());
+
         if (MyApplication.getBaseUrl() == null) {
             MyApplication.setBaseUrl(BASE_URL5);
         }
@@ -111,7 +112,7 @@ public class ApiServiceModule {
     }
 
 
-    //    private OkHttpClient getClient(){
+//    private OkHttpClient getClient(){
 //        OkHttpClient.Builder builder = new OkHttpClient.Builder();
 //        if (BuildConfig.DEBUG) {
 //            // Log信息拦截器
@@ -125,6 +126,7 @@ public class ApiServiceModule {
 //        OkHttpClient client = builder.build();
 //        return client;
 //    }
+
     OkHttpClient providerFileUploadOkHttpClient(Context context) {
         OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
         builder.readTimeout(100, TimeUnit.SECONDS);

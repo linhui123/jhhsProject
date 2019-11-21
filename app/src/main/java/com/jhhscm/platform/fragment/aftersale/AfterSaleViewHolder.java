@@ -15,15 +15,24 @@ import java.util.List;
 public class AfterSaleViewHolder extends AbsRecyclerViewHolder<FindBusListBean.DataBean> {
 
     private ItemAftersaleStoreBinding mBinding;
+    private double latitude = 0.0;
+    private double longitude = 0.0;
 
-    public AfterSaleViewHolder(View itemView) {
+    public AfterSaleViewHolder(View itemView, double latitude, double longitude) {
         super(itemView);
+        this.latitude = latitude;
+        this.longitude = longitude;
         mBinding = ItemAftersaleStoreBinding.bind(itemView);
     }
 
     @Override
     protected void onBindView(final FindBusListBean.DataBean item) {
         if (item != null) {
+            if (getAdapterPosition() == 0) {
+                mBinding.tv3.setVisibility(View.VISIBLE);
+            } else {
+                mBinding.tv3.setVisibility(View.GONE);
+            }
             mBinding.tv1.setText(item.getBus_name());
             if (item.getProvince_name() != null) {
                 mBinding.tv2.setText(item.getProvince_name() + " ");
@@ -60,7 +69,13 @@ public class AfterSaleViewHolder extends AbsRecyclerViewHolder<FindBusListBean.D
             mBinding.rl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    StoreDetailActivity.start(itemView.getContext());
+                    if (getAdapterPosition() == 0) {
+                        StoreDetailActivity.start(itemView.getContext(), item.getBus_code(),
+                                latitude + "", longitude + "", true);
+                    } else {
+                        StoreDetailActivity.start(itemView.getContext(), item.getBus_code(),
+                                latitude + "", longitude + "");
+                    }
                 }
             });
         }

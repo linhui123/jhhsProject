@@ -41,6 +41,7 @@
                         android:layout_alignParentRight="true"
                         android:background="@null"
                         android:hint="请输入"
+                        android:inputType="numberDecimal"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
 
@@ -74,6 +75,7 @@
                         android:layout_alignParentRight="true"
                         android:background="@null"
                         android:hint="请输入"
+                        android:inputType="numberDecimal"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
 
@@ -107,6 +109,7 @@
                         android:layout_alignParentRight="true"
                         android:background="@null"
                         android:hint="请输入"
+                        android:inputType="numberDecimal"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
 

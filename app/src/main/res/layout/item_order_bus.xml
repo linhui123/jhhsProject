@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@color/white"
+        android:clickable="true"
+        android:paddingTop="@dimen/padding_15"
+        android:paddingBottom="@dimen/padding_15">
+
+        <com.jhhscm.platform.views.OvalImageView
+            android:id="@+id/im"
+            android:layout_width="128dp"
+            android:layout_height="110dp"
+            android:layout_toRightOf="@+id/tv_select"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_order_repair"
+            roundiv:left_bottom_radius1="5dp"
+            roundiv:left_top_radius1="5dp"
+            roundiv:right_bottom_radius1="5dp"
+            roundiv:right_top_radius1="5dp" />
+
+        <TextView
+            android:id="@+id/tv_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_10"
+            android:layout_marginRight="@dimen/padding_10"
+            android:layout_toRightOf="@+id/im"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="设备品牌"
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/tv_model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/padding_10"
+            android:layout_marginRight="@dimen/padding_10"
+            android:layout_toRightOf="@+id/im"
+            android:text="设备型号："
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/tv_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/padding_10"
+            android:layout_marginRight="@dimen/padding_10"
+            android:layout_toRightOf="@+id/im"
+            android:text="故障类型："
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/sp_14" />
+
+    </RelativeLayout>
+</layout>

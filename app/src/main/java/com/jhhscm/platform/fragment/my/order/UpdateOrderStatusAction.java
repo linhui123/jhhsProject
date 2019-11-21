@@ -10,21 +10,21 @@ import com.jhhscm.platform.http.bean.ResultBean;
 
 import retrofit2.Call;
 
-public class FindOrderListAction extends AHttpService<BaseEntity<FindOrderListBean>> {
+public class UpdateOrderStatusAction extends AHttpService<BaseEntity<ResultBean>> {
 
     private NetBean netBean;
 
-    public static FindOrderListAction newInstance(Context context, NetBean netBean) {
-        return new FindOrderListAction(context, netBean);
+    public static UpdateOrderStatusAction newInstance(Context context, NetBean netBean) {
+        return new UpdateOrderStatusAction(context, netBean);
     }
 
-    public FindOrderListAction(Context context, NetBean netBean) {
+    public UpdateOrderStatusAction(Context context, NetBean netBean) {
         super(context);
         this.netBean = netBean;
     }
 
     @Override
     protected Call newRetrofitCall(ApiService apiService) {
-        return apiService.findOrderList(netBean);
+        return apiService.updateOrderStatus(netBean);
     }
 }

@@ -273,7 +273,7 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
 
         @Override
         public AbsRecyclerViewHolder<FindBusListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new AfterSaleViewHolder(mInflater.inflate(R.layout.item_aftersale_store, parent, false));
+            return new AfterSaleViewHolder(mInflater.inflate(R.layout.item_aftersale_store, parent, false), latitude, longitude);
         }
     }
 

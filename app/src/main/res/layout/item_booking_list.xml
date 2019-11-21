@@ -5,22 +5,27 @@
         android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:paddingTop="@dimen/padding_10"
         android:paddingBottom="@dimen/padding_10">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:text="主要收入"
             android:textColor="@color/acc3"
             android:textSize="@dimen/text_size_14" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/padding_10"
+            android:layout_weight="1"
             android:maxLength="8"
             android:singleLine="true"
             android:text="工作内容"
@@ -28,11 +33,13 @@
             android:textSize="@dimen/text_size_14" />
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/padding_15">
+            android:layout_marginRight="@dimen/dp_5"
+            android:layout_weight="3">
 
             <LinearLayout
+                android:id="@+id/ll_income"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -48,9 +55,12 @@
                     android:textSize="@dimen/text_size_14" />
 
                 <TextView
+                    android:id="@+id/tv3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:padding="@dimen/dp_3"
+                    android:singleLine="true"
                     android:text="2000"
                     android:textColor="@color/a13c"
                     android:textSize="@dimen/text_size_14" />
@@ -66,17 +76,19 @@
                     android:textSize="@dimen/text_size_14" />
 
                 <TextView
+                    android:id="@+id/tv4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:padding="@dimen/dp_3"
+                    android:singleLine="true"
                     android:text="2000"
                     android:textColor="@color/ffa7"
                     android:textSize="@dimen/text_size_14" />
-
-
             </LinearLayout>
 
             <TextView
+                android:id="@+id/pay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

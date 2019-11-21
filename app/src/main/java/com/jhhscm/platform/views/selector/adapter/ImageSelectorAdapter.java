@@ -28,6 +28,7 @@ import java.util.List;
 public class ImageSelectorAdapter extends AbsAdapter<ImageSelectorItem> {
     private final static int ITEM_IMAGE = 0;
     private final static int ITEM_ADD = 1;
+    private final static int ITEM_SHOW = 2;//只显
     private int mCode;
     private int mItemWidth;
     private Context context;
@@ -51,7 +52,7 @@ public class ImageSelectorAdapter extends AbsAdapter<ImageSelectorItem> {
 
     @Override
     public int getViewTypeCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -60,7 +61,11 @@ public class ImageSelectorAdapter extends AbsAdapter<ImageSelectorItem> {
         if (item.isAddFlag()) {
             return ITEM_ADD;
         } else {
-            return ITEM_IMAGE;
+            if (!item.isSHow()) {
+                return ITEM_IMAGE;
+            } else {
+                return ITEM_SHOW;
+            }
         }
     }
 
@@ -69,6 +74,8 @@ public class ImageSelectorAdapter extends AbsAdapter<ImageSelectorItem> {
         switch (itemType) {
             case ITEM_ADD:
                 return new ImageSelectorAddHolder(mInflater.inflate(R.layout.item_image_selector_add, parent, false));
+            case ITEM_SHOW:
+                return new ImageSelectorShowHolder(mInflater.inflate(R.layout.item_image_selector, parent, false));
             default:
                 return new ImageSelectorHolder(mInflater.inflate(R.layout.item_image_selector, parent, false));
         }
@@ -136,4 +143,27 @@ public class ImageSelectorAdapter extends AbsAdapter<ImageSelectorItem> {
         }
     }
 
+    private class ImageSelectorShowHolder extends AbsViewHolder<ImageSelectorItem> {
+        private ItemImageSelectorBinding mItemBinding;
+
+        public ImageSelectorShowHolder(View convertView) {
+            super(convertView);
+            mItemBinding = DataBindingUtil.bind(convertView);
+            ViewGroup.LayoutParams params = mItemBinding.flImage.getLayoutParams();
+            int head = (int) (((double) mItemWidth) / 1.33);
+            if (params == null) {
+                params = new ViewGroup.LayoutParams(mItemWidth, head);
+            } else {
+                params.width = mItemWidth;
+                params.height = head;
+            }
+            mItemBinding.flImage.setLayoutParams(params);
+        }
+
+        @Override
+        protected void onBindView(final ImageSelectorItem item) {
+            ImageLoader.getInstance().displayImage(StringUtils.filterNullAndTrim(item.imageUrl), mItemBinding.ivImage);
+            mItemBinding.ivPressed.setVisibility(View.GONE);
+        }
+    }
 }

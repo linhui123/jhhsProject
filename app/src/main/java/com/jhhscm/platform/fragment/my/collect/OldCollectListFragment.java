@@ -141,7 +141,7 @@ public class OldCollectListFragment extends AbsFragment<FragmentCollectListBindi
         map.put("limit", mShowCount + "");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "findCollectList: " + "type");
+        String sign = Sign.getSignKey(getActivity(), map, "findCollectList: " + type);
         NetBean netBean = new NetBean();
         netBean.setToken(userSession.getToken());
         netBean.setSign(sign);

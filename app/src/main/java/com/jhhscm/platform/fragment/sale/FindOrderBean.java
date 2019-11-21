@@ -316,4 +316,50 @@ public class FindOrderBean {
             this.deleted = deleted;
         }
     }
+
+    public static class GoodsOwnerListBean {
+        /**
+         * fixs :
+         * brands :
+         * v3s : 11
+         * pic_url :
+         */
+
+        private String fixs;
+        private String brands;
+        private String v3s;
+//        private String pic_url;
+
+        public String getFixs() {
+            return fixs;
+        }
+
+        public void setFixs(String fixs) {
+            this.fixs = fixs;
+        }
+
+        public String getBrands() {
+            return brands;
+        }
+
+        public void setBrands(String brands) {
+            this.brands = brands;
+        }
+
+        public String getV3s() {
+            return v3s;
+        }
+
+        public void setV3s(String v3s) {
+            this.v3s = v3s;
+        }
+
+//        public String getPic_url() {
+//            return pic_url;
+//        }
+//
+//        public void setPic_url(String pic_url) {
+//            this.pic_url = pic_url;
+//        }
+    }
 }

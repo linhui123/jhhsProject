@@ -320,7 +320,7 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
         map.put("key_group_name", name);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "getComboBox:" + "name");
+        String sign = Sign.getSignKey(getActivity(), map, "getComboBox:" + name);
         NetBean netBean = new NetBean();
         netBean.setToken("");
         netBean.setSign(sign);

@@ -46,6 +46,7 @@ public class ImageSelector extends LinearLayout {
     private String mUserId;
     private boolean isWithCarmera = false;
     private boolean isUpdata = false;
+    private boolean isOnlyShow = false;//只显示
     private int position = 0;//辅助标识
 
     public ImageSelector(Context context) {
@@ -63,6 +64,7 @@ public class ImageSelector extends LinearLayout {
             mSelectMaxImageSize = a.getInt(R.styleable.ImageSelector_image_num, 9);
             isWithCarmera = a.getBoolean(R.styleable.ImageSelector_with_camera, false);
             isUpdata = a.getBoolean(R.styleable.ImageSelector_is_update, false);
+            isOnlyShow = a.getBoolean(R.styleable.ImageSelector_is_only_show, false);
         } finally {
             a.recycle();
         }
@@ -104,32 +106,16 @@ public class ImageSelector extends LinearLayout {
             ImageSelectorItem item = new ImageSelectorItem();
             item.imageUrl = image.getmUrl();
             item.imageToken = image.getmToken();
+            item.isSHow = isOnlyShow;
             items.add(item);
         }
-        if (items.size() <= 0 || items.size() < mSelectMaxImageSize) {
-            items.add(ImageSelectorItem.newAddImageItem());
+        if (!isOnlyShow) {
+            if (items.size() <= 0 || items.size() < mSelectMaxImageSize) {
+                items.add(ImageSelectorItem.newAddImageItem());
+            }
         }
         mAdapter.setData(items);
     }
-
-//    /**
-//     * 设置图片集信息
-//     *
-//     * @param
-//     */
-//    public void setPbImageList(ArrayList<String> images) {
-//        if (images == null) return;
-//        List<ImageSelectorItem> items = new ArrayList<>();
-//        for (String image : images) {
-//            ImageSelectorItem item = new ImageSelectorItem();
-//            item.imageUrl = image;
-//            items.add(item);
-//        }
-//        if (items.size() <= 0 || items.size() < mSelectMaxImageSize) {
-//            items.add(ImageSelectorItem.newAddImageItem());
-//        }
-//        mAdapter.setData(items);
-//    }
 
     /**
      * 设置图片集信息
@@ -144,10 +130,13 @@ public class ImageSelector extends LinearLayout {
         for (String image : images) {
             ImageSelectorItem item = new ImageSelectorItem();
             item.imageUrl = image;
+            item.isSHow = isOnlyShow;
             items.add(item);
         }
-        if (items.size() <= 0 || items.size() < mSelectMaxImageSize) {
-            items.add(ImageSelectorItem.newAddImageItem());
+        if (!isOnlyShow) {
+            if (items.size() <= 0 || items.size() < mSelectMaxImageSize) {
+                items.add(ImageSelectorItem.newAddImageItem());
+            }
         }
         mAdapter.setData(items);
     }
@@ -156,8 +145,10 @@ public class ImageSelector extends LinearLayout {
 
     public void setImageList(List<ImageSelectorItem> items) {
         if (items == null) return;
-        if (items.size() <= 0 || items.size() < mSelectMaxImageSize) {
-            items.add(ImageSelectorItem.newAddImageItem());
+        if (!isOnlyShow) {
+            if (items.size() <= 0 || items.size() < mSelectMaxImageSize) {
+                items.add(ImageSelectorItem.newAddImageItem());
+            }
         }
         imageSelectorItems = items;
         mAdapter.setData(items);
@@ -173,6 +164,7 @@ public class ImageSelector extends LinearLayout {
                     item.imageToken = image.getImageToken();
                     item.allfilePath = image.getAllfilePath();
                     item.catalogues = image.getCatalogues();
+                    item.isSHow = isOnlyShow;
                 }
             }
         }
@@ -287,7 +279,7 @@ public class ImageSelector extends LinearLayout {
                 //本地图片
                 if (!isClothesImage(item)) {
                     images.add(item.imageUrl);
-                    Log.e("item ","item.imageUrl "+item.imageUrl);
+                    Log.e("item ", "item.imageUrl " + item.imageUrl);
                 }
             }
         }

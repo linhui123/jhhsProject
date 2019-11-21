@@ -30,7 +30,9 @@ public class PeiJianViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.Da
             mBinding.tvStore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    StoreDetailActivity.start(itemView.getContext());
+                    if (item.getBus_code() != null && item.getBus_code().length() > 0) {
+                        StoreDetailActivity.start(itemView.getContext(), item.getBus_code(), "", "");
+                    }
                 }
             });
         } else {

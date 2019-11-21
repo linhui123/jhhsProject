@@ -2,6 +2,8 @@ package com.jhhscm.platform.fragment.my.order;
 
 import android.content.Context;
 
+import com.jhhscm.platform.fragment.aftersale.FindBusListBean;
+import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -10,21 +12,22 @@ import com.jhhscm.platform.http.bean.ResultBean;
 
 import retrofit2.Call;
 
-public class FindOrderListAction extends AHttpService<BaseEntity<FindOrderListBean>> {
+public class FindOrderList3Action extends AHttpService<BaseEntity<FindOrderListBean>> {
 
     private NetBean netBean;
 
-    public static FindOrderListAction newInstance(Context context, NetBean netBean) {
-        return new FindOrderListAction(context, netBean);
+    public static FindOrderList3Action newInstance(Context context, NetBean netBean) {
+        return new FindOrderList3Action(context, netBean);
     }
 
-    public FindOrderListAction(Context context, NetBean netBean) {
+    public FindOrderList3Action(Context context, NetBean netBean) {
         super(context);
         this.netBean = netBean;
     }
 
     @Override
     protected Call newRetrofitCall(ApiService apiService) {
-        return apiService.findOrderList(netBean);
+        return apiService.findOrderList3(netBean);
     }
 }
+

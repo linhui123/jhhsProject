@@ -72,8 +72,14 @@ public class CouponListDialogAdapter extends RecyclerView.Adapter<CouponListDial
         holder.tv_name.setText(list.get(position).getName());
         holder.tv_condition.setText(list.get(position).getDesc());
         holder.tv_count.setText(list.get(position).getDiscount() + "元");
-        holder.tv_data.setText(list.get(position).getStartTime().substring(0, 10) + "至"
-                + list.get(position).getEndTime().substring(0, 10));
+        if (list.get(position).getStartTime() != null
+                && list.get(position).getStartTime().length() > 10
+                && list.get(position).getEndTime() != null
+                && list.get(position).getEndTime().length() > 10) {
+            holder.tv_data.setText(list.get(position).getStartTime().substring(0, 10) + "至"
+                    + list.get(position).getEndTime().substring(0, 10));
+        }
+
 
         holder.tv_receive.setOnClickListener(new View.OnClickListener() {
             @Override

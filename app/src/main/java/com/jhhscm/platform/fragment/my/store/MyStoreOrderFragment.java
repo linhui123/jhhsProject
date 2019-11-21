@@ -150,7 +150,6 @@ public class MyStoreOrderFragment extends AbsFragment<FragmentMyStoreOrderBindin
                                 if (response != null) {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
-
                                         initView(refresh, response.body().getData());
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());

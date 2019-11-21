@@ -12,6 +12,7 @@ public class ImageSelectorItem implements Serializable {
     public String catalogues;
     public String allfilePath;
     public boolean addFlag = false;
+    public boolean isSHow = false;
 
     public static ImageSelectorItem convert(String imagePath) {
         ImageSelectorItem item = new ImageSelectorItem();
@@ -27,6 +28,14 @@ public class ImageSelectorItem implements Serializable {
 
     public boolean isAddFlag() {
         return addFlag;
+    }
+
+    public boolean isSHow() {
+        return isSHow;
+    }
+
+    public void setSHow(boolean SHow) {
+        isSHow = SHow;
     }
 
     @Override

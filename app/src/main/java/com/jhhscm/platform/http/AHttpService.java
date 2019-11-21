@@ -1,6 +1,7 @@
 package com.jhhscm.platform.http;
 
 import android.content.Context;
+import android.util.Log;
 
 
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
@@ -60,6 +61,7 @@ public abstract class AHttpService<T> {
 
                 @Override
                 public void onFailure(Call<T> call, Throwable t) {
+                    t.printStackTrace();
                     if (iResCallback != null) {
                         iResCallback.onCallback(IResCallback.RESULT_NET_ERROR, null, null);
                     }

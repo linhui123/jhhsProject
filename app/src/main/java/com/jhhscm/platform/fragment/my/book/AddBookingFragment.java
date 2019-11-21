@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.donkingliang.labels.LabelsView;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.bean.UploadImage;
 import com.jhhscm.platform.databinding.FragmentAddBookingBinding;
 import com.jhhscm.platform.databinding.FragmentBookingBinding;
@@ -68,6 +69,8 @@ public class AddBookingFragment extends AbsFragment<FragmentAddBookingBinding> {
     private List<UpdateImageBean> updateImageBeanList1;
     private boolean updateImgResult;
 
+    private DetailToolBean dataBean;
+
     public static AddBookingFragment instance() {
         AddBookingFragment view = new AddBookingFragment();
         return view;
@@ -81,6 +84,7 @@ public class AddBookingFragment extends AbsFragment<FragmentAddBookingBinding> {
     @Override
     protected void setupViews() {
         type = getArguments().getInt("type");
+        initData();
         updateImageBeanList1 = new ArrayList<>();
         if (type == 0) {
             getComboBox("bus_tool_in");
@@ -107,7 +111,6 @@ public class AddBookingFragment extends AbsFragment<FragmentAddBookingBinding> {
                     }).show();
                 } else {
                     getComboBox("bus_tool_out");
-
                 }
             }
         });
@@ -153,12 +156,21 @@ public class AddBookingFragment extends AbsFragment<FragmentAddBookingBinding> {
                     if (type == 0 && mDataBinding.typeIncome.getTag() != null
                             && mDataBinding.income.getText().toString().trim().length() > 0
                             && mDataBinding.unIncome.getText().toString().trim().length() > 0) {
-                        updateImgResult = true;
-                        doUploadAImagesAction1();
+                        if (mDataBinding.isSchemeImage.getUploadImageList().size() > 0) {
+                            updateImgResult = true;
+                            doUploadAImagesAction1();
+                        } else {
+                            addTool();
+                        }
+
                     } else if (type == 1 && mDataBinding.typePay.getTag() != null
                             && mDataBinding.pay.getText().toString().trim().length() > 0) {
-                        updateImgResult = true;
-                        doUploadAImagesAction1();
+                        if (mDataBinding.isSchemeImage.getUploadImageList().size() > 0) {
+                            updateImgResult = true;
+                            doUploadAImagesAction1();
+                        } else {
+                            addTool();
+                        }
                     } else {
                         ToastUtil.show(getContext(), "请输入完整数据");
                     }
@@ -169,20 +181,59 @@ public class AddBookingFragment extends AbsFragment<FragmentAddBookingBinding> {
         });
     }
 
+    private void initData() {
+        dataBean = (DetailToolBean) getArguments().getSerializable("detailToolBean");
+        if (dataBean != null) {
+            if (type == 0) {//收入
+                mDataBinding.income.setText(dataBean.getData().getPrice_1() + "");
+                mDataBinding.unIncome.setText(dataBean.getData().getPrice_2() + "");
+                mDataBinding.typeIncome.setText(dataBean.getData().getIn_type_name());
+                mDataBinding.typeIncome.setTag(dataBean.getData().getIn_type());
+            } else {//支出
+                mDataBinding.pay.setText(dataBean.getData().getPrice_3() + "");
+                mDataBinding.typePay.setText(dataBean.getData().getOut_type_name());
+                mDataBinding.typePay.setTag(dataBean.getData().getOut_type());
+            }
+            mDataBinding.content.setText(dataBean.getData().getData_content());
+            mDataBinding.remark.setText(dataBean.getData().getDesc());
+            if (dataBean.getData().getData_time() != null && dataBean.getData().getData_time().length() > 10) {
+                mDataBinding.dataIncome.setText(dataBean.getData().getData_time().substring(0, 10).trim() + " 00:00:00");
+            }
+
+            if (dataBean.getData().getPic_small_url() != null && dataBean.getData().getPic_small_url().length() > 10) {
+                List<PbImage> items = new ArrayList<>();
+                String[] strs = dataBean.getData().getPic_small_url().split(",");
+                if (strs.length > 0) {
+                    for (int i = 0; i < strs.length; i++) {
+                        PbImage pbImage = new PbImage();
+                        pbImage.setmUrl(strs[i].trim());
+                        pbImage.setmToken(strs[i].trim());
+                        items.add(pbImage);
+                    }
+                    mDataBinding.isSchemeImage.setPbImageList(items);
+                }
+            }
+        }
+    }
+
     private void addTool() {
         if (getContext() != null) {
+            showDialog();
             Map<String, Object> map = new TreeMap<String, Object>();
             String jsonString1 = "";
             if (mDataBinding.isSchemeImage.getUploadImageList().size() > 0) {
                 for (UpdateImageBean updateImageBean : updateImageBeanList1) {
                     if (jsonString1.length() > 0) {
-                        jsonString1 = jsonString1 + "," + "\"" + updateImageBean.getIMG_URL() + "\"";
+                        jsonString1 = jsonString1 + "," + "" + updateImageBean.getIMG_URL() + "";
                     } else {
-                        jsonString1 = "\"" + updateImageBean.getIMG_URL() + "\"";
+                        jsonString1 = "" + updateImageBean.getIMG_URL() + "";
                     }
                 }
             }
-
+            if (dataBean != null) {
+                map.put("data_code", dataBean.getData().getData_code());
+                map.put("id", dataBean.getData().getId());
+            }
             map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
             map.put("data_type", type);//0 收入 1 支出
             map.put("price_1", mDataBinding.income.getText().toString().trim());
@@ -215,7 +266,12 @@ public class AddBookingFragment extends AbsFragment<FragmentAddBookingBinding> {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         if (response.body().getData().getData().equals("0")) {
-                                            ToastUtil.show(getContext(), "添加成功");
+
+                                            if (dataBean != null) {
+                                                ToastUtil.show(getContext(), "编辑成功");
+                                            } else {
+                                                ToastUtil.show(getContext(), "添加成功");
+                                            }
                                             EventBusUtil.post(new RefreshEvent());
                                             getActivity().finish();
                                         }

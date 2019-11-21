@@ -177,7 +177,7 @@ public class MyLabourFragment extends AbsFragment<FragmentMyLabourBinding> {
         map.put("limit", mShowCount);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = SignObject.getSignKey(getActivity(), map, "findLabourList: " + "type");
+        String sign = SignObject.getSignKey(getActivity(), map, "findLabourList: " + type);
         NetBean netBean = new NetBean();
         netBean.setToken(userSession.getToken());
         netBean.setSign(sign);

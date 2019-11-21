@@ -89,17 +89,17 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
         mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
-                getCouponList(true);
+                allSum();
+                allSumByDataTime(true);
             }
 
             @Override
             public void onLoadMore(RecyclerView view) {
-                getCouponList(false);
+                allSumByDataTime(false);
             }
         });
 
         initSelect();
-        allSum();
 
         mDataBinding.income.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -308,24 +308,28 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
         }
     }
 
-    private void getCouponList(final boolean refresh) {
+    private void allSumByDataTime(final boolean refresh) {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("page", mCurrentPage);
             map.put("limit", mShowCount);
-            map.put("article_type_list", 1);
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("in_type", incomeType);
+            map.put("out_type", payType);
+            map.put("startTime", mDataBinding.startTime.getText().toString().trim());
+            map.put("endTime", mDataBinding.endTime.getText().toString().trim());
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
-            String sign = SignObject.getSignKey(getActivity(), map, "getArticleList");
+            String sign = SignObject.getSignKey(getActivity(), map, "allSumByDataTime");
             NetBean netBean = new NetBean();
-            netBean.setToken("");
+            netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
             netBean.setSign(sign);
             netBean.setContent(content);
-            onNewRequestCall(GetArticleListAction.newInstance(getContext(), netBean)
-                    .request(new AHttpService.IResCallback<BaseEntity<GetPageArticleListBean>>() {
+            onNewRequestCall(AllSumByDataTimeAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<AllSumByDataTimeBean>>() {
                         @Override
-                        public void onCallback(int resultCode, Response<BaseEntity<GetPageArticleListBean>> response,
+                        public void onCallback(int resultCode, Response<BaseEntity<AllSumByDataTimeBean>> response,
                                                BaseErrorInfo baseErrorInfo) {
                             if (getView() != null) {
                                 closeDialog();
@@ -347,9 +351,9 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
         }
     }
 
-    GetPageArticleListBean getPushListBean;
+    AllSumByDataTimeBean getPushListBean;
 
-    private void initView(boolean refresh, GetPageArticleListBean pushListBean) {
+    private void initView(boolean refresh, AllSumByDataTimeBean pushListBean) {
 
         this.getPushListBean = pushListBean;
         if (refresh) {
@@ -361,13 +365,13 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
                 ((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage);
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<GetPageArticleListBean.DataBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<AllSumByDataTimeBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<GetPageArticleListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+        public AbsRecyclerViewHolder<AllSumByDataTimeBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new ItemBookingViewHolder(mInflater.inflate(R.layout.item_booking, parent, false));
         }
     }
@@ -454,7 +458,7 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
     }
 
     public void onEvent(RefreshEvent event) {
-        allSum();
+        mDataBinding.recyclerview.autoRefresh();
     }
 
     @Override

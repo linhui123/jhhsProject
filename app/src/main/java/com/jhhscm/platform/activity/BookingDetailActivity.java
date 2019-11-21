@@ -12,8 +12,9 @@ import com.jhhscm.platform.fragment.my.book.BookingFragment;
 
 public class BookingDetailActivity extends AbsToolbarActivity {
 
-    public static void start(Context context, int type) {
+    public static void start(Context context, int type, String data_code) {
         Intent intent = new Intent(context, BookingDetailActivity.class);
+        intent.putExtra("data_code", data_code);
         intent.putExtra("type", type);
         context.startActivity(intent);
     }
@@ -57,6 +58,7 @@ public class BookingDetailActivity extends AbsToolbarActivity {
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
         args.putInt("type", getIntent().getIntExtra("type", 0));
+        args.putString("data_code",getIntent().getStringExtra("data_code"));
         return args;
     }
 }

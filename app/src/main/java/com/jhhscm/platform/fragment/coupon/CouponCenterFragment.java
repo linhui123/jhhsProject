@@ -163,9 +163,9 @@ public class CouponCenterFragment extends AbsFragment<FragmentCouponCenterBindin
 
         this.getPushListBean = pushListBean;
         if (refresh) {
-            mAdapter.setData(pushListBean.getResult().getData());
+            mAdapter.setData(pushListBean.getData());
         } else {
-            mAdapter.append(pushListBean.getResult().getData());
+            mAdapter.append(pushListBean.getData());
         }
         mDataBinding.recyclerview.loadComplete(false, false);
 //        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0,
@@ -220,13 +220,13 @@ public class CouponCenterFragment extends AbsFragment<FragmentCouponCenterBindin
         }
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<CouponGetListBean.ResultBean.DataBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<CouponGetListBean.DataBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<CouponGetListBean.ResultBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+        public AbsRecyclerViewHolder<CouponGetListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new CouponCenterViewHolder(mInflater.inflate(R.layout.item_coupon_center, parent, false));
         }
     }

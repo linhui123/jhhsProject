@@ -205,34 +205,34 @@ public class MyPeiJianListFragment extends AbsFragment<FragmentMyPeiJianListBind
         map.put("limit", mShowCount + "");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "findOrderList: " + "type");
+        String sign = Sign.getSignKey(getActivity(), map, "findOrderList: " + type);
         NetBean netBean = new NetBean();
         netBean.setToken(userSession.getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
-        onNewRequestCall(FindOrderListAction.newInstance(getContext(), netBean)
-                .request(new AHttpService.IResCallback<BaseEntity<FindOrderListBean>>() {
-                    @Override
-                    public void onCallback(int resultCode, Response<BaseEntity<FindOrderListBean>> response, BaseErrorInfo baseErrorInfo) {
-                        if (getView() != null) {
-                            closeDialog();
-                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
-                                return;
-                            }
-                            if (response != null) {
-                                if (response.body().getCode().equals("200")) {
-                                    findOrderListBean = response.body().getData();
-                                    doSuccessResponse(refresh, findOrderListBean);
-                                } else if (response.body().getCode().equals("1003")) {
-                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
-                                    startNewActivity(LoginActivity.class);
-                                } else {
-                                    ToastUtils.show(getContext(), "error " + type + ":" + response.body().getMessage());
-                                }
-                            }
-                        }
-                    }
-                }));
+//        onNewRequestCall(FindOrderListAction.newInstance(getContext(), netBean)
+//                .request(new AHttpService.IResCallback<BaseEntity<FindOrderListBean>>() {
+//            @Override
+//            public void onCallback(int resultCode, Response<BaseEntity<FindOrderListBean>> response, BaseErrorInfo baseErrorInfo) {
+//                if (getView() != null) {
+//                    closeDialog();
+//                    if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+//                        return;
+//                    }
+//                    if (response != null) {
+//                        if (response.body().getCode().equals("200")) {
+//                            findOrderListBean = response.body().getData();
+//                            doSuccessResponse(refresh, findOrderListBean);
+//                        } else if (response.body().getCode().equals("1003")) {
+//                            ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+//                            startNewActivity(LoginActivity.class);
+//                        } else {
+//                            ToastUtils.show(getContext(), "error " + type + ":" + response.body().getMessage());
+//                        }
+//                    }
+//                }
+//            }
+//        }));
     }
 
     FindOrderListBean findOrderListBean;

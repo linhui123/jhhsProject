@@ -17,6 +17,7 @@ import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 
 public class ConfirmOrderDialog extends BaseDialog {
+
     private DialogConfirmOrderBinding mDataBinding;
     private String name;
     private String no;
@@ -37,11 +38,10 @@ public class ConfirmOrderDialog extends BaseDialog {
         this.mListener = listener;
     }
 
-    public ConfirmOrderDialog(Context context, String name, String no, CallbackListener listener) {
+    public ConfirmOrderDialog(Context context, String name, CallbackListener listener) {
         this(context);
         setCanceledOnTouchOutside(true);
         this.name = name;
-        this.no = no;
         this.mListener = listener;
     }
 
@@ -76,7 +76,9 @@ public class ConfirmOrderDialog extends BaseDialog {
 
     @Override
     protected void onInitView(View view) {
-
+        if (name != null) {
+            mDataBinding.content.setText(name);
+        }
         mDataBinding.tvCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

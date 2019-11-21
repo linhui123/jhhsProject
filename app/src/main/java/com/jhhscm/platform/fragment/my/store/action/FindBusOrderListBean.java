@@ -159,8 +159,17 @@ public class FindBusOrderListBean {
         private String add_time;
         private double other_price;
         private List<GoodsListBean> goodsList;
-        private List<?> goodsOwnerList;
+        private List<GoodsOwnerListBean> goodsOwnerList;
         private double order_price;
+        private String user_mobile;
+
+        public String getUser_mobile() {
+            return user_mobile;
+        }
+
+        public void setUser_mobile(String user_mobile) {
+            this.user_mobile = user_mobile;
+        }
 
         public double getOrder_price() {
             return order_price;
@@ -250,11 +259,12 @@ public class FindBusOrderListBean {
             this.goodsList = goodsList;
         }
 
-        public List<?> getGoodsOwnerList() {
+
+        public List<GoodsOwnerListBean> getGoodsOwnerList() {
             return goodsOwnerList;
         }
 
-        public void setGoodsOwnerList(List<?> goodsOwnerList) {
+        public void setGoodsOwnerList(List<GoodsOwnerListBean> goodsOwnerList) {
             this.goodsOwnerList = goodsOwnerList;
         }
 
@@ -311,6 +321,92 @@ public class FindBusOrderListBean {
 
             public void setPic_url(String pic_url) {
                 this.pic_url = pic_url;
+            }
+        }
+
+        public static class GoodsOwnerListBean {
+            /**
+             * order_code : 2019111920002002788501
+             * user_code : 2019111860000706486737
+             * fix_p_17 : 001
+             * goods_code : 20191119143340000298076593
+             * v_2 : 001
+             * v_1 : 001
+             * v_3 : 001
+             * bus_code : 2019111860000706486737
+             */
+
+            private String order_code;
+            private String user_code;
+            private String fix_p_17;
+            private String goods_code;
+            private String v_2;
+            private String v_1;
+            private String v_3;
+            private String bus_code;
+
+            public String getOrder_code() {
+                return order_code;
+            }
+
+            public void setOrder_code(String order_code) {
+                this.order_code = order_code;
+            }
+
+            public String getUser_code() {
+                return user_code;
+            }
+
+            public void setUser_code(String user_code) {
+                this.user_code = user_code;
+            }
+
+            public String getFix_p_17() {
+                return fix_p_17;
+            }
+
+            public void setFix_p_17(String fix_p_17) {
+                this.fix_p_17 = fix_p_17;
+            }
+
+            public String getGoods_code() {
+                return goods_code;
+            }
+
+            public void setGoods_code(String goods_code) {
+                this.goods_code = goods_code;
+            }
+
+            public String getV_2() {
+                return v_2;
+            }
+
+            public void setV_2(String v_2) {
+                this.v_2 = v_2;
+            }
+
+            public String getV_1() {
+                return v_1;
+            }
+
+            public void setV_1(String v_1) {
+                this.v_1 = v_1;
+            }
+
+            public String getV_3() {
+                return v_3;
+            }
+
+            public void setV_3(String v_3) {
+                this.v_3 = v_3;
+            }
+
+            public String getBus_code() {
+                return bus_code;
+            }
+
+            public void setBus_code(String bus_code) {
+                this.bus_code = bus_code;
             }
         }
     }

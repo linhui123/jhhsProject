@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_5"
-                android:text="2019年10月11日"
+                android:text="----年--月--日"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="bold" />
@@ -39,7 +39,7 @@
                 android:paddingTop="5dp"
                 android:paddingRight="@dimen/padding_10"
                 android:paddingBottom="@dimen/dp_5"
-                android:text="共2笔"
+                android:text="共-笔"
                 android:textColor="@color/a397"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="bold" />
@@ -97,7 +97,7 @@
                     android:drawableLeft="@drawable/ring_red"
                     android:drawablePadding="@dimen/dp_5"
                     android:padding="@dimen/dp_5"
-                    android:text="未收 300"
+                    android:text="支出 300"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_14" />
             </LinearLayout>

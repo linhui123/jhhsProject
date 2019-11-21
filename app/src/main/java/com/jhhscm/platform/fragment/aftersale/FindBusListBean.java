@@ -166,10 +166,21 @@ public class FindBusListBean {
         private String province;
         private String pic_url;
         private String bus_name;
+        private String bus_code;
+
         private String add_time;
         private int status;
         private String v1;
         private String v2;
+
+
+        public String getBus_code() {
+            return bus_code;
+        }
+
+        public void setBus_code(String bus_code) {
+            this.bus_code = bus_code;
+        }
 
         public String getCity() {
             return city;

@@ -17,7 +17,7 @@ import com.jhhscm.platform.fragment.Mechanics.bean.GetOldDetailsBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetOldPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
 import com.jhhscm.platform.fragment.Mechanics.push.OldMechanicsUpImageBean;
-import com.jhhscm.platform.fragment.Mechanics.push.UploadInvalidOrderImgEntity;
+import com.jhhscm.platform.fragment.aftersale.BusinessDetailBean;
 import com.jhhscm.platform.fragment.aftersale.FindBusListBean;
 import com.jhhscm.platform.fragment.coupon.CouponGetListBean;
 import com.jhhscm.platform.fragment.coupon.CouponListBean;
@@ -32,12 +32,13 @@ import com.jhhscm.platform.fragment.invitation.ReqListBean;
 import com.jhhscm.platform.fragment.invitation.UserShareUrlBean;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseDetailBean;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
-import com.jhhscm.platform.fragment.labour.FindLabourWorkListBean;
 import com.jhhscm.platform.fragment.msg.GetPushListBean;
 import com.jhhscm.platform.fragment.my.BusCountBean;
 import com.jhhscm.platform.fragment.my.CheckVersionBean;
 import com.jhhscm.platform.fragment.my.UserCenterBean;
 import com.jhhscm.platform.fragment.my.book.AllSumBean;
+import com.jhhscm.platform.fragment.my.book.AllSumByDataTimeBean;
+import com.jhhscm.platform.fragment.my.book.DetailToolBean;
 import com.jhhscm.platform.fragment.my.collect.FindCollectListBean;
 import com.jhhscm.platform.fragment.my.labour.FindLabourListBean;
 import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
@@ -65,8 +66,6 @@ import com.jhhscm.platform.http.bean.SaveBean;
 import com.jhhscm.platform.http.bean.UserBean;
 
 import java.util.List;
-
-import javax.xml.transform.Result;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -160,7 +159,7 @@ public interface ApiService {
     //二手机估价
     String FIND_GOODSASSESS = "v1-0/goodsAssess/findGoodsAssess";
 
-    //订单列表
+    //订单列表 v1-3/order/findOrderList  v1-0/order/findOrderList
     String FIND_ORDERLIST = "v1-0/order/findOrderList";
 
     //查询品牌列表
@@ -334,6 +333,13 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(DEL_ORDER)
     Call<BaseEntity<ResultBean>> delOrder(@Body NetBean content);
+
+    //获取订单列表 v3
+    String FIND_ORDERLIST3 = "v1-3/order/findOrderList";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_ORDERLIST3)
+    Call<BaseEntity<FindOrderListBean>> findOrderList3(@Body NetBean content);
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(FIND_BRAND)
@@ -680,6 +686,13 @@ public interface ApiService {
     @POST(FIND_BUSLIST)
     Call<BaseEntity<FindBusListBean>> findBusList(@Body NetBean content);
 
+    //查询商户详情
+    String BUSINESS_DETAIL = "v1-3/business/detail";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(BUSINESS_DETAIL)
+    Call<BaseEntity<BusinessDetailBean>> business_detail(@Body NetBean content);
+
     //我的店铺订单列表（商户角度查询）
     String FIND_BUSORDERLIST = "v1-3/business/findBusOrderList";
 
@@ -736,6 +749,27 @@ public interface ApiService {
     @POST(ALL_SUM)
     Call<BaseEntity<AllSumBean>> allSum(@Body NetBean content);
 
+    //我的工具首页明细按天汇总统计
+    String ALL_SUMBYDATATIME = "v1-3/tool/allSumByDataTime";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(ALL_SUMBYDATATIME)
+    Call<BaseEntity<AllSumByDataTimeBean>> allSumByDataTime(@Body NetBean content);
+
+    //我的工具记帐明细
+    String DETAIL_TOOL = "v1-3/tool/detail";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(DETAIL_TOOL)
+    Call<BaseEntity<DetailToolBean>> detailTool(@Body NetBean content);
+
+    //我的工具记帐明细 删除
+    String DEL_TOOL = "v1-3/tool/del";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(DEL_TOOL)
+    Call<BaseEntity<ResultBean>> del_tool(@Body NetBean content);
+
     //我的工具收入支出添加
     String TOOL_ADD = "v1-3/tool/add";
 
@@ -743,5 +777,10 @@ public interface ApiService {
     @POST(TOOL_ADD)
     Call<BaseEntity<ResultBean>> tool_add(@Body NetBean content);
 
+    //用户确认商户提交的订单状态
+    String UPDATE_ORDERSTATUS = "v1-3/order/updateOrderStatus";
 
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(UPDATE_ORDERSTATUS)
+    Call<BaseEntity<ResultBean>> updateOrderStatus(@Body NetBean content);
 }

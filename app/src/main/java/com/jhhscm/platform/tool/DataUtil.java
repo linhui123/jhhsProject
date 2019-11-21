@@ -5,6 +5,7 @@ import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -314,5 +315,19 @@ public class DataUtil {
         }
         SimpleDateFormat formatter = new SimpleDateFormat(format);
         return formatter.format(date);
+    }
+
+    public static String getDateStr(String date, String format) {
+        Date beginTime = new Date();
+        //格式化时间
+        if (format == null || format.isEmpty()) {
+            format = "yyyy-MM-dd";
+        }
+        SimpleDateFormat CurrentTime = new SimpleDateFormat("yyyy-MM-dd");
+        ParsePosition pos = new ParsePosition(0);
+        beginTime = CurrentTime.parse(date, pos);
+
+        SimpleDateFormat formatter = new SimpleDateFormat(format);
+        return formatter.format(beginTime);
     }
 }

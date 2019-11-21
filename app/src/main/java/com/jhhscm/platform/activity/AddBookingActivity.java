@@ -9,12 +9,20 @@ import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.my.book.AddBookingFragment;
 import com.jhhscm.platform.fragment.my.book.BookingFragment;
+import com.jhhscm.platform.fragment.my.book.DetailToolBean;
 
 public class AddBookingActivity extends AbsToolbarActivity {
 
     public static void start(Context context, int type) {
         Intent intent = new Intent(context, AddBookingActivity.class);
         intent.putExtra("type", type);//0收入；1支出
+        context.startActivity(intent);
+    }
+
+    public static void start(Context context, int type, DetailToolBean detailToolBean) {
+        Intent intent = new Intent(context, AddBookingActivity.class);
+        intent.putExtra("type", type);//0收入；1支出
+        intent.putExtra("detailToolBean", detailToolBean);//0收入；1支出
         context.startActivity(intent);
     }
 
@@ -61,6 +69,7 @@ public class AddBookingActivity extends AbsToolbarActivity {
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
         args.putInt("type", getIntent().getIntExtra("type", 0));
+        args.putSerializable("detailToolBean",getIntent().getSerializableExtra("detailToolBean"));
         return args;
     }
 }

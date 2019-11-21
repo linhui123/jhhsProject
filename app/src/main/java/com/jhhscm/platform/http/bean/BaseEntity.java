@@ -16,6 +16,8 @@ public class BaseEntity<T> implements Serializable {
      * content : ChifNoTlB8vo8j/9x39LED/Dgybv0SzzykuHetYLMJ0YR53fLUyvHBqFV4J8WUidLC9zZDWuN9WNW0toqfxkPabIokhIbcquYzAoqr33KduxF+S+Zfmjn51khrbpiVjr
      */
 
+
+
     private String code;
     private String message;
     private String sign;
