@@ -214,6 +214,15 @@ public class AllSumByDataTimeBean {
             private String data_content;
             private String data_code;
             private String in_type_name;
+            private int data_type;
+
+            public int getData_type() {
+                return data_type;
+            }
+
+            public void setData_type(int data_type) {
+                this.data_type = data_type;
+            }
 
             public int getIn_type() {
                 return in_type;

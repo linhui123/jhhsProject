@@ -79,6 +79,13 @@ public class ConfirmOrderDialog extends BaseDialog {
         if (name != null) {
             mDataBinding.content.setText(name);
         }
+
+        mDataBinding.imClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         mDataBinding.tvCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

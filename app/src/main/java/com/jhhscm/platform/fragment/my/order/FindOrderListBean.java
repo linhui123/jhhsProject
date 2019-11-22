@@ -1,7 +1,9 @@
 package com.jhhscm.platform.fragment.my.order;
 
+import com.jhhscm.platform.fragment.my.store.action.FindBusOrderListBean;
 import com.jhhscm.platform.fragment.sale.FindOrderBean;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class FindOrderListBean {
@@ -136,7 +138,7 @@ public class FindOrderListBean {
         }
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * order_code : 201907315000000098975909
          * order_status : 101
@@ -168,8 +170,17 @@ public class FindOrderListBean {
         private String bus_code;
         private String bus_pic_url;
         private String is_payframe;
-        private List<GoodsOwnerListBean> goodsOwnerList;
-        private List<FindOrderBean.GoodsListBean> goodsListBeans;
+        private List<GoodsListBean> goodsList;//维修订单配件列表
+        private List<GoodsOwnerListBean> goodsOwnerList;//维修订单设备列表
+        private List<FindOrderBean.GoodsListBean> goodsListBeans;//平台订单商品列表
+
+        public List<GoodsListBean> getGoodsList() {
+            return goodsList;
+        }
+
+        public void setGoodsList(List<GoodsListBean> goodsList) {
+            this.goodsList = goodsList;
+        }
 
         public List<GoodsOwnerListBean> getGoodsOwnerList() {
             return goodsOwnerList;
@@ -356,7 +367,7 @@ public class FindOrderListBean {
             this.message = message;
         }
 
-        public static class GoodsOwnerListBean {
+        public static class GoodsOwnerListBean implements Serializable {
             /**
              * fixs :
              * brands :
@@ -436,6 +447,62 @@ public class FindOrderListBean {
 
             public void setV3s(String v3s) {
                 this.v3s = v3s;
+            }
+
+            public String getPic_url() {
+                return pic_url;
+            }
+
+            public void setPic_url(String pic_url) {
+                this.pic_url = pic_url;
+            }
+        }
+
+        public static class GoodsListBean implements Serializable {
+            /**
+             * order_code : 2019111850001343562906
+             * goods_name : 380到480空气滤芯套件
+             * number : 3
+             * price : 963.0
+             * pic_url : http://wajueji.oss-cn-shenzhen.aliyuncs.com/category_water/84143dd9abe8429bacfd24c9a9d86a68.png?Expires=1886144915&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=%2BhUVd8tB2KjZO3Re8fgoGp5dN60%3D
+             */
+
+            private String order_code;
+            private String goods_name;
+            private int number;
+            private double price;
+            private String pic_url;
+
+            public String getOrder_code() {
+                return order_code;
+            }
+
+            public void setOrder_code(String order_code) {
+                this.order_code = order_code;
+            }
+
+            public String getGoods_name() {
+                return goods_name;
+            }
+
+            public void setGoods_name(String goods_name) {
+                this.goods_name = goods_name;
+            }
+
+            public int getNumber() {
+                return number;
+            }
+
+            public void setNumber(int number) {
+                this.number = number;
+            }
+
+            public double getPrice() {
+                return price;
+            }
+
+            public void setPrice(double price) {
+                this.price = price;
             }
 
             public String getPic_url() {

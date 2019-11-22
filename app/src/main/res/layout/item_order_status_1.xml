@@ -6,6 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:descendantFocusability="blocksDescendants"
         android:orientation="vertical">
 
         <View
@@ -60,6 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
+            android:clickable="false"
             android:paddingLeft="@dimen/padding_15"
             android:paddingTop="@dimen/dp_5"
             android:paddingRight="@dimen/padding_15"

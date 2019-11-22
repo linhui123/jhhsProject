@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/ll_car"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/padding_15"
+        android:paddingTop="@dimen/padding_15"
+        android:paddingRight="@dimen/padding_15"
+        android:paddingBottom="@dimen/padding_15">
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="品牌："
+                android:textColor="@color/acc3"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_brand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_income"
+                android:text="山河智能"
+                android:textColor="@color/acc3"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_m_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_income"
+                android:layout_marginTop="@dimen/dp_5"
+                android:text="设备序列号："
+                android:textColor="@color/acc3"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_income"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_toRightOf="@+id/tv_m_income"
+                android:text="1EAD123123"
+                android:textColor="@color/acc3"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_m_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_m_income"
+                android:layout_marginTop="@dimen/dp_5"
+                android:text="故障类型："
+                android:textColor="@color/acc3"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_m_income"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_toRightOf="@+id/tv_m_error"
+                android:text="液压系统故障"
+                android:textColor="@color/acc3"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_member"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="型号："
+                android:textColor="@color/acc3"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/model"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_member"
+                android:text="SWE18UF"
+                android:textColor="@color/acc3"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_m_member"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_member"
+                android:layout_marginTop="@dimen/dp_5"
+                android:text="GPS序列号："
+                android:textColor="@color/acc3"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/gps_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_member"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_toRightOf="@+id/tv_m_member"
+                android:text="GWE123123"
+                android:textColor="@color/acc3"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

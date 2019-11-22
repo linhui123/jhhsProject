@@ -6,18 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
-import com.jhhscm.platform.fragment.aftersale.AfterSaleFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.invitation.IntegralFragment;
 import com.jhhscm.platform.fragment.invitation.InvitationRegisterFragment;
 
-/**
- * 邀请注册
- */
-public class InvitationRegisterActivity extends AbsToolbarActivity {
+public class IntegralActivity extends AbsToolbarActivity {
 
-    public static void start(Context context) {
-        Intent intent = new Intent(context, InvitationRegisterActivity.class);
+    public static void start(Context context, int type, String des) {
+        Intent intent = new Intent(context, IntegralActivity.class);
+        intent.putExtra("type", type);
+        intent.putExtra("des", des);
         context.startActivity(intent);
     }
 
@@ -48,7 +46,11 @@ public class InvitationRegisterActivity extends AbsToolbarActivity {
 
     @Override
     protected String getToolBarTitle() {
-        return "邀请注册";
+        if ( getIntent().getIntExtra("type", 0)==0){
+            return "个人积分规则";
+        }else {
+            return "店铺积分规则";
+        }
     }
 
     @Override
@@ -59,6 +61,8 @@ public class InvitationRegisterActivity extends AbsToolbarActivity {
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putInt("type", getIntent().getIntExtra("type", 0));
+        args.putString("des", getIntent().getStringExtra("des"));
         return args;
     }
 }

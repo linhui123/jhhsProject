@@ -94,6 +94,7 @@ public class InvitationRegisterFragment extends AbsFragment<FragmentInvitationRe
      */
     private void getUserShareUrl() {
         if (getContext() != null) {
+            showDialog();
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
             map.put("isbus", ConfigUtils.getCurrentUser(getContext()).getIs_bus());

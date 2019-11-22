@@ -32,8 +32,17 @@ public class UserCenterBean {
         private int bus_points;
         private int coupons_count;
         private String bus_pointdesc;
+        private String user_pointdesc;
         private int collect_count;
         private int bususer_count;
+
+        public String getUser_pointdesc() {
+            return user_pointdesc;
+        }
+
+        public void setUser_pointdesc(String user_pointdesc) {
+            this.user_pointdesc = user_pointdesc;
+        }
 
         public int getUser_points() {
             return user_points;

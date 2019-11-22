@@ -27,7 +27,7 @@ public class ItemBookingListViewHolder extends AbsRecyclerViewHolder<AllSumByDat
     @Override
     protected void onBindView(final AllSumByDataTimeBean.DataBean.DetailBean item) {
         if (item != null) {
-            if (item.getIn_type() > 0) {//收入
+            if (item.getData_type() == 0) {//收入
                 mBinding.tv1.setText(item.getIn_type_name());
                 mBinding.tv2.setText(item.getData_content());
                 mBinding.tv3.setText(item.getPrice_1() + "");
@@ -35,7 +35,7 @@ public class ItemBookingListViewHolder extends AbsRecyclerViewHolder<AllSumByDat
                 mBinding.pay.setText("");
                 mBinding.pay.setVisibility(View.GONE);
                 mBinding.llIncome.setVisibility(View.VISIBLE);
-            } else if (item.getOut_type() > 0) {//支出
+            } else {//支出
                 mBinding.tv1.setText(item.getOut_type_name());
                 mBinding.tv2.setText(item.getData_content());
                 mBinding.tv3.setText("");
@@ -43,39 +43,15 @@ public class ItemBookingListViewHolder extends AbsRecyclerViewHolder<AllSumByDat
                 mBinding.pay.setText("-" + item.getPrice_3());
                 mBinding.pay.setVisibility(View.VISIBLE);
                 mBinding.llIncome.setVisibility(View.GONE);
-            } else {
-                if (item.getPrice_3() > 0) {
-                    mBinding.tv1.setText(item.getOut_type_name());
-                    mBinding.tv2.setText(item.getData_content());
-                    mBinding.tv3.setText("");
-                    mBinding.tv4.setText("");
-                    mBinding.pay.setText("-" + item.getPrice_3());
-                    mBinding.pay.setVisibility(View.VISIBLE);
-                    mBinding.llIncome.setVisibility(View.GONE);
-                } else {
-                    mBinding.tv1.setText(item.getIn_type_name());
-                    mBinding.tv2.setText(item.getData_content());
-                    mBinding.tv3.setText(item.getPrice_1() + "");
-                    mBinding.tv4.setText(item.getPrice_2() + "");
-                    mBinding.pay.setText("");
-                    mBinding.pay.setVisibility(View.GONE);
-                    mBinding.llIncome.setVisibility(View.VISIBLE);
-                }
             }
 
             mBinding.ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (item.getIn_type() > 0) {//收入
+                    if (item.getData_type() == 0) {//收入
                         BookingDetailActivity.start(itemView.getContext(), 0, item.getData_code());
-                    } else if (item.getOut_type() > 0) {//支出
+                    } else {//支出
                         BookingDetailActivity.start(itemView.getContext(), 1, item.getData_code());
-                    } else {
-                        if (item.getPrice_3() > 0) {
-                            BookingDetailActivity.start(itemView.getContext(), 1, item.getData_code());
-                        } else {
-                            BookingDetailActivity.start(itemView.getContext(), 0, item.getData_code());
-                        }
                     }
                 }
             });

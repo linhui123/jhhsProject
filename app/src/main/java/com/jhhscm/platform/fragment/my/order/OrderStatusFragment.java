@@ -106,9 +106,7 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
         mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
-//                if (type.equals("")) {
                 findOrderList3(true, type);
-//                }
             }
 
             @Override
@@ -123,12 +121,6 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
                 GoodsToCartsActivity.start(getContext());
             }
         });
-//        String jsonString1 = "{\"data\":[{\"goods_price\":1637.00,\"is_payframe\":\"0\",\"order_price\":2237.00,\"bus_pic_url\":\"[{\\\"name\\\":\\\"http://wajueji.oss-cn-shenzhen.aliyuncs.com/business/78ff88cf31fa418296137eab90b46f1b.jpg?Expires=1889408613&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=fNtWiExSqb%2FdFdD0CMk3xQ%2BLQFI%3D\\\",\\\"url\\\":\\\"http://wajueji.oss-cn-shenzhen.aliyuncs.com/business/78ff88cf31fa418296137eab90b46f1b.jpg?Expires=1889408613&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=fNtWiExSqb%2FdFdD0CMk3xQ%2BLQFI%3D\\\",\\\"uid\\\":1574048527532,\\\"status\\\":\\\"success\\\"}]\",\"order_text\":\"未付款\",\"message\":\"bus\",\"other_price\":600.00,\"order_name\":\"700柴滤\",\"order_code\":\"2019111960002087639117\",\"order_status\":101,\"user_code\":\"2019111860000706486737\",\"goodsOwnerList\":[{\"fixs\":\"002\",\"brands\":\"日立\",\"v3s\":\"123456\"},{\"fixs\":\"002\",\"brands\":\"日立\",\"v3s\":\"123456\"}],\"order_num\":3,\"id\":481,\"pic_url\":\"http://wajueji.oss-cn-shenzhen.aliyuncs.com/category_water/4557fac8c5b7439d86ca1fe6c99ed453.png?Expires=1886145360&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=svc9Bv5UHJ%2FKQpQSI0VW29A6XtI%3D\",\"order_type\":1,\"add_time\":\"2019-11-19 18:52:11\",\"bus_name\":\"18030129694\",\"bus_code\":\"2019111860000706486737\"},{\"goods_price\":71.00,\"is_payframe\":\"0\",\"order_price\":171.00,\"bus_pic_url\":\"[{\\\"name\\\":\\\"http://wajueji.oss-cn-shenzhen.aliyuncs.com/business/78ff88cf31fa418296137eab90b46f1b.jpg?Expires=1889408613&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=fNtWiExSqb%2FdFdD0CMk3xQ%2BLQFI%3D\\\",\\\"url\\\":\\\"http://wajueji.oss-cn-shenzhen.aliyuncs.com/business/78ff88cf31fa418296137eab90b46f1b.jpg?Expires=1889408613&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=fNtWiExSqb%2FdFdD0CMk3xQ%2BLQFI%3D\\\",\\\"uid\\\":1574048527532,\\\"status\\\":\\\"success\\\"}]\",\"order_text\":\"未付款\",\"message\":\"bus\",\"other_price\":100.00,\"order_name\":\"700泄油滤\",\"order_code\":\"2019111920002002788501\",\"order_status\":101,\"user_code\":\"2019111860000706486737\",\"goodsOwnerList\":[{\"fixs\":\"001\",\"brands\":\"小松\",\"v3s\":\"001\"}],\"order_num\":1,\"id\":479,\"pic_url\":\"http://wajueji.oss-cn-shenzhen.aliyuncs.com/category_water/b7404498892c49c9984d09befd864d7f.png?Expires=1886145608&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=qFF1NjfcSDzI5KRKqVChHLK%2Fqd8%3D\",\"order_type\":1,\"add_time\":\"2019-11-19 14:33:52\",\"bus_name\":\"18030129694\",\"bus_code\":\"2019111860000706486737\"}],\"page\":{\"total\":4,\"startRow\":1,\"size\":4,\"navigateFirst\":1,\"prePage\":0,\"endRow\":4,\"pageSize\":10,\"pageNum\":1,\"navigateLastPageNums\":1,\"navigatePageNums\":[1]}}";
-//        String jsonString = "{\"data\":[{\"goods_price\":1637.00,\"is_payframe\":\"0\",\"order_price\":2237.00,\"order_text\":\"未付款\",\"message\":\"bus\",\"other_price\":600.00,\"order_name\":\"700柴滤\",\"order_code\":\"2019111960002087639117\",\"order_status\":101,\"user_code\":\"2019111860000706486737\",\"goodsOwnerList\":[{\"fixs\":\"002\",\"brands\":\"日立\",\"v3s\":\"123456\"},{\"fixs\":\"002\",\"brands\":\"日立\",\"v3s\":\"123456\"}],\"order_num\":3,\"id\":481,\"order_type\":1,\"add_time\":\"2019-11-19 18:52:11\",\"bus_name\":\"18030129694\",\"bus_code\":\"2019111860000706486737\"},{\"goods_price\":71.00,\"is_payframe\":\"0\",\"order_price\":171.00,\"order_text\":\"未付款\",\"message\":\"bus\",\"other_price\":100.00,\"order_name\":\"700泄油滤\",\"order_code\":\"2019111920002002788501\",\"order_status\":101,\"user_code\":\"2019111860000706486737\",\"goodsOwnerList\":[{\"fixs\":\"001\",\"brands\":\"小松\",\"v3s\":\"001\"}],\"order_num\":1,\"id\":479,\"order_type\":1,\"add_time\":\"2019-11-19 14:33:52\",\"bus_name\":\"18030129694\",\"bus_code\":\"2019111860000706486737\"}],\"page\":{\"total\":4,\"startRow\":1,\"size\":4,\"navigateFirst\":1,\"prePage\":0,\"endRow\":4,\"pageSize\":10,\"pageNum\":1,\"navigateLastPageNums\":1,\"navigatePageNums\":[1]}}";
-//
-//        Gson gson = new Gson();
-//        FindOrderListBean dataBean1 = gson.fromJson(jsonString1, FindOrderListBean.class);
-//        FindOrderListBean dataBean = gson.fromJson(jsonString, FindOrderListBean.class);
     }
 
     public void onEvent(AddressResultEvent messageEvent) {
@@ -265,36 +257,36 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
 
     private void doSuccessResponse(final boolean refresh, final FindOrderListBean categoryBean) {
         this.findOrderListBean = categoryBean;
-        if (categoryBean != null && categoryBean.getData() != null
-                && categoryBean.getData().size() > 0) {
-            for (int i = 0; i < categoryBean.getData().size(); i++) {
-                if (categoryBean.getData().get(i).getIs_payframe() != null
-                        && "1".equals(categoryBean.getData().get(i).getIs_payframe())) {
-                    findOrder(categoryBean.getData().get(i).getOrder_code());
-                }
-
-                if (i == categoryBean.getData().size() - 1) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (refresh) {
-                                mAdapter.setDetail(categoryBean);
-                            } else {
-                                mAdapter.setExpend(categoryBean);
-                            }
-                        }
-                    }, 500);
-                }
-            }
-            mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findOrderListBean.getPage().getTotal() / (float) findOrderListBean.getPage().getPageSize()) > mCurrentPage);
-        } else {
+//        if (categoryBean != null && categoryBean.getData() != null
+//                && categoryBean.getData().size() > 0) {
+//            for (int i = 0; i < categoryBean.getData().size(); i++) {
+//                if (categoryBean.getData().get(i).getIs_payframe() != null
+//                        && "1".equals(categoryBean.getData().get(i).getIs_payframe())) {
+//                    findOrder(categoryBean.getData().get(i).getOrder_code());
+//                }
+//
+//                if (i == categoryBean.getData().size() - 1) {
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if (refresh) {
+//                                mAdapter.setDetail(categoryBean);
+//                            } else {
+//                                mAdapter.setExpend(categoryBean);
+//                            }
+//                        }
+//                    }, 500);
+//                }
+//            }
+//            mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findOrderListBean.getPage().getTotal() / (float) findOrderListBean.getPage().getPageSize()) > mCurrentPage);
+//        } else {
             if (refresh) {
                 mAdapter.setDetail(categoryBean);
             } else {
                 mAdapter.setExpend(categoryBean);
             }
             mDataBinding.recyclerview.loadComplete(true, false);
-        }
+//        }
     }
 
     /**

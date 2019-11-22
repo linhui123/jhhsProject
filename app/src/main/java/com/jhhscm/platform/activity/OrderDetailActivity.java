@@ -7,6 +7,8 @@ import android.view.View;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.my.order.FindOrderListBean;
+import com.jhhscm.platform.fragment.my.order.OrderDetail2Fragment;
 import com.jhhscm.platform.fragment.my.order.OrderDetailFragment;
 
 public class OrderDetailActivity extends AbsToolbarActivity {
@@ -14,6 +16,13 @@ public class OrderDetailActivity extends AbsToolbarActivity {
     public static void start(Context context, String orderGood, int Type) {
         Intent intent = new Intent(context, OrderDetailActivity.class);
         intent.putExtra("orderGood", orderGood);
+        intent.putExtra("type", Type);
+        context.startActivity(intent);
+    }
+
+    public static void start(Context context, FindOrderListBean.DataBean dataBean, int Type) {
+        Intent intent = new Intent(context, OrderDetailActivity.class);
+        intent.putExtra("dataBean", dataBean);
         intent.putExtra("type", Type);
         context.startActivity(intent);
     }
@@ -50,13 +59,18 @@ public class OrderDetailActivity extends AbsToolbarActivity {
 
     @Override
     protected AbsFragment onCreateContentView() {
-        return OrderDetailFragment.instance();
+        if ((FindOrderListBean.DataBean)getIntent().getSerializableExtra("dataBean") != null) {
+            return OrderDetail2Fragment.instance();
+        } else {
+            return OrderDetailFragment.instance();
+        }
     }
 
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
         args.putString("orderGood", getIntent().getStringExtra("orderGood"));
+        args.putSerializable("dataBean", getIntent().getSerializableExtra("dataBean"));
         args.putInt("type", getIntent().getIntExtra("type", 1));
         return args;
     }

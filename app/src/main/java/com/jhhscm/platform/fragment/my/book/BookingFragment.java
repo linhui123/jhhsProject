@@ -297,6 +297,10 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
                                             mDataBinding.tvUn.setText(allSumBean.getData().getPrice_2());
                                             mDataBinding.tvAccepted.setText(allSumBean.getData().getPrice_1());
                                             mDataBinding.tvPay.setText(allSumBean.getData().getPrice_3());
+                                        }else {
+                                            mDataBinding.tvUn.setText("0");
+                                            mDataBinding.tvAccepted.setText("0");
+                                            mDataBinding.tvPay.setText("0");
                                         }
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
@@ -418,7 +422,7 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
      * 下拉筛选
      */
     private void income(final GetComboBoxBean getComboBoxBean) {
-        getComboBoxBean.getResult().add(0, new GetComboBoxBean.ResultBean("", "不限"));
+//        getComboBoxBean.getResult().add(0, new GetComboBoxBean.ResultBean("", "不限"));
         mDataBinding.incomeLabels.setLabels(getComboBoxBean.getResult(), new LabelsView.LabelTextProvider<GetComboBoxBean.ResultBean>() {
             @Override
             public CharSequence getLabelText(TextView label, int position, GetComboBoxBean.ResultBean data) {
@@ -438,7 +442,7 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
     }
 
     private void pay(final GetComboBoxBean getComboBoxBean) {
-        getComboBoxBean.getResult().add(0, new GetComboBoxBean.ResultBean("", "不限"));
+//        getComboBoxBean.getResult().add(0, new GetComboBoxBean.ResultBean("", "不限"));
         mDataBinding.payLabels.setLabels(getComboBoxBean.getResult(), new LabelsView.LabelTextProvider<GetComboBoxBean.ResultBean>() {
             @Override
             public CharSequence getLabelText(TextView label, int position, GetComboBoxBean.ResultBean data) {

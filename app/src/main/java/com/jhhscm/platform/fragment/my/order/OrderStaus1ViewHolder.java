@@ -74,7 +74,7 @@ public class OrderStaus1ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
             mBinding.rv.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
             InnerAdapter mAdapter = new InnerAdapter(itemView.getContext());
             mBinding.rv.setAdapter(mAdapter);
-            mAdapter.setData(item.orderBean.getGoodsListBeans());
+            mAdapter.setData(item.orderBean.getGoodsList());
 
             mBinding.ll.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -122,14 +122,14 @@ public class OrderStaus1ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
         }
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<FindOrderBean.GoodsListBean> {
+    private class InnerAdapter extends AbsRecyclerViewAdapter<FindOrderListBean.DataBean.GoodsListBean> {
         public InnerAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public AbsRecyclerViewHolder<FindOrderBean.GoodsListBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new OrderListViewHolder(mInflater.inflate(R.layout.item_create_order, parent, false));
+        public AbsRecyclerViewHolder<FindOrderListBean.DataBean.GoodsListBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new OrderItemViewHolder(mInflater.inflate(R.layout.item_create_order, parent, false));
         }
     }
 }

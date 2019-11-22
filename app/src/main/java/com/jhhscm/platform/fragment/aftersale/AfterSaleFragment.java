@@ -34,6 +34,7 @@ import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.coupon.CouponCenterFragment;
 import com.jhhscm.platform.fragment.coupon.CouponCenterViewHolder;
 import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
+import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.my.store.viewholder.MyMemberItemViewHolder;
 import com.jhhscm.platform.http.AHttpService;
@@ -48,6 +49,8 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.dialog.SimpleDialog;
+import com.jhhscm.platform.views.dialog.TelPhoneDialog;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
@@ -137,6 +140,18 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
             }
         });
 
+        mDataBinding.tel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new TelPhoneDialog(getContext(), "免费咨询", new TelPhoneDialog.CallbackListener() {
+
+                    @Override
+                    public void clickYes(String phone) {
+                        saveMsg(phone, "10");
+                    }
+                }).show();
+            }
+        });
         YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
                 .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
                 .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
@@ -218,8 +233,8 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
             map.put("limit", mShowCount);
             map.put("v1", longitude + "");
             map.put("v2", latitude + "");
-            map.put("province", pID);
-            map.put("city", cID);
+            map.put("province_id", pID);
+            map.put("city_id", cID);
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = SignObject.getSignKey(getActivity(), map, "findBusList");
@@ -275,6 +290,44 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
         public AbsRecyclerViewHolder<FindBusListBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new AfterSaleViewHolder(mInflater.inflate(R.layout.item_aftersale_store, parent, false), latitude, longitude);
         }
+    }
+
+    /**
+     * 信息咨询
+     */
+    private void saveMsg(final String phone, String type) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("mobile", phone);
+        map.put("type", type);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "saveMsg");
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(SaveMsgAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity> response, BaseErrorInfo baseErrorInfo) {
+                        closeDialog();
+                        if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                            return;
+                        }
+                        if (response != null) {
+                            if (response.body().getCode().equals("200")) {
+                                new SimpleDialog(getContext(), phone, new SimpleDialog.CallbackListener() {
+                                    @Override
+                                    public void clickYes() {
+
+                                    }
+                                }).show();
+                            } else {
+                                ToastUtils.show(getContext(), response.body().getMessage());
+                            }
+                        }
+                    }
+                }));
     }
 
     /**

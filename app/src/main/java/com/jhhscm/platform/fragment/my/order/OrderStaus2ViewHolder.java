@@ -2,6 +2,7 @@ package com.jhhscm.platform.fragment.my.order;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -65,26 +66,58 @@ public class OrderStaus2ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
             } else {
                 mBinding.pay.setVisibility(View.GONE);
             }
-
+            mBinding.rv.setHasFixedSize(true);
+            mBinding.rv.setNestedScrollingEnabled(false);
             mBinding.rv.addItemDecoration(new DividerItemDecoration(itemView.getContext()));
             mBinding.rv.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
             InnerAdapter mAdapter = new InnerAdapter(itemView.getContext());
             mBinding.rv.setAdapter(mAdapter);
             mAdapter.setData(item.orderBean.getGoodsOwnerList());
 
+//            mBinding.rv.setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+////                    return mBinding.ll.onTouchEvent(event);
+//                    if (event.getAction() == MotionEvent.ACTION_UP) {
+//                        mBinding.ll.performClick();
+//                    }
+//                    return false;
+//                }
+//            });
+
             mBinding.ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (item.orderBean.getOrder_status().contains("10")) {
-                        OrderDetailActivity.start(itemView.getContext(), item.orderBean.getOrder_code(), 1);
+                        if ("1".equals(item.orderBean.getIs_payframe())) {
+                            OrderDetailActivity.start(itemView.getContext(), item.orderBean.getOrder_code(), 1);
+                        } else {
+                            OrderDetailActivity.start(itemView.getContext(), item.orderBean, 1);
+                        }
                     } else if (item.orderBean.getOrder_status().contains("20")) {
-                        OrderDetailActivity.start(itemView.getContext(), item.orderBean.getOrder_code(), 2);
+                        if ("1".equals(item.orderBean.getIs_payframe())) {
+                            OrderDetailActivity.start(itemView.getContext(), item.orderBean.getOrder_code(), 2);
+                        } else {
+                            OrderDetailActivity.start(itemView.getContext(), item.orderBean, 2);
+                        }
                     } else if (item.orderBean.getOrder_status().contains("30")) {
-                        OrderDetailActivity.start(itemView.getContext(), item.orderBean.getOrder_code(), 3);
+                        if ("1".equals(item.orderBean.getIs_payframe())) {
+                            OrderDetailActivity.start(itemView.getContext(), item.orderBean.getOrder_code(), 3);
+                        } else {
+                            OrderDetailActivity.start(itemView.getContext(), item.orderBean, 3);
+                        }
                     } else if (item.orderBean.getOrder_status().contains("40")) {
-                        OrderDetailActivity.start(itemView.getContext(), item.orderBean.getOrder_code(), 4);
+                        if ("1".equals(item.orderBean.getIs_payframe())) {
+                            OrderDetailActivity.start(itemView.getContext(), item.orderBean.getOrder_code(), 4);
+                        } else {
+                            OrderDetailActivity.start(itemView.getContext(), item.orderBean, 4);
+                        }
                     } else {
-                        OrderDetailActivity.start(itemView.getContext(), item.orderBean.getOrder_code(), 1);
+                        if ("1".equals(item.orderBean.getIs_payframe())) {
+                            OrderDetailActivity.start(itemView.getContext(), item.orderBean.getOrder_code(), 1);
+                        } else {
+                            OrderDetailActivity.start(itemView.getContext(), item.orderBean, 1);
+                        }
                     }
                 }
             });

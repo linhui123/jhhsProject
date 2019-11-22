@@ -23,23 +23,5 @@ public class OrderListBusViewHolder extends AbsRecyclerViewHolder<FindOrderListB
         mBinding.tvBrand.setText("设备品牌：" + item.getBrands());
         mBinding.tvModel.setText("设备型号：" + item.getFixs());
         mBinding.tvError.setText("故障类型：" + item.getV3s());
-//        ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.im);
-
-//        mBinding.rl.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (item.getOrder_status().contains("10")) {
-//                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 1);
-//                } else if (item.getOrder_status().contains("20")) {
-//                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 2);
-//                } else if (item.getOrder_status().contains("30")) {
-//                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 3);
-//                } else if (item.getOrder_status().contains("40")) {
-//                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 4);
-//                }else {
-//
-//                }
-//            }
-//        });
     }
 }

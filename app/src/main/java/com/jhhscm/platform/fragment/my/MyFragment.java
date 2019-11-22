@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AuthenticationActivity;
 import com.jhhscm.platform.activity.BookingActivity;
+import com.jhhscm.platform.activity.IntegralActivity;
 import com.jhhscm.platform.activity.InvitationRegisterActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.MainActivity;
@@ -64,6 +65,7 @@ import retrofit2.Response;
 
 
 public class MyFragment extends AbsFragment<FragmentMyBinding> {
+    private UserCenterBean userCenterBean;
 
     public static MyFragment instance() {
         MyFragment view = new MyFragment();
@@ -151,23 +153,24 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                             }
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
-                                    if (response.body().getData().getResult() != null) {
+                                    userCenterBean = response.body().getData();
+                                    if (userCenterBean != null) {
                                         UserSession userSession = ConfigUtils.getCurrentUser(getContext());
                                         userSession.setIs_bus(response.body().getData().getResult().getIs_bus());
                                         ConfigUtils.setCurrentUser(getContext(), userSession);
 
-                                        if (response.body().getData().getResult().getIs_bus() == 0) {
+                                        if (userCenterBean.getResult().getIs_bus() == 0) {
                                             mDataBinding.llStore.setVisibility(View.GONE);
                                             mDataBinding.tvStoreNum.setVisibility(View.GONE);
                                         } else {
                                             mDataBinding.llStore.setVisibility(View.VISIBLE);
                                             mDataBinding.tvStoreNum.setVisibility(View.VISIBLE);
-                                            mDataBinding.tvStoreNum.setText("店铺积分：" + response.body().getData().getResult().getBus_points());
+                                            mDataBinding.tvStoreNum.setText("店铺积分：" + userCenterBean.getResult().getBus_points());
                                         }
-                                        mDataBinding.tvPersonNum.setText(response.body().getData().getResult().getUser_points() + "");
-                                        mDataBinding.tvCouponNum.setText(response.body().getData().getResult().getCoupons_count() + "");
-                                        mDataBinding.tvShoucangNum.setText(response.body().getData().getResult().getCollect_count() + "");
-                                        mDataBinding.tvInviteNum.setText(response.body().getData().getResult().getBususer_count() + "");
+                                        mDataBinding.tvPersonNum.setText(userCenterBean.getResult().getUser_points() + "");
+                                        mDataBinding.tvCouponNum.setText(userCenterBean.getResult().getCoupons_count() + "");
+                                        mDataBinding.tvShoucangNum.setText(userCenterBean.getResult().getCollect_count() + "");
+                                        mDataBinding.tvInviteNum.setText(userCenterBean.getResult().getBususer_count() + "");
                                     }
 
                                 } else if (response.body().getCode().equals("1003")) {
@@ -403,6 +406,28 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                     RepaymentActivity.start(getContext());
                 } else {
                     startNewActivity(LoginActivity.class);
+                }
+            }
+        });
+
+        mDataBinding.tvStoreNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userCenterBean != null && userCenterBean.getResult() != null
+                        && userCenterBean.getResult().getBus_pointdesc() != null
+                        && userCenterBean.getResult().getBus_pointdesc().length() > 0) {
+                    IntegralActivity.start(getContext(), 1, userCenterBean.getResult().getBus_pointdesc());
+                }
+            }
+        });
+
+        mDataBinding.llPerson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userCenterBean != null && userCenterBean.getResult() != null
+                        && userCenterBean.getResult().getUser_pointdesc() != null
+                        && userCenterBean.getResult().getUser_pointdesc().length() > 0) {
+                    IntegralActivity.start(getContext(), 0, userCenterBean.getResult().getUser_pointdesc());
                 }
             }
         });

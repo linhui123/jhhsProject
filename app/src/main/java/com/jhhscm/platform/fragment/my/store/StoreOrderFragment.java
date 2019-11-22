@@ -16,9 +16,11 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentMyStoreOrderBinding;
 import com.jhhscm.platform.databinding.FragmentStoreOrderBinding;
+import com.jhhscm.platform.event.OrderCancleEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
+import com.jhhscm.platform.fragment.my.order.DelOrderAction;
 import com.jhhscm.platform.fragment.my.store.action.FindBusGoodsOwnerListByUserCodeBean;
 import com.jhhscm.platform.fragment.my.store.action.FindBusGoodsOwnerOrderListByUserCodeAction;
 import com.jhhscm.platform.fragment.my.store.action.FindBusGoodsOwnerOrderListByUserCodeBean;
@@ -30,10 +32,15 @@ import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
+import com.jhhscm.platform.http.bean.ResultBean;
+import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
+import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.dialog.ConfirmOrderDialog;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.util.Map;
@@ -67,6 +74,7 @@ public class StoreOrderFragment extends AbsFragment<FragmentStoreOrderBinding> {
 
     @Override
     protected void setupViews() {
+        EventBusUtil.registerEvent(this);
         bus_code = getArguments().getString("bus_code");
         goods_code = (FindBusGoodsOwnerListByUserCodeBean.ResultBean.DataBean) getArguments().getSerializable("goods_code");
         if (goods_code != null) {
@@ -203,4 +211,59 @@ public class StoreOrderFragment extends AbsFragment<FragmentStoreOrderBinding> {
         }
     }
 
+    public void onEvent(final OrderCancleEvent event) {
+        if (event.order_code != null) {
+            new ConfirmOrderDialog(getContext(), "请确认是否取消订单", new ConfirmOrderDialog.CallbackListener() {
+                @Override
+                public void clickY() {
+                    delOrder(event.order_code);
+                }
+            }).show();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregisterEvent(this);
+    }
+
+    /**
+     * 取消订单
+     */
+    private void delOrder(final String orderGood) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("order_code", orderGood);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "delOrder");
+        NetBean netBean = new NetBean();
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(DelOrderAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response,
+                                           BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                if (response.body().getCode().equals("200")) {
+                                    if (response.body().getData().getData().equals("0")) {
+                                        ToastUtil.show(getContext(), "取消成功");
+                                    }
+                                    mDataBinding.recyclerview.autoRefresh();
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
 }

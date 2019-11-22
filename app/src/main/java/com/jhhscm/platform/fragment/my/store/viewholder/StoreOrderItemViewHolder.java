@@ -9,12 +9,14 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemStoreOrderBinding;
+import com.jhhscm.platform.event.OrderCancleEvent;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.my.store.MyServiceGoodsViewHolder;
 import com.jhhscm.platform.fragment.my.store.action.FindBusGoodsOwnerOrderListByUserCodeBean;
 import com.jhhscm.platform.fragment.my.store.action.FindBusOrderListBean;
 import com.jhhscm.platform.fragment.my.store.viewholder.MyStoreOrderGoodsViewHolder;
 import com.jhhscm.platform.fragment.sale.FindOrderBean;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 
 import java.util.ArrayList;
@@ -33,8 +35,20 @@ public class StoreOrderItemViewHolder extends AbsRecyclerViewHolder<FindBusGoods
     protected void onBindView(final FindBusGoodsOwnerOrderListByUserCodeBean.DataBean item) {
         if (item != null) {
             mBinding.orderNo.setText("订单编号：" + item.getOrder_code());
-            mBinding.orderTime.setText("下单时间：" + item.getAdd_time());
-            mBinding.orderType.setText(item.getOrder_status() + "");
+            if (item.getAdd_time() != null && item.getAdd_time().length() > 10) {
+                mBinding.orderTime.setText("下单时间：" + item.getAdd_time().substring(0, 10));
+            } else {
+                mBinding.orderTime.setText("下单时间：" + item.getAdd_time());
+            }
+
+            if (item.getOrder_status() == 101) {
+                mBinding.orderType.setText("待付款");
+            } else if (item.getOrder_status() == 501) {
+                mBinding.orderType.setText("用户已确认订单");
+            } else {
+                mBinding.orderType.setText("已完成");
+            }
+
             mBinding.fee.setText("￥" + item.getOther_price());
             mBinding.total.setText("￥" + item.getGoods_price());
             mBinding.phone.setText(item.getUser_name());
@@ -48,9 +62,11 @@ public class StoreOrderItemViewHolder extends AbsRecyclerViewHolder<FindBusGoods
             mBinding.tvFunc1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtil.show(itemView.getContext(), "取消订单");
+                    EventBusUtil.post(new OrderCancleEvent(item.getOrder_code(), ""));
                 }
             });
+
+            mBinding.tvFunc2.setVisibility(View.GONE);
             mBinding.tvFunc2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

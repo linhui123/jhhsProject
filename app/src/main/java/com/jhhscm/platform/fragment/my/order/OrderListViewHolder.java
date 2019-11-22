@@ -39,17 +39,6 @@ public class OrderListViewHolder extends AbsRecyclerViewHolder<FindOrderBean.Goo
                 }else {
 
                 }
-
-//                if ("未付款".equals(item.getOrder_text())) {
-//                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 1);
-//                } else if ("未发货".equals(item.getOrder_text())
-//                        || "已付款".equals(item.getOrder_text())) {
-//                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 2);
-//                } else if ("未收货".equals(item.getOrder_text())) {
-//                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 3);
-//                } else if ("已完成".equals(item.getOrder_text())) {
-//                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 4);
-//                }
             }
         });
     }

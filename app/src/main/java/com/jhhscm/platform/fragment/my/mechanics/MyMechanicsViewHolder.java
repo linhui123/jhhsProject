@@ -42,13 +42,22 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindGoodsOwnerB
             mBinding.tvName.setText(item.getName());
             mBinding.tv1.setText("品牌：" + item.getBrand_name());
             mBinding.tv2.setText("型号：" + item.getFixp17());
-            if (item.getFcatory_time() != null && item.getFcatory_time().length() >= 10) {
-                mBinding.tv3.setText("出厂时间：" + item.getFcatory_time().substring(0, 10));
+            if (item.getFcatory_time() != null) {
+                if (item.getFcatory_time().length() >= 10) {
+                    mBinding.tv3.setText("出厂时间：" + item.getFcatory_time().substring(0, 10));
+                } else {
+                    mBinding.tv3.setText("出厂时间：" + item.getFcatory_time());
+                }
             } else {
-                mBinding.tv3.setText("出厂时间：" + item.getFcatory_time());
+                mBinding.tv3.setText("出厂时间：--");
             }
 
-            mBinding.tvType.setText(item.getStatus() + "");
+            if (item.getStatus() == 0) {
+                mBinding.tvType.setText("状态：未使用");
+            } else {
+                mBinding.tvType.setText("状态：使用中");
+            }
+
             if (item.getPic_gallery_url_list() != null && item.getPic_gallery_url_list().length() > 10) {
                 String listString = item.getPic_gallery_url_list().replace("[\"", "").replace("\"]", "");
                 final String[] strs = listString.split("\",\"");
@@ -84,9 +93,7 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindGoodsOwnerB
             mBinding.tvFunc1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    ToastUtil.show(itemView.getContext(), "租赁");
                     Lessee1Activity.start(itemView.getContext(), item);
-//                    Lessee2Activity.start(itemView.getContext(), null, item);
                 }
 
             });
@@ -94,7 +101,6 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindGoodsOwnerB
             mBinding.tvFunc2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    ToastUtil.show(itemView.getContext(), "卖车");
                     PushOldMechanicsActivity.start(itemView.getContext(), item);
                 }
             });
@@ -113,39 +119,5 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindGoodsOwnerB
                 }
             });
         }
-
-        //        ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.im);
-//        mBinding.tv1.setText("品牌："+item.getName());
-//        String data = item.getFactory_time() == null ? "" : item.getFactory_time() + "年 | ";
-//        String Old_time = item.getOld_time() == null ? "" : item.getOld_time() + "小时 | ";
-//        String Province = item.getProvince() == null ? "" : item.getProvince() + "-";
-//        String City = item.getCity() == null ? "" : item.getCity();
-//        mBinding.tv2.setText("型号："+data + Old_time + Province + City);
-//
-//        String Counter_price = item.getCounter_price() == null ? "" : CalculationUtils.wan(item.getCounter_price()) + "  ";
-//        String Retail_price = "";
-//        if (item.getRetail_price() != null && Double.parseDouble(item.getRetail_price()) != 0.0) {
-//            Retail_price = "首付" + CalculationUtils.wan(item.getRetail_price());
-//        } else {
-//            Retail_price = "";
-//        }
-////        String Retail_price = item.getRetail_price() == null ? "" : "首付" + CalculationUtils.wan(item.getRetail_price());
-//        mBinding.tv3.setText("出厂时间："+Counter_price + Retail_price);
-//        mBinding.tvType.setText("");
-//        if (item.getIs_sell() == 0) {
-//            mBinding.tvType.setText("审核");
-//        } else if (item.getIs_sell() == 1) {
-//            mBinding.tvType.setText("已售出");
-//        } else if (item.getIs_sell() == 2) {
-//            mBinding.tvType.setText("正在销售");
-//        }
-//
-//        mBinding.rl.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String url = UrlUtils.ESJXQ + "&good_code=" + item.getGood_code();
-//                MechanicsH5Activity.start(itemView.getContext(), url, "二手机详情", item.getGood_code(), item.getName(), item.getPic_url(), 2);
-//            }
-//        });
     }
 }

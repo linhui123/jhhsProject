@@ -36,7 +36,6 @@ public class TelPhoneDialog extends BaseDialog {
 
     public TelPhoneDialog(Context context, String content, CallbackListener listener) {
         super(context);
-//        setCancelable(false);
         setCanceledOnTouchOutside(true);
         this.mContent = content;
         this.mListener = listener;
@@ -55,7 +54,7 @@ public class TelPhoneDialog extends BaseDialog {
             mDataBinding.edPhone.setText(ConfigUtils.getCurrentUser(getContext()).getMobile());
         }
         if (mContent != null) {
-            mDataBinding.content.setText(mContent);
+            mDataBinding.tvConfirm.setText(mContent);
         }
 
         mDataBinding.tvConfirm.setOnClickListener(new View.OnClickListener() {
