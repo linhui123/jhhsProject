@@ -20,7 +20,6 @@ import com.jhhscm.platform.fragment.GoodsToCarts.action.CreateOrderAction;
 import com.jhhscm.platform.fragment.GoodsToCarts.action.DelGoodsToCartsAction;
 import com.jhhscm.platform.fragment.GoodsToCarts.action.GetCartGoodsByUserCodeAction;
 import com.jhhscm.platform.fragment.GoodsToCarts.action.UpdateGoodsToCartsAction;
-import com.jhhscm.platform.fragment.GoodsToCarts.adapter.RecOtherTypeAdapter;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -30,6 +29,7 @@ import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.shoppingcast.adapter.CartExpandAdapter;
 import com.jhhscm.platform.shoppingcast.callback.OnClickAddCloseListenter;
 import com.jhhscm.platform.shoppingcast.callback.OnClickDeleteListenter;
@@ -61,15 +61,13 @@ import retrofit2.Response;
 /**
  * 购物车
  */
-public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBinding> implements RecOtherTypeAdapter.DeletedItemListener, RecOtherTypeAdapter.CountChangeListener, RecOtherTypeAdapter.SelectedListener {
-    private RecOtherTypeAdapter recAdapter;
-    List<GetCartGoodsByUserCodeBean.ResultBean> list;
-    private boolean total;
-    private UserSession userSession;
-    CartInfo cartInfo;
-    CartExpandAdapter cartExpandAdapter;
-    double price;
-    int num;
+public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBinding> {
+    private List<GetCartGoodsByUserCodeBean.ResultBean> list;
+    private boolean total = false;//全选
+    private GetCartGoodsByUserCodeBean getCartGoodsByUserCodeBean;
+    private CartExpandAdapter cartExpandAdapter;
+    private double price;
+    private int num;
 
     public static GoodsToCartsFragment instance() {
         GoodsToCartsFragment view = new GoodsToCartsFragment();
@@ -88,30 +86,11 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
-            userSession = ConfigUtils.getCurrentUser(getContext());
         } else {
             startNewActivity(LoginActivity.class);
         }
 
-//        mDataBinding.refresh.setEnableLastTime(false);
-//        mDataBinding.load.setEnableLastTime(false);
-//        mDataBinding.refreshlayout.setEnableRefresh(true);
-//        mDataBinding.refreshlayout.setEnableLoadMore(false);
-//        mDataBinding.refreshlayout.setOnRefreshListener(new OnRefreshListener() {
-//            @Override
-//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-//                getCartGoodsByUserCode(userSession.getUserCode(), userSession.getToken(), true);
-//            }
-//        });
-//
-//        mDataBinding.refreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-//                getCartGoodsByUserCode(userSession.getUserCode(), userSession.getToken(), false);
-//
-//            }
-//        });
-        getCartGoodsByUserCode(ConfigUtils.getCurrentUser(getContext()).getUserCode(), ConfigUtils.getCurrentUser(getContext()).getToken(), true);
+        getCartGoodsByUserCode();
         initBottom();
     }
 
@@ -121,25 +100,30 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
             public void onClick(View v) {
                 if (total) {
                     if (getCartGoodsByUserCodeBean != null) {
-                        for (GetCartGoodsByUserCodeBean.ResultBean r : getCartGoodsByUserCodeBean) {
-                            r.setSelect(false);
+                        for (GetCartGoodsByUserCodeBean.ResultBean r : getCartGoodsByUserCodeBean.getResult()) {
+                            r.setIscheck(false);
+                            for (GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean goodsListBean : r.getGoodsList()) {
+                                goodsListBean.setIscheck(false);
+                            }
+
                         }
-                        initData(getCartGoodsByUserCodeBean, true);
-                        select(getCartGoodsByUserCodeBean);
+                        initData(getCartGoodsByUserCodeBean);
                     }
                     total = false;
-                    mDataBinding.imQuanxuan.setImageResource(R.mipmap.ic_shoping_s);
+                    showCommodityCalculation();
                 } else {
                     if (getCartGoodsByUserCodeBean != null) {
-                        for (GetCartGoodsByUserCodeBean.ResultBean r : getCartGoodsByUserCodeBean) {
-                            r.setSelect(true);
+                        for (GetCartGoodsByUserCodeBean.ResultBean r : getCartGoodsByUserCodeBean.getResult()) {
+                            r.setIscheck(true);
+                            for (GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean goodsListBean : r.getGoodsList()) {
+                                goodsListBean.setIscheck(true);
+                            }
+
                         }
-                        initData(getCartGoodsByUserCodeBean, true);
-                        select(getCartGoodsByUserCodeBean);
+                        initData(getCartGoodsByUserCodeBean);
                     }
                     total = true;
-                    mDataBinding.imQuanxuan.setImageResource(R.mipmap.ic_shoping_s1);
-
+                    showCommodityCalculation();
                 }
             }
         });
@@ -147,15 +131,28 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
         mDataBinding.tvJiesuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<GetCartGoodsByUserCodeBean.ResultBean> list = new ArrayList<>();
-                for (GetCartGoodsByUserCodeBean.ResultBean r : getCartGoodsByUserCodeBean) {
-//                    if (r.isSelect()) {
-                        list.add(r);
-//                    }
+
+                List<GetCartGoodsByUserCodeBean.ResultBean> resultBeans = new ArrayList<>();
+                if (getCartGoodsByUserCodeBean != null) {
+                    for (GetCartGoodsByUserCodeBean.ResultBean r : getCartGoodsByUserCodeBean.getResult()) {
+                        List<GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean> list = new ArrayList<>();
+                        GetCartGoodsByUserCodeBean.ResultBean resultBean = new GetCartGoodsByUserCodeBean.ResultBean();
+                        for (GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean goodsListBean : r.getGoodsList()) {
+                            if (goodsListBean.isIscheck()) {
+                                list.add(goodsListBean);
+                            }
+                        }
+                        if (list.size() > 0) {
+                            resultBean.setGoodsList(list);
+                            resultBeans.add(resultBean);
+                        }
+                    }
+                    initData(getCartGoodsByUserCodeBean);
                 }
-                if (list != null && list.size() > 0) {
+
+                if (resultBeans != null && resultBeans.size() > 0) {
                     GetCartGoodsByUserCodeBean g = new GetCartGoodsByUserCodeBean();
-                    g.setResult(list);
+                    g.setResult(resultBeans);
                     CreateOrderActivity.start(getContext(), g);
                     getActivity().finish();
                 } else {
@@ -164,20 +161,6 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
             }
         });
     }
-
-//    private void initView() {
-//        mDataBinding.rvGouwuche.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
-//        mDataBinding.rvGouwuche.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        recAdapter = new RecOtherTypeAdapter(getContext());
-//        recAdapter.setDeletedItemListener(this);
-//        recAdapter.setChangeListener(this);
-//        recAdapter.setSelectedListener(this);
-//        mDataBinding.rvGouwuche.setAdapter(recAdapter);
-//
-//        PlusItemSlideCallback callback = new PlusItemSlideCallback();
-//        WItemTouchHelperPlus extension = new WItemTouchHelperPlus(callback);
-//        extension.attachToRecyclerView(mDataBinding.rvGouwuche);
-//    }
 
     /**
      * 更新地区选择
@@ -188,15 +171,15 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
     /**
      * 获取用户购物车列表
      */
-    private void getCartGoodsByUserCode(String userCode, String token, final boolean refrash) {
-        Log.e("getCartGoodsByUserCode", " token :" + token);
+    private void getCartGoodsByUserCode() {
+        showDialog();
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("userCode", userCode);
+        map.put("userCode", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "getCartGoodsByUserCode");
         NetBean netBean = new NetBean();
-        netBean.setToken(token);
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(GetCartGoodsByUserCodeAction.newInstance(getContext(), netBean)
@@ -212,8 +195,8 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
                             if (response != null) {
                                 new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                 if (response.body().getCode().equals("200")) {
-                                    getCartGoodsByUserCodeBean = response.body().getData().getResult();
-                                    initData(response.body().getData().getResult(), refrash);
+                                    getCartGoodsByUserCodeBean = response.body().getData();
+                                    initData(response.body().getData());
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
                                 }
@@ -223,37 +206,10 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
                 }));
     }
 
-    List<GetCartGoodsByUserCodeBean.ResultBean> getCartGoodsByUserCodeBean;
-
-    private void initData(List<GetCartGoodsByUserCodeBean.ResultBean> resultBeans, boolean refresh) {
-//        recAdapter.setList(resultBeans, refresh);
-//        if (refresh) {
-//            getCartGoodsByUserCodeBean = resultBeans;
-//            mDataBinding.refreshlayout.finishRefresh(1000);
-//        } else {
-//            getCartGoodsByUserCodeBean.addAll(resultBeans);
-//            mDataBinding.refreshlayout.finishLoadMore(1000);
-//        }
-
-//        if (recAdapter.getItemCount() == 0) {
-//            mDataBinding.rlCaseBaseNull.setVisibility(View.VISIBLE);
-//        } else {
-//            mDataBinding.rlCaseBaseNull.setVisibility(View.GONE);
-//        }
-
-        initView();
-    }
-
-
-    private void initView() {
+    private void initData(GetCartGoodsByUserCodeBean resultBeans) {
+        this.getCartGoodsByUserCodeBean = resultBeans;
         mDataBinding.cartExpandablelistview.setGroupIndicator(null);
-        showData();
-    }
-
-    private void showData() {
-        cartInfo = JSON.parseObject("{\"errcode\":0,\"errmsg\":\"success\",\"data\":[{\"shop_id\":\"1636\",\"shop_name\":\"水城县阳光佳美食材经营部\",\"items\":[{\"itemid\":\"100189\",\"quantity\":\"1\",\"thumb\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/thumb\\/2017\\/06\\/20170609105502145359.jpg\",\"image\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/photo\\/2017\\/06\\/20170609105502145359.jpg\",\"price\":\"3.00\",\"title\":\"油菜一斤\"}]},{\"shop_id\":\"1778\",\"shop_name\":\"商品测试专卖店\",\"items\":[{\"itemid\":\"103677\",\"quantity\":\"2\",\"thumb\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/thumb\\/2017\\/09\\/20170926150650687701.jpg\",\"image\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/photo\\/2017\\/09\\/20170926150650687701.jpg\",\"price\":\"0.10\",\"title\":\"测试商品1\"},{\"itemid\":\"103629\",\"quantity\":\"1\",\"thumb\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/thumb\\/2017\\/10\\/20171016134627837135.jpg\",\"image\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/photo\\/2017\\/10\\/20171016134627837135.jpg\",\"price\":\"2.50\",\"title\":\"测试商品2\"},{\"itemid\":\"104015\",\"quantity\":\"1\",\"thumb\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/thumb\\/2017\\/10\\/20171016135318646327.jpg\",\"image\":\"https:\\/\\/cg.liaidi.com\\/data\\/attachment\\/image\\/photo\\/2017\\/10\\/20171016135318646327.jpg\",\"price\":\"1.00\",\"title\":\"测试商品3\"}]}]}"
-                , CartInfo.class);
-        if (cartInfo != null && cartInfo.getData().size() > 0) {
+        if (getCartGoodsByUserCodeBean != null && getCartGoodsByUserCodeBean.getResult().size() > 0) {
             cartExpandAdapter = null;
             showExpandData();
         } else {
@@ -266,7 +222,8 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
     }
 
     private void showExpandData() {
-        cartExpandAdapter = new CartExpandAdapter(getContext(), mDataBinding.cartExpandablelistview, cartInfo.getData());
+        cartExpandAdapter = new CartExpandAdapter(getContext(), mDataBinding.cartExpandablelistview,
+                getCartGoodsByUserCodeBean.getResult());
         mDataBinding.cartExpandablelistview.setAdapter(cartExpandAdapter);
         int intgroupCount = mDataBinding.cartExpandablelistview.getCount();
         for (int i = 0; i < intgroupCount; i++) {
@@ -278,10 +235,10 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
         cartExpandAdapter.setOnItemClickListener(new OnViewItemClickListener() {
             @Override
             public void onItemClick(boolean isFlang, View view, int position) {
-                cartInfo.getData().get(position).setIscheck(isFlang);
-                int length = cartInfo.getData().get(position).getItems().size();
+                getCartGoodsByUserCodeBean.getResult().get(position).setIscheck(isFlang);
+                int length = getCartGoodsByUserCodeBean.getResult().get(position).getGoodsList().size();
                 for (int i = 0; i < length; i++) {
-                    cartInfo.getData().get(position).getItems().get(i).setIscheck(isFlang);
+                    getCartGoodsByUserCodeBean.getResult().get(position).getGoodsList().get(i).setIscheck(isFlang);
                 }
                 cartExpandAdapter.notifyDataSetChanged();
                 showCommodityCalculation();
@@ -294,19 +251,21 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
         cartExpandAdapter.setOnClickListenterModel(new OnClickListenterModel() {
             @Override
             public void onItemClick(boolean isFlang, View view, int onePosition, int position) {
-                cartInfo.getData().get(onePosition).getItems().get(position).setIscheck(isFlang);
-                int length = cartInfo.getData().get(onePosition).getItems().size();
+                Log.e("onItemClick", "isFlang " + isFlang);
+                getCartGoodsByUserCodeBean.getResult().get(onePosition).getGoodsList().get(position).setIscheck(isFlang);
+
+                int length = getCartGoodsByUserCodeBean.getResult().get(onePosition).getGoodsList().size();
                 for (int i = 0; i < length; i++) {
-                    if (!cartInfo.getData().get(onePosition).getItems().get(i).ischeck()) {
+                    if (!getCartGoodsByUserCodeBean.getResult().get(onePosition).getGoodsList().get(i).isIscheck()) {//false
                         if (!isFlang) {
-                            cartInfo.getData().get(onePosition).setIscheck(isFlang);
+                            getCartGoodsByUserCodeBean.getResult().get(onePosition).setIscheck(isFlang);
                         }
                         cartExpandAdapter.notifyDataSetChanged();
                         showCommodityCalculation();
                         return;
                     } else {
                         if (i == (length - 1)) {
-                            cartInfo.getData().get(onePosition).setIscheck(isFlang);
+                            getCartGoodsByUserCodeBean.getResult().get(onePosition).setIscheck(isFlang);
                             cartExpandAdapter.notifyDataSetChanged();
                         }
                     }
@@ -317,9 +276,8 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
         cartExpandAdapter.setOnClickDeleteListenter(new OnClickDeleteListenter() {
             @Override
             public void onItemClick(View view, int onePosition, int position) {
-
-                //具体代码没写， 只要删除商品，刷新数据即可
-//                Toast.makeText(MainActivity.this, "删除操作", Toast.LENGTH_LONG).show();
+                delGoodsToCarts(onePosition, position,
+                        getCartGoodsByUserCodeBean.getResult().get(onePosition).getGoodsList().get(position).getGoodsCode());
             }
         });
 
@@ -331,26 +289,51 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
             public void onItemClick(View view, int index, int onePosition, int position, int num) {
                 if (index == 1) {
                     if (num > 1) {
-                        cartInfo.getData().get(onePosition).getItems().get(position).setNum((num - 1));
+                        getCartGoodsByUserCodeBean.getResult().get(onePosition).getGoodsList().get(position).setNumber((num - 1));
                         cartExpandAdapter.notifyDataSetChanged();
                     }
                 } else {
-                    cartInfo.getData().get(onePosition).getItems().get(position).setNum((num + 1));
+                    getCartGoodsByUserCodeBean.getResult().get(onePosition).getGoodsList().get(position).setNumber((num + 1));
                     cartExpandAdapter.notifyDataSetChanged();
                 }
                 showCommodityCalculation();
+                updateGoodsToCarts(getCartGoodsByUserCodeBean.getResult().get(onePosition).getGoodsList().get(position));
             }
         });
         showCommodityCalculation();
     }
 
     private void showCommodityCalculation() {
+        //判断是否全选
+        boolean all = true;
+        for (GetCartGoodsByUserCodeBean.ResultBean resultBean : getCartGoodsByUserCodeBean.getResult()) {
+            boolean allGroup = true;
+            for (GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean goodsListBean : resultBean.getGoodsList()) {
+                if (!goodsListBean.isIscheck()) {
+                    allGroup = false;
+                }
+            }
+            resultBean.setIscheck(allGroup);
+            if (!resultBean.isIscheck()) {
+                all = false;
+            }
+        }
+        if (all) {
+            total = true;
+            mDataBinding.imQuanxuan.setImageResource(R.mipmap.ic_shoping_s1);
+        } else {
+            total = false;
+            mDataBinding.imQuanxuan.setImageResource(R.mipmap.ic_shoping_s);
+        }
+        cartExpandAdapter.notifyDataSetChanged();
+
         price = 0;
         num = 0;
-        for (int i = 0; i < cartInfo.getData().size(); i++) {
-            for (int j = 0; j < cartInfo.getData().get(i).getItems().size(); j++) {
-                if (cartInfo.getData().get(i).getItems().get(j).ischeck()) {
-                    price += Double.valueOf((cartInfo.getData().get(i).getItems().get(j).getNum() * Double.valueOf(cartInfo.getData().get(i).getItems().get(j).getPrice())));
+        for (int i = 0; i < getCartGoodsByUserCodeBean.getResult().size(); i++) {
+            for (int j = 0; j < getCartGoodsByUserCodeBean.getResult().get(i).getGoodsList().size(); j++) {
+                if (getCartGoodsByUserCodeBean.getResult().get(i).getGoodsList().get(j).isIscheck()) {
+                    price += Double.valueOf((getCartGoodsByUserCodeBean.getResult().get(i).getGoodsList().get(j).getNumber() *
+                            Double.valueOf(getCartGoodsByUserCodeBean.getResult().get(i).getGoodsList().get(j).getPrice())));
                     num++;
                 }
             }
@@ -376,15 +359,16 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
     /**
      * 删除用户购物车
      */
-    private void delGoodsToCarts(final String userCode, String goodsCode, final String token) {
+    private void delGoodsToCarts(final int onePosition, final int position, String goodsCode) {
+        showDialog();
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("userCode", userCode);
+        map.put("userCode", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         map.put("goodsCode", goodsCode);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "delGoodsToCarts");
         NetBean netBean = new NetBean();
-        netBean.setToken(token);
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(DelGoodsToCartsAction.newInstance(getContext(), netBean)
@@ -400,7 +384,14 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
                             if (response != null) {
                                 new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                 if (response.body().getCode().equals("200")) {
-                                    getCartGoodsByUserCode(userCode, token, true);
+                                    if (getCartGoodsByUserCodeBean.getResult().get(onePosition).getGoodsList().size() == 1) {
+                                        getCartGoodsByUserCodeBean.getResult().get(onePosition).getGoodsList().remove(position);
+                                        getCartGoodsByUserCodeBean.getResult().remove(onePosition);
+                                    } else if (getCartGoodsByUserCodeBean.getResult().get(onePosition).getGoodsList().size() > 1) {
+                                        getCartGoodsByUserCodeBean.getResult().get(onePosition).getGoodsList().remove(position);
+                                    }
+
+                                    showCommodityCalculation();
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
                                 }
@@ -413,17 +404,18 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
     /**
      * 修改用户购物车
      */
-    private void updateGoodsToCarts(final String userCode, GetCartGoodsByUserCodeBean.ResultBean resultBean, final String token) {
-        Map<String, String> map = new TreeMap<String, String>();
-        map.put("userCode", userCode);
+    private void updateGoodsToCarts(GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean resultBean) {
+        showDialog();
+        Map<String, Object> map = new TreeMap<String, Object>();
+        map.put("userCode", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         map.put("goodsCode", resultBean.getGoodsCode());
         map.put("number", resultBean.getNumber());
         map.put("id", resultBean.getId());
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "updateGoodsToCarts");
+        String sign = SignObject.getSignKey(getActivity(), map, "updateGoodsToCarts");
         NetBean netBean = new NetBean();
-        netBean.setToken(token);
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(UpdateGoodsToCartsAction.newInstance(getContext(), netBean)
@@ -449,37 +441,9 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
                 }));
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBusUtil.unregisterEvent(this);
-    }
-
-    @Override
-    public void deleted(GetCartGoodsByUserCodeBean.ResultBean resultBean) {
-        delGoodsToCarts(userSession.getUserCode(), resultBean.getGoodsCode(), userSession.getToken());
-    }
-
-    @Override
-    public void select(List<GetCartGoodsByUserCodeBean.ResultBean> resultBeans) {
-        List<GetCartGoodsByUserCodeBean.ResultBean> getList = resultBeans;
-        double count = 0;
-        for (GetCartGoodsByUserCodeBean.ResultBean bean : getList) {
-            if (bean.isSelect()) {
-                if (bean.getNumber() != null) {
-                    count = count + Double.parseDouble(bean.getPrice()) * Double.parseDouble(bean.getNumber());
-                }
-            }
-        }
-        total = false;
-        mDataBinding.imQuanxuan.setImageResource(R.mipmap.ic_shoping_s);
-        mDataBinding.tvSum.setText("￥" + count);
-    }
-
-    @Override
-    public void changeCount(List<GetCartGoodsByUserCodeBean.ResultBean> resultBeans, int position) {
-        updateGoodsToCarts(userSession.getUserCode(), resultBeans.get(position), userSession.getToken());
-        select(resultBeans);
     }
 }

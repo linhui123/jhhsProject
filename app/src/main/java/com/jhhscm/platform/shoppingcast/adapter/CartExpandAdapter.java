@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
 import com.jhhscm.platform.shoppingcast.callback.OnClickAddCloseListenter;
 import com.jhhscm.platform.shoppingcast.callback.OnClickDeleteListenter;
 import com.jhhscm.platform.shoppingcast.callback.OnClickListenterModel;
@@ -23,6 +24,7 @@ import com.jhhscm.platform.shoppingcast.entity.CartInfo;
 import com.jhhscm.platform.shoppingcast.widget.FrontViewToMove;
 import com.jhhscm.platform.shoppingcast.widget.ZQRoundOvalImageView;
 import com.jhhscm.platform.views.OvalImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 
 import java.util.List;
@@ -37,9 +39,9 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private ListView listView;
-    private List<CartInfo.DataBean> list;
+    private List<GetCartGoodsByUserCodeBean.ResultBean> list;
 
-    public CartExpandAdapter(Context context, ListView listView, List<CartInfo.DataBean> list) {
+    public CartExpandAdapter(Context context, ListView listView, List<GetCartGoodsByUserCodeBean.ResultBean> list) {
         super();
         this.context = context;
         this.listView = listView;
@@ -49,7 +51,7 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
     @Override
     public Object getChild(int arg0, int arg1) {
         // TODO Auto-generated method stub
-        return list.get(arg0).getItems().get(arg1);
+        return list.get(arg0).getGoodsList().get(arg1);
     }
 
     @Override
@@ -67,16 +69,18 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
 
         //关键语句，使用自己写的类来对frontView的ontouch事件复写，实现视图滑动效果
         new FrontViewToMove(viewHolder1.frontView, listView, dip2px(context, 100));
-        viewHolder1.textView.setText(list.get(groupPosition).getItems().get(position).getTitle());
-        viewHolder1.checkBox.setChecked(list.get(groupPosition).getItems().get(position).ischeck());
-        viewHolder1.tvMoney.setText("¥ " + list.get(groupPosition).getItems().get(position).getPrice());
-        viewHolder1.btnNum.setText(list.get(groupPosition).getItems().get(position).getNum() + "");
+        viewHolder1.textView.setText(list.get(groupPosition).getGoodsList().get(position).getGoodsName());
+        viewHolder1.checkBox.setChecked(list.get(groupPosition).getGoodsList().get(position).isIscheck());
+        viewHolder1.tvMoney.setText("¥ " + list.get(groupPosition).getGoodsList().get(position).getPrice());
+        viewHolder1.btnNum.setText(list.get(groupPosition).getGoodsList().get(position).getNumber() + "");
 //        viewHolder1.zqRoundOvalImageView.setType(ZQRoundOvalImageView.TYPE_ROUND);
 //        viewHolder1.zqRoundOvalImageView.setRoundRadius(8);
 //        Glide.with(context).load(list.get(groupPosition).getItems().get(position).getImage())
 //                .placeholder(R.mipmap.image_error)
 //                .error(R.mipmap.image_error).into(viewHolder1.zqRoundOvalImageView);
 
+        ImageLoader.getInstance().displayImage(list.get(groupPosition).getGoodsList().get(position).getPicUrl()
+                , viewHolder1.zqRoundOvalImageView);
         viewHolder1.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,7 +178,7 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int arg0) {
         // TODO Auto-generated method stub
-        return (list != null && list.size() > 0) ? list.get(arg0).getItems().size() : 0;
+        return (list != null && list.size() > 0) ? list.get(arg0).getGoodsList().size() : 0;
     }
 
     @Override
@@ -209,9 +213,9 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
         if (groupPosition == 0) {
             viewHolder.textTopBar.setVisibility(View.GONE);
         }
-        CartInfo.DataBean dataBean = (CartInfo.DataBean) getGroup(groupPosition);
-        viewHolder.textView.setText(dataBean.getShop_name());
-        viewHolder.checkBox.setChecked(dataBean.ischeck());
+        GetCartGoodsByUserCodeBean.ResultBean dataBean = (GetCartGoodsByUserCodeBean.ResultBean) getGroup(groupPosition);
+        viewHolder.textView.setText(dataBean.getBus_name());
+        viewHolder.checkBox.setChecked(dataBean.isIscheck());
         viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

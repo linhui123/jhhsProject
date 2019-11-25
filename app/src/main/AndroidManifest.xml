@@ -57,7 +57,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme.TranslucentStatusBar"
         tools:replace="android:label">
-        <activity android:name=".activity.IntegralActivity"></activity>
+        <activity android:name=".activity.StoreOrderSubmit3Activity"></activity>
+        <activity android:name=".activity.IntegralActivity" />
         <activity android:name=".activity.BookingDetailActivity" />
         <activity android:name=".activity.AddBookingActivity" />
         <activity android:name=".activity.BookingActivity" />
@@ -254,7 +255,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

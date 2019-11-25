@@ -73,10 +73,10 @@
 
             <ImageView
                 android:id="@+id/im_quanxuan"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/padding_10"
+                android:layout_marginLeft="@dimen/padding_15"
                 android:src="@mipmap/ic_shoping_s" />
 
             <TextView

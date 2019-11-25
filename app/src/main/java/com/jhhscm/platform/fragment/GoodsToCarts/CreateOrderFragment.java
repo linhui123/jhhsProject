@@ -74,19 +74,16 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
             startNewActivity(LoginActivity.class);
         }
 
-        findAddressList(ConfigUtils.getCurrentUser(getContext()).getUserCode(), ConfigUtils.getCurrentUser(getContext()).getToken());
-
         if (getArguments() != null) {
             getCartGoodsByUserCodeBean = (GetCartGoodsByUserCodeBean) getArguments().getSerializable("getCartGoodsByUserCodeBean");
-        } else {
-            getCartGoodsByUserCodeBean = new GetCartGoodsByUserCodeBean();
         }
+        if (getCartGoodsByUserCodeBean != null) {
+            findAddressList();
 
-//        mDataBinding.rv.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
-        mDataBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new InnerAdapter(getContext());
-        mDataBinding.rv.setAdapter(mAdapter);
-        mAdapter.setData(getCartGoodsByUserCodeBean.getResult());
+            mDataBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
+            mAdapter = new InnerAdapter(getContext());
+            mDataBinding.rv.setAdapter(mAdapter);
+        }
 
         mDataBinding.tvTijiao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +105,6 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
             }
         });
     }
-
 
     public void onEvent(AddressResultEvent event) {
         if (event.getResultBean() != null) {
@@ -134,164 +130,17 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
         EventBusUtil.unregisterEvent(this);
     }
 
-    private class InnerAdapter extends AbsRecyclerViewAdapter<GetCartGoodsByUserCodeBean.ResultBean> {
-        public InnerAdapter(Context context) {
-            super(context);
-        }
-
-        @Override
-        public AbsRecyclerViewHolder<GetCartGoodsByUserCodeBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-//            return new CreateOrderViewHolder(mInflater.inflate(R.layout.item_create_order, parent, false));
-            return new CreateOrderItemViewHolder(mInflater.inflate(R.layout.item_create_order_list, parent, false));
-
-        }
-    }
-
-    CalculateOrderBean calculateOrderBean;
-
-    /**
-     * 计算订单和运费
-     */
-    private void calculateOrder(final String mobile, GetCartGoodsByUserCodeBean getCartGoodsByUserCodeBean, final String token) {
-        String goodsCode = "";
-        String goodsList = "";
-        Map<String, Integer> gMap = new TreeMap<String, Integer>();
-        for (GetCartGoodsByUserCodeBean.ResultBean r : getCartGoodsByUserCodeBean.getResult()) {
-            if (goodsCode.length() > 0) {
-                goodsCode = goodsCode + "," + r.getGoodsCode();
-            } else {
-                goodsCode = r.getGoodsCode();
-            }
-            gMap.put(r.getGoodsCode(), Integer.parseInt(r.getNumber()));
-        }
-        goodsList = JSON.toJSONString(gMap);
-        Map<String, String> map = new TreeMap<String, String>();
-        map.put("goodsCode", goodsCode);
-        map.put("goodsList", goodsList);
-        map.put("mobile", mobile);
-        map.put("addressId", selectAddressID);
-        String content = JSON.toJSONString(map);
-        content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "createOrder");
-        NetBean netBean = new NetBean();
-        netBean.setToken(token);
-        netBean.setSign(sign);
-        netBean.setContent(content);
-        onNewRequestCall(CalculateOrderAction.newInstance(getContext(), netBean)
-                .request(new AHttpService.IResCallback<BaseEntity<CalculateOrderBean>>() {
-                    @Override
-                    public void onCallback(int resultCode, Response<BaseEntity<CalculateOrderBean>> response,
-                                           BaseErrorInfo baseErrorInfo) {
-                        if (getView() != null) {
-                            closeDialog();
-                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
-                                return;
-                            }
-                            if (response != null) {
-                                new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
-                                if (response.body().getCode().equals("200")) {
-                                    calculateOrderBean = response.body().getData();
-                                    initView();
-                                } else {
-                                    ToastUtils.show(getContext(), response.body().getMessage());
-                                }
-                            }
-                        }
-                    }
-                }));
-    }
-
-    private void initView() {
-        if (calculateOrderBean.getData() != null) {
-            mDataBinding.tvYunfei.setText(calculateOrderBean.getData().getFreight_price());
-            List<GetCartGoodsByUserCodeBean.ResultBean> getList = getCartGoodsByUserCodeBean.getResult();
-            double count = 0;//金额
-            int num = 0;//数量
-            for (GetCartGoodsByUserCodeBean.ResultBean bean : getList) {
-                if (bean.getNumber() != null) {
-                    count = count + Double.parseDouble(bean.getPrice()) * Double.parseDouble(bean.getNumber());
-                    num = num + Integer.parseInt(bean.getNumber());
-                }
-            }
-            double yufei = Double.parseDouble(calculateOrderBean.getData().getFreight_price());//运费
-            double youhui = 0.0;//优惠
-            double total = count + yufei - youhui;//合计
-
-            mDataBinding.tvPrice.setText("￥" + count);
-            mDataBinding.tvYunfei.setText("￥" + yufei);
-            mDataBinding.tvYouhui.setText("-￥" + youhui);
-            mDataBinding.tvQuanxuan.setText("共计" + num + "件商品");
-            BigDecimal b = new BigDecimal(total);
-            mDataBinding.tvSum.setText("￥" + b.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
-        }
-    }
-
-    /**
-     * 创建订单
-     */
-    private void createOrder(final String mobile, GetCartGoodsByUserCodeBean getCartGoodsByUserCodeBean, final String token) {
-        String goodsCode = "";
-        String goodsList = "";
-        Map<String, Integer> gMap = new TreeMap<String, Integer>();
-        for (GetCartGoodsByUserCodeBean.ResultBean r : getCartGoodsByUserCodeBean.getResult()) {
-            if (goodsCode.length() > 0) {
-                goodsCode = goodsCode + "," + r.getGoodsCode();
-            } else {
-                goodsCode = r.getGoodsCode();
-            }
-            gMap.put(r.getGoodsCode(), Integer.parseInt(r.getNumber()));
-        }
-        goodsList = JSON.toJSONString(gMap);
-        Map<String, String> map = new TreeMap<String, String>();
-        map.put("goodsCode", goodsCode);
-        map.put("goodsList", goodsList);
-        map.put("mobile", mobile);
-        map.put("addressId",selectAddressID);
-        String content = JSON.toJSONString(map);
-        content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "createOrder");
-        NetBean netBean = new NetBean();
-        netBean.setToken(token);
-        netBean.setSign(sign);
-        netBean.setContent(content);
-        onNewRequestCall(CreateOrderAction.newInstance(getContext(), netBean)
-                .request(new AHttpService.IResCallback<BaseEntity<CreateOrderResultBean>>() {
-                    @Override
-                    public void onCallback(int resultCode, Response<BaseEntity<CreateOrderResultBean>> response,
-                                           BaseErrorInfo baseErrorInfo) {
-                        if (getView() != null) {
-                            closeDialog();
-                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
-                                return;
-                            }
-                            if (response != null) {
-                                new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
-                                if (response.body().getCode().equals("200")) {
-                                    CashierActivity.start(getContext(), response.body().getData());
-                                    ToastUtils.show(getContext(), "创建订单成功");
-                                    getActivity().finish();
-                                } else {
-                                    ToastUtils.show(getContext(), response.body().getMessage());
-                                }
-                            }
-                        }
-                    }
-                }));
-    }
-
-    FindAddressListBean findAddressListBean = new FindAddressListBean();
-
     /**
      * 获取地址列表
      */
-    private void findAddressList(String userCode, String token) {
+    private void findAddressList() {
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("user_code", userCode);
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "findAddressList");
         NetBean netBean = new NetBean();
-        netBean.setToken(token);
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(FindAddressListAction.newInstance(getContext(), netBean)
@@ -343,9 +192,178 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
                 mDataBinding.tvDefault.setVisibility(View.GONE);
                 mDataBinding.tvAddress.setText(showAddress.getAddress_detail());
             }
-            calculateOrder(ConfigUtils.getCurrentUser(getContext()).getMobile(), getCartGoodsByUserCodeBean, ConfigUtils.getCurrentUser(getContext()).getToken());
+
+            for (GetCartGoodsByUserCodeBean.ResultBean r : getCartGoodsByUserCodeBean.getResult()) {
+                calculateOrder(r);
+            }
         } else {
             mDataBinding.tvEmpty.setVisibility(View.VISIBLE);
         }
     }
+
+    /**
+     * 计算订单和运费
+     */
+    private void calculateOrder(final GetCartGoodsByUserCodeBean.ResultBean resultBean) {
+        String goodsCode = "";
+        String goodsList = "";
+        Map<String, Integer> gMap = new TreeMap<String, Integer>();
+        for (GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean goodsListBean : resultBean.getGoodsList()) {
+            if (goodsListBean.isIscheck()) {
+                if (goodsCode.length() > 0) {
+                    goodsCode = goodsCode + "," + goodsListBean.getGoodsCode();
+                } else {
+                    goodsCode = goodsListBean.getGoodsCode();
+                }
+                gMap.put(goodsListBean.getGoodsCode(), goodsListBean.getNumber());
+            }
+        }
+
+        goodsList = JSON.toJSONString(gMap);
+
+        showDialog();
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("goodsCode", goodsCode);
+        map.put("goodsList", goodsList);
+        map.put("mobile", ConfigUtils.getCurrentUser(getContext()).getMobile());
+        map.put("addressId", selectAddressID);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getActivity(), map, "calculateOrder");
+        NetBean netBean = new NetBean();
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(CalculateOrderAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<CalculateOrderBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<CalculateOrderBean>> response,
+                                           BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                if (response.body().getCode().equals("200")) {
+                                    if (response.body().getData().getData() != null) {
+                                        resultBean.setFreight_price(response.body().getData().getData().getFreight_price());
+//                                        resultBean.setFreight_price("10.0");
+                                    }
+                                    initView();
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    private void initView() {
+        double count = 0;//金额
+        int num = 0;//数量
+        double yufei = 0.0;//运费
+        double youhui = 0.0;//优惠
+        for (GetCartGoodsByUserCodeBean.ResultBean bean : getCartGoodsByUserCodeBean.getResult()) {
+            double itemTotal = 0;//小计
+
+            for (GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean goodsListBean : bean.getGoodsList()) {
+                if (goodsListBean.getNumber() > 0) {
+                    count = count + Double.parseDouble(goodsListBean.getPrice()) * Double.parseDouble(goodsListBean.getNumber() + "");
+                    num = num + goodsListBean.getNumber();
+                    itemTotal = itemTotal + Double.parseDouble(goodsListBean.getPrice()) * Double.parseDouble(goodsListBean.getNumber() + "");
+                }
+            }
+            if (bean.getFreight_price() != null) {
+                yufei = yufei + Double.parseDouble(bean.getFreight_price());
+                itemTotal = itemTotal + Double.parseDouble(bean.getFreight_price());
+            }
+            bean.setSum(itemTotal + "");
+        }
+
+        double total = count + yufei - youhui;//合计
+        mDataBinding.tvPrice.setText("￥" + count);
+        mDataBinding.tvYouhui.setText("-￥" + youhui);
+        mDataBinding.tvQuanxuan.setText("共计" + num + "件商品");
+        BigDecimal b = new BigDecimal(total);
+        mDataBinding.tvSum.setText("￥" + b.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+
+        mAdapter.setData(getCartGoodsByUserCodeBean.getResult());
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private class InnerAdapter extends AbsRecyclerViewAdapter<GetCartGoodsByUserCodeBean.ResultBean> {
+        public InnerAdapter(Context context) {
+            super(context);
+        }
+
+        @Override
+        public AbsRecyclerViewHolder<GetCartGoodsByUserCodeBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new CreateOrderItemViewHolder(mInflater.inflate(R.layout.item_create_order_list, parent, false));
+        }
+    }
+
+    /**
+     * 创建订单
+     */
+    private void createOrder(final String mobile, GetCartGoodsByUserCodeBean getCartGoodsByUserCodeBean, final String token) {
+        String goodsCode = "";
+        String goodsList = "";
+        Map<String, Integer> gMap = new TreeMap<String, Integer>();
+        for (GetCartGoodsByUserCodeBean.ResultBean r : getCartGoodsByUserCodeBean.getResult()) {
+            for (GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean goodsListBean : r.getGoodsList()) {
+                if (goodsCode.length() > 0) {
+                    goodsCode = goodsCode + "," + goodsListBean.getGoodsCode();
+                } else {
+                    goodsCode = goodsListBean.getGoodsCode();
+                }
+                gMap.put(goodsListBean.getGoodsCode(), goodsListBean.getNumber());
+
+            }
+        }
+        goodsList = JSON.toJSONString(gMap);
+
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("goodsCode", goodsCode);
+        map.put("goodsList", goodsList);
+        map.put("mobile", mobile);
+        map.put("addressId", selectAddressID);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getActivity(), map, "createOrder");
+        NetBean netBean = new NetBean();
+        netBean.setToken(token);
+        netBean.setSign(sign);
+        netBean.setContent(content);
+
+        onNewRequestCall(CreateOrderAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<CreateOrderResultBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<CreateOrderResultBean>>
+                            response,
+                                           BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                if (response.body().getCode().equals("200")) {
+                                    CashierActivity.start(getContext(), response.body().getData());
+                                    ToastUtils.show(getContext(), "创建订单成功");
+                                    getActivity().finish();
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    FindAddressListBean findAddressListBean = new FindAddressListBean();
+
 }

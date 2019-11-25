@@ -2,6 +2,7 @@ package com.jhhscm.platform.fragment.my.order;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,17 +74,25 @@ public class OrderStaus2ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
             InnerAdapter mAdapter = new InnerAdapter(itemView.getContext());
             mBinding.rv.setAdapter(mAdapter);
             mAdapter.setData(item.orderBean.getGoodsOwnerList());
+            mBinding.rv.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+                @Override
+                public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                    if (e.getAction() == MotionEvent.ACTION_UP) {
+                        mBinding.ll.performClick();
+                    }
+                    return false;
+                }
 
-//            mBinding.rv.setOnTouchListener(new View.OnTouchListener() {
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-////                    return mBinding.ll.onTouchEvent(event);
-//                    if (event.getAction() == MotionEvent.ACTION_UP) {
-//                        mBinding.ll.performClick();
-//                    }
-//                    return false;
-//                }
-//            });
+                @Override
+                public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+                }
+
+                @Override
+                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+                }
+            });
 
             mBinding.ll.setOnClickListener(new View.OnClickListener() {
                 @Override

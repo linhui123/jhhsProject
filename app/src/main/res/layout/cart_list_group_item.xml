@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="11sp">
+        android:paddingRight="@dimen/padding_15"
+        android:paddingLeft="15dp">
 
         <CheckBox
             android:id="@+id/check_box"

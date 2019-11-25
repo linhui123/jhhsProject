@@ -115,7 +115,7 @@ public class MyInviteFragment extends AbsFragment<FragmentMyInviteBinding> {
             map.put("page", mCurrentPage);
             map.put("limit", mShowCount);
             map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
-            map.put("keyword", mDataBinding.searchContent.getText().toString());
+            map.put("keyword", mDataBinding.searchContent.getText().toString().trim());
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = SignObject.getSignKey(getActivity(), map, "getReqList");

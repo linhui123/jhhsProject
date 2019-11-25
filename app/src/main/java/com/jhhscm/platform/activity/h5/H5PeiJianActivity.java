@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.os.Bundle;
 import android.util.Log;
@@ -82,6 +83,8 @@ public class H5PeiJianActivity extends AbsActivity {
     private String goodCode;
     private String picUrl;
     private String good_name;
+    private String bus_code;
+    private String bus_name;
     private String price;
 
     private int type = 0;
@@ -96,7 +99,7 @@ public class H5PeiJianActivity extends AbsActivity {
     /**
      * 配件详情-购物车需要图片地址
      */
-    public static void start(Context context, String url, String title, String good_name, String good_code, String pic_url, String price, int type) {
+    public static void start(Context context, String url, String title, String bus_code, String bus_name, String good_name, String good_code, String pic_url, String price, int type) {
         Intent intent = new Intent(context, H5PeiJianActivity.class);
         intent.putExtra("url", url);
         intent.putExtra("title", title);
@@ -104,6 +107,8 @@ public class H5PeiJianActivity extends AbsActivity {
         intent.putExtra("good_code", good_code);
         intent.putExtra("pic_url", pic_url);
         intent.putExtra("good_name", good_name);
+        intent.putExtra("bus_code", bus_code);
+        intent.putExtra("bus_name", bus_name);
         intent.putExtra("price", price);
         context.startActivity(intent);
     }
@@ -224,6 +229,12 @@ public class H5PeiJianActivity extends AbsActivity {
         if (getIntent().hasExtra("good_name")) {
             good_name = getIntent().getStringExtra("good_name");
         }
+        if (getIntent().hasExtra("bus_name")) {
+            bus_name = getIntent().getStringExtra("bus_name");
+        }
+        if (getIntent().hasExtra("bus_code")) {
+            bus_code = getIntent().getStringExtra("bus_code");
+        }
         if (getIntent().hasExtra("price")) {
             price = getIntent().getStringExtra("price");
         }
@@ -290,21 +301,26 @@ public class H5PeiJianActivity extends AbsActivity {
                         && userSession.getUserCode() != null
                         && userSession.getToken() != null) {
                     if (picUrl != null && picUrl.length() > 0) {
-                        List<GetCartGoodsByUserCodeBean.ResultBean> list = new ArrayList<>();
-                        GetCartGoodsByUserCodeBean.ResultBean resultBean = new GetCartGoodsByUserCodeBean.ResultBean();
-                        Log.e("CreateOrderViewHolder", "count " + count);
-                        resultBean.setNumber(count);
+                        List<GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean> list = new ArrayList<>();
+                        GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean resultBean = new GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean();
+                        resultBean.setNumber(Integer.parseInt(count));
+                        resultBean.setIscheck(true);
                         resultBean.setGoodsCode(goodCode);
                         resultBean.setGoodsName(good_name);
                         resultBean.setPicUrl(picUrl);
                         resultBean.setPrice(price);
                         list.add(resultBean);
 
-                        GetCartGoodsByUserCodeBean g = new GetCartGoodsByUserCodeBean();
-                        g.setResult(list);
-
+                        GetCartGoodsByUserCodeBean.ResultBean g = new GetCartGoodsByUserCodeBean.ResultBean();
+                        g.setBus_code(bus_code);
+                        g.setBus_name(bus_name);
+                        g.setGoodsList(list);
+                        List<GetCartGoodsByUserCodeBean.ResultBean> resultBeans = new ArrayList<>();
+                        resultBeans.add(g);
+                        GetCartGoodsByUserCodeBean getCartGoodsByUserCodeBean = new GetCartGoodsByUserCodeBean();
+                        getCartGoodsByUserCodeBean.setResult(resultBeans);
+                        CreateOrderActivity.start(H5PeiJianActivity.this, getCartGoodsByUserCodeBean);
                         MobclickAgent.onEvent(getApplicationContext(), "create_order");
-                        CreateOrderActivity.start(H5PeiJianActivity.this, g);
                     }
                 } else {
                     startNewActivity(LoginActivity.class);
@@ -363,14 +379,14 @@ public class H5PeiJianActivity extends AbsActivity {
             public void wechat() {
                 MobclickAgent.onEvent(getApplicationContext(), "parts_share");
                 YXProgressDialog dialog = new YXProgressDialog(H5PeiJianActivity.this, "请稍后");
-                ShareUtils.shareUrlToWx(getApplicationContext(),url, TITLE, CONTENT, IMG_URL, 0);
+                ShareUtils.shareUrlToWx(getApplicationContext(), url, TITLE, CONTENT, IMG_URL, 0);
             }
 
             @Override
             public void friends() {
                 MobclickAgent.onEvent(getApplicationContext(), "parts_share");
                 YXProgressDialog dialog = new YXProgressDialog(H5PeiJianActivity.this, "请稍后");
-                ShareUtils.shareUrlToWx(getApplicationContext(),url, TITLE, CONTENT, IMG_URL, 1);
+                ShareUtils.shareUrlToWx(getApplicationContext(), url, TITLE, CONTENT, IMG_URL, 1);
             }
         }).show();
     }
@@ -473,7 +489,7 @@ public class H5PeiJianActivity extends AbsActivity {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("userCode", userCode);
         map.put("goodsCode", goodCode);
-        map.put("goodsName", good_name);
+        map.put("goodsName", good_name.trim());
         map.put("number", count);
         map.put("price", price);
         map.put("picUrl", picUrl);

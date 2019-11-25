@@ -40,20 +40,31 @@ public class CreateOrderItemViewHolder extends AbsRecyclerViewHolder<GetCartGood
     protected void onBindView(final GetCartGoodsByUserCodeBean.ResultBean item) {
         if (item != null) {
             mBinding.storeCoupon.setText("暂无优惠券");
-            mBinding.yunfei.setText("￥ 0.00");
-            mBinding.total.setText("￥ "+item.getPrice());
+            if (item.getFreight_price() != null) {
+                mBinding.yunfei.setText("￥ " + item.getFreight_price());
+            } else {
+                mBinding.yunfei.setText("￥ 0.0");
+            }
+            if (item.getFreight_price() != null) {
+                mBinding.total.setText("￥ " + item.getSum());
+            } else {
+                mBinding.total.setText("￥ 0.0");
+            }
+
             mBinding.rv.addItemDecoration(new DividerItemDecoration(itemView.getContext()));
             mBinding.rv.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
             InnerAdapter mAdapter = new InnerAdapter(itemView.getContext());
             mBinding.rv.setAdapter(mAdapter);
-            List<FindOrderBean.GoodsListBean> listBeans=new ArrayList<>();
-            FindOrderBean.GoodsListBean goodsListBean = new FindOrderBean.GoodsListBean();
-            goodsListBean.setGoodsName(item.getGoodsName());
-            goodsListBean.setNumber(item.getNumber());
-            goodsListBean.setPrice(item.getPrice());
-            goodsListBean.setPicUrl(item.getPicUrl());
-            listBeans.add(goodsListBean);
-            listBeans.add(goodsListBean);
+
+            List<FindOrderBean.GoodsListBean> listBeans = new ArrayList<>();
+            for (GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean goodsBean : item.getGoodsList()) {
+                FindOrderBean.GoodsListBean goodsListBean = new FindOrderBean.GoodsListBean();
+                goodsListBean.setGoodsName(goodsBean.getGoodsName());
+                goodsListBean.setNumber(goodsBean.getNumber() + "");
+                goodsListBean.setPrice(goodsBean.getPrice());
+                goodsListBean.setPicUrl(goodsBean.getPicUrl());
+                listBeans.add(goodsListBean);
+            }
             mAdapter.setData(listBeans);
         }
     }

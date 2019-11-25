@@ -85,7 +85,7 @@ public class ItemFaultDeviceViewHolder extends AbsRecyclerViewHolder<FindUserGoo
 
             @Override
             public void afterTextChanged(Editable s) {
-                item.setFixp17(s.toString());
+                item.setFixp17(s.toString().trim());
             }
         });
 
@@ -102,7 +102,7 @@ public class ItemFaultDeviceViewHolder extends AbsRecyclerViewHolder<FindUserGoo
 
             @Override
             public void afterTextChanged(Editable s) {
-                item.setNo(s.toString());
+                item.setNo(s.toString().trim());
             }
         });
 
@@ -119,7 +119,7 @@ public class ItemFaultDeviceViewHolder extends AbsRecyclerViewHolder<FindUserGoo
 
             @Override
             public void afterTextChanged(Editable s) {
-                item.setGps_no(s.toString());
+                item.setGps_no(s.toString().trim());
             }
         });
     }

@@ -64,6 +64,7 @@ import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.bean.SaveBean;
 import com.jhhscm.platform.http.bean.UserBean;
+import com.jhhscm.platform.shoppingcast.entity.CartInfo;
 
 import java.util.List;
 
@@ -123,7 +124,7 @@ public interface ApiService {
     //添加购物车
     String ADD_GOODSTOCARTS = "v1-0/goodscart/addGoodsToCarts";
     //获取用户购物车列表
-    String GET_CARTGOODSBYUSERCODE = "v1-0/goodscart/getCartGoodsByUserCode";
+    String GET_CARTGOODSBYUSERCODE = "v1-3/goodscart/getCartGoodsByUserCode";
     //删除购物车信息
     String DEL_GOODSTOCARTS = "v1-0/goodscart/delGoodsToCarts";
     //修改购物车信息
@@ -281,7 +282,7 @@ public interface ApiService {
     Call<BaseEntity<ResultBean>> addAddress(@Body NetBean content);
 
     //计算订单和运费  calculateOrder
-    String CALCULATE_ORDER = "order/calculateOrder";
+    String CALCULATE_ORDER = "v1-0/order/calculateOrder";
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(CALCULATE_ORDER)

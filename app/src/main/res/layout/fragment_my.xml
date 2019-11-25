@@ -847,7 +847,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:text="0591-88390068"
+                            android:text="0591-83590001"
                             android:textColor="@color/ff1a" />
                     </RelativeLayout>
 

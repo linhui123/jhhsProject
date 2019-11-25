@@ -1,8 +1,9 @@
 package com.jhhscm.platform.fragment.my.store.action;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class BusinessFindcategorybyBuscodeBean {
+public class BusinessFindcategorybyBuscodeBean implements Serializable {
 
     /**
      * data : [{"categoryName":"类目","brandName":"天津日石","good_code":"20190822150130002000225867","sale_num":0,"counter_price":450,"name":"柴机油 CI-4 15W-40/20W-50","id":242,"pic_url":"http://wajueji.oss-cn-shenzhen.aliyuncs.com/category/a85212cbb3b3472dabf0b648767c1351.jpg?Expires=1881713326&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=S4Gj2S7Wv81fsrOzwsInrsIMZ6w%3D","brand_id":10}]
@@ -28,7 +29,7 @@ public class BusinessFindcategorybyBuscodeBean {
         this.data = data;
     }
 
-    public static class PageBean {
+    public static class PageBean implements Serializable {
         /**
          * total : 1
          * startRow : 1
@@ -134,7 +135,7 @@ public class BusinessFindcategorybyBuscodeBean {
         }
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * categoryName : 类目
          * brandName : 天津日石
@@ -157,7 +158,7 @@ public class BusinessFindcategorybyBuscodeBean {
         private String pic_url;
         private int brand_id;
         private boolean isSelect;
-        private int num;
+        private int num = 1;
 
         public int getNum() {
             return num;

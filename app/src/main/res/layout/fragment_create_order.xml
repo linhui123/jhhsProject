@@ -190,6 +190,7 @@
                     android:layout_alignParentRight="true"
                     android:drawableRight="@mipmap/ic_point"
                     android:drawablePadding="@dimen/dp_5"
+                    android:gravity="right"
                     android:hint="选择优惠券"
                     android:textColor="@color/ff1a" />
             </RelativeLayout>

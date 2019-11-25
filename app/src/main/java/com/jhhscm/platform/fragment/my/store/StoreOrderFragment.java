@@ -118,7 +118,7 @@ public class StoreOrderFragment extends AbsFragment<FragmentStoreOrderBinding> {
         mDataBinding.button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                type = "";
+                type = "1";
                 mDataBinding.button1.setTextColor(getResources().getColor(R.color.acc9));
                 mDataBinding.button1.setBackgroundResource(R.drawable.bg_line_de);
                 mDataBinding.button2.setTextColor(getResources().getColor(R.color.white));
@@ -132,7 +132,7 @@ public class StoreOrderFragment extends AbsFragment<FragmentStoreOrderBinding> {
         mDataBinding.button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                type = "";
+                type = "4";
                 mDataBinding.button1.setTextColor(getResources().getColor(R.color.acc9));
                 mDataBinding.button1.setBackgroundResource(R.drawable.bg_line_de);
                 mDataBinding.button2.setTextColor(getResources().getColor(R.color.acc9));

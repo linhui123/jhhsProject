@@ -32,6 +32,7 @@ public class StoreOrderProductItemViewHolder extends AbsRecyclerViewHolder<Busin
 
         mBinding.name.setText(item.getName());
         mBinding.brand.setText(item.getBrandName());
+        mBinding.tvNum.setText(item.getNum() + "");
         if (item.getCategoryName() != null) {
             mBinding.type.setText("类型：" + item.getCategoryName());
         }

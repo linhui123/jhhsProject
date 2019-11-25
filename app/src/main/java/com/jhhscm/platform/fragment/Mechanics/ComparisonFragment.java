@@ -26,7 +26,6 @@ import com.jhhscm.platform.databinding.FragmentMyBinding;
 import com.jhhscm.platform.event.CompMechanicsEvent;
 import com.jhhscm.platform.event.GetRegionEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
-import com.jhhscm.platform.fragment.GoodsToCarts.adapter.RecOtherTypeAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.CompairsonAdapter;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsByBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;

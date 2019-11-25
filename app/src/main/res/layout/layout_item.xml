@@ -28,9 +28,9 @@
         android:layout_height="90dp"
         android:background="@color/white"
         android:clickable="true"
-        android:paddingLeft="@dimen/padding_10"
+        android:paddingLeft="@dimen/padding_15"
         android:paddingTop="@dimen/dp_5"
-        android:paddingRight="@dimen/padding_10"
+        android:paddingRight="@dimen/padding_15"
         android:paddingBottom="@dimen/dp_5">
 
         <CheckBox

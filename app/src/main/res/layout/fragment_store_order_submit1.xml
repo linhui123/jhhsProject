@@ -57,6 +57,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="20dp"
+                        android:text="选择配件"
+                        android:textColor="@color/acc9"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="20dp"
                         android:text="费用结算"
@@ -119,6 +128,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="@dimen/padding_15"
                         android:background="@null"
+                        android:gravity="right"
                         android:hint="请输入"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_14" />
@@ -151,6 +161,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="@dimen/padding_15"
                         android:background="@null"
+                        android:gravity="right"
                         android:hint="请输入"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_14" />
