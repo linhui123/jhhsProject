@@ -50,22 +50,31 @@ public class OrderStaus2ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
                 type = "1";
                 mBinding.confirm.setVisibility(View.VISIBLE);
                 mBinding.pay.setVisibility(View.VISIBLE);
+                mBinding.del.setVisibility(View.GONE);
             } else if (item.orderBean.getOrder_status().contains("20")) {
                 type = "2";
                 mBinding.pay.setVisibility(View.GONE);
+                mBinding.confirm.setVisibility(View.GONE);
+                mBinding.del.setVisibility(View.GONE);
             } else if (item.orderBean.getOrder_status().contains("30")) {
                 type = "3";
                 mBinding.pay.setVisibility(View.GONE);
+                mBinding.confirm.setVisibility(View.GONE);
+                mBinding.del.setVisibility(View.GONE);
             } else if (item.orderBean.getOrder_status().contains("40")) {
                 type = "4";
                 mBinding.pay.setVisibility(View.GONE);
                 mBinding.del.setVisibility(View.VISIBLE);
+                mBinding.confirm.setVisibility(View.GONE);
             } else if (item.orderBean.getOrder_status().contains("50")) {//已确认待付款
-                type = "5";
+                type = "1";
                 mBinding.pay.setVisibility(View.VISIBLE);
                 mBinding.del.setVisibility(View.GONE);
+                mBinding.confirm.setVisibility(View.GONE);
             } else {
                 mBinding.pay.setVisibility(View.GONE);
+                mBinding.del.setVisibility(View.GONE);
+                mBinding.confirm.setVisibility(View.GONE);
             }
             mBinding.rv.setHasFixedSize(true);
             mBinding.rv.setNestedScrollingEnabled(false);
@@ -97,7 +106,8 @@ public class OrderStaus2ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
             mBinding.ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (item.orderBean.getOrder_status().contains("10")) {
+                    if (item.orderBean.getOrder_status().contains("10")
+                            || item.orderBean.getOrder_status().contains("50")) {
                         if ("1".equals(item.orderBean.getIs_payframe())) {
                             OrderDetailActivity.start(itemView.getContext(), item.orderBean.getOrder_code(), 1);
                         } else {
@@ -140,7 +150,8 @@ public class OrderStaus2ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
             mBinding.pay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBusUtil.post(new PayEvent(item.orderBean.getId() + "", type));
+                    EventBusUtil.post(new PayEvent(item.orderBean.getOrder_code() + "",
+                            item.orderBean.getOrder_price(), type));
                 }
             });
 

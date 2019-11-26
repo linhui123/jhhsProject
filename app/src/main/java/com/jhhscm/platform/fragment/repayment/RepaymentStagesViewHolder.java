@@ -3,13 +3,10 @@ package com.jhhscm.platform.fragment.repayment;
 import android.app.Activity;
 import android.view.View;
 
-import com.jhhscm.platform.activity.RepaymentDetailActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemRepayStagesBinding;
-import com.jhhscm.platform.databinding.ItemRepaymentBinding;
-import com.jhhscm.platform.fragment.lessee.LesseeBean;
 import com.jhhscm.platform.tool.DataUtil;
-import com.jhhscm.platform.views.dialog.PayDialog;
+import com.jhhscm.platform.views.dialog.ContractPayDialog;
 
 public class RepaymentStagesViewHolder extends AbsRecyclerViewHolder<ContractDetailBean.MoneyPlanBean> {
 
@@ -50,7 +47,7 @@ public class RepaymentStagesViewHolder extends AbsRecyclerViewHolder<ContractDet
             mBinding.tvRepay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new PayDialog(itemView.getContext(), activity, item.getId()).show();
+                    new ContractPayDialog(itemView.getContext(), activity, item.getId()).show();
                 }
             });
         }

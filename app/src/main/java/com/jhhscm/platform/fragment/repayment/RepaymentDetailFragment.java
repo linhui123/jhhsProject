@@ -12,7 +12,6 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentRepaymentDetailBinding;
-import com.jhhscm.platform.event.FinishEvent;
 import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.http.AHttpService;
@@ -26,7 +25,7 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.views.dialog.PayDialog;
+import com.jhhscm.platform.views.dialog.ContractPayDialog;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -61,7 +60,7 @@ public class RepaymentDetailFragment extends AbsFragment<FragmentRepaymentDetail
             mDataBinding.tvPay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new PayDialog(getContext()).show();
+                    new ContractPayDialog(getContext()).show();
                 }
             });
         } else {
@@ -76,7 +75,7 @@ public class RepaymentDetailFragment extends AbsFragment<FragmentRepaymentDetail
             mDataBinding.tvPay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new PayDialog(getContext()).show();
+                    new ContractPayDialog(getContext()).show();
                 }
             });
         } else {

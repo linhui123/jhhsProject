@@ -128,8 +128,8 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
     }
 
     public void onEvent(PayEvent event) {
-        if (event.order_code != null && type.equals(event.type) && list != null) {
-            new PayWithCouponDialog(getContext(), getActivity(), event.order_code, list).show();
+        if (event.order_code != null && type.equals(event.type) && event.price != null && list != null) {
+            new PayWithCouponDialog(getContext(), getActivity(), event.price, event.order_code, list).show();
         }
     }
 
@@ -280,12 +280,12 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
 //            }
 //            mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findOrderListBean.getPage().getTotal() / (float) findOrderListBean.getPage().getPageSize()) > mCurrentPage);
 //        } else {
-            if (refresh) {
-                mAdapter.setDetail(categoryBean);
-            } else {
-                mAdapter.setExpend(categoryBean);
-            }
-            mDataBinding.recyclerview.loadComplete(true, false);
+        if (refresh) {
+            mAdapter.setDetail(categoryBean);
+        } else {
+            mAdapter.setExpend(categoryBean);
+        }
+        mDataBinding.recyclerview.loadComplete(true, false);
 //        }
     }
 
@@ -456,12 +456,12 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
         if (couponListBean != null && couponListBean.getResult() != null && couponListBean.getResult().size() > 0) {
             for (CouponListBean.ResultBean resultBean : couponListBean.getResult()) {
                 if (resultBean.getStatus() == 0) {
-                    GetComboBoxBean.ResultBean resultBean1 = new GetComboBoxBean.ResultBean(resultBean.getOrder_code(), resultBean.getName());
+                    GetComboBoxBean.ResultBean resultBean1 = new GetComboBoxBean.ResultBean(resultBean.getCoupon_code(), resultBean.getName(), resultBean.getDiscount());
                     list.add(resultBean1);
                 }
             }
         }
-        list.add(new GetComboBoxBean.ResultBean("", "不使用优惠券"));
+        list.add(new GetComboBoxBean.ResultBean("", "不使用优惠券", 0));
     }
 }
 

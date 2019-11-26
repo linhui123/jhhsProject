@@ -38,7 +38,7 @@ public class CouponListBean {
          * discount :
          * desc : 满100可用
          */
-
+        private String coupon_code;
         private String order_code;
         private String start_time;
         private String user_code;
@@ -50,6 +50,14 @@ public class CouponListBean {
         private int discount;
         private String desc;
         private boolean isSelect;
+
+        public String getCoupon_code() {
+            return coupon_code;
+        }
+
+        public void setCoupon_code(String coupon_code) {
+            this.coupon_code = coupon_code;
+        }
 
         public boolean isSelect() {
             return isSelect;

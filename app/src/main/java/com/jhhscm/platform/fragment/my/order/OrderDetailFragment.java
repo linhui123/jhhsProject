@@ -51,6 +51,7 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.Utils;
+import com.jhhscm.platform.views.dialog.ConfirmOrderDialog;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
@@ -101,7 +102,12 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         mDataBinding.tvCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delOrder();
+                new ConfirmOrderDialog(getContext(), "请确认是否取消订单", new ConfirmOrderDialog.CallbackListener() {
+                    @Override
+                    public void clickY() {
+                        delOrder();
+                    }
+                }).show();
             }
         });
 
@@ -120,7 +126,6 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         });
         findOrder();
     }
-
 
     @Override
     public void onDestroy() {

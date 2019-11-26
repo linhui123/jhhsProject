@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/name"
                 android:layout_marginTop="@dimen/dp_3"
-                android:text="2019/10/23"
+                android:text="--"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
 

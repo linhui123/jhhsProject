@@ -286,6 +286,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
         double total = count + yufei - youhui;//合计
         mDataBinding.tvPrice.setText("￥" + count);
         mDataBinding.tvYouhui.setText("-￥" + youhui);
+        mDataBinding.rlCoupon.setVisibility(View.GONE);
         mDataBinding.tvQuanxuan.setText("共计" + num + "件商品");
         BigDecimal b = new BigDecimal(total);
         mDataBinding.tvSum.setText("￥" + b.setScale(2, BigDecimal.ROUND_HALF_UP).toString());

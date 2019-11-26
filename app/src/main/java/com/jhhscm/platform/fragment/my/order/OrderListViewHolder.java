@@ -27,18 +27,19 @@ public class OrderListViewHolder extends AbsRecyclerViewHolder<FindOrderBean.Goo
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (item.getOrder_status().contains("10")) {
-                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 1);
-                } else if (item.getOrder_status().contains("20")) {
-                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 2);
-                } else if (item.getOrder_status().contains("30")) {
-                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 3);
-                } else if (item.getOrder_status().contains("40")) {
-                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 4);
-                }else {
-
-                }
+//                if (item.getOrder_status()!=null){
+//                    if (item.getOrder_status().contains("10")) {
+//                        OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 1);
+//                    } else if (item.getOrder_status().contains("20")) {
+//                        OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 2);
+//                    } else if (item.getOrder_status().contains("30")) {
+//                        OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 3);
+//                    } else if (item.getOrder_status().contains("40")) {
+//                        OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 4);
+//                    }else {
+//
+//                    }
+//                }
             }
         });
     }

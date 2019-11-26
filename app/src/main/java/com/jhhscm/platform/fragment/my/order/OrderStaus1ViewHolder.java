@@ -37,11 +37,11 @@ public class OrderStaus1ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
     @Override
     protected void onBindView(final SaleItem item) {
         if (item.orderBean != null) {
-            if (item.orderBean.getBus_name()!=null&&item.orderBean.getBus_name().length()>0){
+            if (item.orderBean.getBus_name() != null && item.orderBean.getBus_name().length() > 0) {
                 mBinding.name.setText(item.orderBean.getBus_name());
             }
-            if (item.orderBean.getGoodsListBeans() != null && item.orderBean.getGoodsListBeans().size() > 0) {
-                mBinding.data.setText(item.orderBean.getGoodsListBeans().get(0).getUpdateTime());
+            if (item.orderBean.getAdd_time() != null) {
+                mBinding.data.setText(item.orderBean.getAdd_time());
             }
             mBinding.tatal.setText("合计 ￥" + item.orderBean.getOrder_price());
             mBinding.orderStaus.setText(item.orderBean.getOrder_text());
@@ -123,7 +123,8 @@ public class OrderStaus1ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
             mBinding.pay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBusUtil.post(new PayEvent(item.orderBean.getId()+"", type));
+                    EventBusUtil.post(new PayEvent(item.orderBean.getOrder_code() + "",
+                            item.orderBean.getOrder_price(), type));
                 }
             });
 

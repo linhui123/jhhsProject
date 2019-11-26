@@ -25,6 +25,7 @@ public class GetComboBoxBean {
         private String key_name;
         private String id;
         private String key_value;
+        private int discount;
         private String desc;
         private boolean isSelect;
 
@@ -40,11 +41,25 @@ public class GetComboBoxBean {
             this.key_value = key_value;
         }
 
+        public ResultBean(String key_name, String key_value, int discount) {
+            this.key_value = key_value;
+            this.key_name = key_name;
+            this.discount = discount;
+        }
+
         public ResultBean(boolean isSelect, String key_name, String id, String pic_url) {
             this.isSelect = isSelect;
             this.key_name = key_name;
             this.id = id;
             this.pic_url = pic_url;
+        }
+
+        public int getDiscount() {
+            return discount;
+        }
+
+        public void setDiscount(int discount) {
+            this.discount = discount;
         }
 
         public String getPic_url() {

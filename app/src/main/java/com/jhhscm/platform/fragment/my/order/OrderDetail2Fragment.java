@@ -41,6 +41,7 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.dialog.ConfirmOrderDialog;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 
 import java.util.Map;
@@ -97,33 +98,29 @@ public class OrderDetail2Fragment extends AbsFragment<FragmentOrderDetailBinding
             deviceAdapter.setData(findOrderBean.getGoodsOwnerList());
             intView(findOrderBean);
 
-            mDataBinding.tvCancle.setOnClickListener(new View.OnClickListener() {
+            mDataBinding.tvConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    delOrder();
-                }
-            });
-
-            mDataBinding.tvDel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                delOrder();
+                    new ConfirmOrderDialog(getContext(), new ConfirmOrderDialog.CallbackListener() {
+                        @Override
+                        public void clickY() {
+                            updateOrderStatus(findOrderBean.getOrder_code());
+                        }
+                    }).show();
                 }
             });
 
             mDataBinding.tvTijiao.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                CashierActivity.start(getContext(), new CreateOrderResultBean(new CreateOrderResultBean.DataBean(order_code)));
+                    CashierActivity.start(getContext(), new CreateOrderResultBean(new CreateOrderResultBean.DataBean(findOrderBean.getOrder_code())));
                 }
             });
         } else {
             ToastUtil.show(getContext(), "数据错误");
             getActivity().finish();
         }
-
     }
-
 
     @Override
     public void onDestroy() {
@@ -133,6 +130,46 @@ public class OrderDetail2Fragment extends AbsFragment<FragmentOrderDetailBinding
 
     public void onEvent(GetRegionEvent messageEvent) {
 
+    }
+
+    /**
+     * 确认订单
+     */
+    private void updateOrderStatus(final String orderGood) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("order_code", orderGood);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "delOrder");
+        NetBean netBean = new NetBean();
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(UpdateOrderStatusAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response,
+                                           BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                if (response.body().getCode().equals("200")) {
+                                    if (response.body().getData().getData().equals("0")) {
+                                        ToastUtil.show(getContext(), "操作成功");
+                                        mDataBinding.orderType.setText("用户已确认");
+                                        mDataBinding.tvConfirm.setVisibility(View.GONE);
+                                    }
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
     }
 
     /**
@@ -205,11 +242,7 @@ public class OrderDetail2Fragment extends AbsFragment<FragmentOrderDetailBinding
 
         mDataBinding.tvOrderNo.setText(findOrderBean.getOrder_code());
         if (findOrderBean.getAdd_time() != null) {
-            if (findOrderBean.getAdd_time().length() > 10) {
-                mDataBinding.tvOrderTime.setText(findOrderBean.getAdd_time().substring(0, 10));
-            } else {
-                mDataBinding.tvOrderTime.setText(findOrderBean.getAdd_time());
-            }
+            mDataBinding.tvOrderTime.setText(findOrderBean.getAdd_time());
         }
 
         mAdapter.setData(findOrderBean.getGoodsList());

@@ -32,10 +32,10 @@ public class MyStoreOrderItemViewHolder extends AbsRecyclerViewHolder<FindBusOrd
     protected void onBindView(final FindBusOrderListBean.DataBean item) {
         if (item != null) {
             mBinding.orderNo.setText("订单编号：" + item.getOrder_code());
-            if (item.getAdd_time() != null && item.getAdd_time().length() > 10) {
-                mBinding.orderTime.setText("下单时间：" + item.getAdd_time().substring(0, 10));
-            } else {
+            if (item.getAdd_time() != null) {
                 mBinding.orderTime.setText("下单时间：" + item.getAdd_time());
+            } else {
+                mBinding.orderTime.setText("下单时间：--");
             }
 
             if (item.getOrder_status() == 101) {

@@ -44,17 +44,15 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 
 import java.util.Map;
 import java.util.TreeMap;
 
 import retrofit2.Response;
 
-public class PayDialog extends BaseDialog {
+public class ContractPayDialog extends BaseDialog {
     private DialogPayBinding mDataBinding;
     private boolean mCancelable = true;
     private CallbackListener mListener;
@@ -122,17 +120,17 @@ public class PayDialog extends BaseDialog {
         void clickY();
     }
 
-    public PayDialog(Context context) {
+    public ContractPayDialog(Context context) {
         super(context);
     }
 
-    public PayDialog(Context context, Activity activity, String orderId) {
+    public ContractPayDialog(Context context, Activity activity, String orderId) {
         super(context);
         this.orderId = orderId;
         this.activity = activity;
     }
 
-    public PayDialog(Context context, CallbackListener listener) {
+    public ContractPayDialog(Context context, CallbackListener listener) {
         this(context);
         setCanceledOnTouchOutside(false);
         this.mListener = listener;

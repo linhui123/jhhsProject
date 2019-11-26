@@ -26,6 +26,8 @@ import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
+import com.jhhscm.platform.aliapi.AliPrePayAction;
+import com.jhhscm.platform.aliapi.AliPrePayBean;
 import com.jhhscm.platform.aliapi.OrderInfoUtil2_0;
 import com.jhhscm.platform.aliapi.PayResult;
 import com.jhhscm.platform.databinding.DialogPayBinding;
@@ -53,6 +55,7 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
+import com.jhhscm.platform.wxapi.WxPrePayAction;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 
@@ -67,9 +70,9 @@ public class PayWithCouponDialog extends BaseDialog {
     private boolean mCancelable = true;
     private CallbackListener mListener;
     private Activity activity;
-    private String orderId = "";
+    private String orderCode = "";
+    private String price = "";
     private List<GetComboBoxBean.ResultBean> list;
-    private ContractPayCreateOrderBean.DataBean dataBean;
     private String prepayid = "";
     private String data = "";
     /**
@@ -135,9 +138,10 @@ public class PayWithCouponDialog extends BaseDialog {
         super(context);
     }
 
-    public PayWithCouponDialog(Context context, Activity activity, String orderId, List<GetComboBoxBean.ResultBean> list) {
+    public PayWithCouponDialog(Context context, Activity activity, String price, String orderCode, List<GetComboBoxBean.ResultBean> list) {
         super(context);
-        this.orderId = orderId;
+        this.price = price;
+        this.orderCode = orderCode;
         this.list = list;
         this.activity = activity;
     }
@@ -179,23 +183,22 @@ public class PayWithCouponDialog extends BaseDialog {
     protected void onInitView(View view) {
         EventBusUtil.registerEvent(this);
         type = ALI_PAY_FLAG;
-        mDataBinding.imClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-        dataBean = new ContractPayCreateOrderBean.DataBean();
-        if (orderId != null) {
-            contractpayCreateorder(orderId);
+        if (price != null) {
+            mDataBinding.num.setText("￥" + price);
         } else {
-            ToastUtil.show(getContext(), "订单Id为空");
+            mDataBinding.num.setText("￥0.0");
+        }
+
+
+        if (orderCode == null) {
+            ToastUtil.show(getContext(), "订单code为空");
             mDataBinding.tvPay.setEnabled(false);
             mDataBinding.tvPay.setBackgroundResource(R.drawable.button_98b);
         }
         if (list != null) {
             initDrop();
         }
+        mDataBinding.coupon.setTag("");
         mDataBinding.coupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,7 +216,12 @@ public class PayWithCouponDialog extends BaseDialog {
                 dismiss();
             }
         });
-
+        mDataBinding.imClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         mDataBinding.rlAli.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -236,16 +244,16 @@ public class PayWithCouponDialog extends BaseDialog {
             @Override
             public void onClick(View v) {
                 Log.e("tvPay", "type " + type);
-                if (dataBean != null && dataBean.getOrderCode() != null) {
+                if (orderCode != null && orderCode.length() > 0
+                        && mDataBinding.coupon.getTag().toString() != null) {
                     if (type == ALI_PAY_FLAG) {
-                        contractPayAliPrePay(dataBean.getOrderCode());
+                        aliPrePay(orderCode);
                     } else if (type == WX_PAY_FLAG) {
-                        contractPayWxPrePay(dataBean.getOrderCode());
+                        wxPrePay(orderCode);
                     }
                 } else {
-                    contractpayCreateorder(orderId);
+                    ToastUtil.show(getContext(), "数据问题");
                 }
-//                dismiss();
             }
         });
     }
@@ -274,51 +282,13 @@ public class PayWithCouponDialog extends BaseDialog {
     }
 
     /**
-     * 创建合同订单
-     */
-    private void contractpayCreateorder(final String id) {
-        Map<String, Object> map = new TreeMap<String, Object>();
-        map.put("id", id);
-        map.put("mobile", ConfigUtils.getCurrentUser(getContext()).getMobile());
-        String content = JSON.toJSONString(map);
-        content = Des.encryptByDes(content);
-        String sign = SignObject.getSignKey(getContext(), map, "contractpayCreateorder");
-        NetBean netBean = new NetBean();
-        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
-        netBean.setSign(sign);
-        netBean.setContent(content);
-        onNewRequestCall(ContractPayCreateOrderAction.newInstance(getContext(), netBean)
-                .request(new AHttpService.IResCallback<BaseEntity<ContractPayCreateOrderBean>>() {
-
-                    @Override
-                    public void onCallback(int resultCode, Response<BaseEntity<ContractPayCreateOrderBean>> response, BaseErrorInfo baseErrorInfo) {
-                        if (getContext() != null) {
-                            closeDialog();
-                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getContext().getString(R.string.error_net))) {
-                                return;
-                            }
-                            if (response != null) {
-                                if (response.body().getCode().equals("200")) {
-                                    dataBean = response.body().getData().getData();
-                                } else if (response.body().getCode().equals("1001")) {
-                                    ToastUtils.show(getContext(), response.body().getMessage());
-                                    mDataBinding.tvPay.setEnabled(false);
-                                    mDataBinding.tvPay.setBackgroundResource(R.drawable.button_98b);
-                                } else {
-                                    ToastUtils.show(getContext(), "网络异常");
-                                }
-                            }
-                        }
-                    }
-                }));
-    }
-
-    /**
      * 获取微信支付订单号 预支付
      */
-    private void contractPayWxPrePay(final String orderCode) {
+    private void wxPrePay(final String orderCode) {
         Map<String, Object> map = new TreeMap<String, Object>();
         map.put("orderCode", orderCode);
+        map.put("coupon_code", mDataBinding.coupon.getTag().toString().trim());
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = SignObject.getSignKey(getContext(), map, "contractPayWxPrePay");
@@ -326,7 +296,7 @@ public class PayWithCouponDialog extends BaseDialog {
         netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
-        onNewRequestCall(ContractWXPrePayAction.newInstance(getContext(), netBean)
+        onNewRequestCall(WxPrePayAction.newInstance(getContext(), netBean)
                 .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
 
                     @Override
@@ -354,9 +324,11 @@ public class PayWithCouponDialog extends BaseDialog {
     /**
      * 获取支付宝支付订单号 预支付
      */
-    private void contractPayAliPrePay(final String orderCode) {
+    private void aliPrePay(final String orderCode) {
         Map<String, Object> map = new TreeMap<String, Object>();
         map.put("orderCode", orderCode);
+        map.put("coupon_code", mDataBinding.coupon.getTag().toString().trim());
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = SignObject.getSignKey(getContext(), map, "contractPayAliPrePay");
@@ -364,11 +336,11 @@ public class PayWithCouponDialog extends BaseDialog {
         netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
-        onNewRequestCall(ContractAliPrePayAction.newInstance(getContext(), netBean)
-                .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
+        onNewRequestCall(AliPrePayAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<AliPrePayBean>>() {
 
                     @Override
-                    public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response, BaseErrorInfo baseErrorInfo) {
+                    public void onCallback(int resultCode, Response<BaseEntity<AliPrePayBean>> response, BaseErrorInfo baseErrorInfo) {
                         if (getContext() != null) {
                             closeDialog();
                             if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getContext().getString(R.string.error_net))) {
@@ -516,6 +488,10 @@ public class PayWithCouponDialog extends BaseDialog {
                 @Override
                 public void onClick(View v) {
                     mDataBinding.coupon.setText(item.getKey_value());
+                    mDataBinding.coupon.setTag(item.getKey_name());
+                    double result = 0.0;
+                    result = Double.parseDouble(price) - Double.parseDouble(item.getDiscount() + "");
+                    mDataBinding.num.setText("￥" + result);
                     mDataBinding.recyvleview.setVisibility(View.GONE);
                     if (mListener != null) {
                         mListener.clickResult(item.getKey_name(), item.getKey_value());
