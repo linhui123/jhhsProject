@@ -61,7 +61,6 @@ public class MyStoreFragment extends AbsFragment<FragmentMyStoreBinding> {
         return FragmentMyStoreBinding.inflate(inflater, container, attachToRoot);
     }
 
-
     @Override
     protected void setupViews() {
         if (ConfigUtils.getCurrentUser(getContext()) != null

@@ -41,7 +41,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="25dp"
                             android:scaleType="centerCrop"
-                            android:src="@mipmap/ic_heard" />
+                            android:src="@mipmap/ic_store" />
 
                         <RelativeLayout
                             android:id="@+id/rl_cer"

@@ -208,30 +208,46 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
             mDataBinding.phone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new ConfirmCallPhoneDialog(getContext(), dataBean.getContact_msg(), new ConfirmCallPhoneDialog.CallbackListener() {
-                        @Override
-                        public void clickResult() {
-                            //6.0权限处理
-                            YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
-                                    .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
-                                    .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
-                                    .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "拨打电话"))
-                                    .setPermissions(Manifest.permission.CALL_PHONE).build(), new AcpListener() {
-                                @Override
-                                public void onGranted() {
-                                    Uri uriScheme = Uri.parse("tel:" + dataBean.getContact_msg());
-                                    Intent it = new Intent(Intent.ACTION_CALL, uriScheme);
-                                    getContext().startActivity(it);
+                    if (ConfigUtils.getCurrentUser(getContext()) != null
+                            && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null
+                            && "1".equals(ConfigUtils.getCurrentUser(getContext()).getIs_check())) {
+                        new ConfirmCallPhoneDialog(getContext(), dataBean.getContact_msg(), new ConfirmCallPhoneDialog.CallbackListener() {
+                            @Override
+                            public void clickResult() {
+                                //6.0权限处理
+                                YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
+                                        .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
+                                        .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
+                                        .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "拨打电话"))
+                                        .setPermissions(Manifest.permission.CALL_PHONE).build(), new AcpListener() {
+                                    @Override
+                                    public void onGranted() {
+                                        Uri uriScheme = Uri.parse("tel:" + dataBean.getContact_msg());
+                                        Intent it = new Intent(Intent.ACTION_CALL, uriScheme);
+                                        getContext().startActivity(it);
+                                    }
+
+
+                                    @Override
+                                    public void onDenied(List<String> permissions) {
+
+                                    }
+                                });
+                            }
+                        }).show();
+                    } else {
+                        new TelPhoneDialog(getContext(), new TelPhoneDialog.CallbackListener() {
+
+                            @Override
+                            public void clickYes(String phone) {
+                                if (type == 0) {
+                                    saveMsg(phone, "7");
+                                } else {
+                                    saveMsg(phone, "8");
                                 }
-
-
-                                @Override
-                                public void onDenied(List<String> permissions) {
-
-                                }
-                            });
-                        }
-                    }).show();
+                            }
+                        }).show();
+                    }
                 }
             });
         }
@@ -311,30 +327,46 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
             mDataBinding.phone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new ConfirmCallPhoneDialog(getContext(), dataBean.getContact_msg(), new ConfirmCallPhoneDialog.CallbackListener() {
-                        @Override
-                        public void clickResult() {
-                            //6.0权限处理
-                            YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
-                                    .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
-                                    .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
-                                    .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "拨打电话"))
-                                    .setPermissions(Manifest.permission.CALL_PHONE).build(), new AcpListener() {
-                                @Override
-                                public void onGranted() {
-                                    Uri uriScheme = Uri.parse("tel:" + dataBean.getContact_msg());
-                                    Intent it = new Intent(Intent.ACTION_CALL, uriScheme);
-                                    getContext().startActivity(it);
+                    if (ConfigUtils.getCurrentUser(getContext()) != null
+                            && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null
+                            && "1".equals(ConfigUtils.getCurrentUser(getContext()).getIs_check())) {
+                        new ConfirmCallPhoneDialog(getContext(), dataBean.getContact_msg(), new ConfirmCallPhoneDialog.CallbackListener() {
+                            @Override
+                            public void clickResult() {
+                                //6.0权限处理
+                                YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
+                                        .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
+                                        .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
+                                        .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "拨打电话"))
+                                        .setPermissions(Manifest.permission.CALL_PHONE).build(), new AcpListener() {
+                                    @Override
+                                    public void onGranted() {
+                                        Uri uriScheme = Uri.parse("tel:" + dataBean.getContact_msg());
+                                        Intent it = new Intent(Intent.ACTION_CALL, uriScheme);
+                                        getContext().startActivity(it);
+                                    }
+
+
+                                    @Override
+                                    public void onDenied(List<String> permissions) {
+
+                                    }
+                                });
+                            }
+                        }).show();
+                    } else {
+                        new TelPhoneDialog(getContext(), new TelPhoneDialog.CallbackListener() {
+
+                            @Override
+                            public void clickYes(String phone) {
+                                if (type == 0) {
+                                    saveMsg(phone, "7");
+                                } else {
+                                    saveMsg(phone, "8");
                                 }
-
-
-                                @Override
-                                public void onDenied(List<String> permissions) {
-
-                                }
-                            });
-                        }
-                    }).show();
+                            }
+                        }).show();
+                    }
                 }
             });
         }

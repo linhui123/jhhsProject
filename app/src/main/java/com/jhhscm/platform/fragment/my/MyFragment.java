@@ -501,7 +501,12 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             mDataBinding.tvName.setVisibility(View.GONE);
             mDataBinding.rlCer.setVisibility(View.VISIBLE);
             mDataBinding.username.setText(ConfigUtils.getCurrentUser(getContext()).getMobile());
-            ImageLoader.getInstance().displayImage(ConfigUtils.getCurrentUser(getContext()).getAvatar(), mDataBinding.imUser);
+            if (ConfigUtils.getCurrentUser(getContext()).getAvatar() != null
+                    && ConfigUtils.getCurrentUser(getContext()).getAvatar().length() > 0) {
+                ImageLoader.getInstance().displayImage(ConfigUtils.getCurrentUser(getContext()).getAvatar(), mDataBinding.imUser);
+            } else {
+                mDataBinding.imUser.setImageResource(R.mipmap.ic_heard);
+            }
         } else {
             mDataBinding.imUser.setImageResource(R.mipmap.ic_heard);
             mDataBinding.tvName.setVisibility(View.VISIBLE);

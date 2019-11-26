@@ -40,14 +40,12 @@
             <TextView
                 android:id="@+id/cancle"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="33dp"
+                android:textSize="@dimen/text_size_16"
                 android:layout_weight="1"
                 android:background="@drawable/bg_white"
                 android:gravity="center"
-                android:paddingLeft="@dimen/padding_10"
-                android:paddingTop="@dimen/dp_5"
-                android:paddingRight="@dimen/padding_10"
-                android:paddingBottom="@dimen/dp_5"
+                android:textColor="@color/acc3"
                 android:text="取消" />
         </LinearLayout>
 

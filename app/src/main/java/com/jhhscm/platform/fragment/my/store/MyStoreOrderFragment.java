@@ -240,9 +240,10 @@ public class MyStoreOrderFragment extends AbsFragment<FragmentMyStoreOrderBindin
                             if (response != null) {
                                 new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                 if (response.body().getCode().equals("200")) {
-                                    if (response.body().getData().getData().equals("0")) {
-                                        ToastUtil.show(getContext(), "取消成功");
-                                    }
+//                                    if (response.body().getData().getData().equals("0")) {
+//                                        ToastUtil.show(getContext(), "取消成功");
+//                                    }
+                                    ToastUtil.show(getContext(), "取消成功");
                                     mDataBinding.recyclerview.autoRefresh();
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());

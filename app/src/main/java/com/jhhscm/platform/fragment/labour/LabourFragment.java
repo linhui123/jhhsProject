@@ -15,6 +15,8 @@ import android.widget.SeekBar;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.PushQiuZhiActivity;
+import com.jhhscm.platform.activity.PushZhaoPinActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentLabourBinding;
@@ -117,6 +119,17 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
         getRegion("1", "");
 
         initTop();
+
+        mDataBinding.tel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (type == 0) {
+                    PushZhaoPinActivity.start(getContext(), "", "", 0);
+                } else {
+                    PushQiuZhiActivity.start(getContext(), "", "", 0);
+                }
+            }
+        });
     }
 
     private void initTop() {
@@ -242,6 +255,7 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
             @Override
             public void onClick(View v) {
                 type = 0;
+                mDataBinding.tel.setImageResource(R.mipmap.ic_push_zhaopin);
                 mDataBinding.rv.autoRefresh();
                 mDataBinding.tvZhaopin.setBackgroundResource(R.color.white);
                 mDataBinding.tvZhaopin.setTextColor(getResources().getColor(R.color.a397));
@@ -254,6 +268,7 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> implement
             @Override
             public void onClick(View v) {
                 type = 1;
+                mDataBinding.tel.setImageResource(R.mipmap.ic_push_qiuzhi);
                 mDataBinding.rv.autoRefresh();
                 mDataBinding.tvQiuzhi.setBackgroundResource(R.color.white);
                 mDataBinding.tvQiuzhi.setTextColor(getResources().getColor(R.color.a397));

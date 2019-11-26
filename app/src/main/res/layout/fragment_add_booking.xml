@@ -295,7 +295,8 @@
                     android:layout_marginLeft="@dimen/padding_15"
                     android:layout_marginRight="@dimen/padding_15"
                     app:colum_num="3"
-                    app:image_num="6"></com.jhhscm.platform.views.selector.ImageSelector>
+                    app:image_num="6"
+                    app:with_camera="true"></com.jhhscm.platform.views.selector.ImageSelector>
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>

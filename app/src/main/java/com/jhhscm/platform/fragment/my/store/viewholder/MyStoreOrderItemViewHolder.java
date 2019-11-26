@@ -40,10 +40,24 @@ public class MyStoreOrderItemViewHolder extends AbsRecyclerViewHolder<FindBusOrd
 
             if (item.getOrder_status() == 101) {
                 mBinding.orderType.setText("待付款");
+                mBinding.tvFunc1.setVisibility(View.VISIBLE);
+                mBinding.tvFunc2.setVisibility(View.GONE);
+            } else if (item.getOrder_status() == 102) {
+                mBinding.orderType.setText("已取消");
+                mBinding.tvFunc1.setVisibility(View.GONE);
+                mBinding.tvFunc2.setVisibility(View.GONE);
             } else if (item.getOrder_status() == 501) {
                 mBinding.orderType.setText("用户已确认订单");
-            } else {
+                mBinding.tvFunc1.setVisibility(View.GONE);
+                mBinding.tvFunc2.setVisibility(View.GONE);
+            } else if (item.getOrder_status() == 201) {
                 mBinding.orderType.setText("已完成");
+                mBinding.tvFunc1.setVisibility(View.GONE);
+                mBinding.tvFunc2.setVisibility(View.GONE);
+            } else {
+                mBinding.orderType.setText(item.getOrder_status_name());
+                mBinding.tvFunc1.setVisibility(View.GONE);
+                mBinding.tvFunc2.setVisibility(View.GONE);
             }
 
             mBinding.fee.setText("￥" + item.getOther_price());

@@ -25,6 +25,7 @@
                 android:background="@drawable/edit_bg_397"
                 android:hint="请输入手机号或姓名"
                 android:padding="@dimen/padding_10"
+                android:singleLine="true"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_16" />
 
@@ -34,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="-2dp"
-                android:background="@drawable/button_c397"
+                android:background="@drawable/bg_397_right_ovel"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
                 android:paddingRight="20dp"

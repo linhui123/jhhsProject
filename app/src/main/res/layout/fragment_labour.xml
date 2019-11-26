@@ -154,6 +154,17 @@
             android:layout_below="@+id/ll_select"
             android:layout_marginTop="@dimen/dp_5"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
 
+        <ImageView
+            android:id="@+id/tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="50dp"
+            android:animateLayoutChanges="true"
+            android:src="@mipmap/ic_push_zhaopin" />
+
         <LinearLayout
             android:id="@+id/ll_xiala"
             android:layout_width="match_parent"
