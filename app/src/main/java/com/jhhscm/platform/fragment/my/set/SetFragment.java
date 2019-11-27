@@ -56,14 +56,19 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
     @Override
     protected void setupViews() {
         try {
+            showDialog();
             DataCleanManager.getTotalCacheSize(getContext());
             mDataBinding.tvCache.setText(DataCleanManager.getTotalCacheSize(getContext()));
             ConfigUtils.removeCoupon(getContext());
+            ConfigUtils.removePTime(getContext());
+            ConfigUtils.removeUpdataTime(getContext());
+            ConfigUtils.removeUpdataUrl(getContext());
         } catch (Exception e) {
             e.printStackTrace();
             mDataBinding.tvCache.setText("0.0M");
+        }finally {
+            closeDialog();
         }
-
 
         mDataBinding.rl1.setOnClickListener(new View.OnClickListener() {
             @Override

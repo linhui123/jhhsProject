@@ -6,6 +6,7 @@ import com.jhhscm.platform.fragment.GoodsToCarts.CalculateOrderBean;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
 import com.jhhscm.platform.fragment.GoodsToCarts.FindAddressListBean;
 import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.BrandModelBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryDetailBean;
@@ -64,7 +65,6 @@ import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.bean.SaveBean;
 import com.jhhscm.platform.http.bean.UserBean;
-import com.jhhscm.platform.shoppingcast.entity.CartInfo;
 
 import java.util.List;
 
@@ -213,7 +213,7 @@ public interface ApiService {
     Call<BaseEntity<GetGoodsPageListBean>> getGoodsPageList(@Body NetBean content);
 
     //查询新机详情
-    String GET_GOODSDETAILS = "goods/getGoodsDetails";
+    String GET_GOODSDETAILS = "v1-0/goods/getGoodsDetails";
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(GET_GOODSDETAILS)
@@ -221,7 +221,7 @@ public interface ApiService {
 
 
     //查询二手机详情
-    String GET_OLDDETAILS = "goods/getOldDetails";
+    String GET_OLDDETAILS = "v1-0/goods/getOldDetails";
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(GET_OLDDETAILS)
@@ -345,6 +345,13 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(FIND_BRAND)
     Call<BaseEntity<FindBrandBean>> findBrand(@Body NetBean content);
+
+    //机型列表
+    String BRAND_MODELLISTBEAN = "v1-3/brandmodel/list";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(BRAND_MODELLISTBEAN)
+    Call<BaseEntity<BrandModelBean>> brandModelListBean(@Body NetBean content);
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(GET_GOODSBYBRAND)

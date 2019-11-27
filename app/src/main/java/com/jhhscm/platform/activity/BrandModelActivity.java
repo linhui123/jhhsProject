@@ -6,18 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
-import com.jhhscm.platform.fragment.aftersale.AfterSaleFragment;
+import com.jhhscm.platform.fragment.Mechanics.BrandModelFragment;
+import com.jhhscm.platform.fragment.Mechanics.bean.BrandModelBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.invitation.IntegralFragment;
-import com.jhhscm.platform.fragment.invitation.InvitationRegisterFragment;
+import com.jhhscm.platform.fragment.my.book.BookingFragment;
 
-/**
- * 邀请注册
- */
-public class InvitationRegisterActivity extends AbsToolbarActivity {
+public class BrandModelActivity extends AbsToolbarActivity {
 
-    public static void start(Context context) {
-        Intent intent = new Intent(context, InvitationRegisterActivity.class);
+    public static void start(Context context, BrandModelBean.DataBean dataBean) {
+        Intent intent = new Intent(context, BrandModelActivity.class);
+        intent.putExtra("dataBean", dataBean);
         context.startActivity(intent);
     }
 
@@ -48,17 +46,18 @@ public class InvitationRegisterActivity extends AbsToolbarActivity {
 
     @Override
     protected String getToolBarTitle() {
-        return "邀请注册";
+        return "机型选择";
     }
 
     @Override
     protected AbsFragment onCreateContentView() {
-        return InvitationRegisterFragment.instance();
+        return BrandModelFragment.instance();
     }
 
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putSerializable("dataBean",getIntent().getSerializableExtra("dataBean"));
         return args;
     }
 }

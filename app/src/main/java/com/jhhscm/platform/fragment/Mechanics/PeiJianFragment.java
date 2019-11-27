@@ -11,15 +11,20 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.BrandModelActivity;
 import com.jhhscm.platform.activity.SearchActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentPeiJianBinding;
+import com.jhhscm.platform.event.BrandResultEvent;
+import com.jhhscm.platform.fragment.Mechanics.action.BrandModelListAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindCategoryAction;
 import com.jhhscm.platform.fragment.Mechanics.adapter.BrandAdapter;
+import com.jhhscm.platform.fragment.Mechanics.adapter.BrandModelAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.JXDropAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.SelectedAdapter;
+import com.jhhscm.platform.fragment.Mechanics.bean.BrandModelBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
@@ -36,6 +41,8 @@ import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
+import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
@@ -58,6 +65,7 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
     private String sort_type = "";//排序
     private String category_id = "";//类型
     private String brand_id = "";//品牌
+    private String model_ids = "";//机型
 
     public static PeiJianFragment instance() {
         PeiJianFragment view = new PeiJianFragment();
@@ -71,6 +79,7 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
 
     @Override
     protected void setupViews() {
+        EventBusUtil.registerEvent(this);
         RelativeLayout.LayoutParams llParams = (RelativeLayout.LayoutParams) mDataBinding.rlTop.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.rlTop.setLayoutParams(llParams);
@@ -163,6 +172,24 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
             }
         });
 
+        mDataBinding.tvJixing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDataBinding.llXiala.getVisibility() == View.GONE) {
+                    mDataBinding.llXiala.setVisibility(View.VISIBLE);
+                    mDataBinding.llJixing.setVisibility(View.VISIBLE);
+                } else {
+                    if (mDataBinding.llJixing.getVisibility() == View.VISIBLE) {
+                        mDataBinding.llXiala.setVisibility(View.GONE);
+                        closeDrap();
+                    } else {
+                        closeDrap();
+                        mDataBinding.llJixing.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+
         mDataBinding.tvBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,7 +200,7 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
         mDataBinding.imSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchActivity.start(getContext());
+                SearchActivity.start(getContext(), 2);
             }
         });
     }
@@ -188,6 +215,7 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
             map.put("keyword", "");
             map.put("category_id", category_id);
             map.put("brand_id", brand_id);
+            map.put("model_ids", model_ids);
             map.put("sort_type", sort_type);//1是价格降序 2是价格升序
             map.put("page", mCurrentPage + "");
             map.put("limit", mShowCount + "");
@@ -261,8 +289,9 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
         getComboBoxBean.setResult(resultBeans);
         zonghe(getComboBoxBean);
 
-        findBrand();
-        findCategoryHomePage();
+        findBrand();//品牌
+        findCategoryHomePage();//类型
+        brandModel();//机型
     }
 
     /**
@@ -293,6 +322,44 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         pinpai(response.body().getData());
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
+    }
+
+    /**
+     * 获取品牌 + 机型列表
+     */
+    private void brandModel() {
+        if (getContext() != null) {
+            Map<String, String> map = new TreeMap<String, String>();
+            map.put("type", "2");
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = Sign.getSignKey(getActivity(), map, "brandModel");
+            NetBean netBean = new NetBean();
+            netBean.setToken("");
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(BrandModelListAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<BrandModelBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<BrandModelBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                        jixing(response.body().getData());
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
@@ -417,9 +484,53 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
         });
     }
 
+    /**
+     * 下拉机型
+     */
+    private void jixing(BrandModelBean brandModelBean) {
+        BrandModelBean.DataBean resultBean = new BrandModelBean.DataBean("机型通用", "");
+        if (brandModelBean.getData() != null && brandModelBean.getData().size() > 0) {
+            brandModelBean.getData().add(0, resultBean);
+        }
+        mDataBinding.rlJixing.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        BrandModelAdapter bAdapter = new BrandModelAdapter(brandModelBean.getData(), getContext());
+        mDataBinding.rlJixing.setAdapter(bAdapter);
+        bAdapter.setMyListener(new BrandModelAdapter.ItemListener() {
+            @Override
+            public void onItemClick(BrandModelBean.DataBean item) {
+                if (item.getBrand_model_list() != null && item.getBrand_model_list().size() > 0) {
+                    BrandModelActivity.start(getContext(), item);
+                } else {
+                    model_ids = "";
+                    ToastUtil.show(getContext(), "该品牌下没有机型数据");
+                    mDataBinding.llXiala.setVisibility(View.GONE);
+                    closeDrap();
+                    mDataBinding.wrvRecycler.autoRefresh();
+                }
+            }
+        });
+    }
+
     private void closeDrap() {
         mDataBinding.llZonghe.setVisibility(View.GONE);
         mDataBinding.llQuanbu.setVisibility(View.GONE);
         mDataBinding.llPinpai.setVisibility(View.GONE);
+        mDataBinding.llJixing.setVisibility(View.GONE);
+    }
+
+    public void onEvent(BrandResultEvent event) {
+        if (event.getBrand_id() != null && event.getBrand_name() != null && event.getType() == 1) {
+            model_ids = event.getBrand_id();
+            mDataBinding.tvJixing.setText(event.getBrand_name());
+            mDataBinding.llXiala.setVisibility(View.GONE);
+            closeDrap();
+            mDataBinding.wrvRecycler.autoRefresh();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregisterEvent(this);
     }
 }

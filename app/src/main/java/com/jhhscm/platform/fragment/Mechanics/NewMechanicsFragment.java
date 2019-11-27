@@ -200,7 +200,7 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
     }
 
     public void onEvent(BrandResultEvent event) {
-        if (event != null && event.getBrand_id() != null) {
+        if (event != null && event.getBrand_id() != null && event.getType() == 0) {
             brand_id = event.getBrand_id();
             mDataBinding.tvPinpai.setText(event.getBrand_name());
             mDataBinding.wrvRecycler.autoRefresh();

@@ -41,7 +41,7 @@ import java.util.List;
 public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
 
     private int mScreenWidth = 0; // 屏幕宽度
-
+    private int type = 0;
     private SearchNewFragment newListFragment;
     private SearchOldFragment oldListFragment;
     private SearchPeiJianFragment peijianListFragment;
@@ -58,6 +58,8 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
 
     @Override
     protected void setupViews() {
+        type = getArguments().getInt("type");
+
         LinearLayout.LayoutParams llParams = (LinearLayout.LayoutParams) mDataBinding.llTop.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.llTop.setLayoutParams(llParams);
@@ -122,6 +124,8 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
                 return mDataBinding.enhanceTabLayout.getTabLayout().getTabAt(position).getText();
             }
         });
+
+        mDataBinding.enhanceTabLayout.getTabLayout().getTabAt(type).select();
     }
 
     /**

@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.PushOldMechanicsActivity;
+import com.jhhscm.platform.activity.PushQiuZhiActivity;
+import com.jhhscm.platform.activity.PushZhaoPinActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentNewMechanicsBinding;
@@ -194,6 +197,13 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                 }
             }
         });
+
+        mDataBinding.tel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PushOldMechanicsActivity.start(getContext());
+            }
+        });
     }
 
     /**
@@ -205,7 +215,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                 pID = event.pid;
             } else if (event.type.equals("2")) {//市点击
                 cID = event.pid;
-            }else if (event.type.equals("0")) {//全部点击
+            } else if (event.type.equals("0")) {//全部点击
                 cID = "";
                 pID = "";
             }

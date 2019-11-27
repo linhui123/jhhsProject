@@ -57,7 +57,7 @@
             android:background="@drawable/edit_bg_acc9"
             android:drawableRight="@mipmap/ic_down_397"
             android:padding="@dimen/padding_10"
-            android:text="优惠券"
+            android:hint="请选择优惠券"
             android:textColor="@color/acc3"
             android:textSize="@dimen/text_size_16" />
 

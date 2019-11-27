@@ -110,32 +110,8 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         mDataBinding.rlTop.setLayoutParams(llParams);
 
         EventBusUtil.registerEvent(this);
-//        homePageItem = new HomePageItem();
-//        initView();
-        YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
-                .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
-                .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
-                .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "读写"))
-                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        , Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).build(), new AcpListener() {
-            @Override
-            public void onGranted() {
-                initView();
-            }
-
-            @Override
-            public void onDenied(List<String> permissions) {
-                if (permissions.contains(Manifest.permission.ACCESS_COARSE_LOCATION) &&
-                        permissions.contains(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    mDataBinding.wetherDate.setVisibility(View.GONE);
-                    mDataBinding.wetherTemperature.setVisibility(View.GONE);
-                    mDataBinding.wetherImg.setVisibility(View.GONE);
-                } else {
-                    initView();
-                }
-            }
-        });
-//        setUpMap();
+        homePageItem = new HomePageItem();
+        initView();
         mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new HomePageAdapter(getContext());
         mDataBinding.wrvRecycler.setAdapter(mAdapter);
@@ -152,12 +128,6 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                 getAD(5);//首页活动位
                 getAD(6);
                 findBrandHomePage();
-
-                if (ConfigUtils.getCurrentUser(getContext()) != null
-                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
-                    isNewUser();
-                    getCouponslist();
-                }
             }
 
             @Override
@@ -167,6 +137,11 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
 
         initTel();
         checkVersion();
+        if (ConfigUtils.getCurrentUser(getContext()) != null
+                && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+            isNewUser();
+            getCouponslist();
+        }
 
         mDataBinding.msgImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,31 +158,46 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                 SearchActivity.start(getContext());
             }
         });
-//ExampleUtil.GetVersion(getContext())
-//        Log.e("home", "getChannel :" + StringUtils.getChannel(getContext()));
-//        ToastUtil.show(getContext(), "getChannel :" + StringUtils.getChannel(getContext()));
-        if (ConfigUtils.getHomePageItem(getContext()) != null) {
-            mAdapter.setDetail(ConfigUtils.getHomePageItem(getContext()));
-        }
 
-        //用户信息保存24小时
-        initUser();
+//        if (ConfigUtils.getPTime(getContext()) != null && ConfigUtils.getPTime(getContext()).length() > 1) {
+//            long time = DataUtil.getLongTime(ConfigUtils.getPTime(getContext())
+//                    , DataUtil.getCurDate("yyyy-MM-dd HH:mm:ss")
+//                    , "yyyy-MM-dd HH:mm:ss");
+//            if (Integer.parseInt(DataUtil.getLongToMintues(time, "yyyy-MM-dd HH:mm:ss")) >= 24) {
+//                initPermission();
+//            }
+//        } else {
+            initPermission();
+//        }
     }
 
-    private void initUser() {
-        //24小时保存用户信息
-        if (ConfigUtils.getCurrentUser(getContext()) != null) {
-            if (ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
-                Log.e("initUser", "Timestamp : " + ConfigUtils.getCurrentUser(getContext()).getTimestamp());
-//                long time = DataUtil.getLongTime(ConfigUtils.getUpdataTime(getContext())
-//                        , DataUtil.getCurDate("yyyy-MM-dd HH:mm:ss")
-//                        , "yyyy-MM-dd HH:mm:ss");
-//                Log.e("更新提示时间差", "小时： " + DataUtil.getLongToHours(time, "yyyy-MM-dd HH:mm:ss"));
-//                if (Integer.parseInt(DataUtil.getLongToMintues(time, "yyyy-MM-dd HH:mm:ss")) >= 24) {
-//
-//                }
+    /**
+     * 权限获取提示  24小时一次
+     */
+    private void initPermission() {
+        ConfigUtils.setPTime(getContext(), DataUtil.getCurDate("yyyy-MM-dd HH:mm:ss"));
+        YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
+                .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
+                .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
+                .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "读写"))
+                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        , Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).build(), new AcpListener() {
+            @Override
+            public void onGranted() {
+
             }
-        }
+
+            @Override
+            public void onDenied(List<String> permissions) {
+                if (permissions.contains(Manifest.permission.ACCESS_COARSE_LOCATION) &&
+                        permissions.contains(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    mDataBinding.wetherDate.setVisibility(View.GONE);
+                    mDataBinding.wetherTemperature.setVisibility(View.GONE);
+                    mDataBinding.wetherImg.setVisibility(View.GONE);
+                }
+            }
+        });
+
     }
 
     private void initTel() {
@@ -220,14 +210,9 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                      * SCROLL_STATE_IDLE：目前RecyclerView不是滚动，也就是静止
                      * SCROLL_STATE_DRAGGING：RecyclerView目前被外部输入如用户触摸输入。
                      * SCROLL_STATE_SETTLING：RecyclerView目前动画虽然不是在最后一个位置外部控制。**/
-
-//                    mDataBinding.tel.setVisibility(View.VISIBLE);
-//                    imgTranslateAnimation(mDataBinding.tel, 100, 0);
                     mDataBinding.coupon.setVisibility(View.VISIBLE);
                     imgTranslateAnimation(mDataBinding.coupon, 100, 0);
                 } else if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-//                    imgTranslateAnimation(mDataBinding.tel, 0, 100);
-//                    mDataBinding.tel.setVisibility(View.GONE);
                     imgTranslateAnimation(mDataBinding.coupon, 0, 100);
                     mDataBinding.coupon.setVisibility(View.GONE);
                 }
@@ -320,6 +305,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                                             }
                                         }
                                     }
+                                    mAdapter.setDetail(homePageItem);
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
                                 }
@@ -355,7 +341,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
                                     homePageItem.findBrandHomePageBean = response.body().getData();
-
+                                    mAdapter.setDetail(homePageItem);
                                     findCategoryHomePage();
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
@@ -392,6 +378,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
                                     homePageItem.findCategoryHomePageBean = response.body().getData();
+                                    mAdapter.setDetail(homePageItem);
                                     findLabourReleaseHomePage();
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
@@ -466,6 +453,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
                                     homePageItem.findLabourReleaseHomePageBean = response.body().getData();
+                                    mAdapter.setDetail(homePageItem);
                                     getPageArticleList();
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
@@ -480,10 +468,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
     private void setView() {
         mAdapter.setDetail(homePageItem);
         mDataBinding.wrvRecycler.loadComplete(true, false);
-
         ConfigUtils.setHomePageItem(getContext(), homePageItem);
-        Log.e("home", "setView homePageItem :" + homePageItem);
-        Log.e("home", "setView HomePageItem :" + ConfigUtils.getHomePageItem(getContext()));
     }
 
     /**

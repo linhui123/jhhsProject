@@ -486,7 +486,7 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                 mDataBinding.tvCerGo.setText("已认证");
             } else {
                 mDataBinding.tvCer.setText("未认证");
-                mDataBinding.tvCerGo.setText("已认证");
+                mDataBinding.tvCerGo.setText("未认证");
             }
             getUser();
             getUserConter();

@@ -45,13 +45,15 @@ public class CouponCenterViewHolder extends AbsRecyclerViewHolder<CouponGetListB
                 mBinding.tvReceive.setBackgroundResource(R.drawable.edit_bg_397);
                 mBinding.tvReceive.setText("领取");
                 mBinding.tvReceive.setTextColor(itemView.getContext().getResources().getColor(R.color.a397));
-                mBinding.tvReceive.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+            }
+            mBinding.tvReceive.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (item.getIsGet().equals("0")) {
                         EventBusUtil.post(new GetCouponEvent(item.getCode(), item.getStartTime(), item.getEndTime()));
                     }
-                });
-            }
+                }
+            });
         }
     }
 }

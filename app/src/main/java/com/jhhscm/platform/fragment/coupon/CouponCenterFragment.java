@@ -103,8 +103,7 @@ public class CouponCenterFragment extends AbsFragment<FragmentCouponCenterBindin
     }
 
     public void onEvent(GetCouponEvent event) {
-        if (event.coupon_code != null
-                && event.start != null && event.end != null) {
+        if (event.coupon_code != null && event.start != null && event.end != null) {
             getCoupon(event.coupon_code, event.start, event.end);
         }
     }

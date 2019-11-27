@@ -17,6 +17,12 @@ public class SearchActivity extends AbsToolbarActivity {
         context.startActivity(intent);
     }
 
+    public static void start(Context context, int type) {
+        Intent intent = new Intent(context, SearchActivity.class);
+        intent.putExtra("type", type);
+        context.startActivity(intent);
+    }
+
     @Override
     protected boolean enableHomeButton() {
         return true;
@@ -56,18 +62,7 @@ public class SearchActivity extends AbsToolbarActivity {
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putInt("type", getIntent().getIntExtra("type", 0));
         return args;
     }
-
-    public void onResume() {
-        super.onResume();
-//        MobclickAgent.onPageStart("search"); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
-//        MobclickAgent.onResume(this);          //统计时长
-    }
-    public void onPause() {
-        super.onPause();
-//        MobclickAgent.onPageEnd("search"); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
-//        MobclickAgent.onPause(this);
-    }
-
 }

@@ -1,6 +1,5 @@
 package com.jhhscm.platform.fragment.sale;
 
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -36,7 +35,10 @@ import com.jhhscm.platform.event.GetRegionEvent;
 import com.jhhscm.platform.event.WXResultEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.coupon.CouponListAction;
+import com.jhhscm.platform.fragment.coupon.CouponListBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -51,6 +53,8 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.dialog.DropDialog;
+import com.jhhscm.platform.views.dialog.DropTDialog;
 import com.jhhscm.platform.wxapi.WXPayEntryFragment;
 import com.jhhscm.platform.wxapi.WxPrePayAction;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -60,17 +64,19 @@ import com.umeng.analytics.MobclickAgent;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import retrofit2.Response;
 
+/*收银台*/
 public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
     /**
      * 用于支付宝支付业务的入参 app_id。
      */
     public static final String APPID = "2019070565716752";
-
     public static final String RSA_PRIVATE = "";
     public static final String RSA2_PRIVATE = "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC8f9Jdvgk2hqxKwAQ7NvL/co4NT7EnqPNXU3lU0Px+2pobdCA3VzY3iJFxxgyagldRtKEkzzz497H/OqNaMrGIxIUhCRve9LEG1ySB8e9Ees87I5ZHVtgTk/7HJXZuHlZyvePSFV72brEROl1AefqrwTewPifLZAcijlGM5CkzJr/KssRpU4uHU1rEIt9DZSWC2KjSOkIky7TrHur1AOaYmgQ0MOPaJ2RT+Qak8dmnqPmGZGHX2kaAbJb1xZnxND4/I16C+a8YOZePGeIR8qYlWIwZIuLyNuZVnpfunpnNvUe3WyGjcD5/kJgZ7OtwrceGpswyYGlY9Fznu87ABS7bAgMBAAECggEBAJe2XQ8b43hiPgtPrlgmar+UaKZoDJJ6FZikU5QjPAWxVbVg6okABV/+5+jlWMGGxFa7hbMFpPJREY71mAIBqQgF+4xSM39n+48g235GxaedHGthwhMa34AqbjXEfiQ1AKkLEnDEyJCZGKRgECvTwSA5u+N6szatBF0YpKQ8ArjqRFlTzuDffV6hru/JZAThyqO9n9VaLS622ELYnLoLQVJMg51mLxvX/swEgx29TjnXwSrm7Ex982qcqxt85KfFTXDsMCHfO3rol7nfmNIK16WDIgNTnKarkrRrduPB+Ljnoms/PiqdeQH9eCDD8zq84efjYal4W08vV4/sgSjg9CECgYEA9RxZimF8S+9KQzHHiUoIHSaLYX5aM0vEZQbqfYX+0CeXDrcvEbl90YGDpNB/8SwsUU55KMxxUT+NG2renEgyZiCugwFTThAwcvYb5vl7F1yAiB7qVkFeFHmdiejCiowJpePz6x0rFGX0CXH5OuZ/Z0tm2KDpBX4i5LGxMPgt0AsCgYEAxN+g9pDPeh11eXdrR7G1mVocmf14iwMAEO4qHH7xGp9Sta++vXd6jlKuxb6kQcxH5qxPxNL22KoWpu0NPovc7bXgzje4yT3ySk+QabcMF2UlsOK/PXLdGAAI3MFhIabGpWEH1nF66s4f/squoZfLVc67coDuTt3AWSEAeO/bTnECgYB4KeLXzX0DOReeI4xgCPQ7Xkccj7YmybFJmf9hdEx8vbv3keS4eshs6mKgbTsb//zmC2OolbnEDDTgSR9DXL2ghcsoHIE7lwI5ieAZ9xraVBYLJaTajodR4GFUV9Dv3UFpm3xcOluBT445BzAZKSEygau07gXvFGyE03w7tp+3CwKBgQDE0D+NXvVbwgmHtd+0266NMS24sFIKvqQZSM8mj60fDTnVUm1f4grOL1BzdYOmF7+llotkW/bUYS2mEQOVjKL/rTyhS8lavafzrBjV5l2bIc4NSJEgsCzhal9xuY0N5DlgaWE5e1cDV69au2rbNvHaxYJVFRmoFD3PnJNpU3gtsQKBgBZp5iiDmrESCeU5R35YobCUa6O2YSnsNSjcACfQHujYQU5KZEKoeMN5i553Db1Bsh7o4+qVNXB1DZR2FLF1+uotlxYSk9baF3OzBJKaUmN7bxn/Vmo3/OAItXvvSuBnxxVGg1+FaTPamy5fOa8/CZPR/3Ao2PQM+2IaOg9bnhzA";
 
@@ -82,6 +88,8 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
     private UserSession userSession;
     private String prepayid = "";
     private AliPrePayBean aliPrePayBean;
+    private FindOrderBean findOrderBean;
+    private List<GetComboBoxBean.ResultBean> list;
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -143,15 +151,39 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
             userSession = ConfigUtils.getCurrentUser(getContext());
         } else {
             startNewActivity(LoginActivity.class);
+            getActivity().finish();
         }
+        getCouponList(true);
+        mDataBinding.tvCoupon.setTag("");
+        mDataBinding.tvCoupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (list != null && list.size() > 1)
+                    new DropTDialog(getActivity(), "优惠券选择", "", list, new DropTDialog.CallbackDiscountListener() {
+                        @Override
+                        public void clickResult(String id, String Nmae, int discount) {
+                            mDataBinding.tvCoupon.setText(Nmae);
+                            mDataBinding.tvCoupon.setTag(id);
+                            double result = 0.0;
+                            result = Double.parseDouble(createOrderResultBean.getData().getOrderPrice() + "")
+                                    - Double.parseDouble(discount + "");
+                            mDataBinding.tvPrice.setText(result + "");
+                        }
+
+                    }).show();
+                else {
+                    getCouponList(false);
+                }
+            }
+        });
 
         createOrderResultBean = (CreateOrderResultBean) getArguments().getSerializable("createOrderResultBean");
         if (createOrderResultBean != null && createOrderResultBean.getData().getOrderCode() != null) {
             mDataBinding.tvPrice.setText(createOrderResultBean.getData().getOrderPrice() + "");
-            wxPrePay();
-            aliPrePay();
             findOrder(false);
         }
+
+
         type = ALI_PAY_FLAG;
         mDataBinding.rlAli.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,15 +207,12 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
             @Override
             public void onClick(View v) {
                 if (type == ALI_PAY_FLAG) {
-                    if (aliPrePayBean != null) {
-                        MobclickAgent.onEvent(getContext(), "pay_zfb");
-                        payV1(v);
-                    } else {
-                        aliPrePay();
-                    }
+                    aliPrePay();
+                    MobclickAgent.onEvent(getContext(), "pay_zfb");
                 } else if (type == WX_PAY_FLAG) {
                     MobclickAgent.onEvent(getContext(), "pay_wx");
-                    payV2(v);
+                    wxPrePay();
+
                 }
             }
         });
@@ -214,7 +243,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
     /**
      * 微信支付业务示例
      */
-    public void payV2(View v) {
+    public void payV2() {
         try {
             PayReq req = new PayReq();
             if (prepayid != null) {
@@ -250,7 +279,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
     /**
      * 支付宝支付业务示例
      */
-    public void payV1(View v) {
+    public void payV1() {
         if (TextUtils.isEmpty(APPID) || (TextUtils.isEmpty(RSA2_PRIVATE) && TextUtils.isEmpty(RSA_PRIVATE))) {
             showAlert(getContext(), getString(R.string.error_missing_appid_rsa_private));
             return;
@@ -311,6 +340,10 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
     private void wxPrePay() {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("orderCode", createOrderResultBean.getData().getOrderCode());
+        if (mDataBinding.tvCoupon.getTag().toString().trim() != null) {
+            map.put("coupon_code", mDataBinding.tvCoupon.getTag().toString().trim());
+        }
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getContext(), map, "wxPrePay");
@@ -334,6 +367,12 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
                                     ResultBean resultBean = response.body().getData();
                                     if (resultBean != null && resultBean.getPrepay_id() != null) {
                                         prepayid = resultBean.getPrepay_id();
+                                        if (prepayid != null) {
+                                            payV2();
+                                        } else {
+                                            ToastUtils.show(getContext(), "获取微信支付信息失败");
+                                        }
+
                                         Log.e("wxPrePay", "prepayid : " + prepayid);
                                     }
                                 } else {
@@ -352,6 +391,10 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
     private void aliPrePay() {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("orderCode", createOrderResultBean.getData().getOrderCode());
+        if (mDataBinding.tvCoupon.getTag().toString().trim() != null) {
+            map.put("coupon_code", mDataBinding.tvCoupon.getTag().toString().trim());
+        }
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getContext(), map, "aliPrePay");
@@ -373,6 +416,11 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
                                 new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                 if (response.body().getCode().equals("200")) {
                                     aliPrePayBean = response.body().getData();
+                                    if (aliPrePayBean != null) {
+                                        payV1();
+                                    } else {
+                                        ToastUtils.show(getContext(), "获取支付宝支付信息失败");
+                                    }
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
                                 }
@@ -382,8 +430,6 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
                 }));
 
     }
-
-    FindOrderBean findOrderBean;
 
     /**
      * 订单查询
@@ -471,5 +517,77 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
                 .setPositiveButton("确认", null)
                 .setOnDismissListener(onDismiss)
                 .show();
+    }
+
+    /**
+     * 获取优惠券列表
+     */
+    private void getCouponList(final boolean isFinsh) {
+        showDialog();
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getActivity(), map, "getCouponList");
+        NetBean netBean = new NetBean();
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(CouponListAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<CouponListBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<CouponListBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    doSuccessResponse(response.body().getData(), isFinsh);
+                                } else if (response.body().getCode().equals("1003")) {
+                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+                                    startNewActivity(LoginActivity.class);
+                                } else {
+                                    ToastUtils.show(getContext(), "error " + type + ":" + response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    private void doSuccessResponse(final CouponListBean couponListBean, final boolean isfinsh) {
+        list = new ArrayList<>();
+        list.add(new GetComboBoxBean.ResultBean("", "不使用优惠券", 0));
+        if (couponListBean != null && couponListBean.getResult() != null && couponListBean.getResult().size() > 0) {
+            for (CouponListBean.ResultBean resultBean : couponListBean.getResult()) {
+                if (resultBean.getStatus() == 0) {
+                    GetComboBoxBean.ResultBean resultBean1 = new GetComboBoxBean.ResultBean(resultBean.getCoupon_code(), resultBean.getName(), resultBean.getDiscount());
+                    list.add(resultBean1);
+                }
+            }
+        }
+
+        if (!isfinsh) {
+            if (list.size() > 1) {
+                new DropTDialog(getActivity(), "优惠券选择", "", list, new DropTDialog.CallbackDiscountListener() {
+                    @Override
+                    public void clickResult(String id, String Nmae, int discount) {
+                        mDataBinding.tvCoupon.setText(Nmae);
+                        mDataBinding.tvCoupon.setTag(id);
+                        double result = 0.0;
+                        result = Double.parseDouble(createOrderResultBean.getData().getOrderPrice() + "")
+                                - Double.parseDouble(discount + "");
+                        mDataBinding.tvPrice.setText(result + "");
+                    }
+
+                }).show();
+            } else {
+                mDataBinding.tvCoupon.setText("暂无优惠券");
+                mDataBinding.tvCoupon.setTag("");
+                ToastUtil.show(getContext(), "暂无优惠券");
+            }
+        }
     }
 }

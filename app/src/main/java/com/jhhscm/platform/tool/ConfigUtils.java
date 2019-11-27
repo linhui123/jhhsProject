@@ -33,14 +33,17 @@ public class ConfigUtils {
     private static final String API_URL = "api_url";
     private static final String NEW_MECHANICS = "newMechanics";
     private static final String HOME = "home";
+    private static final String P_Time = "p_time";//首页权限提示时间
     private static final String LOGIN_TIME = "login_time";//登录时间
     private static final String UPDATA_TIME = "updata_time";//更新提示时间
     private static final String UPDATA_URL = "updata_url";//更新下载安装包地址
 
     private static final String COUPON_NO_SEE_DATA = "COUPON_NO_SEE_DATA";
-    private static List<String> couponList;
-    private static String url;
-    private static UserSession mCurrentUser;
+    private static List<String> couponList;//缓存不提示优惠券
+    private static String url; //缓存版本更新地址
+    private static String p_time; //首页权限提示时间
+    private static String updata_time; //缓存更新提示时间
+    private static UserSession mCurrentUser;//用户信息缓存
     private static GetGoodsPageListBean dataBean;//新机浏览历史；最多只存5个
     private static HomePageItem homePageItem;//首页缓存数据
 
@@ -194,17 +197,44 @@ public class ConfigUtils {
         SharedPreferences.Editor edit = getSharedPreferences(context, SYSTEM_CONFIG).edit();
         edit.putString(UPDATA_TIME, apiUrl);
         edit.commit();
+
     }
 
     public static String getUpdataTime(Context context) {
-        return getSharedPreferences(context, SYSTEM_CONFIG).getString(UPDATA_TIME, "");
+        if (updata_time == null) {
+            updata_time = getSharedPreferences(context, SYSTEM_CONFIG).getString(UPDATA_TIME, "");
+        }
+        return updata_time;
     }
 
     public static void removeUpdataTime(Context context) {
         SharedPreferences.Editor edit = getSharedPreferences(context).edit();
         edit.remove(UPDATA_TIME);
         edit.commit();
+        updata_time = null;
     }
+
+    public static void setPTime(Context context, String apiUrl) {
+        removePTime(context);
+        SharedPreferences.Editor edit = getSharedPreferences(context, SYSTEM_CONFIG).edit();
+        edit.putString(P_Time, apiUrl);
+        edit.commit();
+    }
+
+    public static String getPTime(Context context) {
+        if (p_time == null) {
+            p_time = getSharedPreferences(context, SYSTEM_CONFIG).getString(P_Time, "");
+        }
+        return p_time;
+    }
+
+    public static void removePTime(Context context) {
+        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
+        edit.remove(P_Time);
+        edit.commit();
+        p_time = null;
+    }
+
 
     public static void setUpdataUrl(Context context, String apiUrl) {
         removeUpdataUrl(context);
@@ -214,13 +244,17 @@ public class ConfigUtils {
     }
 
     public static String getUpdataUrl(Context context) {
-        return getSharedPreferences(context, SYSTEM_CONFIG).getString(UPDATA_URL, "");
+        if (url == null) {
+            url = getSharedPreferences(context, SYSTEM_CONFIG).getString(UPDATA_URL, "");
+        }
+        return url;
     }
 
     public static void removeUpdataUrl(Context context) {
         SharedPreferences.Editor edit = getSharedPreferences(context).edit();
         edit.remove(UPDATA_URL);
         edit.commit();
+        url = null;
     }
 
     public static void setHttpHeadersCookie(Context context, String cookie) {

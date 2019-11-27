@@ -103,7 +103,7 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
                 } else {
                     transaction.show(newMechanicsFragment);
                 }
-                transaction.commit();
+                transaction.commitAllowingStateLoss();
             }
         });
 
@@ -126,7 +126,7 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
                 } else {
                     transaction.show(oldMechanicsFragment);
                 }
-                transaction.commit();
+                transaction.commitAllowingStateLoss();
             }
         });
 
@@ -144,7 +144,12 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
         mDataBinding.imSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchActivity.start(getContext());
+                if (mDataBinding.tvArea.getVisibility() == View.GONE) {
+                    SearchActivity.start(getContext(), 0);
+                } else {
+                    SearchActivity.start(getContext(), 1);
+                }
+
             }
         });
 
@@ -168,7 +173,7 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
      * 品牌跳转
      */
     public void onEvent(BrandResultEvent event) {
-        if (event != null && event.getBrand_id() != null) {
+        if (event != null && event.getBrand_id() != null && event.getType() == 0) {
             mDataBinding.tvNew.performClick();
         }
     }

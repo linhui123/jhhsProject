@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
@@ -28,10 +29,15 @@ public class DropTDialog extends BaseDialog {
     private String title;
     private List<GetComboBoxBean.ResultBean> list;
     private CallbackListener mListener;
+    private CallbackDiscountListener dListener;
     private boolean mCancelable = true;
 
     public interface CallbackListener {
         void clickResult(String id, String Nmae);
+    }
+
+    public interface CallbackDiscountListener {
+        void clickResult(String id, String Nmae, int discount);
     }
 
     public DropTDialog(Context context) {
@@ -48,6 +54,14 @@ public class DropTDialog extends BaseDialog {
         this.title = title;
         this.list = list;
         this.mListener = listener;
+    }
+
+    public DropTDialog(Context context, String title, String type, List<GetComboBoxBean.ResultBean> list, CallbackDiscountListener listener) {
+        super(context);
+        setCanceledOnTouchOutside(true);
+        this.title = title;
+        this.list = list;
+        this.dListener = listener;
     }
 
     @Override
@@ -133,6 +147,11 @@ public class DropTDialog extends BaseDialog {
                 public void onClick(View v) {
                     if (mListener != null) {
                         mListener.clickResult(item.getKey_name(), item.getKey_value());
+                        dismiss();
+                    }
+
+                    if (dListener != null) {
+                        dListener.clickResult(item.getKey_name(), item.getKey_value(), item.getDiscount());
                         dismiss();
                     }
                 }

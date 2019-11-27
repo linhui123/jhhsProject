@@ -120,7 +120,9 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
                 mDataBinding.tvDefault.setVisibility(View.GONE);
                 mDataBinding.tvAddress.setText(event.getResultBean().getAddress_detail());
             }
-//            findAddressList( ConfigUtils.getCurrentUser(getContext()).getUserCode(),  ConfigUtils.getCurrentUser(getContext()).getToken());
+            for (GetCartGoodsByUserCodeBean.ResultBean r : getCartGoodsByUserCodeBean.getResult()) {
+                calculateOrder(r);
+            }
         }
     }
 
@@ -229,7 +231,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
         map.put("addressId", selectAddressID);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "calculateOrder");
+        String sign = Sign.getSignKey(getActivity(), map, "s");
         NetBean netBean = new NetBean();
         netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
@@ -249,7 +251,6 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
                                 if (response.body().getCode().equals("200")) {
                                     if (response.body().getData().getData() != null) {
                                         resultBean.setFreight_price(response.body().getData().getData().getFreight_price());
-//                                        resultBean.setFreight_price("10.0");
                                     }
                                     initView();
                                 } else {

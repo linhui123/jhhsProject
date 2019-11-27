@@ -244,8 +244,7 @@ public class PayWithCouponDialog extends BaseDialog {
             @Override
             public void onClick(View v) {
                 Log.e("tvPay", "type " + type);
-                if (orderCode != null && orderCode.length() > 0
-                        && mDataBinding.coupon.getTag().toString() != null) {
+                if (orderCode != null && orderCode.length() > 0) {
                     if (type == ALI_PAY_FLAG) {
                         aliPrePay(orderCode);
                     } else if (type == WX_PAY_FLAG) {
@@ -287,7 +286,9 @@ public class PayWithCouponDialog extends BaseDialog {
     private void wxPrePay(final String orderCode) {
         Map<String, Object> map = new TreeMap<String, Object>();
         map.put("orderCode", orderCode);
-        map.put("coupon_code", mDataBinding.coupon.getTag().toString().trim());
+        if (mDataBinding.coupon.getTag().toString().trim()!=null){
+            map.put("coupon_code", mDataBinding.coupon.getTag().toString().trim());
+        }
         map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
@@ -327,7 +328,9 @@ public class PayWithCouponDialog extends BaseDialog {
     private void aliPrePay(final String orderCode) {
         Map<String, Object> map = new TreeMap<String, Object>();
         map.put("orderCode", orderCode);
-        map.put("coupon_code", mDataBinding.coupon.getTag().toString().trim());
+        if (mDataBinding.coupon.getTag().toString().trim()!=null){
+            map.put("coupon_code", mDataBinding.coupon.getTag().toString().trim());
+        }
         map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);

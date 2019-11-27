@@ -134,7 +134,6 @@ public class HomePageAdapter extends AbsRecyclerViewAdapter<HomePageItem> {
                 addHomePageAc(homePageItem.adBean4);
             }
         }
-//        addHomePageAc();
         addHomePageMsg(homePageItem.findLabourReleaseHomePageBean);
         notifyDataSetChanged();
     }
