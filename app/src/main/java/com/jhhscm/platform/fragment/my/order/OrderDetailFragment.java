@@ -257,6 +257,13 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         mDataBinding.tvName.setText(findOrderBean.getOrder().getConsignee());
         mDataBinding.tvTel.setText(findOrderBean.getOrder().getMobile());
         mDataBinding.tvAddress.setText(findOrderBean.getOrder().getAddress());
+        mDataBinding.tvPeijian.setText("￥" + findOrderBean.getOrder().getGoods_price());
+        if (findOrderBean.getOrder().getOrder_price() != null) {
+            mDataBinding.tvHour.setText("￥" + findOrderBean.getOrder().getOrder_price());
+        } else {
+            mDataBinding.tvHour.setText("￥0.0");
+        }
+
         mDataBinding.tvPrice.setText("￥" + findOrderBean.getOrder().getGoods_price());
         mDataBinding.tvYunfei.setText("+￥" + findOrderBean.getOrder().getFreight_price());
         mDataBinding.tvYouhui.setText("-￥" + findOrderBean.getOrder().getCoupon_price());

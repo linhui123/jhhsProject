@@ -53,10 +53,18 @@ public class FindOrderBean {
         private String coupon_price;
         private String order_price;
         private String order_text;
-
+        private String other_price;
         private String ship_time;
         private String ship_sn;
         private String ship_channel;
+
+        public String getOther_price() {
+            return other_price;
+        }
+
+        public void setOther_price(String other_price) {
+            this.other_price = other_price;
+        }
 
         public String getShip_time() {
             return ship_time;

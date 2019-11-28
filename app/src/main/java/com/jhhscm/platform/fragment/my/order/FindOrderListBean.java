@@ -158,7 +158,7 @@ public class FindOrderListBean {
         private String order_text;
         private String id;
         private String message;
-
+        private String coupon_price;
         private String goods_price;
         private String other_price;
         private String order_name;
@@ -188,6 +188,14 @@ public class FindOrderListBean {
 
         public void setGoodsOwnerList(List<GoodsOwnerListBean> goodsOwnerList) {
             this.goodsOwnerList = goodsOwnerList;
+        }
+
+        public String getCoupon_price() {
+            return coupon_price;
+        }
+
+        public void setCoupon_price(String coupon_price) {
+            this.coupon_price = coupon_price;
         }
 
         public String getGoods_price() {

@@ -210,9 +210,9 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
                 @Override
                 public void onLocationChanged(Location location) {
                     if (location != null) {
-                        Log.e("Map", "Location changed : Lat: "
-                                + location.getLatitude() + " Lng: "
-                                + location.getLongitude());
+//                        Log.e("Map", "Location changed : Lat: "
+//                                + location.getLatitude() + " Lng: "
+//                                + location.getLongitude());
                     }
                 }
             };

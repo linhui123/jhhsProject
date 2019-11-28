@@ -67,6 +67,8 @@ public class InvitationRegisterFragment extends AbsFragment<FragmentInvitationRe
             public void onClick(View v) {
                 if (bitmap != null && url != null) {
                     showShare(url, "邀请好友", bitmap, "扫一扫，加入挖矿来", 1);
+                } else {
+                    ToastUtils.show(getContext(), "数据错误");
                 }
             }
         });
@@ -76,6 +78,8 @@ public class InvitationRegisterFragment extends AbsFragment<FragmentInvitationRe
             public void onClick(View v) {
                 if (bitmap != null && url != null) {
                     showShare(url, "邀请好友", bitmap, "扫一扫，加入挖矿来", 2);
+                } else {
+                    ToastUtils.show(getContext(), "数据错误");
                 }
             }
         });

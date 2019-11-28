@@ -136,9 +136,9 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
                 @Override
                 public void onLocationChanged(Location location) {
                     if (location != null) {
-                        Log.e("Map", "Location changed : Lat: "
-                                + location.getLatitude() + " Lng: "
-                                + location.getLongitude());
+//                        Log.e("Map", "Location changed : Lat: "
+//                                + location.getLatitude() + " Lng: "
+//                                + location.getLongitude());
                     }
                 }
             };

@@ -232,11 +232,15 @@ public class OrderDetail2Fragment extends AbsFragment<FragmentOrderDetailBinding
 
         mDataBinding.tvPeijian.setText("￥" + findOrderBean.getGoods_price());
         mDataBinding.tvHour.setText("￥" + findOrderBean.getOther_price());
+        if (findOrderBean.getCoupon_price() != null) {
+            mDataBinding.tvYouhui.setText("-￥" + findOrderBean.getCoupon_price());
+        } else {
+            mDataBinding.rlCoupon.setVisibility(View.GONE);
+        }
 
         mDataBinding.rlYunfei.setVisibility(View.GONE);
         mDataBinding.rlWuliu.setVisibility(View.GONE);
         mDataBinding.rlWuliuNo.setVisibility(View.GONE);
-        mDataBinding.rlCoupon.setVisibility(View.GONE);
         mDataBinding.rlProduce.setVisibility(View.GONE);
         mDataBinding.tvTotal.setText("￥" + findOrderBean.getOrder_price());
 
