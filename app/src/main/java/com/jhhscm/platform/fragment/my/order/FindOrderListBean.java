@@ -373,6 +373,7 @@ public class FindOrderListBean {
              * brands :
              * v3s : 11
              * pic_url :
+             * v1      序列号 ，v2   GPS序列号
              */
 
             private String fixs;
@@ -380,8 +381,8 @@ public class FindOrderListBean {
             private String v3s;
             private String pic_url;
             private String goods_code;
-            private String v_2;
-            private String v_1;
+            private String v2;
+            private String v1;
             private String v_3;
             private String bus_code;
 
@@ -393,20 +394,20 @@ public class FindOrderListBean {
                 this.goods_code = goods_code;
             }
 
-            public String getV_2() {
-                return v_2;
+            public String getV2() {
+                return v2;
             }
 
-            public void setV_2(String v_2) {
-                this.v_2 = v_2;
+            public void setV2(String v2) {
+                this.v2 = v2;
             }
 
-            public String getV_1() {
-                return v_1;
+            public String getV1() {
+                return v1;
             }
 
-            public void setV_1(String v_1) {
-                this.v_1 = v_1;
+            public void setV1(String v1) {
+                this.v1 = v1;
             }
 
             public String getV_3() {

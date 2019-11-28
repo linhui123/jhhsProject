@@ -309,7 +309,43 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             public void onClick(View v) {
                 if (ConfigUtils.getCurrentUser(getContext()) != null
                         && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
-                    MyStoreActivity.start(getContext());
+                    MyStoreActivity.start(getContext(), 0);
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
+            }
+        });
+
+        mDataBinding.llProjectNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    MyStoreActivity.start(getContext(), 0);
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
+            }
+        });
+
+        mDataBinding.llMemberNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    MyStoreActivity.start(getContext(), 1);
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
+            }
+        });
+
+        mDataBinding.llOrderNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    MyStoreActivity.start(getContext(), 2);
                 } else {
                     startNewActivity(LoginActivity.class);
                 }
@@ -443,7 +479,7 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
 //                        .setPermissions(Manifest.permission.CALL_PHONE).build(), new AcpListener() {
 //                    @Override
 //                    public void onGranted() {
-//                        Uri uriScheme = Uri.parse("tel:" + "0591-88390068");
+//                        Uri uriScheme = Uri.parse("tel:" + "0591-83590001");
 //                        Intent it = new Intent(Intent.ACTION_CALL, uriScheme);
 //                        getContext().startActivity(it);
 //                    }

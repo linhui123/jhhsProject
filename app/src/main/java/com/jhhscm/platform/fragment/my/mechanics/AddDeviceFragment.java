@@ -62,6 +62,9 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import top.zibin.luban.Luban;
 
+/**
+ * 添加设备
+ */
 public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
     private int type;
     FindGoodsOwnerBean.DataBean dataBean;
@@ -122,13 +125,13 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
                                 }
                             }
                         } else {
-                            ToastUtil.show(getContext(), "型号不能为空");
+                            ToastUtil.show(getContext(), "设备型号不能为空");
                         }
                     } else {
-                        ToastUtil.show(getContext(), "品牌不能为空");
+                        ToastUtil.show(getContext(), "设备品牌不能为空");
                     }
                 } else {
-                    ToastUtil.show(getContext(), "名称不能为空");
+                    ToastUtil.show(getContext(), "设备名称不能为空");
                 }
             }
         });

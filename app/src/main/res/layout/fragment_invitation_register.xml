@@ -40,7 +40,7 @@
                     android:layout_marginLeft="50dp"
                     android:layout_marginTop="@dimen/padding_15"
                     android:layout_marginRight="50dp"
-                    android:src="@mipmap/ic_site" />
+                    android:src="@mipmap/ic_launcher_foreground" />
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -61,6 +61,8 @@
                     android:padding="@dimen/dp_5"
                     android:paddingLeft="@dimen/padding_10"
                     android:paddingRight="@dimen/padding_10"
+                    android:layout_marginBottom="@dimen/padding_10"
+                    android:visibility="gone"
                     android:text="离你最近"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_12" />
@@ -71,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_3"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="@dimen/padding_10"
+                    android:visibility="gone"
                     android:layout_marginRight="@dimen/dp_5"
                     android:ellipsize="end"
                     android:maxLines="1"

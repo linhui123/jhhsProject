@@ -41,7 +41,8 @@ import java.util.TreeMap;
 import retrofit2.Response;
 
 public class InvitationRegisterFragment extends AbsFragment<FragmentInvitationRegisterBinding> {
-    Bitmap bitmap;
+    private Bitmap bitmap;
+    private String url;
 
     public static InvitationRegisterFragment instance() {
         InvitationRegisterFragment view = new InvitationRegisterFragment();
@@ -56,12 +57,16 @@ public class InvitationRegisterFragment extends AbsFragment<FragmentInvitationRe
     @Override
     protected void setupViews() {
         getUserShareUrl();
+//         url = "http://192.168.0.235:8080/#/inviteReg?isbus=" +
+//                ConfigUtils.getCurrentUser(getContext()).getIs_bus() +
+//                "&user_code=" + ConfigUtils.getCurrentUser(getContext()).getUserCode();
+//        Log.e("invite", "Url " + url);
 
         mDataBinding.wx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bitmap != null) {
-                    showShare(UrlUtils.FWXY, "邀请好友", bitmap, "邀请好友", 1);
+                if (bitmap != null && url != null) {
+                    showShare(url, "邀请好友", bitmap, "扫一扫，加入挖矿来", 1);
                 }
             }
         });
@@ -69,8 +74,8 @@ public class InvitationRegisterFragment extends AbsFragment<FragmentInvitationRe
         mDataBinding.pyq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bitmap != null) {
-                    showShare(UrlUtils.FWXY, "邀请好友", bitmap, "邀请好友", 2);
+                if (bitmap != null && url != null) {
+                    showShare(url, "邀请好友", bitmap, "扫一扫，加入挖矿来", 2);
                 }
             }
         });
@@ -119,7 +124,8 @@ public class InvitationRegisterFragment extends AbsFragment<FragmentInvitationRe
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         Log.e("invite", "getUrl " + response.body().getData().getResult().getUrl());
-                                        bitmap = EncodingUtils.createQRCode(UrlUtils.FWXY, 700, 700,
+                                        url = response.body().getData().getResult().getUrl();
+                                        bitmap = EncodingUtils.createQRCode(url, 700, 700,
                                                 BitmapFactory.decodeResource(getResources(), R.mipmap.ic_logo_white));
                                         mDataBinding.scan.setImageBitmap(bitmap);
                                     } else {

@@ -196,29 +196,25 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
         if (data != null && data.getResult().size() > 0) {
             mDataBinding.tv1.setText(data.getResult().get(0).getBus_name());
 
+            String location = "";
             if (data.getResult().get(0).getProvince_name() != null) {
-                mDataBinding.tv2.setText(data.getResult().get(0).getProvince_name() + " ");
-                if (data.getResult().get(0).getCity_name() != null) {
-                    mDataBinding.tv2.append(data.getResult().get(0).getCity_name() + " ");
-                    if (data.getResult().get(0).getAddress_detail() != null) {
-                        mDataBinding.tv2.append(data.getResult().get(0).getAddress_detail());
-                    }
-                } else if (data.getResult().get(0).getAddress_detail() != null) {
-                    mDataBinding.tv2.append(data.getResult().get(0).getAddress_detail());
-                }
-            } else if (data.getResult().get(0).getCity_name() != null) {
-                mDataBinding.tv2.setText(data.getResult().get(0).getCity_name() + " ");
-                if (data.getResult().get(0).getAddress_detail() != null) {
-                    mDataBinding.tv2.append(data.getResult().get(0).getAddress_detail());
-                }
-            } else if (data.getResult().get(0).getAddress_detail() != null) {
-                mDataBinding.tv2.setText(data.getResult().get(0).getAddress_detail());
-            } else {
-                mDataBinding.tv2.setText("");
+                location = data.getResult().get(0).getProvince_name() + " ";
             }
+            if (data.getResult().get(0).getCity_name() != null) {
+                location = location + data.getResult().get(0).getCity_name() + " ";
+            }
+            if (data.getResult().get(0).getCounty_name() != null) {
+                location = location + data.getResult().get(0).getCounty_name() + " ";
+            }
+            if (data.getResult().get(0).getAddress_detail() != null) {
+                location = location + data.getResult().get(0).getAddress_detail() + " ";
+            }
+            mDataBinding.tv2.setText(location);
+
 
             mDataBinding.storeDetail.setText(data.getResult().get(0).getDesc());
             if (data.getResult().get(0).getDistance() != null) {
+                mDataBinding.tvStore.setVisibility(View.VISIBLE);
                 mDataBinding.tvStore.setText("距离" + data.getResult().get(0).getDistance() + "km");
             } else {
                 mDataBinding.tvStore.setVisibility(View.GONE);

@@ -12,8 +12,9 @@ import com.jhhscm.platform.fragment.my.store.MyStoreFragment;
 
 public class MyStoreActivity extends AbsToolbarActivity {
 
-    public static void start(Context context) {
+    public static void start(Context context, int type) {
         Intent intent = new Intent(context, MyStoreActivity.class);
+        intent.putExtra("type", type);
         context.startActivity(intent);
     }
 
@@ -55,6 +56,7 @@ public class MyStoreActivity extends AbsToolbarActivity {
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putInt("type", getIntent().getIntExtra("type", 0));
         return args;
     }
 }

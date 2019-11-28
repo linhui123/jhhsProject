@@ -1,6 +1,10 @@
 package com.jhhscm.platform.fragment.my.set;
 
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -27,6 +31,7 @@ import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.sign.SignObject;
+import com.jhhscm.platform.permission.YXPermission;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.DataCleanManager;
 import com.jhhscm.platform.tool.Des;
@@ -35,7 +40,10 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.LoginOutDialog;
+import com.mylhyl.acp.AcpListener;
+import com.mylhyl.acp.AcpOptions;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -66,7 +74,7 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
         } catch (Exception e) {
             e.printStackTrace();
             mDataBinding.tvCache.setText("0.0M");
-        }finally {
+        } finally {
             closeDialog();
         }
 
@@ -102,10 +110,35 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
             }
         });
 
+
         mDataBinding.rl3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //6.0权限处理
+                YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
+                        .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
+                        .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
+                        .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "拨打电话"))
+                        .setPermissions(Manifest.permission.CALL_PHONE).build(), new AcpListener() {
+                    @SuppressLint("MissingPermission")
+                    @Override
+                    public void onGranted() {
+                        Uri uriScheme = Uri.parse("tel:" + "0591-83590001");
+                        Intent it = new Intent(Intent.ACTION_CALL, uriScheme);
+                        getContext().startActivity(it);
+                    }
 
+                    @Override
+                    public void onDenied(List<String> permissions) {
+
+                    }
+                });
+            }
+        });
+
+        mDataBinding.rl4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 //意见反馈
                 FeedbackActivity.start(getContext());
             }

@@ -19,8 +19,8 @@ public class OrderItemDeviceViewHolder extends AbsRecyclerViewHolder<FindOrderLi
     protected void onBindView(final FindOrderListBean.DataBean.GoodsOwnerListBean item) {
         mBinding.tvBrand.setText(item.getBrands());
         mBinding.model.setText(item.getFixs());
-        mBinding.no.setText(item.getV_1());
-        mBinding.gpsNo.setText(item.getV_2());
+        mBinding.no.setText(item.getV1());
+        mBinding.gpsNo.setText(item.getV2());
         mBinding.error.setText(item.getV3s());
     }
 }

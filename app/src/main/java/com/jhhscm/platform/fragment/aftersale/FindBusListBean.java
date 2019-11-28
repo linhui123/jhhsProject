@@ -152,6 +152,7 @@ public class FindBusListBean {
          * status : 1
          * v1 :
          * v2 :
+         * distance
          */
 
         private String city;
@@ -167,12 +168,19 @@ public class FindBusListBean {
         private String pic_url;
         private String bus_name;
         private String bus_code;
-
+        private String distance;
         private String add_time;
         private int status;
         private String v1;
         private String v2;
 
+        public String getDistance() {
+            return distance;
+        }
+
+        public void setDistance(String distance) {
+            this.distance = distance;
+        }
 
         public String getBus_code() {
             return bus_code;

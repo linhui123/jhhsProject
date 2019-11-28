@@ -51,6 +51,8 @@ public class MyStoreFragment extends AbsFragment<FragmentMyStoreBinding> {
     private MyMemberFragment useCounponFragment;
     private MyStoreOrderFragment oldCounponFragment;
 
+    private int type = 0;
+
     public static MyStoreFragment instance() {
         MyStoreFragment view = new MyStoreFragment();
         return view;
@@ -69,6 +71,7 @@ public class MyStoreFragment extends AbsFragment<FragmentMyStoreBinding> {
         } else {
             startNewActivity(LoginActivity.class);
         }
+        type = getArguments().getInt("type", 0);
 
         unCounponFragment = MyProductFragment.instance();
         useCounponFragment = MyMemberFragment.instance();
@@ -128,6 +131,8 @@ public class MyStoreFragment extends AbsFragment<FragmentMyStoreBinding> {
                 return mDataBinding.enhanceTabLayout.getTabLayout().getTabAt(position).getText();
             }
         });
+
+        mDataBinding.enhanceTabLayout.getTabLayout().getTabAt(type).select();
     }
 
     private void businessSumdata() {
@@ -161,9 +166,20 @@ public class MyStoreFragment extends AbsFragment<FragmentMyStoreBinding> {
                                             mDataBinding.tvMMemberNum.setText(response.body().getData().getResult().get(0).getSum_users() + "");
                                             mDataBinding.tvGMemberNum.setText(response.body().getData().getResult().get(0).getSum_users_all() + "");
                                             mDataBinding.username.setText(response.body().getData().getResult().get(0).getBus_name());
-                                            mDataBinding.tvStoreNum.setText(response.body().getData().getResult().get(0).getProvince_name()
-                                                    + " " + response.body().getData().getResult().get(0).getCity_name()
-                                                    + " " + response.body().getData().getResult().get(0).getAddress_detail());
+                                            String location = "";
+                                            if (response.body().getData().getResult().get(0).getProvince_name() != null) {
+                                                location = response.body().getData().getResult().get(0).getProvince_name() + " ";
+                                            }
+                                            if (response.body().getData().getResult().get(0).getCity_name() != null) {
+                                                location = location + response.body().getData().getResult().get(0).getCity_name() + " ";
+                                            }
+                                            if (response.body().getData().getResult().get(0).getCounty_name() != null) {
+                                                location = location + response.body().getData().getResult().get(0).getCounty_name() + " ";
+                                            }
+                                            if (response.body().getData().getResult().get(0).getAddress_detail() != null) {
+                                                location = location + response.body().getData().getResult().get(0).getAddress_detail() + " ";
+                                            }
+                                            mDataBinding.tvStoreNum.setText(location);
                                         }
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());

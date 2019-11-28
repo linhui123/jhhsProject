@@ -89,13 +89,13 @@ public class MyInviteFragment extends AbsFragment<FragmentMyInviteBinding> {
         mDataBinding.search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mDataBinding.searchContent.getText().toString().length() > 0) {
+//                if (mDataBinding.searchContent.getText().toString().length() > 0) {
                     mDataBinding.recyclerview.autoRefresh();
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
-                } else {
-                    ToastUtil.show(getContext(), "输入内容不能为空");
-                }
+//                } else {
+//                    ToastUtil.show(getContext(), "输入内容不能为空");
+//                }
             }
         });
 

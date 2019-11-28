@@ -34,28 +34,29 @@ public class AfterSaleViewHolder extends AbsRecyclerViewHolder<FindBusListBean.D
                 mBinding.tv3.setVisibility(View.GONE);
             }
             mBinding.tv1.setText(item.getBus_name());
+
+            String location = "";
             if (item.getProvince_name() != null) {
-                mBinding.tv2.setText(item.getProvince_name() + " ");
-                if (item.getCity_name() != null) {
-                    mBinding.tv2.append(item.getCity_name() + " ");
-                    if (item.getAddress_detail() != null) {
-                        mBinding.tv2.append(item.getAddress_detail());
-                    }
-                } else if (item.getAddress_detail() != null) {
-                    mBinding.tv2.append(item.getAddress_detail());
-                }
-            } else if (item.getCity_name() != null) {
-                mBinding.tv2.setText(item.getCity_name() + " ");
-                if (item.getAddress_detail() != null) {
-                    mBinding.tv2.append(item.getAddress_detail());
-                }
-            } else if (item.getAddress_detail() != null) {
-                mBinding.tv2.setText(item.getAddress_detail());
+                location = item.getProvince_name() + " ";
+            }
+            if (item.getCity_name() != null) {
+                location = location + item.getCity_name() + " ";
+            }
+            if (item.getCounty_name() != null) {
+                location = location + item.getCounty_name() + " ";
+            }
+            if (item.getAddress_detail() != null) {
+                location = location + item.getAddress_detail() + " ";
+            }
+            mBinding.tv2.setText(location);
+
+            if (item.getDistance() != null) {
+                mBinding.tvStore.setVisibility(View.VISIBLE);
+                mBinding.tvStore.setText("距离" + item.getDistance() + "km");
             } else {
-                mBinding.tv2.setText("");
+                mBinding.tvStore.setVisibility(View.GONE);
             }
 
-            mBinding.tvStore.setText("距离-km");
             if (item.getPic_url() != null) {
                 String jsonString = "{\"pic_url\":" + item.getPic_url() + "}";
                 Log.e("jsonString", "jsonString  " + jsonString);
