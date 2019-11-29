@@ -59,6 +59,7 @@ import java.util.TreeMap;
 
 import retrofit2.Response;
 
+/**记账工具*/
 public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
 
     private InnerAdapter mAdapter;

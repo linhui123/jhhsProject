@@ -28,6 +28,7 @@ import com.jhhscm.platform.event.GetRegionEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
 import com.jhhscm.platform.fragment.Mechanics.adapter.CompairsonAdapter;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsByBrandBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsDetailsBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.my.MyFragment;
@@ -64,19 +65,21 @@ import java.util.TreeMap;
 
 import retrofit2.Response;
 
+/**
+ * 机型对比
+ */
 public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> implements CompairsonAdapter.DeletedItemListener, CompairsonAdapter.SelectedListener {
     private CompairsonAdapter compairsonAdapter;//添加机型
     private CompairsonAdapter wAdapter;//历史
     private CompairsonAdapter sAdapter;//收藏
-    List<GetCartGoodsByUserCodeBean.ResultBean> list;
-    private boolean total;
+    private GetGoodsDetailsBean getGoodsDetailsBean;
     private UserSession userSession;
     private int mShowCount = 10;
     private int mCurrentPage = 1;
     private final int START_PAGE = mCurrentPage;
-    List<GetGoodsPageListBean.DataBean> selectDataBean;
-    List<GetGoodsPageListBean.DataBean> historyDataBean;
-    List<GetGoodsPageListBean.DataBean> shoucangDataBean;
+    private List<GetGoodsPageListBean.DataBean> selectDataBean;//选中机型
+    private List<GetGoodsPageListBean.DataBean> historyDataBean;//历史浏览机型
+    private List<GetGoodsPageListBean.DataBean> shoucangDataBean;//收藏机型
 
     public static ComparisonFragment instance() {
         ComparisonFragment view = new ComparisonFragment();
@@ -94,6 +97,8 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
             userSession = ConfigUtils.getCurrentUser(getContext());
+        } else {
+            startNewActivity(LoginActivity.class);
         }
     }
 
@@ -104,12 +109,6 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
         historyDataBean = new ArrayList<>();
         shoucangDataBean = new ArrayList<>();
 
-        if (ConfigUtils.getCurrentUser(getContext()) != null
-                && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
-            userSession = ConfigUtils.getCurrentUser(getContext());
-        } else {
-            startNewActivity(LoginActivity.class);
-        }
         mDataBinding.refreshlayout.setEnableRefresh(false);
         mDataBinding.refreshlayout.setEnableLoadMore(false);
         mDataBinding.refreshlayout.setOnRefreshListener(new OnRefreshListener() {
@@ -126,6 +125,17 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
 
         initView();
         initBottom();
+        //选中机型
+        getGoodsDetailsBean = (GetGoodsDetailsBean) getArguments().getSerializable("getGoodsDetailsBean");
+        if (getGoodsDetailsBean != null) {
+            GetGoodsPageListBean.DataBean dataBean = new GetGoodsPageListBean.DataBean();
+            dataBean.setGood_code(getGoodsDetailsBean.getResult().getGoodsDetails().getGood_code());
+            dataBean.setName(getGoodsDetailsBean.getResult().getGoodsDetails().getName());
+            dataBean.setCounter_price(getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price());
+            dataBean.setSelect(true);
+            compairsonAdapter.setData(dataBean);
+            selectDataBean.add(dataBean);
+        }
         //从浏览记录中获取
         GetGoodsPageListBean getGoodsPageListBean = ConfigUtils.getNewMechanics(getContext());
         if (getGoodsPageListBean != null && getGoodsPageListBean.getData() != null && getGoodsPageListBean.getData().size() > 0) {
@@ -134,10 +144,7 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
             } else {
                 wAdapter.setList(getGoodsPageListBean.getData().subList(1, getGoodsPageListBean.getData().size()), true);
             }
-            GetGoodsPageListBean.DataBean dataBean = getGoodsPageListBean.getData().get(0);
-            dataBean.setSelect(true);
-            compairsonAdapter.setData(dataBean);
-            selectDataBean.add(dataBean);
+            //去掉和选中相同项
         }
 
         mDataBinding.tvHostory.setOnClickListener(new View.OnClickListener() {
@@ -178,8 +185,9 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
                     if (selectDataBean.size() == 1) {
                         if (good1.length() > 0) {
                             good2 = selectDataBean.get(0).getGood_code();
+                        } else {
+                            good1 = selectDataBean.get(0).getGood_code();
                         }
-                        good1 = selectDataBean.get(0).getGood_code();
                     }
                     if (selectDataBean.size() == 2) {
                         good1 = selectDataBean.get(0).getGood_code();
@@ -188,8 +196,9 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
                     if (historyDataBean.size() == 1) {
                         if (good1.length() > 0) {
                             good2 = historyDataBean.get(0).getGood_code();
+                        } else {
+                            good1 = historyDataBean.get(0).getGood_code();
                         }
-                        good1 = historyDataBean.get(0).getGood_code();
                     }
                     if (historyDataBean.size() == 2) {
                         good1 = historyDataBean.get(0).getGood_code();
@@ -198,8 +207,9 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
                     if (shoucangDataBean.size() == 1) {
                         if (good1.length() > 0) {
                             good2 = shoucangDataBean.get(0).getGood_code();
+                        } else {
+                            good1 = shoucangDataBean.get(0).getGood_code();
                         }
-                        good1 = shoucangDataBean.get(0).getGood_code();
                     }
                     if (shoucangDataBean.size() == 2) {
                         good1 = shoucangDataBean.get(0).getGood_code();
@@ -317,15 +327,15 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
     private void findCollectList(final boolean refresh) {
         mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
         Map<String, Object> map = new TreeMap<String, Object>();
-        map.put("user_code", userSession.getUserCode());
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         map.put("goods_type", "1");
         map.put("page", mCurrentPage);
         map.put("limit", mShowCount);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = SignObject.getSignKey(getActivity(), map, "findCollectList: " + "type");
+        String sign = SignObject.getSignKey(getActivity(), map, "findCollectList: 1");
         NetBean netBean = new NetBean();
-        netBean.setToken(userSession.getToken());
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(FindCollectListAction.newInstance(getContext(), netBean)
@@ -360,8 +370,13 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
                                     mDataBinding.rvShoucang.loadComplete(sAdapter.getItemCount() == 0, ((float) findCollectListBean.getPage().getTotal() / (float) findCollectListBean.getPage().getPageSize()) > mCurrentPage);
 
                                 } else {
+                                    if (response.body().getCode().equals("1003")) {
+                                        ToastUtils.show(getContext(), "登录过期，请重新登录");
+                                        LoginActivity.start(getContext());
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
                                     mDataBinding.rvShoucang.loadComplete(true, false);
-                                    ToastUtils.show(getContext(), response.body().getMessage());
                                 }
                             }
                         }

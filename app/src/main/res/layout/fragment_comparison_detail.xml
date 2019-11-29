@@ -30,7 +30,7 @@
                     android:drawablePadding="@dimen/padding_10"
                     android:gravity="center"
                     android:text="机型信息"
-                    android:textColor="@color/acc3"
+                    android:textColor="@color/a397"
                     android:textSize="@dimen/text_size_16" />
 
                 <LinearLayout
@@ -48,6 +48,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:maxLines="2"
+                        android:minLines="2"
                         android:text=""
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
@@ -78,6 +79,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:maxLines="2"
+                        android:minLines="2"
                         android:text=""
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />

@@ -1,6 +1,5 @@
 package com.jhhscm.platform.fragment.Mechanics;
 
-
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,6 +38,7 @@ import java.util.TreeMap;
 
 import retrofit2.Response;
 
+/**机型对比*/
 public class ComparisonDetailFragment extends AbsFragment<FragmentComparisonDetailBinding> {
 
     private String good_code1;

@@ -116,7 +116,6 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
                 }
             }
         });
-
         holder.tvDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +130,6 @@ public class CompairsonAdapter extends RecyclerView.Adapter<CompairsonAdapter.Re
     public int getItemCount() {
         return data.size();
     }
-
 
     /**
      * view.getWidth()获取的是屏幕中可以看到的大小.

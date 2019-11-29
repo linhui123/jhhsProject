@@ -2,9 +2,10 @@ package com.jhhscm.platform.fragment.Mechanics.bean;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GetGoodsDetailsBean {
+public class GetGoodsDetailsBean implements Serializable {
 
     /**
      * result : {"wAppKvs":[{"key_group_value":"综述","key_group_name":"goods_sum"},{"key_group_value":"参数","key_group_name":"goods_parameter"},{"key_group_value":"图片","key_group_name":"goods_photo"}],"goodsDetails":{"fix_p3":"4","fix_p2":"3","fix_p5":"4","picGalleryUrlList":"[\"https://wajuejifiles.oss-cn-beijing.aliyuncs.com/C%3A%5CUsers%5CAdministrator%5CDesktop%5C%E5%B7%A5%E5%85%B7%E7%AE%B1%5Ctest.png\",\"https://wajuejifiles.oss-cn-beijing.aliyuncs.com/C%3A%5CUsers%5CAdministrator%5CDesktop%5C%E5%B7%A5%E5%85%B7%E7%AE%B1%5Ctest.png\",\"https://wajuejifiles.oss-cn-beijing.aliyuncs.com/C%3A%5CUsers%5CAdministrator%5CDesktop%5C%E5%B7%A5%E5%85%B7%E7%AE%B1%5Ctest.png\"]","fix_p4":"4","good_code":"1","picSmallUrl":"https://wajuejifiles.oss-cn-beijing.aliyuncs.com/1.jpeg","fix_p1":"2","counter_price":10,"h5_address":"http://192.168.0.234:8080/#/product/productDetail","word_detail":"固定的一个详情内容","name":"EC480D","fix_p7":"5","fix_p6":"4"}}
@@ -20,7 +21,7 @@ public class GetGoodsDetailsBean {
         this.result = result;
     }
 
-    public static class ResultBean {
+    public static class ResultBean implements Serializable {
         /**
          * wAppKvs : [{"key_group_value":"综述","key_group_name":"goods_sum"},{"key_group_value":"参数","key_group_name":"goods_parameter"},{"key_group_value":"图片","key_group_name":"goods_photo"}]
          * goodsDetails : {"fix_p3":"4","fix_p2":"3","fix_p5":"4","picGalleryUrlList":"[\"https://wajuejifiles.oss-cn-beijing.aliyuncs.com/C%3A%5CUsers%5CAdministrator%5CDesktop%5C%E5%B7%A5%E5%85%B7%E7%AE%B1%5Ctest.png\",\"https://wajuejifiles.oss-cn-beijing.aliyuncs.com/C%3A%5CUsers%5CAdministrator%5CDesktop%5C%E5%B7%A5%E5%85%B7%E7%AE%B1%5Ctest.png\",\"https://wajuejifiles.oss-cn-beijing.aliyuncs.com/C%3A%5CUsers%5CAdministrator%5CDesktop%5C%E5%B7%A5%E5%85%B7%E7%AE%B1%5Ctest.png\"]","fix_p4":"4","good_code":"1","picSmallUrl":"https://wajuejifiles.oss-cn-beijing.aliyuncs.com/1.jpeg","fix_p1":"2","counter_price":10,"h5_address":"http://192.168.0.234:8080/#/product/productDetail","word_detail":"固定的一个详情内容","name":"EC480D","fix_p7":"5","fix_p6":"4"}
@@ -45,7 +46,7 @@ public class GetGoodsDetailsBean {
             this.wAppKvs = wAppKvs;
         }
 
-        public static class GoodsDetailsBean {
+        public static class GoodsDetailsBean implements Serializable {
 
             /**
              * fix_p_12 : 5
@@ -270,7 +271,7 @@ public class GetGoodsDetailsBean {
             }
         }
 
-        public static class WAppKvsBean {
+        public static class WAppKvsBean implements Serializable {
             /**
              * key_group_value : 综述
              * key_group_name : goods_sum

@@ -70,6 +70,7 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
             ConfigUtils.removeCoupon(getContext());
             ConfigUtils.removePTime(getContext());
             ConfigUtils.removeUpdataTime(getContext());
+            ConfigUtils.removeNewMechanics(getContext());
             ConfigUtils.removeUpdataUrl(getContext());
         } catch (Exception e) {
             e.printStackTrace();

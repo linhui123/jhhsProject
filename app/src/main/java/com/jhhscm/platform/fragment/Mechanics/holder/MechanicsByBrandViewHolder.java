@@ -35,6 +35,7 @@ public class MechanicsByBrandViewHolder extends AbsRecyclerViewHolder<GetGoodsBy
         }
         mBinding.tvTitle.setText(item.getName());
         mBinding.tvPrice.setText(CalculationUtils.wan1(item.getCounterPrice()));
+        mBinding.tvDetail.setVisibility(View.GONE);
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

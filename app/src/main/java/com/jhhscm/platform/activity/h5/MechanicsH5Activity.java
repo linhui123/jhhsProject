@@ -246,7 +246,11 @@ public class MechanicsH5Activity extends AbsActivity {
             public void onClick(View v) {
                 if (ConfigUtils.getCurrentUser(getApplicationContext()) != null) {
                     MobclickAgent.onEvent(getApplicationContext(), "new_mechanics_pk");
-                    ComparisonActivity.start(MechanicsH5Activity.this);
+                    if (getGoodsDetailsBean != null) {
+                        ComparisonActivity.start(MechanicsH5Activity.this, getGoodsDetailsBean);
+                    } else {
+                        ComparisonActivity.start(MechanicsH5Activity.this);
+                    }
                 } else {
                     startNewActivity(LoginActivity.class);
                 }
@@ -1159,31 +1163,43 @@ public class MechanicsH5Activity extends AbsActivity {
                             new HttpHelper().showError(getApplicationContext(), response.body().getCode(), response.body().getMessage());
                             if (response.body().getCode().equals("200")) {
                                 getGoodsDetailsBean = response.body().getData();
-                                GetGoodsPageListBean getGoodsPageListBean = new GetGoodsPageListBean();
-                                GetGoodsPageListBean.DataBean dataBean = new GetGoodsPageListBean.DataBean();
-                                dataBean.setCounter_price(getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price() + "");
-                                dataBean.setGood_code(getGoodsDetailsBean.getResult().getGoodsDetails().getGood_code());
-                                dataBean.setName(getGoodsDetailsBean.getResult().getGoodsDetails().getName());
-                                dataBean.setSelect(false);
-                                if (ConfigUtils.getNewMechanics(getApplicationContext()) != null
-                                        && ConfigUtils.getNewMechanics(getApplicationContext()).getData() != null
-                                        && ConfigUtils.getNewMechanics(getApplicationContext()).getData().size() > 0) {
-                                    getGoodsPageListBean = ConfigUtils.getNewMechanics(getApplicationContext());
-                                    if (!getGoodsPageListBean.getData().contains(dataBean)) {
-                                        getGoodsPageListBean.getData().add(0, dataBean);
-                                    }
-                                } else {
-                                    List<GetGoodsPageListBean.DataBean> dataBeans = new ArrayList<>();
-                                    dataBeans.add(dataBean);
-                                    getGoodsPageListBean.setData(dataBeans);
-                                }
-                                ConfigUtils.setNewMechanics(getApplicationContext(), getGoodsPageListBean);
+                                addHistory(getGoodsDetailsBean);
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
                             }
                         }
                     }
                 }));
+    }
+
+    private void addHistory(GetGoodsDetailsBean getGoodsDetailsBean) {
+        GetGoodsPageListBean getGoodsPageListBean = ConfigUtils.getNewMechanics(getApplicationContext());
+        GetGoodsPageListBean.DataBean dataBean = new GetGoodsPageListBean.DataBean();
+        dataBean.setCounter_price(getGoodsDetailsBean.getResult().getGoodsDetails().getCounter_price() + "");
+        dataBean.setGood_code(getGoodsDetailsBean.getResult().getGoodsDetails().getGood_code());
+        dataBean.setName(getGoodsDetailsBean.getResult().getGoodsDetails().getName());
+        dataBean.setSelect(false);
+        if (getGoodsPageListBean != null
+                && getGoodsPageListBean.getData() != null
+                && getGoodsPageListBean.getData().size() > 0) {
+            boolean isRepeat = false;
+            for (GetGoodsPageListBean.DataBean dataBean1 : getGoodsPageListBean.getData()) {
+                if (dataBean1.getGood_code() != null
+                        && getGoodsDetailsBean.getResult().getGoodsDetails().getGood_code().equals(dataBean1.getGood_code())) {
+                    isRepeat = true;
+                }
+            }
+            if (!isRepeat) {
+                getGoodsPageListBean.getData().add(0, dataBean);
+                ConfigUtils.setNewMechanics(getApplicationContext(), getGoodsPageListBean);
+            }
+        } else {
+            getGoodsPageListBean = new GetGoodsPageListBean();
+            List<GetGoodsPageListBean.DataBean> dataBeans = new ArrayList<>();
+            dataBeans.add(dataBean);
+            getGoodsPageListBean.setData(dataBeans);
+            ConfigUtils.setNewMechanics(getApplicationContext(), getGoodsPageListBean);
+        }
     }
 
     /**

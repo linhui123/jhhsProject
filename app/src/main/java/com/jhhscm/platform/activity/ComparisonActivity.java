@@ -2,18 +2,24 @@ package com.jhhscm.platform.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.Mechanics.ComparisonFragment;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsDetailsBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.my.set.SetFragment;
 
 public class ComparisonActivity extends AbsToolbarActivity {
 
     public static void start(Context context) {
         Intent intent = new Intent(context, ComparisonActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void start(Context context, GetGoodsDetailsBean getGoodsDetailsBean) {
+        Intent intent = new Intent(context, ComparisonActivity.class);
+        intent.putExtra("getGoodsDetailsBean", getGoodsDetailsBean);
         context.startActivity(intent);
     }
 
@@ -55,7 +61,14 @@ public class ComparisonActivity extends AbsToolbarActivity {
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
+        args.putSerializable("getGoodsDetailsBean", getIntent().getSerializableExtra("getGoodsDetailsBean"));
         return args;
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.e("onDestroy", "onDestroy");
+        super.onDestroy();
     }
 }
 
