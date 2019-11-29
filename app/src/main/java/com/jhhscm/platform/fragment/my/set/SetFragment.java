@@ -168,6 +168,7 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
      */
     private void loginOut() {
         if (getContext() != null) {
+            showDialog();
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("mobile", ConfigUtils.getCurrentUser(getContext()).getMobile());
             map.put("appid", "336abf9e97cd4276bf8aecde9d32ed99");

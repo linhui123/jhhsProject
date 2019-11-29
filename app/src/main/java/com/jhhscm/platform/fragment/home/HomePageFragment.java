@@ -167,7 +167,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
 //                initPermission();
 //            }
 //        } else {
-            initPermission();
+        initPermission();
 //        }
     }
 
@@ -570,7 +570,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         map.put("type", "1");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "isNewUser 新人");
+        String sign = Sign.getSignKey(getActivity(), map, "getFirstPageCouponslist 新人");
         NetBean netBean = new NetBean();
         netBean.setToken("");
         netBean.setSign(sign);
@@ -606,13 +606,11 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                 && getNewCouponslistBean.getResult().getData() != null) {
             if (getNewCouponslistBean.getResult().getData().size() > 1) {
                 if (resultBean != null && resultBean.size() > 0) {
-
                     for (GetNewCouponslistBean.ResultBean.DataBean dataBean2 : getNewCouponslistBean.getResult().getData()) {
                         if (!resultBean.contains(dataBean2.getCode())) {
                             is_show = true;
                         }
                     }
-
                 } else {
                     is_show = true;
                 }
@@ -621,19 +619,19 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             new NewCouponListDialog.CallbackListener() {
                                 @Override
                                 public void clickYes() {
-
+                                    CouponCenterActivity.start(getContext());
                                 }
                             }).show();
                 }
 
-            } else {
+            } else if (getNewCouponslistBean.getResult().getData().size() == 1) {
                 if (resultBean != null && !resultBean.contains(getNewCouponslistBean.getResult().getData().get(0).getCode())) {
                     new NewCouponDialog(getContext(),
                             getNewCouponslistBean.getResult().getData().get(0),
                             new NewCouponDialog.CallbackListener() {
                                 @Override
                                 public void clickYes() {
-
+                                    CouponCenterActivity.start(getContext());
                                 }
                             }).show();
                 } else {
@@ -642,7 +640,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             new NewCouponDialog.CallbackListener() {
                                 @Override
                                 public void clickYes() {
-
+                                    CouponCenterActivity.start(getContext());
                                 }
                             }).show();
                 }
@@ -659,7 +657,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         map.put("type", "0");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "isNewUser 满减");
+        String sign = Sign.getSignKey(getActivity(), map, "getFirstPageCouponslist 满减");
         NetBean netBean = new NetBean();
         netBean.setToken("");
         netBean.setSign(sign);
@@ -693,15 +691,13 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         if (getNewCouponslistBean != null &&
                 getNewCouponslistBean.getResult() != null
                 && getNewCouponslistBean.getResult().getData() != null) {
-            if (getNewCouponslistBean.getResult().getData().size() > 1) {
+            if (getNewCouponslistBean.getResult().getData().size() > 0) {
                 if (resultBean != null && resultBean.size() > 0) {
-
                     for (GetNewCouponslistBean.ResultBean.DataBean dataBean2 : getNewCouponslistBean.getResult().getData()) {
                         if (!resultBean.contains(dataBean2.getCode())) {
                             is_show = true;
                         }
                     }
-
                 } else {
                     is_show = true;
                 }
@@ -710,7 +706,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             new NewCouponListDialog.CallbackListener() {
                                 @Override
                                 public void clickYes() {
-
+                                    CouponCenterActivity.start(getContext());
                                 }
                             }).show();
                 }
@@ -721,7 +717,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
 
     public void onEvent(GetCouponEvent event) {
         if (event.coupon_code != null
-                && event.start != null && event.end != null) {
+                && event.start != null && event.end != null && event.type == 0) {
             getCoupon(event.coupon_code, event.start, event.end);
         }
     }
@@ -772,7 +768,6 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                     }));
         }
     }
-
 
     /**
      * 版本更新查询

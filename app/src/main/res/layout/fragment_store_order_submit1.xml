@@ -129,6 +129,7 @@
                         android:layout_marginRight="@dimen/padding_15"
                         android:background="@null"
                         android:gravity="right"
+                        android:inputType="phone"
                         android:hint="请输入"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_14" />

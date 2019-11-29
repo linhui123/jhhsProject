@@ -103,7 +103,7 @@ public class CouponCenterFragment extends AbsFragment<FragmentCouponCenterBindin
     }
 
     public void onEvent(GetCouponEvent event) {
-        if (event.coupon_code != null && event.start != null && event.end != null) {
+        if (event.coupon_code != null && event.start != null && event.end != null && event.type == 1) {
             getCoupon(event.coupon_code, event.start, event.end);
         }
     }
@@ -174,7 +174,7 @@ public class CouponCenterFragment extends AbsFragment<FragmentCouponCenterBindin
     /**
      * 领取优惠卷
      */
-    private void getCoupon(String coupon_code, String start, String end) {
+    private void getCoupon(final String coupon_code, String start, String end) {
         if (getContext() != null) {
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("coupon_code", coupon_code);
@@ -203,12 +203,18 @@ public class CouponCenterFragment extends AbsFragment<FragmentCouponCenterBindin
                                     if (response.body().getCode().equals("200")) {
                                         if ("0".equals(response.body().getData().getResult())) {
                                             ToastUtil.show(getContext(), "领取成功");
+                                            for (CouponGetListBean.DataBean dataBean : getPushListBean.getData()) {
+                                                if (dataBean.getCode().equals(coupon_code)) {
+                                                    dataBean.setIsGet("1");
+                                                }
+                                            }
+                                            mAdapter.notifyDataSetChanged();
                                         } else if ("2".equals(response.body().getData().getResult())) {
                                             ToastUtil.show(getContext(), "该券已领取完");
                                         } else {
                                             ToastUtil.show(getContext(), "领取失败");
                                         }
-                                        mDataBinding.recyclerview.autoRefresh();
+//                                        mDataBinding.recyclerview.autoRefresh();
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }

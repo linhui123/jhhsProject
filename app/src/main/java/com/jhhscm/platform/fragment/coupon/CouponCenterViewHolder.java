@@ -50,7 +50,7 @@ public class CouponCenterViewHolder extends AbsRecyclerViewHolder<CouponGetListB
                 @Override
                 public void onClick(View v) {
                     if (item.getIsGet().equals("0")) {
-                        EventBusUtil.post(new GetCouponEvent(item.getCode(), item.getStartTime(), item.getEndTime()));
+                        EventBusUtil.post(new GetCouponEvent(item.getCode(), item.getStartTime(), item.getEndTime(), 1));
                     }
                 }
             });

@@ -85,7 +85,7 @@ public class CouponListDialogAdapter extends RecyclerView.Adapter<CouponListDial
             @Override
             public void onClick(View v) {
                 list.get(position).setSelect(true);
-                EventBusUtil.post(new GetCouponEvent(list.get(position).getCode(), list.get(position).getStartTime(), list.get(position).getEndTime()));
+                EventBusUtil.post(new GetCouponEvent(list.get(position).getCode(), list.get(position).getStartTime(), list.get(position).getEndTime(), 0));
 //                if (myListener != null) {
 //                    myListener.onItemClick(list.get(position));
 //                }

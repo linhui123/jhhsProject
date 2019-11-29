@@ -170,12 +170,12 @@ public class StoreOrderSubmit1Fragment extends AbsFragment<FragmentStoreOrderSub
                 return false;
             }
         }
-        userName = mDataBinding.name.getText().toString();
+        userName = mDataBinding.name.getText().toString().trim();
         if (StringUtils.isNullEmpty(userName)) {
             ToastUtil.show(getContext(), "用户姓名不能为空");
             return false;
         }
-        userMobile = mDataBinding.phone.getText().toString();
+        userMobile = mDataBinding.phone.getText().toString().trim();
         if (StringUtils.isNullEmpty(userMobile)) {
             ToastUtil.show(getContext(), "用户手机号不能为空");
             return false;
