@@ -12,6 +12,7 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentMyMemberBinding;
+import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
@@ -26,6 +27,7 @@ import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
@@ -55,6 +57,7 @@ public class MyMemberFragment extends AbsFragment<FragmentMyMemberBinding> {
 
     @Override
     protected void setupViews() {
+        EventBusUtil.registerEvent(this);
         mDataBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
@@ -76,7 +79,7 @@ public class MyMemberFragment extends AbsFragment<FragmentMyMemberBinding> {
             @Override
             public void onClick(View v) {
 //                if (mDataBinding.searchContent.getText().toString().length() > 0) {
-                    mDataBinding.recyclerview.autoRefresh();
+                mDataBinding.recyclerview.autoRefresh();
 //                } else {
 ////                    ToastUtil.show(getContext(), "输入内容不能为空");
 ////                }
@@ -147,5 +150,16 @@ public class MyMemberFragment extends AbsFragment<FragmentMyMemberBinding> {
         public AbsRecyclerViewHolder<ReqListBean.ResultBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new MyMemberItemViewHolder(mInflater.inflate(R.layout.item_store_member, parent, false));
         }
+    }
+
+    public void onEvent(RefreshEvent event) {
+        mDataBinding.recyclerview.autoRefresh();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregisterEvent(this);
     }
 }

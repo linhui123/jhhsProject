@@ -13,7 +13,7 @@ import com.jhhscm.platform.fragment.vehicle.VehicleMonitoringFragment;
 
 public class VehicleDetailsActivity extends AbsToolbarActivity {
 
-    public static void start(Context context, GpsDetailBean.GpsListBean gpsListBean) {
+    public static void start(Context context, GpsDetailBean.GpsListBean.ResultBean gpsListBean) {
         Intent intent = new Intent(context, VehicleDetailsActivity.class);
         intent.putExtra("gpsListBean", gpsListBean);
         context.startActivity(intent);

@@ -6,6 +6,8 @@ public class PayEvent implements EventBusUtil.IEvent {
     public String order_code;
     public String type;
     public String price;
+    public String couponPrice;
+
     public PayEvent() {
 
     }
@@ -15,9 +17,10 @@ public class PayEvent implements EventBusUtil.IEvent {
         this.type = type;
     }
 
-    public PayEvent(String order_code, String price, String type) {
+    public PayEvent(String order_code, String price, String couponPrice, String type) {
         this.order_code = order_code;
         this.price = price;
+        this.couponPrice = couponPrice;
         this.type = type;
     }
 }

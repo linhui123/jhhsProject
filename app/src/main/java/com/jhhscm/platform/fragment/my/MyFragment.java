@@ -49,6 +49,7 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
@@ -62,6 +63,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import retrofit2.Response;
+
+import static com.jhhscm.platform.tool.UdaUtils.hiddenPhoneNumber;
 
 
 public class MyFragment extends AbsFragment<FragmentMyBinding> {
@@ -536,7 +539,7 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             }
             mDataBinding.tvName.setVisibility(View.GONE);
             mDataBinding.rlCer.setVisibility(View.VISIBLE);
-            mDataBinding.username.setText(ConfigUtils.getCurrentUser(getContext()).getMobile());
+            mDataBinding.username.setText(hiddenPhoneNumber(ConfigUtils.getCurrentUser(getContext()).getMobile()));
             if (ConfigUtils.getCurrentUser(getContext()).getAvatar() != null
                     && ConfigUtils.getCurrentUser(getContext()).getAvatar().length() > 0) {
                 ImageLoader.getInstance().displayImage(ConfigUtils.getCurrentUser(getContext()).getAvatar(), mDataBinding.imUser);

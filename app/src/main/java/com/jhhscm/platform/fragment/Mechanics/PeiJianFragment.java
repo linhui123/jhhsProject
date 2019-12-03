@@ -242,6 +242,7 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
                                         doSuccessResponse(refresh, response.body().getData());
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
+                                        mDataBinding.wrvRecycler.loadComplete(true, false);
                                     }
                                 }
                             }
@@ -498,11 +499,19 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
         bAdapter.setMyListener(new BrandModelAdapter.ItemListener() {
             @Override
             public void onItemClick(BrandModelBean.DataBean item) {
-                if (item.getBrand_model_list() != null && item.getBrand_model_list().size() > 0) {
-                    BrandModelActivity.start(getContext(), item);
+                if (item.getBrand_id().length() > 0) {
+                    if (item.getBrand_model_list() != null && item.getBrand_model_list().size() > 0) {
+                        BrandModelActivity.start(getContext(), item);
+                    } else {
+                        model_ids = "";
+                        ToastUtil.show(getContext(), "该品牌下没有机型数据");
+                        mDataBinding.llXiala.setVisibility(View.GONE);
+                        closeDrap();
+                        mDataBinding.wrvRecycler.autoRefresh();
+                    }
                 } else {
                     model_ids = "";
-                    ToastUtil.show(getContext(), "该品牌下没有机型数据");
+                    mDataBinding.tvJixing.setText("机型通用");
                     mDataBinding.llXiala.setVisibility(View.GONE);
                     closeDrap();
                     mDataBinding.wrvRecycler.autoRefresh();

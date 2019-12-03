@@ -757,7 +757,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                                         } else if ("2".equals(response.body().getData().getResult())) {
                                             ToastUtil.show(getContext(), "该券已领取完");
                                         } else {
-                                            ToastUtil.show(getContext(), "领取失败");
+//                                            ToastUtil.show(getContext(), "领取失败");
                                         }
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());

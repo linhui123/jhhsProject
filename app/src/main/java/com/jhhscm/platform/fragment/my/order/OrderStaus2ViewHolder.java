@@ -151,7 +151,7 @@ public class OrderStaus2ViewHolder extends AbsRecyclerViewHolder<SaleItem> {
                 @Override
                 public void onClick(View v) {
                     EventBusUtil.post(new PayEvent(item.orderBean.getOrder_code() + "",
-                            item.orderBean.getOrder_price(), type));
+                            item.orderBean.getOrder_price(),  item.orderBean.getCoupon_price(), type));
                 }
             });
 

@@ -29,7 +29,7 @@ import java.util.List;
 
 public class VehicleMessageDialog extends BaseDialog {
     private DialogVehicleMessageBinding mDataBinding;
-    private GpsDetailBean.GpsListBean gpsListBean;
+    private GpsDetailBean.GpsListBean.ResultBean gpsListBean;
     private String no;
     private boolean mCancelable = true;
     private LogisticsDialog.CallbackListener mListener;
@@ -42,7 +42,7 @@ public class VehicleMessageDialog extends BaseDialog {
         super(context);
     }
 
-    public VehicleMessageDialog(Context context, GpsDetailBean.GpsListBean gpsListBean) {
+    public VehicleMessageDialog(Context context, GpsDetailBean.GpsListBean.ResultBean gpsListBean) {
         super(context);
         this.gpsListBean = gpsListBean;
         setCanceledOnTouchOutside(true);
@@ -86,23 +86,23 @@ public class VehicleMessageDialog extends BaseDialog {
 
     @Override
     protected void onInitView(View view) {
-        mDataBinding.chepai.setText("车牌：" + gpsListBean.getVid());
-        if (gpsListBean.getGt().length() > 20) {
-            mDataBinding.data.setText("时间：" + gpsListBean.getGt().substring(0, 19));
+        mDataBinding.chepai.setText("车牌：" + gpsListBean.getVehNoF());
+        if (gpsListBean.getTime().length() > 20) {
+            mDataBinding.data.setText("时间：" + gpsListBean.getTime().substring(0, 19));
         } else {
-            mDataBinding.data.setText("时间：" + gpsListBean.getGt());
+            mDataBinding.data.setText("时间：" + gpsListBean.getTime());
         }
         //数据提供，速度要除以10
-        mDataBinding.sudu.setText("速度：" + Double.parseDouble(gpsListBean.getSp()) / 10 + " Km/h");
-        if (gpsListBean.getOl() == 1) {
+        mDataBinding.sudu.setText("速度：" + Double.parseDouble(gpsListBean.getVelocity()) + " Km/h");
+        if ("1".equals(gpsListBean.getVehStatus())) {
             mDataBinding.status.setText("状态：在线");
         } else {
             mDataBinding.status.setText("状态：离线");
         }
 
-        mDataBinding.longitude.setText("经度：" + gpsListBean.getMlng());
-        mDataBinding.latitude.setText("纬度：" + gpsListBean.getMlat());
-        getAddress(Double.parseDouble(gpsListBean.getMlng()), Double.parseDouble(gpsListBean.getMlat()));
+        mDataBinding.longitude.setText("经度：" + gpsListBean.getLongitude());
+        mDataBinding.latitude.setText("纬度：" + gpsListBean.getLatitude());
+        getAddress(Double.parseDouble(gpsListBean.getLongitude()), Double.parseDouble(gpsListBean.getLatitude()));
 
         mDataBinding.detail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +115,7 @@ public class VehicleMessageDialog extends BaseDialog {
         mDataBinding.reload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TraceReloadActivity.start(getContext(), gpsListBean.getId());
+                TraceReloadActivity.start(getContext(), gpsListBean.getSystemNo());
 //                H5Activity.start(getContext(),
 //                        "http://183.62.138.30:88/808gps/open/trackReplay/Track.html?vehiIdno=500000&jsession=1bd49f53-8e49-4cad-972c-bf48cc4b3c83&begintime=2018-08-23 00:00:00&endtime=2018-08-23 23:59:59",
 //                        "轨迹回放");

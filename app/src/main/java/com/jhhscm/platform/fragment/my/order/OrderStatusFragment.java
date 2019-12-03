@@ -129,7 +129,7 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
 
     public void onEvent(PayEvent event) {
         if (event.order_code != null && type.equals(event.type) && event.price != null && list != null) {
-            new PayWithCouponDialog(getContext(), getActivity(), event.price, event.order_code, list).show();
+            new PayWithCouponDialog(getContext(), getActivity(), event.price, event.couponPrice, event.order_code, list).show();
         }
     }
 
@@ -363,7 +363,7 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
                                 new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                 if (response.body().getCode().equals("200")) {
 //                                    if (response.body().getData().getData().equals("0")) {
-                                        ToastUtil.show(getContext(), "取消成功");
+                                    ToastUtil.show(getContext(), "取消成功");
 //                                    }
                                     mDataBinding.recyclerview.autoRefresh();
                                 } else {

@@ -539,19 +539,19 @@ public interface ApiService {
     @POST(LEASE_CREATE)
     Call<BaseEntity<ResultBean>> createLease(@Body NetBean content);
 
-    //根据手机号查询gps信息
-    String GPS_DETAIL = "v1-0/gps/detail";
+    //根据手机号查询gps信息v1-0/gps/detail3
+    String GPS_DETAIL = "v1-0/gps/detail3";
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(GPS_DETAIL)
     Call<BaseEntity<GpsDetailBean>> gpsDetail(@Body NetBean content);
 
-    //查询设备轨迹回放
-    String GPS_TRACKDETAIL = "v1-0/gps/trackDetail";
+    //查询设备轨迹回放 v1-0/gps/trackDetail3
+    String GPS_TRACKDETAIL = "v1-0/gps/trackDetail3";
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(GPS_TRACKDETAIL)
-    Call<GpsTrackDetailBean> gps_trackdetail(@Body NetBean content);
+    Call<BaseEntity<GpsTrackDetailBean>> gps_trackdetail(@Body NetBean content);
 
 
     //合同列表

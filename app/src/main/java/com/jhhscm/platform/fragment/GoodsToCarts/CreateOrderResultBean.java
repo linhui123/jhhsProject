@@ -73,6 +73,10 @@ public class CreateOrderResultBean implements Serializable {
             this.orderCode = orderCode;
         }
 
+        public DataBean(String orderCode, double orderPrice) {
+            this.orderCode = orderCode;
+            this.orderPrice = orderPrice;
+        }
         public String getId() {
             return id;
         }

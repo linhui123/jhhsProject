@@ -72,6 +72,7 @@ public class PayWithCouponDialog extends BaseDialog {
     private Activity activity;
     private String orderCode = "";
     private String price = "";
+    private String coupon_price = "";
     private List<GetComboBoxBean.ResultBean> list;
     private String prepayid = "";
     private String data = "";
@@ -138,10 +139,11 @@ public class PayWithCouponDialog extends BaseDialog {
         super(context);
     }
 
-    public PayWithCouponDialog(Context context, Activity activity, String price, String orderCode, List<GetComboBoxBean.ResultBean> list) {
+    public PayWithCouponDialog(Context context, Activity activity, String price, String coupon_price, String orderCode, List<GetComboBoxBean.ResultBean> list) {
         super(context);
         this.price = price;
         this.orderCode = orderCode;
+        this.coupon_price = coupon_price;
         this.list = list;
         this.activity = activity;
     }
@@ -195,6 +197,12 @@ public class PayWithCouponDialog extends BaseDialog {
             mDataBinding.tvPay.setEnabled(false);
             mDataBinding.tvPay.setBackgroundResource(R.drawable.button_98b);
         }
+        if (Double.parseDouble(coupon_price) > 0) {
+            mDataBinding.coupon.setText("该订单已使用过优惠券");
+            mDataBinding.coupon.setEnabled(false);
+            mDataBinding.coupon.setVisibility(View.GONE);
+        }
+
         if (list != null) {
             initDrop();
         }
@@ -286,7 +294,7 @@ public class PayWithCouponDialog extends BaseDialog {
     private void wxPrePay(final String orderCode) {
         Map<String, Object> map = new TreeMap<String, Object>();
         map.put("orderCode", orderCode);
-        if (mDataBinding.coupon.getTag().toString().trim()!=null){
+        if (mDataBinding.coupon.getTag().toString().trim() != null) {
             map.put("coupon_code", mDataBinding.coupon.getTag().toString().trim());
         }
         map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
@@ -328,7 +336,7 @@ public class PayWithCouponDialog extends BaseDialog {
     private void aliPrePay(final String orderCode) {
         Map<String, Object> map = new TreeMap<String, Object>();
         map.put("orderCode", orderCode);
-        if (mDataBinding.coupon.getTag().toString().trim()!=null){
+        if (mDataBinding.coupon.getTag().toString().trim() != null) {
             map.put("coupon_code", mDataBinding.coupon.getTag().toString().trim());
         }
         map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());

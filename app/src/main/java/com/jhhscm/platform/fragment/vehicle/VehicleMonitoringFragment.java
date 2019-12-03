@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapsInitializer;
@@ -27,12 +29,14 @@ import com.amap.api.maps2d.model.LatLngBounds;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.maps2d.model.Polyline;
+import com.google.gson.Gson;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AssessResultActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.databinding.FragmentLessee3Binding;
 import com.jhhscm.platform.databinding.FragmentVehicleMonitoringBinding;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.fragment.lessee.Lessee3Fragment;
 import com.jhhscm.platform.fragment.lessee.LesseeBean;
 import com.jhhscm.platform.fragment.sale.FindGoodsAssessAction;
@@ -154,7 +158,7 @@ public class VehicleMonitoringFragment extends AbsFragment<FragmentVehicleMonito
 //        map.put("phone", "15927112992");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = SignObject.getSignKey(getActivity(), map, "gpsDetail");
+        String sign = SignObject.getSignKey(getActivity(), map, "gpsDetail3");
         NetBean netBean = new NetBean();
         netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
@@ -171,11 +175,16 @@ public class VehicleMonitoringFragment extends AbsFragment<FragmentVehicleMonito
                             }
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
-                                    if (response.body().getData() != null
-                                            && response.body().getData().getGpsList().size() > 0) {
-                                        initView(response.body().getData());
-                                    } else {
-                                        ToastUtil.show(getContext(), "暂无车辆信息！");
+                                    if (response.body().getData() != null) {
+                                        GpsDetailBean gpsDetailBean = response.body().getData();
+                                        Gson gson = new Gson();
+                                        GpsDetailBean.GpsListBean gpsListBean = gson.fromJson(gpsDetailBean.getGpsList(), GpsDetailBean.GpsListBean.class);
+
+                                        if ("true".equals(gpsListBean.getRes()) && gpsListBean != null) {
+                                            initView(gpsListBean);
+                                        } else {
+                                            ToastUtil.show(getContext(), "暂无车辆信息！");
+                                        }
                                     }
                                 } else if (response.body().getCode().equals("1001")) {
                                     ToastUtils.show(getContext(), response.body().getMessage());
@@ -188,15 +197,16 @@ public class VehicleMonitoringFragment extends AbsFragment<FragmentVehicleMonito
                 }));
     }
 
-    private void initView(final GpsDetailBean gpsDetailBean) {
+    private void initView(final GpsDetailBean.GpsListBean gpsDetailBean) {
 //        mLatLngs.add(new LatLng(26.080648, 119.308806));
 //        mLatLngs.add(new LatLng(26.084339, 119.316046));
 //        mLatLngs.add(new LatLng(26.088752, 119.304117));
 //        mLatLngs.add(new LatLng(26.076064, 119.32176));
 //        mLatLngs.add(new LatLng(26.099719, 119.319711));
-        if (gpsDetailBean != null && gpsDetailBean.getGpsList().size() > 0) {
-            for (GpsDetailBean.GpsListBean gpsListBean : gpsDetailBean.getGpsList()) {
-                mLatLngs.add(new LatLng(Double.parseDouble(gpsListBean.getMlat()), Double.parseDouble(gpsListBean.getMlng())));
+        if (gpsDetailBean != null
+                && gpsDetailBean.getResult().size() > 0) {
+            for (GpsDetailBean.GpsListBean.ResultBean gpsListBean : gpsDetailBean.getResult()) {
+                mLatLngs.add(new LatLng(Double.parseDouble(gpsListBean.getLatitude()), Double.parseDouble(gpsListBean.getLongitude())));
             }
         }
 //https://restapi.amap.com/v3/geocode/regeo?output=xml&location=116.310003,39.991957
@@ -211,10 +221,10 @@ public class VehicleMonitoringFragment extends AbsFragment<FragmentVehicleMonito
                                     R.mipmap.ic_map_v)));
             mAMap.addMarker(markerOptions);
         }
-        if (gpsDetailBean != null && gpsDetailBean.getGpsList().size() > 1) {
+        if (gpsDetailBean != null && gpsDetailBean.getResult().size() > 1) {
             LatLngBounds bounds = getLatLngBounds(mLatLngs);
             mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 300));//设置地图的放缩
-        } else if (gpsDetailBean.getGpsList().size() == 1) {
+        } else if (gpsDetailBean.getResult().size() == 1) {
             CameraPosition cameraPosition = new CameraPosition(mLatLngs.get(0), 13, 0, 0);
             mAMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
@@ -224,9 +234,9 @@ public class VehicleMonitoringFragment extends AbsFragment<FragmentVehicleMonito
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Log.e("onMarkerClick", "LatLng : " + marker.getPosition().longitude + " - " + marker.getPosition().latitude);
-                for (GpsDetailBean.GpsListBean gpsListBean : gpsDetailBean.getGpsList()) {
-                    if (marker.getPosition().longitude == Double.parseDouble(gpsListBean.getMlng())
-                            && marker.getPosition().latitude == Double.parseDouble(gpsListBean.getMlat())) {
+                for (GpsDetailBean.GpsListBean.ResultBean gpsListBean : gpsDetailBean.getResult()) {
+                    if (marker.getPosition().longitude == Double.parseDouble(gpsListBean.getLongitude())
+                            && marker.getPosition().latitude == Double.parseDouble(gpsListBean.getLatitude())) {
                         new VehicleMessageDialog(getContext(), gpsListBean).show();
                     }
                 }

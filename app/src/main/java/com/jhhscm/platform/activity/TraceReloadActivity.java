@@ -32,6 +32,7 @@ import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.maps2d.model.Polyline;
 import com.amap.api.maps2d.model.PolylineOptions;
+import com.google.gson.Gson;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsActivity;
 import com.jhhscm.platform.databinding.ActivityMainBinding;
@@ -73,9 +74,12 @@ public class TraceReloadActivity extends AbsActivity {
     private Polyline mPolyline;
 
     private String id;
+    private String data1 = "";
+    private String data2 = "";
     private String startTime;
     private String endTime;
-    private GpsTrackDetailBean gpsTrackDetailBean;
+    //    private GpsTrackDetailBean gpsTrackDetailBean;
+    private GpsTrackDetailBean.GpsgjListBean gpsTrackDetailBean;
     // 存放所有坐标的数组
     private final ArrayList<LatLng> mLatLngs = new ArrayList<>();
     private final ArrayList<LatLng> mTraceLatLngs = new ArrayList<>();
@@ -147,9 +151,11 @@ public class TraceReloadActivity extends AbsActivity {
                 timePickerShow.setOnTimePickerListener(new TimePickerShow.OnTimePickerListener() {
                     @Override
                     public void onClicklistener(String dataTime) {
-                        startTime = dataTime.replace(" ", "+") + ":00";
+                        data1 = dataTime.substring(0, 10);
+                        startTime = dataTime + ":00";
+//                        startTime = dataTime.replace(" ", "+") + ":00";
                         mDataBinding.start.setText(dataTime.trim() + ":00");
-                        mDataBinding.start.setTag(startTime);
+                        mDataBinding.start.setTag(startTime.substring(11, startTime.length()));
                     }
                 });
             }
@@ -163,9 +169,16 @@ public class TraceReloadActivity extends AbsActivity {
                 timePickerShow.setOnTimePickerListener(new TimePickerShow.OnTimePickerListener() {
                     @Override
                     public void onClicklistener(String dataTime) {
-                        endTime = dataTime.replace(" ", "+") + ":00";
+                        data2 = dataTime.substring(0, 10);
+                        endTime = dataTime + ":00";
+//                        endTime = dataTime.replace(" ", "+") + ":00";
                         mDataBinding.end.setText(dataTime.trim() + ":00");
-                        mDataBinding.end.setTag(endTime);
+                        mDataBinding.end.setTag(endTime.substring(11, endTime.length()));
+                        if (data1.length() > 0 && data2.equals(data1)) {
+
+                        } else {
+                            ToastUtil.show(getApplicationContext(), "选择时间必须是同一天");
+                        }
                     }
                 });
             }
@@ -177,14 +190,16 @@ public class TraceReloadActivity extends AbsActivity {
                 if (id != null && id.length() > 0) {
                     if (mDataBinding.start.getText().toString().length() > 0
                             && mDataBinding.end.getText().toString().length() > 0) {
-                        if (DataUtil.TimeCompare(mDataBinding.start.getText().toString(), mDataBinding.end.getText().toString(), "yyyy-MM-dd")) {
-                            String days = DataUtil.getLongToDays(DataUtil.getLongTime(mDataBinding.start.getText().toString(),
-                                    mDataBinding.end.getText().toString(),
-                                    "yyyy-MM-dd"), "yyyy-MM-dd");
-                            if (Integer.parseInt(days) <= 7) {
+                        if (DataUtil.TimeCompare(mDataBinding.start.getText().toString(),
+                                mDataBinding.end.getText().toString(),
+                                "yyyy-MM-dd")) {
+//                            String days = DataUtil.getLongToDays(DataUtil.getLongTime(mDataBinding.start.getText().toString(),
+//                                    mDataBinding.end.getText().toString(),
+//                                    "yyyy-MM-dd"), "yyyy-MM-dd");
+                            if (data2.equals(data1)) {
                                 gpsTrackDetail();
                             } else {
-                                ToastUtil.show(getApplicationContext(), "时间差不能超过7天");
+                                ToastUtil.show(getApplicationContext(), "选择时间必须是同一天");
                             }
                         } else {
                             ToastUtil.show(getApplicationContext(), "结束时间不能小于开始时间");
@@ -205,35 +220,51 @@ public class TraceReloadActivity extends AbsActivity {
      */
     private void gpsTrackDetail() {
         Map<String, Object> map = new TreeMap<String, Object>();
-        map.put("devIdno", id);
-        map.put("begintime", mDataBinding.start.getTag().toString());
-        map.put("endtime", mDataBinding.end.getTag().toString());
+        map.put("systemno", id);
+        map.put("startTime", mDataBinding.start.getTag().toString().trim());
+        map.put("endTime", mDataBinding.end.getTag().toString().trim());
+        map.put("date", data1);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = SignObject.getSignKey(getApplicationContext(), map, "gpsTrackDetail");
+        String sign = SignObject.getSignKey(getApplicationContext(), map, "gpsTrackDetail3");
         NetBean netBean = new NetBean();
         netBean.setToken("");
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(GpsTrackDetailAction.newInstance(getApplicationContext(), netBean)
-                .request(new AHttpService.IResCallback<GpsTrackDetailBean>() {
+                .request(new AHttpService.IResCallback<BaseEntity<GpsTrackDetailBean>>() {
 
                     @Override
-                    public void onCallback(int resultCode, Response<GpsTrackDetailBean> response, BaseErrorInfo baseErrorInfo) {
+                    public void onCallback(int resultCode, Response<BaseEntity<GpsTrackDetailBean>> response, BaseErrorInfo baseErrorInfo) {
                         if (getApplicationContext() != null) {
                             closeDialog();
                             if (new HttpHelper().showError(getApplicationContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
                                 return;
                             }
                             if (response != null) {
-                                if (response.body() != null) {
-                                    if (response.body().getTracks() != null
-                                            && response.body().getTracks().size() > 0) {
-                                        gpsTrackDetailBean = response.body();
+//                                if (response.body() != null) {
+//                                    if (response.body().getTracks() != null
+//                                            && response.body().getTracks().size() > 0) {
+//                                        gpsTrackDetailBean = response.body();
+//                                        setUpMap();
+//                                    } else {
+//                                        ToastUtil.show(getApplicationContext(), "暂无车辆信息！");
+//                                    }
+//                                } else {
+//                                    ToastUtils.show(getApplicationContext(), "网络异常");
+//                                }
+                                if (response.body().getCode().equals("200")) {
+                                    GpsTrackDetailBean gpsDetailBean = response.body().getData();
+                                    Gson gson = new Gson();
+                                    gpsTrackDetailBean = gson.fromJson(gpsDetailBean.getGpsgjList(), GpsTrackDetailBean.GpsgjListBean.class);
+
+                                    if ("true".equals(gpsTrackDetailBean.getRes()) && gpsTrackDetailBean != null) {
                                         setUpMap();
                                     } else {
                                         ToastUtil.show(getApplicationContext(), "暂无车辆信息！");
                                     }
+                                } else if (response.body().getCode().equals("1001")) {
+                                    ToastUtils.show(getApplicationContext(), response.body().getMessage());
                                 } else {
                                     ToastUtils.show(getApplicationContext(), "网络异常");
                                 }
@@ -247,10 +278,10 @@ public class TraceReloadActivity extends AbsActivity {
         mLatLngs.clear();
 
         if (gpsTrackDetailBean != null
-                && gpsTrackDetailBean.getTracks() != null
-                && gpsTrackDetailBean.getTracks().size() > 0) {
-            for (GpsTrackDetailBean.TracksBean tracksBean : gpsTrackDetailBean.getTracks()) {
-                mLatLngs.add(new LatLng(Double.parseDouble(tracksBean.getMlat()), Double.parseDouble(tracksBean.getMlng())));
+                && gpsTrackDetailBean.getResult() != null
+                && gpsTrackDetailBean.getResult().size() > 0) {
+            for (GpsTrackDetailBean.GpsgjListBean.ResultBean tracksBean : gpsTrackDetailBean.getResult()) {
+                mLatLngs.add(new LatLng(Double.parseDouble(tracksBean.getLatitude()), Double.parseDouble(tracksBean.getLongitude())));
             }
 //            mLatLngs.add(new LatLng(26.080648, 119.308806));
 //            mLatLngs.add(new LatLng(26.084339, 119.316046));

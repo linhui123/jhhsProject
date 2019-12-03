@@ -25,7 +25,7 @@ import java.util.List;
 
 public class VehicleDetailsFragment extends AbsFragment<FragmentVehicleDetailsBinding> {
 
-    private GpsDetailBean.GpsListBean gpsListBean;
+    private GpsDetailBean.GpsListBean.ResultBean gpsListBean;
 
     public static VehicleDetailsFragment instance() {
         VehicleDetailsFragment view = new VehicleDetailsFragment();
@@ -39,35 +39,35 @@ public class VehicleDetailsFragment extends AbsFragment<FragmentVehicleDetailsBi
 
     @Override
     protected void setupViews() {
-        gpsListBean = (GpsDetailBean.GpsListBean) getArguments().getSerializable("gpsListBean");
+        gpsListBean = (GpsDetailBean.GpsListBean.ResultBean) getArguments().getSerializable("gpsListBean");
         if (gpsListBean != null) {
-            mDataBinding.tvId.setText("系统编号：" + gpsListBean.getVid());
-            mDataBinding.tvNum.setText("车辆号码：" + gpsListBean.getId());
-            mDataBinding.tvSim.setText("- -");
-            if (gpsListBean.getGt().length() > 20) {
-                mDataBinding.tvData.setText(gpsListBean.getGt().substring(0, 19));
+            mDataBinding.tvId.setText("系统编号：" + gpsListBean.getSystemNo());
+            mDataBinding.tvNum.setText("车辆号码：" + gpsListBean.getVehNoF());
+            mDataBinding.tvSim.setText(gpsListBean.getSimID());
+            if (gpsListBean.getTime().length() > 20) {
+                mDataBinding.tvData.setText(gpsListBean.getTime().substring(0, 19));
             } else {
-                mDataBinding.tvData.setText(gpsListBean.getGt());
+                mDataBinding.tvData.setText(gpsListBean.getTime());
             }
-
-            if (gpsListBean.getOl() == 1) {
+            if ("1".equals(gpsListBean.getVehStatus())) {
                 mDataBinding.tvAcc.setText("开启");
                 mDataBinding.tvStatus.setText("在线");
             } else {
                 mDataBinding.tvAcc.setText("关闭");
                 mDataBinding.tvStatus.setText("离线");
             }
+
             //数据提供，速度要除以10
-            mDataBinding.tvSudu.setText(Double.parseDouble(gpsListBean.getSp())/10 + " Km/h");
+            mDataBinding.tvSudu.setText(Double.parseDouble(gpsListBean.getVelocity()) + " Km/h");
             //数据提供，油量要除以100
-            mDataBinding.tvOil.setText(gpsListBean.getYl() / 100 + " L");
-            mDataBinding.tvTem.setText(gpsListBean.getT1() + " ℃");
-            mDataBinding.tvVol.setText(gpsListBean.getOv() + " v");
-            mDataBinding.tvResistance.setText("- - Ω");
-            mDataBinding.tvLatitude.setText(gpsListBean.getMlat());
-            mDataBinding.tvLongitude.setText(gpsListBean.getMlng());
-            mDataBinding.tvParking.setText(DataUtil.getLongToTime(gpsListBean.getPk() * 1000, ""));
-            getAddress(Double.parseDouble(gpsListBean.getMlng()), Double.parseDouble(gpsListBean.getMlat()));
+            mDataBinding.tvOil.setText(Integer.parseInt(gpsListBean.getOil()) + " L");
+            mDataBinding.tvTem.setText(gpsListBean.getTemperature() + " ℃");
+//            mDataBinding.tvVol.setText(gpsListBean.getOv() + " v");
+//            mDataBinding.tvResistance.setText("- - Ω");
+            mDataBinding.tvLatitude.setText(gpsListBean.getLatitude());
+            mDataBinding.tvLongitude.setText(gpsListBean.getLongitude());
+//            mDataBinding.tvParking.setText(DataUtil.getLongToTime(gpsListBean.getPk() * 1000, ""));
+            getAddress(Double.parseDouble(gpsListBean.getLongitude()), Double.parseDouble(gpsListBean.getLatitude()));
         }
     }
 

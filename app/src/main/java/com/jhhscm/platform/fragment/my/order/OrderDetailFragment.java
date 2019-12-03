@@ -121,7 +121,8 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         mDataBinding.tvTijiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CashierActivity.start(getContext(), new CreateOrderResultBean(new CreateOrderResultBean.DataBean(order_code)));
+                CashierActivity.start(getContext(), new CreateOrderResultBean(
+                        new CreateOrderResultBean.DataBean(order_code)));
             }
         });
         findOrder();

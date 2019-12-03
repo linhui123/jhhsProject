@@ -11,6 +11,11 @@ public class GpsTrackDetailBean {
 
     private PaginationBean pagination;
     private List<TracksBean> tracks;
+    /**
+     * gpsgjList : {"res":"true","result":[{"Time":"2019-11-05 07:02:23","Longitude":"117.56195","Latitude":"26.29507","ysLongitude":"117.55045","ysLatitude":"26.29273","Angle":"84","DwellTime":"24704","Velocity":"1","Miles":"2801.831"},{"Time":"2019-11-05 07:03:09","Longitude":"117.56196","Latitude":"26.29507","ysLongitude":"117.55047","ysLatitude":"26.29273","Angle":"58","DwellTime":"43","Velocity":"1","Miles":"2801.837"},{"Time":"2019-11-05 07:03:43","Longitude":"117.56196","Latitude":"26.29507","ysLongitude":"117.55047","ysLatitude":"26.29273","Angle":"24","DwellTime":"31","Velocity":"1","Miles":"2801.843"},{"Time":"2019-11-05 07:04:47","Longitude":"117.56196","Latitude":"26.29511","ysLongitude":"117.55047","ysLatitude":"26.29277","Angle":"345","DwellTime":"34","Velocity":"1","Miles":"2801.853"},{"Time":"2019-11-05 07:05:05","Longitude":"117.56196","Latitude":"26.29512","ysLongitude":"117.55047","ysLatitude":"26.29278","Angle":"177","DwellTime":"12","Velocity":"1","Miles":"2801.857"},{"Time":"2019-11-05 07:11:02","Longitude":"117.56195","Latitude":"26.29511","ysLongitude":"117.55045","ysLatitude":"26.29277","Angle":"241","DwellTime":"354","Velocity":"1","Miles":"2801.906"},{"Time":"2019-11-05 07:19:13","Longitude":"117.56196","Latitude":"26.29511","ysLongitude":"117.55047","ysLatitude":"26.29277","Angle":"315","DwellTime":"458","Velocity":"2","Miles":"2801.943"},{"Time":"2019-11-05 07:19:44","Longitude":"117.56196","Latitude":"26.29511","ysLongitude":"117.55047","ysLatitude":"26.29277","Angle":"0","DwellTime":"0","Velocity":"1","Miles":"2801.947"},{"Time":"2019-11-05 07:20:23","Longitude":"117.56195","Latitude":"26.29512","ysLongitude":"117.55045","ysLatitude":"26.29278","Angle":"358","DwellTime":"9","Velocity":"2","Miles":"2801.953"},{"Time":"2019-11-05 07:23:17","Longitude":"117.56195","Latitude":"26.29512","ysLongitude":"117.55045","ysLatitude":"26.29278","Angle":"182","DwellTime":"55","Velocity":"2","Miles":"2801.988"},{"Time":"2019-11-05 07:24:34","Longitude":"117.56209","Latitude":"26.29471","ysLongitude":"117.55060","ysLatitude":"26.29237","Angle":"152","DwellTime":"0","Velocity":"2","Miles":"2802.035"},{"Time":"2019-11-05 07:25:04","Longitude":"117.56219","Latitude":"26.29454","ysLongitude":"117.55070","ysLatitude":"26.29220","Angle":"167","DwellTime":"0","Velocity":"2","Miles":"2802.058"},{"Time":"2019-11-05 07:25:35","Longitude":"117.56216","Latitude":"26.29432","ysLongitude":"117.55067","ysLatitude":"26.29198","Angle":"196","DwellTime":"0","Velocity":"2","Miles":"2802.082"},{"Time":"2019-11-05 07:25:41","Longitude":"117.56215","Latitude":"26.29429","ysLongitude":"117.55065","ysLatitude":"26.29195","Angle":"200","DwellTime":"0","Velocity":"2","Miles":"2802.086"},{"Time":"2019-11-05 07:25:47","Longitude":"117.56212","Latitude":"26.29426","ysLongitude":"117.55063","ysLatitude":"26.29192","Angle":"197","DwellTime":"0","Velocity":"2","Miles":"2802.090"},{"Time":"2019-11-05 07:25:50","Longitude":"117.56212","Latitude":"26.29424","ysLongitude":"117.55063","ysLatitude":"26.29190","Angle":"200","DwellTime":"0","Velocity":"2","Miles":"2802.093"},{"Time":"2019-11-05 07:26:21","Longitude":"117.56205","Latitude":"26.29406","ysLongitude":"117.55055","ysLatitude":"26.29172","Angle":"203","DwellTime":"0","Velocity":"2","Miles":"2802.116"},{"Time":"2019-11-05 07:26:30","Longitude":"117.56202","Latitude":"26.29401","ysLongitude":"117.55052","ysLatitude":"26.29167","Angle":"199","DwellTime":"0","Velocity":"2","Miles":"2802.122"},{"Time":"2019-11-05 07:26:45","Longitude":"117.56198","Latitude":"26.29391","ysLongitude":"117.55048","ysLatitude":"26.29157","Angle":"213","DwellTime":"0","Velocity":"2","Miles":"2802.133"},{"Time":"2019-11-05 07:27:16","Longitude":"117.56183","Latitude":"26.29374","ysLongitude":"117.55033","ysLatitude":"26.29140","Angle":"223","DwellTime":"0","Velocity":"2","Miles":"2802.156"},{"Time":"2019-11-05 07:27:46","Longitude":"117.56164","Latitude":"26.29361","ysLongitude":"117.55015","ysLatitude":"26.29127","Angle":"0","DwellTime":"0","Velocity":"2","Miles":"2802.178"},{"Time":"2019-11-05 07:28:01","Longitude":"117.56167","Latitude":"26.29357","ysLongitude":"117.55017","ysLatitude":"26.29123","Angle":"138","DwellTime":"0","Velocity":"2","Miles":"2802.185"},{"Time":"2019-11-05 07:33:56","Longitude":"117.56187","Latitude":"26.29351","ysLongitude":"117.55038","ysLatitude":"26.29117","Angle":"349","DwellTime":"349","Velocity":"1","Miles":"2802.277"},{"Time":"2019-11-05 07:39:38","Longitude":"117.56187","Latitude":"26.29351","ysLongitude":"117.55038","ysLatitude":"26.29117","Angle":"256","DwellTime":"300","Velocity":"2","Miles":"2802.336"},{"Time":"2019-11-05 07:39:47","Longitude":"117.56187","Latitude":"26.29351","ysLongitude":"117.55038","ysLatitude":"26.29117","Angle":"294","DwellTime":"6","Velocity":"1","Miles":"2802.338"},{"Time":"2019-11-05 07:40:39","Longitude":"117.56187","Latitude":"26.29351","ysLongitude":"117.55038","ysLatitude":"26.29117","Angle":"235","DwellTime":"10","Velocity":"1","Miles":"2802.351"},{"Time":"2019-11-05 07:47:26","Longitude":"117.56190","Latitude":"26.29347","ysLongitude":"117.55040","ysLatitude":"26.29113","Angle":"0","DwellTime":"404","Velocity":"1","Miles":"2802.416"},{"Time":"2019-11-05 07:48:13","Longitude":"117.56190","Latitude":"26.29351","ysLongitude":"117.55040","ysLatitude":"26.29117","Angle":"8","DwellTime":"0","Velocity":"1","Miles":"2802.429"},{"Time":"2019-11-05 07:51:56","Longitude":"117.56190","Latitude":"26.29349","ysLongitude":"117.55040","ysLatitude":"26.29115","Angle":"32","DwellTime":"162","Velocity":"1","Miles":"2802.451"},{"Time":"2019-11-05 07:52:08","Longitude":"117.56190","Latitude":"26.29349","ysLongitude":"117.55040","ysLatitude":"26.29115","Angle":"96","DwellTime":"0","Velocity":"1","Miles":"2802.453"},{"Time":"2019-11-05 07:55:11","Longitude":"117.56192","Latitude":"26.29351","ysLongitude":"117.55042","ysLatitude":"26.29117","Angle":"40","DwellTime":"180","Velocity":"1","Miles":"2802.478"},{"Time":"2019-11-05 07:55:48","Longitude":"117.56192","Latitude":"26.29352","ysLongitude":"117.55042","ysLatitude":"26.29118","Angle":"55","DwellTime":"34","Velocity":"1","Miles":"2802.483"},{"Time":"2019-11-05 07:55:57","Longitude":"117.56193","Latitude":"26.29349","ysLongitude":"117.55043","ysLatitude":"26.29115","Angle":"0","DwellTime":"0","Velocity":"1","Miles":"2802.487"},{"Time":"2019-11-05 07:56:12","Longitude":"117.56192","Latitude":"26.29344","ysLongitude":"117.55042","ysLatitude":"26.29110","Angle":"90","DwellTime":"0","Velocity":"2","Miles":"2802.492"},{"Time":"2019-11-05 08:03:58","Longitude":"117.56183","Latitude":"26.29346","ysLongitude":"117.55033","ysLatitude":"26.29112","Angle":"0","DwellTime":"463","Velocity":"1","Miles":"2802.552"},{"Time":"2019-11-05 08:04:37","Longitude":"117.56192","Latitude":"26.29354","ysLongitude":"117.55042","ysLatitude":"26.29120","Angle":"42","DwellTime":"8","Velocity":"3","Miles":"2802.565"},{"Time":"2019-11-05 08:19:12","Longitude":"117.56190","Latitude":"26.29349","ysLongitude":"117.55040","ysLatitude":"26.29115","Angle":"158","DwellTime":"758","Velocity":"2","Miles":"2802.704"},{"Time":"2019-11-05 08:21:33","Longitude":"117.56190","Latitude":"26.29349","ysLongitude":"117.55040","ysLatitude":"26.29115","Angle":"244","DwellTime":"26","Velocity":"1","Miles":"2802.722"},{"Time":"2019-11-05 08:22:49","Longitude":"117.56190","Latitude":"26.29347","ysLongitude":"117.55040","ysLatitude":"26.29113","Angle":"194","DwellTime":"43","Velocity":"1","Miles":"2802.731"},{"Time":"2019-11-05 08:24:24","Longitude":"117.56190","Latitude":"26.29349","ysLongitude":"117.55040","ysLatitude":"26.29115","Angle":"9","DwellTime":"61","Velocity":"1","Miles":"2802.739"},{"Time":"2019-11-05 08:30:01","Longitude":"117.56190","Latitude":"26.29347","ysLongitude":"117.55040","ysLatitude":"26.29113","Angle":"306","DwellTime":"307","Velocity":"1","Miles":"2802.786"}]}
+     */
+
+    private String gpsgjList;
 
     public PaginationBean getPagination() {
         return pagination;
@@ -26,6 +31,14 @@ public class GpsTrackDetailBean {
 
     public void setTracks(List<TracksBean> tracks) {
         this.tracks = tracks;
+    }
+
+    public String getGpsgjList() {
+        return gpsgjList;
+    }
+
+    public void setGpsgjList(String gpsgjList) {
+        this.gpsgjList = gpsgjList;
     }
 
     public static class PaginationBean {
@@ -397,6 +410,129 @@ public class GpsTrackDetailBean {
 
         public void setT3(int t3) {
             this.t3 = t3;
+        }
+    }
+
+
+    public static class GpsgjListBean {
+        /**
+         * res : true
+         * result : [{"Time":"2019-11-05 07:02:23","Longitude":"117.56195","Latitude":"26.29507","ysLongitude":"117.55045","ysLatitude":"26.29273","Angle":"84","DwellTime":"24704","Velocity":"1","Miles":"2801.831"},{"Time":"2019-11-05 07:03:09","Longitude":"117.56196","Latitude":"26.29507","ysLongitude":"117.55047","ysLatitude":"26.29273","Angle":"58","DwellTime":"43","Velocity":"1","Miles":"2801.837"},{"Time":"2019-11-05 07:03:43","Longitude":"117.56196","Latitude":"26.29507","ysLongitude":"117.55047","ysLatitude":"26.29273","Angle":"24","DwellTime":"31","Velocity":"1","Miles":"2801.843"},{"Time":"2019-11-05 07:04:47","Longitude":"117.56196","Latitude":"26.29511","ysLongitude":"117.55047","ysLatitude":"26.29277","Angle":"345","DwellTime":"34","Velocity":"1","Miles":"2801.853"},{"Time":"2019-11-05 07:05:05","Longitude":"117.56196","Latitude":"26.29512","ysLongitude":"117.55047","ysLatitude":"26.29278","Angle":"177","DwellTime":"12","Velocity":"1","Miles":"2801.857"},{"Time":"2019-11-05 07:11:02","Longitude":"117.56195","Latitude":"26.29511","ysLongitude":"117.55045","ysLatitude":"26.29277","Angle":"241","DwellTime":"354","Velocity":"1","Miles":"2801.906"},{"Time":"2019-11-05 07:19:13","Longitude":"117.56196","Latitude":"26.29511","ysLongitude":"117.55047","ysLatitude":"26.29277","Angle":"315","DwellTime":"458","Velocity":"2","Miles":"2801.943"},{"Time":"2019-11-05 07:19:44","Longitude":"117.56196","Latitude":"26.29511","ysLongitude":"117.55047","ysLatitude":"26.29277","Angle":"0","DwellTime":"0","Velocity":"1","Miles":"2801.947"},{"Time":"2019-11-05 07:20:23","Longitude":"117.56195","Latitude":"26.29512","ysLongitude":"117.55045","ysLatitude":"26.29278","Angle":"358","DwellTime":"9","Velocity":"2","Miles":"2801.953"},{"Time":"2019-11-05 07:23:17","Longitude":"117.56195","Latitude":"26.29512","ysLongitude":"117.55045","ysLatitude":"26.29278","Angle":"182","DwellTime":"55","Velocity":"2","Miles":"2801.988"},{"Time":"2019-11-05 07:24:34","Longitude":"117.56209","Latitude":"26.29471","ysLongitude":"117.55060","ysLatitude":"26.29237","Angle":"152","DwellTime":"0","Velocity":"2","Miles":"2802.035"},{"Time":"2019-11-05 07:25:04","Longitude":"117.56219","Latitude":"26.29454","ysLongitude":"117.55070","ysLatitude":"26.29220","Angle":"167","DwellTime":"0","Velocity":"2","Miles":"2802.058"},{"Time":"2019-11-05 07:25:35","Longitude":"117.56216","Latitude":"26.29432","ysLongitude":"117.55067","ysLatitude":"26.29198","Angle":"196","DwellTime":"0","Velocity":"2","Miles":"2802.082"},{"Time":"2019-11-05 07:25:41","Longitude":"117.56215","Latitude":"26.29429","ysLongitude":"117.55065","ysLatitude":"26.29195","Angle":"200","DwellTime":"0","Velocity":"2","Miles":"2802.086"},{"Time":"2019-11-05 07:25:47","Longitude":"117.56212","Latitude":"26.29426","ysLongitude":"117.55063","ysLatitude":"26.29192","Angle":"197","DwellTime":"0","Velocity":"2","Miles":"2802.090"},{"Time":"2019-11-05 07:25:50","Longitude":"117.56212","Latitude":"26.29424","ysLongitude":"117.55063","ysLatitude":"26.29190","Angle":"200","DwellTime":"0","Velocity":"2","Miles":"2802.093"},{"Time":"2019-11-05 07:26:21","Longitude":"117.56205","Latitude":"26.29406","ysLongitude":"117.55055","ysLatitude":"26.29172","Angle":"203","DwellTime":"0","Velocity":"2","Miles":"2802.116"},{"Time":"2019-11-05 07:26:30","Longitude":"117.56202","Latitude":"26.29401","ysLongitude":"117.55052","ysLatitude":"26.29167","Angle":"199","DwellTime":"0","Velocity":"2","Miles":"2802.122"},{"Time":"2019-11-05 07:26:45","Longitude":"117.56198","Latitude":"26.29391","ysLongitude":"117.55048","ysLatitude":"26.29157","Angle":"213","DwellTime":"0","Velocity":"2","Miles":"2802.133"},{"Time":"2019-11-05 07:27:16","Longitude":"117.56183","Latitude":"26.29374","ysLongitude":"117.55033","ysLatitude":"26.29140","Angle":"223","DwellTime":"0","Velocity":"2","Miles":"2802.156"},{"Time":"2019-11-05 07:27:46","Longitude":"117.56164","Latitude":"26.29361","ysLongitude":"117.55015","ysLatitude":"26.29127","Angle":"0","DwellTime":"0","Velocity":"2","Miles":"2802.178"},{"Time":"2019-11-05 07:28:01","Longitude":"117.56167","Latitude":"26.29357","ysLongitude":"117.55017","ysLatitude":"26.29123","Angle":"138","DwellTime":"0","Velocity":"2","Miles":"2802.185"},{"Time":"2019-11-05 07:33:56","Longitude":"117.56187","Latitude":"26.29351","ysLongitude":"117.55038","ysLatitude":"26.29117","Angle":"349","DwellTime":"349","Velocity":"1","Miles":"2802.277"},{"Time":"2019-11-05 07:39:38","Longitude":"117.56187","Latitude":"26.29351","ysLongitude":"117.55038","ysLatitude":"26.29117","Angle":"256","DwellTime":"300","Velocity":"2","Miles":"2802.336"},{"Time":"2019-11-05 07:39:47","Longitude":"117.56187","Latitude":"26.29351","ysLongitude":"117.55038","ysLatitude":"26.29117","Angle":"294","DwellTime":"6","Velocity":"1","Miles":"2802.338"},{"Time":"2019-11-05 07:40:39","Longitude":"117.56187","Latitude":"26.29351","ysLongitude":"117.55038","ysLatitude":"26.29117","Angle":"235","DwellTime":"10","Velocity":"1","Miles":"2802.351"},{"Time":"2019-11-05 07:47:26","Longitude":"117.56190","Latitude":"26.29347","ysLongitude":"117.55040","ysLatitude":"26.29113","Angle":"0","DwellTime":"404","Velocity":"1","Miles":"2802.416"},{"Time":"2019-11-05 07:48:13","Longitude":"117.56190","Latitude":"26.29351","ysLongitude":"117.55040","ysLatitude":"26.29117","Angle":"8","DwellTime":"0","Velocity":"1","Miles":"2802.429"},{"Time":"2019-11-05 07:51:56","Longitude":"117.56190","Latitude":"26.29349","ysLongitude":"117.55040","ysLatitude":"26.29115","Angle":"32","DwellTime":"162","Velocity":"1","Miles":"2802.451"},{"Time":"2019-11-05 07:52:08","Longitude":"117.56190","Latitude":"26.29349","ysLongitude":"117.55040","ysLatitude":"26.29115","Angle":"96","DwellTime":"0","Velocity":"1","Miles":"2802.453"},{"Time":"2019-11-05 07:55:11","Longitude":"117.56192","Latitude":"26.29351","ysLongitude":"117.55042","ysLatitude":"26.29117","Angle":"40","DwellTime":"180","Velocity":"1","Miles":"2802.478"},{"Time":"2019-11-05 07:55:48","Longitude":"117.56192","Latitude":"26.29352","ysLongitude":"117.55042","ysLatitude":"26.29118","Angle":"55","DwellTime":"34","Velocity":"1","Miles":"2802.483"},{"Time":"2019-11-05 07:55:57","Longitude":"117.56193","Latitude":"26.29349","ysLongitude":"117.55043","ysLatitude":"26.29115","Angle":"0","DwellTime":"0","Velocity":"1","Miles":"2802.487"},{"Time":"2019-11-05 07:56:12","Longitude":"117.56192","Latitude":"26.29344","ysLongitude":"117.55042","ysLatitude":"26.29110","Angle":"90","DwellTime":"0","Velocity":"2","Miles":"2802.492"},{"Time":"2019-11-05 08:03:58","Longitude":"117.56183","Latitude":"26.29346","ysLongitude":"117.55033","ysLatitude":"26.29112","Angle":"0","DwellTime":"463","Velocity":"1","Miles":"2802.552"},{"Time":"2019-11-05 08:04:37","Longitude":"117.56192","Latitude":"26.29354","ysLongitude":"117.55042","ysLatitude":"26.29120","Angle":"42","DwellTime":"8","Velocity":"3","Miles":"2802.565"},{"Time":"2019-11-05 08:19:12","Longitude":"117.56190","Latitude":"26.29349","ysLongitude":"117.55040","ysLatitude":"26.29115","Angle":"158","DwellTime":"758","Velocity":"2","Miles":"2802.704"},{"Time":"2019-11-05 08:21:33","Longitude":"117.56190","Latitude":"26.29349","ysLongitude":"117.55040","ysLatitude":"26.29115","Angle":"244","DwellTime":"26","Velocity":"1","Miles":"2802.722"},{"Time":"2019-11-05 08:22:49","Longitude":"117.56190","Latitude":"26.29347","ysLongitude":"117.55040","ysLatitude":"26.29113","Angle":"194","DwellTime":"43","Velocity":"1","Miles":"2802.731"},{"Time":"2019-11-05 08:24:24","Longitude":"117.56190","Latitude":"26.29349","ysLongitude":"117.55040","ysLatitude":"26.29115","Angle":"9","DwellTime":"61","Velocity":"1","Miles":"2802.739"},{"Time":"2019-11-05 08:30:01","Longitude":"117.56190","Latitude":"26.29347","ysLongitude":"117.55040","ysLatitude":"26.29113","Angle":"306","DwellTime":"307","Velocity":"1","Miles":"2802.786"}]
+         */
+
+        private String res;
+        private List<ResultBean> result;
+
+        public String getRes() {
+            return res;
+        }
+
+        public void setRes(String res) {
+            this.res = res;
+        }
+
+        public List<ResultBean> getResult() {
+            return result;
+        }
+
+        public void setResult(List<ResultBean> result) {
+            this.result = result;
+        }
+
+        public static class ResultBean {
+            /**
+             * Time : 2019-11-05 07:02:23
+             * Longitude : 117.56195
+             * Latitude : 26.29507
+             * ysLongitude : 117.55045
+             * ysLatitude : 26.29273
+             * Angle : 84
+             * DwellTime : 24704
+             * Velocity : 1
+             * Miles : 2801.831
+             */
+
+            private String Time;
+            private String Longitude;
+            private String Latitude;
+            private String ysLongitude;
+            private String ysLatitude;
+            private String Angle;
+            private String DwellTime;
+            private String Velocity;
+            private String Miles;
+
+            public String getTime() {
+                return Time;
+            }
+
+            public void setTime(String Time) {
+                this.Time = Time;
+            }
+
+            public String getLongitude() {
+                return Longitude;
+            }
+
+            public void setLongitude(String Longitude) {
+                this.Longitude = Longitude;
+            }
+
+            public String getLatitude() {
+                return Latitude;
+            }
+
+            public void setLatitude(String Latitude) {
+                this.Latitude = Latitude;
+            }
+
+            public String getYsLongitude() {
+                return ysLongitude;
+            }
+
+            public void setYsLongitude(String ysLongitude) {
+                this.ysLongitude = ysLongitude;
+            }
+
+            public String getYsLatitude() {
+                return ysLatitude;
+            }
+
+            public void setYsLatitude(String ysLatitude) {
+                this.ysLatitude = ysLatitude;
+            }
+
+            public String getAngle() {
+                return Angle;
+            }
+
+            public void setAngle(String Angle) {
+                this.Angle = Angle;
+            }
+
+            public String getDwellTime() {
+                return DwellTime;
+            }
+
+            public void setDwellTime(String DwellTime) {
+                this.DwellTime = DwellTime;
+            }
+
+            public String getVelocity() {
+                return Velocity;
+            }
+
+            public void setVelocity(String Velocity) {
+                this.Velocity = Velocity;
+            }
+
+            public String getMiles() {
+                return Miles;
+            }
+
+            public void setMiles(String Miles) {
+                this.Miles = Miles;
+            }
         }
     }
 }

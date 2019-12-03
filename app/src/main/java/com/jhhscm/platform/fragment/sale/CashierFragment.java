@@ -153,6 +153,9 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
             startNewActivity(LoginActivity.class);
             getActivity().finish();
         }
+
+        createOrderResultBean = (CreateOrderResultBean) getArguments().getSerializable("createOrderResultBean");
+
         getCouponList(true);
         mDataBinding.tvCoupon.setTag("");
         mDataBinding.tvCoupon.setOnClickListener(new View.OnClickListener() {
@@ -165,7 +168,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
                             mDataBinding.tvCoupon.setText(Nmae);
                             mDataBinding.tvCoupon.setTag(id);
                             double result = 0.0;
-                            result = Double.parseDouble(createOrderResultBean.getData().getOrderPrice() + "")
+                            result = Double.parseDouble(findOrderBean.getOrder().getOrder_price() + "")
                                     - Double.parseDouble(discount + "");
                             mDataBinding.tvPrice.setText(result + "");
                         }
@@ -177,9 +180,8 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
             }
         });
 
-        createOrderResultBean = (CreateOrderResultBean) getArguments().getSerializable("createOrderResultBean");
         if (createOrderResultBean != null && createOrderResultBean.getData().getOrderCode() != null) {
-            mDataBinding.tvPrice.setText(createOrderResultBean.getData().getOrderPrice() + "");
+//            mDataBinding.tvPrice.setText(createOrderResultBean.getData().getOrderPrice() + "");
             findOrder(false);
         }
 
@@ -471,6 +473,11 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
                                         } else {//支付前
                                             mDataBinding.tvPrice.setText(findOrderBean.getOrder().getOrder_price() + "");
                                             startCountDown();
+                                            if (Double.parseDouble(findOrderBean.getOrder().getCoupon_price()) > 0) {
+                                                mDataBinding.tvCoupon.setEnabled(false);
+                                                mDataBinding.tvCoupon.setText("该订单已使用过优惠券");
+                                                mDataBinding.rlCoupon.setVisibility(View.GONE);
+                                            }
                                         }
                                     }
                                 } else {
@@ -577,7 +584,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
                         mDataBinding.tvCoupon.setText(Nmae);
                         mDataBinding.tvCoupon.setTag(id);
                         double result = 0.0;
-                        result = Double.parseDouble(createOrderResultBean.getData().getOrderPrice() + "")
+                        result = Double.parseDouble(findOrderBean.getOrder().getOrder_price() + "")
                                 - Double.parseDouble(discount + "");
                         mDataBinding.tvPrice.setText(result + "");
                     }

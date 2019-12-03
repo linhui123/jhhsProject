@@ -9,7 +9,7 @@ import com.jhhscm.platform.http.bean.NetBean;
 
 import retrofit2.Call;
 
-public class GpsTrackDetailAction extends AHttpService<GpsTrackDetailBean> {
+public class GpsTrackDetailAction extends AHttpService<BaseEntity<GpsTrackDetailBean>> {
 
     private NetBean netBean;
 
