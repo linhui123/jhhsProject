@@ -32,7 +32,7 @@ import retrofit2.Call;
 public class UploadOldMechanicsImgAction extends AHttpService<OldMechanicsUpImageBean> {
 
     private String imagePath;
-    public final long UPLOAD_IMAGE_SIZE_LIMIT = 1024 * 1024;//1M
+    public final long UPLOAD_IMAGE_SIZE_LIMIT = 100* 1024;//1M
     private File uploadImageFile;
     private String mToken;
 

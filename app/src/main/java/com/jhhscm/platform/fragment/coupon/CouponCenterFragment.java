@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
+import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
@@ -146,6 +147,8 @@ public class CouponCenterFragment extends AbsFragment<FragmentCouponCenterBindin
                                     if (response.body().getCode().equals("200")) {
 
                                         initView(refresh, response.body().getData());
+                                    } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                        ToastUtils.show(getContext(), "网络错误");
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }

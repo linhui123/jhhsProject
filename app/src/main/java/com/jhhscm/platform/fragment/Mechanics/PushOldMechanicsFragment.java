@@ -456,7 +456,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
     }
 
     public void imageFile(Context context, final String imagePath) {
-        final long UPLOAD_IMAGE_SIZE_LIMIT = 1024 * 1024;//1M
+        final long UPLOAD_IMAGE_SIZE_LIMIT = 100 * 1024;//1M
         File imageFile = null;
         try {
             imageFile = new File(new URI(imagePath));

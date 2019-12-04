@@ -118,7 +118,7 @@ public class FinancialH5Activity extends AbsActivity {
         setupToolbar();
         setupContentView();
         setupButtom();
-        checkDeviceHasNavigationBar(getApplicationContext());
+//        checkDeviceHasNavigationBar(getApplicationContext());
     }
 
     private void setupButtom() {
@@ -165,7 +165,7 @@ public class FinancialH5Activity extends AbsActivity {
 
     @Override
     public boolean isSupportSwipeBack() {
-        return true;
+        return false;
     }
 
     protected Bundle onPutArguments() {
@@ -830,57 +830,5 @@ public class FinancialH5Activity extends AbsActivity {
             }
         }
 
-    }
-
-    /**
-     * 判断是否存在NavigationBar
-     *
-     * @param context：上下文环境
-     * @return：返回是否存在(true/false)
-     */
-    public boolean checkDeviceHasNavigationBar(Context context) {
-        boolean hasNavigationBar = false;
-        Resources rs = context.getResources();
-        int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
-        if (id > 0) {
-            hasNavigationBar = rs.getBoolean(id);
-        }
-        try {
-            Class systemPropertiesClass = Class.forName("android.os.SystemProperties");
-            Method m = systemPropertiesClass.getMethod("get", String.class);
-            String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
-//            Log.e("navBarOverride", "navBarOverride:" + navBarOverride);
-            if ("1".equals(navBarOverride)) {
-                //不存在虚拟按键
-                hasNavigationBar = false;
-//                ToastUtil.show(context, "不存在虚拟按键");
-            } else if ("0".equals(navBarOverride)) {
-                //存在虚拟按键
-                hasNavigationBar = true;
-                //手动设置控件的margin
-                //linebutton是一个linearlayout,里面包含了两个Button
-                RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) mDataBinding.llBottom.getLayoutParams();
-//                Log.e("getNavigationBarHeight", "getNavigationBarHeight:" + getNavigationBarHeight(this));
-                //setMargins：顺序是左、上、右、下
-                layout.setMargins(15, 0, 15, getNavigationBarHeight(this) + 10);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return hasNavigationBar;
-    }
-
-
-    /**
-     * 测量底部导航栏的高度
-     *
-     * @param mActivity:上下文环境
-     * @return：返回测量出的底部导航栏高度
-     */
-    private int getNavigationBarHeight(Activity mActivity) {
-        Resources resources = mActivity.getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        int height = resources.getDimensionPixelSize(resourceId);
-        return height;
     }
 }

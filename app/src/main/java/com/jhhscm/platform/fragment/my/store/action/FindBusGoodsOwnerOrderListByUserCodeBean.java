@@ -148,11 +148,13 @@ public class FindBusGoodsOwnerOrderListByUserCodeBean {
          * goodsOwnerList : [{"order_code":"2019111550001571159003","pic_gallery_url_list":"[\"http://wajueji.oss-cn-shenzhen.aliyuncs.com/oldGood_water/0260b2d0717a44a5a7369ec9b6f29c14.jpg?Expires=1888803679&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=eSraHUKF2xEJ5fV3gWVACw7buxE%3D\",\"http://wajueji.oss-cn-shenzhen.aliyuncs.com/oldGood_water/d2d8453e5fd441848b5d623b4880fbd2.jpg?Expires=1888803681&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=h326LsaqVfWwWBlazBLpXO3w%2Bmg%3D\"]","user_code":"1000000330781973","fix_p_17":"yyy","goods_code":"20191111114190000457715285","bus_code":"4000000034777111","factory_time":"2019-11-10T16:00:00.000+0000"}]
          * add_time : 2019-11-15T08:20:38.000+0000
          * other_price : 12212.0
+         * user_mobile
          */
 
         private String order_code;
         private int order_status;
         private String goods_name;
+        private String user_mobile;
         private String order_status_name;
         private String user_code;
         private double goods_price;
@@ -161,6 +163,14 @@ public class FindBusGoodsOwnerOrderListByUserCodeBean {
         private double other_price;
         private List<GoodsListBean> goodsList;
         private List<GoodsOwnerListBean> goodsOwnerList;
+
+        public String getUser_mobile() {
+            return user_mobile;
+        }
+
+        public void setUser_mobile(String user_mobile) {
+            this.user_mobile = user_mobile;
+        }
 
         public String getOrder_code() {
             return order_code;

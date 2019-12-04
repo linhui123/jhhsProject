@@ -198,10 +198,10 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
                                 } else {
                                     if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
                                         ToastUtils.show(getContext(), "网络错误");
-                                        mDataBinding.recyclerview.loadComplete(true, false);
                                     } else {
                                         ToastUtils.show(getContext(), "error " + type + ":" + response.body().getMessage());
                                     }
+                                    mDataBinding.recyclerview.loadComplete(true, false);
                                 }
                             } else {
                                 ToastUtils.show(getContext(), "网络错误");

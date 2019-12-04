@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
+import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.PushOldMechanicsActivity;
 import com.jhhscm.platform.activity.PushQiuZhiActivity;
@@ -422,6 +423,8 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         pinpai(response.body().getData());
+                                    } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                        ToastUtils.show(getContext(), "网络错误");
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
@@ -666,6 +669,8 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
 
                                     }
                                 }).show();
+                            } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                ToastUtils.show(getContext(), "网络错误");
                             } else {
                                 ToastUtils.show(getContext(), response.body().getMessage());
                             }

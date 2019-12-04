@@ -44,7 +44,7 @@ public class ApiServiceModule {
     private static ApiServiceModule ourInstance = new ApiServiceModule();
     //URL定义
     public static String BASE_URL2 = "http://47.106.110.219/#/newMachine";//显示
-    public static String BASE_URL3 = "http://192.168.0.241:8083/wajueji/";//bowen 测试
+    public static String BASE_URL3 = "http://192.168.0.209:8083/wajueji/";//测试
     public static String BASE_URL4 = "http://120.76.101.183:9090/wajueji/";//外网测试
     public static String BASE_URL5 = "http://api.jhhscm.cn/wajueji/";
 

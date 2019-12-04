@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
+import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
@@ -250,6 +251,8 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         doSuccessResponse(refresh, response.body().getData());
+                                    } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                        ToastUtils.show(getContext(), "网络错误");
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
@@ -385,6 +388,8 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         pinpai(response.body().getData());
+                                    } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                        ToastUtils.show(getContext(), "网络错误");
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
@@ -625,6 +630,8 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
 
                                     }
                                 }).show();
+                            } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                ToastUtils.show(getContext(), "网络错误");
                             } else {
                                 ToastUtils.show(getContext(), response.body().getMessage());
                             }

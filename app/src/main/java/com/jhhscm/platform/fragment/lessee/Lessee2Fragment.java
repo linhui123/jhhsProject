@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
+import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.Lessee3Activity;
@@ -239,6 +240,8 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         doSuccessResponse(response.body().getData());
+                                    } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                        ToastUtils.show(getContext(), "网络错误");
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
@@ -306,7 +309,7 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
     }
 
     public void imageFile(final int position, Context context, final String imagePath) {
-        final long UPLOAD_IMAGE_SIZE_LIMIT = 1024 * 1024;//1M
+        final long UPLOAD_IMAGE_SIZE_LIMIT = 100 * 1024;//1M
         File imageFile = null;
         try {
             imageFile = new File(new URI(imagePath));

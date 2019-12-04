@@ -65,7 +65,7 @@ public class StoreOrderItemViewHolder extends AbsRecyclerViewHolder<FindBusGoods
 
             mBinding.fee.setText("￥" + item.getOther_price());
             mBinding.total.setText("￥" + item.getGoods_price());
-            mBinding.phone.setText(item.getUser_name());
+            mBinding.phone.setText(item.getUser_mobile());
             mBinding.name.setText(item.getUser_name());
 
             mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(itemView.getContext()));

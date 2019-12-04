@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
+import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.h5.H5Activity;
 import com.jhhscm.platform.bean.LogingResultBean;
@@ -127,6 +128,8 @@ public class LoginFragment extends AbsFragment<FragmentLoginBinding> {
                                     LogingResultBean logingResultBean = new LogingResultBean();
                                     logingResultBean = gson.fromJson(jsonData, LogingResultBean.class);
                                     ToastUtils.show(getContext(), response.body().getMessage());
+                                } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                    ToastUtils.show(getContext(), "网络错误");
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
                                 }

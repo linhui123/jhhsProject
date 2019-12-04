@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
+import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AddDeviceActivity;
 import com.jhhscm.platform.activity.LoginActivity;
@@ -142,6 +143,8 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         doSuccessResponse(refresh, response.body().getData());
+                                    } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                        ToastUtils.show(getContext(), "网络错误");
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
@@ -206,6 +209,8 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
                                     if (response.body().getCode().equals("200")) {
                                         mDataBinding.wrvRecycler.autoRefresh();
                                         ToastUtil.show(getContext(), "删除成功");
+                                    }else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                        ToastUtils.show(getContext(), "网络错误");
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }

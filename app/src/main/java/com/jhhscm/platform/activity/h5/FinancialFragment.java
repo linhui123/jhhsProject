@@ -33,6 +33,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.FragmentFinancialBinding;
 import com.jhhscm.platform.event.LoginH5Event;
@@ -720,6 +721,8 @@ public class FinancialFragment extends AbsFragment<FragmentFinancialBinding> {
 
                                         }
                                     }).show();
+                                } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                    ToastUtils.show(getContext(), "网络错误");
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
                                 }

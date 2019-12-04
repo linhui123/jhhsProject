@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
+import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.BrandModelActivity;
 import com.jhhscm.platform.activity.SearchActivity;
@@ -240,6 +241,9 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         doSuccessResponse(refresh, response.body().getData());
+                                    } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                        ToastUtils.show(getContext(), "网络错误");
+                                        mDataBinding.wrvRecycler.loadComplete(true, false);
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                         mDataBinding.wrvRecycler.loadComplete(true, false);
@@ -323,6 +327,8 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         pinpai(response.body().getData());
+                                    } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                        ToastUtils.show(getContext(), "网络错误");
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
@@ -361,6 +367,8 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         jixing(response.body().getData());
+                                    } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                        ToastUtils.show(getContext(), "网络错误");
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
@@ -407,6 +415,8 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
                                         getComboBoxBean.setResult(resultBeans);
                                         quanbu(getComboBoxBean);
                                     }
+                                } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                    ToastUtils.show(getContext(), "网络错误");
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
                                 }

@@ -2,6 +2,7 @@ package com.jhhscm.platform.fragment.my;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
+import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AuthenticationActivity;
 import com.jhhscm.platform.activity.BookingActivity;
@@ -126,6 +128,8 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                                 } else if (response.body().getCode().equals("1003")) {
                                     ToastUtils.show(getContext(), "登录信息过期，请重新登录");
                                     startNewActivity(LoginActivity.class);
+                                } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                    ToastUtils.show(getContext(), "网络错误");
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
                                 }
@@ -174,11 +178,26 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                                         mDataBinding.tvCouponNum.setText(userCenterBean.getResult().getCoupons_count() + "");
                                         mDataBinding.tvShoucangNum.setText(userCenterBean.getResult().getCollect_count() + "");
                                         mDataBinding.tvInviteNum.setText(userCenterBean.getResult().getBususer_count() + "");
+                                        if (userCenterBean.getResult().getBus_pointdesc().length() > 0) {
+                                            Drawable drawable = getContext().getResources().getDrawable(R.mipmap.ic_ques);
+                                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                                            mDataBinding.tvStoreNum.setCompoundDrawables(null, null, drawable, null);
+                                        } else {
+                                            mDataBinding.tvStoreNum.setCompoundDrawables(null, null, null, null);
+                                        }
+                                        if (userCenterBean.getResult().getUser_pointdesc().length() > 0) {
+                                            Drawable drawable = getContext().getResources().getDrawable(R.mipmap.ic_ques);
+                                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                                            mDataBinding.personNum.setCompoundDrawables(null, null, drawable, null);
+                                        } else {
+                                            mDataBinding.personNum.setCompoundDrawables(null, null, null, null);
+                                        }
                                     }
-
                                 } else if (response.body().getCode().equals("1003")) {
                                     ToastUtils.show(getContext(), "登录信息过期，请重新登录");
                                     startNewActivity(LoginActivity.class);
+                                } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                    ToastUtils.show(getContext(), "网络错误");
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
                                 }
@@ -219,9 +238,10 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                                 } else if (response.body().getCode().equals("1003")) {
                                     ToastUtils.show(getContext(), "登录信息过期，请重新登录");
                                     startNewActivity(LoginActivity.class);
+                                } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                    ToastUtils.show(getContext(), "网络错误");
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
-//                                    ToastUtils.show(getContext(), "网络错误");
                                 }
                             }
                         }
@@ -504,11 +524,6 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
         if (!hidden) {//可见
             initUser();
         }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
     @Override

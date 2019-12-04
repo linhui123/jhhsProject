@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
+import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AboutActivity;
 import com.jhhscm.platform.activity.FeedbackActivity;
@@ -201,6 +202,8 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
                                         ConfigUtils.removeCurrentUser(getContext());
                                         EventBusUtil.post(new LoginOutEvent());
                                         getActivity().finish();
+                                    } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                        ToastUtils.show(getContext(), "网络错误");
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
                                     }
