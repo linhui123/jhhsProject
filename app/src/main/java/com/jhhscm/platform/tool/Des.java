@@ -1,4 +1,5 @@
 package com.jhhscm.platform.tool;
+
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -6,10 +7,6 @@ import android.util.Log;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeMap;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;

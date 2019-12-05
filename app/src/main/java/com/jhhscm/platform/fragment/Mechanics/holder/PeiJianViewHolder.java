@@ -2,7 +2,6 @@ package com.jhhscm.platform.fragment.Mechanics.holder;
 
 import android.view.View;
 
-import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.StoreDetailActivity;
 import com.jhhscm.platform.activity.h5.H5PeiJianActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;

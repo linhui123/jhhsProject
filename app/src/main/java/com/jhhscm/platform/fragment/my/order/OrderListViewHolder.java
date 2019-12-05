@@ -2,10 +2,8 @@ package com.jhhscm.platform.fragment.my.order;
 
 import android.view.View;
 
-import com.jhhscm.platform.activity.OrderDetailActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemCreateOrderBinding;
-import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
 import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

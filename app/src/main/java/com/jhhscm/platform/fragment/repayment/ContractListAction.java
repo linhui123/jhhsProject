@@ -2,14 +2,10 @@ package com.jhhscm.platform.fragment.repayment;
 
 import android.content.Context;
 
-import com.jhhscm.platform.fragment.vehicle.GpsDetailAction;
-import com.jhhscm.platform.fragment.vehicle.GpsDetailBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.NetBean;
-
-import java.util.List;
 
 import retrofit2.Call;
 

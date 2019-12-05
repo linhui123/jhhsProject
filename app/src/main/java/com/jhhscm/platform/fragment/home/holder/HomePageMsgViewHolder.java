@@ -10,17 +10,13 @@ import com.jhhscm.platform.activity.LabourActivity;
 import com.jhhscm.platform.activity.LabourDetailActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.bean.UserData;
-import com.jhhscm.platform.databinding.ItemHomePageMsgBinding;
 import com.jhhscm.platform.databinding.ItemHomeMsgListBinding;
+import com.jhhscm.platform.databinding.ItemHomePageMsgBinding;
 import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
 import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.umeng.analytics.MobclickAgent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class HomePageMsgViewHolder extends AbsRecyclerViewHolder<HomePageItem> {
 

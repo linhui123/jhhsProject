@@ -47,7 +47,6 @@ import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.AlertDialogs;
 
-
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;

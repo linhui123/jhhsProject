@@ -4,12 +4,8 @@ import android.view.View;
 
 import com.jhhscm.platform.activity.ServiceRecordActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.ItemInviteBinding;
 import com.jhhscm.platform.databinding.ItemStoreMemberBinding;
-import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.invitation.ReqListBean;
-import com.jhhscm.platform.tool.ToastUtil;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 
 public class MyMemberItemViewHolder extends AbsRecyclerViewHolder<ReqListBean.ResultBean.DataBean> {
 

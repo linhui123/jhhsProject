@@ -7,18 +7,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.jhhscm.platform.MyApplication;
 
-import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 

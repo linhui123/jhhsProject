@@ -1,7 +1,5 @@
 package com.jhhscm.platform.fragment.GoodsToCarts;
 
-import com.jhhscm.platform.fragment.GoodsToCarts.action.CreateOrderAction;
-
 import java.io.Serializable;
 
 public class CreateOrderResultBean implements Serializable {

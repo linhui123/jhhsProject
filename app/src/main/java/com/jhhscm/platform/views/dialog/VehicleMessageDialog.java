@@ -1,11 +1,9 @@
 package com.jhhscm.platform.views.dialog;
 
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.location.Address;
 import android.location.Geocoder;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,13 +14,9 @@ import android.view.WindowManager;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.TraceReloadActivity;
 import com.jhhscm.platform.activity.VehicleDetailsActivity;
-import com.jhhscm.platform.activity.h5.H5Activity;
-import com.jhhscm.platform.databinding.DialogLogisticsBinding;
 import com.jhhscm.platform.databinding.DialogVehicleMessageBinding;
 import com.jhhscm.platform.fragment.vehicle.GpsDetailBean;
-import com.jhhscm.platform.tool.DataUtil;
 import com.jhhscm.platform.tool.DisplayUtils;
-import com.jhhscm.platform.tool.ToastUtil;
 
 import java.io.IOException;
 import java.util.List;

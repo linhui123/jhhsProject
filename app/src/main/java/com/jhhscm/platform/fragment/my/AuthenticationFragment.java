@@ -1,67 +1,33 @@
 package com.jhhscm.platform.fragment.my;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
-import com.google.gson.Gson;
-import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.LoginActivity;
-import com.jhhscm.platform.bean.LogingResultBean;
-import com.jhhscm.platform.bean.UploadImage;
 import com.jhhscm.platform.databinding.FragmentAuthenticationBinding;
-import com.jhhscm.platform.databinding.FragmentLoginBinding;
 import com.jhhscm.platform.event.LoginOutEvent;
-import com.jhhscm.platform.fragment.Mechanics.push.OldMechanicsUpImageBean;
-import com.jhhscm.platform.fragment.Mechanics.push.SaveOldGoodAction;
-import com.jhhscm.platform.fragment.Mechanics.push.UpdateImageBean;
-import com.jhhscm.platform.fragment.Mechanics.push.UploadOldMechanicsImgAction;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
-import com.jhhscm.platform.http.action.GetCodeAction;
-import com.jhhscm.platform.http.action.GetUserAction;
-import com.jhhscm.platform.http.action.LoginAction;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.ResultBean;
-import com.jhhscm.platform.http.bean.UserBean;
 import com.jhhscm.platform.http.bean.UserSession;
-import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
-import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 
-import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import retrofit2.Response;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-import top.zibin.luban.Luban;
 
 public class AuthenticationFragment extends AbsFragment<FragmentAuthenticationBinding> {
     private boolean updateImgResult;

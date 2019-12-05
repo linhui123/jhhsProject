@@ -2,8 +2,6 @@ package com.jhhscm.platform.fragment.lessee;
 
 import android.content.Context;
 
-import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
-import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;

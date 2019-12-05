@@ -2,9 +2,6 @@ package com.jhhscm.platform.fragment.invitation;
 
 
 import android.content.Context;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,17 +14,8 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.InvitationRegisterActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.FragmentMyBinding;
 import com.jhhscm.platform.databinding.FragmentMyInviteBinding;
-import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
-import com.jhhscm.platform.fragment.aftersale.AfterSaleFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.coupon.CouponCenterViewHolder;
-import com.jhhscm.platform.fragment.coupon.MyCouponListAdapter;
-import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
-import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
-import com.jhhscm.platform.fragment.my.MyFragment;
-import com.jhhscm.platform.fragment.my.order.FindOrderListBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -37,13 +25,10 @@ import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
-import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 

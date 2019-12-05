@@ -14,9 +14,6 @@ import com.jhhscm.platform.tool.CalculationUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.UrlUtils;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-
 public class MechanicsByBrandViewHolder extends AbsRecyclerViewHolder<GetGoodsByBrandBean.ResultBean.DataBean> {
 
     private ItemCompairsonSelectBinding mBinding;

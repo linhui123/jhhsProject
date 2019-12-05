@@ -2,8 +2,6 @@ package com.jhhscm.platform.fragment.vehicle;
 
 import android.content.Context;
 
-import com.jhhscm.platform.fragment.sale.FindOrderAction;
-import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;

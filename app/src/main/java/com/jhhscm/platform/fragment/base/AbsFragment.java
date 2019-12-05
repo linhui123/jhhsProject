@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-
 import com.jhhscm.platform.runtime.RuntimePermission;
 import com.jhhscm.platform.views.LoadingPage;
 import com.jhhscm.platform.views.YXProgressDialog;

@@ -63,17 +63,32 @@
                 android:textColor="@color/acc9"
                 android:textSize="@dimen/text_size_12" />
 
-            <TextView
-                android:id="@+id/tv_4"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_10"
-                android:background="@drawable/edit_bg_397"
-                android:paddingLeft="@dimen/padding_10"
-                android:paddingRight="@dimen/padding_10"
-                android:text="询价"
-                android:textColor="@color/a397"
-                android:textSize="@dimen/text_size_12" />
+                android:layout_marginTop="@dimen/padding_10">
+
+                <TextView
+                    android:id="@+id/tv_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/edit_bg_397"
+                    android:paddingLeft="@dimen/padding_10"
+                    android:paddingRight="@dimen/padding_10"
+                    android:text="询价"
+                    android:textColor="@color/a397"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/tv_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已售出：0台"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_12" />
+            </RelativeLayout>
+
         </LinearLayout>
     </RelativeLayout>
 </layout>

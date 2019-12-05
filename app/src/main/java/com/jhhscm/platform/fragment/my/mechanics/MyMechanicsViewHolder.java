@@ -5,27 +5,17 @@ import android.view.View;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AddDeviceActivity;
 import com.jhhscm.platform.activity.Lessee1Activity;
-import com.jhhscm.platform.activity.Lessee2Activity;
 import com.jhhscm.platform.activity.PushOldMechanicsActivity;
-import com.jhhscm.platform.activity.h5.MechanicsH5Activity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.databinding.ItemDeviceBinding;
-import com.jhhscm.platform.databinding.ItemMechanicsOldBinding;
 import com.jhhscm.platform.event.DelDeviceEvent;
-import com.jhhscm.platform.tool.CalculationUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
-import com.jhhscm.platform.tool.UrlUtils;
-import com.jhhscm.platform.views.selector.ImageSelector;
 import com.jhhscm.platform.views.selector.ImageSelectorItem;
 import com.jhhscm.platform.views.selector.ImageSelectorPreviewActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindGoodsOwnerBean.DataBean> {
 

@@ -2,37 +2,19 @@ package com.jhhscm.platform.fragment.msg;
 
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.method.LinkMovementMethod;
-import android.text.method.MovementMethod;
 import android.text.style.ImageSpan;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
-import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentArticleDetailBinding;
-import com.jhhscm.platform.databinding.FragmentNewsListBinding;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.GetArticleDetailsAction;
-import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
 import com.jhhscm.platform.fragment.home.bean.GetArticleDetailsBean;
-import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.msg.html.LinkMovementMethodExt;
 import com.jhhscm.platform.fragment.msg.html.MessageSpan;
 import com.jhhscm.platform.fragment.msg.html.URLImageParser;
@@ -41,19 +23,13 @@ import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
-import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.SignObject;
-import com.jhhscm.platform.photopicker.PhotoPickerActivity;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
-import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
-import com.jhhscm.platform.views.selector.ImageSelector;
 import com.jhhscm.platform.views.selector.ImageSelectorItem;
 import com.jhhscm.platform.views.selector.ImageSelectorPreviewActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 

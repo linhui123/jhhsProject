@@ -1,23 +1,17 @@
 package com.jhhscm.platform.activity.base;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.databinding.ActivityAbsToolbarBinding;
+import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.tool.DisplayUtils;
-import com.jhhscm.platform.tool.ToastUtil;
-
-import java.lang.reflect.Method;
 
 /**
  * Created by Administrator on 2017/10/23.

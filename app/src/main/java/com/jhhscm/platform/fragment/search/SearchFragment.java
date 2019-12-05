@@ -3,12 +3,9 @@ package com.jhhscm.platform.fragment.search;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,23 +14,14 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jhhscm.platform.R;
-import com.jhhscm.platform.databinding.FragmentAuthenticationBinding;
 import com.jhhscm.platform.databinding.FragmentSearchBinding;
 import com.jhhscm.platform.event.SerachEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.my.AuthenticationFragment;
-import com.jhhscm.platform.fragment.my.collect.NewCollectListFragment;
-import com.jhhscm.platform.fragment.my.collect.OldCollectListFragment;
-import com.jhhscm.platform.fragment.my.collect.PeiJianCollectListFragment;
-import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.Utils;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;

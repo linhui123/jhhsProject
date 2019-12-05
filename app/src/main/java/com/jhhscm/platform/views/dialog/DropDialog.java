@@ -10,29 +10,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.databinding.DialogAddressBinding;
 import com.jhhscm.platform.databinding.DialogDropBinding;
-import com.jhhscm.platform.event.GetRegionEvent;
-import com.jhhscm.platform.fragment.Mechanics.action.GetRegionAction;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
+import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.address.LocationAdapter;
-import com.jhhscm.platform.http.AHttpService;
-import com.jhhscm.platform.http.HttpHelper;
-import com.jhhscm.platform.http.bean.BaseEntity;
-import com.jhhscm.platform.http.bean.BaseErrorInfo;
-import com.jhhscm.platform.http.bean.NetBean;
-import com.jhhscm.platform.http.sign.Sign;
-import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.tool.ToastUtils;
-
-import java.util.Map;
-import java.util.TreeMap;
-
-import retrofit2.Response;
 
 public class DropDialog extends BaseDialog {
     private DialogDropBinding mDataBinding;
@@ -121,7 +104,7 @@ public class DropDialog extends BaseDialog {
     /**
      * 更新地区选择
      */
-    public void onEvent(GetRegionEvent event) {
+    public void onEvent(RefreshEvent event) {
 
     }
 }

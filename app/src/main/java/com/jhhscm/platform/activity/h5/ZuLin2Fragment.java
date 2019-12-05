@@ -2,8 +2,6 @@ package com.jhhscm.platform.activity.h5;
 
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,19 +13,13 @@ import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.LabourDetailActivity;
 import com.jhhscm.platform.activity.Lessee1Activity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentZuLin2Binding;
-import com.jhhscm.platform.databinding.FragmentZuLinBinding;
-import com.jhhscm.platform.databinding.ItemLabourBinding;
 import com.jhhscm.platform.databinding.ItemZulinBinding;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
-import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
-import com.jhhscm.platform.fragment.labour.LabourFragment;
-import com.jhhscm.platform.fragment.labour.LabourViewHolder;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -43,7 +35,6 @@ import com.jhhscm.platform.views.YXProgressDialog;
 import com.jhhscm.platform.views.dialog.ShareDialog;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
-import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;

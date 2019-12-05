@@ -2,20 +2,13 @@ package com.jhhscm.platform.views.dialog;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.support.constraint.solver.GoalRow;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.CompoundButton;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.DialogCouponListNewBinding;
-import com.jhhscm.platform.databinding.DialogCouponNewBinding;
-import com.jhhscm.platform.fragment.address.LocationAdapter;
-import com.jhhscm.platform.fragment.coupon.CouponListBean;
 import com.jhhscm.platform.fragment.coupon.CouponListDialogAdapter;
 import com.jhhscm.platform.fragment.coupon.GetNewCouponslistBean;
 import com.jhhscm.platform.tool.ConfigUtils;

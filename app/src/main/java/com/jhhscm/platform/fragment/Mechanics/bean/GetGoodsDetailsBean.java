@@ -1,7 +1,5 @@
 package com.jhhscm.platform.fragment.Mechanics.bean;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.List;
 

@@ -5,7 +5,6 @@ import android.view.View;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemStoreOrderGoodsBinding;
 import com.jhhscm.platform.fragment.my.store.action.FindBusGoodsOwnerOrderListByUserCodeBean;
-import com.jhhscm.platform.fragment.my.store.action.FindBusOrderListBean;
 
 public class MyServiceGoodsViewHolder extends AbsRecyclerViewHolder<FindBusGoodsOwnerOrderListByUserCodeBean.DataBean.GoodsListBean> {
 

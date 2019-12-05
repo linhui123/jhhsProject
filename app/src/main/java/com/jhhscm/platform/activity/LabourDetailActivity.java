@@ -2,16 +2,12 @@ package com.jhhscm.platform.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
 import com.jhhscm.platform.fragment.labour.LabourDetailFragment;
-import com.jhhscm.platform.fragment.labour.LabourFragment;
-import com.umeng.commonsdk.debug.D;
 
 public class LabourDetailActivity extends AbsToolbarActivity {
     private int type;//0 查看；1编辑

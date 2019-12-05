@@ -8,7 +8,6 @@ import android.view.View;
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.search.SearchFragment;
-import com.umeng.analytics.MobclickAgent;
 
 public class SearchActivity extends AbsToolbarActivity {
 

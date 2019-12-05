@@ -1,21 +1,13 @@
 package com.jhhscm.platform.fragment.Mechanics;
 
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.telephony.mbms.MbmsErrors;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.databinding.FragmentComparisonBinding;
 import com.jhhscm.platform.databinding.FragmentComparisonDetailBinding;
 import com.jhhscm.platform.fragment.Mechanics.action.GetGoodsDetailsAction;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsDetailsBean;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -24,15 +16,9 @@ import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.CalculationUtils;
-import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
-import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtils;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 

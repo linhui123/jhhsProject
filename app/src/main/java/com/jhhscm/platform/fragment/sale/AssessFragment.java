@@ -10,17 +10,11 @@ import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AssessResultActivity;
 import com.jhhscm.platform.activity.BrandActivity;
-import com.jhhscm.platform.activity.LoginActivity;
-import com.jhhscm.platform.activity.MechanicsByBrandActivity;
 import com.jhhscm.platform.databinding.FragmentAssessBinding;
-import com.jhhscm.platform.databinding.FragmentSaleMachineBinding;
 import com.jhhscm.platform.event.BrandResultEvent;
-import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.GetComboBoxAction;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
-import com.jhhscm.platform.fragment.my.mechanics.FindOldGoodByUserCodeBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -29,23 +23,18 @@ import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
-import com.jhhscm.platform.tool.ConfigUtils;
-import com.jhhscm.platform.tool.DataUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.AddressDialog;
-import com.jhhscm.platform.views.dialog.DropDialog;
 import com.jhhscm.platform.views.dialog.DropTDialog;
-import com.jhhscm.platform.views.dialog.SimpleDialog;
-import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 import com.jhhscm.platform.views.timePickets.TimePickerShow;
-
-import retrofit2.Response;
 
 import java.util.Map;
 import java.util.TreeMap;
+
+import retrofit2.Response;
 
 public class AssessFragment extends AbsFragment<FragmentAssessBinding> implements View.OnClickListener {
 

@@ -2,14 +2,9 @@ package com.jhhscm.platform.fragment.my.store.viewholder;
 
 import android.view.View;
 
-import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.ItemStoreOrderProductBinding;
 import com.jhhscm.platform.databinding.ItemStoreOrderSubmit3Binding;
-import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.my.store.action.BusinessFindcategorybyBuscodeBean;
-import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.tool.ToastUtil;
 
 public class StoreOrderProductItem3ViewHolder extends AbsRecyclerViewHolder<BusinessFindcategorybyBuscodeBean.DataBean> {
 

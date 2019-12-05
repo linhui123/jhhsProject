@@ -6,16 +6,11 @@ import android.view.View;
 
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemFaultDevicesBinding;
-import com.jhhscm.platform.databinding.ItemLesseeMechanicsBinding;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
-import com.jhhscm.platform.fragment.lessee.LesseeBean;
-import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
 import com.jhhscm.platform.fragment.my.store.action.FindUserGoodsOwnerBean;
 import com.jhhscm.platform.views.dialog.DropTDialog;
-import com.jhhscm.platform.views.timePickets.TimePickerShow;
 
 import java.util.List;
-import java.util.jar.Attributes;
 
 public class ItemFaultDeviceViewHolder extends AbsRecyclerViewHolder<FindUserGoodsOwnerBean.DataBean> {
 

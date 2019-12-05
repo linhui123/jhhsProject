@@ -2,9 +2,6 @@ package com.jhhscm.platform.http.interceptor;
 
 import android.content.Context;
 
-import com.jhhscm.platform.http.Fields;
-import com.jhhscm.platform.tool.ConfigUtils;
-
 import java.io.IOException;
 
 import okhttp3.HttpUrl;

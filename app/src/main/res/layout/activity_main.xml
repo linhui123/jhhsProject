@@ -9,7 +9,8 @@
             android:id="@+id/fl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/nihao"></FrameLayout>
+            android:layout_above="@+id/nihao"
+            android:background="@color/a397"></FrameLayout>
 
         <View
             android:id="@+id/nihao"

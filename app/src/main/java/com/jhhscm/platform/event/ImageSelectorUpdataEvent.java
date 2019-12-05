@@ -4,7 +4,6 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.views.selector.ImageSelector;
 import com.jhhscm.platform.views.selector.ImageSelectorItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ImageSelectorUpdataEvent implements EventBusUtil.IEvent {

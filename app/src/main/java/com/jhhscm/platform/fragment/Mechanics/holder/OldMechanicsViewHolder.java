@@ -12,9 +12,6 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-
 public class OldMechanicsViewHolder extends AbsRecyclerViewHolder<GetOldPageListBean.DataBean> {
 
     private ItemMechanicsOldBinding mBinding;

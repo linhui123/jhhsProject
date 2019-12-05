@@ -7,9 +7,6 @@ import com.jhhscm.platform.databinding.ItemSaleMechanicsHistoryBinding;
 import com.jhhscm.platform.tool.CalculationUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-
 public class SaleMechanicsHistoryViewHolder extends AbsRecyclerViewHolder<SaleItem> {
 
     private ItemSaleMechanicsHistoryBinding mBinding;

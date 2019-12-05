@@ -11,7 +11,6 @@ import android.view.WindowManager;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.DialogCallPhoneBinding;
-import com.jhhscm.platform.databinding.DialogLoginOutBinding;
 import com.jhhscm.platform.tool.DisplayUtils;
 
 public class ConfirmCallPhoneDialog extends BaseDialog {

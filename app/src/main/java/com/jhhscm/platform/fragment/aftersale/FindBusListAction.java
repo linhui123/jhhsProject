@@ -2,8 +2,6 @@ package com.jhhscm.platform.fragment.aftersale;
 
 import android.content.Context;
 
-import com.jhhscm.platform.fragment.coupon.CouponGetListAction;
-import com.jhhscm.platform.fragment.coupon.CouponGetListBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;

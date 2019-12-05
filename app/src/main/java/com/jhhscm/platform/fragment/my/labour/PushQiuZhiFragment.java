@@ -2,7 +2,6 @@ package com.jhhscm.platform.fragment.my.labour;
 
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -38,7 +37,6 @@ import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.AddressDialog;
 import com.jhhscm.platform.views.dialog.DropTDialog;
 import com.jhhscm.platform.views.timePickets.TimePickerShow;
-import com.tencent.mm.opensdk.utils.Log;
 
 import java.util.Map;
 import java.util.TreeMap;

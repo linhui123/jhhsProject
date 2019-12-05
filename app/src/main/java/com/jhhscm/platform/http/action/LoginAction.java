@@ -2,7 +2,6 @@ package com.jhhscm.platform.http.action;
 
 import android.content.Context;
 
-import com.jhhscm.platform.bean.PostLoginBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;

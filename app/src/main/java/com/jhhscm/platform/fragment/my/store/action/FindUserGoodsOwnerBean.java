@@ -1,7 +1,5 @@
 package com.jhhscm.platform.fragment.my.store.action;
 
-import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
-
 import java.io.Serializable;
 import java.util.List;
 

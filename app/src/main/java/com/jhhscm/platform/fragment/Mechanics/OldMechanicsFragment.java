@@ -1,12 +1,9 @@
 package com.jhhscm.platform.fragment.Mechanics;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +12,13 @@ import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.PushOldMechanicsActivity;
-import com.jhhscm.platform.activity.PushQiuZhiActivity;
-import com.jhhscm.platform.activity.PushZhaoPinActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.FragmentNewMechanicsBinding;
 import com.jhhscm.platform.databinding.FragmentOldMechanicsBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.event.GetRegionEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetComboBoxAction;
-import com.jhhscm.platform.fragment.Mechanics.action.GetGoodsPageListAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GetOldPageListAction;
 import com.jhhscm.platform.fragment.Mechanics.adapter.BrandAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.JXDropAdapter;
@@ -33,13 +26,10 @@ import com.jhhscm.platform.fragment.Mechanics.adapter.SXDropAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.SelectedAdapter;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetOldPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
-import com.jhhscm.platform.fragment.Mechanics.holder.NewMechanicsViewHolder;
 import com.jhhscm.platform.fragment.Mechanics.holder.OldMechanicsViewHolder;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.home.HomePageAdapter;
 import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -50,8 +40,6 @@ import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.views.bottommenu.BottomMenuShow;
-import com.jhhscm.platform.views.bottommenu.bean.MenuData;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
 import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
@@ -211,7 +199,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
      * 更新地区选择
      */
     public void onEvent(GetRegionEvent event) {
-        if (event.pid != null && event.type != null) {
+        if (event.activity == 0 && event.pid != null && event.type != null) {
             if (event.type.equals("1")) {//省点击，获取市
                 pID = event.pid;
             } else if (event.type.equals("2")) {//市点击

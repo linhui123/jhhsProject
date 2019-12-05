@@ -4,13 +4,11 @@ import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 
 import com.jhhscm.platform.activity.AssessActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemSaleMechanicsTopBinding;
-import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.event.OrderSussessEvent;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;

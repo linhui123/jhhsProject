@@ -1,18 +1,13 @@
 package com.jhhscm.platform.fragment.my.order;
 
 import android.os.Bundle;
-import android.os.Debug;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.google.gson.Gson;
 import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.GoodsToCartsActivity;
@@ -23,8 +18,6 @@ import com.jhhscm.platform.event.OrderCancleEvent;
 import com.jhhscm.platform.event.OrderConfirmEvent;
 import com.jhhscm.platform.event.PayEvent;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
-import com.jhhscm.platform.fragment.aftersale.FindBusListBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.coupon.CouponListAction;
 import com.jhhscm.platform.fragment.coupon.CouponListBean;
@@ -46,11 +39,8 @@ import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.ConfirmOrderDialog;
 import com.jhhscm.platform.views.dialog.ConfirmOrderDialog.CallbackListener;
-import com.jhhscm.platform.views.dialog.NewCouponListDialog;
 import com.jhhscm.platform.views.dialog.PayWithCouponDialog;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
-
-import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;

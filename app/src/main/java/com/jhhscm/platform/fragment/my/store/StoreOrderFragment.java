@@ -2,8 +2,6 @@ package com.jhhscm.platform.fragment.my.store;
 
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,18 +12,13 @@ import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.FragmentMyStoreOrderBinding;
 import com.jhhscm.platform.databinding.FragmentStoreOrderBinding;
 import com.jhhscm.platform.event.OrderCancleEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
-import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.my.order.DelOrderAction;
 import com.jhhscm.platform.fragment.my.store.action.FindBusGoodsOwnerListByUserCodeBean;
 import com.jhhscm.platform.fragment.my.store.action.FindBusGoodsOwnerOrderListByUserCodeAction;
 import com.jhhscm.platform.fragment.my.store.action.FindBusGoodsOwnerOrderListByUserCodeBean;
-import com.jhhscm.platform.fragment.my.store.action.FindBusOrderListAction;
-import com.jhhscm.platform.fragment.my.store.action.FindBusOrderListBean;
 import com.jhhscm.platform.fragment.my.store.viewholder.StoreOrderItemViewHolder;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;

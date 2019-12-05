@@ -4,38 +4,15 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 
-import com.alibaba.fastjson.JSON;
-import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.BrandActivity;
-import com.jhhscm.platform.activity.LabourDetailActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.bean.PbImage;
-import com.jhhscm.platform.databinding.ItemLabourBinding;
 import com.jhhscm.platform.databinding.ItemLesseeMechanicsBinding;
-import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
-import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
-import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
-import com.jhhscm.platform.http.AHttpService;
-import com.jhhscm.platform.http.HttpHelper;
-import com.jhhscm.platform.http.bean.BaseEntity;
-import com.jhhscm.platform.http.bean.BaseErrorInfo;
-import com.jhhscm.platform.http.bean.NetBean;
-import com.jhhscm.platform.http.sign.Sign;
-import com.jhhscm.platform.tool.Des;
-import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.DropTDialog;
 import com.jhhscm.platform.views.timePickets.TimePickerShow;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
-import retrofit2.Response;
-
-import static com.umeng.socialize.utils.ContextUtil.getContext;
 
 public class LesseeViewHolder extends AbsRecyclerViewHolder<LesseeBean.WBankLeaseItemsBean> {
 

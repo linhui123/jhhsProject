@@ -1,6 +1,5 @@
 package com.jhhscm.platform.views.dialog;
 
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.view.Display;
@@ -12,9 +11,7 @@ import android.view.WindowManager;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.DialogConfirmOrderBinding;
-import com.jhhscm.platform.databinding.DialogLogisticsBinding;
 import com.jhhscm.platform.tool.DisplayUtils;
-import com.jhhscm.platform.tool.ToastUtil;
 
 public class ConfirmOrderDialog extends BaseDialog {
 

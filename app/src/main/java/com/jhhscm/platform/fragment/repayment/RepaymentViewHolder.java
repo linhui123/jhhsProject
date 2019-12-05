@@ -1,15 +1,10 @@
 package com.jhhscm.platform.fragment.repayment;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 
 import com.jhhscm.platform.activity.RepaymentDetailActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemRepaymentBinding;
-import com.jhhscm.platform.fragment.lessee.LesseeBean;
-
-import java.util.List;
 
 public class RepaymentViewHolder extends AbsRecyclerViewHolder<ContractListBean.DataBean> {
 

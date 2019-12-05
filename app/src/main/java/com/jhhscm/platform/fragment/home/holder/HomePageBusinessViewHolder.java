@@ -1,32 +1,18 @@
 package com.jhhscm.platform.fragment.home.holder;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.google.gson.Gson;
-import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.MainActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
+import com.jhhscm.platform.databinding.ItemHomePageBusinessBinding;
 import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.HomePageItem;
-
-import com.jhhscm.platform.databinding.ItemHomePageBusinessBinding;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.views.dlflipviewpage.bean.DLGridViewBean;
 import com.jhhscm.platform.views.dlflipviewpage.utils.DLVPSetting;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

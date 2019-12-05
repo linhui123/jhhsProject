@@ -2,15 +2,10 @@ package com.jhhscm.platform.views.dialog;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.MainActivity;
 import com.jhhscm.platform.databinding.DialogTelphoneBinding;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.ToastUtils;

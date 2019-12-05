@@ -2,8 +2,6 @@ package com.jhhscm.platform.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
@@ -11,7 +9,6 @@ import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.lessee.Lessee2Fragment;
 import com.jhhscm.platform.fragment.lessee.LesseeBean;
 import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
-import com.jhhscm.platform.fragment.my.set.FeedbackFragment;
 
 public class Lessee2Activity extends AbsToolbarActivity {
 

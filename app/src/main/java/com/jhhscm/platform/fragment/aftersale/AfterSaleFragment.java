@@ -4,13 +4,10 @@ package com.jhhscm.platform.fragment.aftersale;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,20 +20,12 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentAfterSaleBinding;
-import com.jhhscm.platform.databinding.FragmentCouponCenterBinding;
 import com.jhhscm.platform.event.GetRegionEvent;
-import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
-import com.jhhscm.platform.fragment.Mechanics.MechanicsFragment;
 import com.jhhscm.platform.fragment.Mechanics.action.GetRegionAction;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
 import com.jhhscm.platform.fragment.Mechanics.holder.GetRegionViewHolder;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.coupon.CouponCenterFragment;
-import com.jhhscm.platform.fragment.coupon.CouponCenterViewHolder;
-import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
 import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
-import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
-import com.jhhscm.platform.fragment.my.store.viewholder.MyMemberItemViewHolder;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -56,7 +45,6 @@ import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
-import com.tencent.mm.opensdk.utils.Log;
 
 import java.util.List;
 import java.util.Map;
@@ -64,7 +52,9 @@ import java.util.TreeMap;
 
 import retrofit2.Response;
 
-/**售后*/
+/**
+ * 售后
+ */
 public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
     private InnerAdapter mAdapter;
     private int mShowCount = 10;
@@ -335,7 +325,7 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
      * 更新地区选择
      */
     public void onEvent(GetRegionEvent event) {
-        if (event.pid != null && event.type != null) {
+        if (event.activity == 3 && event.pid != null && event.type != null) {
             if (event.type.equals("1")) {//省点击，获取市
                 pID = event.pid;
                 pName = event.name;
@@ -434,7 +424,7 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
 
         @Override
         public AbsRecyclerViewHolder<GetRegionBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false));
+            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false),3);
         }
     }
 
@@ -445,7 +435,7 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
 
         @Override
         public AbsRecyclerViewHolder<GetRegionBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false));
+            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false),3);
         }
     }
 

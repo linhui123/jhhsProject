@@ -1,18 +1,10 @@
 package com.jhhscm.platform.fragment.my.book;
 
-import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.BookingDetailActivity;
-import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.ItemBookingBinding;
 import com.jhhscm.platform.databinding.ItemBookingListBinding;
-import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
-import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 
 public class ItemBookingListViewHolder extends AbsRecyclerViewHolder<AllSumByDataTimeBean.DataBean.DetailBean> {
 

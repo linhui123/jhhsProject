@@ -2,8 +2,6 @@ package com.jhhscm.platform.fragment.Mechanics.push;
 
 import android.content.Context;
 
-import com.jhhscm.platform.fragment.Mechanics.action.GetGoodsByBrandAction;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsByBrandBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;

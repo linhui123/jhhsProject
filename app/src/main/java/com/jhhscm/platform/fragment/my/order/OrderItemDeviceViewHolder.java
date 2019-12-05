@@ -3,7 +3,6 @@ package com.jhhscm.platform.fragment.my.order;
 import android.view.View;
 
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.ItemOrderBusBinding;
 import com.jhhscm.platform.databinding.ItemOrderDeviceBinding;
 
 public class OrderItemDeviceViewHolder extends AbsRecyclerViewHolder<FindOrderListBean.DataBean.GoodsOwnerListBean> {

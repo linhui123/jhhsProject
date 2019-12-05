@@ -6,8 +6,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 
-import com.amap.api.maps2d.model.MarkerOptions;
-
 import java.util.List;
 
 public class MapUtil {

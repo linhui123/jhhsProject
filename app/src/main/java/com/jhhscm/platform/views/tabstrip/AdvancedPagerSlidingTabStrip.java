@@ -30,7 +30,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.tool.DisplayUtils;
 

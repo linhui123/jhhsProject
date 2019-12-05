@@ -1,11 +1,6 @@
 package com.jhhscm.platform.fragment.casebase;
 
 
-import android.view.View;
-
-import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-
-
 /**
  * Created by Administrator on 2018/5/9.
  */

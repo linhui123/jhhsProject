@@ -1,7 +1,6 @@
 package com.jhhscm.platform.views.dialog;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -15,15 +14,12 @@ import android.view.View;
 
 import com.arialyy.annotations.Download;
 import com.arialyy.aria.core.Aria;
-import com.arialyy.aria.core.AriaManager;
 import com.arialyy.aria.core.download.DownloadTask;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.DialogUpdateBinding;
-import com.jhhscm.platform.event.FinishEvent;
 import com.jhhscm.platform.event.ForceCloseEvent;
 import com.jhhscm.platform.permission.YXPermission;
 import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.tool.ToastUtil;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 

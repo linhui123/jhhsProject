@@ -2,25 +2,15 @@ package com.jhhscm.platform.views.dialog;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
-import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.DialogDropTBinding;
 import com.jhhscm.platform.databinding.DialogLoginOutBinding;
-import com.jhhscm.platform.databinding.ItemLocationBinding;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
-import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
-
-import java.util.List;
 
 public class LoginOutDialog extends BaseDialog {
     private DialogLoginOutBinding mDataBinding;

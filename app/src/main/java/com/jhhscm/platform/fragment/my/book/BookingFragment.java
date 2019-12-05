@@ -1,20 +1,13 @@
 package com.jhhscm.platform.fragment.my.book;
 
-import android.app.TimePickerDialog;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.alibaba.fastjson.JSON;
 import com.donkingliang.labels.LabelsView;
@@ -23,16 +16,10 @@ import com.jhhscm.platform.activity.AddBookingActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentBookingBinding;
-import com.jhhscm.platform.databinding.FragmentMyMemberBinding;
 import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.GetComboBoxAction;
-import com.jhhscm.platform.fragment.Mechanics.adapter.SXDropAdapter;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
-import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
-import com.jhhscm.platform.fragment.my.store.MyMemberFragment;
-import com.jhhscm.platform.fragment.my.store.viewholder.MyMemberItemViewHolder;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -44,16 +31,10 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.DataUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 import com.jhhscm.platform.views.timePickets.TimePickerShow;
-import com.jhhscm.platform.views.timePickets.TimePicketAlertDialog;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 

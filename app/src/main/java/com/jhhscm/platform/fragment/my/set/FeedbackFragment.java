@@ -1,8 +1,6 @@
 package com.jhhscm.platform.fragment.my.set;
 
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +9,6 @@ import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.FragmentFeedbackBinding;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.msg.GetPushListAction;
-import com.jhhscm.platform.fragment.msg.GetPushListBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -24,7 +20,6 @@ import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.views.bottommenu.bean.MenuData;
 
 import java.util.Map;
 import java.util.TreeMap;

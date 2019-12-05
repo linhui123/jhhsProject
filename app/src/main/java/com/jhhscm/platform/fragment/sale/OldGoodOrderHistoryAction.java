@@ -1,6 +1,7 @@
 package com.jhhscm.platform.fragment.sale;
 
 import android.content.Context;
+
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;

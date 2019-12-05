@@ -1,15 +1,12 @@
 package com.jhhscm.platform.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsActivity;
 import com.jhhscm.platform.fragment.home.AdBean;
-import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.fragment.home.action.GetAdAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -19,7 +16,6 @@ import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.Map;
 import java.util.TreeMap;

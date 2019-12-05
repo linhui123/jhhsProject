@@ -12,7 +12,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
 import com.jhhscm.platform.shoppingcast.callback.OnClickAddCloseListenter;
@@ -20,12 +19,9 @@ import com.jhhscm.platform.shoppingcast.callback.OnClickDeleteListenter;
 import com.jhhscm.platform.shoppingcast.callback.OnClickListenterModel;
 import com.jhhscm.platform.shoppingcast.callback.OnClickSideListenter;
 import com.jhhscm.platform.shoppingcast.callback.OnViewItemClickListener;
-import com.jhhscm.platform.shoppingcast.entity.CartInfo;
 import com.jhhscm.platform.shoppingcast.widget.FrontViewToMove;
-import com.jhhscm.platform.shoppingcast.widget.ZQRoundOvalImageView;
 import com.jhhscm.platform.views.OvalImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
 
 import java.util.List;
 

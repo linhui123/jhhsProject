@@ -3,9 +3,7 @@ package com.jhhscm.platform.http.sign;
 import android.content.Context;
 import android.util.Log;
 
-import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.BuildConfig;
-import com.jhhscm.platform.fragment.lessee.LesseeBean;
 import com.jhhscm.platform.tool.Des;
 
 import java.util.ArrayList;
@@ -14,8 +12,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SignObject {
 

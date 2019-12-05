@@ -1,11 +1,7 @@
 package com.jhhscm.platform.views.dialog;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.text.TextUtils;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,13 +9,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.view.animation.BounceInterpolator;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.DialogHomeAlterBinding;
-import com.jhhscm.platform.tool.DisplayUtils;
 
 public class HomeAlterDialog extends BaseDialog {
     private DialogHomeAlterBinding mDataBinding;

@@ -3,8 +3,6 @@ package com.jhhscm.platform.fragment.invitation;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,29 +10,21 @@ import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.h5.MechanicsH5Activity;
-import com.jhhscm.platform.databinding.FragmentAfterSaleBinding;
 import com.jhhscm.platform.databinding.FragmentInvitationRegisterBinding;
-import com.jhhscm.platform.fragment.aftersale.AfterSaleFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
-import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EncodingUtils;
 import com.jhhscm.platform.tool.ShareUtils;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.YXProgressDialog;
-import com.jhhscm.platform.views.dialog.ShareDialog;
-import com.umeng.analytics.MobclickAgent;
 
-import java.net.URL;
 import java.util.Map;
 import java.util.TreeMap;
 

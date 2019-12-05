@@ -3,13 +3,10 @@ package com.jhhscm.platform.fragment.Mechanics.adapter;
 import android.content.Context;
 import android.view.ViewGroup;
 
-import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.fragment.Mechanics.MechanicsItem;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
-import com.jhhscm.platform.fragment.Mechanics.holder.NewMechanicsViewHolder;
-import com.jhhscm.platform.fragment.Mechanics.holder.OldMechanicsViewHolder;
 import com.jhhscm.platform.fragment.home.AdBean;
 
 public class MechanicsAdapter extends AbsRecyclerViewAdapter<MechanicsItem> {

@@ -10,7 +10,6 @@ import com.jhhscm.platform.photopicker.bean.Photo;
 import com.jhhscm.platform.photopicker.bean.PhotoFloder;
 import com.jhhscm.platform.tool.FileUtils;
 
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;

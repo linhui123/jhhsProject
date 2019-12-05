@@ -19,7 +19,6 @@ import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-
 import java.util.ArrayList;
 
 import uk.co.senab.photoview.PhotoView;

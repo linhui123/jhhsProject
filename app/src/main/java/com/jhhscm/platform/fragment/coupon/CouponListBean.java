@@ -1,7 +1,5 @@
 package com.jhhscm.platform.fragment.coupon;
 
-import com.jhhscm.platform.fragment.my.store.action.BusinessFindcategorybyBuscodeBean;
-
 import java.util.List;
 
 public class CouponListBean {

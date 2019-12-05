@@ -35,7 +35,6 @@ import com.jhhscm.platform.photopicker.util.PhotoUtils;
 import com.jhhscm.platform.tool.FileUtils;
 import com.jhhscm.platform.tool.ToastUtils;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

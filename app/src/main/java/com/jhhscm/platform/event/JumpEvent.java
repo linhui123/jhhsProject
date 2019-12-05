@@ -1,7 +1,6 @@
 package com.jhhscm.platform.event;
 
 import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsByBrandBean;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.tool.EventBusUtil;
 

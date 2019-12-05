@@ -2,13 +2,10 @@ package com.jhhscm.platform.fragment.my.order;
 
 import android.content.Context;
 
-import com.jhhscm.platform.fragment.aftersale.FindBusListBean;
-import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.NetBean;
-import com.jhhscm.platform.http.bean.ResultBean;
 
 import retrofit2.Call;
 

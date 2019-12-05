@@ -1,28 +1,18 @@
 package com.jhhscm.platform.wxapi;
 
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.google.gson.Gson;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.LoginActivity;
-import com.jhhscm.platform.bean.LogingResultBean;
-import com.jhhscm.platform.databinding.FragmentCreateOrderBinding;
 import com.jhhscm.platform.databinding.FragmentWxpayEntryBinding;
-import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderFragment;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
-import com.jhhscm.platform.fragment.GoodsToCarts.FindAddressListBean;
-import com.jhhscm.platform.fragment.GoodsToCarts.action.FindAddressListAction;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -35,12 +25,7 @@ import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.tencent.mm.opensdk.constants.Build;
 import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-
-import org.json.JSONObject;
 
 import java.util.Map;
 import java.util.TreeMap;

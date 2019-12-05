@@ -2,7 +2,6 @@ package com.jhhscm.platform.fragment.my.set;
 
 import android.content.Context;
 
-import com.jhhscm.platform.fragment.my.collect.CollectDeleteAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;

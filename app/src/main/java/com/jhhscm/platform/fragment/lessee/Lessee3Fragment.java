@@ -2,34 +2,26 @@ package com.jhhscm.platform.fragment.lessee;
 
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.bean.UploadImage;
-import com.jhhscm.platform.databinding.FragmentLessee1Binding;
 import com.jhhscm.platform.databinding.FragmentLessee3Binding;
 import com.jhhscm.platform.event.LesseeFinishEvent;
 import com.jhhscm.platform.fragment.Mechanics.push.OldMechanicsUpImageBean;
-import com.jhhscm.platform.fragment.Mechanics.push.SaveOldGoodAction;
 import com.jhhscm.platform.fragment.Mechanics.push.UpdateImageBean;
-import com.jhhscm.platform.fragment.Mechanics.push.UploadOldMechanicsImgAction;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.ResultBean;
-import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
@@ -37,7 +29,6 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.views.selector.ImageSelector;
 
 import java.io.File;
 import java.net.URI;

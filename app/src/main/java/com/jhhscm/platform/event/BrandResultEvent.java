@@ -1,6 +1,5 @@
 package com.jhhscm.platform.event;
 
-import com.jhhscm.platform.fragment.GoodsToCarts.FindAddressListBean;
 import com.jhhscm.platform.tool.EventBusUtil;
 
 public class BrandResultEvent implements EventBusUtil.IEvent {

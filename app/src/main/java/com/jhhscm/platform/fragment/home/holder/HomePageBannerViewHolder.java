@@ -1,6 +1,5 @@
 package com.jhhscm.platform.fragment.home.holder;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,8 @@ import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.tool.StringUtils;
-import com.umeng.analytics.MobclickAgent;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,14 +4,13 @@ import android.view.View;
 
 import com.google.gson.Gson;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
+import com.jhhscm.platform.databinding.ItemHomePageAdBinding;
 import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.HomePageItem;
-import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
-import com.jhhscm.platform.databinding.ItemHomePageAdBinding;
 
 import java.util.ArrayList;
 import java.util.List;

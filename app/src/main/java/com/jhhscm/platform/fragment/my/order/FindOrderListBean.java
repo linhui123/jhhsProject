@@ -1,6 +1,5 @@
 package com.jhhscm.platform.fragment.my.order;
 
-import com.jhhscm.platform.fragment.my.store.action.FindBusOrderListBean;
 import com.jhhscm.platform.fragment.sale.FindOrderBean;
 
 import java.io.Serializable;

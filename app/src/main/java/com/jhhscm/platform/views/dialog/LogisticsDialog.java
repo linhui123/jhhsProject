@@ -9,12 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.CycleInterpolator;
-import android.view.animation.TranslateAnimation;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.databinding.DialogHomeAlterBinding;
 import com.jhhscm.platform.databinding.DialogLogisticsBinding;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.ToastUtil;

@@ -139,19 +139,30 @@ public class FindCategoryBean implements Serializable {
         /**
          * sale_num : 0
          * counter_price : 0
+         * original_price原价
          * name : 履带轮子01
          * id : 27
          * "bus_name":"小崔商户"
+         * `counter_price
          * pic_url : https://wajuejifiles.oss-cn-beijing.aliyuncs.com/C%3A%5CUsers%5CAdministrator%5CDesktop%5C%E5%B7%A5%E5%85%B7%E7%AE%B1%5Ctest.png
          */
         private String good_code;
         private String sale_num;
         private String counter_price;
+        private String original_price;
         private String name;
         private String id;
         private String pic_url;
         private String bus_name;
         private String bus_code;
+
+        public String getOriginal_price() {
+            return original_price;
+        }
+
+        public void setOriginal_price(String original_price) {
+            this.original_price = original_price;
+        }
 
         public String getBus_code() {
             return bus_code;

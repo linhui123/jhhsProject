@@ -7,12 +7,11 @@ import android.graphics.drawable.AnimationDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 
-
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.databinding.DialogProgressBinding;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.views.dialog.BaseDialog;
 import com.jhhscm.platform.views.dialog.DialogCallback;
-import com.jhhscm.platform.databinding.DialogProgressBinding;
 
 /**
  * Created by Administrator on 2017/6/13.

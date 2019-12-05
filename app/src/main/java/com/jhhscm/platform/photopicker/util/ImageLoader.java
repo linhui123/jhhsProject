@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.util.LruCache;
 import android.widget.ImageView;
 
-
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.tool.FileUtils;
 

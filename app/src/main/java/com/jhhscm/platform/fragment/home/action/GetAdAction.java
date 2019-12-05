@@ -5,7 +5,6 @@ import android.content.Context;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
-import com.jhhscm.platform.http.action.GetCodeAction;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.NetBean;
 

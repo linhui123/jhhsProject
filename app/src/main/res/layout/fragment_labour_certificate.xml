@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/padding_15"
+        android:background="@color/cf5"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_10"
+            android:background="@drawable/bg_white_shadow"
+            android:padding="@dimen/padding_15">
+
+            <ImageView
+                android:id="@+id/im_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/padding_15"
+                android:src="@mipmap/ic_labour_zhengshu" />
+
+            <TextView
+                android:id="@+id/tv_11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/im_1"
+                android:text="证书代办"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_11"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_toRightOf="@+id/im_1"
+                android:paddingBottom="@dimen/padding_10"
+                android:text="为企业/个人提供开展业务所需各类资质证件的代办服务（快速出证）"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_15"
+            android:background="@drawable/bg_white_shadow"
+            android:padding="@dimen/padding_15">
+
+            <ImageView
+                android:id="@+id/im_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/padding_15"
+                android:src="@mipmap/ic_labour_zhicheng" />
+
+            <TextView
+                android:id="@+id/tv_21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/im_2"
+                android:text="职称代评"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_21"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_toRightOf="@+id/im_2"
+                android:paddingBottom="@dimen/padding_10"
+                android:text="为企业/个人提供初\中\高级工程师职称的代评服务（快速出证）"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_15"
+            android:background="@drawable/bg_white_shadow"
+            android:padding="@dimen/padding_15">
+
+            <ImageView
+                android:id="@+id/im_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/padding_15"
+                android:src="@mipmap/ic_labour_xueli" />
+
+            <TextView
+                android:id="@+id/tv_31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/im_3"
+                android:text="学历提升"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_31"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_toRightOf="@+id/im_3"
+                android:paddingBottom="@dimen/padding_10"
+                android:text="为企业/个人提供现有学历的快速提升服务（周期短、无需到校）"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_15"
+            android:background="@drawable/bg_white_shadow"
+            android:padding="@dimen/padding_15">
+
+            <ImageView
+                android:id="@+id/im_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/padding_15"
+                android:src="@mipmap/ic_labour_zhiye" />
+
+            <TextView
+                android:id="@+id/tv_41"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/im_4"
+                android:text="职业培训"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_42"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_41"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_toRightOf="@+id/im_4"
+                android:paddingBottom="@dimen/padding_10"
+                android:text="为个人提供就业咨询、职业培训、就业安置的整体就业服务"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_10"
+            android:background="@drawable/bg_white_shadow"
+            android:padding="@dimen/padding_15">
+
+            <ImageView
+                android:id="@+id/im_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/padding_15"
+                android:src="@mipmap/ic_labour_weituo" />
+
+            <TextView
+                android:id="@+id/tv_51"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/im_5"
+                android:text="委托招聘"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_52"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_51"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_toRightOf="@+id/im_5"
+                android:paddingBottom="@dimen/padding_10"
+                android:text="为企业/个人提供所需人才的委托招聘到岗服务"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_15"
+            android:background="@drawable/bg_white_shadow"
+            android:padding="@dimen/padding_15">
+
+            <ImageView
+                android:id="@+id/im_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/padding_15"
+                android:src="@mipmap/ic_labour_baoxian" />
+
+            <TextView
+                android:id="@+id/tv_61"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/im_6"
+                android:text="保险代理"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_62"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_61"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_toRightOf="@+id/im_6"
+                android:paddingBottom="@dimen/padding_10"
+                android:text="为企业/个人提供包括医社保代缴、工伤与雇主责任保险、商业意外保险在内的多种社会保险代理服务"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>

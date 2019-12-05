@@ -1,22 +1,16 @@
 package com.jhhscm.platform.fragment.GoodsToCarts;
 
-
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.CreateOrderActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.databinding.FragmentGoodsToCartsBinding;
-
-import com.jhhscm.platform.event.GetRegionEvent;
-import com.jhhscm.platform.fragment.GoodsToCarts.action.CreateOrderAction;
+import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.action.DelGoodsToCartsAction;
 import com.jhhscm.platform.fragment.GoodsToCarts.action.GetCartGoodsByUserCodeAction;
 import com.jhhscm.platform.fragment.GoodsToCarts.action.UpdateGoodsToCartsAction;
@@ -27,7 +21,6 @@ import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.bean.ResultBean;
-import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.shoppingcast.adapter.CartExpandAdapter;
@@ -35,20 +28,11 @@ import com.jhhscm.platform.shoppingcast.callback.OnClickAddCloseListenter;
 import com.jhhscm.platform.shoppingcast.callback.OnClickDeleteListenter;
 import com.jhhscm.platform.shoppingcast.callback.OnClickListenterModel;
 import com.jhhscm.platform.shoppingcast.callback.OnViewItemClickListener;
-import com.jhhscm.platform.shoppingcast.entity.CartInfo;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
-import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
-import com.jhhscm.platform.views.slideswaphelper.PlusItemSlideCallback;
-import com.jhhscm.platform.views.slideswaphelper.WItemTouchHelperPlus;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +40,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import retrofit2.Response;
-
 
 /**
  * 购物车
@@ -162,10 +145,7 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
         });
     }
 
-    /**
-     * 更新地区选择
-     */
-    public void onEvent(GetRegionEvent event) {
+    public void onEvent(RefreshEvent event) {
     }
 
     /**

@@ -2,8 +2,6 @@ package com.jhhscm.platform.fragment.msg;
 
 import android.content.Context;
 
-import com.jhhscm.platform.fragment.labour.FindLabourReleaseDetailAction;
-import com.jhhscm.platform.fragment.labour.FindLabourReleaseDetailBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;

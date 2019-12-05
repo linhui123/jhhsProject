@@ -1,8 +1,6 @@
 package com.jhhscm.platform.http;
 
 import android.content.Context;
-import android.util.Log;
-
 
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.tool.NETUtils;

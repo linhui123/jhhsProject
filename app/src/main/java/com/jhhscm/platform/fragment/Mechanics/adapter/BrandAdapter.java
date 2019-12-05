@@ -1,7 +1,6 @@
 package com.jhhscm.platform.fragment.Mechanics.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;

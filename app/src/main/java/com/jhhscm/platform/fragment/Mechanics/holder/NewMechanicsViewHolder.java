@@ -29,6 +29,12 @@ public class NewMechanicsViewHolder extends AbsRecyclerViewHolder<GetGoodsPageLi
         mBinding.tv1.setText(item.getName());
         mBinding.tv2.setText("铲斗容量：" + item.getFixP2() + " m³");
         mBinding.tv3.setText("额定功率：" + item.getFixP5() + " km/rpm");
+        if (item.getNum() != null) {
+            mBinding.tv5.setText("已售出：" + item.getNum() + "台");
+        } else {
+            mBinding.tv5.setText("已售出：0台");
+        }
+
         mBinding.tv4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,7 +46,7 @@ public class NewMechanicsViewHolder extends AbsRecyclerViewHolder<GetGoodsPageLi
             @Override
             public void onClick(View v) {
                 String url = UrlUtils.XJXQ + "&good_code=" + item.getGood_code();
-                MechanicsH5Activity.start(itemView.getContext(), url, "新机详情", item.getGood_code(), item.getName(),item.getPic_url(),1);
+                MechanicsH5Activity.start(itemView.getContext(), url, "新机详情", item.getGood_code(), item.getName(), item.getPic_url(), 1);
             }
         });
     }

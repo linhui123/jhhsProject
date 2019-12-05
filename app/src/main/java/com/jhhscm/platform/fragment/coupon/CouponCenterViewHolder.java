@@ -1,20 +1,12 @@
 package com.jhhscm.platform.fragment.coupon;
 
-import android.util.Log;
 import android.view.View;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.ServiceRecordActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemCouponCenterBinding;
-import com.jhhscm.platform.databinding.ItemCreateOrderBinding;
-import com.jhhscm.platform.databinding.ItemStoreMemberBinding;
 import com.jhhscm.platform.event.GetCouponEvent;
-import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
-import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.tool.ToastUtil;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class CouponCenterViewHolder extends AbsRecyclerViewHolder<CouponGetListBean.DataBean> {
 

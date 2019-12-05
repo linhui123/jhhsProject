@@ -2,8 +2,6 @@ package com.jhhscm.platform.fragment.my;
 
 import android.content.Context;
 
-import com.jhhscm.platform.fragment.home.action.FindBrandHomePageAction;
-import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;

@@ -1,7 +1,5 @@
 package com.jhhscm.platform.http.bean;
 
-import com.google.gson.annotations.SerializedName;
-
 public class UserSession {
 
     private String token;

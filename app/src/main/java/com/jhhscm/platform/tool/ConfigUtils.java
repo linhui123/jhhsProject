@@ -3,21 +3,14 @@ package com.jhhscm.platform.tool;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
-import com.jhhscm.platform.fragment.coupon.GetNewCouponslistBean;
 import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.http.bean.UserSession;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 /**

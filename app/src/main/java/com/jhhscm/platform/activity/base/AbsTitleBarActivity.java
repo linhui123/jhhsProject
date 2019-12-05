@@ -8,8 +8,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.databinding.ActivityAbsTitleBinding;
+import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.UdaUtils;
 

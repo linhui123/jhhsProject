@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.event.GetRegionEvent;
-import com.jhhscm.platform.fragment.Mechanics.adapter.JXDropAdapter;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
 import com.jhhscm.platform.tool.EventBusUtil;
 

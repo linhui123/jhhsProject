@@ -2,28 +2,21 @@ package com.jhhscm.platform.fragment.home.holder;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.BrandActivity;
-import com.jhhscm.platform.activity.MechanicsByBrandActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.bean.UserData;
-import com.jhhscm.platform.databinding.ItemHomePagePhoneBinding;
-import com.jhhscm.platform.event.JumpEvent;
-import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.databinding.ItemHomePageBrandBinding;
 import com.jhhscm.platform.databinding.ItemHomeProjectListBinding;
+import com.jhhscm.platform.event.JumpEvent;
+import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class HomePageBrandViewHolder extends AbsRecyclerViewHolder<HomePageItem> {
 

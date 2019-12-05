@@ -1,7 +1,5 @@
 package com.jhhscm.platform.fragment.sale;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 
 public class FindGoodsAssessBean implements Serializable{

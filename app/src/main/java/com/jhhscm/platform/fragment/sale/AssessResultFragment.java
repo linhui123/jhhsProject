@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alibaba.fastjson.JSON;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -16,31 +15,12 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.FragmentAssessResultBinding;
-import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.http.AHttpService;
-import com.jhhscm.platform.http.HttpHelper;
-import com.jhhscm.platform.http.bean.BaseEntity;
-import com.jhhscm.platform.http.bean.BaseErrorInfo;
-import com.jhhscm.platform.http.bean.NetBean;
-import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.CalculationUtils;
-import com.jhhscm.platform.tool.Des;
-import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.views.dialog.DropDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.apache.commons.lang3.reflect.ConstructorUtils;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
-import retrofit2.Response;
 
 public class AssessResultFragment extends AbsFragment<FragmentAssessResultBinding> {
     FindGoodsAssessBean findGoodsAssessBean;

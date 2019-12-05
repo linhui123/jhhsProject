@@ -4,9 +4,7 @@ package com.jhhscm.platform.fragment.Mechanics;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +33,6 @@ import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.tool.MapUtil;
-import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 
@@ -193,7 +189,7 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
      * 更新地区选择
      */
     public void onEvent(GetRegionEvent event) {
-        if (event.pid != null && event.type != null) {
+        if (event.activity == 0 && event.pid != null && event.type != null) {
             if (event.type.equals("1")) {//省点击，获取市
                 pID = event.pid;
                 pName = event.name;
@@ -296,7 +292,7 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
 
         @Override
         public AbsRecyclerViewHolder<GetRegionBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false));
+            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false),0);
         }
     }
 
@@ -307,7 +303,7 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
 
         @Override
         public AbsRecyclerViewHolder<GetRegionBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false));
+            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false),0);
         }
     }
 }

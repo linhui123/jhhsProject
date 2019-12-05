@@ -8,13 +8,11 @@ import android.view.ViewGroup;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsAdapter;
 import com.jhhscm.platform.adater.AbsViewHolder;
-import com.jhhscm.platform.databinding.ItemImageSelectorAddBinding;
 import com.jhhscm.platform.databinding.ItemImageSelectorAddFaceBinding;
 import com.jhhscm.platform.databinding.ItemImageSelectorBinding;
 import com.jhhscm.platform.databinding.ItemImageSelectorNeBinding;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.views.selector.ImageSelectorItem;
-import com.jhhscm.platform.views.selector.adapter.ImageSelectorAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;

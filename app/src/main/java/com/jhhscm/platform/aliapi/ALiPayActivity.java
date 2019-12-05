@@ -5,13 +5,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+
 import com.alipay.sdk.app.PayTask;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;

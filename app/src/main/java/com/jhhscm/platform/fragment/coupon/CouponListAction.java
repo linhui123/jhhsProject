@@ -2,8 +2,6 @@ package com.jhhscm.platform.fragment.coupon;
 
 import android.content.Context;
 
-import com.jhhscm.platform.fragment.my.store.action.BusinessSumdataAction;
-import com.jhhscm.platform.fragment.my.store.action.BusinessSumdataBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;

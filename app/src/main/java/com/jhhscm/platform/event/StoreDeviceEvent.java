@@ -1,6 +1,5 @@
 package com.jhhscm.platform.event;
 
-import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
 import com.jhhscm.platform.fragment.my.store.action.FindUserGoodsOwnerBean;
 import com.jhhscm.platform.tool.EventBusUtil;
 

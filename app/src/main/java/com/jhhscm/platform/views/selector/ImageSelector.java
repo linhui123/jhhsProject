@@ -26,7 +26,6 @@ import com.jhhscm.platform.views.selector.adapter.ImageSelectorAdapter;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 
-
 import java.util.ArrayList;
 import java.util.List;
 

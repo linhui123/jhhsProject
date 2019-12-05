@@ -1,6 +1,5 @@
 package com.jhhscm.platform.wxapi;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsActivity;
-import com.jhhscm.platform.event.GetRegionEvent;
 import com.jhhscm.platform.event.WXResultEvent;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;

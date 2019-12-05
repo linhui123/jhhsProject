@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.address.ReceiveAddressListFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;

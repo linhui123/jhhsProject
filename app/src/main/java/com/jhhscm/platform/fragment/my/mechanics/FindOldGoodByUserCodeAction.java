@@ -2,12 +2,10 @@ package com.jhhscm.platform.fragment.my.mechanics;
 
 import android.content.Context;
 
-import com.jhhscm.platform.fragment.my.collect.CollectDeleteAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.NetBean;
-import com.jhhscm.platform.http.bean.ResultBean;
 
 import retrofit2.Call;
 

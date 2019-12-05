@@ -153,6 +153,7 @@ public class GetGoodsPageListBean {
         private String pic_url;
         private String FixP2;
         private String second;
+        private String num;
         private boolean select;
 
         public boolean isSelect() {
@@ -161,6 +162,14 @@ public class GetGoodsPageListBean {
 
         public void setSelect(boolean select) {
             this.select = select;
+        }
+
+        public String getNum() {
+            return num;
+        }
+
+        public void setNum(String num) {
+            this.num = num;
         }
 
         public String getCounter_price() {

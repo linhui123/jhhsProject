@@ -10,7 +10,6 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.FileUtils;
 import com.jhhscm.platform.tool.ToastUtils;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;

@@ -7,18 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.ServiceRecordActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemBookingBinding;
-import com.jhhscm.platform.databinding.ItemStoreMemberBinding;
-import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.tool.DataUtil;
-import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ItemBookingViewHolder extends AbsRecyclerViewHolder<AllSumByDataTimeBean.DataBean> {
 

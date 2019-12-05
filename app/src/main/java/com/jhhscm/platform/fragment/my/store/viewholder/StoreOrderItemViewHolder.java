@@ -10,17 +10,10 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemStoreOrderBinding;
 import com.jhhscm.platform.event.OrderCancleEvent;
-import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.my.store.MyServiceGoodsViewHolder;
 import com.jhhscm.platform.fragment.my.store.action.FindBusGoodsOwnerOrderListByUserCodeBean;
-import com.jhhscm.platform.fragment.my.store.action.FindBusOrderListBean;
-import com.jhhscm.platform.fragment.my.store.viewholder.MyStoreOrderGoodsViewHolder;
-import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class StoreOrderItemViewHolder extends AbsRecyclerViewHolder<FindBusGoodsOwnerOrderListByUserCodeBean.DataBean> {
 

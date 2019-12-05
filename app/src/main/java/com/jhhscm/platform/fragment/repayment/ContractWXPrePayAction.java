@@ -2,7 +2,6 @@ package com.jhhscm.platform.fragment.repayment;
 
 import android.content.Context;
 
-import com.jhhscm.platform.bean.GirlsBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;

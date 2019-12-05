@@ -2,13 +2,10 @@ package com.jhhscm.platform.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.my.order.OrderDetailFragment;
 import com.jhhscm.platform.fragment.my.set.SetFragment;
 
 public class SettingActivity extends AbsToolbarActivity {

@@ -1,25 +1,14 @@
 package com.jhhscm.platform.fragment.home.holder;
 
 import android.view.View;
-import android.widget.Toast;
 
-import com.jhhscm.platform.activity.MainActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.ItemHomePageAdBinding;
+import com.jhhscm.platform.databinding.ItemHomePagePhoneBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.views.dialog.HomeAlterDialog;
-import com.jhhscm.platform.views.dialog.SimpleDialog;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import com.jhhscm.platform.databinding.ItemHomePagePhoneBinding;
 
 public class HomePageSendFriendsViewHolder extends AbsRecyclerViewHolder<HomePageItem> {
 

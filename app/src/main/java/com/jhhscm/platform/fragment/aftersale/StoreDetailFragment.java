@@ -7,16 +7,13 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.databinding.FragmentAfterSaleBinding;
 import com.jhhscm.platform.databinding.FragmentStoreDetailBinding;
-import com.jhhscm.platform.databinding.FragmentStoreOrderBinding;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -34,8 +31,6 @@ import com.jhhscm.platform.views.dialog.MapSelectDialog;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.imageaware.ImageAware;
-import com.tencent.mm.opensdk.utils.Log;
 
 import java.util.List;
 import java.util.Map;

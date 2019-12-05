@@ -20,7 +20,6 @@ import com.jhhscm.platform.photopicker.ConfirmDialog;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-
 import java.util.ArrayList;
 
 import uk.co.senab.photoview.PhotoView;

@@ -7,7 +7,6 @@ import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.Fields;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.UploadImageResponse;
-import com.jhhscm.platform.tool.ConfigUtils;
 
 import java.io.File;
 import java.util.List;

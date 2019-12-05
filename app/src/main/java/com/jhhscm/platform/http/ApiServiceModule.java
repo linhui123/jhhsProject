@@ -1,17 +1,13 @@
 package com.jhhscm.platform.http;
 
 import android.content.Context;
-import android.util.Log;
 
-
-import com.arialyy.aria.orm.annotation.Ignore;
 import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.http.interceptor.CommonInterceptor;
 import com.jhhscm.platform.http.interceptor.FetchCookiesInterceptor;
 import com.jhhscm.platform.http.interceptor.SetCookiesInterceptor;
-import com.jhhscm.platform.tool.ConfigUtils;
 
 import java.io.IOException;
 import java.io.InputStream;

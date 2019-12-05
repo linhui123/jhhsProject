@@ -5,7 +5,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_white"
+        android:background="@drawable/bg_white_large"
         android:orientation="vertical"
         android:paddingTop="10dp"
         android:paddingBottom="24dp">
@@ -24,6 +24,26 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableLeft="@mipmap/ic_labour_success"
+            android:gravity="center"
+            android:lineSpacingExtra="1dp"
+            android:lineSpacingMultiplier="1.2"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:paddingTop="@dimen/padding_15"
+            android:paddingBottom="@dimen/padding_15"
+            android:text="提交成功"
+            android:visibility="gone"
+            android:drawablePadding="@dimen/padding_15"
+            android:textColor="@color/a397"
+            android:textSize="@dimen/text_size_20"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +53,8 @@
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
             android:text="您的手机13000000001将很快接到挖矿来的来电请注意接听"
-            android:textSize="15sp" />
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/text_size_16" />
 
     </LinearLayout>
 </layout>

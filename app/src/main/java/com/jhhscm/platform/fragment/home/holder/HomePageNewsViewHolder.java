@@ -14,7 +14,6 @@ import com.jhhscm.platform.databinding.ItemHomeNewsListBinding;
 import com.jhhscm.platform.databinding.ItemHomePageNewsBinding;
 import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
-import com.jhhscm.platform.tool.ToastUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class HomePageNewsViewHolder extends AbsRecyclerViewHolder<HomePageItem> {

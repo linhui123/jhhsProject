@@ -1,6 +1,5 @@
 package com.jhhscm.platform.fragment.labour;
 
-
 import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,7 +14,7 @@ import com.jhhscm.platform.activity.PushQiuZhiActivity;
 import com.jhhscm.platform.activity.PushZhaoPinActivity;
 import com.jhhscm.platform.databinding.FragmentLabourDetailBinding;
 import com.jhhscm.platform.event.AddressRefreshEvent;
-import com.jhhscm.platform.event.GetRegionEvent;
+import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.fragment.my.labour.action.DelLabourReleaseAction;
@@ -46,7 +45,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import retrofit2.Response;
-
 
 public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBinding> {
     private FindLabourReleaseListBean.DataBean dataBean;
@@ -129,9 +127,8 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
     /**
      * 更新地区选择
      */
-    public void onEvent(GetRegionEvent event) {
-        if (event.pid != null && event.type != null) {
-        }
+    public void onEvent(RefreshEvent event) {
+
     }
 
 

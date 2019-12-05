@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
 
-
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.DialogAlertBinding;
 import com.jhhscm.platform.tool.StringUtils;

@@ -8,11 +8,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.bean.UploadImage;
 import com.jhhscm.platform.event.ImageSelectorEvent;
 import com.jhhscm.platform.permission.YXPermission;
@@ -20,11 +18,8 @@ import com.jhhscm.platform.photopicker.PhotoPickerActivity;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.views.ExtendGridView;
-import com.jhhscm.platform.views.selector.AlertDialog;
 import com.jhhscm.platform.views.selector.ChoiceDialog;
-import com.jhhscm.platform.views.selector.ImageSelector;
 import com.jhhscm.platform.views.selector.ImageSelectorItem;
-import com.jhhscm.platform.views.selector.adapter.ImageSelectorAdapter;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 

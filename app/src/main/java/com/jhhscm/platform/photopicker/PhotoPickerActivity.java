@@ -36,7 +36,6 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.FileUtils;
 import com.jhhscm.platform.tool.ToastUtils;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

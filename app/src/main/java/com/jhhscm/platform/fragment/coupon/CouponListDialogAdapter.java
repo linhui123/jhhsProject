@@ -2,21 +2,15 @@ package com.jhhscm.platform.fragment.coupon;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.event.GetCouponEvent;
-import com.jhhscm.platform.event.GetRegionEvent;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
-import com.jhhscm.platform.fragment.address.LocationAdapter;
 import com.jhhscm.platform.tool.EventBusUtil;
 
 import java.util.List;

@@ -5,14 +5,8 @@ import android.view.View;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemStoreSelectDeviceBinding;
-import com.jhhscm.platform.databinding.ItemStoreSelectMemberBinding;
-import com.jhhscm.platform.event.FinishEvent;
-import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
-import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
 import com.jhhscm.platform.fragment.my.store.action.FindUserGoodsOwnerBean;
-import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.views.selector.ImageSelectorItem;
-import com.jhhscm.platform.views.selector.ImageSelectorPreviewActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;

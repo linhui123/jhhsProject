@@ -4,14 +4,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
+        android:background="@color/a397"
         android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/rl_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/a397"
             android:gravity="center_vertical"
             android:paddingTop="@dimen/padding_10"
             android:paddingBottom="@dimen/padding_10">
@@ -65,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/padding_15"
+            android:background="@color/white"
             android:paddingRight="@dimen/padding_15"
             android:layout_below="@+id/rl_top"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
 

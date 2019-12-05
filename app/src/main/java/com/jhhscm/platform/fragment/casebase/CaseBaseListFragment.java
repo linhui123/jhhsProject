@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.SearchEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,12 +14,8 @@ import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentCaseBaseListBinding;
 import com.jhhscm.platform.event.ScrollEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
-
-
-import retrofit2.Response;
 
 /**
  * Created by Administrator on 2018/8/21/021.

@@ -7,8 +7,6 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.bean.FindCaseByEntity;
 
-import static android.media.CamcorderProfile.get;
-
 
 /**
  * Created by Administrator on 2018/4/28.

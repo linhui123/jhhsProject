@@ -3,11 +3,8 @@ package com.jhhscm.platform.fragment.coupon;
 import android.view.View;
 
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.ItemCouponUnuseBinding;
 import com.jhhscm.platform.databinding.ItemCouponUseBinding;
 import com.jhhscm.platform.fragment.sale.SaleItem;
-import com.jhhscm.platform.views.dialog.NewCouponDialog;
-import com.jhhscm.platform.views.dialog.NewCouponListDialog;
 
 public class CouponUseItemViewHolder extends AbsRecyclerViewHolder<SaleItem> {
 

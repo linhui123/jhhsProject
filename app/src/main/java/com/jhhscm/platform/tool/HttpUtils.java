@@ -2,11 +2,8 @@ package com.jhhscm.platform.tool;
 
 import android.content.Context;
 
-import com.jhhscm.platform.http.AHttpService;
-import com.jhhscm.platform.http.bean.BaseEntity;
-
-import org.apache.http.HttpResponse;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -38,8 +35,6 @@ import java.util.Map;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
-import retrofit2.Response;
 
 public class HttpUtils {
 

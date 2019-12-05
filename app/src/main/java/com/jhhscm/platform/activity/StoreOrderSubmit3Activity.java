@@ -2,12 +2,10 @@ package com.jhhscm.platform.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.my.store.StoreOrderSubmit2Fragment;
 import com.jhhscm.platform.fragment.my.store.StoreOrderSubmit3Fragment;
 import com.jhhscm.platform.fragment.my.store.action.BusinessFindcategorybyBuscodeBean;
 import com.jhhscm.platform.fragment.my.store.action.FindUserGoodsOwnerBean;

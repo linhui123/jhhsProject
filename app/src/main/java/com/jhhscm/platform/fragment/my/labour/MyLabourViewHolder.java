@@ -4,7 +4,6 @@ import android.view.View;
 
 import com.jhhscm.platform.activity.LabourDetailActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.ItemLabourBinding;
 import com.jhhscm.platform.databinding.ItemMyLabourBinding;
 import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
 

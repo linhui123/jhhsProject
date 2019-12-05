@@ -2,15 +2,12 @@ package com.jhhscm.platform.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.labour.LabourDetailFragment;
 import com.jhhscm.platform.fragment.lessee.Lessee1Fragment;
 import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
-import com.jhhscm.platform.fragment.my.set.FeedbackFragment;
 
 public class Lessee1Activity extends AbsToolbarActivity {
 

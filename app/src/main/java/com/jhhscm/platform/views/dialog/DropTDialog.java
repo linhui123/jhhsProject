@@ -2,9 +2,7 @@ package com.jhhscm.platform.views.dialog;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,7 +17,6 @@ import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.DialogDropTBinding;
 import com.jhhscm.platform.databinding.ItemLocationBinding;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
-import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 
 import java.util.List;

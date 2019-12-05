@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
-import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.SelectDeviceActivity;
 import com.jhhscm.platform.activity.SelectMemberActivity;
@@ -24,7 +23,6 @@ import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.lessee.LesseeBean;
-import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
 import com.jhhscm.platform.fragment.my.store.action.FindUserGoodsOwnerBean;
 import com.jhhscm.platform.fragment.my.store.viewholder.ItemFaultDeviceViewHolder;
 import com.jhhscm.platform.http.AHttpService;

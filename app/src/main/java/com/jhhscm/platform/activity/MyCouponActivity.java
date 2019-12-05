@@ -2,12 +2,10 @@ package com.jhhscm.platform.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.coupon.CouponCenterFragment;
 import com.jhhscm.platform.fragment.coupon.MyCouponFragment;
 
 public class MyCouponActivity extends AbsToolbarActivity {

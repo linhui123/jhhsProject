@@ -2,7 +2,6 @@ package com.jhhscm.platform.fragment.home.action;
 
 import android.content.Context;
 
-import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;

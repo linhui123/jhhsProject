@@ -1,22 +1,17 @@
 package com.jhhscm.platform.fragment.my.book;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.donkingliang.labels.LabelsView;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.bean.UploadImage;
 import com.jhhscm.platform.databinding.FragmentAddBookingBinding;
-import com.jhhscm.platform.databinding.FragmentBookingBinding;
 import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.GetComboBoxAction;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
@@ -33,7 +28,6 @@ import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
-import com.jhhscm.platform.tool.DataUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;

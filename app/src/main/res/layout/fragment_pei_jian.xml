@@ -4,13 +4,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/a397"
         android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/rl_top"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/blue_txt"
+
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/padding_15"
             android:paddingRight="@dimen/padding_15">
@@ -126,16 +127,19 @@
             </LinearLayout>
         </LinearLayout>
 
-        <View
-            style="@style/view_h_de"
-            android:layout_below="@+id/rl_select" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/rl_select"
+            android:background="@color/cf5" />
 
         <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
             android:id="@+id/wrv_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/rl_select"
-            android:layout_marginTop="@dimen/dp_1"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+            android:layout_marginTop="@dimen/dp_1"
+            android:background="@color/white"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
 
         <LinearLayout
             android:id="@+id/ll_xiala"
@@ -222,6 +226,7 @@
                     android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/ll_ohter"
                 android:layout_width="match_parent"

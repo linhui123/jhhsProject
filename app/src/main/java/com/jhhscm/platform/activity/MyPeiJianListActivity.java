@@ -3,12 +3,10 @@ package com.jhhscm.platform.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.my.order.MyOrderListFragment;
-import com.jhhscm.platform.fragment.my.order.MyPeiJianListFragment;
 
 public class MyPeiJianListActivity extends AbsToolbarActivity {
 

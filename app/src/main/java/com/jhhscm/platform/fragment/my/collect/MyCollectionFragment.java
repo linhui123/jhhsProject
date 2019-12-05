@@ -1,7 +1,6 @@
 package com.jhhscm.platform.fragment.my.collect;
 
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -10,11 +9,9 @@ import android.view.ViewGroup;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.databinding.FragmentMyCollectionBinding;
-import com.jhhscm.platform.event.AddressResultEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.tool.ConfigUtils;
-import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.Utils;
 
 import java.util.ArrayList;

@@ -1,18 +1,13 @@
 package com.jhhscm.platform.fragment.my.order;
 
 
-import android.annotation.SuppressLint;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
@@ -22,11 +17,9 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentOrderDetailBinding;
 import com.jhhscm.platform.event.AddressRefreshEvent;
-import com.jhhscm.platform.event.GetRegionEvent;
+import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.sale.FindOrderAction;
-import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -36,7 +29,6 @@ import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.ConfigUtils;
-import com.jhhscm.platform.tool.DataUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
@@ -128,7 +120,7 @@ public class OrderDetail2Fragment extends AbsFragment<FragmentOrderDetailBinding
         EventBusUtil.unregisterEvent(this);
     }
 
-    public void onEvent(GetRegionEvent messageEvent) {
+    public void onEvent(RefreshEvent messageEvent) {
 
     }
 

@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.fragment.Mechanics.bean.BrandModelBean;
-import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;

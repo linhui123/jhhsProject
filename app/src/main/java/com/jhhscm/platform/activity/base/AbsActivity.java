@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 
-
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.event.LoginErrorEvent;
 import com.jhhscm.platform.runtime.RuntimePermission;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
-import de.greenrobot.event.EventBus;
 import retrofit2.Call;
 
 

@@ -1,24 +1,15 @@
 package com.jhhscm.platform.fragment.lessee;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.Lessee2Activity;
-import com.jhhscm.platform.bean.PbImage;
-import com.jhhscm.platform.databinding.FragmentLabourDetailBinding;
 import com.jhhscm.platform.databinding.FragmentLessee1Binding;
 import com.jhhscm.platform.event.LesseeFinishEvent;
-import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.labour.FindLabourReleaseListBean;
-import com.jhhscm.platform.fragment.labour.LabourDetailFragment;
 import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
-import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.views.dialog.DropTDialog;

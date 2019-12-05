@@ -3,10 +3,6 @@ package com.jhhscm.platform.fragment.Mechanics;
 import com.jhhscm.platform.bean.UserData;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
-import com.jhhscm.platform.fragment.home.AdBean;
-import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
-import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
-import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
 
 public class MechanicsItem {
     public static final int TYPE_MECHANICS_NEW = 1; // 新机列表

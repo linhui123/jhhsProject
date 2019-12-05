@@ -1,7 +1,6 @@
 package com.jhhscm.platform.fragment.my.store;
 
 
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,14 +13,8 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.InvitationRegisterActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.StoreOrderSubmit1Activity;
-import com.jhhscm.platform.activity.StoreOrderSubmit2Activity;
-import com.jhhscm.platform.databinding.FragmentMyBinding;
 import com.jhhscm.platform.databinding.FragmentMyStoreBinding;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.coupon.MyCouponListFragment;
-import com.jhhscm.platform.fragment.home.action.GetArticleListAction;
-import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
-import com.jhhscm.platform.fragment.my.MyFragment;
 import com.jhhscm.platform.fragment.my.store.action.BusinessSumdataAction;
 import com.jhhscm.platform.fragment.my.store.action.BusinessSumdataBean;
 import com.jhhscm.platform.http.AHttpService;

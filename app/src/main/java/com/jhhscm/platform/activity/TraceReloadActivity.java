@@ -4,24 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
-
 import com.alibaba.fastjson.JSON;
 import com.amap.api.maps2d.AMap;
-import com.amap.api.maps2d.AMapUtils;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapsInitializer;
 import com.amap.api.maps2d.SupportMapFragment;
@@ -35,10 +29,7 @@ import com.amap.api.maps2d.model.PolylineOptions;
 import com.google.gson.Gson;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsActivity;
-import com.jhhscm.platform.databinding.ActivityMainBinding;
 import com.jhhscm.platform.databinding.ActivityTraceReloadBinding;
-import com.jhhscm.platform.fragment.vehicle.GpsDetailAction;
-import com.jhhscm.platform.fragment.vehicle.GpsDetailBean;
 import com.jhhscm.platform.fragment.vehicle.GpsTrackDetailAction;
 import com.jhhscm.platform.fragment.vehicle.GpsTrackDetailBean;
 import com.jhhscm.platform.http.AHttpService;
@@ -53,12 +44,10 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.timePickets.TimePickerShow;
-import com.umeng.commonsdk.debug.E;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.TreeMap;
 
 import retrofit2.Response;

@@ -5,15 +5,12 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.style.AbsoluteSizeSpan;
-import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.DialogSimpleBinding;
-import com.jhhscm.platform.tool.StringUtils;
 
 /**
  * 文字提示

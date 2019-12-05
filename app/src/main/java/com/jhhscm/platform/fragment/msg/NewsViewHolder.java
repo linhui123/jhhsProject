@@ -2,11 +2,8 @@ package com.jhhscm.platform.fragment.msg;
 
 import android.view.View;
 
-import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.ArticleDetailActivity;
-import com.jhhscm.platform.activity.MsgDetailActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.ItemMsgBinding;
 import com.jhhscm.platform.databinding.ItemNewsBinding;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.nostra13.universalimageloader.core.ImageLoader;

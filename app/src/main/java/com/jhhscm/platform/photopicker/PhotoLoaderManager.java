@@ -8,7 +8,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 
-
 import com.jhhscm.platform.photopicker.bean.Folder;
 import com.jhhscm.platform.photopicker.bean.Image;
 import com.jhhscm.platform.tool.FileUtils;

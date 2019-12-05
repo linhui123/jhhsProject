@@ -8,20 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.activity.CashierActivity;
 import com.jhhscm.platform.activity.OrderDetailActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemOrderStatus1Binding;
 import com.jhhscm.platform.event.OrderCancleEvent;
 import com.jhhscm.platform.event.PayEvent;
-import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
-import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.fragment.sale.SaleItem;
 import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.views.dialog.ConfirmOrderDialog;
 import com.jhhscm.platform.views.dialog.LogisticsDialog;
-import com.jhhscm.platform.views.dialog.PayWithCouponDialog;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 
 public class OrderStaus1ViewHolder extends AbsRecyclerViewHolder<SaleItem> {

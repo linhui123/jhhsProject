@@ -1,6 +1,5 @@
 package com.jhhscm.platform.fragment.home;
 
-import com.jhhscm.platform.bean.UserData;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;

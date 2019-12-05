@@ -2,7 +2,6 @@ package com.jhhscm.platform.views.selector.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,9 +10,7 @@ import com.jhhscm.platform.adater.AbsAdapter;
 import com.jhhscm.platform.adater.AbsViewHolder;
 import com.jhhscm.platform.databinding.ItemImageSelectorAddBinding;
 import com.jhhscm.platform.databinding.ItemImageSelectorBinding;
-import com.jhhscm.platform.event.DelDeviceEvent;
 import com.jhhscm.platform.event.DelPhotoEvent;
-import com.jhhscm.platform.photopicker.PhotoPreviewActivity;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.views.selector.ImageSelectorItem;
