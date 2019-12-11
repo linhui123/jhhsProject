@@ -173,6 +173,24 @@ public class FindBusListBean {
         private int status;
         private String v1;
         private String v2;
+        private String x;
+        private String y;
+
+        public String getX() {
+            return x;
+        }
+
+        public void setX(String x) {
+            this.x = x;
+        }
+
+        public String getY() {
+            return y;
+        }
+
+        public void setY(String y) {
+            this.y = y;
+        }
 
         public String getDistance() {
             return distance;

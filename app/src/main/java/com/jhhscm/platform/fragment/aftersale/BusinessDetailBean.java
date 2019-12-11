@@ -34,8 +34,10 @@ public class BusinessDetailBean {
          * bus_code : 2019111310001599105392
          * status : 0
          * desc : 3333
+         * "x":"119.314389","y":"26.095002"
          */
-
+        private String x;
+        private String y;
         private String distance;
         private String city;
         private String user_name;
@@ -55,6 +57,22 @@ public class BusinessDetailBean {
         private String desc;
         private String v1;
         private String v2;
+
+        public String getX() {
+            return x;
+        }
+
+        public void setX(String x) {
+            this.x = x;
+        }
+
+        public String getY() {
+            return y;
+        }
+
+        public void setY(String y) {
+            this.y = y;
+        }
 
         public String getV1() {
             return v1;

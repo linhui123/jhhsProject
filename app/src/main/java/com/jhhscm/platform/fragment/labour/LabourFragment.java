@@ -131,7 +131,6 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> {
             } else {
                 transaction.show(zhaopinFragment);
             }
-
         } else if (checkedId == R.id.tv_qiuzhi) {
             if (qiuzhiFragment == null) {
                 qiuzhiFragment = new LabourListFragment().instance(1);
@@ -139,7 +138,6 @@ public class LabourFragment extends AbsFragment<FragmentLabourBinding> {
             } else {
                 transaction.show(qiuzhiFragment);
             }
-
         } else if (checkedId == R.id.tv_zhengjian) {
             if (labourCertificateFragment == null) {
                 labourCertificateFragment = new LabourCertificateFragment().instance(0);

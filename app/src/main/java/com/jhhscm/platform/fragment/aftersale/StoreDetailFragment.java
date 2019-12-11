@@ -226,10 +226,11 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
                 }
             }
 
-            final String v1 = data.getResult().get(0).getV1();
-            final String v2 = data.getResult().get(0).getV2();
+            final String v1 = data.getResult().get(0).getX();
+            final String v2 = data.getResult().get(0).getY();
             final String adress = data.getResult().get(0).getProvince_name()
                     + data.getResult().get(0).getCity_name()
+                    + data.getResult().get(0).getCounty_name()
                     + data.getResult().get(0).getAddress_detail();
             if (!StringUtils.isNullEmpty(v1) && !StringUtils.isNullEmpty(v2)) {
                 mDataBinding.storeLocation.setOnClickListener(new View.OnClickListener() {

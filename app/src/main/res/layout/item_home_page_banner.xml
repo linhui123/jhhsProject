@@ -14,10 +14,10 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:orientation="vertical"
-            roundiv:left_bottom_radius1="5dp"
-            roundiv:left_top_radius1="5dp"
-            roundiv:right_bottom_radius1="5dp"
-            roundiv:right_top_radius1="5dp">
+            roundiv:left_bottom_radius1="10dp"
+            roundiv:left_top_radius1="10dp"
+            roundiv:right_bottom_radius1="10dp"
+            roundiv:right_top_radius1="10dp">
 
             <cn.bingoogolapple.bgabanner.BGABanner
                 android:id="@+id/bga_banner"
@@ -25,7 +25,7 @@
                 android:layout_height="130dp"
                 app:banner_pageChangeDuration="1000"
                 app:banner_pointAutoPlayAble="true"
-                app:banner_pointAutoPlayInterval="5000"
+                app:banner_pointAutoPlayInterval="3000"
                 app:banner_pointContainerBackground="@android:color/transparent"
                 app:banner_pointDrawable="@drawable/bga_banner_selector_point"
                 app:banner_pointTopBottomMargin="10dp"

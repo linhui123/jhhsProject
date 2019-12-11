@@ -1,6 +1,5 @@
 package com.jhhscm.platform.fragment.labour;
 
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -282,6 +281,7 @@ public class SubmitLabourFragment extends AbsFragment<FragmentSubmitLabourBindin
      * 获取下拉框 工种 职业等级 最高学历 提升学历 职业
      */
     private void getComboBox(final String name) {
+        showDialog();
         Map<String, String> map = new TreeMap<String, String>();
         map.put("key_group_name", name);
         String content = JSON.toJSONString(map);
