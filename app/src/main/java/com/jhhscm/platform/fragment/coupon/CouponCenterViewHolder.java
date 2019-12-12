@@ -28,6 +28,27 @@ public class CouponCenterViewHolder extends AbsRecyclerViewHolder<CouponGetListB
             } else {
                 mBinding.tvData.setText("-- 至 --");
             }
+            String data = "";
+            if (item.getStartTime() != null) {
+                if (item.getStartTime().length() > 10) {
+                    data = item.getStartTime().substring(0, 10) + " 至 ";
+                } else {
+                    data = item.getStartTime() + " 至 ";
+                }
+            } else {
+                data = "-- 至 ";
+            }
+            if (item.getEndTime() != null) {
+                if (item.getEndTime().length() > 10) {
+                    data = data + item.getEndTime().substring(0, 10);
+                } else {
+                    data = data + item.getEndTime();
+                }
+            } else {
+                data = data + "--";
+            }
+            mBinding.tvData.setText(data);
+
             mBinding.tvCondition.setText(item.getDesc());
             if (item.getIsGet().equals("1")) {
                 mBinding.tvReceive.setBackgroundResource(R.drawable.button_c397);

@@ -160,38 +160,56 @@ public class StoreOrderSubmit3Fragment extends AbsFragment<FragmentStoreOrderSub
                 for (FindUserGoodsOwnerBean.DataBean updateImageBean : dataBean.getData()) {
                     if (updateImageBean.getBrand_id() != null) {
                         if (brandIds.length() > 0) {
-                            brandIds = brandIds + "," + "" + updateImageBean.getBrand_id() + "";
+                            brandIds = brandIds + "," +updateImageBean.getBrand_id() ;
                         } else {
-                            brandIds = "" + updateImageBean.getBrand_id() + "";
+                            brandIds = updateImageBean.getBrand_id() ;
                         }
                     }
                     if (updateImageBean.getFixp17() != null) {
                         if (fixs.length() > 0) {
-                            fixs = fixs + "," + "" + updateImageBean.getFixp17() + "";
+                            fixs = fixs + "," + updateImageBean.getFixp17();
                         } else {
-                            fixs = "" + updateImageBean.getFixp17() + "";
+                            fixs = updateImageBean.getFixp17() ;
                         }
                     }
                     if (updateImageBean.getNo() != null) {
                         if (goodsOwnerV1s.length() > 0) {
-                            goodsOwnerV1s = goodsOwnerV1s + "," + "" + updateImageBean.getNo() + "";
+                            goodsOwnerV1s = goodsOwnerV1s + "," + updateImageBean.getNo();
                         } else {
-                            goodsOwnerV1s = "" + updateImageBean.getNo() + "";
+                            goodsOwnerV1s = updateImageBean.getNo();
+                        }
+                    } else {
+                        if (goodsOwnerV1s.length() > 0) {
+                            goodsOwnerV1s = goodsOwnerV1s + "," + "null";
+                        } else {
+                            goodsOwnerV1s = "null";
                         }
                     }
 
                     if (updateImageBean.getGps_no() != null) {
                         if (goodsOwnerV2s.length() > 0) {
-                            goodsOwnerV2s = goodsOwnerV2s + "," + "" + updateImageBean.getGps_no() + "";
+                            goodsOwnerV2s = goodsOwnerV2s + "," + updateImageBean.getGps_no();
                         } else {
-                            goodsOwnerV2s = "" + updateImageBean.getGps_no() + "";
+                            goodsOwnerV2s = updateImageBean.getGps_no();
+                        }
+                    } else {
+                        if (goodsOwnerV2s.length() > 0) {
+                            goodsOwnerV2s = goodsOwnerV2s + "," + "null";
+                        } else {
+                            goodsOwnerV2s = "null";
                         }
                     }
                     if (updateImageBean.getError_no() != null) {
                         if (goodsOwnerV3s.length() > 0) {
-                            goodsOwnerV3s = goodsOwnerV3s + "," + "" + updateImageBean.getError_no() + "";
+                            goodsOwnerV3s = goodsOwnerV3s + "," + updateImageBean.getError_no();
                         } else {
-                            goodsOwnerV3s = "" + updateImageBean.getError_no() + "";
+                            goodsOwnerV3s = updateImageBean.getError_no();
+                        }
+                    } else {
+                        if (goodsOwnerV3s.length() > 0) {
+                            goodsOwnerV3s = goodsOwnerV3s + "," + "null";
+                        } else {
+                            goodsOwnerV3s = "null";
                         }
                     }
                 }
@@ -255,8 +273,8 @@ public class StoreOrderSubmit3Fragment extends AbsFragment<FragmentStoreOrderSub
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         EventBusUtil.post(new RefreshEvent());
-                                        getActivity().finish();
                                         EventBusUtil.post(new FinishEvent());
+                                        getActivity().finish();
                                         ToastUtil.show(getContext(), "提交成功");
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());

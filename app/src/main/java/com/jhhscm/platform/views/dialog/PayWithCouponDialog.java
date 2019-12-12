@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSON;
 import com.alipay.sdk.app.PayTask;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.aliapi.AliPrePayAction;
@@ -35,6 +36,9 @@ import com.jhhscm.platform.databinding.ItemLocationBinding;
 import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.event.WXResultEvent;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
+import com.jhhscm.platform.fragment.coupon.CouponListAction;
+import com.jhhscm.platform.fragment.coupon.CouponListBean;
+import com.jhhscm.platform.fragment.my.store.action.PayUseListAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -54,6 +58,7 @@ import com.jhhscm.platform.wxapi.WxPrePayAction;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -143,6 +148,15 @@ public class PayWithCouponDialog extends BaseDialog {
         this.activity = activity;
     }
 
+    public PayWithCouponDialog(Context context, Activity activity, String price, String coupon_price, String orderCode) {
+        super(context);
+        this.price = price;
+        this.orderCode = orderCode;
+        this.coupon_price = coupon_price;
+        this.activity = activity;
+    }
+
+
     public PayWithCouponDialog(Context context, CallbackListener listener) {
         this(context);
         setCanceledOnTouchOutside(false);
@@ -198,9 +212,10 @@ public class PayWithCouponDialog extends BaseDialog {
             mDataBinding.coupon.setVisibility(View.GONE);
         }
 
-        if (list != null) {
-            initDrop();
-        }
+//        if (list != null) {
+        initDrop();
+        payUseList();
+//        }
         mDataBinding.coupon.setTag("");
         mDataBinding.coupon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,7 +282,7 @@ public class PayWithCouponDialog extends BaseDialog {
         mDataBinding.recyvleview.setLayoutManager(new LinearLayoutManager(getContext()));
         pAdapter = new InnerAdapter(getContext());
         mDataBinding.recyvleview.setAdapter(pAdapter);
-        pAdapter.setData(list);
+//        pAdapter.setData(list);
     }
 
     @Override
@@ -505,5 +520,56 @@ public class PayWithCouponDialog extends BaseDialog {
                 }
             });
         }
+    }
+
+    /**
+     * 获取优惠券列表
+     */
+    private void payUseList() {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+        map.put("order_code",orderCode);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "payUseList");
+        NetBean netBean = new NetBean();
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(PayUseListAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<CouponListBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<CouponListBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getContext() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getContext().getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    doSuccessResponse(response.body().getData());
+                                } else if (response.body().getCode().equals("1003")) {
+                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+                                } else {
+                                    ToastUtils.show(getContext(), "error " + type + ":" + response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    private void doSuccessResponse(final CouponListBean couponListBean) {
+        list = new ArrayList<>();
+        if (couponListBean != null && couponListBean.getResult() != null && couponListBean.getResult().size() > 0) {
+            for (CouponListBean.ResultBean resultBean : couponListBean.getResult()) {
+                if (resultBean.getStatus() == 0) {
+                    GetComboBoxBean.ResultBean resultBean1 = new GetComboBoxBean.ResultBean(resultBean.getCoupon_code(), resultBean.getName(), resultBean.getDiscount());
+                    list.add(resultBean1);
+                }
+            }
+        }
+        list.add(new GetComboBoxBean.ResultBean("", "不使用优惠券", 0));
+        pAdapter.setData(list);
     }
 }

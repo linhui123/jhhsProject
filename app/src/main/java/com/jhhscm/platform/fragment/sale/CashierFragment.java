@@ -30,6 +30,7 @@ import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.coupon.CouponListAction;
 import com.jhhscm.platform.fragment.coupon.CouponListBean;
+import com.jhhscm.platform.fragment.my.store.action.PayUseListAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -518,14 +519,15 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
         showDialog();
         Map<String, String> map = new TreeMap<String, String>();
         map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+        map.put("order_code", createOrderResultBean.getData().getOrderCode());
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "getCouponList");
+        String sign = Sign.getSignKey(getActivity(), map, "payUseList");
         NetBean netBean = new NetBean();
         netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
-        onNewRequestCall(CouponListAction.newInstance(getContext(), netBean)
+        onNewRequestCall(PayUseListAction.newInstance(getContext(), netBean)
                 .request(new AHttpService.IResCallback<BaseEntity<CouponListBean>>() {
                     @Override
                     public void onCallback(int resultCode, Response<BaseEntity<CouponListBean>> response, BaseErrorInfo baseErrorInfo) {
@@ -576,9 +578,9 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
 
                 }).show();
             } else {
-                mDataBinding.tvCoupon.setText("暂无优惠券");
+                mDataBinding.tvCoupon.setText("暂无可用优惠券");
                 mDataBinding.tvCoupon.setTag("");
-                ToastUtil.show(getContext(), "暂无优惠券");
+                ToastUtil.show(getContext(), "暂无可用优惠券");
             }
         }
     }

@@ -5,18 +5,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
+import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.FragmentSubmitLabourBinding;
 import com.jhhscm.platform.event.FinishEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.GetComboBoxAction;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
@@ -24,6 +27,7 @@ import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.AddressDialog;
 import com.jhhscm.platform.views.dialog.DropTDialog;
 import com.jhhscm.platform.views.dialog.LabourSubmitDialog;
+import com.jhhscm.platform.views.dialog.SimpleDialog;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -35,6 +39,8 @@ import retrofit2.Response;
  */
 public class SubmitLabourFragment extends AbsFragment<FragmentSubmitLabourBinding> {
     private int type = 0;
+    private String pId = "";
+    private String cId = "";
 
     public static SubmitLabourFragment instance() {
         SubmitLabourFragment view = new SubmitLabourFragment();
@@ -69,7 +75,7 @@ public class SubmitLabourFragment extends AbsFragment<FragmentSubmitLabourBindin
             mDataBinding.rlTv1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getComboBox("goods_type");//工种
+                    getComboBox("work_arg_1");//工种
                 }
             });
             mDataBinding.rlTv2.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +86,8 @@ public class SubmitLabourFragment extends AbsFragment<FragmentSubmitLabourBindin
                         @Override
                         public void clickResult(String pid, String pNmae, String cityId, String cName, String countryID, String countryName) {
                             mDataBinding.tv22.setText(pNmae + " " + cName + " " + countryName);
+                            pId = pid;
+                            cId = cityId;
                         }
                     }).show();
                 }
@@ -100,13 +108,13 @@ public class SubmitLabourFragment extends AbsFragment<FragmentSubmitLabourBindin
             mDataBinding.rlTv1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getComboBox("old_sort");       //职业等级
+                    getComboBox("work_arg_2");       //职业等级
                 }
             });
             mDataBinding.rlTv2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getComboBox("good_old_time");//最高学历
+                    getComboBox("work_arg_5");//最高学历
                 }
             });
             mDataBinding.rlTv3.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +125,8 @@ public class SubmitLabourFragment extends AbsFragment<FragmentSubmitLabourBindin
                         @Override
                         public void clickResult(String pid, String pNmae, String cityId, String cName, String countryID, String countryName) {
                             mDataBinding.tv32.setText(pNmae + " " + cName + " " + countryName);
+                            pId = pid;
+                            cId = cityId;
                         }
                     }).show();
                 }
@@ -137,13 +147,13 @@ public class SubmitLabourFragment extends AbsFragment<FragmentSubmitLabourBindin
             mDataBinding.rlTv1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getComboBox("good_counter_price");//提升学历
+                    getComboBox("work_arg_3");//提升学历
                 }
             });
             mDataBinding.rlTv2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getComboBox("good_old_time");//最高学历
+                    getComboBox("work_arg_5");//最高学历
                 }
             });
             mDataBinding.rlTv3.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +164,8 @@ public class SubmitLabourFragment extends AbsFragment<FragmentSubmitLabourBindin
                         @Override
                         public void clickResult(String pid, String pNmae, String cityId, String cName, String countryID, String countryName) {
                             mDataBinding.tv32.setText(pNmae + " " + cName + " " + countryName);
+                            pId = pid;
+                            cId = cityId;
                         }
                     }).show();
                 }
@@ -176,7 +188,7 @@ public class SubmitLabourFragment extends AbsFragment<FragmentSubmitLabourBindin
             mDataBinding.rlTv1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getComboBox("good_factory_time");//职业
+                    getComboBox("work_arg_4");//职业
                 }
             });
             mDataBinding.rlTv2.setOnClickListener(new View.OnClickListener() {
@@ -187,6 +199,8 @@ public class SubmitLabourFragment extends AbsFragment<FragmentSubmitLabourBindin
                         @Override
                         public void clickResult(String pid, String pNmae, String cityId, String cName, String countryID, String countryName) {
                             mDataBinding.tv22.setText(pNmae + " " + cName + " " + countryName);
+                            pId = pid;
+                            cId = cityId;
                         }
                     }).show();
                 }
@@ -213,7 +227,6 @@ public class SubmitLabourFragment extends AbsFragment<FragmentSubmitLabourBindin
             @Override
             public void onClick(View v) {
                 if (judge()) {
-                    ToastUtil.show(getContext(), "提交");
                     submit();
                 } else {
                     ToastUtil.show(getContext(), "请填写完整");
@@ -274,11 +287,25 @@ public class SubmitLabourFragment extends AbsFragment<FragmentSubmitLabourBindin
     }
 
     private void submit() {
-        new LabourSubmitDialog(getContext()).show();
+        if (type == 0) {//证书代办
+            saveMsg("11");
+        } else if (type == 1) {//职称代评
+            saveMsg("12");
+        } else if (type == 2) {//学历提升
+            saveMsg("13");
+        } else if (type == 3) {//职业培训
+            saveMsg("14");
+        } else if (type == 4) {//委托招聘
+            saveMsg("15");
+        } else if (type == 5) {//保险代理
+            saveMsg("16");
+        }
     }
 
     /**
      * 获取下拉框 工种 职业等级 最高学历 提升学历 职业
+     * 证书代办（工种）： work_arg_1 职称代评（职业等级） ： work_arg_2 学历提升 ：work_arg_3 职业培训（职业）： work_arg_4
+     * 最高学历： work_arg_5
      */
     private void getComboBox(final String name) {
         showDialog();
@@ -303,45 +330,117 @@ public class SubmitLabourFragment extends AbsFragment<FragmentSubmitLabourBindin
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
                                     GetComboBoxBean getComboBoxBean = response.body().getData();
-                                    if ("goods_type".equals(name)) {
+                                    if ("work_arg_1".equals(name)) {
                                         new DropTDialog(getActivity(), "工种", getComboBoxBean.getResult(), new DropTDialog.CallbackListener() {
                                             @Override
                                             public void clickResult(String id, String Nmae) {
                                                 mDataBinding.tv12.setText(Nmae);
+                                                mDataBinding.tv12.setTag(id);
                                             }
                                         }).show();
-                                    } else if ("old_sort".equals(name)) {
+                                    } else if ("work_arg_2".equals(name)) {
                                         new DropTDialog(getActivity(), "职业等级", getComboBoxBean.getResult(), new DropTDialog.CallbackListener() {
                                             @Override
                                             public void clickResult(String id, String Nmae) {
                                                 mDataBinding.tv12.setText(Nmae);
+                                                mDataBinding.tv12.setTag(id);
                                             }
                                         }).show();
-                                    } else if ("good_old_time".equals(name)) {
+                                    } else if ("work_arg_5".equals(name)) {
                                         new DropTDialog(getActivity(), "最高学历", getComboBoxBean.getResult(), new DropTDialog.CallbackListener() {
                                             @Override
                                             public void clickResult(String id, String Nmae) {
                                                 mDataBinding.tv22.setText(Nmae);
+                                                mDataBinding.tv22.setTag(id);
                                             }
                                         }).show();
-                                    } else if ("good_counter_price".equals(name)) {
+                                    } else if ("work_arg_3".equals(name)) {
                                         new DropTDialog(getActivity(), "提升学历", getComboBoxBean.getResult(), new DropTDialog.CallbackListener() {
                                             @Override
                                             public void clickResult(String id, String Nmae) {
                                                 mDataBinding.tv12.setText(Nmae);
+                                                mDataBinding.tv12.setTag(id);
                                             }
                                         }).show();
-                                    } else if ("good_factory_time".equals(name)) {
+                                    } else if ("work_arg_4".equals(name)) {
                                         new DropTDialog(getActivity(), "职业", getComboBoxBean.getResult(), new DropTDialog.CallbackListener() {
                                             @Override
                                             public void clickResult(String id, String Nmae) {
                                                 mDataBinding.tv12.setText(Nmae);
+                                                mDataBinding.tv12.setTag(id);
                                             }
                                         }).show();
                                     }
                                 } else {
                                     ToastUtils.show(getContext(), "error " + name + ":" + response.body().getMessage());
                                 }
+                            }
+                        }
+                    }
+                }));
+    }
+
+
+    /**
+     * 信息咨询-- 劳务 11:证书代办 12:职称代评 13:学历提升 14:职业培训 15: 委托招聘 16:保险代理
+     */
+    private void saveMsg(String fix) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("type", fix);
+        map.put("name",  mDataBinding.et12.getText().toString().trim());
+        map.put("content", "");
+        map.put("contactName", mDataBinding.et12.getText().toString().trim());
+        map.put("mobile", mDataBinding.et22.getText().toString().trim());
+        if (type == 0) {//证书代办
+            map.put("typeClass", mDataBinding.tv12.getTag().toString().trim());
+            map.put("contactCity", pId);
+            map.put("contactProvince", cId);
+            map.put("contactAge", mDataBinding.et32.getText().toString().trim());
+        } else if (type == 1) {//职称代评
+            map.put("typeClass", mDataBinding.tv12.getTag().toString().trim());
+            map.put("contactEd", mDataBinding.tv22.getTag().toString().trim());//最高学历
+            map.put("contactCity", pId);
+            map.put("contactProvince", cId);
+            map.put("contactAge", mDataBinding.et32.getText().toString().trim());
+        } else if (type == 2) {//学历提升
+            map.put("typeClass", mDataBinding.tv12.getTag().toString().trim());
+            map.put("contactCity", pId);
+            map.put("contactProvince", cId);
+            map.put("contactAge", mDataBinding.et32.getText().toString().trim());
+        } else if (type == 3) {//职业培训
+            map.put("typeClass", mDataBinding.tv12.getTag().toString().trim());
+            map.put("contactCity", pId);
+            map.put("contactProvince", cId);
+            map.put("contactAge", mDataBinding.et32.getText().toString().trim());
+            map.put("contactHeight", mDataBinding.et42.getText().toString().trim());
+            map.put("contactWeight", mDataBinding.et52.getText().toString().trim());
+        } else if (type == 4) {//委托招聘
+            map.put("contactCompany", mDataBinding.et62.getText().toString().trim());
+        } else if (type == 5) {//保险代理
+            map.put("contactCompany", mDataBinding.et62.getText().toString().trim());
+        }
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "saveMsg type = " + fix);
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(SaveMsgAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity> response, BaseErrorInfo baseErrorInfo) {
+                        closeDialog();
+                        if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                            return;
+                        }
+                        if (response != null) {
+                            if (response.body().getCode().equals("200")) {
+                                new LabourSubmitDialog(getContext()).show();
+                            } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                ToastUtils.show(getContext(), "网络错误");
+                            } else {
+                                ToastUtils.show(getContext(), response.body().getMessage());
                             }
                         }
                     }

@@ -107,8 +107,8 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                                     userSession.setIs_check(userBean.getData().getIs_check());
                                     ConfigUtils.setCurrentUser(getContext(), userSession);
                                 } else if (response.body().getCode().equals("1003")) {
-                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
-                                    startNewActivity(LoginActivity.class);
+//                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+//                                    startNewActivity(LoginActivity.class);
                                 } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
                                     ToastUtils.show(getContext(), "网络错误");
                                 } else {
@@ -175,8 +175,8 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                                         }
                                     }
                                 } else if (response.body().getCode().equals("1003")) {
-                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
-                                    startNewActivity(LoginActivity.class);
+//                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+//                                    startNewActivity(LoginActivity.class);
                                 } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
                                     ToastUtils.show(getContext(), "网络错误");
                                 } else {
@@ -217,8 +217,8 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                                         mDataBinding.tvProjectNum.setText(response.body().getData().getResult().getData().get(0).getGoods_num() + "");
                                     }
                                 } else if (response.body().getCode().equals("1003")) {
-                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
-                                    startNewActivity(LoginActivity.class);
+//                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+//                                    startNewActivity(LoginActivity.class);
                                 } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
                                     ToastUtils.show(getContext(), "网络错误");
                                 } else {

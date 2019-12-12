@@ -76,7 +76,6 @@ public class MyPeiJianListAdapter extends AbsRecyclerViewAdapter<SaleItem> {
                 return new OrderStaus1ViewHolder(mInflater.inflate(R.layout.item_order_status_1, parent, false));
             case SaleItem.TYPE_SALE_2://商户订单
                 return new OrderStaus2ViewHolder(mInflater.inflate(R.layout.item_order_status_2, parent, false));
-
         }
         return null;
     }

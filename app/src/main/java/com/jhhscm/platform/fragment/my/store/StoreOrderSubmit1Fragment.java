@@ -159,10 +159,10 @@ public class StoreOrderSubmit1Fragment extends AbsFragment<FragmentStoreOrderSub
                 ToastUtil.show(getContext(), "序列号不能为空");
                 return false;
             }
-            if (StringUtils.isNullEmpty(wBankLeaseItemsBean.getGps_no())) {
-                ToastUtil.show(getContext(), "GPS序列号不能为空");
-                return false;
-            }
+//            if (StringUtils.isNullEmpty(wBankLeaseItemsBean.getGps_no())) {
+//                ToastUtil.show(getContext(), "GPS序列号不能为空");
+//                return false;
+//            }
             if (StringUtils.isNullEmpty(wBankLeaseItemsBean.getError_no())) {
                 ToastUtil.show(getContext(), "故障类型不能为空");
                 return false;
@@ -192,7 +192,6 @@ public class StoreOrderSubmit1Fragment extends AbsFragment<FragmentStoreOrderSub
     }
 
     public void onEvent(StoreDeviceEvent event) {
-
         if (event.dataBeans != null && event.dataBeans.size() > 0) {
             if (mAdapter.getItemCount() > 0 && mAdapter.get(0) != null
                     && mAdapter.get(0).getBrand_id() != null && mAdapter.get(0).getFixp17() != null) {
@@ -325,6 +324,4 @@ public class StoreOrderSubmit1Fragment extends AbsFragment<FragmentStoreOrderSub
                     }
                 }));
     }
-
-
 }

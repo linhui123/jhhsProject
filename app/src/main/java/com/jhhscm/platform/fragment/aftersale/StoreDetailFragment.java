@@ -7,14 +7,20 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.FragmentStoreDetailBinding;
+import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -23,6 +29,7 @@ import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.permission.YXPermission;
 import com.jhhscm.platform.tool.Des;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.MapUtil;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
@@ -31,11 +38,14 @@ import com.jhhscm.platform.views.dialog.MapSelectDialog;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import cn.bingoogolapple.bgabanner.BGABanner;
 import retrofit2.Response;
 
 public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding> {
@@ -175,7 +185,6 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
                                 if (response != null) {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
-
                                         initView(response.body().getData());
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
@@ -214,64 +223,106 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
             } else {
                 mDataBinding.tvStore.setVisibility(View.GONE);
             }
+            initBanner(data);
+            initLocation(data);
+        }
+    }
 
+    private void initBanner(final BusinessDetailBean data) {
+        if (data.getResult().get(0).getPic_url() != null) {
+            String jsonString = "{\"pic_url\":" + data.getResult().get(0).getPic_url() + "}";
+            android.util.Log.e("jsonString", "jsonString  " + jsonString);
+            AfterSaleViewHolder.PicBean pic = JSON.parseObject(jsonString, AfterSaleViewHolder.PicBean.class);
+            if (pic != null && pic.getPic_url() != null) {
+                if (pic.getPic_url().size() > 1) {
+                    mDataBinding.bgaBanner.setVisibility(View.VISIBLE);
+                    mDataBinding.im.setVisibility(View.GONE);
+                    ViewTreeObserver vto = mDataBinding.bgaBanner.getViewTreeObserver();
+                    vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            mDataBinding.bgaBanner.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                            ViewGroup.LayoutParams lp1 = mDataBinding.bgaBanner.getLayoutParams();
+                            lp1.width = mDataBinding.bgaBanner.getWidth();
+                            lp1.height = (int) (mDataBinding.bgaBanner.getWidth() / 1.5);
+                            mDataBinding.bgaBanner.setLayoutParams(lp1);
+                        }
+                    });
+                    mDataBinding.bgaBanner.setAdapter(new BGABanner.Adapter() {
+                        @Override
+                        public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
+                        ((ImageView) view).setScaleType(ImageView.ScaleType.FIT_XY);
+                            ImageLoader.getInstance().displayImage((String) model, (ImageView) view);
+                        }
+                    });
+                    final List<String> list = new ArrayList<>();
+                    for (AfterSaleViewHolder.PicBean.PicUrlBean picBean : pic.getPic_url()) {
+                        list.add(picBean.getName());
+                    }
 
-            if (data.getResult().get(0).getPic_url() != null) {
-                String jsonString = "{\"pic_url\":" + data.getResult().get(0).getPic_url() + "}";
-                android.util.Log.e("jsonString", "jsonString  " + jsonString);
-                AfterSaleViewHolder.PicBean pic = JSON.parseObject(jsonString, AfterSaleViewHolder.PicBean.class);
-                if (pic != null
-                        && pic.getPic_url() != null && pic.getPic_url().size() > 0) {
-                    ImageLoader.getInstance().displayImage(pic.getPic_url().get(0).getUrl(), mDataBinding.im);
+                    mDataBinding.bgaBanner.setData(list, null);
+                    mDataBinding.bgaBanner.setDelegate(new BGABanner.Delegate() {
+                        @Override
+                        public void onBannerItemClick(BGABanner banner, View itemViews, @Nullable Object model, int position) {
+                        }
+                    });
+                } else {
+                    mDataBinding.bgaBanner.setVisibility(View.GONE);
+                    mDataBinding.im.setVisibility(View.VISIBLE);
+                    if (pic.getPic_url().size() > 0) {
+                        ImageLoader.getInstance().displayImage(pic.getPic_url().get(0).getName(), mDataBinding.im);
+                    }
                 }
             }
+        }
+    }
 
-            final String v1 = data.getResult().get(0).getX();
-            final String v2 = data.getResult().get(0).getY();
-            final String adress = data.getResult().get(0).getProvince_name()
-                    + data.getResult().get(0).getCity_name()
-                    + data.getResult().get(0).getCounty_name()
-                    + data.getResult().get(0).getAddress_detail();
-            if (!StringUtils.isNullEmpty(v1) && !StringUtils.isNullEmpty(v2)) {
-                mDataBinding.storeLocation.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!StringUtils.isNullEmpty(v1) && !StringUtils.isNullEmpty(v2)) {
-                            new MapSelectDialog(getContext(), adress, new MapSelectDialog.CallbackListener() {
-                                @Override
-                                public void clickGaode() {
-                                    if (MapUtil.checkMapAppsIsExist(getActivity(), MapUtil.GAODE_PKG)) {
-                                        MapUtil.openGaoDe(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1));
-                                    } else {
-                                        ToastUtil.show(getActivity(), "检测到您没有安装高德地图");
-                                    }
-
+    private void initLocation(BusinessDetailBean data) {
+        final String v1 = data.getResult().get(0).getX();
+        final String v2 = data.getResult().get(0).getY();
+        final String adress = data.getResult().get(0).getProvince_name()
+                + data.getResult().get(0).getCity_name()
+                + data.getResult().get(0).getCounty_name()
+                + data.getResult().get(0).getAddress_detail();
+        if (!StringUtils.isNullEmpty(v1) && !StringUtils.isNullEmpty(v2)) {
+            mDataBinding.storeLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!StringUtils.isNullEmpty(v1) && !StringUtils.isNullEmpty(v2)) {
+                        new MapSelectDialog(getContext(), adress, new MapSelectDialog.CallbackListener() {
+                            @Override
+                            public void clickGaode() {
+                                if (MapUtil.checkMapAppsIsExist(getActivity(), MapUtil.GAODE_PKG)) {
+                                    MapUtil.openGaoDe(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1));
+                                } else {
+                                    ToastUtil.show(getActivity(), "检测到您没有安装高德地图");
                                 }
 
-                                @Override
-                                public void clickBaidu() {
-                                    if (MapUtil.checkMapAppsIsExist(getActivity(), MapUtil.BAIDU_PKG)) {
-                                        MapUtil.openBaidu(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1));
-                                    } else {
-                                        ToastUtil.show(getActivity(), "检测到您没有安装百度地图");
-                                    }
-                                }
+                            }
 
-                                @Override
-                                public void clickTenxun() {
-                                    if (MapUtil.checkMapAppsIsExist(getActivity(), MapUtil.PN_TENCENT_MAP)) {
-                                        MapUtil.openTenxun(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1));
-                                    } else {
-                                        ToastUtil.show(getActivity(), "检测到您没有安装腾讯地图");
-                                    }
+                            @Override
+                            public void clickBaidu() {
+                                if (MapUtil.checkMapAppsIsExist(getActivity(), MapUtil.BAIDU_PKG)) {
+                                    MapUtil.openBaidu(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1));
+                                } else {
+                                    ToastUtil.show(getActivity(), "检测到您没有安装百度地图");
                                 }
-                            }).show();
-                        } else {
-                            ToastUtil.show(getActivity(), "该商户无准确地址");
-                        }
+                            }
+
+                            @Override
+                            public void clickTenxun() {
+                                if (MapUtil.checkMapAppsIsExist(getActivity(), MapUtil.PN_TENCENT_MAP)) {
+                                    MapUtil.openTenxun(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1));
+                                } else {
+                                    ToastUtil.show(getActivity(), "检测到您没有安装腾讯地图");
+                                }
+                            }
+                        }).show();
+                    } else {
+                        ToastUtil.show(getActivity(), "该商户无准确地址");
                     }
-                });
-            }
+                }
+            });
         }
     }
 }

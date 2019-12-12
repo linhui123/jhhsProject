@@ -30,7 +30,7 @@ public class LabourSubmitDialog extends BaseDialog {
 
     public LabourSubmitDialog(Context context, String content, LabourSubmitDialog.CallbackListener listener, String sure) {
         super(context);
-        setCanceledOnTouchOutside(true);
+        setCanceledOnTouchOutside(false);
         this.mContent = content;
         this.mListener = listener;
         this.sure = sure;
@@ -63,6 +63,7 @@ public class LabourSubmitDialog extends BaseDialog {
     @Override
     public void onBackPressed() {
         if (mCancelable) {
+            EventBusUtil.post(new FinishEvent());
             super.onBackPressed();
         }
     }

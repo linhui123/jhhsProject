@@ -118,8 +118,8 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
     }
 
     public void onEvent(PayEvent event) {
-        if (event.order_code != null && type.equals(event.type) && event.price != null && list != null) {
-            new PayWithCouponDialog(getContext(), getActivity(), event.price, event.couponPrice, event.order_code, list).show();
+        if (event.order_code != null && type.equals(event.type) && event.price != null ) {
+            new PayWithCouponDialog(getContext(), getActivity(), event.price, event.couponPrice, event.order_code).show();
         }
     }
 

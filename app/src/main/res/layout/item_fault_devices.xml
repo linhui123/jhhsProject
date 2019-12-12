@@ -96,8 +96,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/padding_15"
-                android:drawableRight="@mipmap/ic_xinghao"
                 android:text="设备序列号"
+                android:drawableRight="@mipmap/ic_xinghao"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14" />
 
@@ -129,7 +129,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/padding_15"
-                android:drawableRight="@mipmap/ic_xinghao"
                 android:text="GPS序列号"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14" />

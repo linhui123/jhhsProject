@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.v4.widget.NestedScrollView
@@ -16,9 +17,22 @@
             <ImageView
                 android:id="@+id/im"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="240dp"
                 android:scaleType="centerCrop"
+                android:visibility="gone"
                 android:src="@mipmap/ic_site" />
+
+            <cn.bingoogolapple.bgabanner.BGABanner
+                android:id="@+id/bga_banner"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                app:banner_pageChangeDuration="1000"
+                app:banner_pointAutoPlayAble="true"
+                app:banner_pointAutoPlayInterval="3000"
+                app:banner_pointContainerBackground="@android:color/transparent"
+                app:banner_pointDrawable="@drawable/bga_banner_selector_point"
+                app:banner_pointTopBottomMargin="10dp"
+                app:banner_transitionEffect="alpha" />
 
             <RelativeLayout
                 android:id="@+id/store_location"
@@ -57,15 +71,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_marginBottom="@dimen/padding_10"
                     android:background="@drawable/button_98b"
                     android:padding="@dimen/dp_5"
                     android:paddingLeft="@dimen/padding_10"
                     android:paddingRight="@dimen/padding_10"
-                    android:layout_marginBottom="@dimen/padding_10"
-                    android:visibility="gone"
                     android:text="离你最近"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_12" />
+                    android:textSize="@dimen/text_size_12"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tv_store"
@@ -73,13 +87,13 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_3"
                     android:layout_alignParentRight="true"
-                    android:visibility="gone"
                     android:layout_marginRight="@dimen/dp_5"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="距离--km"
                     android:textColor="@color/acc3"
-                    android:textSize="@dimen/sp_14" />
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <TextView

@@ -666,6 +666,13 @@ public interface ApiService {
     @POST(COUPON_LIST)
     Call<BaseEntity<CouponListBean>> coupon_list(@Body NetBean content);
 
+    //支付可用券列表
+    String PAY_USELIST = "v1-3/coupon/payUseList";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(PAY_USELIST)
+    Call<BaseEntity<CouponListBean>> payUseList(@Body NetBean content);
+
     //券领取列表
     String COUPON_GETLIST = "v1-3/coupon/getlist";
 
