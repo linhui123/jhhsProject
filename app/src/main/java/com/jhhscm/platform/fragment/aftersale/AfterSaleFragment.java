@@ -61,17 +61,17 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
     private int mCurrentPage = 1;
     private final int START_PAGE = mCurrentPage;
 
-    String pID = "";
-    String cID = "";
+    private String pID = "";
+    private String cID = "";
 
     private String pName;
     private String cName;
 
-    PrinviceAdapter pAdapter;
-    CityAdapter cAdapter;
+    private PrinviceAdapter pAdapter;
+    private CityAdapter cAdapter;
 
-    GetRegionBean pRegionBean;
-    GetRegionBean cRegionBean;
+    private GetRegionBean pRegionBean;
+    private GetRegionBean cRegionBean;
 
     private double latitude = 0.0;
     private double longitude = 0.0;
@@ -424,7 +424,7 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
 
         @Override
         public AbsRecyclerViewHolder<GetRegionBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false),3);
+            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false), 3);
         }
     }
 
@@ -435,7 +435,7 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
 
         @Override
         public AbsRecyclerViewHolder<GetRegionBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false),3);
+            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false), 3);
         }
     }
 

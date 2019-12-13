@@ -45,23 +45,27 @@
 
                 <TextView
                     android:id="@+id/tv_1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:text="店铺名称"
+                    android:layout_toLeftOf="@+id/tv_store"
+                    android:layout_marginRight="@dimen/padding_10"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_18"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_1"
                     android:layout_marginTop="@dimen/padding_10"
                     android:ellipsize="end"
-                    android:singleLine="true"
+                    android:layout_toLeftOf="@+id/tv_store"
+                    android:layout_marginRight="@dimen/padding_10"
+                    android:maxLines="2"
                     android:text="店铺地址"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_14" />

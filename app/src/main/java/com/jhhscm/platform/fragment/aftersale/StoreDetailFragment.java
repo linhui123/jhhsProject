@@ -215,7 +215,6 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
             }
             mDataBinding.tv2.setText(location);
 
-
             mDataBinding.storeDetail.setText(data.getResult().get(0).getDesc());
             if (data.getResult().get(0).getDistance() != null) {
                 mDataBinding.tvStore.setVisibility(View.VISIBLE);
