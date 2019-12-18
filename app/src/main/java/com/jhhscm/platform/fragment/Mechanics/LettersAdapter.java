@@ -84,6 +84,7 @@ public class LettersAdapter extends BaseAdapter {
             vHolder.tvLetters.setText(model.getLetter());
         } else {
             vHolder.tvLetters.setVisibility(View.GONE);
+            ImageLoader.getInstance().displayImage(model.getPic_url(), vHolder.imageView);
             vHolder.line.setVisibility(View.VISIBLE);
         }
         vHolder.tvName.setText(model.getName());

@@ -1,6 +1,5 @@
 package com.jhhscm.platform.fragment.GoodsToCarts;
 
-
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -40,7 +39,7 @@ import java.util.TreeMap;
 
 import retrofit2.Response;
 
-
+/**确认订单*/
 public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding> {
     private InnerAdapter mAdapter;
     private List<GetCartGoodsByUserCodeBean.ResultBean> resultBeans;

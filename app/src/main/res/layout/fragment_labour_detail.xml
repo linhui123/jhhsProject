@@ -220,7 +220,6 @@
                             android:textColor="@color/acc3"
                             android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
-
                 </LinearLayout>
 
 
@@ -228,9 +227,7 @@
                     android:id="@+id/ll_base"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:orientation="vertical"
-
                     android:paddingBottom="@dimen/padding_10"
                     android:visibility="gone">
 

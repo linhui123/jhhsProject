@@ -30,6 +30,12 @@ public class CreateOrderItemViewHolder extends AbsRecyclerViewHolder<GetCartGood
     protected void onBindView(final GetCartGoodsByUserCodeBean.ResultBean item) {
         if (item != null) {
             mBinding.rlCoupon.setVisibility(View.GONE);
+            if (item.getBus_name()!=null){
+                mBinding.name.setText(item.getBus_name());
+            }else {
+                mBinding.name.setText("挖矿来");
+            }
+
             mBinding.storeCoupon.setText("暂无优惠券");
             if (item.getFreight_price() != null) {
                 mBinding.yunfei.setText("￥ " + item.getFreight_price());

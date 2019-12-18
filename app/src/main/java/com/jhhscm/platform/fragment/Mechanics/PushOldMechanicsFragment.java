@@ -140,6 +140,7 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
         mDataBinding.tv4.setOnClickListener(this);
         mDataBinding.tv6.setOnClickListener(this);
         mDataBinding.tv7.setOnClickListener(this);
+        mDataBinding.tvBiaopai.setOnClickListener(this);
         mDataBinding.tvAssess.setOnClickListener(this);
         mDataBinding.tv2.addTextChangedListener(new TextWatcher() {
             @Override
@@ -193,23 +194,23 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                 judgeButton();
             }
         });
-        mDataBinding.tvBiaopai.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                biaopai = editable.toString().trim();
-                judgeButton();
-            }
-        });
+//        mDataBinding.tvBiaopai.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                biaopai = editable.toString().trim();
+//                judgeButton();
+//            }
+//        });
 
         mDataBinding.tvPrice.addTextChangedListener(new TextWatcher() {
             @Override
@@ -316,6 +317,9 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
             case R.id.tv_7://作业方式  fix_p_14    work_type
                 getComboBox("work_type");
                 break;
+            case R.id.tv_biaopai://环保标牌  biaopai goods_second_envir
+                getComboBox("goods_second_envir");
+                break;
             case R.id.tv_assess:
                 if (mDataBinding.selector.getUploadImageList().size() > 0) {
                     updateImgResult = true;
@@ -383,6 +387,16 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                                                 judgeButton();
                                             }
                                         }).show();
+                                    } else if ("goods_second_envir".equals(name)) {
+                                        new DropTDialog(getActivity(), "环保标牌", getComboBoxBean.getResult(), new DropTDialog.CallbackListener() {
+                                            @Override
+                                            public void clickResult(String id, String Nmae) {
+                                                biaopai = id;
+                                                mDataBinding.tvBiaopai.setText(Nmae);
+                                                mDataBinding.tvBiaopai.setTag(id);
+                                                judgeButton();
+                                            }
+                                        }).show();
                                     }
                                 } else {
                                     ToastUtils.show(getContext(), "error " + name + ":" + response.body().getMessage());
@@ -395,10 +409,10 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
 
     private void judgeButton() {
         if (brand_id != null && brand_id.length() > 0
-                && goods_factory != null && goods_factory.length() > 0
+//                && goods_factory != null && goods_factory.length() > 0
                 && fix_p_9 != null && fix_p_9.length() > 0
                 && factory_time != null && factory_time.length() > 0
-                && name != null && name.length() > 0
+//                && name != null && name.length() > 0
                 && old_time != null && old_time.length() > 0
                 && fix_p_13 != null && fix_p_13.length() > 0
                 && fix_p_14 != null && fix_p_14.length() > 0
@@ -605,8 +619,8 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                 }
             }
             Map<String, Object> map = new TreeMap<String, Object>();
-            map.put("user_code",ConfigUtils.getCurrentUser(getContext()).getUserCode());
-            map.put("name", name);
+            map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            map.put("name", mDataBinding.tv1.getText().toString() + mDataBinding.tv2.getText().toString());
             map.put("brand_id", brand_id);
             map.put("fix_p_17", fix_p_9);
             map.put("province", province);
@@ -616,7 +630,8 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
             map.put("counter_price", price);
             map.put("fix_p_13", fix_p_13);
             map.put("fix_p_14", fix_p_14);
-            map.put("merchant_id", Integer.parseInt(goods_factory));
+            map.put("fix_p_18", mDataBinding.tvTel.getText().toString().trim());
+//            map.put("merchant_id", Integer.parseInt(goods_factory));
             map.put("fix_p_15", biaopai);
             map.put("pic_gallery_url_list", "[" + jsonString1 + "]");
             String content = JSON.toJSONString(map);

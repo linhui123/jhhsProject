@@ -26,6 +26,7 @@
                 android:drawableLeft="@mipmap/ic_order_store"
                 android:drawablePadding="@dimen/dp_5"
                 android:text="挖矿来"
+                android:visibility="gone"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
 

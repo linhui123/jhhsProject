@@ -5,19 +5,18 @@
         android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dp_5"
         android:paddingLeft="@dimen/dp_3"
+        android:paddingTop="@dimen/dp_5"
         android:paddingRight="@dimen/dp_3"
         android:paddingBottom="@dimen/dp_5">
 
         <ImageView
             android:id="@+id/im_brand"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="30dp"
             android:layout_centerHorizontal="true"
-            android:scaleType="centerInside"
+            android:scaleType="fitCenter"
             android:src="@mipmap/ic_brand_all" />
-
 
         <TextView
             android:id="@+id/tv_name"
@@ -31,6 +30,5 @@
             android:text="全部"
             android:textColor="@color/acc3"
             android:textSize="@dimen/text_size_16" />
-
     </RelativeLayout>
 </layout>

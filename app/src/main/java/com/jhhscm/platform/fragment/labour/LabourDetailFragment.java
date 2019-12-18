@@ -197,7 +197,9 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
 
             mDataBinding.tvProject1.setText(dataBean.getWork_type_text());
             mDataBinding.tvProject2.setText(dataBean.getProvince_text() + " " + dataBean.getCity_text());
-            mDataBinding.tvProject3.setText(dataBean.getEnd_time());
+            if (dataBean.getEnd_time()!=null){
+                mDataBinding.tvProject3.setText(dataBean.getEnd_time()+"截止");
+            }
             mDataBinding.tvProject4.setText(dataBean.getOther_desc());
 
             mDataBinding.userName.setText(UdaUtils.hiddenNameString(dataBean.getContact()));
@@ -316,7 +318,9 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
 
             mDataBinding.tvJinyan1.setText(dataBean.getWork_time_text());
             mDataBinding.tvJinyan2.setText(dataBean.getGood_work_text());
-            mDataBinding.tvJinyan3.setText(dataBean.getEnd_time());
+            if (dataBean.getEnd_time()!=null){
+                mDataBinding.tvJinyan3.setText(dataBean.getEnd_time()+"截止");
+            }
             mDataBinding.tvJinyan4.setText(dataBean.getOther_desc());
 
             mDataBinding.userName.setText(UdaUtils.hiddenNameString(dataBean.getContact()));
@@ -342,7 +346,6 @@ public class LabourDetailFragment extends AbsFragment<FragmentLabourDetailBindin
                                         Intent it = new Intent(Intent.ACTION_CALL, uriScheme);
                                         getContext().startActivity(it);
                                     }
-
 
                                     @Override
                                     public void onDenied(List<String> permissions) {

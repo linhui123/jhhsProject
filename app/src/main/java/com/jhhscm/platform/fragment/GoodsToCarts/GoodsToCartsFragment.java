@@ -88,7 +88,6 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
                             for (GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean goodsListBean : r.getGoodsList()) {
                                 goodsListBean.setIscheck(false);
                             }
-
                         }
                         initData(getCartGoodsByUserCodeBean);
                     }
@@ -101,7 +100,6 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
                             for (GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean goodsListBean : r.getGoodsList()) {
                                 goodsListBean.setIscheck(true);
                             }
-
                         }
                         initData(getCartGoodsByUserCodeBean);
                     }
@@ -126,6 +124,8 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
                             }
                         }
                         if (list.size() > 0) {
+                            resultBean.setBus_name(r.getBus_name());
+                            resultBean.setBus_code(r.getBus_code());
                             resultBean.setGoodsList(list);
                             resultBeans.add(resultBean);
                         }

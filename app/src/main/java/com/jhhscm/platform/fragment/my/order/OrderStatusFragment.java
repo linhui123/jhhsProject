@@ -118,36 +118,38 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
     }
 
     public void onEvent(PayEvent event) {
-        if (event.order_code != null && type.equals(event.type) && event.price != null ) {
+        if (event.order_code != null && type.equals(event.type) && event.price != null) {
             new PayWithCouponDialog(getContext(), getActivity(), event.price, event.couponPrice, event.order_code).show();
         }
     }
 
     public void onEvent(final OrderCancleEvent event) {
-        if (event.order_code != null && type.equals(event.type)) {
-            new ConfirmOrderDialog(getContext(), "请确认是否取消订单", new CallbackListener() {
-                @Override
-                public void clickY() {
-                    delOrder(event.order_code);
-                }
-            }).show();
-        }
-        if ("".equals(type)){
-            mDataBinding.recyclerview.autoRefresh();
+        if (event.order_code != null) {
+            if ("".equals(event.type)) {
+                mDataBinding.recyclerview.autoRefresh();
+            } else if (type.equals(event.type)) {
+                new ConfirmOrderDialog(getContext(), "请确认是否取消订单", new CallbackListener() {
+                    @Override
+                    public void clickY() {
+                        delOrder(event.order_code);
+                    }
+                }).show();
+            }
         }
     }
 
     public void onEvent(final OrderConfirmEvent event) {
-        if (event.order_code != null && type.equals(event.type)) {
-            new ConfirmOrderDialog(getContext(), new CallbackListener() {
-                @Override
-                public void clickY() {
-                    updateOrderStatus(event.order_code);
-                }
-            }).show();
-        }
-        if ("".equals(type)){
-            mDataBinding.recyclerview.autoRefresh();
+        if (event.order_code != null) {
+            if ("".equals(event.type)) {
+                mDataBinding.recyclerview.autoRefresh();
+            } else if (type.equals(event.type)) {
+                new ConfirmOrderDialog(getContext(), new CallbackListener() {
+                    @Override
+                    public void clickY() {
+                        updateOrderStatus(event.order_code);
+                    }
+                }).show();
+            }
         }
     }
 
@@ -362,6 +364,7 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
                                     ToastUtil.show(getContext(), "取消成功");
 //                                    }
                                     mDataBinding.recyclerview.autoRefresh();
+                                    EventBusUtil.post(new OrderCancleEvent(orderGood, ""));
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
                                 }
@@ -401,6 +404,7 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
                                         ToastUtil.show(getContext(), "操作成功");
                                     }
                                     mDataBinding.recyclerview.autoRefresh();
+                                    EventBusUtil.post(new OrderConfirmEvent(orderGood, ""));
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
                                 }

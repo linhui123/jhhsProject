@@ -155,6 +155,15 @@ public class GetGoodsPageListBean {
         private String second;
         private String num;
         private boolean select;
+        private String sale_num;
+
+        public String getSale_num() {
+            return sale_num;
+        }
+
+        public void setSale_num(String sale_num) {
+            this.sale_num = sale_num;
+        }
 
         public boolean isSelect() {
             return select;

@@ -46,17 +46,20 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
-                <View style="@style/view_h_de" />
+                <View
+                    style="@style/view_h_de"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="产商"
+                        android:text="厂商"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
 
@@ -127,7 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="施工地区"
+                        android:text="设备所在地"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
 
@@ -157,7 +160,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="年限"
+                        android:text="出厂年限"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
 
@@ -175,11 +178,14 @@
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
-                <View style="@style/view_h_de" />
+                <View
+                    style="@style/view_h_de"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -242,7 +248,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="手机号码"
+                        android:text="联系电话"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
 
@@ -305,18 +311,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="环保标牌"
+                        android:text="是否有环保牌照"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/text_size_16" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/tv_biaopai"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:background="@null"
+                        android:drawableRight="@mipmap/ic_point"
+                        android:drawablePadding="@dimen/padding_10"
                         android:gravity="right"
-                        android:hint="请输入"
+                        android:hint="请选择"
                         android:inputType="numberDecimal"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
@@ -345,8 +352,8 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
                         android:drawableRight="@mipmap/ic_point"
-                        android:gravity="right"
                         android:drawablePadding="@dimen/padding_10"
+                        android:gravity="right"
                         android:hint="请选择"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
@@ -375,8 +382,8 @@
                         android:layout_alignParentRight="true"
                         android:drawableRight="@mipmap/ic_point"
                         android:drawablePadding="@dimen/padding_10"
-                        android:hint="请选择"
                         android:gravity="right"
+                        android:hint="请选择"
                         android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
                         android:textColor="@color/acc3"
@@ -385,7 +392,7 @@
 
                 <View style="@style/view_h_de" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -402,10 +409,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" (上传设备图片越多越好)"
+                        android:lineSpacingMultiplier="1.2"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:text="                     (请上传设备的铭牌，发动机，整机外观，配重，液压泵照，回转马达，分配阀，行走装置，回转轴承，挖斗工作机构照片)"
                         android:textColor="@color/acc9"
                         android:textSize="@dimen/text_size_14" />
-                </LinearLayout>
+                </RelativeLayout>
 
                 <com.jhhscm.platform.views.selector.ImageSelector
                     android:id="@+id/selector"
