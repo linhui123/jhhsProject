@@ -94,7 +94,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
 
         type = getArguments().getInt("type");
         labour_code = getArguments().getString("labour_code");
-        id = getArguments().getString("id");
+//        id = getArguments().getString("id");
         if (type == 0) {//只读
             mDataBinding.tvFabu.setText("发布信息");
         } else {//编辑
@@ -882,6 +882,7 @@ public class PushZhaoPinFragment extends AbsFragment<FragmentPushZhaoPinBinding>
             mDataBinding.tvPData.setText(dataBean.getEnd_time());
             mDataBinding.tvPLocation.setText(dataBean.getProvince_text() + " " + dataBean.getCity_text());
             mDataBinding.tvElse.setText(dataBean.getOther_desc());
+            id = dataBean.getId();
             name = dataBean.getName();
             job = dataBean.getJob();
             m_type = dataBean.getM_type();

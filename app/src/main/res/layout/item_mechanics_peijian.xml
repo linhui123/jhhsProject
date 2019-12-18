@@ -70,7 +70,7 @@
                 android:layout_alignParentBottom="true"
                 android:maxLines="1"
                 android:layout_marginRight="@dimen/dp_5"
-                android:text="骏惠自营"
+                android:text="自营"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
         </RelativeLayout>

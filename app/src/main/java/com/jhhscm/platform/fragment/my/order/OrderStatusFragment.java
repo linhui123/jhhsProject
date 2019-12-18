@@ -132,6 +132,9 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
                 }
             }).show();
         }
+        if ("".equals(type)){
+            mDataBinding.recyclerview.autoRefresh();
+        }
     }
 
     public void onEvent(final OrderConfirmEvent event) {
@@ -142,6 +145,9 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
                     updateOrderStatus(event.order_code);
                 }
             }).show();
+        }
+        if ("".equals(type)){
+            mDataBinding.recyclerview.autoRefresh();
         }
     }
 

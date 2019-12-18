@@ -248,8 +248,7 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
         mDataBinding.rvShoucang.setLayoutManager(new LinearLayoutManager(getActivity()));
         sAdapter = new CompairsonAdapter(getContext());
         mDataBinding.rvShoucang.setAdapter(sAdapter);
-        mDataBinding.rvShoucang.loadComplete(true, false);
-        mDataBinding.rvShoucang.autoRefresh();
+        findCollectList(true);
         mDataBinding.rvShoucang.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
@@ -261,6 +260,7 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
                 findCollectList(false);
             }
         });
+
 
         sAdapter.setDeletedItemListener(new CompairsonAdapter.DeletedItemListener() {
             @Override
@@ -339,7 +339,7 @@ public class ComparisonFragment extends AbsFragment<FragmentComparisonBinding> i
                                             GetGoodsPageListBean.DataBean resultBean = new GetGoodsPageListBean.DataBean();
                                             resultBean.setSelect(false);
                                             resultBean.setName(findCollectListBean.getData().get(i).getName());
-                                            resultBean.setGood_code(findCollectListBean.getData().get(i).getCode());
+                                            resultBean.setGood_code(findCollectListBean.getData().get(i).getGood_code());
                                             dataBeans.add(resultBean);
                                             if (i == findCollectListBean.getData().size() - 1) {
                                                 sAdapter.setList(dataBeans, refresh);

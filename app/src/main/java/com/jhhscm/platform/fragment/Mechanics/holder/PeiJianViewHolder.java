@@ -35,7 +35,7 @@ public class PeiJianViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.Da
                 }
             });
         } else {
-            mBinding.tvStore.setText("骏惠自营>");
+            mBinding.tvStore.setText("自营>");
         }
 
         mBinding.tv1.setText(item.getName());

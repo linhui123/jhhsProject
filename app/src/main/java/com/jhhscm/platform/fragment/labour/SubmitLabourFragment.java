@@ -421,12 +421,12 @@ public class SubmitLabourFragment extends AbsFragment<FragmentSubmitLabourBindin
         }
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getContext(), map, "saveMsg type = " + fix);
+        String sign = Sign.getSignKey(getContext(), map, "saveMsg3 type = " + fix);
         NetBean netBean = new NetBean();
         netBean.setToken("");
         netBean.setSign(sign);
         netBean.setContent(content);
-        onNewRequestCall(SaveMsgAction.newInstance(getContext(), netBean)
+        onNewRequestCall(SaveMsg3Action.newInstance(getContext(), netBean)
                 .request(new AHttpService.IResCallback<BaseEntity>() {
                     @Override
                     public void onCallback(int resultCode, Response<BaseEntity> response, BaseErrorInfo baseErrorInfo) {

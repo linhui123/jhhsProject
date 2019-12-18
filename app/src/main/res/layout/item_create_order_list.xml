@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@mipmap/ic_order_store"
                 android:drawablePadding="@dimen/dp_5"
-                android:text="骏惠惠商"
+                android:text="挖矿来"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
         </RelativeLayout>

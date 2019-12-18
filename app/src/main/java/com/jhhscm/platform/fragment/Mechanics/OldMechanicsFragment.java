@@ -481,7 +481,6 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
         mDataBinding.wrvRecycler.autoRefresh();
     }
 
-
     /**
      * 下拉机型
      */

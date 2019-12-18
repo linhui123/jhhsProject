@@ -72,7 +72,7 @@ public class SimpleDialog extends BaseDialog {
     }
 
     private void initText(String phone) {
-        String content = "您的手机" + phone + "将很快接到骏惠的来电请注意接听";
+        String content = "您的手机" + phone + "将很快接到挖矿来的来电请注意接听";
         SpannableString spannableString = new SpannableString(content);
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, 4 + phone.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#3977FE")), 4, 4 + phone.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);

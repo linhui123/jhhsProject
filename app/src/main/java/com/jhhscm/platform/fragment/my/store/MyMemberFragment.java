@@ -153,7 +153,6 @@ public class MyMemberFragment extends AbsFragment<FragmentMyMemberBinding> {
         mDataBinding.recyclerview.autoRefresh();
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();

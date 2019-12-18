@@ -31,6 +31,7 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.DataUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 import com.jhhscm.platform.views.timePickets.TimePickerShow;
@@ -40,7 +41,9 @@ import java.util.TreeMap;
 
 import retrofit2.Response;
 
-/**记账工具*/
+/**
+ * 记账工具
+ */
 public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
 
     private InnerAdapter mAdapter;
@@ -129,6 +132,12 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
                     public void onClicklistener(String dataTime) {
                         String data = DataUtil.getDateStr(DataUtil.getStringToData(dataTime, "yyyy-MM-dd"), "yyyy.MM.dd");
                         mDataBinding.endTime.setText(data);
+                        //判断 结束时间要大于开始时间
+                        if (!DataUtil.TimeCompare(mDataBinding.startTime.getText().toString().trim(), mDataBinding.endTime.getText().toString().trim(), "yyyy.MM.dd")) {
+                            ToastUtil.show(getContext(), "结束时间不能小于开始时间");
+                            mDataBinding.endTime.setText("");
+                        }
+
                     }
                 });
             }
@@ -185,12 +194,17 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
         mDataBinding.timeConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDataBinding.llXiala.setVisibility(View.GONE);
-                mDataBinding.llTime.setVisibility(View.GONE);
-                mDataBinding.llType.setVisibility(View.GONE);
-                mDataBinding.recyclerview.autoRefresh();
-                mDataBinding.data.setText(mDataBinding.startTime.getText().toString() + " - " + mDataBinding.endTime.getText().toString() + " 明细");
-                allSum();
+                if (mDataBinding.startTime.getText().toString().length() > 0
+                        && mDataBinding.endTime.getText().toString().length() > 0) {
+                    mDataBinding.llXiala.setVisibility(View.GONE);
+                    mDataBinding.llTime.setVisibility(View.GONE);
+                    mDataBinding.llType.setVisibility(View.GONE);
+                    mDataBinding.recyclerview.autoRefresh();
+                    mDataBinding.data.setText(mDataBinding.startTime.getText().toString() + " - " + mDataBinding.endTime.getText().toString() + " 明细");
+                    allSum();
+                }else {
+                    ToastUtil.show(getContext(),"请填写时间");
+                }
             }
         });
 
@@ -279,7 +293,7 @@ public class BookingFragment extends AbsFragment<FragmentBookingBinding> {
                                             mDataBinding.tvUn.setText(allSumBean.getData().getPrice_2());
                                             mDataBinding.tvAccepted.setText(allSumBean.getData().getPrice_1());
                                             mDataBinding.tvPay.setText(allSumBean.getData().getPrice_3());
-                                        }else {
+                                        } else {
                                             mDataBinding.tvUn.setText("0");
                                             mDataBinding.tvAccepted.setText("0");
                                             mDataBinding.tvPay.setText("0");

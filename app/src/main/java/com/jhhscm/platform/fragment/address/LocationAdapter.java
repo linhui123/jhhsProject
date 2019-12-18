@@ -67,7 +67,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
                 if (myListener != null) {
                     myListener.onItemClick(list.get(position));
                 }
-                EventBusUtil.post(new GetRegionEvent(list.get(position).getId() + "", list.get(position).getName(), list.get(position).getType() + ""));
+                EventBusUtil.post(new GetRegionEvent(list.get(position).getId() + "", list.get(position).getName(), list.get(position).getType() + "", 4));
                 notifyDataSetChanged();
             }
         });

@@ -13,6 +13,7 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentMyProductBinding;
+import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.my.store.action.BusinessFindcategorybyBuscodeAction;
 import com.jhhscm.platform.fragment.my.store.action.BusinessFindcategorybyBuscodeBean;
@@ -25,6 +26,7 @@ import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
@@ -54,6 +56,7 @@ public class MyProductFragment extends AbsFragment<FragmentMyProductBinding> {
 
     @Override
     protected void setupViews() {
+        EventBusUtil.registerEvent(this);
         mDataBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
@@ -147,5 +150,15 @@ public class MyProductFragment extends AbsFragment<FragmentMyProductBinding> {
         public AbsRecyclerViewHolder<BusinessFindcategorybyBuscodeBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
             return new ProductItemViewHolder(mInflater.inflate(R.layout.item_store_product, parent, false));
         }
+    }
+
+    public void onEvent(RefreshEvent event) {
+        mDataBinding.recyclerview.autoRefresh();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregisterEvent(this);
     }
 }

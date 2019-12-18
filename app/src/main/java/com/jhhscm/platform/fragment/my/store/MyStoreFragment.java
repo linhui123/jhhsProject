@@ -14,6 +14,7 @@ import com.jhhscm.platform.activity.InvitationRegisterActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.StoreOrderSubmit1Activity;
 import com.jhhscm.platform.databinding.FragmentMyStoreBinding;
+import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.my.store.action.BusinessSumdataAction;
 import com.jhhscm.platform.fragment.my.store.action.BusinessSumdataBean;
@@ -26,6 +27,7 @@ import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.Utils;
 
@@ -58,6 +60,7 @@ public class MyStoreFragment extends AbsFragment<FragmentMyStoreBinding> {
 
     @Override
     protected void setupViews() {
+        EventBusUtil.registerEvent(this);
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
             userSession = ConfigUtils.getCurrentUser(getContext());
@@ -182,5 +185,15 @@ public class MyStoreFragment extends AbsFragment<FragmentMyStoreBinding> {
                         }
                     }));
         }
+    }
+
+    public void onEvent(RefreshEvent event) {
+        businessSumdata();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregisterEvent(this);
     }
 }

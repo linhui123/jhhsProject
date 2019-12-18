@@ -175,7 +175,7 @@ public class AddressDialog extends BaseDialog {
      * 更新地区选择
      */
     public void onEvent(GetRegionEvent event) {
-        if (event.pid != null && event.type != null) {
+        if (event.pid != null && event.type != null && event.activity == 4) {
             if (event.type.equals("1")) {//省点击，获取市
                 pID = event.pid;
                 pName = event.name;
@@ -252,7 +252,6 @@ public class AddressDialog extends BaseDialog {
                                     ToastUtils.show(getContext(), response.body().getMessage());
                                 }
                             }
-
                         }
                     }));
         }

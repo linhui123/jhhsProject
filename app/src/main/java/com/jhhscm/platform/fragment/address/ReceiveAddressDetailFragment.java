@@ -121,9 +121,9 @@ public class ReceiveAddressDetailFragment extends AbsFragment<FragmentReceiveAdd
             @Override
             public void onClick(View v) {
                 if (type == 1) {
-                    addAddress(userSession.getUserCode(), userSession.getToken());
+                    addAddress();
                 } else {
-                    updateAddress(userSession.getUserCode(), userSession.getToken());
+                    updateAddress();
                 }
             }
         });
@@ -137,12 +137,13 @@ public class ReceiveAddressDetailFragment extends AbsFragment<FragmentReceiveAdd
      */
     public void delAddress() {
         Map<String, String> map = new TreeMap<String, String>();
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         map.put("id", addressId);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "delAddress");
         NetBean netBean = new NetBean();
-        netBean.setToken(userSession.getToken());
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(DelAddressAction.newInstance(getContext(), netBean)
@@ -158,7 +159,7 @@ public class ReceiveAddressDetailFragment extends AbsFragment<FragmentReceiveAdd
                             if (response != null) {
                                 new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                 if (response.body().getCode().equals("200")) {
-                                    Log.e("delAddress", "删除地址列表成功");
+                                    ToastUtils.show(getContext(), "删除地址成功");
                                     EventBusUtil.post(new AddressRefreshEvent(1));
                                     getActivity().finish();
                                 } else {
@@ -173,9 +174,9 @@ public class ReceiveAddressDetailFragment extends AbsFragment<FragmentReceiveAdd
     /**
      * 收货地址-修改
      */
-    private void updateAddress(String userCode, String token) {
+    private void updateAddress() {
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("user_code", userCode);
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         map.put("name", name);
         map.put("province", mProvinceId);
         map.put("city", mCityId);
@@ -188,7 +189,7 @@ public class ReceiveAddressDetailFragment extends AbsFragment<FragmentReceiveAdd
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "updateAddress");
         NetBean netBean = new NetBean();
-        netBean.setToken(token);
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(UpdateAddressAction.newInstance(getContext(), netBean)
@@ -204,7 +205,7 @@ public class ReceiveAddressDetailFragment extends AbsFragment<FragmentReceiveAdd
                             if (response != null) {
                                 new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                 if (response.body().getCode().equals("200")) {
-                                    Log.e("updateAddress", "修改地址列表成功");
+                                    ToastUtils.show(getContext(), "修改地址成功");
                                     EventBusUtil.post(new AddressRefreshEvent(1));
                                     getActivity().finish();
                                 } else {
@@ -219,9 +220,9 @@ public class ReceiveAddressDetailFragment extends AbsFragment<FragmentReceiveAdd
     /**
      * 新增地址列表
      */
-    private void addAddress(String userCode, String token) {
+    private void addAddress() {
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("user_code", userCode);
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         map.put("name", name);
         map.put("province", mProvinceId);
         map.put("city", mCityId);
@@ -233,7 +234,7 @@ public class ReceiveAddressDetailFragment extends AbsFragment<FragmentReceiveAdd
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "addAddress");
         NetBean netBean = new NetBean();
-        netBean.setToken(token);
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(AddAddressAction.newInstance(getContext(), netBean)
@@ -249,7 +250,7 @@ public class ReceiveAddressDetailFragment extends AbsFragment<FragmentReceiveAdd
                             if (response != null) {
                                 new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                 if (response.body().getCode().equals("200")) {
-                                    Log.e("addAddress", "新增地址列表成功");
+                                    ToastUtils.show(getContext(), "添加地址成功");
                                     EventBusUtil.post(new AddressRefreshEvent(1));
                                     getActivity().finish();
                                 } else {

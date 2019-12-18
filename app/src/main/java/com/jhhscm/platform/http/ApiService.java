@@ -235,6 +235,13 @@ public interface ApiService {
     @POST(SAVE_MSG)
     Call<BaseEntity> saveMsg(@Body NetBean content);
 
+    //信息咨询 3期接口 与一期一起用
+    String SAVE_MSG_3 = "v1-3/msg/saveMsg";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(SAVE_MSG_3)
+    Call<BaseEntity> saveMsg3(@Body NetBean content);
+
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(SAVE)
     Call<BaseEntity> save(@Body NetBean content);

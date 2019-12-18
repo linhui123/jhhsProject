@@ -160,16 +160,16 @@ public class StoreOrderSubmit3Fragment extends AbsFragment<FragmentStoreOrderSub
                 for (FindUserGoodsOwnerBean.DataBean updateImageBean : dataBean.getData()) {
                     if (updateImageBean.getBrand_id() != null) {
                         if (brandIds.length() > 0) {
-                            brandIds = brandIds + "," +updateImageBean.getBrand_id() ;
+                            brandIds = brandIds + "," + updateImageBean.getBrand_id();
                         } else {
-                            brandIds = updateImageBean.getBrand_id() ;
+                            brandIds = updateImageBean.getBrand_id();
                         }
                     }
                     if (updateImageBean.getFixp17() != null) {
                         if (fixs.length() > 0) {
                             fixs = fixs + "," + updateImageBean.getFixp17();
                         } else {
-                            fixs = updateImageBean.getFixp17() ;
+                            fixs = updateImageBean.getFixp17();
                         }
                     }
                     if (updateImageBean.getNo() != null) {
@@ -249,6 +249,8 @@ public class StoreOrderSubmit3Fragment extends AbsFragment<FragmentStoreOrderSub
 
             if (mDataBinding.workFee.getText().toString().length() > 0) {
                 map.put("otherPrice", mDataBinding.workFee.getText().toString());
+            } else {
+                map.put("otherPrice", "0");
             }
             map.put("busMobile", ConfigUtils.getCurrentUser(getContext()).getMobile());
             map.put("busCode", ConfigUtils.getCurrentUser(getContext()).getUserCode());

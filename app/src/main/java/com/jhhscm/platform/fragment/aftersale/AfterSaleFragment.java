@@ -4,6 +4,7 @@ package com.jhhscm.platform.fragment.aftersale;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -45,6 +46,7 @@ import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
+import com.tencent.mm.opensdk.utils.Log;
 
 import java.util.List;
 import java.util.Map;
@@ -169,8 +171,17 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
     @SuppressLint("MissingPermission")
     private void getLocation() {
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_COARSE);//低精度，如果设置为高精度，依然获取不了location。
+        criteria.setAltitudeRequired(false);//不要求海拔
+        criteria.setBearingRequired(false);//不要求方位
+        criteria.setCostAllowed(false);//允许有花费
+        criteria.setPowerRequirement(Criteria.POWER_LOW);//低功耗
+
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//            Location location = locationManager.getBestProvider(criteria, true);
             if (location != null) {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
@@ -200,9 +211,9 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
                 @Override
                 public void onLocationChanged(Location location) {
                     if (location != null) {
-//                        Log.e("Map", "Location changed : Lat: "
-//                                + location.getLatitude() + " Lng: "
-//                                + location.getLongitude());
+                        Log.e("Map", "Location changed : Lat: "
+                                + location.getLatitude() + " Lng: "
+                                + location.getLongitude());
                     }
                 }
             };
