@@ -15,6 +15,7 @@ import com.jhhscm.platform.activity.CashierActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
+import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.databinding.FragmentOrderDetailBinding;
 import com.jhhscm.platform.event.AddressRefreshEvent;
 import com.jhhscm.platform.event.RefreshEvent;
@@ -36,6 +37,8 @@ import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.ConfirmOrderDialog;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -108,6 +111,24 @@ public class OrderDetail2Fragment extends AbsFragment<FragmentOrderDetailBinding
                     CashierActivity.start(getContext(), new CreateOrderResultBean(new CreateOrderResultBean.DataBean(findOrderBean.getOrder_code())));
                 }
             });
+
+            if (findOrderBean.getPic_small_url() != null && findOrderBean.getPic_small_url().length() > 10) {
+                mDataBinding.isSchemeImage.setVisibility(View.VISIBLE);
+                List<PbImage> items = new ArrayList<>();
+                String[] strs = findOrderBean.getPic_small_url().split(",");
+                if (strs.length > 0) {
+                    for (int i = 0; i < strs.length; i++) {
+                        PbImage pbImage = new PbImage();
+                        pbImage.setmUrl(strs[i].trim());
+                        pbImage.setmToken(strs[i].trim());
+                        items.add(pbImage);
+                    }
+                    mDataBinding.isSchemeImage.setPbImageList(items);
+                }
+            } else {
+                mDataBinding.tvPiaoju.setVisibility(View.GONE);
+                mDataBinding.isSchemeImage.setVisibility(View.GONE);
+            }
         } else {
             ToastUtil.show(getContext(), "数据错误");
             getActivity().finish();

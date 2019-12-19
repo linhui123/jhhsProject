@@ -115,7 +115,6 @@ public class PhotoPickerActivity extends AbsToolbarActivity {
     }
 
 
-
     public static void startActivity(Context context, int code) {
         Intent intent = new Intent(context, PhotoPickerActivity.class);
         intent.putExtra(EXTRA_SELECT_MODE, MODE_SINGLE);

@@ -101,7 +101,7 @@ public class CaseBasePhotoPickerActivity extends AbsToolbarActivity {
         intent.putExtra(EXTRA_REQCODE, code);
         intent.putExtra(EXTRA_SELECT_COUNT, selectMaxCount);
         intent.putExtra("caseBaseId", caseBaseId);
-        intent.putExtra("timeNodeId",timeNodeId);
+        intent.putExtra("timeNodeId", timeNodeId);
         context.startActivity(intent);
     }
 
@@ -121,8 +121,8 @@ public class CaseBasePhotoPickerActivity extends AbsToolbarActivity {
         args.putSerializable(EXTRA_DEFAULT_SELECTED_LIST, getIntent().getSerializableExtra(EXTRA_DEFAULT_SELECTED_LIST));
         args.putInt(EXTRA_REQCODE, getIntent().getIntExtra(EXTRA_REQCODE, 0));
         args.putInt(EXTRA_SELECT_COUNT, getIntent().getIntExtra(EXTRA_SELECT_COUNT, 0));
-        args.putString("caseBaseId",getIntent().getStringExtra("caseBaseId"));
-        args.putString("timeNodeId",getIntent().getStringExtra("timeNodeId"));
+        args.putString("caseBaseId", getIntent().getStringExtra("caseBaseId"));
+        args.putString("timeNodeId", getIntent().getStringExtra("timeNodeId"));
         return args;
     }
 
@@ -202,9 +202,9 @@ public class CaseBasePhotoPickerActivity extends AbsToolbarActivity {
 
         @Override
         protected void setupViews() {
-            if(getArguments()!=null){
-                mCaseBaseId=getArguments().getString("caseBaseId");
-                mTimeNodeId=getArguments().getString("timeNodeId");
+            if (getArguments() != null) {
+                mCaseBaseId = getArguments().getString("caseBaseId");
+                mTimeNodeId = getArguments().getString("timeNodeId");
             }
         }
 
@@ -468,8 +468,8 @@ public class CaseBasePhotoPickerActivity extends AbsToolbarActivity {
 
         private void refreshActionStatus() {
             List<String> list = mPhotoAdapter.getmSelectedPhotos();
-            String text = getString(R.string.photopicker_done_with_count, list.size(),mMaxNum);
-            ((CaseBasePhotoPickerActivity) getActivity()).setToolBarRightText(text,true);
+            String text = getString(R.string.photopicker_done_with_count, list.size(), mMaxNum);
+            ((CaseBasePhotoPickerActivity) getActivity()).setToolBarRightText(text, true);
             boolean hasSelected = list.size() > 0;
             mBinding.photoPickerFooter.btnPreview.setEnabled(hasSelected);
             if (hasSelected) {
@@ -550,9 +550,9 @@ public class CaseBasePhotoPickerActivity extends AbsToolbarActivity {
 
         // 返回已选择的图片数据
         private void complete() {
-            if(mSelectList.size()==0){
-                ToastUtils.show(getContext(),"请选择图片");
-            }else {
+            if (mSelectList.size() == 0) {
+                ToastUtils.show(getContext(), "请选择图片");
+            } else {
 //                CaseBaseUploadingActivity.start(getContext(),mSelectList,mCaseBaseId,mTimeNodeId);
 //                EventBusUtil.post(ImageSelectorEvent.newInstance(ImageSelectorEvent.EVENT_CLOTHESPRESS_ADD, mSelectList));
                 getActivity().finish();

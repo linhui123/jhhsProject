@@ -1,57 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/a397"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <RelativeLayout
-            android:id="@+id/rl_top"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/padding_15"
-            android:paddingRight="@dimen/padding_15">
-
-            <ImageButton
-                android:id="@+id/tv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:background="@mipmap/ic_back"
-                android:padding="@dimen/dp_5" />
-
-            <TextView
-                android:id="@+id/tv_new"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="  配件  "
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_18" />
-
-            <ImageView
-                android:id="@+id/im_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/ic_sousuo" />
-        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/rl_select"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_top"
-            android:layout_centerVertical="true"
+            android:layout_height="40dp"
             android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/dp_5"
-            android:paddingBottom="@dimen/dp_5">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -135,7 +97,7 @@
         <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
             android:id="@+id/wrv_recycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/rl_select"
             android:layout_marginTop="@dimen/dp_1"
             android:background="@color/white"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>

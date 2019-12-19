@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentStoreOrderSubmit3Binding;
 import com.jhhscm.platform.event.FinishEvent;
+import com.jhhscm.platform.event.ImageUpdataEvent;
 import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.my.store.action.BusinessFindcategorybyBuscodeBean;
@@ -31,6 +33,7 @@ import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.ImageUpdataUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
@@ -69,6 +72,7 @@ public class StoreOrderSubmit3Fragment extends AbsFragment<FragmentStoreOrderSub
 
     @Override
     protected void setupViews() {
+        EventBusUtil.registerEvent(this);
         name = getArguments().getString("name");
         phone = getArguments().getString("phone");
         dataBean = (FindUserGoodsOwnerBean) getArguments().getSerializable("databean");
@@ -115,7 +119,8 @@ public class StoreOrderSubmit3Fragment extends AbsFragment<FragmentStoreOrderSub
             @Override
             public void onClick(View v) {
                 if (name != null && phone != null && dataBean != null) {
-                    busorder_createOrder();
+                    showDialog();
+                    new ImageUpdataUtil(getContext(), StoreOrderSubmit3Fragment.this, mDataBinding.isSchemeImage);
                 }
             }
         });
@@ -286,5 +291,23 @@ public class StoreOrderSubmit3Fragment extends AbsFragment<FragmentStoreOrderSub
                         }
                     }));
         }
+    }
+
+    public void onEvent(ImageUpdataEvent event) {
+        if (event.getType() == 0 && event.getUpdateImageBean().size() > 0) {
+            closeDialog();
+            if (event.isSuccess()) {
+                //            busorder_createOrder();
+                Log.e("ImageUpdataEvent", "图片上传成功");
+            } else {
+                ToastUtil.show(getContext(), "图片上传失败，请联系管理员");
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregisterEvent(this);
     }
 }

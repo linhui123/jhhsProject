@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.bean.UploadImage;
+import com.jhhscm.platform.event.DelPhotoEvent;
 import com.jhhscm.platform.event.ImageSelectorEvent;
 import com.jhhscm.platform.event.ImageSelectorUpdataEvent;
 import com.jhhscm.platform.permission.YXPermission;
@@ -152,7 +153,6 @@ public class ImageSelector extends LinearLayout {
         imageSelectorItems = items;
         mAdapter.setData(items);
     }
-
 
     public void setImageToken(UploadImage image) {
         List<ImageSelectorItem> items = mAdapter.getItems();
@@ -313,6 +313,7 @@ public class ImageSelector extends LinearLayout {
     }
 
     public void onEventMainThread(ImageSelectorEvent event) {
+        Log.e("ImageSelectorEvent", "ImageSelectorEvent " + isOnlyShow + "   " + mSelectMaxImageSize);
         if (event.getCode() == hashCode()) {
             switch (event.getType()) {
                 case ImageSelectorEvent.EVENT_ADD:

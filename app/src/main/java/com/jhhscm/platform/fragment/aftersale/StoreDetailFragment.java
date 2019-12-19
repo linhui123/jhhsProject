@@ -8,6 +8,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import com.google.gson.Gson;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.FragmentStoreDetailBinding;
 import com.jhhscm.platform.event.JumpEvent;
+import com.jhhscm.platform.fragment.Mechanics.PeiJianFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.http.AHttpService;
@@ -53,6 +56,7 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
     private String longitude;
     private boolean fast;
     private String bus_code;
+    private StorePeiJianFragment peiJianFragment;
 
     public static StoreDetailFragment instance() {
         StoreDetailFragment view = new StoreDetailFragment();
@@ -70,6 +74,12 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
         longitude = getArguments().getString("longitude");
         bus_code = getArguments().getString("bus_code");
         fast = getArguments().getBoolean("fast");
+
+        peiJianFragment = new StorePeiJianFragment().instance(bus_code);
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.fragment, peiJianFragment)
+                .show(peiJianFragment).commitAllowingStateLoss();
+
         if (fast) {
             mDataBinding.tv3.setVisibility(View.VISIBLE);
         } else {
@@ -161,7 +171,7 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
             latitude = location.getLatitude() + "";
             longitude = location.getLongitude() + "";
             business_detail();
-        }else {
+        } else {
 //            ToastUtil.show(getContext(),"定位获取失败");
             business_detail();
         }

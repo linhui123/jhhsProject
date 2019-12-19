@@ -169,6 +169,7 @@ public class FindOrderListBean {
         private String bus_code;
         private String bus_pic_url;
         private String is_payframe;
+        private String pic_small_url;
         private List<GoodsListBean> goodsList;//维修订单配件列表
         private List<GoodsOwnerListBean> goodsOwnerList;//维修订单设备列表
         private List<FindOrderBean.GoodsListBean> goodsListBeans;//平台订单商品列表
@@ -187,6 +188,14 @@ public class FindOrderListBean {
 
         public void setGoodsOwnerList(List<GoodsOwnerListBean> goodsOwnerList) {
             this.goodsOwnerList = goodsOwnerList;
+        }
+
+        public String getPic_small_url() {
+            return pic_small_url;
+        }
+
+        public void setPic_small_url(String pic_small_url) {
+            this.pic_small_url = pic_small_url;
         }
 
         public String getCoupon_price() {

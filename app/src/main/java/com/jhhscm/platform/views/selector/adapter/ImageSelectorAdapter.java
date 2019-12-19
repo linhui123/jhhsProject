@@ -11,6 +11,7 @@ import com.jhhscm.platform.adater.AbsViewHolder;
 import com.jhhscm.platform.databinding.ItemImageSelectorAddBinding;
 import com.jhhscm.platform.databinding.ItemImageSelectorBinding;
 import com.jhhscm.platform.event.DelPhotoEvent;
+import com.jhhscm.platform.event.ImageSelectorEvent;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.views.selector.ImageSelectorItem;
@@ -131,7 +132,7 @@ public class ImageSelectorAdapter extends AbsAdapter<ImageSelectorItem> {
                 @Override
                 public void onClick(View v) {
                     if (item.imageUrl != null) {
-                        EventBusUtil.post(new DelPhotoEvent(item.imageUrl));
+                        EventBusUtil.post(ImageSelectorEvent.newInstance(mCode, ImageSelectorEvent.EVENT_DEL, item.imageUrl));
                         getItems().remove(item);
                         notifyDataSetChanged();
                     }

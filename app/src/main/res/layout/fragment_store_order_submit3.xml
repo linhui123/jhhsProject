@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
@@ -7,83 +8,221 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <LinearLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_above="@+id/ll_bottom"
-            android:layout_marginBottom="@dimen/dp_5"
-            android:orientation="vertical">
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="@dimen/dp_5">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_5"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/bg_397_ovel" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="17dp"
+                        android:src="@mipmap/ic_lessee_ring" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="相关信息"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="20dp"
+                        android:text="选择配件"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:text="费用结算"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16"
+                        android:textStyle="bold" />
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_5"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginRight="30dp"
-                    android:background="@drawable/bg_397_ovel" />
+                    android:layout_height="10dp"
+                    android:layout_marginTop="@dimen/padding_15"
+                    android:background="@color/cf5" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="17dp"
-                    android:src="@mipmap/ic_lessee_ring" />
-            </RelativeLayout>
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="15dp"></android.support.v7.widget.RecyclerView>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_10">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/cf5" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/padding_15"
+                        android:layout_marginTop="@dimen/padding_10"
+                        android:layout_marginRight="@dimen/padding_15"
+                        android:paddingBottom="@dimen/padding_10">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="配件费（元）"
+                            android:textColor="@color/acc3"
+                            android:textSize="@dimen/text_size_14" />
+
+                        <TextView
+                            android:id="@+id/peijian_fee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:text="0.0"
+                            android:textColor="@color/acc3"
+                            android:textSize="@dimen/text_size_14" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/padding_15"
+                        android:layout_marginRight="@dimen/padding_15"
+                        android:background="@color/de" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/padding_15"
+                        android:layout_marginTop="@dimen/padding_10"
+                        android:layout_marginRight="@dimen/padding_15"
+                        android:paddingBottom="@dimen/padding_10">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="工时费（元）"
+                            android:textColor="@color/acc3"
+                            android:textSize="@dimen/text_size_14" />
+
+                        <EditText
+                            android:id="@+id/work_fee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:background="@null"
+                            android:gravity="right"
+                            android:hint="请输入"
+                            android:inputType="numberDecimal"
+                            android:textColor="@color/acc3"
+                            android:textSize="@dimen/text_size_14" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/padding_15"
+                        android:layout_marginRight="@dimen/padding_15"
+                        android:background="@color/de" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/padding_15"
+                        android:layout_marginTop="@dimen/padding_10"
+                        android:layout_marginRight="@dimen/padding_15"
+                        android:paddingBottom="@dimen/padding_10">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="0dp"
+                            android:text="合计(元)"
+                            android:textColor="@color/acc3"
+                            android:textSize="@dimen/text_size_14" />
+
+                        <TextView
+                            android:id="@+id/total"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:text="0.0"
+                            android:textColor="@color/ff1a"
+                            android:textSize="@dimen/text_size_14" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/cf5" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="相关信息"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:layout_marginRight="@dimen/padding_15"
+                    android:text="上传票据"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.jhhscm.platform.views.selector.ImageSelector
+                    android:id="@+id/isSchemeImage"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="20dp"
-                    android:text="选择配件"
-                    android:textColor="@color/acc3"
-                    android:textSize="@dimen/text_size_16" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
-                    android:text="费用结算"
-                    android:textColor="@color/acc3"
-                    android:textSize="@dimen/text_size_16"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:layout_marginTop="@dimen/padding_15"
-                android:background="@color/cf5" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/padding_15"
-                android:layout_marginRight="15dp"></android.support.v7.widget.RecyclerView>
-
-        </LinearLayout>
-
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:layout_marginRight="@dimen/padding_15"
+                    app:colum_num="3"
+                    app:image_num="9"
+                    app:with_camera="true"></com.jhhscm.platform.views.selector.ImageSelector>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
         <LinearLayout
             android:id="@+id/ll_bottom"
@@ -92,108 +231,6 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/dp_5"
             android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/cf5" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/padding_15"
-                android:layout_marginTop="@dimen/padding_10"
-                android:layout_marginRight="@dimen/padding_15"
-                android:paddingBottom="@dimen/padding_10">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="配件费（元）"
-                    android:textColor="@color/acc3"
-                    android:textSize="@dimen/text_size_14" />
-
-                <TextView
-                    android:id="@+id/peijian_fee"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="0.0"
-                    android:textColor="@color/acc3"
-                    android:textSize="@dimen/text_size_14" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="@dimen/padding_15"
-                android:layout_marginRight="@dimen/padding_15"
-                android:background="@color/de" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/padding_15"
-                android:layout_marginTop="@dimen/padding_10"
-                android:layout_marginRight="@dimen/padding_15"
-                android:paddingBottom="@dimen/padding_10">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="工时费（元）"
-                    android:textColor="@color/acc3"
-                    android:textSize="@dimen/text_size_14" />
-
-                <EditText
-                    android:id="@+id/work_fee"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:background="@null"
-                    android:hint="请输入"
-                    android:inputType="numberDecimal"
-                    android:gravity="right"
-                    android:textColor="@color/acc3"
-                    android:textSize="@dimen/text_size_14" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="@dimen/padding_15"
-                android:layout_marginRight="@dimen/padding_15"
-                android:background="@color/de" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/padding_15"
-                android:layout_marginTop="@dimen/padding_10"
-                android:layout_marginRight="@dimen/padding_15"
-                android:paddingBottom="@dimen/padding_10">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="0dp"
-                    android:text="合计(元)"
-                    android:textColor="@color/acc3"
-                    android:textSize="@dimen/text_size_14" />
-
-                <TextView
-                    android:id="@+id/total"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="0.0"
-                    android:textColor="@color/ff1a"
-                    android:textSize="@dimen/text_size_14" />
-
-            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -214,8 +251,5 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_16" />
         </LinearLayout>
-
     </RelativeLayout>
-
-
 </layout>

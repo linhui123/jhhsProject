@@ -60,13 +60,9 @@ public abstract class AbsToolbarActivity extends AbsActivity {
 
     protected void setToolBarRightText(String text, boolean b) {
         if (b) {//可点击
-            if (enableOperateText())
-                mDataBinding.tvOperateText.setTextColor(getResources().getColor(R.color.acc3));
             if (enableOperateText()) mDataBinding.tvOperateText.setText(text);
             mDataBinding.tvOperateText.setClickable(true);
         } else {//不可点击
-            if (enableOperateText())
-                mDataBinding.tvOperateText.setTextColor(getResources().getColor(R.color.acc9));
             if (enableOperateText()) mDataBinding.tvOperateText.setText(text);
             mDataBinding.tvOperateText.setClickable(false);
         }
