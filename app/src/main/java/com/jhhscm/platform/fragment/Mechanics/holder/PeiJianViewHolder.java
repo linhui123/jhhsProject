@@ -13,9 +13,16 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class PeiJianViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.DataBean> {
 
     private ItemMechanicsPeijianBinding mBinding;
+    private boolean type = true;
 
     public PeiJianViewHolder(View itemView) {
         super(itemView);
+        mBinding = ItemMechanicsPeijianBinding.bind(itemView);
+    }
+
+    public PeiJianViewHolder(View itemView, boolean type) {
+        super(itemView);
+        this.type = type;
         mBinding = ItemMechanicsPeijianBinding.bind(itemView);
     }
 
@@ -29,7 +36,7 @@ public class PeiJianViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.Da
             mBinding.tvStore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (item.getBus_code() != null && item.getBus_code().length() > 0) {
+                    if (item.getBus_code() != null && item.getBus_code().length() > 0 && type) {
                         StoreDetailActivity.start(itemView.getContext(), item.getBus_code(), "", "");
                     }
                 }

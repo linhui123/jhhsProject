@@ -9,7 +9,6 @@ import com.jhhscm.platform.bean.UploadImage;
 import com.jhhscm.platform.event.ImageUpdataEvent;
 import com.jhhscm.platform.fragment.Mechanics.push.OldMechanicsUpImageBean;
 import com.jhhscm.platform.fragment.Mechanics.push.UpdateImageBean;
-import com.jhhscm.platform.fragment.Mechanics.push.UploadOldMechanicsImgAction;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.my.store.UploadBusorderImgAction;
 import com.jhhscm.platform.http.AHttpService;

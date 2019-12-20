@@ -8,19 +8,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.BrandModelActivity;
-import com.jhhscm.platform.activity.SearchActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.FragmentPeiJianBinding;
 import com.jhhscm.platform.databinding.FragmentStorePeijianBinding;
 import com.jhhscm.platform.event.BrandResultEvent;
-import com.jhhscm.platform.fragment.Mechanics.PeiJianFragment;
 import com.jhhscm.platform.fragment.Mechanics.action.BrandModelListAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindCategoryAction;
@@ -44,7 +40,6 @@ import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.tool.Des;
-import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -269,7 +264,7 @@ public class StorePeiJianFragment extends AbsFragment<FragmentStorePeijianBindin
 
         @Override
         public AbsRecyclerViewHolder<FindCategoryBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new PeiJianViewHolder(mInflater.inflate(R.layout.item_mechanics_peijian, parent, false));
+            return new PeiJianViewHolder(mInflater.inflate(R.layout.item_mechanics_peijian, parent, false), false);
         }
     }
 

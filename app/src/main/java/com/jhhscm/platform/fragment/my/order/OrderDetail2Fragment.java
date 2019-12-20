@@ -21,8 +21,6 @@ import com.jhhscm.platform.event.AddressRefreshEvent;
 import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.sale.FindOrderAction;
-import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -97,6 +95,7 @@ public class OrderDetail2Fragment extends AbsFragment<FragmentOrderDetailBinding
         if (findOrderBean != null) {
             intView(findOrderBean);
         } else if (sign != null && order_code != null) {
+            mDataBinding.rlBottom.setVisibility(View.GONE);
             findOrder3();
         } else {
             ToastUtil.show(getContext(), "数据错误");

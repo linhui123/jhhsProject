@@ -10,7 +10,6 @@ import com.jhhscm.platform.adater.AbsAdapter;
 import com.jhhscm.platform.adater.AbsViewHolder;
 import com.jhhscm.platform.databinding.ItemImageSelectorAddBinding;
 import com.jhhscm.platform.databinding.ItemImageSelectorBinding;
-import com.jhhscm.platform.event.DelPhotoEvent;
 import com.jhhscm.platform.event.ImageSelectorEvent;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;

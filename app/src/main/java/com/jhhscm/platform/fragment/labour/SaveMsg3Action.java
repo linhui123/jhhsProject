@@ -2,7 +2,6 @@ package com.jhhscm.platform.fragment.labour;
 
 import android.content.Context;
 
-import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.bean.BaseEntity;

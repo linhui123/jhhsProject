@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.bean.UploadImage;
-import com.jhhscm.platform.event.DelPhotoEvent;
 import com.jhhscm.platform.event.ImageSelectorEvent;
 import com.jhhscm.platform.event.ImageSelectorUpdataEvent;
 import com.jhhscm.platform.permission.YXPermission;

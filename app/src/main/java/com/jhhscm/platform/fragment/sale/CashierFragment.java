@@ -28,7 +28,6 @@ import com.jhhscm.platform.event.WXResultEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.coupon.CouponListAction;
 import com.jhhscm.platform.fragment.coupon.CouponListBean;
 import com.jhhscm.platform.fragment.my.store.action.PayUseListAction;
 import com.jhhscm.platform.http.AHttpService;

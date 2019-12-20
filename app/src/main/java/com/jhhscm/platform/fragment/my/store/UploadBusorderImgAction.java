@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Environment;
 
 import com.jhhscm.platform.fragment.Mechanics.push.OldMechanicsUpImageBean;
-import com.jhhscm.platform.fragment.Mechanics.push.UploadOldMechanicsImgAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;
 import com.jhhscm.platform.http.Fields;

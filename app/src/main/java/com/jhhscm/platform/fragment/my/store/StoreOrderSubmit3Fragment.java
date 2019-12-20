@@ -139,7 +139,6 @@ public class StoreOrderSubmit3Fragment extends AbsFragment<FragmentStoreOrderSub
                 if (name != null && phone != null && dataBean != null) {
                     showDialog();
                     doUploadAImagesAction();
-//                    new ImageUpdataUtil(getContext(), StoreOrderSubmit3Fragment.this, mDataBinding.isSchemeImage);
                 }
             }
         });
