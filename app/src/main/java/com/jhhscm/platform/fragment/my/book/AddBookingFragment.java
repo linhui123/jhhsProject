@@ -260,7 +260,6 @@ public class AddBookingFragment extends AbsFragment<FragmentAddBookingBinding> {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
                                         if (response.body().getData().getData().equals("0")) {
-
                                             if (dataBean != null) {
                                                 ToastUtil.show(getContext(), "编辑成功");
                                             } else {
@@ -391,8 +390,6 @@ public class AddBookingFragment extends AbsFragment<FragmentAddBookingBinding> {
                             @Override
                             public void call(File file) {
                                 // TODO 压缩成功后调用，返回压缩后的图片文件
-//                                return file;
-//                                return photos;
                                 Log.e("file", "file.length() " + file.length());
                                 doUploadImageAction1(file, imagePath);
                             }
@@ -409,7 +406,6 @@ public class AddBookingFragment extends AbsFragment<FragmentAddBookingBinding> {
     }
 
     private void doUploadImageAction1(final File file, final String imageUrl) {
-        showDialog();
         String token = ConfigUtils.getCurrentUser(getContext()).getToken();
         onNewRequestCall(UploadOldMechanicsImgAction.newInstance(getContext(), file, token).
                 request(new AHttpService.IResCallback<OldMechanicsUpImageBean>() {
@@ -419,7 +415,6 @@ public class AddBookingFragment extends AbsFragment<FragmentAddBookingBinding> {
                             if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
                                 return;
                             }
-                            closeDialog();
                             if (response != null) {
                                 if (response.body().getErrno().equals("0")) {
                                     if ("0".equals(response.body().getData().getCode())) {
@@ -479,7 +474,6 @@ public class AddBookingFragment extends AbsFragment<FragmentAddBookingBinding> {
                             updateImageBean.setPATIENT_IMAGE_NODE("1");
                             updateImageBeanList1.add(updateImageBean);
                         }
-
                     }
                     if (updateImgResult) {
                         addTool();
@@ -488,7 +482,6 @@ public class AddBookingFragment extends AbsFragment<FragmentAddBookingBinding> {
                     }
                 } else {
                     ToastUtils.show(getContext(), "图片上传失败,请重新提交");
-                    closeDialog();
                     return;
                 }
             } else {

@@ -2,10 +2,13 @@ package com.jhhscm.platform.fragment.my.store.viewholder;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.OrderDetailActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemStoreOrderBinding;
@@ -17,6 +20,7 @@ import com.jhhscm.platform.tool.ToastUtil;
 public class MyStoreOrderItemViewHolder extends AbsRecyclerViewHolder<FindBusOrderListBean.DataBean> {
 
     private ItemStoreOrderBinding mBinding;
+    private int type = 1;
 
     public MyStoreOrderItemViewHolder(View itemView) {
         super(itemView);
@@ -34,22 +38,27 @@ public class MyStoreOrderItemViewHolder extends AbsRecyclerViewHolder<FindBusOrd
             }
 
             if (item.getOrder_status() == 101) {
+                type = 1;
                 mBinding.orderType.setText("待付款");
                 mBinding.tvFunc1.setVisibility(View.VISIBLE);
                 mBinding.tvFunc2.setVisibility(View.GONE);
             } else if (item.getOrder_status() == 102) {
+                type = 4;
                 mBinding.orderType.setText("已取消");
                 mBinding.tvFunc1.setVisibility(View.GONE);
                 mBinding.tvFunc2.setVisibility(View.GONE);
             } else if (item.getOrder_status() == 501) {
+                type = 1;
                 mBinding.orderType.setText("用户已确认订单");
                 mBinding.tvFunc1.setVisibility(View.GONE);
                 mBinding.tvFunc2.setVisibility(View.GONE);
             } else if (item.getOrder_status() == 201) {
+                type = 4;
                 mBinding.orderType.setText("已完成");
                 mBinding.tvFunc1.setVisibility(View.GONE);
                 mBinding.tvFunc2.setVisibility(View.GONE);
             } else {
+                type = 4;
                 mBinding.orderType.setText(item.getOrder_status_name());
                 mBinding.tvFunc1.setVisibility(View.GONE);
                 mBinding.tvFunc2.setVisibility(View.GONE);
@@ -77,6 +86,31 @@ public class MyStoreOrderItemViewHolder extends AbsRecyclerViewHolder<FindBusOrd
                 @Override
                 public void onClick(View v) {
                     ToastUtil.show(itemView.getContext(), "修改订单");
+                }
+            });
+            mBinding.recyclerview.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+                @Override
+                public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                    if (e.getAction() == MotionEvent.ACTION_UP) {
+                        mBinding.ll.performClick();
+                    }
+                    return false;
+                }
+
+                @Override
+                public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+                }
+
+                @Override
+                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+                }
+            });
+            mBinding.ll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    OrderDetailActivity.start(itemView.getContext(), item.getOrder_code(), "sign", type);
                 }
             });
         }

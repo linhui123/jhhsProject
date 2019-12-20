@@ -7,10 +7,10 @@ import java.io.Serializable;
  */
 public class ImageSelectorItem implements Serializable {
     public int imageId = 0;
-    public String imageUrl;
-    public String imageToken;
-    public String catalogues;
-    public String allfilePath;
+    public String imageUrl;//本地
+    public String imageToken;//网络 标识
+    public String catalogues;//网络 标识
+    public String allfilePath;//网络地址
     public boolean addFlag = false;
     public boolean isSHow = false;
 

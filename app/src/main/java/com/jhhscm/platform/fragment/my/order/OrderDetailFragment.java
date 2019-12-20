@@ -46,6 +46,7 @@ import java.util.TreeMap;
 
 import retrofit2.Response;
 
+/**商品订单*/
 public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding> {
     private UserSession userSession;
     private FindOrderBean findOrderBean;

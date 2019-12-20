@@ -240,6 +240,7 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
             UploadImage image = uploadImages.get(i);
             if (StringUtils.isNullEmpty(image.getImageToken())) {
                 hasImageToken = false;
+                Log.e("imageFile", "imageFile.length() " + image.getImageUrl());
                 imageFile(getContext(), image.getImageUrl());
             }
         }
@@ -373,7 +374,6 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
                             updateImageBean.setPATIENT_IMAGE_NODE("1");
                             updateImageBeanList1.add(updateImageBean);
                         }
-
                     }
                     if (updateImgResult) {
                         if (type == 0) {

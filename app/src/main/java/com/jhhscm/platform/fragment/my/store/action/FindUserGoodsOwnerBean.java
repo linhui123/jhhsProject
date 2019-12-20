@@ -3,7 +3,7 @@ package com.jhhscm.platform.fragment.my.store.action;
 import java.io.Serializable;
 import java.util.List;
 
-public class FindUserGoodsOwnerBean implements Serializable{
+public class FindUserGoodsOwnerBean implements Serializable {
 
     private List<DataBean> data;
     private PageBean page;
@@ -47,7 +47,34 @@ public class FindUserGoodsOwnerBean implements Serializable{
         private String no;
         private String gps_no;
         private String error_no;
+        private String v_1;
+        private String v_2;
+        private String v_3;
         private boolean isSelect;
+
+        public String getV_1() {
+            return v_1;
+        }
+
+        public void setV_1(String v_1) {
+            this.v_1 = v_1;
+        }
+
+        public String getV_2() {
+            return v_2;
+        }
+
+        public void setV_2(String v_2) {
+            this.v_2 = v_2;
+        }
+
+        public String getV_3() {
+            return v_3;
+        }
+
+        public void setV_3(String v_3) {
+            this.v_3 = v_3;
+        }
 
         public String getNo() {
             return no;

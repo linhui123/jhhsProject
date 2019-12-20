@@ -21,6 +21,8 @@ import com.jhhscm.platform.event.AddressRefreshEvent;
 import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.sale.FindOrderAction;
+import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -44,10 +46,15 @@ import java.util.TreeMap;
 
 import retrofit2.Response;
 
+/**
+ * 维修订单
+ */
 public class OrderDetail2Fragment extends AbsFragment<FragmentOrderDetailBinding> {
     private UserSession userSession;
     private FindOrderListBean.DataBean findOrderBean;
     private int type;
+    private String order_code;
+    private String sign;//从店铺订单进来
     private InnerAdapter mAdapter;
     private InnerDeviceAdapter deviceAdapter;
 
@@ -71,64 +78,26 @@ public class OrderDetail2Fragment extends AbsFragment<FragmentOrderDetailBinding
             startNewActivity(LoginActivity.class);
             getActivity().finish();
         }
-
         type = getArguments().getInt("type");
-        Log.e("type", "type :" + type);
+        sign = getArguments().getString("sign");
+        order_code = getArguments().getString("orderGood");
         findOrderBean = (FindOrderListBean.DataBean) getArguments().getSerializable("dataBean");
+        Log.e("type", "type :" + type);
+
+        mDataBinding.rv.addItemDecoration(new DividerItemDecoration(getContext()));
+        mDataBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        mAdapter = new InnerAdapter(getContext());
+        mDataBinding.rv.setAdapter(mAdapter);
+
+        mDataBinding.rvDevice.addItemDecoration(new DividerItemDecoration(getContext()));
+        mDataBinding.rvDevice.setLayoutManager(new LinearLayoutManager(getContext()));
+        deviceAdapter = new InnerDeviceAdapter(getContext());
+        mDataBinding.rvDevice.setAdapter(deviceAdapter);
+
         if (findOrderBean != null) {
-            mDataBinding.rlLocation.setVisibility(View.GONE);
-            mDataBinding.rvDevice.setVisibility(View.VISIBLE);
-
-            mDataBinding.rv.addItemDecoration(new DividerItemDecoration(getContext()));
-            mDataBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
-            mAdapter = new InnerAdapter(getContext());
-            mDataBinding.rv.setAdapter(mAdapter);
-
-            mDataBinding.rvDevice.addItemDecoration(new DividerItemDecoration(getContext()));
-            mDataBinding.rvDevice.setLayoutManager(new LinearLayoutManager(getContext()));
-            deviceAdapter = new InnerDeviceAdapter(getContext());
-            mDataBinding.rvDevice.setAdapter(deviceAdapter);
-
-            mAdapter.setData(findOrderBean.getGoodsList());
-            deviceAdapter.setData(findOrderBean.getGoodsOwnerList());
             intView(findOrderBean);
-
-            mDataBinding.tvConfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new ConfirmOrderDialog(getContext(), new ConfirmOrderDialog.CallbackListener() {
-                        @Override
-                        public void clickY() {
-                            updateOrderStatus(findOrderBean.getOrder_code());
-                        }
-                    }).show();
-                }
-            });
-
-            mDataBinding.tvTijiao.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CashierActivity.start(getContext(), new CreateOrderResultBean(new CreateOrderResultBean.DataBean(findOrderBean.getOrder_code())));
-                }
-            });
-
-            if (findOrderBean.getPic_small_url() != null && findOrderBean.getPic_small_url().length() > 10) {
-                mDataBinding.isSchemeImage.setVisibility(View.VISIBLE);
-                List<PbImage> items = new ArrayList<>();
-                String[] strs = findOrderBean.getPic_small_url().split(",");
-                if (strs.length > 0) {
-                    for (int i = 0; i < strs.length; i++) {
-                        PbImage pbImage = new PbImage();
-                        pbImage.setmUrl(strs[i].trim());
-                        pbImage.setmToken(strs[i].trim());
-                        items.add(pbImage);
-                    }
-                    mDataBinding.isSchemeImage.setPbImageList(items);
-                }
-            } else {
-                mDataBinding.tvPiaoju.setVisibility(View.GONE);
-                mDataBinding.isSchemeImage.setVisibility(View.GONE);
-            }
+        } else if (sign != null && order_code != null) {
+            findOrder3();
         } else {
             ToastUtil.show(getContext(), "数据错误");
             getActivity().finish();
@@ -143,6 +112,45 @@ public class OrderDetail2Fragment extends AbsFragment<FragmentOrderDetailBinding
 
     public void onEvent(RefreshEvent messageEvent) {
 
+    }
+
+    /**
+     * 订单查询
+     */
+    private void findOrder3() {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("order_code", order_code);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "findOrderDetail");
+        NetBean netBean = new NetBean();
+        netBean.setToken(userSession.getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(FindOrderDetail3Action.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<FindOrderListBean.OrderDetail>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<FindOrderListBean.OrderDetail>> response,
+                                           BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                if (response.body().getCode().equals("200")) {
+                                    findOrderBean = response.body().getData().getData();
+                                    if (findOrderBean != null) {
+                                        intView(findOrderBean);
+                                    }
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
     }
 
     /**
@@ -223,6 +231,30 @@ public class OrderDetail2Fragment extends AbsFragment<FragmentOrderDetailBinding
     }
 
     private void intView(final FindOrderListBean.DataBean findOrderBean) {
+        mDataBinding.rlLocation.setVisibility(View.GONE);
+        mDataBinding.rvDevice.setVisibility(View.VISIBLE);
+        mAdapter.setData(findOrderBean.getGoodsList());
+        deviceAdapter.setData(findOrderBean.getGoodsOwnerList());
+
+        if (findOrderBean.getTicket() != null && findOrderBean.getTicket().length() > 10) {
+            mDataBinding.isSchemeImage.setVisibility(View.VISIBLE);
+            List<PbImage> items = new ArrayList<>();
+            String ticket = findOrderBean.getTicket().replace("[", "").replace("]", "");
+            String[] strs = ticket.split(",");
+            if (strs.length > 0) {
+                for (int i = 0; i < strs.length; i++) {
+                    PbImage pbImage = new PbImage();
+                    pbImage.setmUrl(strs[i].replace("\"", "").trim());
+                    pbImage.setmToken(strs[i].replace("\"", "").trim());
+                    items.add(pbImage);
+                }
+                mDataBinding.isSchemeImage.setPbImageList(items);
+            }
+        } else {
+            mDataBinding.tvPiaoju.setVisibility(View.GONE);
+            mDataBinding.isSchemeImage.setVisibility(View.GONE);
+        }
+
         if (type == 1) {
             mDataBinding.orderType.setText(findOrderBean.getOrder_text());
             mDataBinding.tvInfo.setVisibility(View.GONE);
@@ -279,6 +311,25 @@ public class OrderDetail2Fragment extends AbsFragment<FragmentOrderDetailBinding
                 if (findOrderBean.getShip_sn() != null) {
                     copy(findOrderBean.getShip_sn(), getContext());
                 }
+            }
+        });
+
+        mDataBinding.tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ConfirmOrderDialog(getContext(), new ConfirmOrderDialog.CallbackListener() {
+                    @Override
+                    public void clickY() {
+                        updateOrderStatus(findOrderBean.getOrder_code());
+                    }
+                }).show();
+            }
+        });
+
+        mDataBinding.tvTijiao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CashierActivity.start(getContext(), new CreateOrderResultBean(new CreateOrderResultBean.DataBean(findOrderBean.getOrder_code())));
             }
         });
     }

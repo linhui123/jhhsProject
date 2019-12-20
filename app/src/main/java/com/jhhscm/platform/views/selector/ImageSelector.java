@@ -159,7 +159,7 @@ public class ImageSelector extends LinearLayout {
         for (int i = 0; i < items.size(); i++) {
             ImageSelectorItem item = items.get(i);
             if (!item.isAddFlag()) {
-                if (item.equals(image.getImageUrl())) {
+                if (item.imageUrl.equals(image.getImageUrl())) {
                     item.imageToken = image.getImageToken();
                     item.allfilePath = image.getAllfilePath();
                     item.catalogues = image.getCatalogues();

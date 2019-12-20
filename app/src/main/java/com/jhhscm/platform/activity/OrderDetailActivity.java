@@ -12,6 +12,9 @@ import com.jhhscm.platform.fragment.my.order.OrderDetailFragment;
 
 public class OrderDetailActivity extends AbsToolbarActivity {
 
+    /**
+     * 商品订单
+     */
     public static void start(Context context, String orderGood, int Type) {
         Intent intent = new Intent(context, OrderDetailActivity.class);
         intent.putExtra("orderGood", orderGood);
@@ -19,9 +22,23 @@ public class OrderDetailActivity extends AbsToolbarActivity {
         context.startActivity(intent);
     }
 
+    /**
+     * 维修订单1
+     */
     public static void start(Context context, FindOrderListBean.DataBean dataBean, int Type) {
         Intent intent = new Intent(context, OrderDetailActivity.class);
         intent.putExtra("dataBean", dataBean);
+        intent.putExtra("type", Type);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 维修订单2
+     */
+    public static void start(Context context, String orderGood, String sign, int Type) {
+        Intent intent = new Intent(context, OrderDetailActivity.class);
+        intent.putExtra("sign", sign);
+        intent.putExtra("orderGood", orderGood);
         intent.putExtra("type", Type);
         context.startActivity(intent);
     }
@@ -58,7 +75,9 @@ public class OrderDetailActivity extends AbsToolbarActivity {
 
     @Override
     protected AbsFragment onCreateContentView() {
-        if ((FindOrderListBean.DataBean)getIntent().getSerializableExtra("dataBean") != null) {
+        if ((FindOrderListBean.DataBean) getIntent().getSerializableExtra("dataBean") != null) {
+            return OrderDetail2Fragment.instance();
+        } else if (getIntent().getStringExtra("sign") != null) {
             return OrderDetail2Fragment.instance();
         } else {
             return OrderDetailFragment.instance();
@@ -69,6 +88,7 @@ public class OrderDetailActivity extends AbsToolbarActivity {
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
         args.putString("orderGood", getIntent().getStringExtra("orderGood"));
+        args.putString("sign", getIntent().getStringExtra("sign"));
         args.putSerializable("dataBean", getIntent().getSerializableExtra("dataBean"));
         args.putInt("type", getIntent().getIntExtra("type", 1));
         return args;

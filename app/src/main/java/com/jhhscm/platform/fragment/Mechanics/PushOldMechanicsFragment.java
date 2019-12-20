@@ -513,7 +513,6 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
     }
 
     private void doUploadImageAction1(final File file, final String imageUrl) {
-        showDialog();
         String token = ConfigUtils.getCurrentUser(getContext()).getToken();
         onNewRequestCall(UploadOldMechanicsImgAction.newInstance(getContext(), file, token).
                 request(new AHttpService.IResCallback<OldMechanicsUpImageBean>() {
@@ -523,7 +522,6 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                             if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
                                 return;
                             }
-                            closeDialog();
                             if (response != null) {
                                 if (response.body().getErrno().equals("0")) {
                                     if ("0".equals(response.body().getData().getCode())) {
@@ -591,7 +589,6 @@ public class PushOldMechanicsFragment extends AbsFragment<FragmentPushOldMechani
                     }
                 } else {
                     error();
-                    closeDialog();
                     return;
                 }
             } else {

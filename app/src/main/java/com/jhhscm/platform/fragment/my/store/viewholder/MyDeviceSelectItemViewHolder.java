@@ -25,6 +25,8 @@ public class MyDeviceSelectItemViewHolder extends AbsRecyclerViewHolder<FindUser
         mBinding.tvName.setText("设备名称：" + item.getName());
         mBinding.tv1.setText("品牌：" + item.getBrand_name());
         mBinding.tv2.setText("型号：" + item.getFixp17());
+        item.setNo(item.getV_1());
+        item.setGps_no(item.getV_2());
         if (item.getFcatory_time() != null) {
             if (item.getFcatory_time().length() > 10) {
                 mBinding.tv3.setText("出厂时间：" + item.getFcatory_time().substring(0, 10));

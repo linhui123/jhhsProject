@@ -170,6 +170,7 @@ public class FindOrderListBean {
         private String bus_pic_url;
         private String is_payframe;
         private String pic_small_url;
+        private String ticket;
         private List<GoodsListBean> goodsList;//维修订单配件列表
         private List<GoodsOwnerListBean> goodsOwnerList;//维修订单设备列表
         private List<FindOrderBean.GoodsListBean> goodsListBeans;//平台订单商品列表
@@ -190,12 +191,12 @@ public class FindOrderListBean {
             this.goodsOwnerList = goodsOwnerList;
         }
 
-        public String getPic_small_url() {
-            return pic_small_url;
+        public String getTicket() {
+            return ticket;
         }
 
-        public void setPic_small_url(String pic_small_url) {
-            this.pic_small_url = pic_small_url;
+        public void setTicket(String ticket) {
+            this.ticket = ticket;
         }
 
         public String getCoupon_price() {
@@ -531,4 +532,23 @@ public class FindOrderListBean {
             }
         }
     }
+
+    public static class OrderDetail implements Serializable {
+
+        /**
+         * data : {"ticket":"[\"http://wajueji.oss-cn-shenzhen.aliyuncs.com/ticket/15a45d1a709a4aebbab95d81d84629d3.jpg?Expires=1892180294&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=EVl4kJ3IeEtjaFXFbe4Vszm4kPw%3D\"]","goods_price":235,"is_payframe":"0","goodsList":[{"order_code":"2019122060001530080510","goods_name":"950柴滤","number":1,"price":235,"pic_url":"http://wajueji.oss-cn-shenzhen.aliyuncs.com/category_water/ec66be3bce5740d5a64f53e26ea8db06.png?Expires=1886146307&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=fYdFj%2BbKqVCQ3RxrX5Murow1x5w%3D"}],"order_price":235,"bus_pic_url":"[]","order_text":"未付款","message":"bus","other_price":0,"order_name":"950柴滤","order_code":"2019122060001530080510","order_status":101,"user_code":"1000000330781973","coupon_price":0,"goodsOwnerList":[{"fixs":"yyy","brands":"神钢","v3s":"yyyyy","v1":"yyyyy","v2":"(null)","v3":"0"}],"order_num":1,"id":547,"pic_url":"http://wajueji.oss-cn-shenzhen.aliyuncs.com/category_water/ec66be3bce5740d5a64f53e26ea8db06.png?Expires=1886146307&OSSAccessKeyId=LTAI4F3Gt8M6rbEl&Signature=fYdFj%2BbKqVCQ3RxrX5Murow1x5w%3D","order_type":1,"add_time":"2019-12-20 13:38:15","bus_name":"安卓商户测试","bus_code":"1000000330781973"}
+         */
+
+        private DataBean data;
+
+        public DataBean getData() {
+            return data;
+        }
+
+        public void setData(DataBean data) {
+            this.data = data;
+        }
+
+    }
+
 }

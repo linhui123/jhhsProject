@@ -97,8 +97,6 @@ public class SelectDeviceFragment extends AbsFragment<FragmentSelectDeviceBindin
             ToastUtil.show(getContext(), "用户手机号不能为空");
             getActivity().finish();
         }
-
-
     }
 
     /**

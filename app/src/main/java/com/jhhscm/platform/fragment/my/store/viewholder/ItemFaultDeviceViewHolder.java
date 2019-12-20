@@ -33,6 +33,8 @@ public class ItemFaultDeviceViewHolder extends AbsRecyclerViewHolder<FindUserGoo
         if (item != null) {
             mBinding.brand.setText(item.getBrand_name());
             mBinding.model.setText(item.getFixp17());
+            mBinding.no.setText(item.getNo());
+            mBinding.gpsNo.setText(item.getGps_no());
         }
 
         if (brandList != null && brandList.size() > 0) {

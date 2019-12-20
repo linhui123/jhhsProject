@@ -11,6 +11,7 @@ import com.jhhscm.platform.fragment.Mechanics.push.OldMechanicsUpImageBean;
 import com.jhhscm.platform.fragment.Mechanics.push.UpdateImageBean;
 import com.jhhscm.platform.fragment.Mechanics.push.UploadOldMechanicsImgAction;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.my.store.UploadBusorderImgAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
@@ -39,17 +40,16 @@ public class ImageUpdataUtil {
     /**
      * 二手车上传图片
      */
-    private List<UpdateImageBean> updateImageBeanList=new ArrayList<>();
-
+    private List<UpdateImageBean> updateImageBeanList = new ArrayList<>();
 
     public ImageUpdataUtil(Context context, AbsFragment fragment, ImageSelector imageSelector) {
         this.imageSelector = imageSelector;
         this.context = context;
         this.fragment = fragment;
-        doUploadAImagesAction1();
+        doUploadAImagesAction();
     }
 
-    public void doUploadAImagesAction1() {
+    public void doUploadAImagesAction() {
         boolean hasImageAToken = doUploadImagesAction();
         if (hasImageAToken) {
             doHasImageTokenSuccess();
@@ -128,7 +128,7 @@ public class ImageUpdataUtil {
 
     private void doUploadImageAction(final File file, final String imageUrl) {
         String token = ConfigUtils.getCurrentUser(context).getToken();
-        fragment.onNewRequestCall(UploadOldMechanicsImgAction.newInstance(context, file, token).
+        fragment.onNewRequestCall(UploadBusorderImgAction.newInstance(context, file, token).
                 request(new AHttpService.IResCallback<OldMechanicsUpImageBean>() {
                     @Override
                     public void onCallback(int resultCode, Response<OldMechanicsUpImageBean> response, BaseErrorInfo baseErrorInfo) {
@@ -155,6 +155,7 @@ public class ImageUpdataUtil {
     }
 
     private void doUploadImageResponse(String imageUrl, OldMechanicsUpImageBean response) {
+        Log.e("ImageUpdataEvent", "imageUrl " + imageUrl);//本地地址
         imageSelector.setImageToken(new UploadImage(imageUrl, response.getData().getCatalogues(), response.getData().getAllfilePath(), response.getData().getCatalogues()));
         doHasImageTokenSuccess();
     }
@@ -165,9 +166,11 @@ public class ImageUpdataUtil {
         if (uploadImages == null) return imageTokens;
         for (int i = 0; i < uploadImages.size(); i++) {
             UploadImage image = uploadImages.get(i);
+            Log.e("ImageUpdataEvent", "getImageToken " + image.getImageToken());
             if (!StringUtils.isNullEmpty(image.getImageToken())) {
                 imageTokens.add(image.getImageToken());
             } else {
+                Log.e("ImageUpdataEvent", "null ");
                 return null;
             }
         }
@@ -178,6 +181,7 @@ public class ImageUpdataUtil {
     private void doHasImageTokenSuccess() {
         List<UploadImage> uploadAImages = imageSelector.getUploadImageList();
         List<String> imageATokens = getImageTokenList();
+        Log.e("ImageUpdataEvent", "imageATokens " + imageATokens);
         if (uploadAImages != null && uploadAImages.size() > 0) {
             if (imageATokens != null && imageATokens.size() > 0) {
                 if (uploadAImages.size() == imageATokens.size()) {
@@ -199,24 +203,24 @@ public class ImageUpdataUtil {
                     if (updateImgResult) {
                         EventBusUtil.post(new ImageUpdataEvent(updateImageBeanList, 0));
                     } else {
-                        Log.e("ImageUpdataEvent", "22222222222222");
+                        Log.e("ImageUpdataEvent", "2");
                         ToastUtils.show(context, "图片上传失败,请重新提交");
-                        EventBusUtil.post(new ImageUpdataEvent(updateImageBeanList, 0,false));
+                        EventBusUtil.post(new ImageUpdataEvent(updateImageBeanList, 0, false));
                     }
                 } else {
-                    Log.e("ImageUpdataEvent", "333333333333333");
-                    ToastUtils.show(context, "图片上传失败,请重新提交");
-                    EventBusUtil.post(new ImageUpdataEvent(updateImageBeanList, 0,false));
+                    Log.e("ImageUpdataEvent", "3");
+//                    ToastUtils.show(context, "图片上传失败,请重新提交");
+//                    EventBusUtil.post(new ImageUpdataEvent(updateImageBeanList, 0, false));
                     return;
                 }
             } else {
-                Log.e("ImageUpdataEvent", "444444444444444");
-                EventBusUtil.post(new ImageUpdataEvent(updateImageBeanList, 0,false));
+                Log.e("ImageUpdataEvent", "4");
+//                EventBusUtil.post(new ImageUpdataEvent(updateImageBeanList, 0, false));
                 return;
             }
-        }else {
-            Log.e("ImageUpdataEvent", "55555555555555555555");
-            EventBusUtil.post(new ImageUpdataEvent(updateImageBeanList, 0,false));
+        } else {
+            Log.e("ImageUpdataEvent", "5");
+            EventBusUtil.post(new ImageUpdataEvent(updateImageBeanList, 0, false));
             return;
         }
     }

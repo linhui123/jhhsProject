@@ -335,6 +335,11 @@ public interface ApiService {
     @POST(FIND_ORDERLIST)
     Call<BaseEntity<FindOrderListBean>> findOrderList(@Body NetBean content);
 
+    String FIND_ORDERDETAIL3 = "v1-3/order/findOrderDetail";
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_ORDERDETAIL3)
+    Call<BaseEntity<FindOrderListBean.OrderDetail>> find_OrderDetail3(@Body NetBean content);
+
     //取消订单
     String DEL_ORDER = "v1-0/order/delOrder";
 
@@ -468,6 +473,13 @@ public interface ApiService {
     @Multipart
     @POST(UPLOAD_IMAGE_URL)
     Call<OldMechanicsUpImageBean> uploadImages(@Part List<MultipartBody.Part> parts);
+
+    //票据上传图片
+    String UPLOAD_BUSORDER_IMAGE_URL = "v1-3/busorder/uploadImg";
+
+    @Multipart
+    @POST(UPLOAD_BUSORDER_IMAGE_URL)
+    Call<OldMechanicsUpImageBean> uploadBusorderImages(@Part List<MultipartBody.Part> parts);
 
     //发布二手机
     String SAVE_OLDGOOD = "v1-0/goods/saveOldGood";
