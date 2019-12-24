@@ -29,6 +29,7 @@ public class CouponGetListBean {
          * status : 0
          */
 
+        private String isGetAll;
         private String isGet;
         private String code;
         private double min;
@@ -40,6 +41,14 @@ public class CouponGetListBean {
         private int type;
         private String desc;
         private int status;
+
+        public String getIsGetAll() {
+            return isGetAll;
+        }
+
+        public void setIsGetAll(String isGetAll) {
+            this.isGetAll = isGetAll;
+        }
 
         public String getIsGet() {
             return isGet;

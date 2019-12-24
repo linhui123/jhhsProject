@@ -17,6 +17,8 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentStorePeijianBinding;
 import com.jhhscm.platform.event.BrandResultEvent;
+import com.jhhscm.platform.event.FinishEvent;
+import com.jhhscm.platform.event.ForceCloseEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.BrandModelListAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindCategoryAction;
@@ -120,6 +122,7 @@ public class StorePeiJianFragment extends AbsFragment<FragmentStorePeijianBindin
         mDataBinding.tvZonghe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EventBusUtil.post(new FinishEvent());
                 if (mDataBinding.llXiala.getVisibility() == View.GONE) {
                     mDataBinding.llXiala.setVisibility(View.VISIBLE);
                     mDataBinding.llZonghe.setVisibility(View.VISIBLE);
@@ -138,6 +141,7 @@ public class StorePeiJianFragment extends AbsFragment<FragmentStorePeijianBindin
         mDataBinding.tvQuanbu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EventBusUtil.post(new FinishEvent());
                 if (mDataBinding.llXiala.getVisibility() == View.GONE) {
                     mDataBinding.llXiala.setVisibility(View.VISIBLE);
                     mDataBinding.llQuanbu.setVisibility(View.VISIBLE);
@@ -156,6 +160,7 @@ public class StorePeiJianFragment extends AbsFragment<FragmentStorePeijianBindin
         mDataBinding.tvPinpai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EventBusUtil.post(new FinishEvent());
                 if (mDataBinding.llXiala.getVisibility() == View.GONE) {
                     mDataBinding.llXiala.setVisibility(View.VISIBLE);
                     mDataBinding.llPinpai.setVisibility(View.VISIBLE);
@@ -174,6 +179,7 @@ public class StorePeiJianFragment extends AbsFragment<FragmentStorePeijianBindin
         mDataBinding.tvJixing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EventBusUtil.post(new FinishEvent());
                 if (mDataBinding.llXiala.getVisibility() == View.GONE) {
                     mDataBinding.llXiala.setVisibility(View.VISIBLE);
                     mDataBinding.llJixing.setVisibility(View.VISIBLE);

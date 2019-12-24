@@ -198,7 +198,6 @@ public class PayWithCouponDialog extends BaseDialog {
             mDataBinding.num.setText("￥0.0");
         }
 
-
         if (orderCode == null) {
             ToastUtil.show(getContext(), "订单code为空");
             mDataBinding.tvPay.setEnabled(false);
@@ -210,10 +209,9 @@ public class PayWithCouponDialog extends BaseDialog {
             mDataBinding.coupon.setVisibility(View.GONE);
         }
 
-//        if (list != null) {
         initDrop();
         payUseList();
-//        }
+
         mDataBinding.coupon.setTag("");
         mDataBinding.coupon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -280,7 +278,6 @@ public class PayWithCouponDialog extends BaseDialog {
         mDataBinding.recyvleview.setLayoutManager(new LinearLayoutManager(getContext()));
         pAdapter = new InnerAdapter(getContext());
         mDataBinding.recyvleview.setAdapter(pAdapter);
-//        pAdapter.setData(list);
     }
 
     @Override
@@ -508,9 +505,17 @@ public class PayWithCouponDialog extends BaseDialog {
                 public void onClick(View v) {
                     mDataBinding.coupon.setText(item.getKey_value());
                     mDataBinding.coupon.setTag(item.getKey_name());
-                    double result = 0.0;
-                    result = Double.parseDouble(price) - Double.parseDouble(item.getDiscount() + "");
-                    mDataBinding.num.setText("￥" + result);
+                    if (item.getKey_name().equals("")) {
+                        mDataBinding.num.setText("￥" + price);
+                    } else {
+                        double result = 0.0;
+                        if (item.getDiscount() < 1) {
+                            result = Double.parseDouble(price) * item.getDiscount();
+                        } else {
+                            result = Double.parseDouble(price) - item.getDiscount();
+                        }
+                        mDataBinding.num.setText("￥" + result);
+                    }
                     mDataBinding.recyvleview.setVisibility(View.GONE);
                     if (mListener != null) {
                         mListener.clickResult(item.getKey_name(), item.getKey_value());
@@ -526,7 +531,7 @@ public class PayWithCouponDialog extends BaseDialog {
     private void payUseList() {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
-        map.put("order_code",orderCode);
+        map.put("order_code", orderCode);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getContext(), map, "payUseList");
@@ -548,6 +553,7 @@ public class PayWithCouponDialog extends BaseDialog {
                                     doSuccessResponse(response.body().getData());
                                 } else if (response.body().getCode().equals("1003")) {
                                     ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+                                    ConfigUtils.removeCurrentUser(getContext());
                                 } else {
                                     ToastUtils.show(getContext(), "error " + type + ":" + response.body().getMessage());
                                 }

@@ -34,7 +34,7 @@ public class DropTDialog extends BaseDialog {
     }
 
     public interface CallbackDiscountListener {
-        void clickResult(String id, String Nmae, int discount);
+        void clickResult(String id, String Nmae, double discount);
     }
 
     public DropTDialog(Context context) {

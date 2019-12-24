@@ -20,14 +20,16 @@ public class CouponCenterViewHolder extends AbsRecyclerViewHolder<CouponGetListB
     @Override
     protected void onBindView(final CouponGetListBean.DataBean item) {
         if (item != null) {
-            mBinding.tvCount.setText(item.getDiscount() + "元");
-            mBinding.tvName.setText(item.getName());
-            if (item.getStartTime() != null && item.getStartTime().length() > 10
-                    && item.getEndTime() != null && item.getEndTime().length() > 10) {
-                mBinding.tvData.setText(item.getStartTime().substring(0, 10) + " 至 " + item.getEndTime().substring(0, 10));
+            if (item.getDiscount() < 1) {
+                mBinding.tvCount.setText(item.getDiscount() * 10 + "折");
+                mBinding.tvCount1.setText(item.getDiscount() * 10 + "折");
             } else {
-                mBinding.tvData.setText("-- 至 --");
+                mBinding.tvCount.setText(item.getDiscount() + "元");
+                mBinding.tvCount1.setText(item.getDiscount() + "元");
             }
+
+            mBinding.tvName.setText(item.getName());
+            mBinding.tvName1.setText(item.getName());
             String data = "";
             if (item.getStartTime() != null) {
                 if (item.getStartTime().length() > 10) {
@@ -48,16 +50,25 @@ public class CouponCenterViewHolder extends AbsRecyclerViewHolder<CouponGetListB
                 data = data + "--";
             }
             mBinding.tvData.setText(data);
-
+            mBinding.tvData1.setText(data);
             mBinding.tvCondition.setText(item.getDesc());
-            if (item.getIsGet().equals("1")) {
-                mBinding.tvReceive.setBackgroundResource(R.drawable.button_c397);
-                mBinding.tvReceive.setText("已领取");
-                mBinding.tvReceive.setTextColor(itemView.getContext().getResources().getColor(R.color.white));
+            mBinding.tvCondition1.setText(item.getDesc());
+
+            if (item.getIsGetAll().equals("1")) {
+                mBinding.ll1.setVisibility(View.VISIBLE);
+                mBinding.ll.setVisibility(View.GONE);
             } else {
-                mBinding.tvReceive.setBackgroundResource(R.drawable.edit_bg_397);
-                mBinding.tvReceive.setText("领取");
-                mBinding.tvReceive.setTextColor(itemView.getContext().getResources().getColor(R.color.a397));
+                mBinding.ll.setVisibility(View.VISIBLE);
+                mBinding.ll1.setVisibility(View.GONE);
+                if (item.getIsGet().equals("1")) {
+                    mBinding.tvReceive.setBackgroundResource(R.drawable.button_c397);
+                    mBinding.tvReceive.setText("已领取");
+                    mBinding.tvReceive.setTextColor(itemView.getContext().getResources().getColor(R.color.white));
+                } else {
+                    mBinding.tvReceive.setBackgroundResource(R.drawable.edit_bg_397);
+                    mBinding.tvReceive.setText("领取");
+                    mBinding.tvReceive.setTextColor(itemView.getContext().getResources().getColor(R.color.a397));
+                }
             }
             mBinding.tvReceive.setOnClickListener(new View.OnClickListener() {
                 @Override

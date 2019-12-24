@@ -34,6 +34,8 @@
                 android:layout_below="@+id/tv_count"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/padding_15"
+                android:paddingLeft="@dimen/dp_5"
+                android:paddingRight="@dimen/padding_10"
                 android:text="满100元可用"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_14" />

@@ -32,6 +32,7 @@ import com.jhhscm.platform.event.ForceCloseEvent;
 import com.jhhscm.platform.event.GetCouponEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.coupon.GetCouponAction;
+import com.jhhscm.platform.fragment.coupon.GetNewCouponslist2Action;
 import com.jhhscm.platform.fragment.coupon.GetNewCouponslistAction;
 import com.jhhscm.platform.fragment.coupon.GetNewCouponslistBean;
 import com.jhhscm.platform.fragment.coupon.IsNewUserAction;
@@ -135,7 +136,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
             isNewUser();
-            getCouponslist();
+            getCouponslist2();
         }
 
         mDataBinding.msgImg.setOnClickListener(new View.OnClickListener() {
@@ -154,16 +155,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
             }
         });
 
-//        if (ConfigUtils.getPTime(getContext()) != null && ConfigUtils.getPTime(getContext()).length() > 1) {
-//            long time = DataUtil.getLongTime(ConfigUtils.getPTime(getContext())
-//                    , DataUtil.getCurDate("yyyy-MM-dd HH:mm:ss")
-//                    , "yyyy-MM-dd HH:mm:ss");
-//            if (Integer.parseInt(DataUtil.getLongToMintues(time, "yyyy-MM-dd HH:mm:ss")) >= 24) {
-//                initPermission();
-//            }
-//        } else {
         initPermission();
-//        }
     }
 
     /**
@@ -646,18 +638,18 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
     /**
      * 满减优惠券
      */
-    private void getCouponslist() {
+    private void getCouponslist2() {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         map.put("type", "0");
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getActivity(), map, "getFirstPageCouponslist 满减");
+        String sign = Sign.getSignKey(getActivity(), map, "getFirstPageCouponslist2 满减");
         NetBean netBean = new NetBean();
         netBean.setToken("");
         netBean.setSign(sign);
         netBean.setContent(content);
-        onNewRequestCall(GetNewCouponslistAction.newInstance(getContext(), netBean)
+        onNewRequestCall(GetNewCouponslist2Action.newInstance(getContext(), netBean)
                 .request(new AHttpService.IResCallback<BaseEntity<GetNewCouponslistBean>>() {
                     @Override
                     public void onCallback(int resultCode, Response<BaseEntity<GetNewCouponslistBean>> response, BaseErrorInfo baseErrorInfo) {
@@ -697,7 +689,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                     is_show = true;
                 }
                 if (is_show) {
-                    new NewCouponListDialog(getContext(), "满减优惠券", getNewCouponslistBean.getResult().getData(),
+                    new NewCouponListDialog(getContext(), "优惠券", getNewCouponslistBean.getResult().getData(),
                             new NewCouponListDialog.CallbackListener() {
                                 @Override
                                 public void clickYes() {

@@ -45,7 +45,7 @@ public class CouponListBean {
         private String status_str;
         private String add_time;
         private int status;
-        private int discount;
+        private double discount;
         private String desc;
         private boolean isSelect;
 
@@ -129,11 +129,11 @@ public class CouponListBean {
             this.status = status;
         }
 
-        public int getDiscount() {
+        public double getDiscount() {
             return discount;
         }
 
-        public void setDiscount(int discount) {
+        public void setDiscount(double discount) {
             this.discount = discount;
         }
 

@@ -149,15 +149,21 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
                 if (list != null && list.size() > 1)
                     new DropTDialog(getActivity(), "优惠券选择", "", list, new DropTDialog.CallbackDiscountListener() {
                         @Override
-                        public void clickResult(String id, String Nmae, int discount) {
+                        public void clickResult(String id, String Nmae, double discount) {
                             mDataBinding.tvCoupon.setText(Nmae);
                             mDataBinding.tvCoupon.setTag(id);
-                            double result = 0.0;
-                            result = Double.parseDouble(findOrderBean.getOrder().getOrder_price() + "")
-                                    - Double.parseDouble(discount + "");
-                            mDataBinding.tvPrice.setText(result + "");
+                            if (id.equals("")) {
+                                mDataBinding.tvPrice.setText("￥" + findOrderBean.getOrder().getOrder_price());
+                            } else {
+                                double result = 0.0;
+                                if (discount < 1) {
+                                    result = Double.parseDouble(findOrderBean.getOrder().getOrder_price()) * discount;
+                                } else {
+                                    result = Double.parseDouble(findOrderBean.getOrder().getOrder_price()) - discount;
+                                }
+                                mDataBinding.tvPrice.setText("￥" + result);
+                            }
                         }
-
                     }).show();
                 else {
                     getCouponList(false);
@@ -566,7 +572,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
             if (list.size() > 1) {
                 new DropTDialog(getActivity(), "优惠券选择", "", list, new DropTDialog.CallbackDiscountListener() {
                     @Override
-                    public void clickResult(String id, String Nmae, int discount) {
+                    public void clickResult(String id, String Nmae, double discount) {
                         mDataBinding.tvCoupon.setText(Nmae);
                         mDataBinding.tvCoupon.setTag(id);
                         double result = 0.0;

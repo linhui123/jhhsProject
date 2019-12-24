@@ -78,7 +78,7 @@ public class StoreOrderItemViewHolder extends AbsRecyclerViewHolder<FindBusGoods
                 @Override
                 public void onClick(View v) {
                     if (item.getOrder_status() == 101) {
-                        EventBusUtil.post(new OrderCancleEvent(item.getOrder_code(), ""));
+                        EventBusUtil.post(new OrderCancleEvent(item.getOrder_code(), "",2));
                     } else {
                         ToastUtil.show(itemView.getContext(), "用户已确认不可取消订单");
                     }

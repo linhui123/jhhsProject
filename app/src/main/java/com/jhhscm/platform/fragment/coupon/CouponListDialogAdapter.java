@@ -40,32 +40,38 @@ public class CouponListDialogAdapter extends RecyclerView.Adapter<CouponListDial
 
     @Override
     public CouponListDialogAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_dialog_coupon, parent, false);
-
-//        int parentHeight = parent.getHeight();
-//        parent.getWidth();
-//        ViewGroup.LayoutParams layoutParams = parent.getLayoutParams();
-//        layoutParams.height = (parentHeight / 2);
-
         return new CouponListDialogAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.setData(list.get(position));
-        if (list.get(position).isSelect()) {
-            holder.tv_receive.setTextColor(Color.parseColor("#333333"));
-            holder.tv_receive.setBackgroundResource(R.drawable.edit_bg_acc9);
+        if (list.get(position).getIsGet().equals("1")) {
+            holder.tv_receive.setTextColor(Color.parseColor("#ffffff"));
+            holder.tv_receive.setBackgroundResource(R.drawable.button_c397);
             holder.tv_receive.setText("已领取");
         } else {
             holder.tv_receive.setTextColor(Color.parseColor("#3977FE"));
             holder.tv_receive.setBackgroundResource(R.drawable.edit_bg_397);
             holder.tv_receive.setText("领取");
+            holder.tv_receive.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    list.get(position).setSelect(true);
+                    EventBusUtil.post(new GetCouponEvent(list.get(position).getCode(), list.get(position).getStartTime(), list.get(position).getEndTime(), 0));
+                    notifyDataSetChanged();
+                }
+            });
         }
         holder.tv_name.setText(list.get(position).getName());
         holder.tv_condition.setText(list.get(position).getDesc());
-        holder.tv_count.setText(list.get(position).getDiscount() + "元");
+        if (list.get(position).getDiscount() < 1) {
+            holder.tv_count.setText(list.get(position).getDiscount() * 10 + "折");
+        } else {
+            holder.tv_count.setText(list.get(position).getDiscount() + "元");
+        }
+
         if (list.get(position).getStartTime() != null
                 && list.get(position).getStartTime().length() > 10
                 && list.get(position).getEndTime() != null
@@ -73,20 +79,6 @@ public class CouponListDialogAdapter extends RecyclerView.Adapter<CouponListDial
             holder.tv_data.setText(list.get(position).getStartTime().substring(0, 10) + "至"
                     + list.get(position).getEndTime().substring(0, 10));
         }
-
-
-        holder.tv_receive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                list.get(position).setSelect(true);
-                EventBusUtil.post(new GetCouponEvent(list.get(position).getCode(), list.get(position).getStartTime(), list.get(position).getEndTime(), 0));
-//                if (myListener != null) {
-//                    myListener.onItemClick(list.get(position));
-//                }
-                notifyDataSetChanged();
-            }
-        });
-
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.jhhscm.platform.fragment.home.holder;
 
+import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -12,6 +13,7 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.views.dlflipviewpage.bean.DLGridViewBean;
 import com.jhhscm.platform.views.dlflipviewpage.utils.DLVPSetting;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,8 @@ public class HomePageBusinessViewHolder extends AbsRecyclerViewHolder<HomePageIt
         if (item.adBean3 != null && item.adBean3.getResult() != null) {
             if (item.adBean3.getResult().size() < 9) {
                 mBinding.indicator.setVisibility(View.GONE);
+            } else {
+                mBinding.indicator.setVisibility(View.VISIBLE);
             }
             dlGridViewBeans = new ArrayList<>();
             for (AdBean.ResultBean resultBean : item.adBean3.getResult()) {
@@ -56,6 +60,24 @@ public class HomePageBusinessViewHolder extends AbsRecyclerViewHolder<HomePageIt
                 }
             });
             mBinding.viewPager.setAdapter(setting.getAdapter(dlGridViewBeans));
+            mBinding.viewPager.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+                @Override
+                public void onViewAttachedToWindow(View v) {
+                    try {
+                        Field mFirstLayout = ViewPager.class.getDeclaredField("mFirstLayout");
+                        mFirstLayout.setAccessible(true);
+                        mFirstLayout.set(this, false);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                @Override
+                public void onViewDetachedFromWindow(View v) {
+
+                }
+            });
             mBinding.indicator.setViewPager(mBinding.viewPager);
         }
     }

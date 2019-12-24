@@ -205,7 +205,7 @@ public class StoreOrderFragment extends AbsFragment<FragmentStoreOrderBinding> {
     }
 
     public void onEvent(final OrderCancleEvent event) {
-        if (event.order_code != null) {
+        if (event.order_code != null && event.activity == 2) {
             new ConfirmOrderDialog(getContext(), "请确认是否取消订单", new ConfirmOrderDialog.CallbackListener() {
                 @Override
                 public void clickY() {

@@ -77,7 +77,7 @@ public class MyStoreOrderItemViewHolder extends AbsRecyclerViewHolder<FindBusOrd
             mBinding.tvFunc1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBusUtil.post(new OrderCancleEvent(item.getOrder_code(), ""));
+                    EventBusUtil.post(new OrderCancleEvent(item.getOrder_code(), "",1));
                 }
             });
 

@@ -741,12 +741,19 @@ public interface ApiService {
     @POST(ISNEWUSER)
     Call<BaseEntity<ResultBean>> isNewUser(@Body NetBean content);
 
-    //我的券列表-弹出首页券列表
+    //我的券列表-弹出首页新人券列表
     String GET_FIRSTPAGECOUPONSLIST = "v1-3/coupon/getFirstPageCouponslist";
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(GET_FIRSTPAGECOUPONSLIST)
     Call<BaseEntity<GetNewCouponslistBean>> getFirstPageCouponslist(@Body NetBean content);
+
+    //我的券列表-弹出首页满减券列表
+    String GET_FIRSTPAGECOUPONSLIST2 = "v1-3/coupon/getFirstPageCouponslist2";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GET_FIRSTPAGECOUPONSLIST2)
+    Call<BaseEntity<GetNewCouponslistBean>> getFirstPageCouponslist2(@Body NetBean content);
 
     //商户创建订单选择用户列表
     String FIND_USERGOODSOWNER = "v1-3/busorder/findUserGoodsOwner";

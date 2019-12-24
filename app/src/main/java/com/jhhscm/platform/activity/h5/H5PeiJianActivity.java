@@ -384,14 +384,14 @@ public class H5PeiJianActivity extends AbsActivity {
      */
     private void save(String user_code, String good_code, String token) {
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("user_code", user_code);
+        map.put("user_code",  ConfigUtils.getCurrentUser(getApplicationContext()).getUserCode());
         map.put("good_code", good_code);
         map.put("token", token);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(this, map, "save");
         NetBean netBean = new NetBean();
-        netBean.setToken(token);
+        netBean.setToken( ConfigUtils.getCurrentUser(getApplicationContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         showDialog();
@@ -428,14 +428,14 @@ public class H5PeiJianActivity extends AbsActivity {
      */
     private void findCollectByUserCode(String user_code, String good_code, String token) {
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("user_code", user_code);
+        map.put("user_code", ConfigUtils.getCurrentUser(getApplicationContext()).getUserCode());
         map.put("good_code", good_code);
         map.put("token", token);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(this, map, "save");
         NetBean netBean = new NetBean();
-        netBean.setToken(token);
+        netBean.setToken(ConfigUtils.getCurrentUser(getApplicationContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         showDialog();
@@ -460,7 +460,9 @@ public class H5PeiJianActivity extends AbsActivity {
                                     rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());  // left, top, right, bottom
                                     mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
                                 }
-                            } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                            }else if (response.body().getCode().equals("1003")) {
+                                ConfigUtils.removeCurrentUser(getApplicationContext());
+                            }  else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
                                 ToastUtils.show(getApplicationContext(), "网络错误");
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
@@ -475,7 +477,7 @@ public class H5PeiJianActivity extends AbsActivity {
      */
     private void addGoodsToCarts(String userCode, String token) {
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("userCode", userCode);
+        map.put("userCode", ConfigUtils.getCurrentUser(getApplicationContext()).getUserCode());
         map.put("goodsCode", goodCode);
         map.put("goodsName", good_name.trim());
         map.put("number", count);
@@ -486,7 +488,7 @@ public class H5PeiJianActivity extends AbsActivity {
 
         String sign = Sign.getSignKey(H5PeiJianActivity.this, map, "addGoodsToCarts");
         NetBean netBean = new NetBean();
-        netBean.setToken(token);
+        netBean.setToken(ConfigUtils.getCurrentUser(getApplicationContext()).getUserCode());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(AddGoodsToCartsAction.newInstance(H5PeiJianActivity.this, netBean)

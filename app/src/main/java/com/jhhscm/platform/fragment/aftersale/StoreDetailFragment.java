@@ -9,6 +9,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ import android.widget.ImageView;
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.FragmentStoreDetailBinding;
+import com.jhhscm.platform.event.FinishEvent;
+import com.jhhscm.platform.event.ForceCloseEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -27,11 +31,14 @@ import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.permission.YXPermission;
 import com.jhhscm.platform.tool.Des;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.MapUtil;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.MapSelectDialog;
+import com.jhhscm.platform.views.selector.ImageSelectorItem;
+import com.jhhscm.platform.views.selector.ImageSelectorPreviewActivity;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -63,6 +70,7 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
 
     @Override
     protected void setupViews() {
+        EventBusUtil.registerEvent(this);
         latitude = getArguments().getString("latitude");
         longitude = getArguments().getString("longitude");
         bus_code = getArguments().getString("bus_code");
@@ -243,7 +251,7 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
         if (data.getResult().get(0).getPic_url() != null) {
             String jsonString = "{\"pic_url\":" + data.getResult().get(0).getPic_url() + "}";
             android.util.Log.e("jsonString", "jsonString  " + jsonString);
-            AfterSaleViewHolder.PicBean pic = JSON.parseObject(jsonString, AfterSaleViewHolder.PicBean.class);
+            final AfterSaleViewHolder.PicBean pic = JSON.parseObject(jsonString, AfterSaleViewHolder.PicBean.class);
             if (pic != null && pic.getPic_url() != null) {
                 if (pic.getPic_url().size() > 1) {
                     mDataBinding.bgaBanner.setVisibility(View.VISIBLE);
@@ -263,18 +271,23 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
                         @Override
                         public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
                             ((ImageView) view).setScaleType(ImageView.ScaleType.FIT_XY);
-                            ImageLoader.getInstance().displayImage((String) model, (ImageView) view);
+                            ImageLoader.getInstance().displayImage(((ImageSelectorItem) model).imageUrl, (ImageView) view);
                         }
                     });
-                    final List<String> list = new ArrayList<>();
+                    final ArrayList<ImageSelectorItem> pics = new ArrayList<>();
                     for (AfterSaleViewHolder.PicBean.PicUrlBean picBean : pic.getPic_url()) {
-                        list.add(picBean.getName());
+                        ImageSelectorItem imageSelectorItem = new ImageSelectorItem();
+                        imageSelectorItem.imageUrl = picBean.getName();
+                        pics.add(imageSelectorItem);
                     }
 
-                    mDataBinding.bgaBanner.setData(list, null);
+                    mDataBinding.bgaBanner.setData(pics, null);
                     mDataBinding.bgaBanner.setDelegate(new BGABanner.Delegate() {
                         @Override
                         public void onBannerItemClick(BGABanner banner, View itemViews, @Nullable Object model, int position) {
+                            if (pics.size() > 0) {
+                                ImageSelectorPreviewActivity.startActivity(getContext(), 0, pics, position);
+                            }
                         }
                     });
                 } else {
@@ -335,5 +348,15 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
                 }
             });
         }
+    }
+
+    public void onEvent(FinishEvent event) {
+        mDataBinding.appbarlayout.setExpanded(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregisterEvent(this);
     }
 }

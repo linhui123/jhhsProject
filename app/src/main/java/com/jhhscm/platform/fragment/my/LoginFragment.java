@@ -56,7 +56,7 @@ public class LoginFragment extends AbsFragment<FragmentLoginBinding> {
         RelativeLayout.LayoutParams llParams = (RelativeLayout.LayoutParams) mDataBinding.rlTop.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.rlTop.setLayoutParams(llParams);
-
+        ConfigUtils.removeCurrentUser(getContext());
         mDataBinding.tvCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

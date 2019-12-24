@@ -18,7 +18,11 @@ public class CouponUseItemViewHolder extends AbsRecyclerViewHolder<SaleItem> {
     @Override
     protected void onBindView(final SaleItem item) {
         if (item.couponResult != null) {
-            mBinding.tvCount.setText(item.couponResult.getDiscount() + "元");
+            if (item.couponResult.getDiscount() < 1) {
+                mBinding.tvCount.setText(item.couponResult.getDiscount() * 10 + "折");
+            } else {
+                mBinding.tvCount.setText(item.couponResult.getDiscount() + "元");
+            }
             mBinding.tvName.setText(item.couponResult.getName());
             String data = "";
             if (item.couponResult.getStart_time() != null) {

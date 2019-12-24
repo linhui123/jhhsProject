@@ -48,10 +48,13 @@ public class GetNewCouponslistBean {
              * addTime : 2019-10-30 15:17:38
              * updateTime : 2019-10-30 15:17:38
              * deleted : 0
+             * "isGetAll":"0","isGet":"1"
              */
 
             private int id;
             private String code;
+            private String isGetAll;
+            private String isGet;
             private int type;
             private String name;
             private String startTime;
@@ -68,6 +71,22 @@ public class GetNewCouponslistBean {
             private String updateTime;
             private int deleted;
             private boolean isSelect;
+
+            public String getIsGetAll() {
+                return isGetAll;
+            }
+
+            public void setIsGetAll(String isGetAll) {
+                this.isGetAll = isGetAll;
+            }
+
+            public String getIsGet() {
+                return isGet;
+            }
+
+            public void setIsGet(String isGet) {
+                this.isGet = isGet;
+            }
 
             public boolean isSelect() {
                 return isSelect;
