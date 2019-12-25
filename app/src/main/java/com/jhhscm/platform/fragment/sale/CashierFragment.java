@@ -20,10 +20,12 @@ import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.OrderDetailActivity;
+import com.jhhscm.platform.activity.SelectCouponActivity;
 import com.jhhscm.platform.aliapi.AliPrePayAction;
 import com.jhhscm.platform.aliapi.AliPrePayBean;
 import com.jhhscm.platform.aliapi.OrderInfoUtil2_0;
 import com.jhhscm.platform.databinding.FragmentCashierBinding;
+import com.jhhscm.platform.event.SelectCouponEvent;
 import com.jhhscm.platform.event.WXResultEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
@@ -75,6 +77,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
     private AliPrePayBean aliPrePayBean;
     private FindOrderBean findOrderBean;
     private List<GetComboBoxBean.ResultBean> list;
+    private String selectCode = "";
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -146,36 +149,15 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
         mDataBinding.tvCoupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (list != null && list.size() > 1)
-                    new DropTDialog(getActivity(), "优惠券选择", "", list, new DropTDialog.CallbackDiscountListener() {
-                        @Override
-                        public void clickResult(String id, String Nmae, double discount) {
-                            mDataBinding.tvCoupon.setText(Nmae);
-                            mDataBinding.tvCoupon.setTag(id);
-                            if (id.equals("")) {
-                                mDataBinding.tvPrice.setText("￥" + findOrderBean.getOrder().getOrder_price());
-                            } else {
-                                double result = 0.0;
-                                if (discount < 1) {
-                                    result = Double.parseDouble(findOrderBean.getOrder().getOrder_price()) * discount;
-                                } else {
-                                    result = Double.parseDouble(findOrderBean.getOrder().getOrder_price()) - discount;
-                                }
-                                mDataBinding.tvPrice.setText("￥" + result);
-                            }
-                        }
-                    }).show();
-                else {
-                    getCouponList(false);
+                if (list != null && list.size() > 0) {
+                    SelectCouponActivity.start(getContext(), createOrderResultBean.getData().getOrderCode(), selectCode);
                 }
             }
         });
 
         if (createOrderResultBean != null && createOrderResultBean.getData().getOrderCode() != null) {
-//            mDataBinding.tvPrice.setText(createOrderResultBean.getData().getOrderPrice() + "");
             findOrder(false);
         }
-
 
         type = ALI_PAY_FLAG;
         mDataBinding.rlAli.setOnClickListener(new View.OnClickListener() {
@@ -205,7 +187,6 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
                 } else if (type == WX_PAY_FLAG) {
                     MobclickAgent.onEvent(getContext(), "pay_wx");
                     wxPrePay();
-
                 }
             }
         });
@@ -231,6 +212,28 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
 //        } else {
 //            showAlert(getContext(), "微信支付异常");
 //        }
+    }
+
+    public void onEvent(SelectCouponEvent event) {
+        if (event.getResultBean() != null && event.getType() == 1) {
+            if (event.getResultBean().getCoupon_code() != null) {
+                selectCode = event.getResultBean().getCoupon_code();
+                mDataBinding.tvCoupon.setText(event.getResultBean().getName());
+                mDataBinding.tvCoupon.setTag(event.getResultBean().getCoupon_code());
+                double result = 0.0;
+                if (event.getResultBean().getDiscount() < 1) {
+                    result = Double.parseDouble(findOrderBean.getOrder().getOrder_price()) * event.getResultBean().getDiscount();
+                } else {
+                    result = Double.parseDouble(findOrderBean.getOrder().getOrder_price()) - event.getResultBean().getDiscount();
+                }
+                mDataBinding.tvPrice.setText(result + "");
+            } else {
+                selectCode = "";
+                mDataBinding.tvCoupon.setText("不使用优惠券");
+                mDataBinding.tvCoupon.setTag("");
+                mDataBinding.tvPrice.setText(findOrderBean.getOrder().getOrder_price());
+            }
+        }
     }
 
     /**
@@ -518,7 +521,7 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
     }
 
     /**
-     * 获取优惠券列表
+     * 获取可用优惠券列表
      */
     private void getCouponList(final boolean isFinsh) {
         showDialog();
@@ -558,7 +561,6 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
 
     private void doSuccessResponse(final CouponListBean couponListBean, final boolean isfinsh) {
         list = new ArrayList<>();
-        list.add(new GetComboBoxBean.ResultBean("", "不使用优惠券", 0));
         if (couponListBean != null && couponListBean.getResult() != null && couponListBean.getResult().size() > 0) {
             for (CouponListBean.ResultBean resultBean : couponListBean.getResult()) {
                 if (resultBean.getStatus() == 0) {
@@ -566,27 +568,29 @@ public class CashierFragment extends AbsFragment<FragmentCashierBinding> {
                     list.add(resultBean1);
                 }
             }
+        } else {
+            mDataBinding.tvCoupon.setText("暂无可用优惠券");
         }
 
-        if (!isfinsh) {
-            if (list.size() > 1) {
-                new DropTDialog(getActivity(), "优惠券选择", "", list, new DropTDialog.CallbackDiscountListener() {
-                    @Override
-                    public void clickResult(String id, String Nmae, double discount) {
-                        mDataBinding.tvCoupon.setText(Nmae);
-                        mDataBinding.tvCoupon.setTag(id);
-                        double result = 0.0;
-                        result = Double.parseDouble(findOrderBean.getOrder().getOrder_price() + "")
-                                - Double.parseDouble(discount + "");
-                        mDataBinding.tvPrice.setText(result + "");
-                    }
-
-                }).show();
-            } else {
-                mDataBinding.tvCoupon.setText("暂无可用优惠券");
-                mDataBinding.tvCoupon.setTag("");
-                ToastUtil.show(getContext(), "暂无可用优惠券");
-            }
-        }
+//        if (!isfinsh) {
+//            if (list.size() > 1) {
+//                new DropTDialog(getActivity(), "优惠券选择", "", list, new DropTDialog.CallbackDiscountListener() {
+//                    @Override
+//                    public void clickResult(String id, String Nmae, double discount) {
+//                        mDataBinding.tvCoupon.setText(Nmae);
+//                        mDataBinding.tvCoupon.setTag(id);
+//                        double result = 0.0;
+//                        result = Double.parseDouble(findOrderBean.getOrder().getOrder_price() + "")
+//                                - Double.parseDouble(discount + "");
+//                        mDataBinding.tvPrice.setText(result + "");
+//                    }
+//
+//                }).show();
+//            } else {
+//                mDataBinding.tvCoupon.setText("暂无可用优惠券");
+//                mDataBinding.tvCoupon.setTag("");
+//                ToastUtil.show(getContext(), "暂无可用优惠券");
+//            }
+//        }
     }
 }

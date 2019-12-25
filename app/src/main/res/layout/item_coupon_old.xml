@@ -47,33 +47,36 @@
             android:layout_marginLeft="@dimen/padding_15"
             android:gravity="center">
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="挖矿来满减券"
-                android:textColor="@color/aa"
-                android:textSize="@dimen/text_size_16"
-                android:textStyle="bold" />
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/tv_type"
+                android:paddingRight="5dp">
 
-            <TextView
-                android:id="@+id/tv_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_name"
-                android:layout_marginTop="@dimen/padding_15"
-                android:text="2019.10.08 至 2019.10.30"
-                android:textColor="@color/aa"
-                android:textSize="@dimen/text_size_14" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="挖矿来满减券"
+                    android:textColor="@color/aa"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="bold" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tv_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_name"
+                    android:layout_marginTop="@dimen/padding_15"
+                    android:text="2019.10.08 至 2019.10.30"
+                    android:textColor="@color/aa"
+                    android:textSize="@dimen/text_size_14" />
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="@dimen/dp_1"
-                android:layout_height="match_parent"
+                android:layout_height="90dp"
                 android:layout_toLeftOf="@+id/tv_type"
                 android:background="@drawable/line_stroke_v" />
 

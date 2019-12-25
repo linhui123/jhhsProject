@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSON;
 import com.alipay.sdk.app.PayTask;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.SelectCouponActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.aliapi.AliPrePayAction;
@@ -33,6 +34,7 @@ import com.jhhscm.platform.aliapi.PayResult;
 import com.jhhscm.platform.databinding.DialogPayWithCouponBinding;
 import com.jhhscm.platform.databinding.ItemLocationBinding;
 import com.jhhscm.platform.event.RefreshEvent;
+import com.jhhscm.platform.event.SelectCouponEvent;
 import com.jhhscm.platform.event.WXResultEvent;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.coupon.CouponListBean;
@@ -69,6 +71,7 @@ public class PayWithCouponDialog extends BaseDialog {
     private CallbackListener mListener;
     private Activity activity;
     private String orderCode = "";
+    private String selectCoupon = "";
     private String price = "";
     private String coupon_price = "";
     private List<GetComboBoxBean.ResultBean> list;
@@ -216,10 +219,13 @@ public class PayWithCouponDialog extends BaseDialog {
         mDataBinding.coupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mDataBinding.recyvleview.getVisibility() == View.GONE) {
-                    mDataBinding.recyvleview.setVisibility(View.VISIBLE);
-                } else {
-                    mDataBinding.recyvleview.setVisibility(View.GONE);
+//                if (mDataBinding.recyvleview.getVisibility() == View.GONE) {
+//                    mDataBinding.recyvleview.setVisibility(View.VISIBLE);
+//                } else {
+//                    mDataBinding.recyvleview.setVisibility(View.GONE);
+//                }
+                if (list != null && list.size() > 0) {
+                    SelectCouponActivity.start(getContext(), orderCode, selectCoupon);
                 }
             }
         });
@@ -474,6 +480,28 @@ public class PayWithCouponDialog extends BaseDialog {
         }
         EventBusUtil.post(new RefreshEvent());
         dismiss();
+    }
+
+    public void onEvent(SelectCouponEvent event) {
+        if (event.getResultBean() != null && event.getType() == 1) {
+            if (event.getResultBean().getCoupon_code() != null) {
+                selectCoupon = event.getResultBean().getCoupon_code();
+                mDataBinding.coupon.setText(event.getResultBean().getName());
+                mDataBinding.coupon.setTag(event.getResultBean().getCoupon_code());
+                double result = 0.0;
+                if (event.getResultBean().getDiscount() < 1) {
+                    result = Double.parseDouble(price) * event.getResultBean().getDiscount();
+                } else {
+                    result = Double.parseDouble(price) - event.getResultBean().getDiscount();
+                }
+                mDataBinding.num.setText(result + "");
+            } else {
+                selectCoupon = "";
+                mDataBinding.coupon.setText("不使用优惠券");
+                mDataBinding.coupon.setTag("");
+                mDataBinding.num.setText(price);
+            }
+        }
     }
 
     private class InnerAdapter extends AbsRecyclerViewAdapter<GetComboBoxBean.ResultBean> {

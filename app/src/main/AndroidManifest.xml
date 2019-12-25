@@ -57,7 +57,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme.TranslucentStatusBar"
         tools:replace="android:label">
-        <activity android:name=".activity.SubmitLabourActivity"></activity>
+        <activity android:name=".activity.SelectCouponActivity"></activity>
+        <activity android:name=".activity.SubmitLabourActivity" />
         <activity android:name=".activity.BrandModelActivity" />
         <activity android:name=".activity.StoreOrderSubmit3Activity" />
         <activity android:name=".activity.IntegralActivity" />
