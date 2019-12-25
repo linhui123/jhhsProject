@@ -15,7 +15,7 @@
             android:background="@mipmap/ic_dialog_coupon_2"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingTop="85dp">
+            android:paddingTop="75dp">
 
             <TextView
                 android:id="@+id/title"
@@ -29,9 +29,10 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="185dp"
+                android:layout_height="190dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/dp_5"
+                android:fadeScrollbars="false"
                 android:scrollbarStyle="outsideOverlay"
                 android:scrollbars="vertical">
 

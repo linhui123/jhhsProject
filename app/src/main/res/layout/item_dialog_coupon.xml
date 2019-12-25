@@ -5,10 +5,10 @@
         android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/padding_10"
-        android:layout_marginRight="@dimen/padding_10"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginRight="@dimen/dp_5"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/bg_white_shadow"
+        android:background="@drawable/bg_white"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -16,7 +16,7 @@
             android:layout_height="75dp"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/dp_5"
-            android:layout_weight="1"
+            android:layout_weight="0.9"
             android:gravity="center_vertical">
 
             <TextView
@@ -39,10 +39,10 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/padding_10"
                 android:ellipsize="end"
-                android:singleLine="true"
+                android:maxLines="2"
                 android:text="满--元可用"
                 android:textColor="@color/acc3"
-                android:textSize="@dimen/text_size_14" />
+                android:textSize="@dimen/text_size_12" />
         </RelativeLayout>
 
         <TextView
@@ -65,15 +65,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginRight="@dimen/padding_10"
+                android:layout_marginRight="@dimen/dp_5"
                 android:layout_toLeftOf="@+id/tv_receive"
                 android:ellipsize="end"
+                android:maxLines="2"
                 android:paddingTop="@dimen/dp_3"
                 android:paddingBottom="@dimen/dp_3"
-                android:singleLine="true"
                 android:text="挖矿来满减券"
                 android:textColor="@color/acc3"
-                android:textSize="@dimen/text_size_16"
+                android:textSize="@dimen/sp_14"
                 android:textStyle="bold" />
 
             <TextView
@@ -85,10 +85,11 @@
                 android:paddingLeft="@dimen/dp_5"
                 android:paddingTop="@dimen/dp_3"
                 android:paddingRight="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_3"
                 android:paddingBottom="@dimen/dp_3"
                 android:text="领取"
                 android:textColor="@color/a397"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="@dimen/text_size_12" />
 
 
             <TextView
@@ -96,12 +97,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_name"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="-- 至 --"
                 android:textColor="@color/acc3"
-                android:textSize="@dimen/text_size_14" />
+                android:textSize="@dimen/text_size_12" />
         </RelativeLayout>
     </LinearLayout>
 </layout>

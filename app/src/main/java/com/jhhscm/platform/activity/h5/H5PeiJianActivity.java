@@ -74,6 +74,7 @@ public class H5PeiJianActivity extends AbsActivity {
     private String bus_code;
     private String bus_name;
     private String price;
+    private String num;//库存
 
     private int type = 0;
     private String count = "1";
@@ -87,7 +88,7 @@ public class H5PeiJianActivity extends AbsActivity {
     /**
      * 配件详情-购物车需要图片地址
      */
-    public static void start(Context context, String url, String title, String bus_code, String bus_name, String good_name, String good_code, String pic_url, String price, int type) {
+    public static void start(Context context, String url, String title, String bus_code, String bus_name, String good_name, String good_code, String pic_url, String price, String num, int type) {
         Intent intent = new Intent(context, H5PeiJianActivity.class);
         intent.putExtra("url", url);
         intent.putExtra("title", title);
@@ -97,6 +98,7 @@ public class H5PeiJianActivity extends AbsActivity {
         intent.putExtra("good_name", good_name);
         intent.putExtra("bus_code", bus_code);
         intent.putExtra("bus_name", bus_name);
+        intent.putExtra("num", num);
         intent.putExtra("price", price);
         context.startActivity(intent);
     }
@@ -226,7 +228,20 @@ public class H5PeiJianActivity extends AbsActivity {
         if (getIntent().hasExtra("price")) {
             price = getIntent().getStringExtra("price");
         }
-
+        if (getIntent().hasExtra("num")) {
+            num = getIntent().getStringExtra("num");
+        }
+        if (num != null && num.length() > 0) {
+            Log.e("num", "num " + Integer.parseInt(num));
+            if (Integer.parseInt(num) <=0) {
+                mDataBinding.tvJiaru.setBackgroundResource(R.drawable.edit_bg_acc9);
+                mDataBinding.tvJiaru.setTextColor(getResources().getColor(R.color.acc9));
+                mDataBinding.tvJiaru.setEnabled(false);
+                mDataBinding.tvGoumai.setBackgroundResource(R.drawable.edit_bg_acc9);
+                mDataBinding.tvGoumai.setTextColor(getResources().getColor(R.color.acc9));
+                mDataBinding.tvGoumai.setEnabled(false);
+            }
+        }
         findCategoryDetailBean = new FindCategoryDetailBean();
 
         //判断是否收藏
@@ -384,14 +399,14 @@ public class H5PeiJianActivity extends AbsActivity {
      */
     private void save(String user_code, String good_code, String token) {
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("user_code",  ConfigUtils.getCurrentUser(getApplicationContext()).getUserCode());
+        map.put("user_code", ConfigUtils.getCurrentUser(getApplicationContext()).getUserCode());
         map.put("good_code", good_code);
         map.put("token", token);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(this, map, "save");
         NetBean netBean = new NetBean();
-        netBean.setToken( ConfigUtils.getCurrentUser(getApplicationContext()).getToken());
+        netBean.setToken(ConfigUtils.getCurrentUser(getApplicationContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         showDialog();
@@ -460,9 +475,9 @@ public class H5PeiJianActivity extends AbsActivity {
                                     rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());  // left, top, right, bottom
                                     mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
                                 }
-                            }else if (response.body().getCode().equals("1003")) {
+                            } else if (response.body().getCode().equals("1003")) {
                                 ConfigUtils.removeCurrentUser(getApplicationContext());
-                            }  else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                            } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
                                 ToastUtils.show(getApplicationContext(), "网络错误");
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());

@@ -138,6 +138,7 @@ public class FindCategoryBean implements Serializable {
     public static class DataBean {
         /**
          * sale_num : 0
+         * num
          * counter_price : 0
          * original_price原价
          * name : 履带轮子01
@@ -151,10 +152,19 @@ public class FindCategoryBean implements Serializable {
         private String counter_price;
         private String original_price;
         private String name;
+        private String num;
         private String id;
         private String pic_url;
         private String bus_name;
         private String bus_code;
+
+        public String getNum() {
+            return num;
+        }
+
+        public void setNum(String num) {
+            this.num = num;
+        }
 
         public String getOriginal_price() {
             return original_price;

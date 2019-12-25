@@ -60,24 +60,23 @@ public class HomePageBusinessViewHolder extends AbsRecyclerViewHolder<HomePageIt
                 }
             });
             mBinding.viewPager.setAdapter(setting.getAdapter(dlGridViewBeans));
-            mBinding.viewPager.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-                @Override
-                public void onViewAttachedToWindow(View v) {
-                    try {
-                        Field mFirstLayout = ViewPager.class.getDeclaredField("mFirstLayout");
-                        mFirstLayout.setAccessible(true);
-                        mFirstLayout.set(this, false);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                @Override
-                public void onViewDetachedFromWindow(View v) {
-
-                }
-            });
+//            mBinding.viewPager.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+//                @Override
+//                public void onViewAttachedToWindow(View v) {
+//                    try {
+//                        Field mFirstLayout = ViewPager.class.getDeclaredField("mFirstLayout");
+//                        mFirstLayout.setAccessible(true);
+//                        mFirstLayout.set(mBinding.viewPager, false);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                @Override
+//                public void onViewDetachedFromWindow(View v) {
+//
+//                }
+//            });
             mBinding.indicator.setViewPager(mBinding.viewPager);
         }
     }

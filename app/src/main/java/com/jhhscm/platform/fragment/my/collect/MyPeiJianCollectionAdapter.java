@@ -89,7 +89,7 @@ public class MyPeiJianCollectionAdapter extends RecyclerView.Adapter<MyPeiJianCo
                 String url = UrlUtils.PJXQ + "&good_code=" + data.get(position).getGood_code();
                 H5PeiJianActivity.start(context, url, "配件详情","","",
                         data.get(position).getName(), data.get(position).getGood_code(),
-                        data.get(position).getPic_url(), data.get(position).getCounter_price(), 3);
+                        data.get(position).getPic_url(), data.get(position).getCounter_price(),data.get(position).getNum(), 3);
             }
         });
     }

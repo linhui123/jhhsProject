@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.CouponCenterActivity;
+import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.MsgActivity;
 import com.jhhscm.platform.activity.SearchActivity;
 import com.jhhscm.platform.databinding.FragmentHomePageBinding;
@@ -223,7 +224,12 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         mDataBinding.coupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CouponCenterActivity.start(getActivity());
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    CouponCenterActivity.start(getContext());
+                } else {
+                    LoginActivity.start(getContext());
+                }
             }
         });
     }
@@ -606,7 +612,12 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             new NewCouponListDialog.CallbackListener() {
                                 @Override
                                 public void clickYes() {
-                                    CouponCenterActivity.start(getContext());
+                                    if (ConfigUtils.getCurrentUser(getContext()) != null
+                                            && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                                        CouponCenterActivity.start(getContext());
+                                    } else {
+                                        LoginActivity.start(getContext());
+                                    }
                                 }
                             }).show();
                 }
@@ -618,7 +629,12 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             new NewCouponDialog.CallbackListener() {
                                 @Override
                                 public void clickYes() {
-                                    CouponCenterActivity.start(getContext());
+                                    if (ConfigUtils.getCurrentUser(getContext()) != null
+                                            && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                                        CouponCenterActivity.start(getContext());
+                                    } else {
+                                        LoginActivity.start(getContext());
+                                    }
                                 }
                             }).show();
                 } else {
@@ -627,7 +643,12 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             new NewCouponDialog.CallbackListener() {
                                 @Override
                                 public void clickYes() {
-                                    CouponCenterActivity.start(getContext());
+                                    if (ConfigUtils.getCurrentUser(getContext()) != null
+                                            && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                                        CouponCenterActivity.start(getContext());
+                                    } else {
+                                        LoginActivity.start(getContext());
+                                    }
                                 }
                             }).show();
                 }
@@ -693,7 +714,13 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             new NewCouponListDialog.CallbackListener() {
                                 @Override
                                 public void clickYes() {
-                                    CouponCenterActivity.start(getContext());
+                                    if (ConfigUtils.getCurrentUser(getContext()) != null
+                                            && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                                        CouponCenterActivity.start(getContext());
+                                    } else {
+                                        LoginActivity.start(getContext());
+                                    }
+
                                 }
                             }).show();
                 }

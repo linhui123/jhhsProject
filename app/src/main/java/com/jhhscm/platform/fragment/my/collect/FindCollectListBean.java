@@ -165,6 +165,15 @@ public class FindCollectListBean {
         private String sale_num;
         private String counter_price;
         private String retail_price;
+        private String num;
+
+        public String getNum() {
+            return num;
+        }
+
+        public void setNum(String num) {
+            this.num = num;
+        }
 
         public String getRetail_price() {
             return retail_price;
