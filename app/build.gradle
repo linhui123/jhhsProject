@@ -34,8 +34,8 @@ android {
         applicationId "com.jhhscm.platform"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 8
-        versionName "V1.1.2"
+        versionCode 10
+        versionName "V1.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
         multiDexEnabled true
