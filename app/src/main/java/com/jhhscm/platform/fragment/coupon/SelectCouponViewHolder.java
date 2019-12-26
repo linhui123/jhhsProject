@@ -5,15 +5,8 @@ import android.view.View;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemSelectCouponBinding;
-import com.jhhscm.platform.databinding.ItemStoreSelectDeviceBinding;
 import com.jhhscm.platform.event.SelectCouponEvent;
-import com.jhhscm.platform.event.StoreUserEvent;
-import com.jhhscm.platform.fragment.my.store.action.FindUserGoodsOwnerBean;
 import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.views.selector.ImageSelectorItem;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
-import java.util.ArrayList;
 
 public class SelectCouponViewHolder extends AbsRecyclerViewHolder<CouponListBean.ResultBean> {
 

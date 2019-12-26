@@ -6,16 +6,16 @@
         android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingLeft="@dimen/padding_15"
-        android:paddingTop="@dimen/padding_10"
-        android:paddingRight="@dimen/padding_15"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginRight="@dimen/dp_5"
+        android:background="@drawable/bg_white"
         android:paddingBottom="@dimen/padding_10">
 
         <com.jhhscm.platform.views.OvalImageView
             android:id="@+id/im"
-            android:layout_width="128dp"
-            android:layout_height="95dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:scaleType="fitXY"
             android:src="@mipmap/ic_site"
             roundiv:left_bottom_radius1="5dp"
@@ -32,9 +32,11 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:layout_marginLeft="@dimen/padding_10"
-            android:layout_toRightOf="@+id/im"
-            android:orientation="vertical">
+            android:layout_below="@+id/im"
+            android:layout_marginTop="@dimen/dp_5"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/padding_10"
+            android:paddingRight="@dimen/padding_10">
 
             <TextView
                 android:id="@+id/tv_1"
@@ -70,7 +72,6 @@
                 android:text="已售出 0件"
                 android:textColor="@color/acc9"
                 android:textSize="@dimen/text_size_12" />
-
 
             <TextView
                 android:id="@+id/tv_store"

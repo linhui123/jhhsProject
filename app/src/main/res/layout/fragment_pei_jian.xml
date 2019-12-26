@@ -64,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@mipmap/ic_point1"
-                    android:drawablePadding="@dimen/padding_10"
+                    android:drawablePadding="@dimen/dp_5"
                     android:singleLine="true"
                     android:text="综合"
                     android:textColor="@color/acc3"
@@ -82,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@mipmap/ic_point1"
-                    android:drawablePadding="@dimen/padding_10"
+                    android:drawablePadding="@dimen/dp_5"
                     android:singleLine="true"
                     android:text="全部"
                     android:textColor="@color/acc3"
@@ -100,7 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@mipmap/ic_point1"
-                    android:drawablePadding="@dimen/padding_10"
+                    android:drawablePadding="@dimen/dp_5"
                     android:singleLine="true"
                     android:text="品牌"
                     android:textColor="@color/acc3"
@@ -118,12 +118,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@mipmap/ic_point1"
-                    android:drawablePadding="@dimen/padding_10"
+                    android:drawablePadding="@dimen/dp_5"
                     android:singleLine="true"
                     android:text="适合机型"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/show_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/padding_10"
+                android:layout_marginRight="@dimen/padding_15"
+                android:src="@mipmap/ic_peijian_list1" />
         </LinearLayout>
 
         <TextView
@@ -138,7 +147,18 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/rl_select"
             android:layout_marginTop="@dimen/dp_1"
-            android:background="@color/white"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+            android:background="@color/cf5"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
+
+        <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
+            android:id="@+id/rv_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_select"
+            android:visibility="gone"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_1"
+            android:background="@color/cf5"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
 
         <LinearLayout
             android:id="@+id/ll_xiala"

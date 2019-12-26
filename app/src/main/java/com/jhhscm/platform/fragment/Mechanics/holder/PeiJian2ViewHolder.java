@@ -1,34 +1,35 @@
 package com.jhhscm.platform.fragment.Mechanics.holder;
 
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.StoreDetailActivity;
 import com.jhhscm.platform.activity.h5.H5PeiJianActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.ItemMechanicsPeijianBinding;
+import com.jhhscm.platform.databinding.ItemMechanicsPeijian2Binding;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
+import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class PeiJianViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.DataBean> {
+public class PeiJian2ViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.DataBean> {
 
-    private ItemMechanicsPeijianBinding mBinding;
+    private ItemMechanicsPeijian2Binding mBinding;
     private boolean type = true;
 
-    public PeiJianViewHolder(View itemView) {
+    public PeiJian2ViewHolder(View itemView) {
         super(itemView);
-        mBinding = ItemMechanicsPeijianBinding.bind(itemView);
-    }
-
-    public PeiJianViewHolder(View itemView, boolean type) {
-        super(itemView);
-        this.type = type;
-        mBinding = ItemMechanicsPeijianBinding.bind(itemView);
+        mBinding = ItemMechanicsPeijian2Binding.bind(itemView);
     }
 
     @Override
     protected void onBindView(final FindCategoryBean.DataBean item) {
+
+        ViewGroup.LayoutParams para = mBinding.im.getLayoutParams();
+        para.height = (int) Math.ceil(DisplayUtils.getDeviceWidth(itemView.getContext()) * 0.35);
+        mBinding.im.setLayoutParams(para);
+
         if (item.getPic_url() != null) {
             ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.im);
         } else {
@@ -65,4 +66,3 @@ public class PeiJianViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.Da
         });
     }
 }
-

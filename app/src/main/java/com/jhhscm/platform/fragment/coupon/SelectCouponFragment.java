@@ -2,7 +2,6 @@ package com.jhhscm.platform.fragment.coupon;
 
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,17 +15,9 @@ import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentSelectCouponBinding;
-import com.jhhscm.platform.databinding.FragmentSelectDeviceBinding;
-import com.jhhscm.platform.event.FinishEvent;
 import com.jhhscm.platform.event.SelectCouponEvent;
-import com.jhhscm.platform.event.StoreDeviceEvent;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.my.store.SelectDeviceFragment;
-import com.jhhscm.platform.fragment.my.store.action.FindUserGoodsOwnerAction;
-import com.jhhscm.platform.fragment.my.store.action.FindUserGoodsOwnerBean;
 import com.jhhscm.platform.fragment.my.store.action.PayUseListAction;
-import com.jhhscm.platform.fragment.my.store.viewholder.MyDeviceSelectItemViewHolder;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -38,12 +29,8 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.views.dialog.DropTDialog;
-import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 

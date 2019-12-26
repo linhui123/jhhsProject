@@ -137,15 +137,7 @@ public class MechanicsH5Activity extends AbsActivity {
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_mechanics_h5);
         setupToolbar();
         setupContentView();
-        setupButtom();
-//        checkDeviceHasNavigationBar(getApplicationContext());
-    }
 
-    private void setupButtom() {
-        if (ConfigUtils.getCurrentUser(getApplicationContext()) != null
-                && ConfigUtils.getCurrentUser(getApplicationContext()).getMobile() != null) {
-            userSession = ConfigUtils.getCurrentUser(getApplicationContext());
-        }
         if (getIntent().hasExtra("type")) {
             type = getIntent().getIntExtra("type", 0);
         }
@@ -173,13 +165,25 @@ public class MechanicsH5Activity extends AbsActivity {
             mDataBinding.tvShoucang.setVisibility(View.VISIBLE);
             mDataBinding.tvXujia.setVisibility(View.VISIBLE);
         }
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ConfigUtils.getCurrentUser(getApplicationContext()) != null
+                && ConfigUtils.getCurrentUser(getApplicationContext()).getMobile() != null) {
+            userSession = ConfigUtils.getCurrentUser(getApplicationContext());
+        }
+        setupButtom();
+    }
+
+    private void setupButtom() {
         //判断是否收藏
         if (userSession != null
                 && userSession.getUserCode() != null
                 && userSession.getToken() != null
                 && goodCode != null && goodCode.length() > 0) {
-            findCollectByUserCode(userSession.getUserCode(), goodCode, userSession.getToken());
+            findCollectByUserCode(goodCode);
         }
 
         //收藏
@@ -1045,16 +1049,16 @@ public class MechanicsH5Activity extends AbsActivity {
     /**
      * 判断是否收藏
      */
-    private void findCollectByUserCode(String user_code, String good_code, String token) {
+    private void findCollectByUserCode(String good_code) {
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("user_code", user_code);
+        map.put("user_code", ConfigUtils.getCurrentUser(getApplicationContext()).getUserCode());
         map.put("good_code", good_code);
-        map.put("token", token);
+        map.put("token", ConfigUtils.getCurrentUser(getApplicationContext()).getToken());
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(this, map, "save");
         NetBean netBean = new NetBean();
-        netBean.setToken(token);
+        netBean.setToken(ConfigUtils.getCurrentUser(getApplicationContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         showDialog();

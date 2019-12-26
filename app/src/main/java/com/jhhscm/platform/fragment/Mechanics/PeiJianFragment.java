@@ -29,6 +29,7 @@ import com.jhhscm.platform.fragment.Mechanics.bean.BrandModelBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
+import com.jhhscm.platform.fragment.Mechanics.holder.PeiJian2ViewHolder;
 import com.jhhscm.platform.fragment.Mechanics.holder.PeiJianViewHolder;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.FindCategoryHomePageAction;
@@ -57,12 +58,14 @@ import retrofit2.Response;
 
 public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
     private InnerAdapter mAdapter;
+    private Inner2Adapter mAdapter2;
     private SelectedAdapter selectedAdapter;
     private List<GetComboBoxBean.ResultBean> resultBeanList;
     private int mShowCount = 10;
     private int mCurrentPage = 1;
     private final int START_PAGE = mCurrentPage;
 
+    private boolean showType = false;//false 单列；ture 双列
     private String sort_type = "";//排序
     private String category_id = "";//类型
     private String brand_id = "";//品牌
@@ -110,8 +113,61 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
             }
         });
 
-        initDrop();
+        mDataBinding.rv2.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        mAdapter2 = new Inner2Adapter(getContext());
+        mDataBinding.rv2.setAdapter(mAdapter2);
+        mDataBinding.rv2.autoRefresh();
+        mDataBinding.rv2.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
+            @Override
+            public void onRefresh(RecyclerView view) {
+                findCategory(true);
+            }
+
+            @Override
+            public void onLoadMore(RecyclerView view) {
+                findCategory(false);
+            }
+        });
         resultBeanList = new ArrayList<>();
+        initDrop();
+
+
+        mDataBinding.tvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
+        mDataBinding.imSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchActivity.start(getContext(), 2);
+            }
+        });
+
+        mDataBinding.showType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (showType) {
+                    showType = false;
+                    mDataBinding.rv2.setVisibility(View.GONE);
+                    mDataBinding.wrvRecycler.setVisibility(View.VISIBLE);
+                    mDataBinding.showType.setImageResource(R.mipmap.ic_peijian_list1);
+                } else {
+                    showType = true;
+                    mDataBinding.rv2.setVisibility(View.VISIBLE);
+                    mDataBinding.wrvRecycler.setVisibility(View.GONE);
+                    mDataBinding.showType.setImageResource(R.mipmap.ic_peijian_list2);
+                }
+            }
+        });
+    }
+
+    /**
+     * 初始化下拉
+     */
+    private void initDrop() {
         mDataBinding.llOhter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,6 +214,7 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
         mDataBinding.tvPinpai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                findBrand();//品牌
                 if (mDataBinding.llXiala.getVisibility() == View.GONE) {
                     mDataBinding.llXiala.setVisibility(View.VISIBLE);
                     mDataBinding.llPinpai.setVisibility(View.VISIBLE);
@@ -190,20 +247,19 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
                 }
             }
         });
-
-        mDataBinding.tvBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
-
-        mDataBinding.imSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SearchActivity.start(getContext(), 2);
-            }
-        });
+        GetComboBoxBean getComboBoxBean = new GetComboBoxBean();
+        List<GetComboBoxBean.ResultBean> resultBeans = new ArrayList<>();
+        GetComboBoxBean.ResultBean resultBean1 =
+                new GetComboBoxBean.ResultBean("1", "价格降序 ");
+        GetComboBoxBean.ResultBean resultBean2 =
+                new GetComboBoxBean.ResultBean("2", "价格升序 ");
+        resultBeans.add(resultBean1);
+        resultBeans.add(resultBean2);
+        getComboBoxBean.setResult(resultBeans);
+        zonghe(getComboBoxBean);
+        findBrand();//品牌
+        findCategoryHomePage();//类型
+        brandModel();//机型
     }
 
     /**
@@ -261,10 +317,12 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
         this.findCategoryBean = categoryBean;
         if (refresh) {
             mAdapter.setData(categoryBean.getData());
+            mAdapter2.setData(categoryBean.getData());
         } else {
             mAdapter.append(categoryBean.getData());
+            mAdapter2.append(categoryBean.getData());
         }
-        mDataBinding.wrvRecycler.getAdapter().notifyDataSetChanged();
+        mDataBinding.rv2.loadComplete(mAdapter.getItemCount() == 0, ((float) findCategoryBean.getPage().getTotal() / (float) findCategoryBean.getPage().getPageSize()) > mCurrentPage);
         mDataBinding.wrvRecycler.loadComplete(mAdapter.getItemCount() == 0, ((float) findCategoryBean.getPage().getTotal() / (float) findCategoryBean.getPage().getPageSize()) > mCurrentPage);
     }
 
@@ -279,25 +337,17 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
         }
     }
 
-    /**
-     * 初始化下拉
-     */
-    private void initDrop() {
-        GetComboBoxBean getComboBoxBean = new GetComboBoxBean();
-        List<GetComboBoxBean.ResultBean> resultBeans = new ArrayList<>();
-        GetComboBoxBean.ResultBean resultBean1 =
-                new GetComboBoxBean.ResultBean("1", "价格降序 ");
-        GetComboBoxBean.ResultBean resultBean2 =
-                new GetComboBoxBean.ResultBean("2", "价格升序 ");
-        resultBeans.add(resultBean1);
-        resultBeans.add(resultBean2);
-        getComboBoxBean.setResult(resultBeans);
-        zonghe(getComboBoxBean);
+    private class Inner2Adapter extends AbsRecyclerViewAdapter<FindCategoryBean.DataBean> {
+        public Inner2Adapter(Context context) {
+            super(context);
+        }
 
-        findBrand();//品牌
-        findCategoryHomePage();//类型
-        brandModel();//机型
+        @Override
+        public AbsRecyclerViewHolder<FindCategoryBean.DataBean> onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new PeiJian2ViewHolder(mInflater.inflate(R.layout.item_mechanics_peijian2, parent, false));
+        }
     }
+
 
     /**
      * 获取品牌列表 findBrand
@@ -306,6 +356,7 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
         if (getContext() != null) {
             Map<String, String> map = new TreeMap<String, String>();
             map.put("brand_type", "2");
+            map.put("category_id", category_id);
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = Sign.getSignKey(getActivity(), map, "findBrand");

@@ -118,7 +118,42 @@ public class H5PeiJianActivity extends AbsActivity {
         super.onCreate(savedInstanceState);
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_h5_test);
         setupToolbar();
-        setupButtom();
+        if (getIntent().hasExtra("type")) {
+            type = getIntent().getIntExtra("type", 0);
+        }
+        if (getIntent().hasExtra("good_code")) {
+            goodCode = getIntent().getStringExtra("good_code");
+        }
+        if (getIntent().hasExtra("pic_url")) {
+            picUrl = getIntent().getStringExtra("pic_url");
+        }
+        if (getIntent().hasExtra("good_name")) {
+            good_name = getIntent().getStringExtra("good_name");
+        }
+        if (getIntent().hasExtra("bus_name")) {
+            bus_name = getIntent().getStringExtra("bus_name");
+        }
+        if (getIntent().hasExtra("bus_code")) {
+            bus_code = getIntent().getStringExtra("bus_code");
+        }
+        if (getIntent().hasExtra("price")) {
+            price = getIntent().getStringExtra("price");
+        }
+        if (getIntent().hasExtra("num")) {
+            num = getIntent().getStringExtra("num");
+        }
+        if (num != null && num.length() > 0) {
+            Log.e("num", "num " + Integer.parseInt(num));
+            if (Integer.parseInt(num) <= 0) {
+                mDataBinding.tvJiaru.setBackgroundResource(R.drawable.edit_bg_acc9);
+                mDataBinding.tvJiaru.setTextColor(getResources().getColor(R.color.acc9));
+                mDataBinding.tvJiaru.setEnabled(false);
+                mDataBinding.tvGoumai.setBackgroundResource(R.drawable.edit_bg_acc9);
+                mDataBinding.tvGoumai.setTextColor(getResources().getColor(R.color.acc9));
+                mDataBinding.tvGoumai.setEnabled(false);
+            }
+        }
+        findCategoryDetailBean = new FindCategoryDetailBean();
 
         webview = (BridgeWebView) findViewById(R.id.webview);
         WebSettings settings = mDataBinding.webview.getSettings();
@@ -141,14 +176,14 @@ public class H5PeiJianActivity extends AbsActivity {
         settings.setAppCacheEnabled(true);//开启AppCaches功能
 
         url = getIntent().getStringExtra("url");
-        Log.e("peijian ", "url:" + url);
+
         //加载动画
         animationDrawable = (AnimationDrawable) mDataBinding.webLoadAnim.getBackground();
 
         if (!NETUtils.isNetworkConnected(getApplicationContext())) {
             ToastUtils.show(getApplicationContext(), "网络异常，请检查网络连接");
         } else {
-            webview.loadUrl(getIntent().getStringExtra("url"));
+            webview.loadUrl(url);
             webview.setWebViewClient(new MyWebViewClient(webview));
             webview.setDefaultHandler(new DefaultHandler());
             // Android初始化代码
@@ -162,6 +197,23 @@ public class H5PeiJianActivity extends AbsActivity {
                 }
             });
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ConfigUtils.getCurrentUser(getApplicationContext()) != null
+                && ConfigUtils.getCurrentUser(getApplicationContext()).getMobile() != null) {
+            userSession = ConfigUtils.getCurrentUser(getApplicationContext());
+            url = url + "&isLogin=1";
+            webview.loadUrl(url);
+            Log.e("peijian ", "url:" + url);
+        } else {
+            url = url + "&isLogin=0";
+            webview.loadUrl(url);
+            Log.e("peijian ", "url:" + url);
+        }
+        setupButtom();
     }
 
     public class MyWebViewClient extends BridgeWebViewClient {
@@ -201,49 +253,7 @@ public class H5PeiJianActivity extends AbsActivity {
 
     }
 
-
     private void setupButtom() {
-        if (ConfigUtils.getCurrentUser(getApplicationContext()) != null
-                && ConfigUtils.getCurrentUser(getApplicationContext()).getMobile() != null) {
-            userSession = ConfigUtils.getCurrentUser(getApplicationContext());
-        }
-        if (getIntent().hasExtra("type")) {
-            type = getIntent().getIntExtra("type", 0);
-        }
-        if (getIntent().hasExtra("good_code")) {
-            goodCode = getIntent().getStringExtra("good_code");
-        }
-        if (getIntent().hasExtra("pic_url")) {
-            picUrl = getIntent().getStringExtra("pic_url");
-        }
-        if (getIntent().hasExtra("good_name")) {
-            good_name = getIntent().getStringExtra("good_name");
-        }
-        if (getIntent().hasExtra("bus_name")) {
-            bus_name = getIntent().getStringExtra("bus_name");
-        }
-        if (getIntent().hasExtra("bus_code")) {
-            bus_code = getIntent().getStringExtra("bus_code");
-        }
-        if (getIntent().hasExtra("price")) {
-            price = getIntent().getStringExtra("price");
-        }
-        if (getIntent().hasExtra("num")) {
-            num = getIntent().getStringExtra("num");
-        }
-        if (num != null && num.length() > 0) {
-            Log.e("num", "num " + Integer.parseInt(num));
-            if (Integer.parseInt(num) <=0) {
-                mDataBinding.tvJiaru.setBackgroundResource(R.drawable.edit_bg_acc9);
-                mDataBinding.tvJiaru.setTextColor(getResources().getColor(R.color.acc9));
-                mDataBinding.tvJiaru.setEnabled(false);
-                mDataBinding.tvGoumai.setBackgroundResource(R.drawable.edit_bg_acc9);
-                mDataBinding.tvGoumai.setTextColor(getResources().getColor(R.color.acc9));
-                mDataBinding.tvGoumai.setEnabled(false);
-            }
-        }
-        findCategoryDetailBean = new FindCategoryDetailBean();
-
         //判断是否收藏
         if (userSession != null
                 && userSession.getUserCode() != null
@@ -290,7 +300,7 @@ public class H5PeiJianActivity extends AbsActivity {
                         && userSession.getUserCode() != null
                         && userSession.getToken() != null) {
                     MobclickAgent.onEvent(getApplicationContext(), "add_to_carts");
-                    addGoodsToCarts(userSession.getUserCode(), userSession.getToken());
+                    addGoodsToCarts();
                 } else {
                     startNewActivity(LoginActivity.class);
                 }
@@ -313,7 +323,6 @@ public class H5PeiJianActivity extends AbsActivity {
                         resultBean.setPicUrl(picUrl);
                         resultBean.setPrice(price);
                         list.add(resultBean);
-
                         GetCartGoodsByUserCodeBean.ResultBean g = new GetCartGoodsByUserCodeBean.ResultBean();
                         g.setBus_code(bus_code);
                         g.setBus_name(bus_name);
@@ -490,7 +499,7 @@ public class H5PeiJianActivity extends AbsActivity {
     /**
      * 添加购物车
      */
-    private void addGoodsToCarts(String userCode, String token) {
+    private void addGoodsToCarts() {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("userCode", ConfigUtils.getCurrentUser(getApplicationContext()).getUserCode());
         map.put("goodsCode", goodCode);
@@ -503,7 +512,7 @@ public class H5PeiJianActivity extends AbsActivity {
 
         String sign = Sign.getSignKey(H5PeiJianActivity.this, map, "addGoodsToCarts");
         NetBean netBean = new NetBean();
-        netBean.setToken(ConfigUtils.getCurrentUser(getApplicationContext()).getUserCode());
+        netBean.setToken(ConfigUtils.getCurrentUser(getApplicationContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(AddGoodsToCartsAction.newInstance(H5PeiJianActivity.this, netBean)

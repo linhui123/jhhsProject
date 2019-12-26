@@ -1,6 +1,5 @@
 package com.jhhscm.platform.fragment.home.holder;
 
-import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -13,7 +12,6 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.views.dlflipviewpage.bean.DLGridViewBean;
 import com.jhhscm.platform.views.dlflipviewpage.utils.DLVPSetting;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

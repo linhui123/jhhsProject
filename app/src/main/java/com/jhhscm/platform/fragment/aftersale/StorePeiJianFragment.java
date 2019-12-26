@@ -18,7 +18,6 @@ import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentStorePeijianBinding;
 import com.jhhscm.platform.event.BrandResultEvent;
 import com.jhhscm.platform.event.FinishEvent;
-import com.jhhscm.platform.event.ForceCloseEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.BrandModelListAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindCategoryAction;

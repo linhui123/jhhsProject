@@ -147,8 +147,9 @@ public class GetOldPageListBean {
          * factory_time : 2019
          * second : 1
          * retail_price：
+         * is_sell 1 已成交
          */
-
+        private String is_sell;
         private String good_code;
         private String province;
         private String city;
@@ -160,6 +161,14 @@ public class GetOldPageListBean {
         private String factory_time;
         private String second;
         private String retail_price;
+
+        public String getIs_sell() {
+            return is_sell;
+        }
+
+        public void setIs_sell(String is_sell) {
+            this.is_sell = is_sell;
+        }
 
         public String getRetail_price() {
             return retail_price;
