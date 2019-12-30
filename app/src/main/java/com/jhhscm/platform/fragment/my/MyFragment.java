@@ -266,7 +266,6 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                 } else {
                     startNewActivity(LoginActivity.class);
                 }
-
             }
         });
 

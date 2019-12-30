@@ -165,9 +165,7 @@
                         android:id="@+id/ll_f"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/padding_15"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="@dimen/padding_15"
                         android:layout_marginBottom="15dp"
                         android:orientation="horizontal">
 
@@ -194,8 +192,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_5"
-                                android:drawableRight="@mipmap/ic_ques"
-                                android:drawablePadding="5dp"
+                                android:gravity="center"
                                 android:text="个人积分"
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
@@ -224,6 +221,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_5"
+                                android:gravity="center"
                                 android:text="优惠券"
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
@@ -252,6 +250,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_5"
+                                android:gravity="center"
                                 android:text="我的收藏"
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
@@ -280,6 +279,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_5"
+                                android:gravity="center"
                                 android:text="我的邀请"
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />

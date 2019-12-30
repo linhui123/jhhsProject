@@ -91,7 +91,6 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
         mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());
         mDataBinding.wrvRecycler.setAdapter(mAdapter);
-        mDataBinding.wrvRecycler.autoRefresh();
         mDataBinding.wrvRecycler.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {
@@ -105,7 +104,6 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
         });
 
         resultBeanList = new ArrayList<>();
-        initDrop();
 
         mDataBinding.llOhter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,6 +193,22 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
         });
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {//可见
+            mDataBinding.wrvRecycler.autoRefresh();
+            initDrop();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mDataBinding.wrvRecycler.autoRefresh();
+        initDrop();
+    }
+
     /**
      * 更新地区选择
      */
@@ -231,7 +245,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
     }
 
     /**
-     * 获取新机列表
+     * 获取二手机列表
      */
     private void getOldPageList(final boolean refresh) {
         if (getContext() != null) {
@@ -257,7 +271,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
             map.put("limit", mShowCount + "");
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
-            String sign = Sign.getSignKey(getActivity(), map, "getGoodsPageList");
+            String sign = Sign.getSignKey(getActivity(), map, "getOldPageList");
             NetBean netBean = new NetBean();
             netBean.setToken("");
             netBean.setSign(sign);
@@ -269,7 +283,6 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                                                BaseErrorInfo baseErrorInfo) {
                             if (getView() != null) {
                                 closeDialog();
-
                                 if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
                                     return;
                                 }
@@ -368,9 +381,9 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                                     } else if ("old_sort".equals(name)) {
                                         paixu(response.body().getData());
                                     } else if ("good_old_time".equals(name)) {
-                                        dongli(response.body().getData());
-                                    } else if ("good_counter_price".equals(name)) {
                                         chandou(response.body().getData());
+                                    } else if ("good_counter_price".equals(name)) {
+                                        dongli(response.body().getData());
                                     } else if ("good_factory_time".equals(name)) {
                                         dunwei(response.body().getData());
                                     }
@@ -443,7 +456,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                     for (GetComboBoxBean.ResultBean resultBean : list) {
                         if (resultBean.getKey_name().equals(item.getKey_name())) {
                             resultBean.setSelect(false);
-                            old_time = "";
+                            counter_price = "";
                             ((SXDropAdapter) mDataBinding.rlDongli.getAdapter()).setList(list);
                             ((SXDropAdapter) mDataBinding.rlDongli.getAdapter()).notifyDataSetChanged();
                         }
@@ -454,7 +467,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                     for (GetComboBoxBean.ResultBean resultBean : list) {
                         if (resultBean.getKey_name().equals(item.getKey_name())) {
                             resultBean.setSelect(false);
-                            counter_price = "";
+                            old_time = "";
                             ((SXDropAdapter) mDataBinding.rlChandou.getAdapter()).setList(list);
                             ((SXDropAdapter) mDataBinding.rlChandou.getAdapter()).notifyDataSetChanged();
                         }
@@ -571,7 +584,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                         }
                     }
                 }
-                old_time = item.getKey_name();
+                counter_price = item.getKey_name();
                 resultBeanList.add(item);
             }
         });
@@ -591,7 +604,7 @@ public class OldMechanicsFragment extends AbsFragment<FragmentOldMechanicsBindin
                         }
                     }
                 }
-                counter_price = item.getKey_name();
+                old_time = item.getKey_name();
                 resultBeanList.add(item);
             }
         });
