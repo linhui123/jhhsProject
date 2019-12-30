@@ -72,9 +72,7 @@ public class VehicleMessageDialog extends BaseDialog {
 
     @Override
     protected View onInflateView(LayoutInflater inflater) {
-        mDataBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_vehicle_message
-
-                , null, false);
+        mDataBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_vehicle_message, null, false);
         return mDataBinding.getRoot();
     }
 

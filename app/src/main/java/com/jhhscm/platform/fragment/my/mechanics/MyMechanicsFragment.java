@@ -17,6 +17,7 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentMyMechanicsBinding;
 import com.jhhscm.platform.event.DelDeviceEvent;
+import com.jhhscm.platform.event.LesseeFinishEvent;
 import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.http.AHttpService;
@@ -32,6 +33,7 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.dialog.OrderSuccessDialog;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
 
 import java.util.Map;
@@ -147,6 +149,16 @@ public class MyMechanicsFragment extends AbsFragment<FragmentMyMechanicsBinding>
         }
         mDataBinding.wrvRecycler.getAdapter().notifyDataSetChanged();
         mDataBinding.wrvRecycler.loadComplete(mAdapter.getItemCount() == 0, ((float) findOldGoodByUserCodeBean.getPage().getTotal() / (float) findOldGoodByUserCodeBean.getPage().getPageSize()) > mCurrentPage);
+    }
+
+    public void onEvent(LesseeFinishEvent event) {
+        new OrderSuccessDialog(getContext(), "您的资料已提交成功！", new OrderSuccessDialog.CallbackListener() {
+
+            @Override
+            public void clickYes() {
+
+            }
+        }).show();
     }
 
     public void onEvent(DelDeviceEvent event) {

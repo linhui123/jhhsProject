@@ -10,7 +10,7 @@ import com.jhhscm.platform.databinding.DialogOrderSuccessBinding;
 
 public class OrderSuccessDialog extends BaseDialog {
     private DialogOrderSuccessBinding mDataBinding;
-    private String mContent;
+    private String name;
     private CallbackListener mListener;
     private boolean mCancelable = true;
     private String sure;
@@ -23,14 +23,14 @@ public class OrderSuccessDialog extends BaseDialog {
         this(context, null, listener, null);
     }
 
-    public OrderSuccessDialog(Context context, String content, CallbackListener listener) {
-        this(context, content, listener, null);
+    public OrderSuccessDialog(Context context, String name, CallbackListener listener) {
+        this(context, name, listener, null);
     }
 
-    public OrderSuccessDialog(Context context, String content, CallbackListener listener, String sure) {
+    public OrderSuccessDialog(Context context, String name, CallbackListener listener, String sure) {
         super(context);
         setCanceledOnTouchOutside(true);
-        this.mContent = content;
+        this.name = name;
         this.mListener = listener;
         this.sure = sure;
     }
@@ -43,6 +43,15 @@ public class OrderSuccessDialog extends BaseDialog {
 
     @Override
     protected void onInitView(View view) {
+        if (name != null) {
+            mDataBinding.name.setText(name);
+        }
+        mDataBinding.tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
     }
 
     public void setCanDissmiss(boolean cancelable) {

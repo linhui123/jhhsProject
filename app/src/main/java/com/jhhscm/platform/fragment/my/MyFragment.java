@@ -260,7 +260,13 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
         mDataBinding.setImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SettingActivity.start(getActivity());
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+                    SettingActivity.start(getActivity());
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
+
             }
         });
 

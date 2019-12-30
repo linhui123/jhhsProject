@@ -31,6 +31,7 @@ public class LesseeViewHolder extends AbsRecyclerViewHolder<LesseeBean.WBankLeas
             mBinding.etName.setText(item.getName());
             mBinding.etXinghao.setText(item.getFixP17());
             mBinding.tvBrand.setText(item.getBrandName());
+            mBinding.etNo.setText(item.getMachineNum());
             if (item.getFactoryTime() != null && item.getFactoryTime().length() > 10) {
                 mBinding.tvData.setText(item.getFactoryTime().substring(0, 10));
                 item.setFactoryTime(item.getFactoryTime().substring(0, 10));

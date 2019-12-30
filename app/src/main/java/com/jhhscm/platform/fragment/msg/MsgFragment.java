@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentMsgBinding;
@@ -21,6 +22,7 @@ import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.SignObject;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -90,12 +92,21 @@ public class MsgFragment extends AbsFragment<FragmentMsgBinding> {
         initRv();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(ConfigUtils.getCurrentUser(getContext())!=null){
+            mDataBinding.rlActivity.autoRefresh();
+        }else {
+            startNewActivity(LoginActivity.class);
+        }
+    }
+
     private void initRv() {
         mDataBinding.rlActivity.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
         mDataBinding.rlActivity.setLayoutManager(new LinearLayoutManager(getContext()));
         aAdapter = new InnerAdapter(getContext());
         mDataBinding.rlActivity.setAdapter(aAdapter);
-        mDataBinding.rlActivity.autoRefresh();
         mDataBinding.rlActivity.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
             @Override
             public void onRefresh(RecyclerView view) {

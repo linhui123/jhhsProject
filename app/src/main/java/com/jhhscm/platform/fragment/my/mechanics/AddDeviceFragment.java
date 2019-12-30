@@ -106,15 +106,19 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
                 if (mDataBinding.name.getText().toString().length() > 0) {
                     if (mDataBinding.brand.getText().toString().length() > 0) {
                         if (mDataBinding.model.getText().toString().length() > 0) {
-                            if (mDataBinding.isSchemeImage.getUploadImageList().size() > 0) {
-                                updateImgResult = true;
-                                doUploadAImagesAction1();
-                            } else {
-                                if (type == 0) {
-                                    addGoodsOwner();
+                            if (mDataBinding.no.getText().toString().length() > 0) {
+                                if (mDataBinding.isSchemeImage.getUploadImageList().size() > 0) {
+                                    updateImgResult = true;
+                                    doUploadAImagesAction1();
                                 } else {
-                                    updataGoodsOwner();
+                                    if (type == 0) {
+                                        addGoodsOwner();
+                                    } else {
+                                        updataGoodsOwner();
+                                    }
                                 }
+                            } else {
+                                ToastUtil.show(getContext(), "设备序列号不能为空");
                             }
                         } else {
                             ToastUtil.show(getContext(), "设备型号不能为空");
@@ -147,6 +151,7 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
                 mDataBinding.brand.setText(dataBean.getBrand_name());
                 mDataBinding.brand.setTag(dataBean.getBrand_id());
                 mDataBinding.model.setText(dataBean.getFixp17());
+                mDataBinding.no.setText(dataBean.getV1());
                 mDataBinding.name.setText(dataBean.getName());
                 if (dataBean.getFcatory_time() != null && dataBean.getFcatory_time().length() > 10) {
                     mDataBinding.data.setText(dataBean.getFcatory_time().substring(0, 10));
@@ -420,6 +425,7 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
             map.put("fixp17", mDataBinding.model.getText().toString().trim());
             map.put("brand_id", mDataBinding.brand.getTag().toString().trim());
             map.put("fcatory_time", mDataBinding.data.getText().toString().trim());
+            map.put("v1", mDataBinding.no.getText().toString().trim());
             map.put("status", "1");
 //            map.put("pic", "[" + jsonString1 + "]");
             map.put("pic_gallery_url_list", "[" + jsonString1 + "]");
@@ -479,6 +485,7 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
 //            map.put("code", dataBean.getCode());
             map.put("goods_owner_code", dataBean.getCode());
             map.put("name", mDataBinding.name.getText().toString().trim());
+            map.put("v1", mDataBinding.no.getText().toString().trim());
             map.put("fixp17", mDataBinding.model.getText().toString().trim());
             map.put("brand_id", mDataBinding.brand.getTag().toString().trim());
             map.put("fcatory_time", mDataBinding.data.getText().toString().trim());

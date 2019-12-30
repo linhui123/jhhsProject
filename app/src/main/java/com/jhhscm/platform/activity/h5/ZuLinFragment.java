@@ -42,6 +42,7 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.Lessee1Activity;
 import com.jhhscm.platform.databinding.FragmentZuLinBinding;
 import com.jhhscm.platform.event.JumpEvent;
+import com.jhhscm.platform.event.LesseeFinishEvent;
 import com.jhhscm.platform.event.ShowBackEvent;
 import com.jhhscm.platform.event.WebTitleEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
@@ -61,6 +62,7 @@ import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.YXProgressDialog;
 import com.jhhscm.platform.views.dialog.AlertDialogs;
+import com.jhhscm.platform.views.dialog.OrderSuccessDialog;
 import com.jhhscm.platform.views.dialog.ShareDialog;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
@@ -379,6 +381,17 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
     public void onDestroy() {
         super.onDestroy();
         EventBusUtil.unregisterEvent(this);
+    }
+
+
+    public void onEvent(LesseeFinishEvent event) {
+        new OrderSuccessDialog(getContext(), "您的资料已提交成功！", new OrderSuccessDialog.CallbackListener() {
+
+            @Override
+            public void clickYes() {
+
+            }
+        }).show();
     }
 
     public void onEvent(ShowBackEvent event) {

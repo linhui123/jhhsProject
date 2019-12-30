@@ -9,9 +9,10 @@
         android:paddingTop="24dp">
 
         <TextView
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="15dp"
             android:gravity="center"
             android:lineSpacingExtra="1dp"
             android:lineSpacingMultiplier="1.2"
@@ -25,7 +26,6 @@
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
             android:gravity="center"
             android:lineSpacingExtra="1dp"
             android:lineSpacingMultiplier="1.2"
@@ -33,6 +33,25 @@
             android:paddingRight="50dp"
             android:text="我们的客服人员会尽快与你联系，请保持电话畅通！"
             android:textColor="@color/acc3"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="@dimen/padding_15"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="@dimen/padding_15"
+            android:background="@drawable/button_c397"
+            android:gravity="center"
+            android:paddingLeft="@dimen/padding_10"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingRight="@dimen/padding_10"
+            android:paddingBottom="@dimen/padding_10"
+            android:text="确认"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_16" />
     </LinearLayout>
 </layout>

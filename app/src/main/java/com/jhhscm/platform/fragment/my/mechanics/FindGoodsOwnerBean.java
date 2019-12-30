@@ -153,6 +153,7 @@ public class FindGoodsOwnerBean {
         private String name;
         private String brand_name;
         private String fixp17;
+        private String v1;
         private int brand_id;
         private int status;
         private boolean isSelect;
@@ -163,6 +164,14 @@ public class FindGoodsOwnerBean {
 
         public void setSelect(boolean select) {
             isSelect = select;
+        }
+
+        public String getV1() {
+            return v1;
+        }
+
+        public void setV1(String v1) {
+            this.v1 = v1;
         }
 
         public String getPic_gallery_url_list() {

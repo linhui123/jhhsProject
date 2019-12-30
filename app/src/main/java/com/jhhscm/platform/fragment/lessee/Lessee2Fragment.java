@@ -183,6 +183,7 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
             dataBean.setItemUrl(data.getPic_gallery_url_list());
             dataBean.setBrandId(data.getBrand_id() + "");
             dataBean.setBrandName(data.getBrand_name());
+            dataBean.setMachineNum(data.getV1());
             dataBean.setName(data.getName());
             dataBean.setFixP17(data.getFixp17());
             dataBean.setFactoryTime(data.getFcatory_time());

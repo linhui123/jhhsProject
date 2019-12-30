@@ -29,6 +29,7 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.dialog.OrderSuccessDialog;
 
 import java.io.File;
 import java.net.URI;
@@ -319,7 +320,6 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
                                 if (response != null) {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
-                                        ToastUtils.show(getContext(), "租赁信息提交成功");
                                         EventBusUtil.post(new LesseeFinishEvent());
                                         getActivity().finish();
                                     } else {
