@@ -5,6 +5,7 @@ import android.view.View;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemCouponOldBinding;
 import com.jhhscm.platform.fragment.sale.SaleItem;
+import com.jhhscm.platform.tool.StringUtils;
 
 public class CouponOldItemViewHolder extends AbsRecyclerViewHolder<SaleItem> {
 
@@ -21,7 +22,7 @@ public class CouponOldItemViewHolder extends AbsRecyclerViewHolder<SaleItem> {
             if (item.couponResult.getDiscount() < 1) {
                 mBinding.tvCount.setText(item.couponResult.getDiscount() * 10 + "折");
             } else {
-                mBinding.tvCount.setText(item.couponResult.getDiscount() + "元");
+                mBinding.tvCount.setText(StringUtils.replace(item.couponResult.getDiscount()) + "元");
             }
             mBinding.tvName.setText(item.couponResult.getName());
             String data = "";

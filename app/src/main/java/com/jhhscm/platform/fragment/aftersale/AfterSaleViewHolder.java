@@ -7,6 +7,8 @@ import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.activity.StoreDetailActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemAftersaleStoreBinding;
+import com.jhhscm.platform.tool.StringUtils;
+import com.jhhscm.platform.tool.UdaUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
@@ -47,7 +49,12 @@ public class AfterSaleViewHolder extends AbsRecyclerViewHolder<FindBusListBean.D
             if (item.getAddress_detail() != null) {
                 location = location + item.getAddress_detail() + " ";
             }
-            mBinding.tv2.setText(location);
+            mBinding.tv2.setText("地址：" + location);
+            if (item.getDistance() != null) {
+                mBinding.tv4.setText("电话：" + UdaUtils.hiddenPhoneNumber(item.getMobile()));
+            } else {
+                mBinding.tv4.setText("电话：--");
+            }
 
             if (item.getDistance() != null) {
                 mBinding.tvStore.setVisibility(View.VISIBLE);

@@ -10,6 +10,7 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.DialogCouponNewBinding;
 import com.jhhscm.platform.fragment.coupon.GetNewCouponslistBean;
 import com.jhhscm.platform.tool.ConfigUtils;
+import com.jhhscm.platform.tool.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,7 @@ public class NewCouponDialog extends BaseDialog {
 
     @Override
     protected void onInitView(View view) {
-        mDataBinding.count.setText(dataBean.getDiscount() + "");
+        mDataBinding.count.setText(StringUtils.replace(dataBean.getDiscount()) + "");
         mDataBinding.condition.setText(dataBean.getDesc());
 
         mDataBinding.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

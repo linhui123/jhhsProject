@@ -24,7 +24,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="95dp"
             android:layout_marginLeft="@dimen/padding_10"
             android:layout_toRightOf="@+id/im"
             android:orientation="vertical">
@@ -36,17 +36,30 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text=""
+                android:textStyle="bold"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tv_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_1"
+                android:layout_marginTop="@dimen/dp_5"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_14" />
 
             <TextView
                 android:id="@+id/tv_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_1"
+                android:layout_below="@+id/tv_4"
+                android:layout_marginTop="@dimen/dp_5"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:layout_marginTop="@dimen/dp_5"
                 android:text=""
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_14" />
@@ -55,12 +68,12 @@
                 android:id="@+id/tv_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/button_98b"
+                android:padding="@dimen/dp_3"
                 android:paddingLeft="@dimen/padding_15"
                 android:text="离你最近"
-                android:padding="@dimen/dp_5"
-                android:background="@drawable/button_98b"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_12" />
 
@@ -68,14 +81,14 @@
                 android:id="@+id/tv_store"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
                 android:layout_alignParentBottom="true"
-                android:maxLines="1"
-                android:visibility="gone"
                 android:layout_marginRight="@dimen/dp_5"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="距离-km"
                 android:textColor="@color/acc3"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
         </RelativeLayout>
     </RelativeLayout>
 </layout>

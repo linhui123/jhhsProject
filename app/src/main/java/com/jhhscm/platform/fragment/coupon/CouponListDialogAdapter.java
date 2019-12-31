@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.event.GetCouponEvent;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.StringUtils;
 
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class CouponListDialogAdapter extends RecyclerView.Adapter<CouponListDial
         if (list.get(position).getDiscount() < 1) {
             holder.tv_count.setText(list.get(position).getDiscount() * 10 + "折");
         } else {
-            holder.tv_count.setText(list.get(position).getDiscount() + "元");
+            holder.tv_count.setText(StringUtils.replace(list.get(position).getDiscount()) + "元");
         }
 
         if (list.get(position).getStartTime() != null

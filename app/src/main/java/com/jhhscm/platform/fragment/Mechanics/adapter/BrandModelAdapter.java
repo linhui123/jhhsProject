@@ -38,10 +38,12 @@ public class BrandModelAdapter extends RecyclerView.Adapter<BrandModelAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.setData(list.get(position));
-        if (list.get(position).getBrand_pic()!=null){
+        if (list.get(position).getBrand_id().equals("-1")) {
+            holder.im_brand.setImageResource(R.mipmap.ic_wakuanlai);
+        } else if (list.get(position).getBrand_id().equals("")) {
+            holder.im_brand.setImageResource(R.mipmap.ic_brand_all);
+        } else {
             ImageLoader.getInstance().displayImage(list.get(position).getBrand_pic(), holder.im_brand);
-        }else {
-            holder.im_brand.setImageResource(R.mipmap.ic_peijian_model);
         }
 
         holder.tv_name.setText(list.get(position).getBrand_name());

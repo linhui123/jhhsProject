@@ -3,9 +3,11 @@ package com.jhhscm.platform.fragment.aftersale;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -33,6 +35,7 @@ import com.jhhscm.platform.tool.MapUtil;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.tool.UdaUtils;
 import com.jhhscm.platform.views.dialog.MapSelectDialog;
 import com.jhhscm.platform.views.selector.ImageSelectorItem;
 import com.jhhscm.platform.views.selector.ImageSelectorPreviewActivity;
@@ -75,8 +78,7 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
 
         peiJianFragment = new StorePeiJianFragment().instance(bus_code);
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.fragment, peiJianFragment)
-                .show(peiJianFragment).commitAllowingStateLoss();
+        ft.add(R.id.fragment, peiJianFragment).show(peiJianFragment).commitAllowingStateLoss();
 
         if (fast) {
             mDataBinding.tv3.setVisibility(View.VISIBLE);
@@ -213,7 +215,7 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
         }
     }
 
-    private void initView(BusinessDetailBean data) {
+    private void initView(final BusinessDetailBean data) {
         if (data != null && data.getResult().size() > 0) {
             mDataBinding.tv1.setText(data.getResult().get(0).getBus_name());
 
@@ -231,7 +233,35 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
                 location = location + data.getResult().get(0).getAddress_detail() + " ";
             }
             mDataBinding.tv2.setText(location);
+            if (data.getResult().get(0).getMobile() != null) {
+                mDataBinding.tv4.setText(UdaUtils.hiddenPhoneNumber(data.getResult().get(0).getMobile()));
+                mDataBinding.tv4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //6.0权限处理
+                        YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
+                                .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
+                                .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
+                                .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "拨打电话"))
+                                .setPermissions(Manifest.permission.CALL_PHONE).build(), new AcpListener() {
+                            @SuppressLint("MissingPermission")
+                            @Override
+                            public void onGranted() {
+                                Uri uriScheme = Uri.parse("tel:" + data.getResult().get(0).getMobile());
+                                Intent it = new Intent(Intent.ACTION_CALL, uriScheme);
+                                getContext().startActivity(it);
+                            }
 
+                            @Override
+                            public void onDenied(List<String> permissions) {
+
+                            }
+                        });
+                    }
+                });
+            } else {
+                mDataBinding.tv4.setText("");
+            }
             mDataBinding.storeDetail.setText(data.getResult().get(0).getDesc());
             if (data.getResult().get(0).getDistance() != null) {
                 mDataBinding.tvStore.setVisibility(View.VISIBLE);
@@ -306,7 +336,7 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
                 + data.getResult().get(0).getCounty_name()
                 + data.getResult().get(0).getAddress_detail();
         if (!StringUtils.isNullEmpty(v1) && !StringUtils.isNullEmpty(v2)) {
-            mDataBinding.storeLocation.setOnClickListener(new View.OnClickListener() {
+            mDataBinding.tvStore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (!StringUtils.isNullEmpty(v1) && !StringUtils.isNullEmpty(v2)) {

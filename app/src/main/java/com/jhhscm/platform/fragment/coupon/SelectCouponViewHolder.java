@@ -7,6 +7,7 @@ import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemSelectCouponBinding;
 import com.jhhscm.platform.event.SelectCouponEvent;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.StringUtils;
 
 public class SelectCouponViewHolder extends AbsRecyclerViewHolder<CouponListBean.ResultBean> {
 
@@ -28,7 +29,7 @@ public class SelectCouponViewHolder extends AbsRecyclerViewHolder<CouponListBean
             if (item.getDiscount() < 1) {
                 mBinding.tvCount.setText(item.getDiscount() * 10 + "折");
             } else {
-                mBinding.tvCount.setText(item.getDiscount() + "元");
+                mBinding.tvCount.setText(StringUtils.replace(item.getDiscount()) + "元");
             }
 
             mBinding.tvName.setText(item.getName());

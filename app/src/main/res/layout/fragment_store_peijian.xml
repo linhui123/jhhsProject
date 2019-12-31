@@ -46,7 +46,7 @@
                     android:drawableRight="@mipmap/ic_point1"
                     android:drawablePadding="@dimen/padding_10"
                     android:singleLine="true"
-                    android:text="全部"
+                    android:text="品类"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
             </LinearLayout>

@@ -493,9 +493,11 @@ public class StorePeiJianFragment extends AbsFragment<FragmentStorePeijianBindin
      * 下拉机型
      */
     private void jixing(BrandModelBean brandModelBean) {
-        BrandModelBean.DataBean resultBean = new BrandModelBean.DataBean("机型通用", "");
+        BrandModelBean.DataBean resultBean = new BrandModelBean.DataBean("全部", "");
+        BrandModelBean.DataBean resultBean1 = new BrandModelBean.DataBean("机型通用", "-1");
         if (brandModelBean.getData() != null && brandModelBean.getData().size() > 0) {
             brandModelBean.getData().add(0, resultBean);
+            brandModelBean.getData().add(1, resultBean1);
         }
         mDataBinding.rlJixing.setLayoutManager(new GridLayoutManager(getContext(), 4));
         BrandModelAdapter bAdapter = new BrandModelAdapter(brandModelBean.getData(), getContext());
@@ -504,18 +506,26 @@ public class StorePeiJianFragment extends AbsFragment<FragmentStorePeijianBindin
             @Override
             public void onItemClick(BrandModelBean.DataBean item) {
                 if (item.getBrand_id().length() > 0) {
-                    if (item.getBrand_model_list() != null && item.getBrand_model_list().size() > 0) {
-                        BrandModelActivity.start(getContext(), item);
-                    } else {
-                        model_ids = "";
-                        ToastUtil.show(getContext(), "该品牌下没有机型数据");
+                    if (item.getBrand_id().equals("-1")) {
+                        model_ids = "-1";
+                        mDataBinding.tvJixing.setText("机型通用");
                         mDataBinding.llXiala.setVisibility(View.GONE);
                         closeDrap();
                         mDataBinding.wrvRecycler.autoRefresh();
+                    } else {
+                        if (item.getBrand_model_list() != null && item.getBrand_model_list().size() > 0) {
+                            BrandModelActivity.start(getContext(), item);
+                        } else {
+                            model_ids = "";
+                            ToastUtil.show(getContext(), "该品牌下没有机型数据");
+                            mDataBinding.llXiala.setVisibility(View.GONE);
+                            closeDrap();
+                            mDataBinding.wrvRecycler.autoRefresh();
+                        }
                     }
                 } else {
                     model_ids = "";
-                    mDataBinding.tvJixing.setText("机型通用");
+                    mDataBinding.tvJixing.setText("全部");
                     mDataBinding.llXiala.setVisibility(View.GONE);
                     closeDrap();
                     mDataBinding.wrvRecycler.autoRefresh();
