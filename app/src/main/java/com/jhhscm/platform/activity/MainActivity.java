@@ -31,6 +31,7 @@ import com.jhhscm.platform.event.BrandResultEvent;
 import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.event.ShowBackEvent;
 import com.jhhscm.platform.fragment.Mechanics.MechanicsFragment;
+import com.jhhscm.platform.fragment.Mechanics.PeiJianFragment;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.HomePageFragment;
 import com.jhhscm.platform.fragment.my.MyFragment;
@@ -59,6 +60,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     private List<Fragment> mFragments = new ArrayList<Fragment>();
     private HomePageFragment homeFragment;
     private MechanicsFragment mechanicsFragment;
+    private PeiJianFragment peiJianFragment;
     //        private FinancialFragment financialFragment;
 //    private ZuLin2Fragment zuLinFragment;
     private ZuLinFragment zuLinFragment;

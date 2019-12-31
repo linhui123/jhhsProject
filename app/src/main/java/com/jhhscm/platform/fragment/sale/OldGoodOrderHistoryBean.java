@@ -147,8 +147,9 @@ public class OldGoodOrderHistoryBean {
          * factory_time : 2019
          * retail_price : 0
          * second : 0
+         * update_time
          */
-
+        private String update_time;
         private String good_code;
         private String province;
         private String city;
@@ -160,6 +161,14 @@ public class OldGoodOrderHistoryBean {
         private String factory_time;
         private String retail_price;
         private String second;
+
+        public String getUpdate_time() {
+            return update_time;
+        }
+
+        public void setUpdate_time(String update_time) {
+            this.update_time = update_time;
+        }
 
         public String getGood_code() {
             return good_code;

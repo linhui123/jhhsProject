@@ -43,7 +43,7 @@ public class VehicleMonitoringActivity extends AbsToolbarActivity {
     @Override
     protected String getToolBarTitle() {
 //        return "车辆监控";
-        return "我的机子";
+        return "我的设备";
     }
 
     @Override
