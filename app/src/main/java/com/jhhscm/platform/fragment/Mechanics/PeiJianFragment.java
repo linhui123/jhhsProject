@@ -18,6 +18,8 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentPeiJianBinding;
 import com.jhhscm.platform.event.BrandResultEvent;
+import com.jhhscm.platform.event.JumpEvent;
+import com.jhhscm.platform.event.ShowBackEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.BrandModelListAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindCategoryAction;
@@ -65,6 +67,7 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
     private int mCurrentPage = 1;
     private final int START_PAGE = mCurrentPage;
 
+    private boolean isShowBack;
     private boolean showType = false;//false 单列；ture 双列
     private String sort_type = "";//排序
     private String category_id = "";//类型
@@ -135,7 +138,8 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
         mDataBinding.tvBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().finish();
+                EventBusUtil.post(new JumpEvent("HOME_PAGE", null));
+//                getActivity().finish();
             }
         });
 
@@ -501,7 +505,7 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
     }
 
     /**
-     * 下拉全部
+     * 下拉全部 品类
      */
     private void quanbu(final GetComboBoxBean getComboBoxBean) {
         GetComboBoxBean.ResultBean resultBean = new GetComboBoxBean.ResultBean("", "全部");
@@ -516,6 +520,8 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
             public void onItemClick(GetComboBoxBean.ResultBean item) {
                 category_id = item.getKey_name();
                 mDataBinding.tvQuanbu.setText(item.getKey_value());
+                brand_id = "";
+                mDataBinding.tvPinpai.setText("品牌");
                 mDataBinding.llXiala.setVisibility(View.GONE);
                 closeDrap();
                 mDataBinding.wrvRecycler.autoRefresh();
@@ -599,12 +605,32 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
     }
 
     public void onEvent(BrandResultEvent event) {
-        if (event.getBrand_id() != null && event.getBrand_name() != null && event.getType() == 1) {
-            model_ids = event.getBrand_id();
-            mDataBinding.tvJixing.setText(event.getBrand_name());
-            mDataBinding.llXiala.setVisibility(View.GONE);
-            closeDrap();
-            mDataBinding.wrvRecycler.autoRefresh();
+        if (event.getBrand_id() != null && event.getBrand_name() != null) {//品牌
+            if (event.getType() == 1) {
+                model_ids = event.getBrand_id();
+                mDataBinding.tvJixing.setText(event.getBrand_name());
+                mDataBinding.llXiala.setVisibility(View.GONE);
+                closeDrap();
+                mDataBinding.wrvRecycler.autoRefresh();
+            } else if (event.getType() == 2) {//品类
+                category_id = event.getBrand_id();
+                mDataBinding.tvQuanbu.setText(event.getBrand_name());
+                brand_id = "";
+                mDataBinding.tvPinpai.setText("品牌");
+                mDataBinding.llXiala.setVisibility(View.GONE);
+                closeDrap();
+                mDataBinding.wrvRecycler.autoRefresh();
+            }
+        }
+    }
+
+    public void onEvent(ShowBackEvent event) {
+        if (event.getType() == 2) {
+            isShowBack = true;
+            mDataBinding.tvBack.setVisibility(View.VISIBLE);
+        } else if (event.getType() == 0) {
+            isShowBack = false;
+            mDataBinding.tvBack.setVisibility(View.GONE);
         }
     }
 

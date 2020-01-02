@@ -7,7 +7,7 @@ public class BrandResultEvent implements EventBusUtil.IEvent {
     private String brand_name;//品牌
     private String fix_p_9;//型号
     private String fix_p_9_name;//型号
-    private int type = 0;//1 配件页面；0新机列表
+    private int type = 0;//1 配件页面; 0新机列表; 2 配件页面品类
 
     public BrandResultEvent(String brand_id, String brand_name, int type) {
         this.brand_id = brand_id;

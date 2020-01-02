@@ -44,8 +44,22 @@
                 android:textColor="@drawable/index_textcolor_selecter"
                 android:textSize="@dimen/text_size_12" />
 
+            <!--<RadioButton-->
+            <!--android:id="@+id/rd_educationadmin"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="#fff"-->
+            <!--android:button="@null"-->
+            <!--android:drawableTop="@drawable/operationmanage_edu_selector"-->
+            <!--android:drawablePadding="3dp"-->
+            <!--android:gravity="center"-->
+            <!--android:text="机械"-->
+            <!--android:textColor="@drawable/index_textcolor_selecter"-->
+            <!--android:textSize="@dimen/text_size_12" />-->
+
             <RadioButton
-                android:id="@+id/rd_educationadmin"
+                android:id="@+id/rd_peijian"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -54,7 +68,7 @@
                 android:drawableTop="@drawable/operationmanage_edu_selector"
                 android:drawablePadding="3dp"
                 android:gravity="center"
-                android:text="机械"
+                android:text="配件"
                 android:textColor="@drawable/index_textcolor_selecter"
                 android:textSize="@dimen/text_size_12" />
 

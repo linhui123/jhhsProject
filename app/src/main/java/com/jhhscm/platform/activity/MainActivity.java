@@ -82,20 +82,18 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         super.onCreate(savedInstanceState);
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         instance = this;
-//        initPermission();
         initView();
         registerMessageReceiver();
-//        JPushInterface.init(getApplicationContext());// used for receive msg
         if (savedInstanceState == null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            mechanicsFragment = new MechanicsFragment();
-            fragmentManager.beginTransaction().add(R.id.fl, mechanicsFragment, "mechanicsFragment").commit();
+//            mechanicsFragment = new MechanicsFragment();
+///          fragmentManager.beginTransaction().add(R.id.fl, mechanicsFragment, "mechanicsFragment").commit();
+            peiJianFragment = new PeiJianFragment();
+            fragmentManager.beginTransaction().add(R.id.fl, peiJianFragment, "peiJianFragment").commit();
             homeFragment = new HomePageFragment();
             fragmentManager.beginTransaction().add(R.id.fl, homeFragment, "homeFragment").commit();
         }
         checkNotifySetting();
-//        Utils.getMetaDataStr(getApplicationContext(), "APP_NAME");
-//        Utils.getMetaDataStr(getApplicationContext(), "UMENG_CHANNEL_VALUE");
     }
 
     @Override
@@ -109,9 +107,6 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     }
 
     private void initPermission() {
-        // Manifest.permission.CAMERA,
-        // Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
-        // Manifest.permission.READ_PHONE_STATE,
         YXPermission.getInstance(getApplicationContext()).request(new AcpOptions.Builder()
                 .setDeniedCloseBtn(getApplicationContext().getString(R.string.permission_dlg_close_txt))
                 .setDeniedSettingBtn(getApplicationContext().getString(R.string.permission_dlg_settings_txt))
@@ -135,7 +130,8 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         fm = getSupportFragmentManager();
         transaction = fm.beginTransaction();
         homeFragment = (HomePageFragment) fm.findFragmentByTag("homeFragment");
-        mechanicsFragment = (MechanicsFragment) fm.findFragmentByTag("mechanicsFragment");
+        peiJianFragment = (PeiJianFragment) fm.findFragmentByTag("peiJianFragment");
+//        mechanicsFragment = (MechanicsFragment) fm.findFragmentByTag("mechanicsFragment");
         zuLinFragment = (ZuLinFragment) fm.findFragmentByTag("zuLinFragment");
         mMeFragment = (MyFragment) fm.findFragmentByTag("mMeFragment");
         mDataBinding.rdExpend.setOnClickListener(new View.OnClickListener() {
@@ -186,8 +182,11 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         if (homeFragment != null) {
             transaction1.hide(homeFragment);
         }
-        if (mechanicsFragment != null) {
-            transaction1.hide(mechanicsFragment);
+//        if (mechanicsFragment != null) {
+//            transaction1.hide(mechanicsFragment);
+//        }
+        if (peiJianFragment != null) {
+            transaction1.hide(peiJianFragment);
         }
         if (zuLinFragment != null) {
             transaction1.hide(zuLinFragment);
@@ -195,6 +194,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         if (mMeFragment != null) {
             transaction1.hide(mMeFragment);
         }
+
         if (checkedId == R.id.rd_analysis) {
             MobclickAgent.onEvent(getApplicationContext(), "home_Fragment");
             if (homeFragment == null) {
@@ -204,16 +204,27 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
                 transaction1.show(homeFragment);
             }
 
-        } else if (checkedId == R.id.rd_educationadmin) {
-            MobclickAgent.onEvent(getApplicationContext(), "mechanics_Fragment");
+        }
+//        else if (checkedId == R.id.rd_educationadmin) {
+//            MobclickAgent.onEvent(getApplicationContext(), "mechanics_Fragment");
+//            EventBusUtil.post(new ShowBackEvent(0));
+//            if (mechanicsFragment == null) {
+//                mechanicsFragment = new MechanicsFragment();
+//                transaction1.add(R.id.fl, mechanicsFragment, "mechanicsFragment");
+//            } else {
+//                transaction1.show(mechanicsFragment);
+//            }
+//
+//        }
+        else if (checkedId == R.id.rd_peijian) {
+            MobclickAgent.onEvent(getApplicationContext(), "peiJianFragment");
             EventBusUtil.post(new ShowBackEvent(0));
-            if (mechanicsFragment == null) {
-                mechanicsFragment = new MechanicsFragment();
-                transaction1.add(R.id.fl, mechanicsFragment, "mechanicsFragment");
+            if (peiJianFragment == null) {
+                peiJianFragment = new PeiJianFragment();
+                transaction1.add(R.id.fl, peiJianFragment, "peiJianFragment");
             } else {
-                transaction1.show(mechanicsFragment);
+                transaction1.show(peiJianFragment);
             }
-
         } else if (checkedId == R.id.rd_finance) {
             MobclickAgent.onEvent(getApplicationContext(), "financial_Fragment");
             EventBusUtil.post(new ShowBackEvent(0));
@@ -247,9 +258,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
             } else {
                 System.exit(0);
             }
-
         }
-
     }
 
     public void registerMessageReceiver() {
@@ -309,14 +318,26 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
             } else if ("MECHANICAL".equals(event.getType())) {//机械
                 MobclickAgent.onEvent(getApplicationContext(), "mechanics_button_home");
                 if (event.getBrand_id() != null) {
-                    EventBusUtil.post(new BrandResultEvent(event.getBrand_id(), event.getBrand_name()));
+                    EventBusUtil.post(new BrandResultEvent(event.getBrand_id(), event.getBrand_name(), 0));
+                    MechanicsActivity.start(MainActivity.this, event.getBrand_id(), event.getBrand_name());
+                } else {
+                    MechanicsActivity.start(MainActivity.this);
                 }
-                onCheckedChanged(mDataBinding.rgOper, R.id.rd_educationadmin);
-                mDataBinding.rdEducationadmin.setChecked(true);
                 EventBusUtil.post(new ShowBackEvent(2));
+//                onCheckedChanged(mDataBinding.rgOper, R.id.rd_educationadmin);
+//                mDataBinding.rdEducationadmin.setChecked(true);
+//                EventBusUtil.post(new ShowBackEvent(2));
             } else if ("PARTS".equals(event.getType())) {//配件
                 MobclickAgent.onEvent(getApplicationContext(), "parts_button_home");
-                PeiJianActivity.start(MainActivity.this);
+//                PeiJianActivity.start(MainActivity.this);
+                if (event.getBrand_id() != null) {
+                    EventBusUtil.post(new BrandResultEvent(event.getBrand_id(), event.getBrand_name(), 2));
+                } else {
+                    EventBusUtil.post(new BrandResultEvent("", "品类", 2));
+                }
+                onCheckedChanged(mDataBinding.rgOper, R.id.rd_peijian);
+                mDataBinding.rdPeijian.setChecked(true);
+                EventBusUtil.post(new ShowBackEvent(2));
             } else if ("AFTER_SALE".equals(event.getType())) {//售后
                 MobclickAgent.onEvent(getApplicationContext(), "after_button_home");
                 AfterSaleActivity.start(MainActivity.this);

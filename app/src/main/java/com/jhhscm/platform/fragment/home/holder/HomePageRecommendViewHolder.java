@@ -11,8 +11,10 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemHomePageRecommendBinding;
 import com.jhhscm.platform.databinding.ItemHomeRecommendListBinding;
+import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
 
@@ -27,7 +29,7 @@ public class HomePageRecommendViewHolder extends AbsRecyclerViewHolder<HomePageI
 
     @Override
     protected void onBindView(final HomePageItem item) {
-        if (item.findCategoryHomePageBean!=null){
+        if (item.findCategoryHomePageBean != null) {
             mBinding.layoutProject.setLayoutManager(new GridLayoutManager(itemView.getContext(), 4));
             InnerAdapter mAdapter = new InnerAdapter(itemView.getContext());
             mBinding.layoutProject.setAdapter(mAdapter);
@@ -36,7 +38,8 @@ public class HomePageRecommendViewHolder extends AbsRecyclerViewHolder<HomePageI
                 @Override
                 public void onClick(View v) {
                     MobclickAgent.onEvent(itemView.getContext(), "parts_home");
-                    PeiJianActivity.start(itemView.getContext());
+//                    PeiJianActivity.start(itemView.getContext());
+                    EventBusUtil.post(new JumpEvent("PARTS"));
                 }
             });
         }
@@ -71,7 +74,8 @@ public class HomePageRecommendViewHolder extends AbsRecyclerViewHolder<HomePageI
                 @Override
                 public void onClick(View v) {
                     MobclickAgent.onEvent(itemView.getContext(), "parts_home");
-                    PeiJianActivity.start(itemView.getContext(), item.getId(), item.getName());
+//                    PeiJianActivity.start(itemView.getContext(), item.getId(), item.getName());
+                    EventBusUtil.post(new JumpEvent("PARTS", item.getId(), item.getName()));
                 }
             });
         }

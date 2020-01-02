@@ -54,6 +54,8 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
     private String cID = "";
     private String pName;
     private String cName;
+    private String brand_id;
+    private String brand_name;
 
     public static MechanicsFragment instance() {
         MechanicsFragment view = new MechanicsFragment();
@@ -68,13 +70,22 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
-
+        if (getArguments() != null) {
+            brand_id = getArguments().getString("brand_id");
+            brand_name = getArguments().getString("brand_name");
+        }
         RelativeLayout.LayoutParams llParams = (RelativeLayout.LayoutParams) mDataBinding.rlTop.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.rlTop.setLayoutParams(llParams);
-
+        mDataBinding.imBack.setVisibility(View.VISIBLE);
+        isShowBack = true;
         fragmentManager = getChildFragmentManager();
-        newMechanicsFragment = new NewMechanicsFragment();
+        if (brand_id != null) {
+            newMechanicsFragment = new NewMechanicsFragment().instance(brand_id, brand_name);
+        } else {
+            newMechanicsFragment = new NewMechanicsFragment();
+        }
+
         fragmentManager.beginTransaction().replace(R.id.fl, newMechanicsFragment, "NewMechanicsFragment").commit();
         mDataBinding.tvNew.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +105,11 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
                     transaction.hide(oldMechanicsFragment);
                 }
                 if (newMechanicsFragment == null) {
-                    newMechanicsFragment = new NewMechanicsFragment();
+                    if (brand_id != null) {
+                        newMechanicsFragment = new NewMechanicsFragment().instance(brand_id, brand_name);
+                    } else {
+                        newMechanicsFragment = new NewMechanicsFragment();
+                    }
                     transaction.add(R.id.fl, newMechanicsFragment, "NewMechanicsFragment");
                 } else {
                     transaction.show(newMechanicsFragment);
@@ -152,7 +167,8 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
         mDataBinding.imBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBusUtil.post(new JumpEvent("HOME_PAGE", null));
+//                EventBusUtil.post(new JumpEvent("HOME_PAGE", null));
+                getActivity().finish();
             }
         });
         initPrivince();
@@ -292,7 +308,7 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
 
         @Override
         public AbsRecyclerViewHolder<GetRegionBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false),0);
+            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false), 0);
         }
     }
 
@@ -303,7 +319,7 @@ public class MechanicsFragment extends AbsFragment<FragmentMechanicsBinding> {
 
         @Override
         public AbsRecyclerViewHolder<GetRegionBean.ResultBean> onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false),0);
+            return new GetRegionViewHolder(mInflater.inflate(R.layout.item_mechanics_privince, parent, false), 0);
         }
     }
 }

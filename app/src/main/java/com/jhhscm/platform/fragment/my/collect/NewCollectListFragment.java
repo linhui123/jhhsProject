@@ -220,13 +220,13 @@ public class NewCollectListFragment extends AbsFragment<FragmentCollectListBindi
      */
     private void collectDelete(final String good_code) {
         Map<String, String> map = new TreeMap<String, String>();
-        map.put("user_code", userSession.getUserCode());
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         map.put("good_code", good_code);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
         String sign = Sign.getSignKey(getActivity(), map, "collectDelete: ");
         NetBean netBean = new NetBean();
-        netBean.setToken(userSession.getToken());
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(CollectDeleteAction.newInstance(getContext(), netBean)

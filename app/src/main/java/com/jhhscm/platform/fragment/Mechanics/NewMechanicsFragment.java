@@ -2,6 +2,7 @@ package com.jhhscm.platform.fragment.Mechanics;
 
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -74,6 +75,15 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
         return view;
     }
 
+    public static NewMechanicsFragment instance( String brand_id, String brand_name) {
+        NewMechanicsFragment view = new NewMechanicsFragment();
+        Bundle bundle=new Bundle();
+        bundle.putString("brand_id",brand_id);
+        bundle.putString("brand_name",brand_name);
+        view.setArguments(bundle);
+        return view;
+    }
+
     @Override
     protected FragmentNewMechanicsBinding bindRootView(LayoutInflater inflater, ViewGroup container, boolean attachToRoot) {
         return FragmentNewMechanicsBinding.inflate(inflater, container, attachToRoot);
@@ -83,6 +93,13 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
         if (getActivity() != null) {
+            if (getArguments() != null) {
+                brand_id = getArguments().getString("brand_id");
+                if (getArguments().getString("brand_name") != null
+                        && getArguments().getString("brand_name").length() > 0) {
+                    mDataBinding.tvPinpai.setText(getArguments().getString("brand_name"));
+                }
+            }
             mDataBinding.wrvRecycler.addItemDecoration(new DividerItemStrokeDecoration(getContext()));
             mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
             mAdapter = new InnerAdapter(getActivity());

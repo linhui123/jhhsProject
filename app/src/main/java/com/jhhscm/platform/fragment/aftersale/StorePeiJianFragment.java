@@ -459,6 +459,8 @@ public class StorePeiJianFragment extends AbsFragment<FragmentStorePeijianBindin
             public void onItemClick(GetComboBoxBean.ResultBean item) {
                 category_id = item.getKey_name();
                 mDataBinding.tvQuanbu.setText(item.getKey_value());
+                brand_id = "";
+                mDataBinding.tvPinpai.setText("品牌");
                 mDataBinding.llXiala.setVisibility(View.GONE);
                 closeDrap();
                 mDataBinding.wrvRecycler.autoRefresh();
