@@ -8,13 +8,17 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
@@ -37,11 +41,13 @@ import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.tool.UdaUtils;
 import com.jhhscm.platform.views.dialog.MapSelectDialog;
+import com.jhhscm.platform.views.dialog.TelPhoneDialog;
 import com.jhhscm.platform.views.selector.ImageSelectorItem;
 import com.jhhscm.platform.views.selector.ImageSelectorPreviewActivity;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +63,7 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
     private boolean fast;
     private String bus_code;
     private StorePeiJianFragment peiJianFragment;
+    private BusinessDetailBean businessDetailBean;
 
     public static StoreDetailFragment instance() {
         StoreDetailFragment view = new StoreDetailFragment();
@@ -204,6 +211,7 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
                                 if (response != null) {
                                     new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
                                     if (response.body().getCode().equals("200")) {
+                                        businessDetailBean = response.body().getData();
                                         initView(response.body().getData());
                                     } else {
                                         ToastUtils.show(getContext(), response.body().getMessage());
@@ -271,6 +279,7 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
             }
             initBanner(data);
             initLocation(data);
+            initTel();
         }
     }
 
@@ -385,5 +394,57 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
     public void onDestroy() {
         super.onDestroy();
         EventBusUtil.unregisterEvent(this);
+    }
+
+    private void initTel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mDataBinding.coordinator.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                    if (Math.abs(scrollY - oldScrollY) > 5) {
+                        imgTranslateAnimation(mDataBinding.tel, 0, 200);
+                        mDataBinding.tel.setVisibility(View.GONE);
+                    } else {
+                        mDataBinding.tel.setVisibility(View.VISIBLE);
+                        imgTranslateAnimation(mDataBinding.tel, 200, 0);
+                    }
+                }
+            });
+        }
+
+        mDataBinding.tel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //6.0权限处理
+                YXPermission.getInstance(getContext()).request(new AcpOptions.Builder()
+                        .setDeniedCloseBtn(getContext().getString(R.string.permission_dlg_close_txt))
+                        .setDeniedSettingBtn(getContext().getString(R.string.permission_dlg_settings_txt))
+                        .setDeniedMessage(getContext().getString(R.string.permission_denied_txt, "拨打电话"))
+                        .setPermissions(Manifest.permission.CALL_PHONE).build(), new AcpListener() {
+                    @SuppressLint("MissingPermission")
+                    @Override
+                    public void onGranted() {
+                        Uri uriScheme = Uri.parse("tel:" + businessDetailBean.getResult().get(0).getMobile());
+                        Intent it = new Intent(Intent.ACTION_CALL, uriScheme);
+                        getContext().startActivity(it);
+                    }
+
+                    @Override
+                    public void onDenied(List<String> permissions) {
+
+                    }
+                });
+            }
+        });
+    }
+
+    //动画的左右进出平移动画
+    private void imgTranslateAnimation(View view, float fromXDelta, float toXDelta) {
+        TranslateAnimation translateAnimation = new TranslateAnimation(fromXDelta, toXDelta, 0, 0);
+        translateAnimation.setFillAfter(true);//这句话会造成imageView.setVisibility(GONE)的时候，会停留在动画最后的地方，导致还没有隐藏的假象。
+        translateAnimation.setDuration(800);
+        view.setAnimation(translateAnimation);
+        view.startAnimation(translateAnimation);
     }
 }
