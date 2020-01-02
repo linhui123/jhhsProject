@@ -59,11 +59,13 @@ import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetOldDetailsBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
+import com.jhhscm.platform.fragment.my.collect.CollectDeleteAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
+import com.jhhscm.platform.http.bean.ResultBean;
 import com.jhhscm.platform.http.bean.SaveBean;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.http.sign.Sign;
@@ -114,6 +116,7 @@ public class MechanicsH5Activity extends AbsActivity {
     public static final int XJ = 1;
     public static final int ESJ = 2;
     public static final int PJ = 3;
+    private boolean isCollect;
 
     private String SHARE_URL = "";
     private String TITLE = "";
@@ -199,7 +202,12 @@ public class MechanicsH5Activity extends AbsActivity {
                         } else {
                             MobclickAgent.onEvent(getApplicationContext(), "old_mechanics_collect");
                         }
-                        save(ConfigUtils.getCurrentUser(getApplicationContext()).getUserCode(), goodCode, ConfigUtils.getCurrentUser(getApplicationContext()).getToken());
+                        if (!isCollect) {
+                            MobclickAgent.onEvent(getApplicationContext(), "parts_collect");
+                            save(ConfigUtils.getCurrentUser(getApplicationContext()).getUserCode(), goodCode, ConfigUtils.getCurrentUser(getApplicationContext()).getToken());
+                        } else {
+                            deleteCollect(goodCode);
+                        }
                     }
                 } else {
                     startNewActivity(LoginActivity.class);
@@ -1029,6 +1037,7 @@ public class MechanicsH5Activity extends AbsActivity {
                         if (response != null) {
                             new HttpHelper().showError(getApplicationContext(), response.body().getCode(), response.body().getMessage());
                             if (response.body().getCode().equals("200")) {
+                                isCollect = true;
                                 Drawable rightDrawable = getResources().getDrawable(R.mipmap.ic_shoucang2);
                                 rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());  // left, top, right, bottom
                                 mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
@@ -1040,6 +1049,49 @@ public class MechanicsH5Activity extends AbsActivity {
                                 ToastUtils.show(getApplicationContext(), "网络错误");
                             } else {
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
+                            }
+                        }
+                    }
+                }));
+    }
+
+    /**
+     * 取消收藏
+     */
+    private void deleteCollect(String good_code) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("user_code", ConfigUtils.getCurrentUser(getApplicationContext()).getUserCode());
+        map.put("good_code", good_code);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(this, map, "save");
+        NetBean netBean = new NetBean();
+        netBean.setToken(ConfigUtils.getCurrentUser(getApplicationContext()).getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        showDialog();
+        onNewRequestCall(CollectDeleteAction.newInstance(this, netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response,
+                                           BaseErrorInfo baseErrorInfo) {
+                        closeDialog();
+                        if (new HttpHelper().showError(getApplicationContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                            return;
+                        }
+                        if (response != null) {
+                            new HttpHelper().showError(getApplicationContext(), response.body().getCode(), response.body().getMessage());
+                            if (response.body().getCode().equals("200")) {
+                                isCollect = false;
+                                Drawable rightDrawable = getResources().getDrawable(R.mipmap.ic_shoucang);
+                                rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());  // left, top, right, bottom
+                                mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
+                                ToastUtils.show(getApplicationContext(), "取消收藏");
+                            } else if (response.body().getCode().equals("1003")) {
+                                ToastUtils.show(getApplicationContext(), "登录信息过期，请重新登录");
+                                startNewActivity(LoginActivity.class);
+                            } else {
+                                ToastUtils.show(getApplicationContext(), "网络错误");
                             }
                         }
                     }
@@ -1075,20 +1127,23 @@ public class MechanicsH5Activity extends AbsActivity {
                             new HttpHelper().showError(getApplicationContext(), response.body().getCode(), response.body().getMessage());
                             if (response.body().getCode().equals("200")) {
                                 if (response.body().getData().isResult()) {
+                                    isCollect = true;
                                     Drawable rightDrawable = getResources().getDrawable(R.mipmap.ic_shoucang2);
                                     rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());  // left, top, right, bottom
                                     mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
                                 } else {
+                                    isCollect = false;
                                     Drawable rightDrawable = getResources().getDrawable(R.mipmap.ic_shoucang);
                                     rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());  // left, top, right, bottom
                                     mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
                                 }
                             } else if (response.body().getCode().equals("1003")) {
-//                                ToastUtils.show(getApplicationContext(), "登录信息过期，请重新登录");
-//                                startNewActivity(LoginActivity.class);
+                                isCollect = false;
                             } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                isCollect = false;
                                 ToastUtils.show(getApplicationContext(), "网络错误");
                             } else {
+                                isCollect = false;
                                 ToastUtils.show(getApplicationContext(), response.body().getMessage());
                             }
                         }
