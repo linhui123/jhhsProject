@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
+import com.jhhscm.platform.fragment.address.ReceiveAddressDetailFragment;
 import com.jhhscm.platform.fragment.aftersale.StoreDetailFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 
@@ -43,6 +45,11 @@ public class StoreDetailActivity extends AbsToolbarActivity {
     }
 
     @Override
+    protected boolean enableAddButton() {
+        return true;
+    }
+
+    @Override
     protected boolean fullScreenMode() {
         return true;
     }
@@ -54,7 +61,18 @@ public class StoreDetailActivity extends AbsToolbarActivity {
 
     @Override
     protected String getToolBarTitle() {
-        return "维修店";
+        setToolBarRightAddButton(R.mipmap.ic_shoucang3);
+        return "维修厂";
+    }
+
+    @Override
+    protected void onAddClick(Context context) {
+        super.onToolbarRightClick(context);
+        ((StoreDetailFragment) mFragment).collect();
+    }
+
+    public void setToolBarRightAddButton(int mipmap) {
+        mDataBinding.ivAdd.setImageResource(mipmap);
     }
 
     @Override

@@ -349,7 +349,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
                     //UrlUtils.JF
                     FinancialH5Activity.start(MainActivity.this, adBean.getPARAM().getHREF_URL(), "金服");
                 } else {
-//                    ToastUtils.show(MainActivity.this, "地址为空");
+                    ToastUtils.show(MainActivity.this, "该功能正在建设中");
                 }
 //                onCheckedChanged(mDataBinding.rgOper, R.id.rd_finance);
 //                mDataBinding.rdFinance.setChecked(true);

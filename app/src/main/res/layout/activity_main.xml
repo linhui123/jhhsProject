@@ -92,7 +92,7 @@
                 android:drawableTop="@drawable/zulin_selector"
                 android:drawablePadding="3dp"
                 android:gravity="center"
-                android:text="租赁"
+                android:text="融资"
                 android:textColor="@drawable/index_textcolor_selecter"
                 android:textSize="@dimen/text_size_12" />
 

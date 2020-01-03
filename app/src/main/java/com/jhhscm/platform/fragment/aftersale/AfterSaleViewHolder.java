@@ -50,7 +50,7 @@ public class AfterSaleViewHolder extends AbsRecyclerViewHolder<FindBusListBean.D
                 location = location + item.getAddress_detail() + " ";
             }
             mBinding.tv2.setText("地址：" + location);
-            if (item.getDistance() != null) {
+            if (item.getMobile() != null) {
                 mBinding.tv4.setText("电话：" + UdaUtils.hiddenPhoneNumber(item.getMobile()));
             } else {
                 mBinding.tv4.setText("电话：--");

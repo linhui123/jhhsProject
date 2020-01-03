@@ -44,7 +44,7 @@ public class AfterSaleActivity extends AbsToolbarActivity {
     @Override
     protected String getToolBarTitle() {
         mDataBinding.toolbar.setVisibility(View.GONE);
-        return "售后";
+        return "维修";
     }
 
     @Override

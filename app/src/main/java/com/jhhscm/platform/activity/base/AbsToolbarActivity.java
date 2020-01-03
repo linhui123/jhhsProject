@@ -68,6 +68,10 @@ public abstract class AbsToolbarActivity extends AbsActivity {
         }
     }
 
+    protected void setToolBarRightAddButton(int mipmap) {
+        if (enableOperateText()) mDataBinding.ivAdd.setImageResource(mipmap);
+    }
+
     @Override
     protected boolean fullScreenMode() {
         return true;

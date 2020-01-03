@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -22,17 +23,27 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
+import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.LoginActivity;
+import com.jhhscm.platform.activity.StoreDetailActivity;
 import com.jhhscm.platform.databinding.FragmentStoreDetailBinding;
 import com.jhhscm.platform.event.FinishEvent;
+import com.jhhscm.platform.fragment.Mechanics.action.FindCollectByUserCodeAction;
+import com.jhhscm.platform.fragment.Mechanics.action.SaveAction;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.my.collect.CollectDeleteAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
+import com.jhhscm.platform.http.bean.ResultBean;
+import com.jhhscm.platform.http.bean.SaveBean;
+import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.permission.YXPermission;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.MapUtil;
@@ -61,6 +72,7 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
     private String latitude;
     private String longitude;
     private boolean fast;
+    public boolean isCollect;
     private String bus_code;
     private StorePeiJianFragment peiJianFragment;
     private BusinessDetailBean businessDetailBean;
@@ -120,6 +132,14 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
         } else {
             ToastUtil.show(getContext(), "数据错误");
             getActivity().finish();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (bus_code != null) {
+            findCollectByUserCode(bus_code);
         }
     }
 
@@ -446,5 +466,168 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
         translateAnimation.setDuration(800);
         view.setAnimation(translateAnimation);
         view.startAnimation(translateAnimation);
+    }
+
+    public void collect() {
+        if (isCollect) {
+            deleteCollect(bus_code);
+        } else {
+            save(bus_code);
+        }
+    }
+
+    private void showCollect() {
+        if (isCollect) {
+            ((StoreDetailActivity) getActivity()).setToolBarRightAddButton(R.mipmap.ic_shoucang2);
+        } else {
+            ((StoreDetailActivity) getActivity()).setToolBarRightAddButton(R.mipmap.ic_shoucang3);
+        }
+    }
+
+    /**
+     * 收藏
+     */
+    private void save(String bus_code) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+        map.put("bus_code", bus_code);
+        map.put("token", ConfigUtils.getCurrentUser(getContext()).getToken());
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "save");
+        NetBean netBean = new NetBean();
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        showDialog();
+        onNewRequestCall(SaveBusAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity> response,
+                                           BaseErrorInfo baseErrorInfo) {
+                        closeDialog();
+                        if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                            return;
+                        }
+                        if (response != null) {
+                            new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                            if (response.body().getCode().equals("200")) {
+                                isCollect = true;
+//                                Drawable rightDrawable = getResources().getDrawable(R.mipmap.ic_shoucang2);
+//                                rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());  // left, top, right, bottom
+//                                mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
+                                ToastUtils.show(getContext(), "收藏成功");
+                            } else if (response.body().getCode().equals("1003")) {
+                                ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+                                startNewActivity(LoginActivity.class);
+                            } else {
+                                ToastUtils.show(getContext(), response.body().getMessage());
+                            }
+                            showCollect();
+                        }
+                    }
+                }));
+    }
+
+    /**
+     * 取消收藏
+     */
+    private void deleteCollect(String bus_code) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+        map.put("good_code", bus_code);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "deleteCollect");
+        NetBean netBean = new NetBean();
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        showDialog();
+        onNewRequestCall(CollectDeleteAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<ResultBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<ResultBean>> response,
+                                           BaseErrorInfo baseErrorInfo) {
+                        closeDialog();
+                        if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                            return;
+                        }
+                        if (response != null) {
+                            new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                            if (response.body().getCode().equals("200")) {
+                                isCollect = false;
+//                                Drawable rightDrawable = getResources().getDrawable(R.mipmap.ic_shoucang);
+//                                rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());  // left, top, right, bottom
+//                                mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
+                                ToastUtils.show(getContext(), "取消收藏");
+                            } else if (response.body().getCode().equals("1003")) {
+                                ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+                                startNewActivity(LoginActivity.class);
+                            } else {
+                                ToastUtils.show(getContext(), "网络错误");
+                            }
+                            showCollect();
+                        }
+                    }
+                }));
+    }
+
+    /**
+     * 判断是否收藏
+     */
+    private void findCollectByUserCode(String bus_code) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+//        map.put("bus_code", bus_code);
+        map.put("good_code", bus_code);
+        map.put("token", ConfigUtils.getCurrentUser(getContext()).getToken());
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "save");
+        NetBean netBean = new NetBean();
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        showDialog();
+        onNewRequestCall(FindCollectByUserCodeAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<SaveBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<SaveBean>> response,
+                                           BaseErrorInfo baseErrorInfo) {
+                        if (getContext() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                if (response.body().getCode().equals("200")) {
+                                    if (response.body().getData().isResult()) {
+                                        isCollect = true;
+//                                    Drawable rightDrawable = getResources().getDrawable(R.mipmap.ic_shoucang2);
+//                                    rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());  // left, top, right, bottom
+//                                    mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
+                                    } else {
+                                        isCollect = false;
+//                                    Drawable rightDrawable = getResources().getDrawable(R.mipmap.ic_shoucang);
+//                                    rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());  // left, top, right, bottom
+//                                    mDataBinding.tvShoucang.setCompoundDrawables(null, rightDrawable, null, null);  // left, top, right, bottom
+                                    }
+                                } else if (response.body().getCode().equals("1003")) {
+                                    isCollect = false;
+                                    ConfigUtils.removeCurrentUser(getContext());
+                                } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                    isCollect = false;
+                                    ToastUtils.show(getContext(), "网络错误");
+                                } else {
+                                    isCollect = false;
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                                showCollect();
+                            }
+                        }
+                    }
+                }));
     }
 }

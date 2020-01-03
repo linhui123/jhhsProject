@@ -246,6 +246,12 @@ public interface ApiService {
     @POST(SAVE)
     Call<BaseEntity> save(@Body NetBean content);
 
+    String SAVE_BUS = "v1-0/collect/saveBus";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(SAVE_BUS)
+    Call<BaseEntity> saveBus(@Body NetBean content);
+
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(FIND_COLLECTBYUSERCODE)
     Call<BaseEntity<SaveBean>> findCollectByUserCode(@Body NetBean content);
