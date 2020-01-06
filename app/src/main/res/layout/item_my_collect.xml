@@ -9,7 +9,7 @@
         <TextView
             android:id="@+id/item_slide"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="110dp"
             android:layout_alignParentRight="true"
             android:background="#ff565b"
             android:gravity="center"
@@ -20,14 +20,15 @@
         <RelativeLayout
             android:id="@+id/rl"
             android:layout_width="match_parent"
-            android:tag="slide_flag"
+            android:layout_height="110dp"
+            android:layout_centerVertical="true"
             android:clickable="true"
-            android:layout_height="100dp">
+            android:tag="slide_flag">
 
             <RelativeLayout
                 android:id="@+id/rl_new"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="110dp"
                 android:background="@color/white"
                 android:paddingLeft="@dimen/padding_15"
                 android:paddingTop="@dimen/padding_10"
@@ -35,12 +36,17 @@
                 android:paddingBottom="@dimen/padding_10"
                 android:visibility="gone">
 
-                <ImageView
+                <com.jhhscm.platform.views.OvalImageView
                     android:id="@+id/im_new"
                     android:layout_width="128dp"
                     android:layout_height="90dp"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/ic_launcher" />
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_site"
+                    roundiv:left_bottom_radius1="5dp"
+                    roundiv:left_top_radius1="5dp"
+                    roundiv:right_bottom_radius1="5dp"
+                    roundiv:right_top_radius1="5dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -63,7 +69,7 @@
                         android:id="@+id/tv_new_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="铲斗容量： m³"
@@ -74,7 +80,7 @@
                         android:id="@+id/tv_new_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
+                        android:layout_marginTop="3dp"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="额定功率： km/rpm"
@@ -85,7 +91,7 @@
                         android:id="@+id/tv_new_4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_marginTop="8dp"
                         android:background="@drawable/edit_bg_397"
                         android:paddingLeft="@dimen/padding_10"
                         android:paddingRight="@dimen/padding_10"
@@ -98,7 +104,7 @@
             <RelativeLayout
                 android:id="@+id/rl_old"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="110dp"
                 android:background="@color/white"
                 android:paddingLeft="@dimen/padding_15"
                 android:paddingTop="@dimen/dp_5"
@@ -106,16 +112,21 @@
                 android:paddingBottom="@dimen/dp_5"
                 android:visibility="gone">
 
-                <ImageView
+                <com.jhhscm.platform.views.OvalImageView
                     android:id="@+id/im_old"
                     android:layout_width="128dp"
                     android:layout_height="90dp"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/ic_launcher" />
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_site"
+                    roundiv:left_bottom_radius1="5dp"
+                    roundiv:left_top_radius1="5dp"
+                    roundiv:right_bottom_radius1="5dp"
+                    roundiv:right_top_radius1="5dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/padding_10"
                     android:layout_toRightOf="@+id/im_old"
                     android:orientation="vertical">
@@ -134,7 +145,7 @@
                         android:id="@+id/tv_old_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_marginTop="8dp"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="铲斗容量：0.26 m"
@@ -145,7 +156,7 @@
                         android:id="@+id/tv_old_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_3"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="65万 首付32.5万"
@@ -156,7 +167,7 @@
                         android:id="@+id/tv_old_4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_marginTop="8dp"
                         android:background="@drawable/edit_bg_397"
                         android:paddingLeft="@dimen/padding_10"
                         android:paddingRight="@dimen/padding_10"
@@ -169,7 +180,7 @@
             <RelativeLayout
                 android:id="@+id/rl_peijian"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="110dp"
                 android:background="@color/white"
                 android:paddingLeft="@dimen/padding_15"
                 android:paddingTop="@dimen/padding_10"
@@ -177,12 +188,17 @@
                 android:paddingBottom="@dimen/padding_10"
                 android:visibility="gone">
 
-                <ImageView
+                <com.jhhscm.platform.views.OvalImageView
                     android:id="@+id/im_peijian"
                     android:layout_width="128dp"
                     android:layout_height="90dp"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/ic_launcher" />
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_site"
+                    roundiv:left_bottom_radius1="5dp"
+                    roundiv:left_top_radius1="5dp"
+                    roundiv:right_bottom_radius1="5dp"
+                    roundiv:right_top_radius1="5dp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -197,6 +213,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="2"
+                        android:minLines="2"
                         android:text="三一重工SY365H挖掘机"
                         android:textColor="@color/acc3"
                         android:textSize="@dimen/sp_14" />
@@ -205,7 +222,7 @@
                         android:id="@+id/tv_peijian_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_above="@+id/tv_peijian_3"
+                        android:layout_below="@+id/tv_peijian_1"
                         android:layout_marginTop="@dimen/dp_5"
                         android:ellipsize="end"
                         android:singleLine="true"
@@ -214,21 +231,46 @@
                         android:textSize="@dimen/text_size_14" />
 
                     <TextView
-                        android:id="@+id/tv_peijian_3"
+                        android:id="@+id/tv_peijian_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_peijian_1"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:layout_marginTop="6dp"
+                        android:layout_toRightOf="@+id/tv_peijian_2"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="原价 55.00"
+                        android:textColor="@color/acc9"
+                        android:textSize="@dimen/text_size_12" />
+
+                    <TextView
+                        android:id="@+id/tv_peijian_4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginTop="@dimen/padding_10"
-                        android:text="已售出 250件"
+                        android:text="自营"
                         android:textColor="@color/acc9"
                         android:textSize="@dimen/text_size_12" />
+
+                    <TextView
+                        android:id="@+id/tv_peijian_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:text="已售 250件"
+                        android:textColor="@color/acc9"
+                        android:textSize="@dimen/text_size_12" />
+
+
                 </RelativeLayout>
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_bus"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="110dp"
                 android:background="@color/white"
                 android:paddingLeft="@dimen/padding_15"
                 android:paddingTop="@dimen/padding_10"
@@ -262,9 +304,9 @@
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:text=""
-                        android:textStyle="bold"
                         android:textColor="@color/acc3"
-                        android:textSize="@dimen/sp_14" />
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_4"

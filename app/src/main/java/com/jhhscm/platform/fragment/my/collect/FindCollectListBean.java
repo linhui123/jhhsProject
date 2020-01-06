@@ -166,6 +166,24 @@ public class FindCollectListBean {
         private String counter_price;
         private String retail_price;
         private String num;
+        private String bus_name;
+        private String bus_code;
+
+        public String getBus_name() {
+            return bus_name;
+        }
+
+        public void setBus_name(String bus_name) {
+            this.bus_name = bus_name;
+        }
+
+        public String getBus_code() {
+            return bus_code;
+        }
+
+        public void setBus_code(String bus_code) {
+            this.bus_code = bus_code;
+        }
 
         public String getNum() {
             return num;

@@ -77,7 +77,8 @@ public class OrderDetailFragment extends AbsFragment<FragmentOrderDetailBinding>
         type = getArguments().getInt("type");
         Log.e("type", "type :" + type);
         order_code = getArguments().getString("orderGood");
-
+        mDataBinding.isSchemeImage.setVisibility(View.GONE);
+        mDataBinding.tvPiaoju.setVisibility(View.GONE);
         mDataBinding.rv.addItemDecoration(new DividerItemDecoration(getContext()));
         mDataBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new InnerAdapter(getContext());

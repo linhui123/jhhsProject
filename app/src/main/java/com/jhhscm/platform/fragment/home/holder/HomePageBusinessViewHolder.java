@@ -1,5 +1,7 @@
 package com.jhhscm.platform.fragment.home.holder;
 
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -30,11 +32,7 @@ public class HomePageBusinessViewHolder extends AbsRecyclerViewHolder<HomePageIt
     @Override
     protected void onBindView(final HomePageItem item) {
         if (item.adBean3 != null && item.adBean3.getResult() != null) {
-            if (item.adBean3.getResult().size() < 9) {
-                mBinding.indicator.setVisibility(View.GONE);
-            } else {
-                mBinding.indicator.setVisibility(View.VISIBLE);
-            }
+
             dlGridViewBeans = new ArrayList<>();
             for (AdBean.ResultBean resultBean : item.adBean3.getResult()) {
                 DLGridViewBean dlGridViewBean = new DLGridViewBean();
@@ -42,6 +40,11 @@ public class HomePageBusinessViewHolder extends AbsRecyclerViewHolder<HomePageIt
                 dlGridViewBean.setText(resultBean.getName());
                 dlGridViewBean.setObject(resultBean);
                 dlGridViewBeans.add(dlGridViewBean);
+            }
+            if (dlGridViewBeans.size() < 9) {
+                mBinding.indicator.setVisibility(View.GONE);
+            } else {
+                mBinding.indicator.setVisibility(View.VISIBLE);
             }
             setting = new DLVPSetting(itemView.getContext(), 2, 4, new DLVPSetting.OnClickItemListener() {
                 @Override
@@ -54,27 +57,24 @@ public class HomePageBusinessViewHolder extends AbsRecyclerViewHolder<HomePageIt
 
                 @Override
                 public void OnClickItem(int position, Map<String, Object> map) {
-
                 }
             });
             mBinding.viewPager.setAdapter(setting.getAdapter(dlGridViewBeans));
-//            mBinding.viewPager.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-//                @Override
-//                public void onViewAttachedToWindow(View v) {
-//                    try {
-//                        Field mFirstLayout = ViewPager.class.getDeclaredField("mFirstLayout");
-//                        mFirstLayout.setAccessible(true);
-//                        mFirstLayout.set(mBinding.viewPager, false);
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//                @Override
-//                public void onViewDetachedFromWindow(View v) {
-//
-//                }
-//            });
+            mBinding.viewPager.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+                @Override
+                public void onViewAttachedToWindow(View v) {
+                    try {
+                        mBinding.viewPager.getAdapter().notifyDataSetChanged();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onViewDetachedFromWindow(View v) {
+
+                }
+            });
             mBinding.indicator.setViewPager(mBinding.viewPager);
         }
     }

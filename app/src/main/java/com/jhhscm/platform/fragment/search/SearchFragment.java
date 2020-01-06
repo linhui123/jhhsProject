@@ -83,16 +83,15 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
     private void initTab() {
         mScreenWidth = Utils.getWindowsWidth(getActivity());
         if (mDataBinding.enhanceTabLayout.getTabLayout().getTabCount() == 0) {
-            mDataBinding.enhanceTabLayout.addTab("  新机  ", 3, mScreenWidth);
-            mDataBinding.enhanceTabLayout.addTab("二手机", 3, mScreenWidth);
             mDataBinding.enhanceTabLayout.addTab("  配件  ", 3, mScreenWidth);
+            mDataBinding.enhanceTabLayout.addTab("二手机", 3, mScreenWidth);
+            mDataBinding.enhanceTabLayout.addTab("  新机  ", 3, mScreenWidth);
         }
 
         final List<Fragment> fragments = new ArrayList<>();
-        fragments.add(newListFragment);
-        fragments.add(oldListFragment);
         fragments.add(peijianListFragment);
-
+        fragments.add(oldListFragment);
+        fragments.add(newListFragment);
         mDataBinding.vpM.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mDataBinding.enhanceTabLayout.getTabLayout()));
         mDataBinding.vpM.setOffscreenPageLimit(3);
         mDataBinding.enhanceTabLayout.setupWithViewPager(mDataBinding.vpM);

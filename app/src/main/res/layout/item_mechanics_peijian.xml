@@ -61,16 +61,26 @@
                 android:textSize="@dimen/text_size_14" />
 
             <TextView
-                android:id="@+id/tv_3"
+                android:id="@+id/tv_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_1"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="@dimen/padding_10"
-                android:text="已售出 0件"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginTop="6dp"
+                android:layout_toRightOf="@+id/tv_2"
+                android:text=""
                 android:textColor="@color/acc9"
                 android:textSize="@dimen/text_size_12" />
 
+            <TextView
+                android:id="@+id/tv_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:text="已售 0件"
+                android:textColor="@color/acc9"
+                android:textSize="@dimen/text_size_12" />
 
             <TextView
                 android:id="@+id/tv_store"
@@ -82,7 +92,7 @@
                 android:maxLines="1"
                 android:text="自营"
                 android:textColor="@color/acc3"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/text_size_12" />
         </RelativeLayout>
     </RelativeLayout>
 </layout>

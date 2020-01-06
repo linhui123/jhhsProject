@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
@@ -133,9 +134,16 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         });
 
         initTel();
+
         checkVersion();
-        if (ConfigUtils.getCurrentUser(getContext()) != null
-                && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+        if (ConfigUtils.getCurrentUser(
+
+                getContext()) != null
+                && ConfigUtils.getCurrentUser(
+
+                getContext()).
+
+                getUserCode() != null) {
             isNewUser();
             getCouponslist2();
         }
@@ -1014,7 +1022,8 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
     }
 
     @Override
-    public void onWeatherForecastSearched(LocalWeatherForecastResult localWeatherForecastResult, int i) {
+    public void onWeatherForecastSearched(LocalWeatherForecastResult localWeatherForecastResult,
+                                          int i) {
 
     }
 }

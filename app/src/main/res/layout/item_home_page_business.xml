@@ -18,6 +18,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="@dimen/padding_10"
             android:layout_marginRight="10dp"
+            android:layout_marginBottom="@dimen/padding_10"
             android:background="@drawable/bg_white_shadow"
             android:orientation="vertical">
 
@@ -32,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/viewPager"
-                android:layout_marginTop="@dimen/padding_10"
+                android:layout_marginTop="-10dp"
                 app:pageColor="@color/colorAccent"
                 app:radius="3dp"
                 app:selectColor="@color/colorPrimary"

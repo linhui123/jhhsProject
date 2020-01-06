@@ -1,5 +1,9 @@
 package com.jhhscm.platform.fragment.Mechanics.holder;
 
+import android.graphics.Paint;
+import android.text.SpannableString;
+import android.text.style.StrikethroughSpan;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 
 import com.jhhscm.platform.R;
@@ -45,7 +49,7 @@ public class PeiJianViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.Da
                 }
             });
         } else {
-            mBinding.tvStore.setText("自营>");
+            mBinding.tvStore.setText("自营");
         }
         if (item.getNum() != null && item.getNum().length() < 0 && Integer.parseInt(item.getNum()) == 0) {
             mBinding.im2.setVisibility(View.VISIBLE);
@@ -54,7 +58,7 @@ public class PeiJianViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.Da
         }
         mBinding.tv1.setText(item.getName());
         mBinding.tv2.setText(item.getCounter_price() != null ? "￥" + item.getCounter_price() : "￥ --");
-        mBinding.tv3.setText(item.getSale_num() != null ? "已售出 " + item.getSale_num() + " 件" : "已售出 --件");
+        mBinding.tv3.setText(item.getSale_num() != null ? "已售 " + item.getSale_num() + " 件" : "已售 --件");
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,13 +67,13 @@ public class PeiJianViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.Da
                         item.getName(), item.getGood_code(), item.getPic_url(), item.getCounter_price(), item.getNum(), 3);
             }
         });
-
-//        textView.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
-//        textView.getPaint().setAntiAlias(true);//抗锯齿
-//        textview.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
-//        setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG); // 设置中划线并加清晰
-//        textView.getPaint().setFlags(0); // 取消设置的的划线
-
+        if (item.getOriginal_price() != null) {
+            SpannableString content = new SpannableString("原价：" + item.getOriginal_price());
+            content.setSpan(new StrikethroughSpan(), 3, content.length(), 0);
+            mBinding.tv4.setText(content);
+        }else {
+            mBinding.tv4.setText("");
+        }
     }
 }
 

@@ -1,5 +1,7 @@
 package com.jhhscm.platform.fragment.Mechanics.holder;
 
+import android.text.SpannableString;
+import android.text.style.StrikethroughSpan;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -46,7 +48,7 @@ public class PeiJian2ViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.D
                 }
             });
         } else {
-            mBinding.tvStore.setText("自营>");
+            mBinding.tvStore.setText("自营");
         }
         if (item.getNum() != null && item.getNum().length() < 0 && Integer.parseInt(item.getNum()) == 0) {
             mBinding.im2.setVisibility(View.VISIBLE);
@@ -55,7 +57,7 @@ public class PeiJian2ViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.D
         }
         mBinding.tv1.setText(item.getName());
         mBinding.tv2.setText(item.getCounter_price() != null ? "￥" + item.getCounter_price() : "￥ --");
-        mBinding.tv3.setText(item.getSale_num() != null ? "已售出 " + item.getSale_num() + " 件" : "已售出 --件");
+        mBinding.tv3.setText(item.getSale_num() != null ? "已售 " + item.getSale_num() + " 件" : "已售 --件");
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,5 +66,13 @@ public class PeiJian2ViewHolder extends AbsRecyclerViewHolder<FindCategoryBean.D
                         item.getName(), item.getGood_code(), item.getPic_url(), item.getCounter_price(), item.getNum(), 3);
             }
         });
+
+        if (item.getOriginal_price() != null) {
+            SpannableString content = new SpannableString("原价：" + item.getOriginal_price());
+            content.setSpan(new StrikethroughSpan(), 3, content.length(), 0);
+            mBinding.tv4.setText(content);
+        }else {
+            mBinding.tv4.setText("");
+        }
     }
 }

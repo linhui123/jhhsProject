@@ -1,6 +1,5 @@
 package com.jhhscm.platform.fragment.my.store;
 
-
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +28,7 @@ import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
@@ -98,15 +98,25 @@ public class StoreOrderSubmit2Fragment extends AbsFragment<FragmentStoreOrderSub
         mDataBinding.tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BusinessFindcategorybyBuscodeBean businessFindcategorybyBuscodeBean = new BusinessFindcategorybyBuscodeBean();
-                List<BusinessFindcategorybyBuscodeBean.DataBean> list = new ArrayList<>();
-                for (BusinessFindcategorybyBuscodeBean.DataBean dataBean : getPushListBean.getData()) {
-                    if (dataBean.isSelect()) {
-                        list.add(dataBean);
+                if (getPushListBean != null && getPushListBean.getData() != null
+                        && getPushListBean.getData().size() > 0) {
+                    BusinessFindcategorybyBuscodeBean businessFindcategorybyBuscodeBean = new BusinessFindcategorybyBuscodeBean();
+                    List<BusinessFindcategorybyBuscodeBean.DataBean> list = new ArrayList<>();
+                    for (BusinessFindcategorybyBuscodeBean.DataBean dataBean : getPushListBean.getData()) {
+                        if (dataBean.isSelect()) {
+                            list.add(dataBean);
+                        }
                     }
+                    if (list.size() > 0) {
+                        businessFindcategorybyBuscodeBean.setData(list);
+                        StoreOrderSubmit3Activity.start(getContext(), dataBean, businessFindcategorybyBuscodeBean, name, phone);
+
+                    } else {
+                        ToastUtil.show(getContext(), "请选择配件");
+                    }
+                } else {
+                    ToastUtil.show(getContext(), "请选择配件");
                 }
-                businessFindcategorybyBuscodeBean.setData(list);
-                StoreOrderSubmit3Activity.start(getContext(), dataBean, businessFindcategorybyBuscodeBean, name, phone);
             }
         });
     }

@@ -2,6 +2,8 @@ package com.jhhscm.platform.fragment.my.collect;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.style.StrikethroughSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.StoreDetailActivity;
 import com.jhhscm.platform.activity.h5.H5PeiJianActivity;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.slideswaphelper.SlideSwapAction;
@@ -72,8 +75,28 @@ public class MyPeiJianCollectionAdapter extends RecyclerView.Adapter<MyPeiJianCo
         ImageLoader.getInstance().displayImage(data.get(position).getPic_url(), holder.im_peijian);
         holder.tv_peijian_1.setText(data.get(position).getName());
         holder.tv_peijian_2.setText("￥" + data.get(position).getCounter_price());
-        holder.tv_peijian_3.setText("已售出 " + data.get(position).getSale_num() + "件");
+        holder.tv_peijian_3.setText("已售 " + data.get(position).getSale_num() + "件");
+        if (data.get(position).getBus_name() != null && data.get(position).getBus_name().length() > 0) {
+            holder.tv_peijian_4.setText(data.get(position).getBus_name() + ">");
+            holder.tv_peijian_4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (data.get(position).getBus_code() != null && data.get(position).getBus_code().length() > 0) {
+                        StoreDetailActivity.start(context, data.get(position).getBus_code(), "", "");
+                    }
+                }
+            });
+        } else {
+            holder.tv_peijian_4.setText("自营");
+        }
 
+        if (data.get(position).getOriginal_price() != null) {
+            SpannableString content = new SpannableString("原价：" + data.get(position).getOriginal_price());
+            content.setSpan(new StrikethroughSpan(), 3, content.length(), 0);
+            holder.tv_peijian_5.setText(content);
+        } else {
+            holder.tv_peijian_5.setText("");
+        }
         holder.slide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,9 +110,9 @@ public class MyPeiJianCollectionAdapter extends RecyclerView.Adapter<MyPeiJianCo
             @Override
             public void onClick(View v) {
                 String url = UrlUtils.PJXQ + "&good_code=" + data.get(position).getGood_code();
-                H5PeiJianActivity.start(context, url, "配件详情","","",
+                H5PeiJianActivity.start(context, url, "配件详情", "", "",
                         data.get(position).getName(), data.get(position).getGood_code(),
-                        data.get(position).getPic_url(), data.get(position).getCounter_price(),data.get(position).getNum(), 3);
+                        data.get(position).getPic_url(), data.get(position).getCounter_price(), data.get(position).getNum(), 3);
             }
         });
     }
@@ -127,6 +150,9 @@ public class MyPeiJianCollectionAdapter extends RecyclerView.Adapter<MyPeiJianCo
         public TextView tv_new_4;
         public TextView tv_old_4;
 
+        public TextView tv_peijian_4;
+        public TextView tv_peijian_5;
+
         public RecViewholder(View itemView) {
             super(itemView);
             slide = (TextView) itemView.findViewById(R.id.item_slide);
@@ -149,6 +175,8 @@ public class MyPeiJianCollectionAdapter extends RecyclerView.Adapter<MyPeiJianCo
             tv_new_3 = (TextView) itemView.findViewById(R.id.tv_new_3);
             tv_old_3 = (TextView) itemView.findViewById(R.id.tv_old_3);
             tv_peijian_3 = (TextView) itemView.findViewById(R.id.tv_peijian_3);
+            tv_peijian_4 = (TextView) itemView.findViewById(R.id.tv_peijian_4);
+            tv_peijian_5 = (TextView) itemView.findViewById(R.id.tv_peijian_5);
 
             tv_new_4 = (TextView) itemView.findViewById(R.id.tv_new_4);
             tv_old_4 = (TextView) itemView.findViewById(R.id.tv_old_4);

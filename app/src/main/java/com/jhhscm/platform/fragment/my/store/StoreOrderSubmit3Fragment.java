@@ -137,7 +137,11 @@ public class StoreOrderSubmit3Fragment extends AbsFragment<FragmentStoreOrderSub
             public void onClick(View v) {
                 if (name != null && phone != null && dataBean != null) {
                     showDialog();
-                    doUploadAImagesAction();
+                    if (mDataBinding.isSchemeImage.getUploadImageList().size() > 0) {
+                        doUploadAImagesAction();
+                    } else {
+                        busorder_createOrder();
+                    }
                 }
             }
         });
