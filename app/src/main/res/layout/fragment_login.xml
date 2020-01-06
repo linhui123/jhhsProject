@@ -106,9 +106,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/login"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="@dimen/padding_10"
+            android:layout_marginLeft="@dimen/padding_15"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="@dimen/padding_10"
+            android:layout_marginRight="@dimen/padding_15"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -116,18 +116,20 @@
                 android:id="@+id/tv_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="首次登录将为您创建账号，且代表您已同意"
+                android:lineSpacingMultiplier="1.2"
+                android:text="首次登录将为您创建账号，且代表您已同意挖矿来用户协议和隐私政策"
+                android:textColor="@color/acc6"
                 android:textSize="@dimen/text_size_14" />
 
-            <TextView
-                android:id="@+id/tv_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/tv_1"
-                android:gravity="center"
-                android:text="挖矿来用户协议和隐私政策"
-                android:textColor="@color/a397"
-                android:textSize="@dimen/text_size_14" />
+            <!--<TextView-->
+            <!--android:id="@+id/tv_2"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_toRightOf="@+id/tv_1"-->
+            <!--android:gravity="center"-->
+            <!--android:text="挖矿来用户协议和隐私政策"-->
+            <!--android:textColor="@color/a397"-->
+            <!--android:textSize="@dimen/text_size_14" />-->
         </LinearLayout>
     </RelativeLayout>
 </layout>

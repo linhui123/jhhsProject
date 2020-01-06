@@ -240,7 +240,6 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                 if ("未认证".equals(mDataBinding.tvCerGo.getText().toString())) {
                     AuthenticationActivity.start(getContext());
                 }
-
             }
         });
         mDataBinding.tvName.setOnClickListener(new View.OnClickListener() {

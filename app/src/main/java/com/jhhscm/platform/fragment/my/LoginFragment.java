@@ -2,7 +2,11 @@ package com.jhhscm.platform.fragment.my;
 
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.CountDownTimer;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,8 +97,8 @@ public class LoginFragment extends AbsFragment<FragmentLoginBinding> {
                 getActivity().finish();
             }
         });
-
-        mDataBinding.tv2.setOnClickListener(new View.OnClickListener() {
+        initText();
+        mDataBinding.tv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 H5Activity.start(getContext(), UrlUtils.FWXY, "服务协议");
@@ -203,7 +207,7 @@ public class LoginFragment extends AbsFragment<FragmentLoginBinding> {
                                 if (response.body().getCode().equals("200")) {
 
                                     UserBean userBean = response.body().getData();
-                                    Log.e("initUser", "UserBean Timestamp : "+userBean.getTimestamp());
+                                    Log.e("initUser", "UserBean Timestamp : " + userBean.getTimestamp());
                                     UserSession userSession = new UserSession();
                                     userSession.setToken(logingResultBean.getToken());
                                     userSession.setExpire(logingResultBean.getExpire());
@@ -247,5 +251,13 @@ public class LoginFragment extends AbsFragment<FragmentLoginBinding> {
             }
         };
         countDownTimer.start();
+    }
+
+    private void initText() {
+        String content = "首次登录将为您创建账号，且代表您已同意挖矿来用户协议和隐私政策";
+        SpannableString spannableString = new SpannableString(content);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#666666")), 0, 22, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#3977FE")), 22, content.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        mDataBinding.tv1.setText(spannableString);
     }
 }

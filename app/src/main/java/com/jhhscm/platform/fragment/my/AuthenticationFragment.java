@@ -21,8 +21,10 @@ import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.IDCard;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.tool.UdaUtils;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -45,6 +47,25 @@ public class AuthenticationFragment extends AbsFragment<FragmentAuthenticationBi
 
     @Override
     protected void setupViews() {
+        mDataBinding.tvTijiao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDataBinding.etUser.getText().toString().length() > 0) {
+                    if (IDCard.IDCardValidate(mDataBinding.etId.getText().toString())) {
+                        checkData(mDataBinding.etUser.getText().toString(), mDataBinding.etId.getText().toString());
+                    } else {
+                        ToastUtil.show(getContext(), "身份证号码格式错误");
+                    }
+                } else {
+                    ToastUtil.show(getContext(), "请输入姓名");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
             userSession = ConfigUtils.getCurrentUser(getContext());
@@ -52,17 +73,6 @@ public class AuthenticationFragment extends AbsFragment<FragmentAuthenticationBi
             startNewActivity(LoginActivity.class);
         }
 
-        mDataBinding.tvTijiao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mDataBinding.etId.getText().toString().length() == 18
-                        && mDataBinding.etUser.getText().toString().length() > 0) {
-                    checkData(mDataBinding.etUser.getText().toString(), mDataBinding.etId.getText().toString());
-                } else {
-                    ToastUtil.show(getContext(), "请输入完整信息");
-                }
-            }
-        });
     }
 
     /**
