@@ -43,7 +43,7 @@ public class SelectDeviceActivity extends AbsToolbarActivity {
 
     @Override
     protected String getToolBarTitle() {
-        return "选择机子";
+        return "选择机子(可多选)";
     }
 
     @Override

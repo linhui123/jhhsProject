@@ -5,11 +5,14 @@ import android.view.View;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemStoreSelectDeviceBinding;
+import com.jhhscm.platform.event.StoreDeviceEvent;
 import com.jhhscm.platform.fragment.my.store.action.FindUserGoodsOwnerBean;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.views.selector.ImageSelectorItem;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyDeviceSelectItemViewHolder extends AbsRecyclerViewHolder<FindUserGoodsOwnerBean.DataBean> {
 
@@ -77,6 +80,7 @@ public class MyDeviceSelectItemViewHolder extends AbsRecyclerViewHolder<FindUser
                     item.setSelect(true);
                     mBinding.tvSelect.setImageResource(R.mipmap.ic_shoping_s1);
                 }
+                EventBusUtil.post(new StoreDeviceEvent());
             }
         });
     }

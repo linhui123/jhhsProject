@@ -68,6 +68,7 @@ public class SelectDeviceFragment extends AbsFragment<FragmentSelectDeviceBindin
             mAdapter = new InnerAdapter(getContext());
             mDataBinding.recyclerview.setAdapter(mAdapter);
             mDataBinding.recyclerview.autoRefresh();
+
             mDataBinding.recyclerview.setOnPullListener(new WrappedRecyclerView.OnPullListener() {
                 @Override
                 public void onRefresh(RecyclerView view) {
@@ -150,13 +151,27 @@ public class SelectDeviceFragment extends AbsFragment<FragmentSelectDeviceBindin
         } else {
             mAdapter.append(getGoodsPageList.getData());
         }
-        mDataBinding.recyclerview.loadComplete(true,false);
+        mDataBinding.recyclerview.loadComplete(true, false);
 //        mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0, ((float) findOldGoodByUserCodeBean.getPage().getTotal() / (float) findOldGoodByUserCodeBean.getPage().getPageSize()) > mCurrentPage);
     }
 
     public void onEvent(FinishEvent event) {
         if (event.getType() == 1) {
             getActivity().finish();
+        }
+    }
+
+    public void onEvent(StoreDeviceEvent event) {
+        List<FindUserGoodsOwnerBean.DataBean> dataBeans = new ArrayList<>();
+        for (int i = 0; i < mAdapter.getItemCount(); i++) {
+            if (mAdapter.get(i).isSelect()) {
+                dataBeans.add(mAdapter.get(i));
+            }
+        }
+        if (dataBeans.size() > 0) {
+            mDataBinding.tvNext.setText("确定（选中" + dataBeans.size() + "台设备）");
+        } else {
+            mDataBinding.tvNext.setText("确定");
         }
     }
 
