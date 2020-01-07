@@ -29,7 +29,6 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.views.dialog.OrderSuccessDialog;
 
 import java.io.File;
 import java.net.URI;

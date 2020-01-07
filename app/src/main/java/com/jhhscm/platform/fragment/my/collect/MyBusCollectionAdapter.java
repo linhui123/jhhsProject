@@ -13,13 +13,9 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.StoreDetailActivity;
-import com.jhhscm.platform.activity.h5.MechanicsH5Activity;
-import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.fragment.aftersale.AfterSaleViewHolder;
 import com.jhhscm.platform.fragment.aftersale.FindBusListBean;
-import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.UdaUtils;
-import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.slideswaphelper.SlideSwapAction;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

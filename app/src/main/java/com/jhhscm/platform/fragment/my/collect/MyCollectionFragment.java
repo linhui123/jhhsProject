@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.databinding.FragmentMyCollectionBinding;
-import com.jhhscm.platform.fragment.aftersale.AfterSaleFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.http.bean.UserSession;
 import com.jhhscm.platform.tool.ConfigUtils;

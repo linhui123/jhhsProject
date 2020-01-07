@@ -18,7 +18,6 @@ import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentMechanicsBinding;
 import com.jhhscm.platform.event.BrandResultEvent;
 import com.jhhscm.platform.event.GetRegionEvent;
-import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.event.ShowBackEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.GetRegionAction;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;

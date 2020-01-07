@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.base.AbsToolbarActivity;
-import com.jhhscm.platform.fragment.address.ReceiveAddressDetailFragment;
 import com.jhhscm.platform.fragment.aftersale.StoreDetailFragment;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 

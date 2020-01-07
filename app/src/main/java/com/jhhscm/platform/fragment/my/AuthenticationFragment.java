@@ -24,7 +24,6 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.IDCard;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.tool.UdaUtils;
 
 import java.util.Map;
 import java.util.TreeMap;

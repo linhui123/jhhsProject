@@ -1,9 +1,7 @@
 package com.jhhscm.platform.fragment.Mechanics.holder;
 
-import android.graphics.Paint;
 import android.text.SpannableString;
 import android.text.style.StrikethroughSpan;
-import android.text.style.UnderlineSpan;
 import android.view.View;
 
 import com.jhhscm.platform.R;

@@ -84,6 +84,10 @@ public class WrappedRecyclerView extends LinearLayout {
         });
     }
 
+    public void addOnItemTouchListener(RecyclerView.OnItemTouchListener decor) {
+        mRecyclerView.addOnItemTouchListener(decor);
+    }
+
     public void addItemDecoration(RecyclerView.ItemDecoration decor) {
         mRecyclerView.addItemDecoration(decor);
     }

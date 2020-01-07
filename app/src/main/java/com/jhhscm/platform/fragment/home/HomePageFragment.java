@@ -48,6 +48,7 @@ import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
+import com.jhhscm.platform.fragment.home.holder.HomePageBusinessViewHolder;
 import com.jhhscm.platform.fragment.my.CheckVersionAction;
 import com.jhhscm.platform.fragment.my.CheckVersionBean;
 import com.jhhscm.platform.http.AHttpService;
@@ -90,6 +91,10 @@ import static com.amap.api.location.AMapLocationClientOption.AMapLocationMode.Hi
 public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> implements WeatherSearch.OnWeatherSearchListener {
     private HomePageItem homePageItem;
     private HomePageAdapter mAdapter;
+    private float downX;
+    private float downY;
+    private float moveX;
+    private float moveY;
 
     public static HomePageFragment instance() {
         HomePageFragment view = new HomePageFragment();
@@ -106,10 +111,42 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         RelativeLayout.LayoutParams llParams = (RelativeLayout.LayoutParams) mDataBinding.rlTop.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.rlTop.setLayoutParams(llParams);
-
         EventBusUtil.registerEvent(this);
         homePageItem = new HomePageItem();
         initView();
+        initRecycleView();
+        initTel();
+        checkVersion();
+
+        mDataBinding.msgImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MobclickAgent.onEvent(getContext(), "msg_home");
+                MsgActivity.start(getActivity());
+            }
+        });
+
+        mDataBinding.homeEidt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MobclickAgent.onEvent(getContext(), "search_home");
+                SearchActivity.start(getContext());
+            }
+        });
+        initPermission();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (ConfigUtils.getCurrentUser(getContext()) != null
+                && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+            isNewUser();
+            getCouponslist2();
+        }
+    }
+
+    private void initRecycleView() {
         mDataBinding.wrvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new HomePageAdapter(getContext());
         mDataBinding.wrvRecycler.setAdapter(mAdapter);
@@ -132,40 +169,65 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
             public void onLoadMore(RecyclerView view) {
             }
         });
-
-        initTel();
-
-        checkVersion();
-        if (ConfigUtils.getCurrentUser(
-
-                getContext()) != null
-                && ConfigUtils.getCurrentUser(
-
-                getContext()).
-
-                getUserCode() != null) {
-            isNewUser();
-            getCouponslist2();
-        }
-
-        mDataBinding.msgImg.setOnClickListener(new View.OnClickListener() {
+        mDataBinding.wrvRecycler.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
-            public void onClick(View v) {
-                MobclickAgent.onEvent(getContext(), "msg_home");
-                MsgActivity.start(getActivity());
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                if (e != null) {
+                    //找到被点击位置的item的rootView
+                    View view = rv.findChildViewUnder(e.getX(), e.getY());
+                    if (view != null) {
+                        HomePageBusinessViewHolder holder = (HomePageBusinessViewHolder) rv.findViewHolderForAdapterPosition(1);
+                        if (holder != null && holder.isTouchNsv(e.getRawX(), e.getRawY())) {
+                            switch (e.getAction()) { // 判斷觸控的動作
+                                case MotionEvent.ACTION_DOWN: // 按下
+                                    downX = e.getX();
+                                    downY = e.getY();
+                                    break;
+                                case MotionEvent.ACTION_MOVE: // 拖曳
+                                    moveX = e.getX();
+                                    moveY = e.getY();
+                                    float x = Math.abs(moveX - downX);
+                                    float y = Math.abs(moveY - downY);
+                                    double z = Math.sqrt(x * x + y * y);
+                                    int jiaodu = Math.round((float) (Math.asin(y / z) / Math.PI * 180));// 角度
+                                    if (moveY < downY && jiaodu > 45) {// 上
+//                                        Log.d("viewPager", "角度:" + jiaodu + ", 動作:上");
+                                        mDataBinding.wrvRecycler.setPtrFrameEnabled(true);
+                                    } else if (moveY > downY && jiaodu > 45) {// 下
+//                                        Log.d("viewPager", "角度:" + jiaodu + ", 動作:下");
+                                        mDataBinding.wrvRecycler.setPtrFrameEnabled(true);
+                                    } else if (moveX < downX && jiaodu <= 45) {// 左
+//                                        Log.d("viewPager", "角度:" + jiaodu + ", 動作:左");
+                                        mDataBinding.wrvRecycler.setPtrFrameEnabled(false);
+                                    } else if (moveX > downX && jiaodu <= 45) {// 右
+//                                        Log.d("viewPager", "角度:" + jiaodu + ", 動作:右");
+                                        mDataBinding.wrvRecycler.setPtrFrameEnabled(false);
+                                    }
+                                    break;
+                                case MotionEvent.ACTION_UP: // 放開
+                                    mDataBinding.wrvRecycler.setPtrFrameEnabled(true);
+                                    break;
+                            }
+                        } else {
+                            mDataBinding.wrvRecycler.setPtrFrameEnabled(true);
+                        }
+                    }
+                }
+                return false;//事件下发
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
             }
         });
-
-        mDataBinding.homeEidt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MobclickAgent.onEvent(getContext(), "search_home");
-                SearchActivity.start(getContext());
-            }
-        });
-
-        initPermission();
     }
+
 
     /**
      * 权限获取提示  24小时一次

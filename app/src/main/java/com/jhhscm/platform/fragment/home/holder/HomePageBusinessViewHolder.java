@@ -1,13 +1,12 @@
 package com.jhhscm.platform.fragment.home.holder;
 
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.google.gson.Gson;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemHomePageBusinessBinding;
 import com.jhhscm.platform.event.JumpEvent;
+import com.jhhscm.platform.event.ScrollEvent;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.tool.EventBusUtil;
@@ -32,7 +31,6 @@ public class HomePageBusinessViewHolder extends AbsRecyclerViewHolder<HomePageIt
     @Override
     protected void onBindView(final HomePageItem item) {
         if (item.adBean3 != null && item.adBean3.getResult() != null) {
-
             dlGridViewBeans = new ArrayList<>();
             for (AdBean.ResultBean resultBean : item.adBean3.getResult()) {
                 DLGridViewBean dlGridViewBean = new DLGridViewBean();
@@ -64,6 +62,7 @@ public class HomePageBusinessViewHolder extends AbsRecyclerViewHolder<HomePageIt
                 @Override
                 public void onViewAttachedToWindow(View v) {
                     try {
+                        EventBusUtil.post(new ScrollEvent(true));
                         mBinding.viewPager.getAdapter().notifyDataSetChanged();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -81,6 +80,18 @@ public class HomePageBusinessViewHolder extends AbsRecyclerViewHolder<HomePageIt
 
     private void jump(String type, AdBean.ResultBean resultBean) {
         EventBusUtil.post(new JumpEvent(type, resultBean));
+    }
+
+
+    /**
+     * 判断event坐标点是否在sv范围内:    
+     */
+    public boolean isTouchNsv(float x, float y) {
+        int[] pos = new int[2];
+        mBinding.viewPager.getLocationOnScreen(pos);
+        int width = mBinding.viewPager.getMeasuredWidth();
+        int height = mBinding.viewPager.getMeasuredHeight();
+        return x >= pos[0] && x <= pos[0] + width && y >= pos[1] && y <= pos[1] + height;
     }
 }
 

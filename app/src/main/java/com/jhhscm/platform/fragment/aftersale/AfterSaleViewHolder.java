@@ -7,7 +7,6 @@ import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.activity.StoreDetailActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemAftersaleStoreBinding;
-import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.UdaUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
