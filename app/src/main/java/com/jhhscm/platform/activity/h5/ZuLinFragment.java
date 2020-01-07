@@ -252,7 +252,7 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
         RelativeLayout.LayoutParams llParams = (RelativeLayout.LayoutParams) mDataBinding.toolbar.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.toolbar.setLayoutParams(llParams);
-        mDataBinding.toolbarTitle.setText("租赁");
+        mDataBinding.toolbarTitle.setText("融资");//租赁-融资
 
         if (MyApplication.getInstance().getZulinUrl() != null) {
             Log.e("ZL", "getZulinUrl : " + MyApplication.getInstance().getZulinUrl());
@@ -358,7 +358,7 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
      * 分享
      */
     public void showShare() {
-        TITLE = "租赁";
+        TITLE = "融资";//租赁-融资
         CONTENT = "挖矿来";
         IMG_URL = "";
         Log.e("ShareDialog", "IMG_URL " + IMG_URL);

@@ -62,7 +62,6 @@ public class HomePageBusinessViewHolder extends AbsRecyclerViewHolder<HomePageIt
                 @Override
                 public void onViewAttachedToWindow(View v) {
                     try {
-                        EventBusUtil.post(new ScrollEvent(true));
                         mBinding.viewPager.getAdapter().notifyDataSetChanged();
                     } catch (Exception e) {
                         e.printStackTrace();

@@ -117,7 +117,11 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
         initRecycleView();
         initTel();
         checkVersion();
-
+        if (ConfigUtils.getCurrentUser(getContext()) != null
+                && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+            isNewUser();
+            getCouponslist2();
+        }
         mDataBinding.msgImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,16 +138,6 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
             }
         });
         initPermission();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (ConfigUtils.getCurrentUser(getContext()) != null
-                && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
-            isNewUser();
-            getCouponslist2();
-        }
     }
 
     private void initRecycleView() {

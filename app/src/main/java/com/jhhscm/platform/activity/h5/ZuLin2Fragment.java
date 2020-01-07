@@ -132,7 +132,7 @@ public class ZuLin2Fragment extends AbsFragment<FragmentZuLin2Binding> {
      * 分享
      */
     public void showShare() {
-        TITLE = "租赁";
+        TITLE = "融资";//租赁-融资
         CONTENT = "挖矿来";
         IMG_URL = "";
         Log.e("ShareDialog", "IMG_URL " + IMG_URL);
