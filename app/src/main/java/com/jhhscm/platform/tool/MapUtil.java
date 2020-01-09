@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.util.Log;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class MapUtil {
@@ -15,22 +17,85 @@ public class MapUtil {
 
     public static final String PN_TENCENT_MAP = "com.tencent.map"; // 腾讯地图包名
 
-    public static void openGaoDe(Context context, double latitude, double longitude) {
-        Intent intent = new Intent("android.intent.action.VIEW", android.net.Uri.parse("androidamap://navi?sourceApplication=挖矿来&lat=" + latitude + "&lon=" + longitude + "&dev=0"));
-        intent.setPackage("com.autonavi.minimap");
+    /**
+     * 打开百度地图导航功能(默认坐标点是百度地图)
+     *
+     * @param context
+     * @param dlat    终点纬度
+     * @param dlon    终点经度
+     * @param dname   终点名称 必填
+     */
+    public static void openBaiDuNavi(Context context, double dlat, double dlon, String dname) {
+        String uriString = null;
+        StringBuilder builder = new StringBuilder("baidumap://map/direction?mode=driving&");
+        builder.append("&destination=latlng:")
+                .append(dlat)
+                .append(",")
+                .append(dlon)
+                .append("|name:")
+                .append(dname);
+        uriString = builder.toString();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setPackage(BAIDU_PKG);
+        intent.setData(Uri.parse(uriString));
         context.startActivity(intent);
     }
 
-    public static void openBaidu(Context context, double latitude, double longitude) {
-        Intent i1 = new Intent();
-        double[] position = GPSUtil.gcj02_To_Bd09(latitude, longitude);
-        i1.setData(Uri.parse("baidumap://map/geocoder?location=" + position[0] + "," + position[1]));
-        context.startActivity(i1);
+    /**
+     * 打开高德地图导航功能
+     *
+     * @param context
+     * @param dlat    终点纬度
+     * @param dlon    终点经度
+     * @param dname   终点名称 必填
+     */
+    public static void openGaoDeNavi(Context context, double dlat, double dlon, String dname) {
+        String uriString = null;
+        double destination[] = GPSUtil.bdToGaoDe(dlat, dlon);
+        dlat = destination[0];
+        dlon = destination[1];
+        StringBuilder builder = new StringBuilder("amapuri://route/plan?sourceApplication=maxuslife");
+        builder.append("&dlat=").append(dlat)
+                .append("&dlon=").append(dlon)
+                .append("&dname=").append(dname)
+                .append("&dev=0")
+                .append("&t=0");
+        uriString = builder.toString();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setPackage(GAODE_PKG);
+        intent.setData(Uri.parse(uriString));
+        context.startActivity(intent);
     }
 
-    public static void openTenxun(Context context, double endlatitude, double endlongititude) {
-        Uri uri = Uri.parse("qqmap://map/routeplan?type=drive&tocoord=" + endlatitude + "," + endlongititude + "&to=" + "");
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+    /**
+     * 打开腾讯地图
+     * params 参考http://lbs.qq.com/uri_v1/guide-route.html
+     *
+     * @param context
+     * @param dlat    终点纬度
+     * @param dlon    终点经度
+     * @param dname   终点名称 必填
+     *                驾车：type=drive，policy有以下取值
+     *                0：较快捷
+     *                1：无高速
+     *                2：距离
+     *                policy的取值缺省为0
+     *                &from=" + dqAddress + "&fromcoord=" + dqLatitude + "," + dqLongitude + "
+     */
+    public static void openTencentMap(Context context, double dlat, double dlon, String dname) {
+        String uriString = null;
+        double destination[] = GPSUtil.bdToGaoDe(dlat, dlon);
+        dlat = destination[0];
+        dlon = destination[1];
+        StringBuilder builder = new StringBuilder("qqmap://map/routeplan?type=drive&policy=0&referer=zhongshuo");
+        builder.append("&to=").append(dname)
+                .append("&tocoord=").append(dlat)
+                .append(",")
+                .append(dlon);
+        uriString = builder.toString();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setPackage(PN_TENCENT_MAP);
+        intent.setData(Uri.parse(uriString));
         context.startActivity(intent);
     }
 

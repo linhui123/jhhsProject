@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
+import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
@@ -159,8 +160,8 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
             public void onDenied(List<String> permissions) {
                 if (permissions.contains(Manifest.permission.ACCESS_COARSE_LOCATION) &&
                         permissions.contains(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    longitude = 0.0;
-                    latitude = 0.0;
+                    longitude = ((MyApplication) getActivity().getApplicationContext()).getGaodeLon();
+                    latitude = ((MyApplication) getActivity().getApplicationContext()).getGaodeLat();
                 } else {
                     getLocation();
                 }
@@ -181,7 +182,6 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
 
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//            Location location = locationManager.getBestProvider(criteria, true);
             if (location != null) {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
@@ -233,8 +233,16 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("page", mCurrentPage);
             map.put("limit", mShowCount);
-            map.put("v1", longitude + "");
-            map.put("v2", latitude + "");
+            if (longitude == 0.0) {
+                map.put("v1", ((MyApplication) getActivity().getApplicationContext()).getGaodeLon() + "");
+            } else {
+                map.put("v1", longitude + "");
+            }
+            if (latitude == 0.0) {
+                map.put("v2", ((MyApplication) getActivity().getApplicationContext()).getGaodeLat() + "");
+            } else {
+                map.put("v2", latitude + "");
+            }
             map.put("province_id", pID);
             map.put("city_id", cID);
             String content = JSON.toJSONString(map);

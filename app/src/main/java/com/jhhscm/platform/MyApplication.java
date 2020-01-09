@@ -38,6 +38,8 @@ public class MyApplication extends Application {
     private static final String TAG = "JIGUANG-Example";
     public IWXAPI api;
     private static String BASE_URL = "";
+    private double gaodeLat;
+    private double gaodeLon;
 
     public IWXAPI getApi() {
         return api;
@@ -79,7 +81,7 @@ public class MyApplication extends Application {
 //        MobclickAgent.setDebugMode( true );
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
 
-        Log.e("http","http : "+ConfigUtils.getApiUrl(getInstance().getApplicationContext()));
+        Log.e("http", "http : " + ConfigUtils.getApiUrl(getInstance().getApplicationContext()));
         BASE_URL = ConfigUtils.getApiUrl(getInstance().getApplicationContext());
 //        if (ConfigUtils.getApiUrl(getInstance().getApplicationContext()) != null
 //                && ConfigUtils.getApiUrl(getInstance().getApplicationContext()).length() > 0) {
@@ -175,5 +177,21 @@ public class MyApplication extends Application {
 
     public static void setBaseUrl(String baseUrl) {
         BASE_URL = baseUrl;
+    }
+
+    public double getGaodeLat() {
+        return gaodeLat;
+    }
+
+    public void setGaodeLat(double gaodeLat) {
+        this.gaodeLat = gaodeLat;
+    }
+
+    public double getGaodeLon() {
+        return gaodeLon;
+    }
+
+    public void setGaodeLon(double gaodeLon) {
+        this.gaodeLon = gaodeLon;
     }
 }

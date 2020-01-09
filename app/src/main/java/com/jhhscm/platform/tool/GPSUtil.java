@@ -1,5 +1,11 @@
 package com.jhhscm.platform.tool;
 
+import android.util.Log;
+
+import com.amap.api.maps2d.model.LatLng;
+
+import java.math.BigDecimal;
+
 public class GPSUtil {
     public static double pi = 3.1415926535897932384626;
     public static double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
@@ -137,4 +143,77 @@ public class GPSUtil {
         String result = String .format("%.6f", num);
         return Double.valueOf(result);
     }
+
+    /**
+     * 百度转高德
+     * @param bd_lat
+     * @param bd_lon
+     * @return
+     */
+    public static double[] bdToGaoDe(double bd_lat, double bd_lon) {
+        double[] gd_lat_lon = new double[2];
+        double PI = 3.14159265358979324 * 3000.0 / 180.0;
+        double x = bd_lon - 0.0065, y = bd_lat - 0.006;
+        double z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * PI);
+        double theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * PI);
+        gd_lat_lon[0] = z * Math.sin(theta);
+        gd_lat_lon[1] = z * Math.cos(theta);
+        return gd_lat_lon;
+    }
+
+    /**
+     * 高德、腾讯转百度
+     * @param gd_lon
+     * @param gd_lat
+     * @return
+     */
+    private static double[] gaoDeToBaidu(double gd_lon, double gd_lat) {
+        double[] bd_lat_lon = new double[2];
+        double PI = 3.14159265358979324 * 3000.0 / 180.0;
+        double x = gd_lon, y = gd_lat;
+        double z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * PI);
+        double theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * PI);
+        bd_lat_lon[0] = z * Math.cos(theta) + 0.0065;
+        bd_lat_lon[1] = z * Math.sin(theta) + 0.006;
+        return bd_lat_lon;
+    }
+
+    /**
+     * 百度坐标系 (BD-09) 与 火星坐标系 (GCJ-02)的转换
+     * 即 百度 转 谷歌、高德
+     *
+     * @param latLng
+     * @returns
+     *
+     * 使用此方法需要下载导入百度地图的BaiduLBS_Android.jar包
+     */
+    public static LatLng BD09ToGCJ02(LatLng latLng) {
+        double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+        double x = latLng.longitude - 0.0065;
+        double y = latLng.latitude - 0.006;
+        double z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi);
+        double theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
+        double gg_lat = z * Math.sin(theta);
+        double gg_lng = z * Math.cos(theta);
+        return new LatLng(gg_lat, gg_lng);
+    }
+
+    /**
+     * 火星坐标系 (GCJ-02) 与百度坐标系 (BD-09) 的转换
+     * 即谷歌、高德 转 百度
+     *
+     * @param latLng
+     * @returns
+     *
+     * 需要百度地图的BaiduLBS_Android.jar包
+     */
+    public static LatLng GCJ02ToBD09(LatLng latLng) {
+        double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+        double z = Math.sqrt(latLng.longitude * latLng.longitude + latLng.latitude * latLng.latitude) + 0.00002 * Math.sin(latLng.latitude * x_pi);
+        double theta = Math.atan2(latLng.latitude, latLng.longitude) + 0.000003 * Math.cos(latLng.longitude * x_pi);
+        double bd_lat = z * Math.sin(theta) + 0.006;
+        double bd_lng = z * Math.cos(theta) + 0.0065;
+        return new LatLng(bd_lat, bd_lng);
+    }
+
 }

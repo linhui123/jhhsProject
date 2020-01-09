@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.BuildConfig;
+import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.StoreDetailActivity;
@@ -132,7 +134,7 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
     @Override
     public void onResume() {
         super.onResume();
-        if (bus_code != null) {
+        if (bus_code != null && ConfigUtils.getCurrentUser(getContext()) != null) {
             findCollectByUserCode(bus_code);
         }
     }
@@ -202,8 +204,16 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
         if (getContext() != null) {
             showDialog();
             Map<String, Object> map = new TreeMap<String, Object>();
-            map.put("v1", longitude);
-            map.put("v2", latitude);
+            if (longitude != null && !longitude.equals("") && !longitude.equals("0.0")) {
+                map.put("v1", longitude + "");
+            } else {
+                map.put("v1", ((MyApplication) getActivity().getApplication()).getGaodeLon() + "");
+            }
+            if (latitude != null && !latitude.equals("") && !latitude.equals("0.0")) {
+                map.put("v2", latitude + "");
+            } else {
+                map.put("v2", ((MyApplication) getActivity().getApplication()).getGaodeLat() + "");
+            }
             map.put("bus_code", bus_code);
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
@@ -352,13 +362,16 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
     }
 
     private void initLocation(BusinessDetailBean data) {
-        final String v1 = data.getResult().get(0).getX();
-        final String v2 = data.getResult().get(0).getY();
+        final String v1 = data.getResult().get(0).getX();//经度
+        final String v2 = data.getResult().get(0).getY();//纬度
+//        final String v1 = "119.3304610000";
+//        final String v2 = "25.9966280000";
         final String adress = data.getResult().get(0).getProvince_name()
                 + data.getResult().get(0).getCity_name()
                 + data.getResult().get(0).getCounty_name()
                 + data.getResult().get(0).getAddress_detail();
         if (!StringUtils.isNullEmpty(v1) && !StringUtils.isNullEmpty(v2)) {
+            //后台下发地址默认百度经纬度
             mDataBinding.tvStore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -367,17 +380,16 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
                             @Override
                             public void clickGaode() {
                                 if (MapUtil.checkMapAppsIsExist(getActivity(), MapUtil.GAODE_PKG)) {
-                                    MapUtil.openGaoDe(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1));
+                                    MapUtil.openGaoDeNavi(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1), adress);
                                 } else {
                                     ToastUtil.show(getActivity(), "检测到您没有安装高德地图");
                                 }
-
                             }
 
                             @Override
                             public void clickBaidu() {
                                 if (MapUtil.checkMapAppsIsExist(getActivity(), MapUtil.BAIDU_PKG)) {
-                                    MapUtil.openBaidu(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1));
+                                    MapUtil.openBaiDuNavi(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1), adress);
                                 } else {
                                     ToastUtil.show(getActivity(), "检测到您没有安装百度地图");
                                 }
@@ -386,7 +398,7 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
                             @Override
                             public void clickTenxun() {
                                 if (MapUtil.checkMapAppsIsExist(getActivity(), MapUtil.PN_TENCENT_MAP)) {
-                                    MapUtil.openTenxun(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1));
+                                    MapUtil.openTencentMap(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1), adress);
                                 } else {
                                     ToastUtil.show(getActivity(), "检测到您没有安装腾讯地图");
                                 }
@@ -573,7 +585,6 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
     private void findCollectByUserCode(String bus_code) {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
-//        map.put("bus_code", bus_code);
         map.put("good_code", bus_code);
         map.put("token", ConfigUtils.getCurrentUser(getContext()).getToken());
         String content = JSON.toJSONString(map);

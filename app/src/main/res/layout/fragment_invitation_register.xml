@@ -37,16 +37,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginTop="@dimen/padding_15"
-                    android:layout_marginRight="50dp"
+                    android:scaleType="fitCenter"
                     android:src="@mipmap/ic_launcher_foreground" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/padding_10"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:text="有挖机就用挖矿来"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:text="扫一扫，加入挖矿来"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />

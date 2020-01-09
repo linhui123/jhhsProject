@@ -998,6 +998,8 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                 if (amapLocation.getErrorCode() == 0) {
                     double lat = amapLocation.getLatitude();
                     double lon = amapLocation.getLongitude();
+                    ((MyApplication) getActivity().getApplication()).setGaodeLat(lat);
+                    ((MyApplication) getActivity().getApplication()).setGaodeLon(lon);
                     mDataBinding.cityText.setText(amapLocation.getCity());
                     getWetherData();
                 } else {
