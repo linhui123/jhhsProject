@@ -23,7 +23,7 @@
                 android:background="@drawable/bg_white_large"
                 android:orientation="vertical"
                 android:paddingTop="25dp"
-                android:paddingBottom="25dp">
+                android:paddingBottom="15dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -44,16 +44,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp_5"
                     android:text="有挖机就用挖矿来"
                     android:textColor="@color/acc3"
-                    android:textSize="@dimen/text_size_16" />
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp_5"
                     android:text="扫一扫，加入挖矿来"
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />

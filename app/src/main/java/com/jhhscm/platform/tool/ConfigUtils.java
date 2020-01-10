@@ -30,9 +30,10 @@ public class ConfigUtils {
     private static final String LOGIN_TIME = "login_time";//登录时间
     private static final String UPDATA_TIME = "updata_time";//更新提示时间
     private static final String UPDATA_URL = "updata_url";//更新下载安装包地址
-
+    private static final String SEARCH_HISTORY = "search_history";
     private static final String COUPON_NO_SEE_DATA = "COUPON_NO_SEE_DATA";
     private static List<String> couponList;//缓存不提示优惠券
+    private static List<String> searchList;//缓存搜索历史
     private static String url; //缓存版本更新地址
     private static String p_time; //首页权限提示时间
     private static String updata_time; //缓存更新提示时间
@@ -116,6 +117,39 @@ public class ConfigUtils {
         }
         return couponList;
     }
+
+    public static void setSearchHistory(Context context, List<String> coupon_list) {
+        removeSearchHistory(context);
+        Gson gson = new Gson();
+        String userJson = gson.toJson(coupon_list);
+        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
+        edit.putString(SEARCH_HISTORY, userJson);
+        edit.commit();
+    }
+
+    public static void removeSearchHistory(Context context) {
+        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
+        edit.remove(SEARCH_HISTORY);
+        edit.commit();
+        searchList = null;
+    }
+
+    public synchronized static List<String> getSearchHistory(Context context) {
+        if (searchList == null) {
+            String userJson = getSharedPreferences(context).getString(SEARCH_HISTORY, "");
+            if (!TextUtils.isEmpty(userJson)) {
+                try {
+                    Gson gson = new Gson();
+                    searchList = gson.fromJson(userJson, new TypeToken<List<String>>() {
+                    }.getType());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return searchList;
+    }
+
 
     public static void setHomePageItem(Context context, HomePageItem homePageItem) {
         removeHomePageItem(context);

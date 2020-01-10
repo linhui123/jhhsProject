@@ -146,4 +146,5 @@ dependencies {
     implementation files('libs/nineoldandroids-2.4.0.jar')
 //    implementation files('libs/AMap3DMap_6.0.1_AMapSearch_5.7.0_AMapLocation_3.8.0_20180309.jar')
 //    implementation 'com.github.maning0303:MNUpdateAPK:V2.0.3'
+    implementation 'com.hyman:flowlayout-lib:1.1.2'
 }

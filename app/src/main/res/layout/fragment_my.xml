@@ -482,17 +482,18 @@
                         android:layout_marginRight="@dimen/padding_15"
                         android:orientation="horizontal">
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:id="@+id/ll_order_1"
                             android:layout_width="@dimen/dp_0"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center_horizontal"
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/dfk"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
                                 android:layout_marginTop="@dimen/padding_10"
                                 android:drawableTop="@mipmap/ic_daifukuan"
                                 android:drawablePadding="@dimen/dp_5"
@@ -500,38 +501,69 @@
                                 android:textColor="@color/acc3"
                                 android:textSize="14sp" />
 
-                        </LinearLayout>
+                            <TextView
+                                android:id="@+id/order_1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="16dp"
+                                android:layout_marginLeft="-15dp"
+                                android:layout_toRightOf="@+id/dfk"
+                                android:background="@drawable/bg_text_ff1a"
+                                android:gravity="center"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:text="6"
+                                android:textColor="@color/white"
+                                android:textSize="10sp" />
 
-                        <LinearLayout
+                        </RelativeLayout>
+
+                        <RelativeLayout
                             android:id="@+id/ll_order_2"
                             android:layout_width="@dimen/dp_0"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center_horizontal"
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/dfh"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
                                 android:layout_marginTop="@dimen/padding_10"
                                 android:drawableTop="@mipmap/ic_daifahuo"
                                 android:drawablePadding="@dimen/dp_5"
                                 android:text="待发货"
                                 android:textColor="@color/acc3"
                                 android:textSize="14sp" />
-                        </LinearLayout>
 
-                        <LinearLayout
+                            <TextView
+                                android:id="@+id/order_2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="16dp"
+                                android:layout_marginLeft="-15dp"
+                                android:layout_toRightOf="@+id/dfh"
+                                android:background="@drawable/bg_text_ff1a"
+                                android:gravity="center"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:text="99"
+                                android:textColor="@color/white"
+                                android:textSize="10sp" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
                             android:id="@+id/ll_order_3"
                             android:layout_width="@dimen/dp_0"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center_horizontal"
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/dsh"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
                                 android:layout_marginTop="@dimen/padding_10"
                                 android:drawableTop="@mipmap/ic_daishouhuo"
                                 android:drawablePadding="@dimen/dp_5"
@@ -539,7 +571,20 @@
                                 android:textColor="@color/acc3"
                                 android:textSize="14sp" />
 
-                        </LinearLayout>
+                            <TextView
+                                android:id="@+id/order_3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="16dp"
+                                android:layout_marginLeft="-15dp"
+                                android:layout_toRightOf="@+id/dsh"
+                                android:background="@drawable/bg_text_ff1a"
+                                android:gravity="center"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:text="99+"
+                                android:textColor="@color/white"
+                                android:textSize="10sp" />
+                        </RelativeLayout>
 
                         <LinearLayout
                             android:id="@+id/ll_order_4"

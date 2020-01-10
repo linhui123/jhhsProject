@@ -123,4 +123,19 @@
         <attr name="right_bottom_radius1" format="dimension" />
         <attr name="left_bottom_radius1" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="CustomLableView">
+        <attr name="customSonBackground" format="reference" />
+        <attr name="customInterval" format="dimension" />
+        <attr name="customSonPaddingLeft" format="dimension" />
+        <attr name="customSonPaddingRight" format="dimension" />
+        <attr name="customSonPaddingTop" format="dimension" />
+        <attr name="customSonPaddingBottom" format="dimension" />
+        <attr name="customSonTextSize" format="dimension" />
+        <attr name="customSonTextColor" format="color" />
+        <attr name="customSelectMode">
+            <enum name="alone" value="101" />
+            <enum name="multi" value="102" />
+        </attr>
+    </declare-styleable>
 </resources>

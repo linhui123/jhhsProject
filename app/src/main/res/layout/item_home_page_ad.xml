@@ -8,14 +8,13 @@
         android:background="@color/white"
         android:orientation="vertical"
         android:paddingLeft="16dp"
-        android:paddingTop="@dimen/padding_15"
         android:paddingRight="16dp"
         android:paddingBottom="@dimen/padding_15">
 
         <com.jhhscm.platform.views.OvalImageView
             android:id="@+id/iv_report"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:scaleType="fitXY"
             roundiv:left_bottom_radius1="5dp"
             roundiv:left_top_radius1="5dp"

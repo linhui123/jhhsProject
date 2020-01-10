@@ -362,53 +362,53 @@ public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding>
     }
 
     private void initLocation(BusinessDetailBean data) {
-        final String v1 = data.getResult().get(0).getX();//经度
-        final String v2 = data.getResult().get(0).getY();//纬度
-//        final String v1 = "119.3304610000";
-//        final String v2 = "25.9966280000";
-        final String adress = data.getResult().get(0).getProvince_name()
-                + data.getResult().get(0).getCity_name()
-                + data.getResult().get(0).getCounty_name()
-                + data.getResult().get(0).getAddress_detail();
-        if (!StringUtils.isNullEmpty(v1) && !StringUtils.isNullEmpty(v2)) {
-            //后台下发地址默认百度经纬度
-            mDataBinding.tvStore.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!StringUtils.isNullEmpty(v1) && !StringUtils.isNullEmpty(v2)) {
-                        new MapSelectDialog(getContext(), adress, new MapSelectDialog.CallbackListener() {
-                            @Override
-                            public void clickGaode() {
-                                if (MapUtil.checkMapAppsIsExist(getActivity(), MapUtil.GAODE_PKG)) {
-                                    MapUtil.openGaoDeNavi(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1), adress);
-                                } else {
-                                    ToastUtil.show(getActivity(), "检测到您没有安装高德地图");
+        if (data != null && data.getResult() != null && data.getResult().get(0) != null) {
+            final String v1 = data.getResult().get(0).getX();//经度
+            final String v2 = data.getResult().get(0).getY();//纬度
+            final String adress = data.getResult().get(0).getProvince_name()
+                    + data.getResult().get(0).getCity_name()
+                    + data.getResult().get(0).getCounty_name()
+                    + data.getResult().get(0).getAddress_detail();
+            if (!StringUtils.isNullEmpty(v1) && !StringUtils.isNullEmpty(v2)) {
+                //后台下发地址默认百度经纬度
+                mDataBinding.tvStore.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!StringUtils.isNullEmpty(v1) && !StringUtils.isNullEmpty(v2)) {
+                            new MapSelectDialog(getContext(), adress, new MapSelectDialog.CallbackListener() {
+                                @Override
+                                public void clickGaode() {
+                                    if (MapUtil.checkMapAppsIsExist(getActivity(), MapUtil.GAODE_PKG)) {
+                                        MapUtil.openGaoDeNavi(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1), adress);
+                                    } else {
+                                        ToastUtil.show(getActivity(), "检测到您没有安装高德地图");
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void clickBaidu() {
-                                if (MapUtil.checkMapAppsIsExist(getActivity(), MapUtil.BAIDU_PKG)) {
-                                    MapUtil.openBaiDuNavi(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1), adress);
-                                } else {
-                                    ToastUtil.show(getActivity(), "检测到您没有安装百度地图");
+                                @Override
+                                public void clickBaidu() {
+                                    if (MapUtil.checkMapAppsIsExist(getActivity(), MapUtil.BAIDU_PKG)) {
+                                        MapUtil.openBaiDuNavi(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1), adress);
+                                    } else {
+                                        ToastUtil.show(getActivity(), "检测到您没有安装百度地图");
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void clickTenxun() {
-                                if (MapUtil.checkMapAppsIsExist(getActivity(), MapUtil.PN_TENCENT_MAP)) {
-                                    MapUtil.openTencentMap(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1), adress);
-                                } else {
-                                    ToastUtil.show(getActivity(), "检测到您没有安装腾讯地图");
+                                @Override
+                                public void clickTenxun() {
+                                    if (MapUtil.checkMapAppsIsExist(getActivity(), MapUtil.PN_TENCENT_MAP)) {
+                                        MapUtil.openTencentMap(getActivity(), Double.parseDouble(v2), Double.parseDouble(v1), adress);
+                                    } else {
+                                        ToastUtil.show(getActivity(), "检测到您没有安装腾讯地图");
+                                    }
                                 }
-                            }
-                        }).show();
-                    } else {
-                        ToastUtil.show(getActivity(), "该商户无准确地址");
+                            }).show();
+                        } else {
+                            ToastUtil.show(getActivity(), "该商户无准确地址");
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
