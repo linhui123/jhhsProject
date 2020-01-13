@@ -3,6 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
+    android:layout_marginTop="@dimen/padding_10"
     android:background="@drawable/bg_cf5"
     android:ellipsize="end"
     android:paddingLeft="@dimen/padding_10"
@@ -11,6 +12,6 @@
     android:paddingBottom="@dimen/dp_5"
     android:singleLine="true"
     android:textColor="@color/acc9"
-    android:textSize="@dimen/text_size_12">
+    android:textSize="@dimen/text_size_14">
 
 </TextView>

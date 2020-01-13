@@ -121,6 +121,9 @@ public class ConfigUtils {
     public static void setSearchHistory(Context context, List<String> coupon_list) {
         removeSearchHistory(context);
         Gson gson = new Gson();
+        if (coupon_list != null && coupon_list.size() > 10) {
+            coupon_list = coupon_list.subList(0, 10);
+        }
         String userJson = gson.toJson(coupon_list);
         SharedPreferences.Editor edit = getSharedPreferences(context).edit();
         edit.putString(SEARCH_HISTORY, userJson);

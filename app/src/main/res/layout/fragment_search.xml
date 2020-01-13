@@ -76,7 +76,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/delete"
-                android:layout_marginTop="10dp"
                 android:paddingLeft="@dimen/dp_5"
                 android:paddingRight="@dimen/padding_15"
                 zhy:max_select="1"></com.jhhscm.platform.views.flowlayout.TagFlowLayout>

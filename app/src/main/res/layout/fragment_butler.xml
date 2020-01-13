@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/a397">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding_10"
+                android:padding="@dimen/dp_5"
+                android:src="@mipmap/ic_back" />
+
+            <com.jhhscm.platform.views.EnhanceTabLayout
+                android:id="@+id/enhance_tab_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="@dimen/padding_10"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/back"
+                app:tabIndicatorColor="@color/a397"
+                app:tabIndicatorHeight="2dp"
+                app:tabIndicatorWidth="16dp"
+                app:tabSelectTextColor="@color/white"
+                app:tabTextColor="@color/acc9"
+                app:tabTextSize="6dp"
+                app:tab_Gravity="mode_fill"
+                app:tab_Mode="mode_scrollable" />
+
+        </RelativeLayout>
+
+        <com.jhhscm.platform.views.NoScrollViewPager
+            android:id="@+id/vp_m"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+    </LinearLayout>
+
+
+</layout>

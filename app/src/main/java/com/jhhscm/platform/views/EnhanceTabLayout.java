@@ -64,9 +64,9 @@ public class EnhanceTabLayout extends FrameLayout {
 
     private void readAttr(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.EnhanceTabLayout);
-        mSelectIndicatorColor = typedArray.getColor(R.styleable.EnhanceTabLayout_tabIndicatorColor, context.getResources().getColor(R.color.colorAccent));
+        mSelectIndicatorColor = typedArray.getColor(R.styleable.EnhanceTabLayout_tabIndicatorColor, context.getResources().getColor(R.color.a397));
         mUnSelectTextColor = typedArray.getColor(R.styleable.EnhanceTabLayout_tabTextColor, Color.parseColor("#666666"));
-        mSelectTextColor = typedArray.getColor(R.styleable.EnhanceTabLayout_tabSelectTextColor, context.getResources().getColor(R.color.colorAccent));
+        mSelectTextColor = typedArray.getColor(R.styleable.EnhanceTabLayout_tabSelectTextColor, context.getResources().getColor(R.color.a397));
         mIndicatorHeight = typedArray.getDimensionPixelSize(R.styleable.EnhanceTabLayout_tabIndicatorHeight, 1);
         mIndicatorWidth = typedArray.getDimensionPixelSize(R.styleable.EnhanceTabLayout_tabIndicatorWidth, 0);
         mTabTextSize = typedArray.getDimensionPixelSize(R.styleable.EnhanceTabLayout_tabTextSize, 14);
@@ -85,7 +85,7 @@ public class EnhanceTabLayout extends FrameLayout {
 
         // 添加属性
         mTabLayout.setTabMode(mTabMode == 1 ? TabLayout.MODE_FIXED : TabLayout.MODE_SCROLLABLE);
-        mTabLayout.setTabGravity(mTabGravity == 0? TabLayout.GRAVITY_FILL : TabLayout.GRAVITY_CENTER);
+        mTabLayout.setTabGravity(mTabGravity == 0 ? TabLayout.GRAVITY_FILL : TabLayout.GRAVITY_CENTER);
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -156,7 +156,20 @@ public class EnhanceTabLayout extends FrameLayout {
      */
     public void addTab(String tab, int count, int screenWidth) {
         mTabList.add(tab);
-        View customView = getTabView(getContext(), tab, mIndicatorWidth, mIndicatorHeight, mTabTextSize,count,screenWidth);
+        View customView = getTabView(getContext(), tab, mIndicatorWidth, mIndicatorHeight, mTabTextSize, count, screenWidth);
+        mCustomViewList.add(customView);
+        mTabLayout.addTab(mTabLayout.newTab().setCustomView(customView));
+    }
+
+    /**
+     * 添加tab
+     *
+     * @param tab
+     */
+    public void addTab(String tab, float size) {
+        mTabList.add(tab);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.tab_item_layout, null);
+        View customView = getTabView(getContext(), tab, size);
         mCustomViewList.add(customView);
         mTabLayout.addTab(mTabLayout.newTab().setCustomView(customView));
     }
@@ -220,6 +233,21 @@ public class EnhanceTabLayout extends FrameLayout {
      * @param
      * @return
      */
+    public static View getTabView(Context context, String text, float size) {
+        View view = LayoutInflater.from(context).inflate(R.layout.tab_item_layout, null);
+        TextView tabText = (TextView) view.findViewById(R.id.tab_item_text);
+        tabText.setTextSize(size);
+        tabText.setText(text);
+        return view;
+    }
+
+    /**
+     * 获取Tab 显示的内容
+     *
+     * @param context
+     * @param
+     * @return
+     */
     public static View getTabView(Context context, String text, int indicatorWidth, int indicatorHeight, int textSize, int count, int screenWidth) {
         View view = LayoutInflater.from(context).inflate(R.layout.tab_item_layout, null);
         TextView tabText = (TextView) view.findViewById(R.id.tab_item_text);
@@ -240,20 +268,20 @@ public class EnhanceTabLayout extends FrameLayout {
             width = tabText.getMeasuredWidth();
         }
         tabText.setWidth(width);
-        if(count<2){
+        if (count < 2) {
 
-        }else if(count==3){
+        } else if (count == 3) {
 
-        }else if(count==4){
+        } else if (count == 4) {
 
-        }else {
+        } else {
 
         }
-        if(count>=5){
+        if (count >= 5) {
             tabText.setWidth(width);
-        }else {
-            int itemWidth=screenWidth/(count+1);
-            itemWidth=itemWidth-20;
+        } else {
+            int itemWidth = screenWidth / (count + 1);
+            itemWidth = itemWidth - 20;
             tabText.setWidth(itemWidth);
         }
 
@@ -261,8 +289,8 @@ public class EnhanceTabLayout extends FrameLayout {
     }
 
 
-    public void reflex(int mScreenWidth,int count){
-        StringUtils.reflex(mTabLayout,mScreenWidth,count);
+    public void reflex(int mScreenWidth, int count) {
+        StringUtils.reflex(mTabLayout, mScreenWidth, count);
     }
 }
 

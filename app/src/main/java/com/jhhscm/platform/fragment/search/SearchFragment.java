@@ -106,7 +106,6 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
             }
         });
 
-
         mDataBinding.homeEidt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -237,14 +236,4 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
     }
-
-//    public void onResume() {
-//        super.onResume();
-//        MobclickAgent.onPageStart("search");
-//    }
-//
-//    public void onPause() {
-//        super.onPause();
-//        MobclickAgent.onPageEnd("search");
-//    }
 }
