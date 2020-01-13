@@ -71,36 +71,15 @@
                 android:padding="3dp"
                 android:src="@mipmap/ic_search_del" />
 
-            <com.zhy.view.flowlayout.TagFlowLayout
+            <com.jhhscm.platform.views.flowlayout.TagFlowLayout
                 android:id="@+id/id_flowlayout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/delete"
-                android:layout_marginTop="@dimen/dp_5"
-                android:visibility="gone"
-                android:paddingLeft="@dimen/padding_10"
-                android:paddingRight="@dimen/padding_10"
-                zhy:max_select="-1"></com.zhy.view.flowlayout.TagFlowLayout>
-
-            <com.jhhscm.platform.views.CustomLableView
-                android:id="@+id/custom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/delete"
-                android:layout_marginTop="@dimen/dp_5"
-                android:paddingLeft="@dimen/padding_10"
-                android:paddingRight="@dimen/padding_10"
-                app:customInterval="@dimen/padding_10"
-                app:customSelectMode="multi"
-                app:customSonBackground="@drawable/bg_cf5"
-                app:customSonPaddingBottom="@dimen/padding_10"
-                app:customSonPaddingLeft="@dimen/padding_10"
-                app:customSonPaddingRight="@dimen/padding_10"
-                app:customSonPaddingTop="@dimen/padding_10"
-                app:customSonTextColor="@color/acc9"
-                app:customSonTextSize="@dimen/text_size_14">
-
-            </com.jhhscm.platform.views.CustomLableView>
+                android:layout_marginTop="10dp"
+                android:paddingLeft="@dimen/dp_5"
+                android:paddingRight="@dimen/padding_15"
+                zhy:max_select="1"></com.jhhscm.platform.views.flowlayout.TagFlowLayout>
         </RelativeLayout>
 
         <RelativeLayout

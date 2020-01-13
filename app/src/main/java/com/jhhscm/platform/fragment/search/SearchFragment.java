@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,17 +19,17 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.FragmentSearchBinding;
 import com.jhhscm.platform.event.SerachEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.network.ScreenUtil;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.Utils;
-import com.jhhscm.platform.views.CustomLableView;
-import com.zhy.view.flowlayout.FlowLayout;
-import com.zhy.view.flowlayout.TagAdapter;
+import com.jhhscm.platform.views.flowlayout.FlowLayout;
+import com.jhhscm.platform.views.flowlayout.TagAdapter;
+import com.jhhscm.platform.views.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
     private int mScreenWidth = 0; // 屏幕宽度
@@ -39,6 +38,8 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
     private SearchOldFragment oldListFragment;
     private SearchPeiJianFragment peijianListFragment;
     private List<String> historys;
+    private TagAdapter tagAdapter;
+    private LayoutInflater mInflater;
 
     public static SearchFragment instance() {
         SearchFragment view = new SearchFragment();
@@ -53,6 +54,7 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
     @Override
     protected void setupViews() {
         type = getArguments().getInt("type");
+        mInflater = LayoutInflater.from(getActivity());
         LinearLayout.LayoutParams llParams = (LinearLayout.LayoutParams) mDataBinding.llTop.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.llTop.setLayoutParams(llParams);
@@ -60,11 +62,7 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
         oldListFragment = SearchOldFragment.instance();
         peijianListFragment = SearchPeiJianFragment.instance();
         initTab();
-        historys = ConfigUtils.getSearchHistory(getContext());
-        if (ConfigUtils.getSearchHistory(getContext()) != null && ConfigUtils.getSearchHistory(getContext()).size() > 0) {
-            mDataBinding.custom.setSonContent(historys);
-        }
-
+        setFlow();
         mDataBinding.homeEidt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -97,37 +95,6 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
             }
         });
 
-        mDataBinding.custom.setOnItemClickListener(new CustomLableView.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position, String sonContent) {
-                if (mDataBinding.homeEidt.getText().toString().trim().length() > 0) {
-                    if (historys != null) {
-                        if (historys.contains(mDataBinding.homeEidt.getText().toString().trim())) {
-                            historys.remove(mDataBinding.homeEidt.getText().toString().trim());
-                        }
-                    } else {
-                        historys = new ArrayList<>();
-                    }
-                    historys.add(0, mDataBinding.homeEidt.getText().toString().trim());
-                    ConfigUtils.setSearchHistory(getContext(), historys);
-                }
-                mDataBinding.custom.setSonContent(historys);
-                mDataBinding.homeEidt.setText(sonContent);
-                mDataBinding.homeEidt.setFocusable(false);
-                mDataBinding.homeEidt.setFocusableInTouchMode(false);
-                EventBusUtil.post(new SerachEvent(mDataBinding.homeEidt.getText().toString()));
-                mDataBinding.rlLabview.setVisibility(View.GONE);
-                hideSoftInputFromWindow(getActivity());
-            }
-        });
-        mDataBinding.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConfigUtils.removeSearchHistory(getContext());
-                historys.clear();
-                mDataBinding.custom.clear();
-            }
-        });
         mDataBinding.homeEidt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -139,32 +106,77 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
             }
         });
 
+
         mDataBinding.homeEidt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDataBinding.rlLabview.setVisibility(View.VISIBLE);
                 historys = ConfigUtils.getSearchHistory(getContext());
                 if (ConfigUtils.getSearchHistory(getContext()) != null && ConfigUtils.getSearchHistory(getContext()).size() > 0) {
-                    mDataBinding.custom.setSonContent(historys);
+                    tagAdapter.setDatas(historys);
                 }
                 showSoftInputFromWindow(getActivity(), mDataBinding.homeEidt);
             }
         });
-        mDataBinding.idFlowlayout.setAdapter(new TagAdapter<String>(historys) {
+    }
+
+    private void setFlow() {
+        tagAdapter = new TagAdapter<String>() {
             @Override
             public View getView(FlowLayout parent, int position, String s) {
-                TextView mTextView = new TextView(getContext());
-                LinearLayout.LayoutParams layoutparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                mTextView.setLayoutParams(layoutparams);
-                mTextView.setText(s);
-                mTextView.setEllipsize(TextUtils.TruncateAt.END);
-                mTextView.setSingleLine();
-                mTextView.setTextSize(14);
-                mTextView.setTextColor(getResources().getColor(R.color.acc9));
-                mTextView.setBackgroundResource(R.drawable.bg_cf5);
-                mTextView.setPadding(ScreenUtil.dip2px(getContext(), 10), ScreenUtil.dip2px(getContext(), 5),
-                        ScreenUtil.dip2px(getContext(), 10), ScreenUtil.dip2px(getContext(), 5));
-                return mTextView;
+                TextView tv = (TextView) mInflater.inflate(R.layout.search_tv,
+                        mDataBinding.idFlowlayout, false);
+                tv.setText(s);
+                return tv;
+            }
+        };
+        historys = ConfigUtils.getSearchHistory(getContext());
+        if (ConfigUtils.getSearchHistory(getContext()) != null && ConfigUtils.getSearchHistory(getContext()).size() > 0) {
+            tagAdapter.setDatas(historys);
+        }
+        mDataBinding.idFlowlayout.setAdapter(tagAdapter);
+        mDataBinding.idFlowlayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                mDataBinding.homeEidt.setText(historys.get(position));
+                if (mDataBinding.homeEidt.getText().toString().trim().length() > 0) {
+                    if (historys != null) {
+                        if (historys.size() > 1) {
+                            if (historys.contains(mDataBinding.homeEidt.getText().toString().trim())) {
+                                historys.remove(mDataBinding.homeEidt.getText().toString().trim());
+                            }
+                            historys.add(0, mDataBinding.homeEidt.getText().toString());
+                        } else {
+                            historys.add(mDataBinding.homeEidt.getText().toString().trim());
+                        }
+                    } else {
+                        historys = new ArrayList<>();
+                    }
+                    ConfigUtils.setSearchHistory(getContext(), historys);
+                }
+
+                mDataBinding.homeEidt.setFocusable(false);
+                mDataBinding.homeEidt.setFocusableInTouchMode(false);
+                EventBusUtil.post(new SerachEvent(mDataBinding.homeEidt.getText().toString()));
+                mDataBinding.rlLabview.setVisibility(View.GONE);
+                hideSoftInputFromWindow(getActivity());
+                return true;
+            }
+        });
+
+        mDataBinding.idFlowlayout.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
+            @Override
+            public void onSelected(Set<Integer> selectPosSet) {
+
+            }
+        });
+
+        mDataBinding.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConfigUtils.removeSearchHistory(getContext());
+                historys.clear();
+                tagAdapter.clear();
             }
         });
     }
