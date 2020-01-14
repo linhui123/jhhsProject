@@ -49,10 +49,10 @@ public class PeiJianTypeAdapter extends RecyclerView.Adapter<PeiJianTypeAdapter.
         holder.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < list.size(); i++) {
-                    list.get(i).setSelect(false);
-                }
-                list.get(position).setSelect(true);
+//                for (int i = 0; i < list.size(); i++) {
+//                    list.get(i).setSelect(false);
+//                }
+//                list.get(position).setSelect(true);
                 if (myListener != null) {
                     myListener.onItemClick(list.get(position));
                 }

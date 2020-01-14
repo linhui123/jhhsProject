@@ -19,8 +19,9 @@ public class PeiJianActivity extends AbsToolbarActivity {
         context.startActivity(intent);
     }
 
-    public static void start(Context context, String category_id, String category_namw) {
+    public static void start(Context context, String type_id, String category_id, String category_namw) {
         Intent intent = new Intent(context, PeiJianActivity.class);
+        intent.putExtra("type_id", type_id);
         intent.putExtra("category_id", category_id);
         intent.putExtra("category_namw", category_namw);
         context.startActivity(intent);
@@ -65,8 +66,9 @@ public class PeiJianActivity extends AbsToolbarActivity {
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
-        args.putString("category_namw",getIntent().getStringExtra("category_namw"));
-        args.putString("category_id",getIntent().getStringExtra("category_id"));
+        args.putString("category_namw", getIntent().getStringExtra("category_namw"));
+        args.putString("category_id", getIntent().getStringExtra("category_id"));
+        args.putString("type_id", getIntent().getStringExtra("type_id"));
         return args;
     }
 }

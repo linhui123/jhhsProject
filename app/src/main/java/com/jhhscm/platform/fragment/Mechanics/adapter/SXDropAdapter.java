@@ -61,7 +61,7 @@ public class SXDropAdapter extends RecyclerView.Adapter<SXDropAdapter.ViewHolder
                 }
                 list.get(position).setSelect(true);
                 if (myListener != null) {
-                    myListener.onItemClick(list.get(position));
+                    myListener.onItemClick(list.get(position),position);
                 }
                 notifyDataSetChanged();
             }
@@ -92,13 +92,12 @@ public class SXDropAdapter extends RecyclerView.Adapter<SXDropAdapter.ViewHolder
         @Override
         public void onClick(View v) {
             if (myListener != null) {
-                myListener.onItemClick(item);
+                myListener.onItemClick(item,getAdapterPosition());
             }
         }
     }
 
     public interface ItemListener {
-        void onItemClick(GetComboBoxBean.ResultBean item);
-
+        void onItemClick(GetComboBoxBean.ResultBean item,int pos);
     }
 }

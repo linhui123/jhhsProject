@@ -552,7 +552,7 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
         mDataBinding.rlDongli.setAdapter(sxDropAdapter);
         sxDropAdapter.setMyListener(new SXDropAdapter.ItemListener() {
             @Override
-            public void onItemClick(GetComboBoxBean.ResultBean item) {
+            public void onItemClick(GetComboBoxBean.ResultBean item,int pos) {
                 if (resultBeanList.size() > 0) {
                     for (GetComboBoxBean.ResultBean r : getComboBoxBean.getResult()) {
                         if (resultBeanList.contains(r)) {
@@ -573,7 +573,7 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
         mDataBinding.rlChandou.setAdapter(sxDropAdapter);
         sxDropAdapter.setMyListener(new SXDropAdapter.ItemListener() {
             @Override
-            public void onItemClick(GetComboBoxBean.ResultBean item) {
+            public void onItemClick(GetComboBoxBean.ResultBean item,int pos) {
                 if (resultBeanList.size() > 0) {
                     for (GetComboBoxBean.ResultBean r : getComboBoxBean.getResult()) {
                         if (resultBeanList.contains(r)) {
@@ -594,7 +594,7 @@ public class NewMechanicsFragment extends AbsFragment<FragmentNewMechanicsBindin
         mDataBinding.rlDunwei.setAdapter(sxDropAdapter);
         sxDropAdapter.setMyListener(new SXDropAdapter.ItemListener() {
             @Override
-            public void onItemClick(GetComboBoxBean.ResultBean item) {
+            public void onItemClick(GetComboBoxBean.ResultBean item,int pos) {
                 if (resultBeanList.size() > 0) {
                     for (GetComboBoxBean.ResultBean r : getComboBoxBean.getResult()) {
                         if (resultBeanList.contains(r)) {

@@ -15,12 +15,12 @@
             android:paddingLeft="@dimen/padding_15"
             android:paddingRight="@dimen/padding_15">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/tv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:background="@mipmap/ic_back"
                 android:padding="@dimen/dp_5" />
 
@@ -161,6 +161,17 @@
             android:layout_marginTop="@dimen/dp_1"
             android:background="@color/cf5"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
 
+        <ImageView
+            android:id="@+id/tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="50dp"
+            android:animateLayoutChanges="true"
+            android:src="@mipmap/ic_car" />
+
         <LinearLayout
             android:id="@+id/ll_xiala"
             android:layout_width="match_parent"
@@ -190,23 +201,71 @@
 
             </LinearLayout>
 
+            <!--<LinearLayout-->
+                <!--android:id="@+id/ll_quanbu"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@color/white"-->
+                <!--android:orientation="vertical"-->
+                <!--android:paddingTop="@dimen/dp_5"-->
+                <!--android:paddingBottom="@dimen/dp_5"-->
+                <!--android:visibility="gone">-->
+
+                <!--<android.support.v7.widget.RecyclerView-->
+                    <!--android:id="@+id/rl_quanbu"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="@dimen/dp_5"-->
+                    <!--android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>-->
+
+            <!--</LinearLayout>-->
+
             <LinearLayout
-                android:id="@+id/ll_quanbu"
+                android:id="@+id/ll_shuaixuan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:clickable="true"
                 android:orientation="vertical"
+                android:paddingLeft="@dimen/padding_15"
                 android:paddingTop="@dimen/dp_5"
+                android:paddingRight="@dimen/padding_15"
                 android:paddingBottom="@dimen/dp_5"
                 android:visibility="gone">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:text="配件分类"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="bold" />
+
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rl_quanbu"
+                    android:id="@+id/rl_dongli"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
                     android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:text="配件二级分类"
+                    android:textColor="@color/acc3"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rl_chandou"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
             </LinearLayout>
 
             <LinearLayout

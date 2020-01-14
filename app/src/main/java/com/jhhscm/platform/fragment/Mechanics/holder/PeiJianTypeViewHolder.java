@@ -4,6 +4,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.jhhscm.platform.activity.PeiJianActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemMechanicsPrivinceBinding;
 import com.jhhscm.platform.databinding.ItemPeijianRightBinding;
@@ -33,5 +34,11 @@ public class PeiJianTypeViewHolder extends AbsRecyclerViewHolder<GoodsCatatoryLi
         PeiJianTypeAdapter adapter = new PeiJianTypeAdapter(item.getSecend_brand_list(), itemView.getContext());
         mBinding.rv.setAdapter(adapter);
         mBinding.rv.setNestedScrollingEnabled(false);
+        adapter.setMyListener(new PeiJianTypeAdapter.ItemListener() {
+            @Override
+            public void onItemClick(GoodsCatatoryListBean.DataBean.SecendBrandListBean secendBrandListBean) {
+                PeiJianActivity.start(itemView.getContext(),item.getId(),secendBrandListBean.getId(),secendBrandListBean.getName());
+            }
+        });
     }
 }

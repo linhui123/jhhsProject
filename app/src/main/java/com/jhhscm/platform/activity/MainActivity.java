@@ -32,6 +32,7 @@ import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.event.ShowBackEvent;
 import com.jhhscm.platform.fragment.Mechanics.MechanicsFragment;
 import com.jhhscm.platform.fragment.Mechanics.PeiJianFragment;
+import com.jhhscm.platform.fragment.Mechanics.PeiJianTypeFragment;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.HomePageFragment;
 import com.jhhscm.platform.fragment.my.MyFragment;
@@ -60,7 +61,8 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
     private List<Fragment> mFragments = new ArrayList<Fragment>();
     private HomePageFragment homeFragment;
     private MechanicsFragment mechanicsFragment;
-    private PeiJianFragment peiJianFragment;
+//    private PeiJianFragment peiJianFragment;
+    private PeiJianTypeFragment peiJianFragment;
     //        private FinancialFragment financialFragment;
 //    private ZuLin2Fragment zuLinFragment;
     private ZuLinFragment zuLinFragment;
@@ -88,7 +90,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
             FragmentManager fragmentManager = getSupportFragmentManager();
 //            mechanicsFragment = new MechanicsFragment();
 ///          fragmentManager.beginTransaction().add(R.id.fl, mechanicsFragment, "mechanicsFragment").commit();
-            peiJianFragment = new PeiJianFragment();
+            peiJianFragment = new PeiJianTypeFragment();
             fragmentManager.beginTransaction().add(R.id.fl, peiJianFragment, "peiJianFragment").commit();
             homeFragment = new HomePageFragment();
             fragmentManager.beginTransaction().add(R.id.fl, homeFragment, "homeFragment").commit();
@@ -130,7 +132,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
         fm = getSupportFragmentManager();
         transaction = fm.beginTransaction();
         homeFragment = (HomePageFragment) fm.findFragmentByTag("homeFragment");
-        peiJianFragment = (PeiJianFragment) fm.findFragmentByTag("peiJianFragment");
+        peiJianFragment = (PeiJianTypeFragment) fm.findFragmentByTag("peiJianFragment");
 //        mechanicsFragment = (MechanicsFragment) fm.findFragmentByTag("mechanicsFragment");
         zuLinFragment = (ZuLinFragment) fm.findFragmentByTag("zuLinFragment");
         mMeFragment = (MyFragment) fm.findFragmentByTag("mMeFragment");
@@ -220,7 +222,7 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
             MobclickAgent.onEvent(getApplicationContext(), "peiJianFragment");
             EventBusUtil.post(new ShowBackEvent(0));
             if (peiJianFragment == null) {
-                peiJianFragment = new PeiJianFragment();
+                peiJianFragment = new PeiJianTypeFragment();
                 transaction1.add(R.id.fl, peiJianFragment, "peiJianFragment");
             } else {
                 transaction1.show(peiJianFragment);
@@ -331,16 +333,14 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
                 MobclickAgent.onEvent(getApplicationContext(), "parts_button_home");
 //                PeiJianActivity.start(MainActivity.this);
                 if (event.getBrand_id() != null) {
-
                     EventBusUtil.post(new BrandResultEvent(event.getBrand_id(), event.getBrand_name(), 2));
                 } else {
                     EventBusUtil.post(new BrandResultEvent("", "品类", 2));
                 }
-//                onCheckedChanged(mDataBinding.rgOper, R.id.rd_peijian);
-//                mDataBinding.rdPeijian.setChecked(true);
+                onCheckedChanged(mDataBinding.rgOper, R.id.rd_peijian);
+                mDataBinding.rdPeijian.setChecked(true);
                 EventBusUtil.post(new ShowBackEvent(2));
-                PeiJianTypeActivity.start(MainActivity.this);
-
+//                PeiJianTypeActivity.start(MainActivity.this);
             } else if ("AFTER_SALE".equals(event.getType())) {//售后
                 MobclickAgent.onEvent(getApplicationContext(), "after_button_home");
                 AfterSaleActivity.start(MainActivity.this);
