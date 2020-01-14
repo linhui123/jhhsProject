@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_3"
+        android:paddingTop="@dimen/dp_5"
+        android:paddingRight="@dimen/dp_3"
+        android:paddingBottom="@dimen/dp_5">
+
+        <ImageView
+            android:id="@+id/im_brand"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_site" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/im_brand"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:paddingTop="@dimen/dp_3"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:paddingBottom="@dimen/dp_3"
+            android:text="全部"
+            android:textColor="@color/acc3"
+            android:textSize="@dimen/sp_14" />
+    </RelativeLayout>
+</layout>

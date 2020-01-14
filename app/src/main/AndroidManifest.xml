@@ -57,7 +57,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme.TranslucentStatusBar"
         tools:replace="android:label">
-        <activity android:name=".activity.ButlerActivity"></activity>
+        <activity android:name=".activity.PeiJianTypeActivity"></activity>
+        <activity android:name=".activity.ButlerActivity" />
         <activity android:name=".activity.MechanicsActivity" />
         <activity android:name=".activity.SelectCouponActivity" />
         <activity android:name=".activity.SubmitLabourActivity" />

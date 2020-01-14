@@ -17,6 +17,7 @@ import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetOldDetailsBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetOldPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GoodsCatatoryListBean;
 import com.jhhscm.platform.fragment.Mechanics.push.OldMechanicsUpImageBean;
 import com.jhhscm.platform.fragment.aftersale.BusinessDetailBean;
 import com.jhhscm.platform.fragment.aftersale.FindBusListBean;
@@ -342,6 +343,7 @@ public interface ApiService {
     Call<BaseEntity<FindOrderListBean>> findOrderList(@Body NetBean content);
 
     String FIND_ORDERDETAIL3 = "v1-3/order/findOrderDetail";
+
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(FIND_ORDERDETAIL3)
     Call<BaseEntity<FindOrderListBean.OrderDetail>> find_OrderDetail3(@Body NetBean content);
@@ -363,6 +365,14 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(FIND_BRAND)
     Call<BaseEntity<FindBrandBean>> findBrand(@Body NetBean content);
+
+    //配件分类
+    String GOODSCATATORY_LIST = "v1-3/goodscatatory/list";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(GOODSCATATORY_LIST)
+    Call<BaseEntity<GoodsCatatoryListBean>> goodscatatoryList(@Body NetBean content);
+
 
     //机型列表
     String BRAND_MODELLISTBEAN = "v1-3/brandmodel/list";

@@ -331,13 +331,16 @@ public class MainActivity extends AbsActivity implements RadioGroup.OnCheckedCha
                 MobclickAgent.onEvent(getApplicationContext(), "parts_button_home");
 //                PeiJianActivity.start(MainActivity.this);
                 if (event.getBrand_id() != null) {
+
                     EventBusUtil.post(new BrandResultEvent(event.getBrand_id(), event.getBrand_name(), 2));
                 } else {
                     EventBusUtil.post(new BrandResultEvent("", "品类", 2));
                 }
-                onCheckedChanged(mDataBinding.rgOper, R.id.rd_peijian);
-                mDataBinding.rdPeijian.setChecked(true);
+//                onCheckedChanged(mDataBinding.rgOper, R.id.rd_peijian);
+//                mDataBinding.rdPeijian.setChecked(true);
                 EventBusUtil.post(new ShowBackEvent(2));
+                PeiJianTypeActivity.start(MainActivity.this);
+
             } else if ("AFTER_SALE".equals(event.getType())) {//售后
                 MobclickAgent.onEvent(getApplicationContext(), "after_button_home");
                 AfterSaleActivity.start(MainActivity.this);
