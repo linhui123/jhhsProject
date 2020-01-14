@@ -20,6 +20,7 @@ import com.jhhscm.platform.databinding.FragmentPeiJianBinding;
 import com.jhhscm.platform.event.BrandResultEvent;
 import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.event.ShowBackEvent;
+import com.jhhscm.platform.fragment.Mechanics.action.BrandModelList1Action;
 import com.jhhscm.platform.fragment.Mechanics.action.BrandModelListAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindCategoryAction;
@@ -27,6 +28,7 @@ import com.jhhscm.platform.fragment.Mechanics.adapter.BrandAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.BrandModelAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.JXDropAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.SelectedAdapter;
+import com.jhhscm.platform.fragment.Mechanics.bean.BrandModel1Bean;
 import com.jhhscm.platform.fragment.Mechanics.bean.BrandModelBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
@@ -395,12 +397,12 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
     }
 
     /**
-     * 获取品牌 + 机型列表
+     * 获取+ 机型列表
      */
     private void brandModel() {
         if (getContext() != null) {
             Map<String, String> map = new TreeMap<String, String>();
-            map.put("type", "2");
+            map.put("appid", "336abf9e97cd4276bf8aecde9d32ed99");
             String content = JSON.toJSONString(map);
             content = Des.encryptByDes(content);
             String sign = Sign.getSignKey(getActivity(), map, "brandModel");
@@ -408,10 +410,10 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
             netBean.setToken("");
             netBean.setSign(sign);
             netBean.setContent(content);
-            onNewRequestCall(BrandModelListAction.newInstance(getContext(), netBean)
-                    .request(new AHttpService.IResCallback<BaseEntity<BrandModelBean>>() {
+            onNewRequestCall(BrandModelList1Action.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<BrandModel1Bean>>() {
                         @Override
-                        public void onCallback(int resultCode, Response<BaseEntity<BrandModelBean>> response,
+                        public void onCallback(int resultCode, Response<BaseEntity<BrandModel1Bean>> response,
                                                BaseErrorInfo baseErrorInfo) {
                             if (getView() != null) {
                                 closeDialog();
@@ -555,9 +557,9 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
     /**
      * 下拉机型
      */
-    private void jixing(BrandModelBean brandModelBean) {
-        BrandModelBean.DataBean resultBean = new BrandModelBean.DataBean("全部", "");
-        BrandModelBean.DataBean resultBean1 = new BrandModelBean.DataBean("机型通用", "-1");
+    private void jixing(BrandModel1Bean brandModelBean) {
+        BrandModel1Bean.DataBean resultBean = new BrandModel1Bean.DataBean("全部", "");
+        BrandModel1Bean.DataBean resultBean1 = new BrandModel1Bean.DataBean("机型通用", "-1");
         if (brandModelBean.getData() != null && brandModelBean.getData().size() > 0) {
             brandModelBean.getData().add(0, resultBean);
             brandModelBean.getData().add(1, resultBean1);
@@ -567,7 +569,7 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
         mDataBinding.rlJixing.setAdapter(bAdapter);
         bAdapter.setMyListener(new BrandModelAdapter.ItemListener() {
             @Override
-            public void onItemClick(BrandModelBean.DataBean item) {
+            public void onItemClick(BrandModel1Bean.DataBean item) {
                 if (item.getBrand_id().length() > 0) {
                     if (item.getBrand_id().equals("-1")) {
                         model_ids = "-1";
@@ -576,15 +578,15 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
                         closeDrap();
                         mDataBinding.wrvRecycler.autoRefresh();
                     } else {
-                        if (item.getBrand_model_list() != null && item.getBrand_model_list().size() > 0) {
-                            BrandModelActivity.start(getContext(), item);
-                        } else {
-                            model_ids = "";
-                            ToastUtil.show(getContext(), "该品牌下没有机型数据");
-                            mDataBinding.llXiala.setVisibility(View.GONE);
-                            closeDrap();
-                            mDataBinding.wrvRecycler.autoRefresh();
-                        }
+//                        if (item.getBrand_model_list() != null && item.getBrand_model_list().size() > 0) {
+                            BrandModelActivity.start(getContext(), item.getBrand_name(),item.getBrand_id());
+//                        } else {
+//                            model_ids = "";
+//                            ToastUtil.show(getContext(), "该品牌下没有机型数据");
+//                            mDataBinding.llXiala.setVisibility(View.GONE);
+//                            closeDrap();
+//                            mDataBinding.wrvRecycler.autoRefresh();
+//                        }
                     }
                 } else {
                     model_ids = "";

@@ -10,17 +10,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.fragment.Mechanics.bean.BrandModelBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.BrandModel1Bean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
 public class BrandModelAdapter extends RecyclerView.Adapter<BrandModelAdapter.ViewHolder> {
-    private List<BrandModelBean.DataBean> list;
+    private List<BrandModel1Bean.DataBean> list;
     private Context mContext;
     private ItemListener myListener;
 
-    public BrandModelAdapter(List<BrandModelBean.DataBean> list, Context mContext) {
+    public BrandModelAdapter(List<BrandModel1Bean.DataBean> list, Context mContext) {
         this.list = list;
         this.mContext = mContext;
     }
@@ -50,10 +50,6 @@ public class BrandModelAdapter extends RecyclerView.Adapter<BrandModelAdapter.Vi
         holder.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < list.size(); i++) {
-                    list.get(i).setSelect(false);
-                }
-                list.get(position).setSelect(true);
                 if (myListener != null) {
                     myListener.onItemClick(list.get(position));
                 }
@@ -69,7 +65,7 @@ public class BrandModelAdapter extends RecyclerView.Adapter<BrandModelAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        BrandModelBean.DataBean item;
+        BrandModel1Bean.DataBean item;
         TextView tv_name;
         ImageView im_brand;
         RelativeLayout rl;
@@ -82,7 +78,7 @@ public class BrandModelAdapter extends RecyclerView.Adapter<BrandModelAdapter.Vi
             tv_name.setOnClickListener(this);
         }
 
-        public void setData(BrandModelBean.DataBean item) {
+        public void setData(BrandModel1Bean.DataBean item) {
             this.item = item;
 
         }
@@ -96,7 +92,7 @@ public class BrandModelAdapter extends RecyclerView.Adapter<BrandModelAdapter.Vi
     }
 
     public interface ItemListener {
-        void onItemClick(BrandModelBean.DataBean item);
+        void onItemClick(BrandModel1Bean.DataBean item);
 
     }
 }

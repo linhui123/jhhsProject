@@ -17,6 +17,13 @@ public class BrandModelActivity extends AbsToolbarActivity {
         context.startActivity(intent);
     }
 
+    public static void start(Context context, String name, String id) {
+        Intent intent = new Intent(context, BrandModelActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("name", name);
+        context.startActivity(intent);
+    }
+
     @Override
     protected boolean enableHomeButton() {
         return true;
@@ -55,7 +62,9 @@ public class BrandModelActivity extends AbsToolbarActivity {
     @Override
     protected Bundle onPutArguments() {
         Bundle args = new Bundle();
-        args.putSerializable("dataBean",getIntent().getSerializableExtra("dataBean"));
+        args.putSerializable("dataBean", getIntent().getSerializableExtra("dataBean"));
+        args.putSerializable("id", getIntent().getStringExtra("id"));
+        args.putSerializable("name", getIntent().getStringExtra("name"));
         return args;
     }
 }

@@ -6,6 +6,8 @@ import com.jhhscm.platform.fragment.GoodsToCarts.CalculateOrderBean;
 import com.jhhscm.platform.fragment.GoodsToCarts.CreateOrderResultBean;
 import com.jhhscm.platform.fragment.GoodsToCarts.FindAddressListBean;
 import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.BrandModel1Bean;
+import com.jhhscm.platform.fragment.Mechanics.bean.BrandModel2Bean;
 import com.jhhscm.platform.fragment.Mechanics.bean.BrandModelBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
@@ -374,12 +376,26 @@ public interface ApiService {
     Call<BaseEntity<GoodsCatatoryListBean>> goodscatatoryList(@Body NetBean content);
 
 
-    //机型列表
+    //机型列表v1-3/brandmodel/list1
     String BRAND_MODELLISTBEAN = "v1-3/brandmodel/list";
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(BRAND_MODELLISTBEAN)
     Call<BaseEntity<BrandModelBean>> brandModelListBean(@Body NetBean content);
+
+    //机型列表v1-3/brandmodel/list1
+    String BRAND_MODELLISTBEAN1 = "v1-3/brandmodel/list1";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(BRAND_MODELLISTBEAN1)
+    Call<BaseEntity<BrandModel1Bean>> brandModelList1Bean(@Body NetBean content);
+
+    //机型列表v1-3/brandmodel/list1
+    String BRAND_MODELLISTBEAN2 = "v1-3/brandmodel/list2";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(BRAND_MODELLISTBEAN2)
+    Call<BaseEntity<BrandModel2Bean>> brandModelList2Bean(@Body NetBean content);
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(GET_GOODSBYBRAND)
