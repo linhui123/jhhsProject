@@ -61,6 +61,7 @@ import com.jhhscm.platform.fragment.repayment.ContractPayCreateOrderBean;
 import com.jhhscm.platform.fragment.sale.FindGoodsAssessBean;
 import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.fragment.sale.OldGoodOrderHistoryBean;
+import com.jhhscm.platform.fragment.search.SearchBean;
 import com.jhhscm.platform.fragment.vehicle.GpsDetailBean;
 import com.jhhscm.platform.fragment.vehicle.GpsTrackDetailBean;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -856,4 +857,11 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(UPDATE_ORDERSTATUS)
     Call<BaseEntity<ResultBean>> updateOrderStatus(@Body NetBean content);
+
+    //用户确认商户提交的订单状态
+    String SEARCH_FINDCATEGORYALL = "v1-3/search/findCategoryAll";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(SEARCH_FINDCATEGORYALL)
+    Call<BaseEntity<SearchBean>> findCategoryAll (@Body NetBean content);
 }
