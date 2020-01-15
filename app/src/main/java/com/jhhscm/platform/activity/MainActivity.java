@@ -31,7 +31,6 @@ import com.jhhscm.platform.event.BrandResultEvent;
 import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.event.ShowBackEvent;
 import com.jhhscm.platform.fragment.Mechanics.MechanicsFragment;
-import com.jhhscm.platform.fragment.Mechanics.PeiJianFragment;
 import com.jhhscm.platform.fragment.Mechanics.PeiJianTypeFragment;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.HomePageFragment;

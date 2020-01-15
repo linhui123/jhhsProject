@@ -12,7 +12,6 @@ import com.jhhscm.platform.views.selector.ImageSelectorItem;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyDeviceSelectItemViewHolder extends AbsRecyclerViewHolder<FindUserGoodsOwnerBean.DataBean> {
 

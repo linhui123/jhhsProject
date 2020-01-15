@@ -19,10 +19,7 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentPeiJianBinding;
 import com.jhhscm.platform.event.BrandResultEvent;
-import com.jhhscm.platform.event.JumpEvent;
-import com.jhhscm.platform.event.ShowBackEvent;
 import com.jhhscm.platform.fragment.Mechanics.action.BrandModelList1Action;
-import com.jhhscm.platform.fragment.Mechanics.action.BrandModelListAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.action.FindCategoryAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GoodsCatatoryListAction;
@@ -32,7 +29,6 @@ import com.jhhscm.platform.fragment.Mechanics.adapter.JXDropAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.SXDropAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.SelectedAdapter;
 import com.jhhscm.platform.fragment.Mechanics.bean.BrandModel1Bean;
-import com.jhhscm.platform.fragment.Mechanics.bean.BrandModelBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.FindCategoryBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
@@ -52,7 +48,6 @@ import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
-import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 import com.jhhscm.platform.views.recyclerview.WrappedRecyclerView;
@@ -80,6 +75,7 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
     private String category_id_1 = "";//品类一节
     private String brand_id = "";//品牌
     private String model_ids = "";//机型
+    private SXDropAdapter sx2DropAdapter;
 
     public static PeiJianFragment instance() {
         PeiJianFragment view = new PeiJianFragment();
@@ -605,6 +601,7 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
                         brand_id = "";
                         mDataBinding.tvPinpai.setText("品牌");
                         mDataBinding.llXiala.setVisibility(View.GONE);
+                        pinlei2(new GoodsCatatoryListBean.DataBean(), false);
                         closeDrap();
                         mDataBinding.wrvRecycler.autoRefresh();
                     } else {
@@ -619,33 +616,36 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
      * 下拉全部 品类
      */
     private void pinlei2(final GoodsCatatoryListBean.DataBean findBrandBean, boolean first) {
-        final GetComboBoxBean getComboBoxBean = new GetComboBoxBean();
-        List<GetComboBoxBean.ResultBean> resultBeans = new ArrayList<>();
-        for (GoodsCatatoryListBean.DataBean.SecendBrandListBean resultBean : findBrandBean.getSecend_brand_list()) {
-            GetComboBoxBean.ResultBean resultBean1 =
-                    new GetComboBoxBean.ResultBean(resultBean.getId(), resultBean.getName());
-            if (first && category_id.equals(resultBean.getId())) {
-                resultBean1.setSelect(true);
+        if (findBrandBean.getSecend_brand_list() != null) {
+            final GetComboBoxBean getComboBoxBean = new GetComboBoxBean();
+            List<GetComboBoxBean.ResultBean> resultBeans = new ArrayList<>();
+            for (GoodsCatatoryListBean.DataBean.SecendBrandListBean resultBean : findBrandBean.getSecend_brand_list()) {
+                GetComboBoxBean.ResultBean resultBean1 =
+                        new GetComboBoxBean.ResultBean(resultBean.getId(), resultBean.getName());
+                if (first && category_id.equals(resultBean.getId())) {
+                    resultBean1.setSelect(true);
+                }
+                resultBeans.add(resultBean1);
             }
-            resultBeans.add(resultBean1);
+            getComboBoxBean.setResult(resultBeans);
+            sx2DropAdapter = new SXDropAdapter(getComboBoxBean.getResult(), getContext());
+            mDataBinding.rlChandou.setLayoutManager(new GridLayoutManager(getContext(), 3));
+            mDataBinding.rlChandou.setAdapter(sx2DropAdapter);
+            sx2DropAdapter.setMyListener(new SXDropAdapter.ItemListener() {
+                @Override
+                public void onItemClick(GetComboBoxBean.ResultBean item, int pos) {
+                    category_id = item.getKey_name();
+                    mDataBinding.tvQuanbu.setText(item.getKey_value());
+                    brand_id = "";
+                    mDataBinding.tvPinpai.setText("品牌");
+                    mDataBinding.llXiala.setVisibility(View.GONE);
+                    closeDrap();
+                    mDataBinding.wrvRecycler.autoRefresh();
+                }
+            });
+        } else {//全部
+            sx2DropAdapter.clear();
         }
-        getComboBoxBean.setResult(resultBeans);
-
-        mDataBinding.rlChandou.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        SXDropAdapter sx2DropAdapter = new SXDropAdapter(getComboBoxBean.getResult(), getContext());
-        mDataBinding.rlChandou.setAdapter(sx2DropAdapter);
-        sx2DropAdapter.setMyListener(new SXDropAdapter.ItemListener() {
-            @Override
-            public void onItemClick(GetComboBoxBean.ResultBean item, int pos) {
-                category_id = item.getKey_name();
-                mDataBinding.tvQuanbu.setText(item.getKey_value());
-                brand_id = "";
-                mDataBinding.tvPinpai.setText("品牌");
-                mDataBinding.llXiala.setVisibility(View.GONE);
-                closeDrap();
-                mDataBinding.wrvRecycler.autoRefresh();
-            }
-        });
     }
 
     /**

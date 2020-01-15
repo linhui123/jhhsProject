@@ -6,13 +6,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/a397"
         android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/top"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@color/a397">
+            android:layout_height="45dp">
 
             <ImageView
                 android:id="@+id/back"
@@ -34,7 +34,7 @@
                 app:tabIndicatorHeight="2dp"
                 app:tabIndicatorWidth="16dp"
                 app:tabSelectTextColor="@color/white"
-                app:tabTextColor="@color/acc9"
+                app:tabTextColor="@color/acc3"
                 app:tabTextSize="6dp"
                 app:tab_Gravity="mode_fill"
                 app:tab_Mode="mode_scrollable" />

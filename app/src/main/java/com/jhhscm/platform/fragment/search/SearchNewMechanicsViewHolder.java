@@ -6,7 +6,6 @@ import com.jhhscm.platform.activity.h5.MechanicsH5Activity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemMechanicsNewBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.UrlUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;

@@ -1,10 +1,6 @@
 package com.jhhscm.platform.tool;
 
-import android.util.Log;
-
 import com.amap.api.maps2d.model.LatLng;
-
-import java.math.BigDecimal;
 
 public class GPSUtil {
     public static double pi = 3.1415926535897932384626;

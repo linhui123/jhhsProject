@@ -11,12 +11,18 @@ import android.widget.TextView;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SXDropAdapter extends RecyclerView.Adapter<SXDropAdapter.ViewHolder> {
     private List<GetComboBoxBean.ResultBean> list;
     private Context mContext;
     private ItemListener myListener;
+
+    public SXDropAdapter(Context mContext) {
+        list = new ArrayList<>();
+        this.mContext = mContext;
+    }
 
     public SXDropAdapter(List<GetComboBoxBean.ResultBean> list, Context mContext) {
         this.list = list;
@@ -29,6 +35,11 @@ public class SXDropAdapter extends RecyclerView.Adapter<SXDropAdapter.ViewHolder
 
     public void setList(List<GetComboBoxBean.ResultBean> list1) {
         this.list = list1;
+        notifyDataSetChanged();
+    }
+
+    public void clear() {
+        this.list.clear();
         notifyDataSetChanged();
     }
 
@@ -61,7 +72,7 @@ public class SXDropAdapter extends RecyclerView.Adapter<SXDropAdapter.ViewHolder
                 }
                 list.get(position).setSelect(true);
                 if (myListener != null) {
-                    myListener.onItemClick(list.get(position),position);
+                    myListener.onItemClick(list.get(position), position);
                 }
                 notifyDataSetChanged();
             }
@@ -92,12 +103,12 @@ public class SXDropAdapter extends RecyclerView.Adapter<SXDropAdapter.ViewHolder
         @Override
         public void onClick(View v) {
             if (myListener != null) {
-                myListener.onItemClick(item,getAdapterPosition());
+                myListener.onItemClick(item, getAdapterPosition());
             }
         }
     }
 
     public interface ItemListener {
-        void onItemClick(GetComboBoxBean.ResultBean item,int pos);
+        void onItemClick(GetComboBoxBean.ResultBean item, int pos);
     }
 }

@@ -1,14 +1,9 @@
 package com.jhhscm.platform.fragment.Mechanics;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,25 +15,14 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.SearchActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
-import com.jhhscm.platform.databinding.FragmentPeiJianBinding;
 import com.jhhscm.platform.databinding.FragmentPeiJianTypeBinding;
 import com.jhhscm.platform.event.BrandResultEvent;
 import com.jhhscm.platform.event.JumpEvent;
-import com.jhhscm.platform.event.ShowBackEvent;
-import com.jhhscm.platform.fragment.Mechanics.action.FindBrandAction;
 import com.jhhscm.platform.fragment.Mechanics.action.GoodsCatatoryListAction;
-import com.jhhscm.platform.fragment.Mechanics.adapter.BrandAdapter;
-import com.jhhscm.platform.fragment.Mechanics.adapter.JXDropAdapter;
 import com.jhhscm.platform.fragment.Mechanics.adapter.PeiJianModelAdapter;
-import com.jhhscm.platform.fragment.Mechanics.adapter.PeiJianTypeAdapter;
-import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GoodsCatatoryListBean;
-import com.jhhscm.platform.fragment.Mechanics.holder.NewMechanicsViewHolder;
 import com.jhhscm.platform.fragment.Mechanics.holder.PeiJianTypeViewHolder;
 import com.jhhscm.platform.fragment.base.AbsFragment;
-import com.jhhscm.platform.fragment.search.SearchNewFragment;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -49,7 +33,6 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
-import com.jhhscm.platform.views.recyclerview.DividerItemStrokeDecoration;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -100,6 +83,14 @@ public class PeiJianTypeFragment extends AbsFragment<FragmentPeiJianTypeBinding>
             }
         });
         findBrand();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {//可见
+            mIsFromClick = true;//防止初始化，被消耗掉
+        }
     }
 
     /**
@@ -158,26 +149,8 @@ public class PeiJianTypeFragment extends AbsFragment<FragmentPeiJianTypeBinding>
                 mAdapterLeft.mCheckedPosition = position;
                 mAdapterLeft.notifyDataSetChanged();
                 mIsFromClick = true;//不走onScrolled，防止来回调
-                LinearSmoothScroller topScroller = new LinearSmoothScroller(getActivity()) {
-
-                    @Override
-                    protected int getHorizontalSnapPreference() {
-                        return SNAP_TO_START;//具体见源码注释
-                    }
-
-                    @Override
-                    protected int getVerticalSnapPreference() {
-                        return SNAP_TO_START;//具体见源码注释
-                    }
-
-                    @Override
-                    protected void onStop() {
-                        super.onStop();
-                        mIsFromClick = false;
-                    }
-                };
-                topScroller.setTargetPosition(position);
-                linearLayoutManager.startSmoothScroll(topScroller);
+                linearLayoutManager.scrollToPositionWithOffset(position, 0);
+//                mIsFromClick = false;
             }
         });
         //右边
@@ -189,19 +162,13 @@ public class PeiJianTypeFragment extends AbsFragment<FragmentPeiJianTypeBinding>
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    //和下面的handler配合，这样才能无bug
-                    if (mIsFromClick) {
-                        changePosition();//防止突然停了，定错位置
-                    }
-                    mIsFromClick = false;//滑动结束放开
-                }
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (mIsFromClick) {//防止来回调
+                    mIsFromClick = false;
                     return;
                 }
                 changePosition();
@@ -213,6 +180,7 @@ public class PeiJianTypeFragment extends AbsFragment<FragmentPeiJianTypeBinding>
                     mAdapterLeft.mCheckedPosition = firstPosition;
                     mAdapterLeft.notifyDataSetChanged();
                     //此方法无置顶效果
+                    mIsFromClick = false;
                     mDataBinding.type1.scrollToPosition(mAdapterLeft.mCheckedPosition);
                 }
             }
@@ -230,16 +198,6 @@ public class PeiJianTypeFragment extends AbsFragment<FragmentPeiJianTypeBinding>
         }
     }
 
-    public void onEvent(ShowBackEvent event) {
-//        if (event.getType() == 2) {
-//            isShowBack = true;
-//            mDataBinding.back.setVisibility(View.VISIBLE);
-//        } else if (event.getType() == 0) {
-//            isShowBack = false;
-//            mDataBinding.back.setVisibility(View.GONE);
-//        }
-    }
-
     public void onEvent(BrandResultEvent event) {
         if (event.getBrand_id() != null && event.getBrand_name() != null) {//品牌
             if (event.getType() == 2) {//品类
@@ -248,10 +206,7 @@ public class PeiJianTypeFragment extends AbsFragment<FragmentPeiJianTypeBinding>
                     if (goodsCatatoryListBean != null && goodsCatatoryListBean.getData() != null && goodsCatatoryListBean.getData().size() > 0) {
                         for (int i = 0; i < goodsCatatoryListBean.getData().size(); i++) {
                             if (goodsCatatoryListBean.getData().get(i).getId().equals(category_id)) {
-                                goodsCatatoryListBean.getData().get(i).setSelect(true);
                                 mAdapterLeft.mCheckedPosition = i;
-                            } else {
-                                goodsCatatoryListBean.getData().get(i).setSelect(false);
                             }
                         }
                     }
@@ -260,26 +215,7 @@ public class PeiJianTypeFragment extends AbsFragment<FragmentPeiJianTypeBinding>
                 }
                 mAdapterLeft.notifyDataSetChanged();
                 mIsFromClick = true;//不走onScrolled，防止来回调
-                LinearSmoothScroller topScroller = new LinearSmoothScroller(getActivity()) {
-
-                    @Override
-                    protected int getHorizontalSnapPreference() {
-                        return SNAP_TO_START;//具体见源码注释
-                    }
-
-                    @Override
-                    protected int getVerticalSnapPreference() {
-                        return SNAP_TO_START;//具体见源码注释
-                    }
-
-                    @Override
-                    protected void onStop() {
-                        super.onStop();
-                        mIsFromClick = false;
-                    }
-                };
-                topScroller.setTargetPosition(mAdapterLeft.mCheckedPosition);
-                linearLayoutManager.startSmoothScroll(topScroller);
+                linearLayoutManager.scrollToPositionWithOffset(mAdapterLeft.mCheckedPosition, 0);
             }
         }
     }

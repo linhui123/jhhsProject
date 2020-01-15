@@ -30,7 +30,7 @@
                 android:drawableLeft="@mipmap/ic_search_hint"
                 android:drawablePadding="@dimen/dp_5"
                 android:gravity="center_vertical"
-                android:hint="请输入你要找的机型"
+                android:hint="请输入产品名称、品牌、机型"
                 android:imeOptions="actionSearch"
                 android:paddingLeft="12dp"
                 android:singleLine="true"

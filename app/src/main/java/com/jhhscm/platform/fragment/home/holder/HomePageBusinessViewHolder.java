@@ -6,7 +6,6 @@ import com.google.gson.Gson;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemHomePageBusinessBinding;
 import com.jhhscm.platform.event.JumpEvent;
-import com.jhhscm.platform.event.ScrollEvent;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.HomePageItem;
 import com.jhhscm.platform.tool.EventBusUtil;

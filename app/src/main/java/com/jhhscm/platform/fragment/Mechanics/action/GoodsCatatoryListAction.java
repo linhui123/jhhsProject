@@ -2,7 +2,6 @@ package com.jhhscm.platform.fragment.Mechanics.action;
 
 import android.content.Context;
 
-import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GoodsCatatoryListBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.ApiService;

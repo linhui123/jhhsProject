@@ -6,13 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jhhscm.platform.R;
-import com.jhhscm.platform.fragment.Mechanics.bean.FindBrandBean;
-import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.Mechanics.bean.GoodsCatatoryListBean;
 
 import java.util.List;
@@ -109,6 +106,5 @@ public class PeiJianModelAdapter extends RecyclerView.Adapter<PeiJianModelAdapte
 
     public interface ItemListener {
         void onItemClick(GoodsCatatoryListBean.DataBean item, int position);
-
     }
 }
