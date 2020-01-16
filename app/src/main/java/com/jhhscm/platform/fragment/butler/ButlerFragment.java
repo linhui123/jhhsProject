@@ -9,12 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.databinding.FragmentButlerBinding;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.my.book.BookingFragment;
 import com.jhhscm.platform.fragment.my.labour.MyLabourFragment;
 import com.jhhscm.platform.fragment.repayment.RepaymentFragment;
 import com.jhhscm.platform.fragment.vehicle.VehicleMonitoringFragment;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.Utils;
 
@@ -44,10 +46,13 @@ public class ButlerFragment extends AbsFragment<FragmentButlerBinding> {
         LinearLayout.LayoutParams llParams = (LinearLayout.LayoutParams) mDataBinding.top.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.top.setLayoutParams(llParams);
-        vehicleMonitoringFragment = VehicleMonitoringFragment.instance();
-        repaymentFragment = RepaymentFragment.instance();
-        labourFragment = MyLabourFragment.instance();
-        bookingFragment = BookingFragment.instance();
+        if (ConfigUtils.getCurrentUser(getContext()) != null
+                && ConfigUtils.getCurrentUser(getContext()).getMobile() != null
+                && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null) {
+        } else {
+            startNewActivity(LoginActivity.class);
+            getActivity().finish();
+        }
 
         mDataBinding.back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +60,10 @@ public class ButlerFragment extends AbsFragment<FragmentButlerBinding> {
                 getActivity().finish();
             }
         });
+        vehicleMonitoringFragment = VehicleMonitoringFragment.instance();
+        repaymentFragment = RepaymentFragment.instance();
+        labourFragment = MyLabourFragment.instance();
+        bookingFragment = BookingFragment.instance();
         initTab();
     }
 
@@ -62,6 +71,7 @@ public class ButlerFragment extends AbsFragment<FragmentButlerBinding> {
      * 搜索结果 头部tab
      */
     private void initTab() {
+
         mScreenWidth = Utils.getWindowsWidth(getActivity());
         if (mDataBinding.enhanceTabLayout.getTabLayout().getTabCount() == 0) {
             mDataBinding.enhanceTabLayout.addTab("云惠管家", 18);

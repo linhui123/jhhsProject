@@ -155,12 +155,12 @@ public class MyLabourFragment extends AbsFragment<FragmentMyLabourBinding> {
     }
 
     public void onEvent(AddressResultEvent messageEvent) {
-        Log.e("AddressResultEvent"," AddressResultEvent ");
+        Log.e("AddressResultEvent", " AddressResultEvent ");
         findLabourList(true, type + "");
     }
 
     public void onEvent(AddressRefreshEvent messageEvent) {
-        Log.e("AddressRefreshEvent"," AddressRefreshEvent ");
+        Log.e("AddressRefreshEvent", " AddressRefreshEvent ");
         findLabourList(true, type + "");
     }
 
@@ -171,7 +171,7 @@ public class MyLabourFragment extends AbsFragment<FragmentMyLabourBinding> {
     private void findLabourList(final boolean refresh, final String type) {
         mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
         Map<String, Object> map = new TreeMap<String, Object>();
-        map.put("user_code", userSession.getUserCode());
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
         map.put("type", type);
         map.put("page", mCurrentPage);
         map.put("limit", mShowCount);
@@ -179,7 +179,7 @@ public class MyLabourFragment extends AbsFragment<FragmentMyLabourBinding> {
         content = Des.encryptByDes(content);
         String sign = SignObject.getSignKey(getActivity(), map, "findLabourList: " + type);
         NetBean netBean = new NetBean();
-        netBean.setToken(userSession.getToken());
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);
         netBean.setContent(content);
         onNewRequestCall(FindLabourListAction.newInstance(getContext(), netBean)

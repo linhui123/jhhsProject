@@ -21,17 +21,19 @@ public class PeiJianTypeViewHolder extends AbsRecyclerViewHolder<GoodsCatatoryLi
 
     @Override
     protected void onBindView(final GoodsCatatoryListBean.DataBean item) {
-        ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.im);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(itemView.getContext(), 3, GridLayoutManager.VERTICAL, false);
-        mBinding.rv.setLayoutManager(gridLayoutManager);
-        PeiJianTypeAdapter adapter = new PeiJianTypeAdapter(item.getSecend_brand_list(), itemView.getContext());
-        mBinding.rv.setAdapter(adapter);
-        mBinding.rv.setNestedScrollingEnabled(false);
-        adapter.setMyListener(new PeiJianTypeAdapter.ItemListener() {
-            @Override
-            public void onItemClick(GoodsCatatoryListBean.DataBean.SecendBrandListBean secendBrandListBean) {
-                PeiJianActivity.start(itemView.getContext(),item.getId(),secendBrandListBean.getId(),secendBrandListBean.getName());
-            }
-        });
+        if (item != null) {
+            ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.im);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(itemView.getContext(), 3, GridLayoutManager.VERTICAL, false);
+            mBinding.rv.setLayoutManager(gridLayoutManager);
+            PeiJianTypeAdapter adapter = new PeiJianTypeAdapter(item.getSecend_brand_list(), itemView.getContext());
+            mBinding.rv.setAdapter(adapter);
+            mBinding.rv.setNestedScrollingEnabled(false);
+            adapter.setMyListener(new PeiJianTypeAdapter.ItemListener() {
+                @Override
+                public void onItemClick(GoodsCatatoryListBean.DataBean.SecendBrandListBean secendBrandListBean) {
+                    PeiJianActivity.start(itemView.getContext(), item.getId(), secendBrandListBean.getId(), secendBrandListBean.getName());
+                }
+            });
+        }
     }
 }

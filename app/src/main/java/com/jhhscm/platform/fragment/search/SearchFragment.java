@@ -233,7 +233,9 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
             @Override
             public void onClick(View v) {
                 ConfigUtils.removeSearchHistory(getContext());
-                historys.clear();
+                if (historys != null) {
+                    historys.clear();
+                }
                 tagAdapter.clear();
             }
         });
