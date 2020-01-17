@@ -66,8 +66,10 @@
             android:paddingBottom="@dimen/padding_10">
 
             <TextView
+                android:id="@+id/tv_c"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:text="平台优惠"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_16" />
@@ -77,10 +79,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/tv_c"
                 android:drawableRight="@mipmap/ic_point"
                 android:drawablePadding="@dimen/padding_10"
+                android:ellipsize="end"
                 android:gravity="right"
                 android:hint="请选择优惠券"
+                android:paddingLeft="@dimen/padding_15"
+                android:singleLine="true"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_16" />
         </RelativeLayout>

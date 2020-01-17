@@ -181,6 +181,7 @@
                 <View style="@style/view_h_de" />
 
                 <RelativeLayout
+                    android:id="@+id/rl_hour"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_10"

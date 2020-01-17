@@ -14,6 +14,7 @@ import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.BrandModelActivity;
 import com.jhhscm.platform.activity.GoodsToCartsActivity;
+import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.SearchActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
@@ -45,6 +46,7 @@ import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.jpush.ExampleUtil;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
@@ -156,7 +158,13 @@ public class PeiJianFragment extends AbsFragment<FragmentPeiJianBinding> {
         mDataBinding.tel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsToCartsActivity.start(getContext());
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null
+                        && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
+                    GoodsToCartsActivity.start(getContext());
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
             }
         });
 

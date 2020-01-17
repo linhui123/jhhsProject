@@ -601,7 +601,10 @@ public class PayWithCouponDialog extends BaseDialog {
                 }
             }
         }
-        list.add(new GetComboBoxBean.ResultBean("", "不使用优惠券", 0));
+        if (list.size() == 0) {
+            mDataBinding.coupon.setText("暂无可用优惠券");
+        }
+//        list.add(new GetComboBoxBean.ResultBean("", "不使用优惠券", 0));
         pAdapter.setData(list);
     }
 }
