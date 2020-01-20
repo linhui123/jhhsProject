@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_Carmera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_Carmera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawablePadding="12dp"
+                android:text="拍照"
+                android:textColor="@color/acc3"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <View
+            style="@style/view_h_f5"
+            android:layout_height="@dimen/padding_10" />
+
+        <RelativeLayout
+            android:id="@+id/rl_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawablePadding="12dp"
+                android:text="从相册中选择"
+                android:textColor="@color/acc3"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <View
+            style="@style/view_h_f5"
+            android:layout_height="@dimen/padding_10" />
+
+        <RelativeLayout
+            android:id="@+id/rl_cancle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_cancle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawablePadding="12dp"
+                android:text="取消"
+                android:textColor="@color/acc3"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

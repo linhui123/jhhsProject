@@ -122,12 +122,12 @@ public class HomePageAdapter extends AbsRecyclerViewAdapter<HomePageItem> {
             }
         }
         addHomePageRecommend(homePageItem.findCategoryHomePageBean);
-        addHomePageBank(homePageItem.findBrandHomePageBean);
 
         //资讯信息 测试
         if (homePageItem.getPageArticleListBean != null && homePageItem.getPageArticleListBean.getData().size() > 0) {
             addHomePageNews(homePageItem.getPageArticleListBean);
         }
+        addHomePageBank(homePageItem.findBrandHomePageBean);
 
         if (homePageItem.adBean4 != null && homePageItem.adBean4.getResult() != null && homePageItem.adBean4.getResult().size() > 0) {
             if (homePageItem.adBean4.getResult().get(0).getUrl() != null) {

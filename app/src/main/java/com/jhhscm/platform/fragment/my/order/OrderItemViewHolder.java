@@ -21,24 +21,15 @@ public class OrderItemViewHolder extends AbsRecyclerViewHolder<FindOrderListBean
         mBinding.tvNum.setText("×" + item.getNumber());
         mBinding.tvPrice.setText("￥" + item.getPrice());
         ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.im);
-//        mBinding.rl.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-////                if (item.getOrder_status().contains("10")) {
-////                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 1);
-////                } else if (item.getOrder_status().contains("20")) {
-////                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 2);
-////                } else if (item.getOrder_status().contains("30")) {
-////                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 3);
-////                } else if (item.getOrder_status().contains("40")) {
-////                    OrderDetailActivity.start(itemView.getContext(), item.getOrderCode(), 4);
-////                }else {
-////
-////                }
-//
-//            }
-//        });
+        mBinding.rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                String url = UrlUtils.PJXQ + "&good_code=" + item.getGoodsCode();
+//                H5PeiJianActivity.start(itemView.getContext(), url, "配件详情", "", "",
+//                        item.getGoodsName(), item.getGoodsCode(),
+//                        item.getPicUrl(), item.getPicUrl(), item.getNumber() + "", 3);
+            }
+        });
     }
 }
 

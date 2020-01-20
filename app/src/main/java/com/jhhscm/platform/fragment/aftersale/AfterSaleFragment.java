@@ -27,6 +27,8 @@ import com.jhhscm.platform.fragment.Mechanics.action.GetRegionAction;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetRegionBean;
 import com.jhhscm.platform.fragment.Mechanics.holder.GetRegionViewHolder;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.home.AdBean;
+import com.jhhscm.platform.fragment.home.action.GetAdAction;
 import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
@@ -35,10 +37,12 @@ import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.http.sign.SignObject;
+import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.permission.YXPermission;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
@@ -49,6 +53,7 @@ import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 import com.tencent.mm.opensdk.utils.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -78,6 +83,7 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
 
     private double latitude = 0.0;
     private double longitude = 0.0;
+    private List<FindBusListBean.DataBean> beanList;
 
     public static AfterSaleFragment instance() {
         AfterSaleFragment view = new AfterSaleFragment();
@@ -115,7 +121,7 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
         });
 
         initPrivince();
-
+        getAD(7);
         mDataBinding.back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -289,6 +295,14 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
         }
         mDataBinding.recyclerview.loadComplete(mAdapter.getItemCount() == 0,
                 ((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage);
+
+        if (((float) getPushListBean.getPage().getTotal() / (float) getPushListBean.getPage().getPageSize()) > mCurrentPage) {
+
+        } else {
+            if (beanList != null && beanList.size() > 0) {
+                mAdapter.append(beanList);
+            }
+        }
     }
 
     private class InnerAdapter extends AbsRecyclerViewAdapter<FindBusListBean.DataBean> {
@@ -301,6 +315,51 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
             return new AfterSaleViewHolder(mInflater.inflate(R.layout.item_aftersale_store, parent, false), latitude, longitude);
         }
     }
+
+    /**
+     * 获取广告
+     */
+    private void getAD(final int position) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("position", position + "");
+        map.put("app_version", ExampleUtil.GetVersion(MyApplication.getInstance()));
+        map.put("app_platform", StringUtils.getChannel(MyApplication.getInstance()));
+        map.put("appid", "336abf9e97cd4276bf8aecde9d32ed99");
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getActivity(), map, "getAD type:" + position);
+        NetBean netBean = new NetBean();
+        netBean.setToken("");
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(GetAdAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<AdBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<AdBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    if (position == 7) {
+                                        AdBean adBean = response.body().getData();
+                                        beanList = new ArrayList<>();
+                                        for (AdBean.ResultBean resultBean : adBean.getResult()) {
+                                            FindBusListBean.DataBean dataBean = new FindBusListBean.DataBean(resultBean.getUrl(), 1);
+                                            beanList.add(dataBean);
+                                        }
+                                    }
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
 
     /**
      * 信息咨询

@@ -175,6 +175,12 @@ public class FindBusListBean {
         private String v2;
         private String x;
         private String y;
+        private int type;//0为正常，其他为广告
+
+        public DataBean(String pic_url, int type) {
+            this.pic_url = pic_url;
+            this.type = type;
+        }
 
         public String getX() {
             return x;
@@ -334,6 +340,14 @@ public class FindBusListBean {
 
         public void setV2(String v2) {
             this.v2 = v2;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
         }
     }
 }

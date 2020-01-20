@@ -144,4 +144,5 @@ dependencies {
     implementation files('libs/zxing.jar')
     implementation 'com.github.donkingliang:LabelsView:1.4.1'
     implementation files('libs/nineoldandroids-2.4.0.jar')
+    implementation 'com.github.loonggg:TextWrapView:v1.1'
 }

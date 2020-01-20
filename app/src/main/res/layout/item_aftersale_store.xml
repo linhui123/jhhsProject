@@ -23,6 +23,7 @@
             roundiv:right_top_radius1="5dp" />
 
         <RelativeLayout
+            android:id="@+id/rl1"
             android:layout_width="match_parent"
             android:layout_height="95dp"
             android:layout_marginLeft="@dimen/padding_10"
@@ -33,12 +34,14 @@
                 android:id="@+id/tv_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:editable="true"
                 android:ellipsize="end"
                 android:maxLines="2"
+                android:singleLine="true"
                 android:text=""
-                android:textStyle="bold"
                 android:textColor="@color/acc3"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_4"
@@ -89,6 +92,29 @@
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14"
                 android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl2"
+            android:layout_width="match_parent"
+            android:layout_height="95dp"
+            android:layout_marginLeft="@dimen/padding_10"
+            android:layout_toRightOf="@+id/im"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:editable="true"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:singleLine="true"
+                android:text="虚位以待，等您加入！"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_18"
+                android:textStyle="bold" />
         </RelativeLayout>
     </RelativeLayout>
 </layout>

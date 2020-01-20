@@ -66,8 +66,8 @@ import retrofit2.Response;
 public class StoreDetailFragment extends AbsFragment<FragmentStoreDetailBinding> {
     private String latitude;
     private String longitude;
-    private boolean fast;
-    public boolean isCollect;
+    private boolean fast;//是否离你最近
+    public boolean isCollect;//是否收藏
     private String bus_code;
     private StorePeiJianFragment peiJianFragment;
     private BusinessDetailBean businessDetailBean;

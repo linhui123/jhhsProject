@@ -9,6 +9,7 @@ import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -71,6 +72,11 @@ public class PhotoPickerActivity extends AbsToolbarActivity {
      * 是否显示相机，boolean类型
      */
     public static final String EXTRA_SHOW_CAMERA = "show_camera";
+
+    /**
+     * 是否直达相机，boolean类型
+     */
+    public static final String EXTRA_TO_CAMERA = "to_camera";
     /**
      * 默认选择的数据集
      */
@@ -114,6 +120,19 @@ public class PhotoPickerActivity extends AbsToolbarActivity {
         context.startActivity(intent);
     }
 
+    /**
+     * 选择拍照
+     */
+    public static void startActivity(Context context, int code, ArrayList<String> images, int selectMaxCount, boolean withCarmer, boolean toCarmer) {
+        Intent intent = new Intent(context, PhotoPickerActivity.class);
+        intent.putExtra(EXTRA_SELECT_MODE, MODE_MULTI);
+        intent.putExtra(EXTRA_SHOW_CAMERA, withCarmer);
+        intent.putExtra(EXTRA_TO_CAMERA, toCarmer);
+        intent.putStringArrayListExtra(EXTRA_DEFAULT_SELECTED_LIST, images);
+        intent.putExtra(EXTRA_REQCODE, code);
+        intent.putExtra(EXTRA_SELECT_COUNT, selectMaxCount);
+        context.startActivity(intent);
+    }
 
     public static void startActivity(Context context, int code) {
         Intent intent = new Intent(context, PhotoPickerActivity.class);
@@ -130,12 +149,12 @@ public class PhotoPickerActivity extends AbsToolbarActivity {
         Bundle args = new Bundle();
         args.putInt(EXTRA_SELECT_MODE, getIntent().getIntExtra(EXTRA_SELECT_MODE, 0));
         args.putBoolean(EXTRA_SHOW_CAMERA, getIntent().getBooleanExtra(EXTRA_SHOW_CAMERA, false));
+        args.putBoolean(EXTRA_TO_CAMERA, getIntent().getBooleanExtra(EXTRA_TO_CAMERA, false));
         args.putSerializable(EXTRA_DEFAULT_SELECTED_LIST, getIntent().getSerializableExtra(EXTRA_DEFAULT_SELECTED_LIST));
         args.putInt(EXTRA_REQCODE, getIntent().getIntExtra(EXTRA_REQCODE, 0));
         args.putInt(EXTRA_SELECT_COUNT, getIntent().getIntExtra(EXTRA_SELECT_COUNT, 0));
         return args;
     }
-
 
     @Override
     protected boolean enableHomeButton() {
@@ -277,6 +296,11 @@ public class PhotoPickerActivity extends AbsToolbarActivity {
             }
             //加载图片
             getPhotosTask.execute();
+            //是否直达拍照
+//            Log.e("EXTRA_TO_CAMERA ", "EXTRA_TO_CAMERA " + getArguments().getBoolean(EXTRA_TO_CAMERA, false));
+            if (getArguments().getBoolean(EXTRA_TO_CAMERA, false)) {
+                showCamera();
+            }
         }
 
         /**
@@ -534,6 +558,7 @@ public class PhotoPickerActivity extends AbsToolbarActivity {
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
+            Log.e("EXTRA_TO_CAMERA ", "resultCode " + resultCode + "  requestCode  " + requestCode);
             if (resultCode == RESULT_OK) {
                 switch (requestCode) {
                     // 相机拍照完成后，返回图片路径
@@ -544,6 +569,12 @@ public class PhotoPickerActivity extends AbsToolbarActivity {
                         }
                         complete();
                         break;
+                }
+            } else {
+                if (getArguments().getBoolean(EXTRA_TO_CAMERA, false)) {
+                    //直达相机，返回时，退回进入页
+                    EventBusUtil.post(ImageSelectorEvent.newInstance(mCode, ImageSelectorEvent.EVENT_ADD, mSelectList));
+                    getActivity().finish();
                 }
             }
         }
@@ -557,7 +588,6 @@ public class PhotoPickerActivity extends AbsToolbarActivity {
             int cols = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().densityDpi;
             return cols < 4 ? 4 : cols;
         }
-
 
         // 返回已选择的图片数据
         private void complete() {

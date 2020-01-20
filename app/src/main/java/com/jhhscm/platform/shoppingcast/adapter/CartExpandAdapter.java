@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.h5.H5PeiJianActivity;
 import com.jhhscm.platform.fragment.GoodsToCarts.GetCartGoodsByUserCodeBean;
 import com.jhhscm.platform.shoppingcast.callback.OnClickAddCloseListenter;
 import com.jhhscm.platform.shoppingcast.callback.OnClickDeleteListenter;
@@ -20,6 +21,7 @@ import com.jhhscm.platform.shoppingcast.callback.OnClickListenterModel;
 import com.jhhscm.platform.shoppingcast.callback.OnClickSideListenter;
 import com.jhhscm.platform.shoppingcast.callback.OnViewItemClickListener;
 import com.jhhscm.platform.shoppingcast.widget.FrontViewToMove;
+import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.OvalImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -81,6 +83,15 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 onClickListenterModel.onItemClick(viewHolder1.checkBox.isChecked(), v, groupPosition, position);
+            }
+        });
+        viewHolder1.frontView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = UrlUtils.PJXQ + "&good_code=" + list.get(groupPosition).getGoodsList().get(position).getGoodsCode();
+                H5PeiJianActivity.start(context, url, "配件详情", list.get(groupPosition).getBus_code(), list.get(groupPosition).getBus_name(),
+                        list.get(groupPosition).getGoodsList().get(position).getGoodsName(), list.get(groupPosition).getGoodsList().get(position).getGoodsCode(),
+                        list.get(groupPosition).getGoodsList().get(position).getPicUrl(), list.get(groupPosition).getGoodsList().get(position).getPicUrl(), list.get(groupPosition).getGoodsList().get(position).getNumber() + "", 3);
             }
         });
         viewHolder1.button.setOnClickListener(new View.OnClickListener() {

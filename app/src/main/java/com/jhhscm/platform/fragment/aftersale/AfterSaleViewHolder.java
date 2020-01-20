@@ -28,62 +28,73 @@ public class AfterSaleViewHolder extends AbsRecyclerViewHolder<FindBusListBean.D
     @Override
     protected void onBindView(final FindBusListBean.DataBean item) {
         if (item != null) {
-            if (getAdapterPosition() == 0) {
-                mBinding.tv3.setVisibility(View.VISIBLE);
-            } else {
-                mBinding.tv3.setVisibility(View.GONE);
-            }
-            mBinding.tv1.setText(item.getBus_name());
-
-            String location = "";
-            if (item.getProvince_name() != null) {
-                location = item.getProvince_name() + " ";
-            }
-            if (item.getCity_name() != null) {
-                location = location + item.getCity_name() + " ";
-            }
-            if (item.getCounty_name() != null) {
-                location = location + item.getCounty_name() + " ";
-            }
-            if (item.getAddress_detail() != null) {
-                location = location + item.getAddress_detail() + " ";
-            }
-            mBinding.tv2.setText("地址：" + location);
-            if (item.getMobile() != null) {
-                mBinding.tv4.setText("电话：" + UdaUtils.hiddenPhoneNumber(item.getMobile()));
-            } else {
-                mBinding.tv4.setText("电话：--");
-            }
-
-            if (item.getDistance() != null) {
-                mBinding.tvStore.setVisibility(View.VISIBLE);
-                mBinding.tvStore.setText("距离" + item.getDistance() + "km");
-            } else {
-                mBinding.tvStore.setVisibility(View.GONE);
-            }
-
-            if (item.getPic_url() != null) {
-                String jsonString = "{\"pic_url\":" + item.getPic_url() + "}";
-                Log.e("jsonString", "jsonString  " + jsonString);
-                PicBean pic = JSON.parseObject(jsonString, PicBean.class);
-                if (pic != null
-                        && pic.getPic_url() != null && pic.getPic_url().size() > 0) {
-                    ImageLoader.getInstance().displayImage(pic.getPic_url().get(0).getUrl(), mBinding.im);
+            mBinding.rl1.setVisibility(View.VISIBLE);
+            mBinding.rl2.setVisibility(View.GONE);
+            if (item.getType() == 0) {
+                if (getAdapterPosition() == 0) {
+                    mBinding.tv3.setVisibility(View.VISIBLE);
+                } else {
+                    mBinding.tv3.setVisibility(View.GONE);
                 }
-            }
+                mBinding.tv1.setText(item.getBus_name());
 
-            mBinding.rl.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (getAdapterPosition() == 0) {
-                        StoreDetailActivity.start(itemView.getContext(), item.getBus_code(),
-                                latitude + "", longitude + "", true);
-                    } else {
-                        StoreDetailActivity.start(itemView.getContext(), item.getBus_code(),
-                                latitude + "", longitude + "");
+                String location = "";
+                if (item.getProvince_name() != null) {
+                    location = item.getProvince_name() + " ";
+                }
+                if (item.getCity_name() != null) {
+                    location = location + item.getCity_name() + " ";
+                }
+                if (item.getCounty_name() != null) {
+                    location = location + item.getCounty_name() + " ";
+                }
+                if (item.getAddress_detail() != null) {
+                    location = location + item.getAddress_detail() + " ";
+                }
+                mBinding.tv2.setText("地址：" + location);
+                if (item.getMobile() != null) {
+                    mBinding.tv4.setText("电话：" + UdaUtils.hiddenPhoneNumber(item.getMobile()));
+                } else {
+                    mBinding.tv4.setText("电话：--");
+                }
+
+                if (item.getDistance() != null) {
+                    mBinding.tvStore.setVisibility(View.VISIBLE);
+                    mBinding.tvStore.setText("距离" + item.getDistance() + "km");
+                } else {
+                    mBinding.tvStore.setVisibility(View.GONE);
+                }
+
+                if (item.getPic_url() != null) {
+                    String jsonString = "{\"pic_url\":" + item.getPic_url() + "}";
+                    Log.e("jsonString", "jsonString  " + jsonString);
+                    PicBean pic = JSON.parseObject(jsonString, PicBean.class);
+                    if (pic != null
+                            && pic.getPic_url() != null && pic.getPic_url().size() > 0) {
+                        ImageLoader.getInstance().displayImage(pic.getPic_url().get(0).getUrl(), mBinding.im);
                     }
                 }
-            });
+
+                mBinding.rl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (getAdapterPosition() == 0) {
+                            StoreDetailActivity.start(itemView.getContext(), item.getBus_code(),
+                                    latitude + "", longitude + "", true);
+                        } else {
+                            StoreDetailActivity.start(itemView.getContext(), item.getBus_code(),
+                                    latitude + "", longitude + "");
+                        }
+                    }
+                });
+            } else {
+                mBinding.tv3.setVisibility(View.GONE);
+                mBinding.rl1.setVisibility(View.GONE);
+                mBinding.rl2.setVisibility(View.VISIBLE);
+                if (item.getPic_url() != null) {
+                    ImageLoader.getInstance().displayImage(item.getPic_url(), mBinding.im);
+                }
+            }
         }
     }
 

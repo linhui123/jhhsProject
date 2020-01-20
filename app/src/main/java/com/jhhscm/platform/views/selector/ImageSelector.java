@@ -22,6 +22,7 @@ import com.jhhscm.platform.photopicker.PhotoPickerActivity;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.views.ExtendGridView;
+import com.jhhscm.platform.views.dialog.SelectImageDialog;
 import com.jhhscm.platform.views.selector.adapter.ImageSelectorAdapter;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
@@ -252,7 +253,27 @@ public class ImageSelector extends LinearLayout {
                     public void onItemClick(ChoiceDialog.ChoiceItem item) {
                         switch (item.getCode()) {
                             case CODE_ALBUM:
-                                PhotoPickerActivity.startActivity(getContext(), ImageSelector.this.hashCode(), getPhotoPickerList(), getPhotoPickerMaxCount(), isWithCarmera);
+                                if (isWithCarmera) {
+                                    new SelectImageDialog(getContext(), new SelectImageDialog.CallbackListener() {
+                                        @Override
+                                        public void clickCarmera() {
+                                            PhotoPickerActivity.startActivity(getContext(), ImageSelector.this.hashCode(), getPhotoPickerList(), getPhotoPickerMaxCount(), isWithCarmera, true);
+                                        }
+
+                                        @Override
+                                        public void clickImage() {
+                                            PhotoPickerActivity.startActivity(getContext(), ImageSelector.this.hashCode(), getPhotoPickerList(), getPhotoPickerMaxCount(), false);
+                                        }
+
+                                        @Override
+                                        public void clickCancle() {
+
+                                        }
+                                    }).show();
+                                } else {
+                                    PhotoPickerActivity.startActivity(getContext(), ImageSelector.this.hashCode(), getPhotoPickerList(), getPhotoPickerMaxCount(), isWithCarmera);
+                                }
+//                                PhotoPickerActivity.startActivity(getContext(), ImageSelector.this.hashCode(), getPhotoPickerList(), getPhotoPickerMaxCount(), isWithCarmera);
                                 break;
                         }
                     }
@@ -260,7 +281,26 @@ public class ImageSelector extends LinearLayout {
             }
             mAddDialog.show();
         } else {
-            PhotoPickerActivity.startActivity(getContext(), ImageSelector.this.hashCode(), getPhotoPickerList(), mSelectMaxImageSize, isWithCarmera);
+            if (isWithCarmera) {
+                new SelectImageDialog(getContext(), new SelectImageDialog.CallbackListener() {
+                    @Override
+                    public void clickCarmera() {
+                        PhotoPickerActivity.startActivity(getContext(), ImageSelector.this.hashCode(), getPhotoPickerList(), mSelectMaxImageSize, isWithCarmera, true);
+                    }
+
+                    @Override
+                    public void clickImage() {
+                        PhotoPickerActivity.startActivity(getContext(), ImageSelector.this.hashCode(), getPhotoPickerList(), mSelectMaxImageSize, isWithCarmera);
+                    }
+
+                    @Override
+                    public void clickCancle() {
+
+                    }
+                }).show();
+            } else {
+                PhotoPickerActivity.startActivity(getContext(), ImageSelector.this.hashCode(), getPhotoPickerList(), mSelectMaxImageSize, isWithCarmera);
+            }
         }
     }
 
@@ -312,7 +352,7 @@ public class ImageSelector extends LinearLayout {
     }
 
     public void onEventMainThread(ImageSelectorEvent event) {
-        Log.e("ImageSelectorEvent", "ImageSelectorEvent " + isOnlyShow + "   " + mSelectMaxImageSize);
+//        Log.e("ImageSelectorEvent", "ImageSelectorEvent " + isOnlyShow + "   " + mSelectMaxImageSize);
         if (event.getCode() == hashCode()) {
             switch (event.getType()) {
                 case ImageSelectorEvent.EVENT_ADD:

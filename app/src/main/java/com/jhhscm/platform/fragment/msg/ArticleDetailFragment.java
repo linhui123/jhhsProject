@@ -1,6 +1,5 @@
 package com.jhhscm.platform.fragment.msg;
 
-
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -15,7 +14,6 @@ import com.jhhscm.platform.databinding.FragmentArticleDetailBinding;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.GetArticleDetailsAction;
 import com.jhhscm.platform.fragment.home.bean.GetArticleDetailsBean;
-import com.jhhscm.platform.fragment.msg.html.LinkMovementMethodExt;
 import com.jhhscm.platform.fragment.msg.html.MessageSpan;
 import com.jhhscm.platform.fragment.msg.html.URLImageParser;
 import com.jhhscm.platform.http.AHttpService;
@@ -39,6 +37,7 @@ public class ArticleDetailFragment extends AbsFragment<FragmentArticleDetailBind
 
     private String id;
     private Context mContect;
+    private String myContent;
 
     public static ArticleDetailFragment instance() {
         ArticleDetailFragment view = new ArticleDetailFragment();
@@ -126,9 +125,9 @@ public class ArticleDetailFragment extends AbsFragment<FragmentArticleDetailBind
         if (getArticleDetailsBean != null) {
             mDataBinding.tvTitle.setText(getArticleDetailsBean.getData().getTitle());
             mDataBinding.tvDate.setText(getArticleDetailsBean.getData().getRelease_time());
+            myContent = getArticleDetailsBean.getData().getContent();
             mDataBinding.tvArtical.setText(Html.fromHtml(getArticleDetailsBean.getData().getContent(), new URLImageParser(mDataBinding.tvArtical), null));
             mContect = getContext();
-            mDataBinding.tvArtical.setMovementMethod(LinkMovementMethodExt.getInstance(handler, ImageSpan.class));
         }
     }
 }
