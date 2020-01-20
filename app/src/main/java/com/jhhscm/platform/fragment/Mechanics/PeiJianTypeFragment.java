@@ -8,10 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.activity.GoodsToCartsActivity;
+import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.SearchActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
@@ -29,6 +32,7 @@ import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
@@ -65,7 +69,7 @@ public class PeiJianTypeFragment extends AbsFragment<FragmentPeiJianTypeBinding>
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
-        LinearLayout.LayoutParams llParams = (LinearLayout.LayoutParams) mDataBinding.top.getLayoutParams();
+        RelativeLayout.LayoutParams llParams = (RelativeLayout.LayoutParams) mDataBinding.top.getLayoutParams();
         llParams.topMargin += DisplayUtils.getStatusBarHeight(getContext());
         mDataBinding.top.setLayoutParams(llParams);
         mDataBinding.back.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +84,19 @@ public class PeiJianTypeFragment extends AbsFragment<FragmentPeiJianTypeBinding>
             @Override
             public void onClick(View v) {
                 SearchActivity.start(getContext());
+            }
+        });
+
+        mDataBinding.tel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null
+                        && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
+                    GoodsToCartsActivity.start(getContext());
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
             }
         });
         findBrand();

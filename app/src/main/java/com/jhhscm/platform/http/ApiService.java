@@ -864,4 +864,11 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(SEARCH_FINDCATEGORYALL)
     Call<BaseEntity<SearchBean>> findCategoryAll (@Body NetBean content);
+
+    //意见反馈
+    String FIND_ORDERLISTCOUNT = "v1-3/order/findOrderListCount";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(FIND_ORDERLISTCOUNT)
+    Call<BaseEntity<FindOrderBean>> findOrderListCount(@Body NetBean content);
 }

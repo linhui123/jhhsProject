@@ -11,6 +11,7 @@ import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AuthenticationActivity;
 import com.jhhscm.platform.activity.BookingActivity;
+import com.jhhscm.platform.activity.GoodsToCartsActivity;
 import com.jhhscm.platform.activity.IntegralActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.MsgActivity;
@@ -26,6 +27,7 @@ import com.jhhscm.platform.activity.SettingActivity;
 import com.jhhscm.platform.databinding.FragmentMyBinding;
 import com.jhhscm.platform.event.LoginOutEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.sale.FindOrderBean;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.action.GetUserAction;
@@ -233,7 +235,86 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                 }));
     }
 
+    private void getOrderCount() {
+        findOrderListCountAction(1);
+        findOrderListCountAction(2);
+        findOrderListCountAction(3);
+    }
+
+    private void findOrderListCountAction(final int type) {
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+        map.put("order_type", type + "");
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "findOrderListCountAction");
+        NetBean netBean = new NetBean();
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(FindOrderListCountAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<FindOrderBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<FindOrderBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getView() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    if (type == 1) {
+                                        if (response.body().getData() != null && response.body().getData().getData() != null
+                                                && response.body().getData().getData().getCount() > 0) {
+                                            mDataBinding.order1.setVisibility(View.VISIBLE);
+                                            mDataBinding.order1.setText(response.body().getData().getData().getCount() + "");
+                                        } else {
+                                            mDataBinding.order1.setVisibility(View.GONE);
+                                        }
+                                    } else if (type == 2) {
+                                        if (response.body().getData() != null && response.body().getData().getData() != null
+                                                && response.body().getData().getData().getCount() > 0) {
+                                            mDataBinding.order2.setVisibility(View.VISIBLE);
+                                            mDataBinding.order2.setText(response.body().getData().getData().getCount() + "");
+                                        } else {
+                                            mDataBinding.order2.setVisibility(View.GONE);
+                                        }
+                                    } else if (type == 3) {
+                                        if (response.body().getData() != null && response.body().getData().getData() != null
+                                                && response.body().getData().getData().getCount() > 0) {
+                                            mDataBinding.order3.setVisibility(View.VISIBLE);
+                                            mDataBinding.order3.setText(response.body().getData().getData().getCount() + "");
+                                        } else {
+                                            mDataBinding.order3.setVisibility(View.GONE);
+                                        }
+                                    }
+                                } else if (response.body().getCode().equals("1003")) {
+                                    ConfigUtils.removeCurrentUser(getContext());
+                                } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                    ToastUtils.show(getContext(), "网络错误");
+                                } else {
+                                    ToastUtils.show(getContext(), response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
     private void initOnClick() {
+        mDataBinding.tel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null
+                        && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
+                    GoodsToCartsActivity.start(getContext());
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
+            }
+        });
+
         mDataBinding.tvCerGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -533,6 +614,7 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
             getUser();
             getUserConter();
             getBusCount();
+            getOrderCount();
             if (ConfigUtils.getCurrentUser(getContext()).getIs_bus() == 0) {
                 mDataBinding.llStore.setVisibility(View.GONE);
                 mDataBinding.tvStoreNum.setVisibility(View.GONE);

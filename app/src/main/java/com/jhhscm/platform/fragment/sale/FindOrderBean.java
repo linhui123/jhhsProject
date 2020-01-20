@@ -11,6 +11,7 @@ public class FindOrderBean {
      */
 
     private OrderBean order;
+    private DataBean data;
     private List<GoodsListBean> goodsList;
 
     public OrderBean getOrder() {
@@ -27,6 +28,14 @@ public class FindOrderBean {
 
     public void setGoodsList(List<GoodsListBean> goodsList) {
         this.goodsList = goodsList;
+    }
+
+    public DataBean getData() {
+        return data;
+    }
+
+    public void setData(DataBean data) {
+        this.data = data;
     }
 
     public static class OrderBean {
@@ -369,5 +378,18 @@ public class FindOrderBean {
 //        public void setPic_url(String pic_url) {
 //            this.pic_url = pic_url;
 //        }
+    }
+
+    public static class DataBean {
+
+        private int count;
+
+        public int getCount() {
+            return count;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
     }
 }
