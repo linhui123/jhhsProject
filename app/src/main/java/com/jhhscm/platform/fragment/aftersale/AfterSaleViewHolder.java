@@ -57,12 +57,16 @@ public class AfterSaleViewHolder extends AbsRecyclerViewHolder<FindBusListBean.D
                 } else {
                     mBinding.tv4.setText("电话：--");
                 }
-
-                if (item.getDistance() != null) {
+                if (latitude == 0.0 || longitude == 0.0) {
                     mBinding.tvStore.setVisibility(View.VISIBLE);
-                    mBinding.tvStore.setText("距离" + item.getDistance() + "km");
+                    mBinding.tvStore.setText("无定位");
                 } else {
-                    mBinding.tvStore.setVisibility(View.GONE);
+                    if (item.getDistance() != null) {
+                        mBinding.tvStore.setVisibility(View.VISIBLE);
+                        mBinding.tvStore.setText("距离" + item.getDistance() + "km");
+                    } else {
+                        mBinding.tvStore.setVisibility(View.GONE);
+                    }
                 }
 
                 if (item.getPic_url() != null) {

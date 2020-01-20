@@ -47,7 +47,7 @@ public class StoreOrderSubmit2Fragment extends AbsFragment<FragmentStoreOrderSub
     private int mCurrentPage = 1;
     private final int START_PAGE = mCurrentPage;
 
-    private String goodsOwnerV1s = "";//设备序列号
+    private String goodsOwnerV1s = "";//机器编号
     private String goodsOwnerV2s = "";//gps序列号
     private String goodsOwnerV3s = "";//故障类型
     private String brandIds = "";

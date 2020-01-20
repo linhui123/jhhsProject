@@ -33,9 +33,9 @@ public class MyMechanicsViewHolder extends AbsRecyclerViewHolder<FindGoodsOwnerB
             mBinding.tv1.setText("品牌：" + item.getBrand_name());
             mBinding.tv2.setText("型号：" + item.getFixp17());
             if (item.getV1() != null) {
-                mBinding.tv4.setText("设备序列号：" + item.getV1());
+                mBinding.tv4.setText("机器编号：" + item.getV1());
             } else {
-                mBinding.tv4.setText("设备序列号：--");
+                mBinding.tv4.setText("机器编号：--");
             }
 
             if (item.getFcatory_time() != null) {

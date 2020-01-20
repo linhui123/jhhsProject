@@ -30,17 +30,16 @@
                 android:paddingLeft="@dimen/padding_15"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
-                android:text="设备名称"
+                android:text="设备品牌"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_16" />
 
-            <EditText
-                android:id="@+id/et_name"
+            <TextView
+                android:id="@+id/tv_brand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:gravity="right"
-                android:hint="请输入"
+                android:hint="请选择"
                 android:paddingLeft="@dimen/padding_15"
                 android:paddingTop="12dp"
                 android:paddingRight="@dimen/padding_15"
@@ -64,16 +63,17 @@
                 android:paddingLeft="@dimen/padding_15"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
-                android:text="设备品牌"
+                android:text="设备名称"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_16" />
 
-            <TextView
-                android:id="@+id/tv_brand"
+            <EditText
+                android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@null"
                 android:gravity="right"
-                android:hint="请选择"
+                android:hint="请输入"
                 android:paddingLeft="@dimen/padding_15"
                 android:paddingTop="12dp"
                 android:paddingRight="@dimen/padding_15"
@@ -164,7 +164,7 @@
                 android:paddingLeft="@dimen/padding_15"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
-                android:text="设备序列号"
+                android:text="机器编号"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_16" />
 
@@ -198,7 +198,7 @@
                 android:paddingLeft="@dimen/padding_15"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
-                android:text="销售价格（元）"
+                android:text="融资金额（元）"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/text_size_16" />
 

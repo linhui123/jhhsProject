@@ -123,7 +123,7 @@
                     android:layout_marginTop="@dimen/dp_5"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:text="设备序列号："
+                    android:text="机器编号："
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_14" />
 

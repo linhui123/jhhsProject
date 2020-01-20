@@ -43,6 +43,7 @@ import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;
+import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.SimpleDialog;
 import com.jhhscm.platform.views.dialog.TelPhoneDialog;
@@ -241,6 +242,9 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
             map.put("limit", mShowCount);
             if (longitude == 0.0) {
                 map.put("v1", ((MyApplication) getActivity().getApplicationContext()).getGaodeLon() + "");
+                if (((MyApplication) getActivity().getApplicationContext()).getGaodeLon() == 0.0) {
+                    ToastUtil.show(getContext(), "定位失败");
+                }
             } else {
                 map.put("v1", longitude + "");
             }
@@ -286,7 +290,6 @@ public class AfterSaleFragment extends AbsFragment<FragmentAfterSaleBinding> {
     FindBusListBean getPushListBean;
 
     private void initView(boolean refresh, FindBusListBean pushListBean) {
-
         this.getPushListBean = pushListBean;
         if (refresh) {
             mAdapter.setData(pushListBean.getData());

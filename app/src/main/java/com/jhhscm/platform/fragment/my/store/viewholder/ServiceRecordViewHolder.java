@@ -25,7 +25,7 @@ public class ServiceRecordViewHolder extends AbsRecyclerViewHolder<FindBusGoodsO
                 mBinding.brand.setText("品牌：" + item.getBrand_name());
             }
             if (item.getGoodsnum() != null) {
-                mBinding.no.setText("设备序列号：" + item.getGoodsnum());
+                mBinding.no.setText("机器编号：" + item.getGoodsnum());
             }
             if (item.getGpsnum() != null) {
                 mBinding.gpsNo.setText("GPS序列号：" + item.getGpsnum());

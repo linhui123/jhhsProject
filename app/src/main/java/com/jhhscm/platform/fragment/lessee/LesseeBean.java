@@ -8,7 +8,7 @@ public class LesseeBean implements Serializable {
     /**
      * wBankleaseFileList : [{"type":0,"fileType":1,"fileUrl":"123"},{"type":0,"fileType":1,"fileUrl":"123"}]
      * wBankLeasePerson : {"name":"姓名","sex":1,"idCard":"123","idCardAddress":"123","phone":"1358189494","postalAddress":"通讯地址","postalCode":"通讯地址","company":"工作单位","companyAddress":"工作单位","marryType":1,"spouseName":"配偶姓名","spouseCard":"配偶身份证","spousePhone":"配偶手机号","spouseCompany":"配偶工作单位","spouseCompanyAddress":"工作单位"}
-     * wBankLeaseItems : [{"name":"租赁物","brandId":"123","fixP17":"15X5","factoryTime":"2019-02-01","machineNum":"设备序列号","machinePrice":"12.00","machineAssess":"15.00"}]
+     * wBankLeaseItems : [{"name":"租赁物","brandId":"123","fixP17":"15X5","factoryTime":"2019-02-01","machineNum":"机器编号","machinePrice":"12.00","machineAssess":"15.00"}]
      * wBankLeaseSurety : [{"name":"担保人姓名","idCard":"44445894849","idCardUrl":"44445894849","houseUrl":"44445894849","marryUrl":"44445894849","creditUrl":"44445894849","moneyUrl":"44445894849"}]
      */
 
@@ -247,7 +247,7 @@ public class LesseeBean implements Serializable {
          * brandId : 123
          * fixP17 : 15X5
          * factoryTime : 2019-02-01
-         * machineNum : 设备序列号
+         * machineNum : 机器编号
          * machinePrice : 12.00
          * machineAssess : 15.00
          * itemUrl

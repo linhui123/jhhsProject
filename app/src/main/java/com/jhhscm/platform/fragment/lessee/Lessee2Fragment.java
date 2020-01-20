@@ -140,7 +140,7 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
                 return false;
             }
             if (StringUtils.isNullEmpty(wBankLeaseItemsBean.getMachineNum())) {
-                ToastUtil.show(getContext(), "设备序列号不能为空");
+                ToastUtil.show(getContext(), "机器编号不能为空");
                 return false;
             }
             if (StringUtils.isNullEmpty(wBankLeaseItemsBean.getName())) {

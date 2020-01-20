@@ -118,7 +118,7 @@ public class AddDeviceFragment extends AbsFragment<FragmentAddDeviceBinding> {
                                     }
                                 }
                             } else {
-                                ToastUtil.show(getContext(), "设备序列号不能为空");
+                                ToastUtil.show(getContext(), "机器编号不能为空");
                             }
                         } else {
                             ToastUtil.show(getContext(), "设备型号不能为空");

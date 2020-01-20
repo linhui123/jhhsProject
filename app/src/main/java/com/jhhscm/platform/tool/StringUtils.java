@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -1017,10 +1018,11 @@ public class StringUtils {
 
     /**
      * 获取img标签中的src值
+     *
      * @param content
      * @return
      */
-    public static String getImgSrc(String content){
+    public static String getImgSrc(String content) {
         String str_src = null;
         //目前img标签标示有3种表达式
         //<img alt="" src="1.jpg"/>   <img alt="" src="1.jpg"></img>     <img alt="" src="1.jpg">
@@ -1050,8 +1052,9 @@ public class StringUtils {
 
     /**
      * 关键字高亮显示
-     * @param target  需要高亮的关键字
-     * @param text	     需要显示的文字
+     *
+     * @param target 需要高亮的关键字
+     * @param text   需要显示的文字
      * @return spannable 处理完后的结果，记得不要toString()，否则没有效果
      * SpannableStringBuilder textString = TextUtilTools.highlight(item.getItemName(), KnowledgeActivity.searchKey);
      * vHolder.tv_itemName_search.setText(textString);
@@ -1072,11 +1075,12 @@ public class StringUtils {
 
     /**
      * 从html文本中提取图片地址，或者文本内容
-     * @param html 传入html文本
+     *
+     * @param html       传入html文本
      * @param isGetImage true获取图片，false获取文本
      * @return
      */
-    public static ArrayList<String> getTextFromHtml(String html, boolean isGetImage){
+    public static ArrayList<String> getTextFromHtml(String html, boolean isGetImage) {
         ArrayList<String> imageList = new ArrayList<>();
         ArrayList<String> textList = new ArrayList<>();
         //根据img标签分割出图片和字符串
@@ -1097,5 +1101,53 @@ public class StringUtils {
         } else {
             return textList;
         }
+    }
+
+    public static String touzi_ed_values22 = "";//千分位结果
+    public static String touzi_ed_values = "";//千分位处理前数据
+
+    /**
+     * 在数字型字符串千分位加逗号
+     *
+     * @param str
+     * @param edtext
+     * @return sb.toString()
+     */
+    public static String addComma(String str, EditText edtext) {
+        touzi_ed_values = edtext.getText().toString().trim();
+        touzi_ed_values22 = edtext.getText().toString().trim().replaceAll(",", "");
+
+        boolean neg = false;
+        if (str.startsWith("-")) {  //处理负数
+            str = str.substring(1);
+            neg = true;
+        }
+        String tail = null;
+        if (str.indexOf('.') != -1) { //处理小数点
+            tail = str.substring(str.indexOf('.'));
+            str = str.substring(0, str.indexOf('.'));
+        }
+        StringBuilder sb = new StringBuilder(str);
+        sb.reverse();
+        for (int i = 3; i < sb.length(); i += 4) {
+            sb.insert(i, ',');
+        }
+        sb.reverse();
+        if (neg) {
+            sb.insert(0, '-');
+        }
+        if (tail != null) {
+            sb.append(tail);
+        }
+        return sb.toString();
+    }
+
+    public static String getValue(String str) {
+        String[] s = str.split(",");
+        String value = "";
+        for (int i = 0; i < s.length; i++) {
+            value += s[i];
+        }
+        return value;
     }
 }

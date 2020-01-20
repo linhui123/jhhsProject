@@ -6,7 +6,7 @@ import java.util.List;
 public class FindBusGoodsOwnerListByUserCodeBean {
 
     /**
-     * result : {"data":[{"brandName":"XXX品牌","brand_id":"XXX品牌ID","fix_p_17":"XXX型号","goodsnum":"设备序列号","gpsnum":"GPS序列号"}]}
+     * result : {"data":[{"brandName":"XXX品牌","brand_id":"XXX品牌ID","fix_p_17":"XXX型号","goodsnum":"机器编号","gpsnum":"GPS序列号"}]}
      * sum : 0
      */
 
@@ -45,7 +45,7 @@ public class FindBusGoodsOwnerListByUserCodeBean {
              * brandName : XXX品牌
              * brand_id : XXX品牌ID
              * fix_p_17 : XXX型号
-             * goodsnum : 设备序列号
+             * goodsnum : 机器编号
              * gpsnum : GPS序列号
              * goods_code
              */

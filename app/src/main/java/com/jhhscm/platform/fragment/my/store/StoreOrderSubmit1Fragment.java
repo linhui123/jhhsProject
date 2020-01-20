@@ -53,7 +53,7 @@ public class StoreOrderSubmit1Fragment extends AbsFragment<FragmentStoreOrderSub
     private String userCode;
     private String userMobile;
 
-    private List<String> goodsOwnerV1s;//设备序列号
+    private List<String> goodsOwnerV1s;//机器编号
     private List<String> goodsOwnerV2s;//gps序列号
     private List<String> goodsOwnerV3s;//故障类型
     private List<String> brandIds;

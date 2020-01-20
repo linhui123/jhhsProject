@@ -62,7 +62,7 @@ import top.zibin.luban.Luban;
 public class StoreOrderSubmit3Fragment extends AbsFragment<FragmentStoreOrderSubmit3Binding> {
     private InnerAdapter mAdapter;
 
-    private String goodsOwnerV1s = "";//设备序列号
+    private String goodsOwnerV1s = "";//机器编号
     private String goodsOwnerV2s = "";//gps序列号
     private String goodsOwnerV3s = "";//故障类型
     private String brandIds = "";

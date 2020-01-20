@@ -8,6 +8,7 @@ import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.databinding.ItemLesseeMechanicsBinding;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
+import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.views.dialog.DropTDialog;
 import com.jhhscm.platform.views.timePickets.TimePickerShow;
 
@@ -127,12 +128,19 @@ public class LesseeViewHolder extends AbsRecyclerViewHolder<LesseeBean.WBankLeas
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                item.setMachinePrice(s.toString().trim());
+                item.setMachinePrice(StringUtils.getValue(s.toString().trim()));
+                if (!StringUtils.touzi_ed_values.equals(mBinding.etPrice.getText().toString().trim())) {
+                    mBinding.etPrice.setText(StringUtils.addComma(
+                            mBinding.etPrice.getText().toString().trim().replaceAll(",", ""),
+                            mBinding.etPrice));
+                    mBinding.etPrice.setSelection(StringUtils.addComma(
+                            mBinding.etPrice.getText().toString().trim().replaceAll(",", ""),
+                            mBinding.etPrice).length());
+                }
             }
         });
 
