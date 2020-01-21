@@ -39,13 +39,16 @@ import java.util.TreeMap;
 
 import retrofit2.Response;
 
-/**确认订单*/
+/**
+ * 确认订单
+ */
 public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding> {
     private InnerAdapter mAdapter;
     private List<GetCartGoodsByUserCodeBean.ResultBean> resultBeans;
     private GetCartGoodsByUserCodeBean getCartGoodsByUserCodeBean;
     private UserSession userSession;
     private String selectAddressID;
+    private FindAddressListBean findAddressListBean;
 
     public static CreateOrderFragment instance() {
         CreateOrderFragment view = new CreateOrderFragment();
@@ -60,14 +63,13 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
-
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
             userSession = ConfigUtils.getCurrentUser(getContext());
         } else {
             startNewActivity(LoginActivity.class);
         }
-
+        findAddressListBean = new FindAddressListBean();
         if (getArguments() != null) {
             getCartGoodsByUserCodeBean = (GetCartGoodsByUserCodeBean) getArguments().getSerializable("getCartGoodsByUserCodeBean");
         }
@@ -360,6 +362,5 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
                 }));
     }
 
-    FindAddressListBean findAddressListBean = new FindAddressListBean();
 
 }

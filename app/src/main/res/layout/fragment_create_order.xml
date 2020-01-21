@@ -21,11 +21,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:paddingTop="@dimen/padding_15"
-                    android:paddingBottom="@dimen/padding_15"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/padding_15"
-                    android:paddingRight="@dimen/padding_15">
+                    android:paddingTop="@dimen/padding_15"
+                    android:paddingRight="@dimen/padding_15"
+                    android:paddingBottom="@dimen/padding_15">
 
                     <TextView
                         android:id="@+id/tv_name"
@@ -96,10 +96,86 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv"
                     android:layout_width="match_parent"
-                    android:background="@color/white"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
 
                 </android.support.v7.widget.RecyclerView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/padding_10"
+                    android:background="@color/cf5" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_15"
+                    android:paddingTop="@dimen/padding_15"
+                    android:paddingRight="@dimen/padding_15"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_c"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="使用优惠券"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_coupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/padding_15"
+                        android:layout_marginBottom="0dp"
+                        android:layout_toRightOf="@+id/tv_c"
+                        android:ellipsize="end"
+                        android:drawableRight="@mipmap/ic_point"
+                        android:drawablePadding="@dimen/dp_5"
+                        android:gravity="right"
+                        android:hint="请选择优惠券"
+                        android:singleLine="true"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
+
+                <View style="@style/view_h_de" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_15"
+                    android:paddingTop="@dimen/padding_15"
+                    android:paddingRight="@dimen/padding_15"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_cp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="已优惠"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_coupon_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="0dp"
+                        android:ellipsize="end"
+                        android:gravity="right"
+                        android:text="-￥0.0"
+                        android:singleLine="true"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -156,7 +232,6 @@
 
                 <View style="@style/view_h_de" />
 
-
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
@@ -164,8 +239,8 @@
             android:id="@+id/rl_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:layout_alignParentBottom="true"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <View style="@style/view_h_de" />
@@ -256,5 +331,4 @@
         </LinearLayout>
 
     </RelativeLayout>
-
 </layout>

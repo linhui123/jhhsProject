@@ -375,14 +375,14 @@ public class OrderStatusFragment extends AbsFragment<FragmentOrderStatusBinding>
     }
 
     /**
-     * 确认订单
+     * UpdateOrder订单
      */
     private void updateOrderStatus(final String orderGood) {
         Map<String, String> map = new TreeMap<String, String>();
         map.put("order_code", orderGood);
         String content = JSON.toJSONString(map);
         content = Des.encryptByDes(content);
-        String sign = Sign.getSignKey(getContext(), map, "delOrder");
+        String sign = Sign.getSignKey(getContext(), map, "UpdateOrder");
         NetBean netBean = new NetBean();
         netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
         netBean.setSign(sign);

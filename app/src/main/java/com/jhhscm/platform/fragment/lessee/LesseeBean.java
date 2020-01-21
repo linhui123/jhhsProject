@@ -15,7 +15,7 @@ public class LesseeBean implements Serializable {
     private WBankLeasePersonBean wBankLeasePerson;
     private List<WBankleaseFileListBean> wBankleaseFileList;
     private List<WBankLeaseItemsBean> wBankLeaseItems;
-    private List<WBankLeaseSuretyBean> wBankLeaseSurety;
+    private WBankLeaseSuretyBean wBankLeaseSurety;
 
     public WBankLeasePersonBean getWBankLeasePerson() {
         return wBankLeasePerson;
@@ -41,11 +41,11 @@ public class LesseeBean implements Serializable {
         this.wBankLeaseItems = wBankLeaseItems;
     }
 
-    public List<WBankLeaseSuretyBean> getWBankLeaseSurety() {
+    public WBankLeaseSuretyBean getwBankLeaseSurety() {
         return wBankLeaseSurety;
     }
 
-    public void setWBankLeaseSurety(List<WBankLeaseSuretyBean> wBankLeaseSurety) {
+    public void setwBankLeaseSurety(WBankLeaseSuretyBean wBankLeaseSurety) {
         this.wBankLeaseSurety = wBankLeaseSurety;
     }
 
@@ -66,8 +66,11 @@ public class LesseeBean implements Serializable {
          * spousePhone : 配偶手机号
          * spouseCompany : 配偶工作单位
          * spouseCompanyAddress : 工作单位
+         * aPhone（紧急联系人电话）
+         * aName（紧急联系人姓名）
          */
-
+        private String aPhone;
+        private String aName;
         private String name;
         private int sex;
         private String idCard;
@@ -83,6 +86,22 @@ public class LesseeBean implements Serializable {
         private String spousePhone;
         private String spouseCompany;
         private String spouseCompanyAddress;
+
+        public String getaPhone() {
+            return aPhone;
+        }
+
+        public void setaPhone(String aPhone) {
+            this.aPhone = aPhone;
+        }
+
+        public String getaName() {
+            return aName;
+        }
+
+        public void setaName(String aName) {
+            this.aName = aName;
+        }
 
         public String getName() {
             return name;
@@ -336,7 +355,7 @@ public class LesseeBean implements Serializable {
         }
     }
 
-    public static class WBankLeaseSuretyBean {
+    public static class WBankLeaseSuretyBean implements Serializable {
         /**
          * name : 担保人姓名
          * idCard : 44445894849
@@ -345,15 +364,25 @@ public class LesseeBean implements Serializable {
          * marryUrl : 44445894849
          * creditUrl : 44445894849
          * moneyUrl : 44445894849
+         * phone   （手机号）
          */
 
         private String name;
+        private String phone;
         private String idCard;
         private String idCardUrl;
         private String houseUrl;
         private String marryUrl;
         private String creditUrl;
         private String moneyUrl;
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
 
         public String getName() {
             return name;

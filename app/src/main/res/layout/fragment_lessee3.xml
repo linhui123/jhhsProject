@@ -17,7 +17,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/padding_15">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -81,7 +82,7 @@
                     android:layout_marginBottom="@dimen/padding_15"
                     android:background="@color/cf5" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -97,21 +98,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="（请确保边框完整，字迹清晰，亮度均匀）"
+                        android:layout_marginTop="@dimen/dp_1"
+                        android:text="                                   （请确保边框完整，字迹清晰，亮度均匀）"
                         android:textColor="@color/acc9"
                         android:textSize="@dimen/text_size_14" />
-                </LinearLayout>
-
-                <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="@dimen/padding_15"-->
-                <!--android:layout_marginTop="@dimen/padding_15"-->
-                <!--android:layout_marginRight="@dimen/padding_15"-->
-                <!--android:background="@drawable/edit_dash_de"-->
-                <!--android:gravity="center"-->
-                <!--android:orientation="vertical"-->
-                <!--android:paddingBottom="@dimen/padding_10">-->
+                </RelativeLayout>
 
                 <com.jhhscm.platform.fragment.lessee.SingleImageSelector
                     android:id="@+id/is_face"
@@ -125,25 +116,6 @@
                     app:is_face="true"
                     app:with_camera="true" />
 
-                <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="点击上传人面像"-->
-                <!--android:textColor="@color/acc3"-->
-                <!--android:textSize="@dimen/text_size_16" />-->
-                <!--</LinearLayout>-->
-
-                <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="@dimen/padding_15"-->
-                <!--android:layout_marginTop="@dimen/padding_15"-->
-                <!--android:layout_marginRight="@dimen/padding_15"-->
-                <!--android:background="@drawable/edit_dash_de"-->
-                <!--android:gravity="center"-->
-                <!--android:orientation="vertical"-->
-                <!--android:paddingBottom="@dimen/padding_10">-->
-
                 <com.jhhscm.platform.fragment.lessee.SingleImageSelector
                     android:id="@+id/is_guohui"
                     android:layout_width="match_parent"
@@ -156,13 +128,107 @@
                     app:is_face="false"
                     app:with_camera="true" />
 
-                <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="点击上传国徽面"-->
-                <!--android:textColor="@color/acc3"-->
-                <!--android:textSize="@dimen/text_size_16" />-->
-                <!--</LinearLayout>-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/padding_15"
+                        android:text="上传财产正面"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_1"
+                        android:text="                                （包括但不限于房产、车辆证明）"
+                        android:textColor="@color/acc9"
+                        android:textSize="@dimen/text_size_14" />
+                </RelativeLayout>
+
+                <com.jhhscm.platform.views.selector.ImageSelector
+                    android:id="@+id/is_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="@dimen/padding_15"
+                    android:padding="10dp"
+                    app:colum_num="3"
+                    app:image_num="9"
+                    app:is_face="true"
+                    app:with_camera="true" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/padding_15"
+                        android:text="上传标的物产权证明"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_1"
+                        android:text="                                             （合格证、发票或购机合同）"
+                        android:textColor="@color/acc9"
+                        android:textSize="@dimen/text_size_14" />
+                </RelativeLayout>
+
+                <com.jhhscm.platform.views.selector.ImageSelector
+                    android:id="@+id/is_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="@dimen/padding_15"
+                    android:padding="10dp"
+                    app:colum_num="3"
+                    app:image_num="9"
+                    app:is_face="true"
+                    app:with_camera="true" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/padding_15"
+                        android:layout_marginTop="@dimen/dp_1"
+                        android:text="上传征信报告"
+                        android:textColor="@color/acc3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/acc9"
+                        android:textSize="@dimen/text_size_14" />
+                </RelativeLayout>
+
+                <com.jhhscm.platform.views.selector.ImageSelector
+                    android:id="@+id/is_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_15"
+                    android:layout_marginRight="@dimen/padding_15"
+                    android:padding="10dp"
+                    app:colum_num="3"
+                    app:image_num="9"
+                    app:is_face="true"
+                    app:with_camera="true" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
