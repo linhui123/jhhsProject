@@ -9,6 +9,7 @@ import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.databinding.ItemLesseeMechanicsBinding;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.tool.StringUtils;
+import com.jhhscm.platform.views.dialog.AddressDialog;
 import com.jhhscm.platform.views.dialog.DropTDialog;
 import com.jhhscm.platform.views.timePickets.TimePickerShow;
 
@@ -29,10 +30,19 @@ public class LesseeViewHolder extends AbsRecyclerViewHolder<LesseeBean.WBankLeas
     @Override
     protected void onBindView(final LesseeBean.WBankLeaseItemsBean item) {
         if (item != null) {
+            // * m1 购买价格   * m2 发动机号    * m3 车架号   * m4 小时数   * m5 施工区域    * m6 施工类型
             mBinding.etName.setText(item.getName());
             mBinding.etXinghao.setText(item.getFixP17());
             mBinding.tvBrand.setText(item.getBrandName());
             mBinding.etNo.setText(item.getMachineNum());
+            mBinding.etPrice.setText(item.getMachinePrice());
+            mBinding.etM1.setText(item.getM1());
+            mBinding.etM2.setText(item.getM2());
+            mBinding.etM3.setText(item.getM3());
+            mBinding.etM4.setText(item.getM4());
+            mBinding.tvM5.setText(item.getM5());
+            mBinding.etM6.setText(item.getM6());
+
             if (item.getFactoryTime() != null && item.getFactoryTime().length() > 10) {
                 mBinding.tvData.setText(item.getFactoryTime().substring(0, 10));
                 item.setFactoryTime(item.getFactoryTime().substring(0, 10));
@@ -158,6 +168,99 @@ public class LesseeViewHolder extends AbsRecyclerViewHolder<LesseeBean.WBankLeas
             @Override
             public void afterTextChanged(Editable s) {
                 item.setFixP17(s.toString().trim());
+            }
+        });
+        mBinding.etM1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                item.setM1(s.toString().trim());
+            }
+        });
+        mBinding.etM2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                item.setM2(s.toString().trim());
+            }
+        });
+        mBinding.etM3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                item.setM3(s.toString().trim());
+            }
+        });
+        mBinding.etM4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                item.setM4(s.toString().trim());
+            }
+        });
+        mBinding.etM6.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                item.setM6(s.toString().trim());
+            }
+        });
+
+        mBinding.tvM5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AddressDialog(itemView.getContext(), "施工区月", new AddressDialog.CallbackListener() {
+                    @Override
+                    public void clickResult(String pid, String pNmae, String cityId, String cName, String countryID, String countryName) {
+                        mBinding.tvM5.setText(pNmae + " " + cName + " " + countryName);
+                        item.setM5(pNmae + " " + cName + " " + countryName);
+                    }
+                }).show();
             }
         });
     }

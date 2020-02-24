@@ -41,6 +41,7 @@ import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.Lessee1Activity;
 import com.jhhscm.platform.activity.Lessee3Activity;
+import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.databinding.FragmentZuLinBinding;
 import com.jhhscm.platform.event.JumpEvent;
 import com.jhhscm.platform.event.LesseeFinishEvent;
@@ -55,6 +56,7 @@ import com.jhhscm.platform.http.bean.BaseEntity;
 import com.jhhscm.platform.http.bean.BaseErrorInfo;
 import com.jhhscm.platform.http.bean.NetBean;
 import com.jhhscm.platform.http.sign.Sign;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.DisplayUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
@@ -288,7 +290,13 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
         mDataBinding.tvApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Lessee1Activity.start(getContext());
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
+                    Lessee1Activity.start(getContext());
+                } else {
+                    LoginActivity.start(getContext());
+                }
+
             }
         });
         initTel();

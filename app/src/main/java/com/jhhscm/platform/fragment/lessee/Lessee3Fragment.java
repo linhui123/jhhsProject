@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
+import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.bean.UploadImage;
@@ -50,6 +51,7 @@ import top.zibin.luban.Luban;
 public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
     private LesseeBean lesseeBean;
     private List<LesseeBean.WBankleaseFileListBean> itemsBeans;
+    private LesseeBean.WBankLeaseSuretyBean suretyBean;
 
     public static Lessee3Fragment instance() {
         Lessee3Fragment view = new Lessee3Fragment();
@@ -65,11 +67,18 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
     protected void setupViews() {
         lesseeBean = (LesseeBean) getArguments().getSerializable("lesseeBean");
         itemsBeans = new ArrayList<>();
+        suretyBean = new LesseeBean.WBankLeaseSuretyBean();
 //        itemsBeans.add(new LesseeBean.WBankleaseFileListBean());//人像面
 //        itemsBeans.add(new LesseeBean.WBankleaseFileListBean());//国徽面
         mDataBinding.tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                suretyBean.setM1(mDataBinding.etEmergency.getText().toString().trim());
+                suretyBean.setM2(mDataBinding.etEmergencyPhone.getText().toString().trim());
+                suretyBean.setName(mDataBinding.etGuarantee.getText().toString().trim());
+                suretyBean.setIdCard(mDataBinding.etGuaranteeId.getText().toString().trim());
+                suretyBean.setPhone(mDataBinding.etGuaranteePhone.getText().toString().trim());
+                lesseeBean.setwBankLeaseSurety(suretyBean);
                 if (mDataBinding.isFace.getUploadImageList().size() > 0) {
                     if (mDataBinding.isGuohui.getUploadImageList().size() > 0) {
                         updateImgResult = true;
@@ -82,6 +91,14 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
                 }
             }
         });
+
+        if (BuildConfig.DEBUG) {//测试数据
+            mDataBinding.etEmergency.setText("111");
+            mDataBinding.etEmergencyPhone.setText("111");
+            mDataBinding.etGuarantee.setText("111");
+            mDataBinding.etGuaranteeId.setText("111");
+            mDataBinding.etGuaranteePhone.setText("111");
+        }
     }
 
     /**
@@ -537,7 +554,7 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
             map.put("wBankLeaseFileList", JSON.toJSONString(lesseeBean.getWBankleaseFileList()));
             map.put("wBankLeasePerson", JSON.toJSONString(lesseeBean.getWBankLeasePerson()));
             map.put("wBankLeaseItems", JSON.toJSONString(lesseeBean.getWBankLeaseItems()));
-            map.put("wBankLeaseSurety ", JSON.toJSONString(lesseeBean.getwBankLeaseSurety()));
+            map.put("wBankLeaseSurety", JSON.toJSONString(lesseeBean.getwBankLeaseSurety()));
             String content = JSON.toJSONString(map);
             Log.e("createLessee", "content : " + content);
             content = Des.encryptByDes(content);

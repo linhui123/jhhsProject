@@ -12,14 +12,22 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.CashierActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.ReceiveAddressActivity;
+import com.jhhscm.platform.activity.SelectCouponActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentCreateOrderBinding;
+import com.jhhscm.platform.databinding.ItemLocationBinding;
 import com.jhhscm.platform.event.AddressResultEvent;
+import com.jhhscm.platform.event.FinishEvent;
+import com.jhhscm.platform.event.SelectCouponEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.action.CalculateOrderAction;
 import com.jhhscm.platform.fragment.GoodsToCarts.action.CreateOrderAction;
 import com.jhhscm.platform.fragment.GoodsToCarts.action.FindAddressListAction;
+import com.jhhscm.platform.fragment.GoodsToCarts.action.PrePayUseListAction;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
+import com.jhhscm.platform.fragment.coupon.CouponListBean;
+import com.jhhscm.platform.fragment.my.store.action.PayUseListAction;
 import com.jhhscm.platform.http.AHttpService;
 import com.jhhscm.platform.http.HttpHelper;
 import com.jhhscm.platform.http.bean.BaseEntity;
@@ -31,8 +39,11 @@ import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.views.dialog.PayWithCouponDialog;
+import com.jhhscm.platform.views.recyclerview.DividerItemDecoration;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -49,6 +60,10 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
     private UserSession userSession;
     private String selectAddressID;
     private FindAddressListBean findAddressListBean;
+    private CouponListBean list;
+    private String orderCode = "";
+    private String selectCoupon = "";
+    private String price = "";
 
     public static CreateOrderFragment instance() {
         CreateOrderFragment view = new CreateOrderFragment();
@@ -75,7 +90,6 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
         }
         if (getCartGoodsByUserCodeBean != null) {
             findAddressList();
-
             mDataBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
             mAdapter = new InnerAdapter(getContext());
             mDataBinding.rv.setAdapter(mAdapter);
@@ -98,6 +112,17 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
             @Override
             public void onClick(View v) {
                 ReceiveAddressActivity.start(getContext(), true);
+            }
+        });
+
+        mDataBinding.tvCoupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (list != null && list.getResult().size() > 0) {
+                    SelectCouponActivity.start(getContext(), list, selectCoupon);
+                } else {
+                    prePayUseList();
+                }
             }
         });
     }
@@ -286,10 +311,13 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
         mDataBinding.rlCoupon.setVisibility(View.GONE);
         mDataBinding.tvQuanxuan.setText("共计" + num + "件商品");
         BigDecimal b = new BigDecimal(total);
-        mDataBinding.tvSum.setText("￥" + b.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+        price = b.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+        mDataBinding.tvSum.setText("￥" + price);
 
         mAdapter.setData(getCartGoodsByUserCodeBean.getResult());
         mAdapter.notifyDataSetChanged();
+        //获取可用优惠券
+        prePayUseList();
     }
 
     private class InnerAdapter extends AbsRecyclerViewAdapter<GetCartGoodsByUserCodeBean.ResultBean> {
@@ -352,6 +380,7 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
                                 if (response.body().getCode().equals("200")) {
                                     CashierActivity.start(getContext(), response.body().getData());
                                     ToastUtils.show(getContext(), "创建订单成功");
+                                    EventBusUtil.post(new FinishEvent(2));
                                     getActivity().finish();
                                 } else {
                                     ToastUtils.show(getContext(), response.body().getMessage());
@@ -362,5 +391,89 @@ public class CreateOrderFragment extends AbsFragment<FragmentCreateOrderBinding>
                 }));
     }
 
+    public void onEvent(SelectCouponEvent event) {
+        if (event.getResultBean() != null && event.getType() == 1) {
+            if (event.getResultBean().getCoupon_code() != null) {
+                selectCoupon = event.getResultBean().getCoupon_code();
+                mDataBinding.tvCoupon.setText(event.getResultBean().getName());
+                mDataBinding.tvCoupon.setTag(event.getResultBean().getCoupon_code());
+                double result = 0.0;
+                if (event.getResultBean().getDiscount() < 1) {
+                    result = Double.parseDouble(price) * event.getResultBean().getDiscount();
+                } else {
+                    result = Double.parseDouble(price) - event.getResultBean().getDiscount();
+                }
+                mDataBinding.tvCouponPrice.setText("-￥" + event.getResultBean().getDiscount());
+                mDataBinding.tvSum.setText("￥" + result);
+            } else {
+                selectCoupon = "";
+                mDataBinding.tvCoupon.setText("不使用优惠券");
+                mDataBinding.tvCoupon.setTag("");
+                mDataBinding.tvCouponPrice.setText("-￥0.0");
+                mDataBinding.tvSum.setText("￥" + price);
+            }
+        }
+    }
+
+    /**
+     * 获取可用优惠券列表
+     */
+    private void prePayUseList() {
+        Map<String, String> map = new TreeMap<String, String>();
+        showDialog();
+        String goods_code = "";
+        for (GetCartGoodsByUserCodeBean.ResultBean bean : getCartGoodsByUserCodeBean.getResult()) {
+            for (GetCartGoodsByUserCodeBean.ResultBean.GoodsListBean goodsListBean : bean.getGoodsList()) {
+                if (goodsListBean.getNumber() > 0) {
+                    if (goods_code.length() > 0) {
+                        goods_code = goods_code + "," + goodsListBean.getGoodsCode();
+                    } else {
+                        goods_code = goodsListBean.getGoodsCode();
+                    }
+                }
+            }
+        }
+        map.put("user_code", ConfigUtils.getCurrentUser(getContext()).getUserCode());
+        map.put("order_price", price);
+        map.put("goods_code", goods_code);
+        String content = JSON.toJSONString(map);
+        content = Des.encryptByDes(content);
+        String sign = Sign.getSignKey(getContext(), map, "prePayUseList");
+        NetBean netBean = new NetBean();
+        netBean.setToken(ConfigUtils.getCurrentUser(getContext()).getToken());
+        netBean.setSign(sign);
+        netBean.setContent(content);
+        onNewRequestCall(PrePayUseListAction.newInstance(getContext(), netBean)
+                .request(new AHttpService.IResCallback<BaseEntity<CouponListBean>>() {
+                    @Override
+                    public void onCallback(int resultCode, Response<BaseEntity<CouponListBean>> response, BaseErrorInfo baseErrorInfo) {
+                        if (getContext() != null) {
+                            closeDialog();
+                            if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getContext().getString(R.string.error_net))) {
+                                return;
+                            }
+                            if (response != null) {
+                                if (response.body().getCode().equals("200")) {
+                                    doSuccessResponse(response.body().getData());
+                                } else if (response.body().getCode().equals("1003")) {
+                                    ToastUtils.show(getContext(), "登录信息过期，请重新登录");
+                                    ConfigUtils.removeCurrentUser(getContext());
+                                } else {
+                                    ToastUtils.show(getContext(), "error :" + response.body().getMessage());
+                                }
+                            }
+                        }
+                    }
+                }));
+    }
+
+    private void doSuccessResponse(final CouponListBean couponListBean) {
+        list = couponListBean;
+        if (list.getResult().size() == 0) {
+            mDataBinding.tvCoupon.setText("暂无可用优惠券");
+            mDataBinding.tvCoupon.setEnabled(false);
+            mDataBinding.tvCouponPrice.setText("-￥0.0");
+        }
+    }
 
 }

@@ -1,8 +1,9 @@
 package com.jhhscm.platform.fragment.coupon;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CouponListBean {
+public class CouponListBean implements Serializable {
 
     private List<ResultBean> result;
     private PageBean page;
@@ -23,7 +24,7 @@ public class CouponListBean {
         this.result = result;
     }
 
-    public static class ResultBean {
+    public static class ResultBean implements Serializable {
         /**
          * order_code :
          * start_time :

@@ -26,6 +26,7 @@ import com.jhhscm.platform.fragment.aftersale.FindBusListBean;
 import com.jhhscm.platform.fragment.coupon.CouponGetListBean;
 import com.jhhscm.platform.fragment.coupon.CouponListBean;
 import com.jhhscm.platform.fragment.coupon.GetNewCouponslistBean;
+import com.jhhscm.platform.fragment.financing.LeaseSelBean;
 import com.jhhscm.platform.fragment.home.AdBean;
 import com.jhhscm.platform.fragment.home.bean.FindBrandHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
@@ -725,6 +726,13 @@ public interface ApiService {
     @POST(PAY_USELIST)
     Call<BaseEntity<CouponListBean>> payUseList(@Body NetBean content);
 
+    //确认订单可用券列表
+    String PRE_PAY_USELIST = "v1-3/coupon/prePayUseList";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(PRE_PAY_USELIST)
+    Call<BaseEntity<CouponListBean>> prePayUseList(@Body NetBean content);
+
     //券领取列表
     String COUPON_GETLIST = "v1-3/coupon/getlist";
 
@@ -871,4 +879,11 @@ public interface ApiService {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(FIND_ORDERLISTCOUNT)
     Call<BaseEntity<FindOrderBean>> findOrderListCount(@Body NetBean content);
+
+    //我的券列表
+    String LEASE_SEL = "v1-0/lease/sel";
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST(LEASE_SEL)
+    Call<BaseEntity<LeaseSelBean>> lease_sel(@Body NetBean content);
 }

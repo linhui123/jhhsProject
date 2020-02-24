@@ -86,6 +86,15 @@ public class LesseeBean implements Serializable {
         private String spousePhone;
         private String spouseCompany;
         private String spouseCompanyAddress;
+        private String userCode;
+
+        public String getUserCode() {
+            return userCode;
+        }
+
+        public void setUserCode(String userCode) {
+            this.userCode = userCode;
+        }
 
         public String getaPhone() {
             return aPhone;
@@ -270,6 +279,12 @@ public class LesseeBean implements Serializable {
          * machinePrice : 12.00
          * machineAssess : 15.00
          * itemUrl
+         * m1 购买价格
+         * m2 发动机号
+         * m3 车架号
+         * m4 小时数
+         * m5 施工区域
+         * m6 施工类型
          */
 
         private String name;
@@ -281,6 +296,60 @@ public class LesseeBean implements Serializable {
         private String machinePrice;
         private String machineAssess;
         private String itemUrl;
+        private String m1;
+        private String m2;
+        private String m3;
+        private String m4;
+        private String m5;
+        private String m6;
+
+        public String getM1() {
+            return m1;
+        }
+
+        public void setM1(String m1) {
+            this.m1 = m1;
+        }
+
+        public String getM2() {
+            return m2;
+        }
+
+        public void setM2(String m2) {
+            this.m2 = m2;
+        }
+
+        public String getM3() {
+            return m3;
+        }
+
+        public void setM3(String m3) {
+            this.m3 = m3;
+        }
+
+        public String getM4() {
+            return m4;
+        }
+
+        public void setM4(String m4) {
+            this.m4 = m4;
+        }
+
+        public String getM5() {
+            return m5;
+        }
+
+        public void setM5(String m5) {
+            this.m5 = m5;
+        }
+
+        public String getM6() {
+            return m6;
+        }
+
+        public void setM6(String m6) {
+            this.m6 = m6;
+        }
 
         public String getBrandName() {
             return brandName;
@@ -365,6 +434,8 @@ public class LesseeBean implements Serializable {
          * creditUrl : 44445894849
          * moneyUrl : 44445894849
          * phone   （手机号）
+         * m1   紧急联系人
+         * m2   紧急联系人手机号
          */
 
         private String name;
@@ -375,6 +446,24 @@ public class LesseeBean implements Serializable {
         private String marryUrl;
         private String creditUrl;
         private String moneyUrl;
+        private String m1;
+        private String m2;
+
+        public String getM1() {
+            return m1;
+        }
+
+        public void setM1(String m1) {
+            this.m1 = m1;
+        }
+
+        public String getM2() {
+            return m2;
+        }
+
+        public void setM2(String m2) {
+            this.m2 = m2;
+        }
 
         public String getPhone() {
             return phone;

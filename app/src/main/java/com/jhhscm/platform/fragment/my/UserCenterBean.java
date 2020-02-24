@@ -35,6 +35,15 @@ public class UserCenterBean {
         private String user_pointdesc;
         private int collect_count;
         private int bususer_count;
+        private String user_level;
+
+        public String getUser_level() {
+            return user_level;
+        }
+
+        public void setUser_level(String user_level) {
+            this.user_level = user_level;
+        }
 
         public String getUser_pointdesc() {
             return user_pointdesc;

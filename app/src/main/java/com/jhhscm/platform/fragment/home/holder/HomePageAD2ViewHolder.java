@@ -16,38 +16,29 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePageADViewHolder extends AbsRecyclerViewHolder<HomePageItem> {
+public class HomePageAD2ViewHolder extends AbsRecyclerViewHolder<HomePageItem> {
 
     private ItemHomePageAdBinding mBinding;
 
-    public HomePageADViewHolder(View itemView) {
+    public HomePageAD2ViewHolder(View itemView) {
         super(itemView);
         mBinding = ItemHomePageAdBinding.bind(itemView);
     }
 
     @Override
     protected void onBindView(final HomePageItem item) {
-        if (item.adBean2 != null) {
+        if (item.adBean5 != null) {//会员权益
             final List<String> list = new ArrayList<>();
-            for (AdBean.ResultBean adBean : item.adBean2.getResult()) {
+            for (AdBean.ResultBean adBean : item.adBean5.getResult()) {
                 list.add(adBean.getUrl());
             }
-//        list.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic1xjab4j30ci08cjrv.jpg");
             if (list.size() > 0) {
                 ImageLoader.getInstance().displayImage(list.get(0), mBinding.ivReport);
             }
-
             mBinding.ivReport.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (list.size() > 0) {
-                        MobclickAgent.onEvent(itemView.getContext(), "ad_home");
-                        AdBean adBean = item.adBean2;
-                        AdBean.ResultBean resultBean = adBean.getResult().get(0);
-                        Gson gson = new Gson();
-                        AdBean.DataBean findOrderBean = gson.fromJson(resultBean.getContent(), AdBean.DataBean.class);
-                        EventBusUtil.post(new JumpEvent(findOrderBean.getTYPE(), resultBean));
-                    }
+                    MemberShipActivity.start(itemView.getContext());
                 }
             });
         }

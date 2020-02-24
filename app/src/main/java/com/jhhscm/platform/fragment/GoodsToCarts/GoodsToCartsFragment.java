@@ -10,6 +10,7 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.CreateOrderActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.databinding.FragmentGoodsToCartsBinding;
+import com.jhhscm.platform.event.FinishEvent;
 import com.jhhscm.platform.event.RefreshEvent;
 import com.jhhscm.platform.fragment.GoodsToCarts.action.DelGoodsToCartsAction;
 import com.jhhscm.platform.fragment.GoodsToCarts.action.GetCartGoodsByUserCodeAction;
@@ -137,7 +138,7 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
                     GetCartGoodsByUserCodeBean g = new GetCartGoodsByUserCodeBean();
                     g.setResult(resultBeans);
                     CreateOrderActivity.start(getContext(), g);
-                    getActivity().finish();
+//                    getActivity().finish();
                 } else {
                     ToastUtil.show(getContext(), "请先选择商品");
                 }
@@ -145,7 +146,10 @@ public class GoodsToCartsFragment extends AbsFragment<FragmentGoodsToCartsBindin
         });
     }
 
-    public void onEvent(RefreshEvent event) {
+    public void onEvent(FinishEvent event) {
+        if (event.getType()==2){
+            getActivity().finish();
+        }
     }
 
     /**

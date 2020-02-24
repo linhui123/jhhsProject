@@ -1,8 +1,9 @@
 package com.jhhscm.platform.fragment.Mechanics.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GetComboBoxBean {
+public class GetComboBoxBean implements Serializable{
 
     private List<ResultBean> result;
 
@@ -14,7 +15,7 @@ public class GetComboBoxBean {
         this.result = result;
     }
 
-    public static class ResultBean {
+    public static class ResultBean implements Serializable {
         /**
          * key_name : 1
          * id : 14

@@ -554,7 +554,7 @@ public class PayWithCouponDialog extends BaseDialog {
     }
 
     /**
-     * 获取优惠券列表
+     * 获取可用优惠券列表
      */
     private void payUseList() {
         Map<String, String> map = new TreeMap<String, String>();

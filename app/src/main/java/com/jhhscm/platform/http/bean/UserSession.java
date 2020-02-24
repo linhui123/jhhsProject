@@ -12,7 +12,15 @@ public class UserSession {
     private String avatar;
     private String is_check;//是否实名 0：未认证 1是已认证
     private int is_bus;//是否商户 0 不是 1是
+    private String user_level;// "0"普通会员 "1"高级会员  "2" VIP会员
 
+    public String getUser_level() {
+        return user_level;
+    }
+
+    public void setUser_level(String user_level) {
+        this.user_level = user_level;
+    }
     public int getIs_bus() {
         return is_bus;
     }

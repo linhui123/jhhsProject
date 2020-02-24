@@ -6,11 +6,13 @@ import android.view.ViewGroup;
 
 import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.activity.Lessee2Activity;
+import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.databinding.FragmentLessee1Binding;
 import com.jhhscm.platform.event.LesseeFinishEvent;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
+import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.IDCard;
 import com.jhhscm.platform.tool.ToastUtil;
@@ -24,7 +26,7 @@ import java.util.List;
 public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
     private LesseeBean lesseeBean;
     private LesseeBean.WBankLeasePersonBean personBean;
-    private LesseeBean.WBankLeaseSuretyBean suretyBean;
+    //    private LesseeBean.WBankLeaseSuretyBean suretyBean;
     private FindGoodsOwnerBean.DataBean dataBean;
     private String province, city;
 
@@ -41,10 +43,17 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
+        if (ConfigUtils.getCurrentUser(getContext()) != null
+                && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
+
+        } else {
+            getActivity().finish();
+            LoginActivity.start(getContext());
+        }
         dataBean = (FindGoodsOwnerBean.DataBean) getArguments().getSerializable("data");
         lesseeBean = new LesseeBean();
         personBean = new LesseeBean.WBankLeasePersonBean();
-        suretyBean = new LesseeBean.WBankLeaseSuretyBean();
+//        suretyBean = new LesseeBean.WBankLeaseSuretyBean();
         mDataBinding.tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,13 +69,16 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
                                             personBean.setPhone(mDataBinding.etPhone.getText().toString().trim());
                                             if (mDataBinding.etAddress.getText().toString().trim().length() > 0) {
                                                 personBean.setIdCardAddress(mDataBinding.etAddress.getText().toString().trim());
-                                                personBean.setaName(mDataBinding.etEmergency.getText().toString().trim());
-                                                personBean.setaPhone(mDataBinding.etEmergencyPhone.getText().toString().trim());
-                                                suretyBean.setName(mDataBinding.etGuarantee.getText().toString().trim());
-                                                suretyBean.setIdCard(mDataBinding.etGuaranteeId.getText().toString().trim());
-                                                suretyBean.setPhone(mDataBinding.etGuaranteePhone.getText().toString().trim());
+                                                personBean.setUserCode(ConfigUtils.getCurrentUser(getContext()).getUserCode());
                                                 lesseeBean.setWBankLeasePerson(personBean);
-                                                lesseeBean.setwBankLeaseSurety(suretyBean);
+//                                                personBean.setaName(mDataBinding.etEmergency.getText().toString().trim());
+//                                                personBean.setaPhone(mDataBinding.etEmergencyPhone.getText().toString().trim());
+//                                                suretyBean.setM1(mDataBinding.etEmergency.getText().toString().trim());
+//                                                suretyBean.setM2(mDataBinding.etEmergencyPhone.getText().toString().trim());
+//                                                suretyBean.setName(mDataBinding.etGuarantee.getText().toString().trim());
+//                                                suretyBean.setIdCard(mDataBinding.etGuaranteeId.getText().toString().trim());
+//                                                suretyBean.setPhone(mDataBinding.etGuaranteePhone.getText().toString().trim());
+//                                                lesseeBean.setwBankLeaseSurety(suretyBean);
                                                 if (dataBean != null) {
                                                     Lessee2Activity.start(getContext(), lesseeBean, dataBean);
                                                 } else {
@@ -150,11 +162,11 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
             mDataBinding.etName.setText("cl");
             mDataBinding.etId.setText("350181199304061596");
             mDataBinding.etPhone.setText("18030129696");
-            mDataBinding.etEmergency.setText("111");
-            mDataBinding.etEmergencyPhone.setText("111");
-            mDataBinding.etGuarantee.setText("111");
-            mDataBinding.etGuaranteeId.setText("111");
-            mDataBinding.etGuaranteePhone.setText("111");
+//            mDataBinding.etEmergency.setText("111");
+//            mDataBinding.etEmergencyPhone.setText("111");
+//            mDataBinding.etGuarantee.setText("111");
+//            mDataBinding.etGuaranteeId.setText("111");
+//            mDataBinding.etGuaranteePhone.setText("111");
         }
     }
 

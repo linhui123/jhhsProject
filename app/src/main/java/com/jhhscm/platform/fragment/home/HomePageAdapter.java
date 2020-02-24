@@ -11,6 +11,7 @@ import com.jhhscm.platform.fragment.home.bean.FindCategoryHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.FindLabourReleaseHomePageBean;
 import com.jhhscm.platform.fragment.home.bean.GetPageArticleListBean;
 import com.jhhscm.platform.fragment.home.holder.HomePageACViewHolder;
+import com.jhhscm.platform.fragment.home.holder.HomePageAD2ViewHolder;
 import com.jhhscm.platform.fragment.home.holder.HomePageADViewHolder;
 import com.jhhscm.platform.fragment.home.holder.HomePageBannerViewHolder;
 import com.jhhscm.platform.fragment.home.holder.HomePageBrandViewHolder;
@@ -55,6 +56,15 @@ public class HomePageAdapter extends AbsRecyclerViewAdapter<HomePageItem> {
     private void addHomePageAD(AdBean adBean) {
         HomePageItem item = new HomePageItem(HomePageItem.TYPE_HOME_PAGE_AD);
         item.adBean2 = adBean;
+        mData.add(item);
+    }
+
+    /**
+     * 广告
+     */
+    private void addHomePageAD2(AdBean adBean) {
+        HomePageItem item = new HomePageItem(HomePageItem.TYPE_HOME_PAGE_AD_2);
+        item.adBean5 = adBean;
         mData.add(item);
     }
 
@@ -122,7 +132,11 @@ public class HomePageAdapter extends AbsRecyclerViewAdapter<HomePageItem> {
             }
         }
         addHomePageRecommend(homePageItem.findCategoryHomePageBean);
-
+        if (homePageItem.adBean5 != null && homePageItem.adBean5.getResult() != null && homePageItem.adBean5.getResult().size() > 0) {
+            if (homePageItem.adBean5.getResult().get(0).getUrl() != null) {
+                addHomePageAD2(homePageItem.adBean5);
+            }
+        }
         //资讯信息 测试
         if (homePageItem.getPageArticleListBean != null && homePageItem.getPageArticleListBean.getData().size() > 0) {
             addHomePageNews(homePageItem.getPageArticleListBean);
@@ -147,6 +161,8 @@ public class HomePageAdapter extends AbsRecyclerViewAdapter<HomePageItem> {
                 return new HomePageBusinessViewHolder(mInflater.inflate(R.layout.item_home_page_business, parent, false));
             case HomePageItem.TYPE_HOME_PAGE_AD:
                 return new HomePageADViewHolder(mInflater.inflate(R.layout.item_home_page_ad, parent, false));
+            case HomePageItem.TYPE_HOME_PAGE_AD_2:
+                return new HomePageAD2ViewHolder(mInflater.inflate(R.layout.item_home_page_ad, parent, false));
             case HomePageItem.TYPE_HOME_PAGE_AC:
                 return new HomePageACViewHolder(mInflater.inflate(R.layout.item_home_page_ac, parent, false));
             case HomePageItem.TYPE_HOME_PAGE_SEND_FRIENDS:

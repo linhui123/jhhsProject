@@ -16,6 +16,7 @@ import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentSelectCouponBinding;
 import com.jhhscm.platform.event.SelectCouponEvent;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.my.store.action.PayUseListAction;
 import com.jhhscm.platform.http.AHttpService;
@@ -46,7 +47,7 @@ public class SelectCouponFragment extends AbsFragment<FragmentSelectCouponBindin
     private final int START_PAGE = mCurrentPage;
     private String coupon_code;
     private String order_code;
-
+    private CouponListBean couponListBean;
     public static SelectCouponFragment instance() {
         SelectCouponFragment view = new SelectCouponFragment();
         return view;
@@ -62,7 +63,7 @@ public class SelectCouponFragment extends AbsFragment<FragmentSelectCouponBindin
         EventBusUtil.registerEvent(this);
         order_code = getArguments().getString("order_code");
         coupon_code = getArguments().getString("coupon_code");
-
+        couponListBean = (CouponListBean) getArguments().getSerializable("list");
         if (order_code != null) {
             mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
             mAdapter = new InnerAdapter(getContext());
@@ -79,6 +80,19 @@ public class SelectCouponFragment extends AbsFragment<FragmentSelectCouponBindin
                     getCouponList(false);
                 }
             });
+        } else if (couponListBean != null && couponListBean.getResult() != null && couponListBean.getResult().size() > 0) {
+            mDataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+            mAdapter = new InnerAdapter(getContext());
+            mDataBinding.recyclerview.setAdapter(mAdapter);
+            if (coupon_code != null && coupon_code.length() > 0) {
+                for (CouponListBean.ResultBean resultBean : couponListBean.getResult()) {
+                    if (resultBean.getCoupon_code().equals(coupon_code)) {
+                        resultBean.setSelect(true);
+                    }
+                }
+            }
+            mAdapter.setData(couponListBean.getResult());
+            mDataBinding.recyclerview.loadComplete(true,false);
         } else {
             ToastUtil.show(getContext(), "数据错误");
             getActivity().finish();
@@ -139,8 +153,6 @@ public class SelectCouponFragment extends AbsFragment<FragmentSelectCouponBindin
                     }
                 }));
     }
-
-    private CouponListBean couponListBean;
 
     private void doSuccessResponse(final CouponListBean couponListBean, boolean refresh) {
         if (coupon_code != null && coupon_code.length() > 0) {

@@ -11,9 +11,11 @@ import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.activity.AuthenticationActivity;
 import com.jhhscm.platform.activity.BookingActivity;
+import com.jhhscm.platform.activity.FinancingProgressActivity;
 import com.jhhscm.platform.activity.GoodsToCartsActivity;
 import com.jhhscm.platform.activity.IntegralActivity;
 import com.jhhscm.platform.activity.LoginActivity;
+import com.jhhscm.platform.activity.MemberShipActivity;
 import com.jhhscm.platform.activity.MsgActivity;
 import com.jhhscm.platform.activity.MyCollectionActivity;
 import com.jhhscm.platform.activity.MyCouponActivity;
@@ -148,8 +150,24 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                                     if (userCenterBean != null) {
                                         UserSession userSession = ConfigUtils.getCurrentUser(getContext());
                                         userSession.setIs_bus(response.body().getData().getResult().getIs_bus());
+                                        userSession.setUser_level(response.body().getData().getResult().getUser_level());
                                         ConfigUtils.setCurrentUser(getContext(), userSession);
-
+                                        if ("1".equals(userCenterBean.getResult().getUser_level())) {
+                                            mDataBinding.tvMember.setText("高级会员");
+                                            Drawable drawable = getContext().getResources().getDrawable(R.mipmap.ic_member_ii);
+                                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                                            mDataBinding.tvMember.setCompoundDrawables(drawable, null, null, null);
+                                        } else if ("2".equals(userCenterBean.getResult().getUser_level())) {
+                                            mDataBinding.tvMember.setText("VIP会员");
+                                            Drawable drawable = getContext().getResources().getDrawable(R.mipmap.ic_member_iii);
+                                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                                            mDataBinding.tvMember.setCompoundDrawables(drawable, null, null, null);
+                                        } else {
+                                            mDataBinding.tvMember.setText("普通会员");
+                                            Drawable drawable = getContext().getResources().getDrawable(R.mipmap.ic_member_i);
+                                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                                            mDataBinding.tvMember.setCompoundDrawables(drawable, null, null, null);
+                                        }
                                         if (userCenterBean.getResult().getIs_bus() == 0) {
                                             mDataBinding.llStore.setVisibility(View.GONE);
                                             mDataBinding.tvStoreNum.setVisibility(View.GONE);
@@ -302,6 +320,26 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
     }
 
     private void initOnClick() {
+        mDataBinding.imUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MemberShipActivity.start(getContext());
+            }
+        });
+
+        mDataBinding.llFinancingProgress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ConfigUtils.getCurrentUser(getContext()) != null
+                        && ConfigUtils.getCurrentUser(getContext()).getUserCode() != null
+                        && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
+                    FinancingProgressActivity.start(getContext());
+                } else {
+                    startNewActivity(LoginActivity.class);
+                }
+            }
+        });
+
         mDataBinding.tel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -608,8 +646,25 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                 mDataBinding.tvCer.setText("已认证");
                 mDataBinding.tvCerGo.setText("已认证");
             } else {
+                mDataBinding.tvMember.setText("普通会员");
                 mDataBinding.tvCer.setText("未认证");
                 mDataBinding.tvCerGo.setText("未认证");
+            }
+            if ("1".equals(ConfigUtils.getCurrentUser(getContext()).getUser_level())) {
+                mDataBinding.tvMember.setText("高级会员");
+                Drawable drawable = getContext().getResources().getDrawable(R.mipmap.ic_member_ii);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                mDataBinding.tvMember.setCompoundDrawables(drawable, null, null, null);
+            } else if ("2".equals(ConfigUtils.getCurrentUser(getContext()).getUser_level())) {
+                mDataBinding.tvMember.setText("VIP会员");
+                Drawable drawable = getContext().getResources().getDrawable(R.mipmap.ic_member_iii);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                mDataBinding.tvMember.setCompoundDrawables(drawable, null, null, null);
+            } else {
+                mDataBinding.tvMember.setText("普通会员");
+                Drawable drawable = getContext().getResources().getDrawable(R.mipmap.ic_member_i);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                mDataBinding.tvMember.setCompoundDrawables(drawable, null, null, null);
             }
             getUser();
             getUserConter();
@@ -634,6 +689,7 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
         } else {
             mDataBinding.imUser.setImageResource(R.mipmap.ic_heard);
             mDataBinding.tvName.setVisibility(View.VISIBLE);
+            mDataBinding.tvMember.setVisibility(View.GONE);
             mDataBinding.rlCer.setVisibility(View.GONE);
             mDataBinding.llStore.setVisibility(View.GONE);
             mDataBinding.tvStoreNum.setVisibility(View.GONE);

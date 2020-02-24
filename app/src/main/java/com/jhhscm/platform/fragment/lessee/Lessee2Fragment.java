@@ -59,7 +59,6 @@ import top.zibin.luban.Luban;
 
 public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
     private FindGoodsOwnerBean.DataBean data;
-
     private int type;
     private UserSession userSession;
     private String id;
@@ -192,10 +191,24 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
             imageSelectors.add(new ImageSelector(getContext()));
         } else {
             LesseeBean.WBankLeaseItemsBean dataBean = new LesseeBean.WBankLeaseItemsBean();
+            if (BuildConfig.DEBUG) {//测试数据
+                dataBean.setMachineNum("111");
+                dataBean.setName("111");
+                dataBean.setFixP17("111");
+                dataBean.setMachinePrice("111");
+                dataBean.setM1("111");
+                dataBean.setM2("111");
+                dataBean.setM3("111");
+                dataBean.setM4("111");
+                dataBean.setM5("111");
+                dataBean.setM6("111");
+            }
             itemsBeans.add(dataBean);
-            mAdapter.setData(itemsBeans);
+            mAdapter.add(dataBean);
             imageSelectors.add(new ImageSelector(getContext()));
         }
+
+
     }
 
     /**

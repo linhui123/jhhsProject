@@ -156,6 +156,7 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                 getAD(4);//首页广告位
                 getAD(5);//首页活动位
                 getAD(6);
+                getAD(8);//会员权益广告
                 findBrandHomePage();
             }
 
@@ -341,17 +342,15 @@ public class HomePageFragment extends AbsFragment<FragmentHomePageBinding> imple
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
                                     if (position == 2) {
-//                                        homePageItem.setAdBean1(response.body().getData());
                                         homePageItem.adBean1 = response.body().getData();
                                     } else if (position == 3) {
-//                                        homePageItem.setAdBean3(response.body().getData());
                                         homePageItem.adBean3 = response.body().getData();
                                     } else if (position == 4) {
-//                                        homePageItem.setAdBean2(response.body().getData());
                                         homePageItem.adBean2 = response.body().getData();
                                     } else if (position == 5) {
-//                                        homePageItem.setAdBean4(response.body().getData());
                                         homePageItem.adBean4 = response.body().getData();
+                                    } else if (position == 8) {
+                                        homePageItem.adBean5 = response.body().getData();
                                     } else if (position == 6) {
                                         if (response.body().getData().getResult().size() > 0 &&
                                                 response.body().getData().getResult().get(0) != null) {
