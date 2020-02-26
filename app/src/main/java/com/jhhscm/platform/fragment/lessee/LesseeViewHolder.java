@@ -2,6 +2,7 @@ package com.jhhscm.platform.fragment.lessee;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
@@ -36,6 +37,7 @@ public class LesseeViewHolder extends AbsRecyclerViewHolder<LesseeBean.WBankLeas
             mBinding.tvBrand.setText(item.getBrandName());
             mBinding.etNo.setText(item.getMachineNum());
             mBinding.etPrice.setText(item.getMachinePrice());
+            mBinding.tvBrand.setText(item.getBrandName());
             mBinding.etM1.setText(item.getM1());
             mBinding.etM2.setText(item.getM2());
             mBinding.etM3.setText(item.getM3());
@@ -52,8 +54,10 @@ public class LesseeViewHolder extends AbsRecyclerViewHolder<LesseeBean.WBankLeas
             }
             if (item.getItemUrl() != null && item.getItemUrl().length() > 10) {
                 List<PbImage> items = new ArrayList<>();
-                String listString = item.getItemUrl().replace("[\"", "").replace("\"]", "");
-                String[] strs = listString.split("\",\"");
+                String listString = item.getItemUrl().replace("[\"", "")
+                        .replace("\"]", "")
+                        .replace("\"", "");
+                String[] strs = listString.split(",");
                 if (strs.length > 0) {
                     for (int i = 0; i < strs.length; i++) {
                         PbImage pbImage = new PbImage();
@@ -76,6 +80,7 @@ public class LesseeViewHolder extends AbsRecyclerViewHolder<LesseeBean.WBankLeas
                     public void clickResult(String id, String Nmae) {
                         mBinding.tvBrand.setText(Nmae);
                         item.setBrandId(id);
+                        item.setBrandName(Nmae);
                     }
                 }).show();
             }
@@ -184,6 +189,14 @@ public class LesseeViewHolder extends AbsRecyclerViewHolder<LesseeBean.WBankLeas
             @Override
             public void afterTextChanged(Editable s) {
                 item.setM1(s.toString().trim());
+                if (!StringUtils.touzi_ed_values.equals(mBinding.etM1.getText().toString().trim())) {
+                    mBinding.etM1.setText(StringUtils.addComma(
+                            mBinding.etM1.getText().toString().trim().replaceAll(",", ""),
+                            mBinding.etM1));
+                    mBinding.etM1.setSelection(StringUtils.addComma(
+                            mBinding.etM1.getText().toString().trim().replaceAll(",", ""),
+                            mBinding.etM1).length());
+                }
             }
         });
         mBinding.etM2.addTextChangedListener(new TextWatcher() {

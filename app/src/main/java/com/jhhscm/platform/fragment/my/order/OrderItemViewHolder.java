@@ -2,8 +2,10 @@ package com.jhhscm.platform.fragment.my.order;
 
 import android.view.View;
 
+import com.jhhscm.platform.activity.h5.H5PeiJianActivity;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.ItemCreateOrderBinding;
+import com.jhhscm.platform.tool.UrlUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class OrderItemViewHolder extends AbsRecyclerViewHolder<FindOrderListBean.DataBean.GoodsListBean> {
@@ -24,10 +26,11 @@ public class OrderItemViewHolder extends AbsRecyclerViewHolder<FindOrderListBean
         mBinding.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String url = UrlUtils.PJXQ + "&good_code=" + item.getGoodsCode();
+//                String url = UrlUtils.PJXQ + "&good_code=" + item.get();
 //                H5PeiJianActivity.start(itemView.getContext(), url, "配件详情", "", "",
 //                        item.getGoodsName(), item.getGoodsCode(),
 //                        item.getPicUrl(), item.getPicUrl(), item.getNumber() + "", 3);
+
             }
         });
     }

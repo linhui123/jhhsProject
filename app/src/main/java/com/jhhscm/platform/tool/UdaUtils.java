@@ -50,8 +50,10 @@ public class UdaUtils {
 
     public static void hideInputMethod(Context context, View view) {
         try {
-            InputMethodManager manager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            manager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            if (view != null) {
+                InputMethodManager manager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                manager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

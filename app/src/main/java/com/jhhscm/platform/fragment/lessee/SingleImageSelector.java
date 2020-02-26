@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.bean.UploadImage;
 import com.jhhscm.platform.event.ImageSelectorEvent;
 import com.jhhscm.platform.permission.YXPermission;
@@ -306,5 +307,23 @@ public class SingleImageSelector extends LinearLayout {
             }
         }
     }
+
+    /**
+     * 设置图片集信息
+     *
+     * @param
+     */
+    public void setPbImageList(List<PbImage> images) {
+        if (images == null) return;
+        List<ImageSelectorItem> items = new ArrayList<>();
+        for (PbImage image : images) {
+            ImageSelectorItem item = new ImageSelectorItem();
+            item.imageUrl = image.getmUrl();
+            item.imageToken = image.getmToken();
+            items.add(item);
+        }
+        mAdapter.setData(items);
+    }
+
 }
 

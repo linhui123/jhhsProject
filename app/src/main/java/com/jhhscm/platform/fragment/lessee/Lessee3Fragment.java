@@ -1,7 +1,7 @@
 package com.jhhscm.platform.fragment.lessee;
 
-
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +11,10 @@ import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
+import com.jhhscm.platform.bean.PbImage;
 import com.jhhscm.platform.bean.UploadImage;
 import com.jhhscm.platform.databinding.FragmentLessee3Binding;
+import com.jhhscm.platform.event.ImageSelectorUpdataEvent;
 import com.jhhscm.platform.event.LesseeFinishEvent;
 import com.jhhscm.platform.fragment.Mechanics.push.OldMechanicsUpImageBean;
 import com.jhhscm.platform.fragment.Mechanics.push.UpdateImageBean;
@@ -52,6 +54,7 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
     private LesseeBean lesseeBean;
     private List<LesseeBean.WBankleaseFileListBean> itemsBeans;
     private LesseeBean.WBankLeaseSuretyBean suretyBean;
+    private boolean isUpdateResult;//是否提交完整信息；false 只上传图片，不提交全信息
 
     public static Lessee3Fragment instance() {
         Lessee3Fragment view = new Lessee3Fragment();
@@ -65,6 +68,8 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
 
     @Override
     protected void setupViews() {
+        EventBusUtil.registerEvent(this);
+        lesseeBean = new LesseeBean();
         lesseeBean = (LesseeBean) getArguments().getSerializable("lesseeBean");
         itemsBeans = new ArrayList<>();
         suretyBean = new LesseeBean.WBankLeaseSuretyBean();
@@ -73,6 +78,7 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
         mDataBinding.tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isUpdateResult = true;
                 suretyBean.setM1(mDataBinding.etEmergency.getText().toString().trim());
                 suretyBean.setM2(mDataBinding.etEmergencyPhone.getText().toString().trim());
                 suretyBean.setName(mDataBinding.etGuarantee.getText().toString().trim());
@@ -91,13 +97,112 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
                 }
             }
         });
+    }
 
-        if (BuildConfig.DEBUG) {//测试数据
-            mDataBinding.etEmergency.setText("111");
-            mDataBinding.etEmergencyPhone.setText("111");
-            mDataBinding.etGuarantee.setText("111");
-            mDataBinding.etGuaranteeId.setText("111");
-            mDataBinding.etGuaranteePhone.setText("111");
+    @Override
+    public void onResume() {
+        super.onResume();
+        //判断是否从我的设备进来；判断草稿箱是否有内容
+        if (ConfigUtils.getLesseeData(getContext()) != null
+                && ConfigUtils.getLesseeData(getContext()).getwBankLeaseSurety() != null
+                && ConfigUtils.getLesseeData(getContext()).getWBankleaseFileList() != null) {
+            suretyBean = ConfigUtils.getLesseeData(getContext()).getwBankLeaseSurety();
+            itemsBeans = ConfigUtils.getLesseeData(getContext()).getWBankleaseFileList();
+            lesseeBean = ConfigUtils.getLesseeData(getContext());
+            initData();
+        } else {
+            if (BuildConfig.DEBUG) {//测试数据
+                mDataBinding.etEmergency.setText("111");
+                mDataBinding.etEmergencyPhone.setText("111");
+                mDataBinding.etGuarantee.setText("111");
+                mDataBinding.etGuaranteeId.setText("111");
+                mDataBinding.etGuaranteePhone.setText("111");
+            }
+        }
+    }
+
+    private void initData() {
+        mDataBinding.etEmergency.setText(suretyBean.getM1());
+        mDataBinding.etEmergencyPhone.setText(suretyBean.getM2());
+        mDataBinding.etGuarantee.setText(suretyBean.getName());
+        mDataBinding.etGuaranteeId.setText(suretyBean.getIdCard());
+        mDataBinding.etGuaranteePhone.setText(suretyBean.getPhone());
+        List<PbImage> items1 = new ArrayList<>();
+        List<PbImage> items2 = new ArrayList<>();
+        List<PbImage> items3 = new ArrayList<>();
+        Log.e("initData", "itemsBeans " + itemsBeans.size());
+        for (LesseeBean.WBankleaseFileListBean image : itemsBeans) {
+            if (image.getState() == 1) {
+                List<PbImage> items = new ArrayList<>();
+                PbImage pbImage = new PbImage();
+                pbImage.setmUrl(image.getFileUrl());
+                pbImage.setmToken(image.getFileUrl());
+                items.add(pbImage);
+                mDataBinding.isFace.setPbImageList(items);
+            } else if (image.getState() == 2) {
+                List<PbImage> items = new ArrayList<>();
+                PbImage pbImage = new PbImage();
+                pbImage.setmUrl(image.getFileUrl());
+                pbImage.setmToken(image.getFileUrl());
+                items.add(pbImage);
+                mDataBinding.isGuohui.setPbImageList(items);
+            } else if (image.getState() == 3) {
+                PbImage pbImage = new PbImage();
+                pbImage.setmUrl(image.getFileUrl());
+                pbImage.setmToken(image.getFileUrl());
+                items1.add(pbImage);
+                mDataBinding.is1.setPbImageList(items1);
+            } else if (image.getState() == 4) {
+                PbImage pbImage = new PbImage();
+                pbImage.setmUrl(image.getFileUrl());
+                pbImage.setmToken(image.getFileUrl());
+                items2.add(pbImage);
+                mDataBinding.is2.setPbImageList(items2);
+            } else if (image.getState() == 5) {
+                PbImage pbImage = new PbImage();
+                pbImage.setmUrl(image.getFileUrl());
+                pbImage.setmToken(image.getFileUrl());
+                items3.add(pbImage);
+                mDataBinding.is3.setPbImageList(items3);
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("onPause1", "itemsBeans " + itemsBeans.size());
+        suretyBean.setPhone(mDataBinding.etGuaranteePhone.getText().toString().trim());
+        suretyBean.setName(mDataBinding.etGuarantee.getText().toString().trim());
+        suretyBean.setIdCard(mDataBinding.etGuaranteeId.getText().toString().trim());
+        suretyBean.setM1(mDataBinding.etEmergency.getText().toString().trim());
+        suretyBean.setM2(mDataBinding.etEmergencyPhone.getText().toString().trim());
+        lesseeBean.setwBankLeaseSurety(suretyBean);
+        lesseeBean.setWBankleaseFileList(itemsBeans);
+        ConfigUtils.setLesseeData(getActivity(), lesseeBean);
+//        lesseeBean.setWBankleaseFileList(itemsBeans);
+//        ConfigUtils.setLesseeData(getContext(), lesseeBean);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregisterEvent(this);
+    }
+
+    public void onEvent(ImageSelectorUpdataEvent event) {
+        if (event.getImageSelector() != null) {
+            isUpdateResult = false;
+            if (event.getImageSelector() == mDataBinding.is1) {
+                updateImgResult = true;
+                doUploadAImagesAction(mDataBinding.is1);
+            } else if (event.getImageSelector() == mDataBinding.is2) {
+                updateImgResult = true;
+                doUploadAImagesAction(mDataBinding.is2);
+            } else if (event.getImageSelector() == mDataBinding.is3) {
+                updateImgResult = true;
+                doUploadAImagesAction(mDataBinding.is3);
+            }
         }
     }
 
@@ -276,6 +381,7 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
         if (imageSelector == mDataBinding.isFace) {
             LesseeBean.WBankleaseFileListBean wBankleaseFileListBean = new LesseeBean.WBankleaseFileListBean();
             wBankleaseFileListBean.setType(1);
+            wBankleaseFileListBean.setState(1);
             wBankleaseFileListBean.setFileType("0");
             wBankleaseFileListBean.setFileUrl(updateImageBeanList.get(0).getIMG_URL());
             itemsBeans.add(wBankleaseFileListBean);
@@ -285,6 +391,7 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
         } else if (imageSelector == mDataBinding.isGuohui) {
             LesseeBean.WBankleaseFileListBean wBankleaseFileListBean = new LesseeBean.WBankleaseFileListBean();
             wBankleaseFileListBean.setType(1);
+            wBankleaseFileListBean.setState(2);
             wBankleaseFileListBean.setFileType("0");
             wBankleaseFileListBean.setFileUrl(updateImageBeanList.get(0).getIMG_URL());
             itemsBeans.add(wBankleaseFileListBean);
@@ -460,35 +567,53 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
                     if (imageSelector == mDataBinding.is1) {
                         updateImageBeanList2.clear();
                         for (int i = 0; i < uploadAImages.size(); i++) {
-                            UpdateImageBean updateImageBean = new UpdateImageBean();
-                            updateImageBean.setIMG_URL(uploadAImages.get(i).getAllfilePath());
-                            updateImageBean.setMENU_CATALOGUES(uploadAImages.get(i).getCatalogues());
-                            updateImageBean.setPATIENT_IMAGE_NODE("0");
-                            updateImageBeanList2.add(updateImageBean);
+                            if (uploadAImages.get(i).getImageUrl() != null && uploadAImages.get(i).getImageUrl().contains("http://")) {
+                                UpdateImageBean updateImageBean = new UpdateImageBean();
+                                updateImageBean.setIMG_URL(uploadAImages.get(i).getImageUrl());
+                                updateImageBean.setPATIENT_IMAGE_NODE("0");
+                                updateImageBeanList2.add(updateImageBean);
+                            } else {
+                                UpdateImageBean updateImageBean = new UpdateImageBean();
+                                updateImageBean.setIMG_URL(uploadAImages.get(i).getAllfilePath());
+                                updateImageBean.setMENU_CATALOGUES(uploadAImages.get(i).getCatalogues());
+                                updateImageBean.setPATIENT_IMAGE_NODE("0");
+                                updateImageBeanList2.add(updateImageBean);
+                            }
                         }
-                        Log.e("ImageSelector", "is1 " + updateImageBeanList2.size());
                         saveImagesData(imageSelector, updateImageBeanList2);
                     } else if (imageSelector == mDataBinding.is2) {
                         updateImageBeanList3.clear();
                         for (int i = 0; i < uploadAImages.size(); i++) {
-                            UpdateImageBean updateImageBean = new UpdateImageBean();
-                            updateImageBean.setIMG_URL(uploadAImages.get(i).getAllfilePath());
-                            updateImageBean.setMENU_CATALOGUES(uploadAImages.get(i).getCatalogues());
-                            updateImageBean.setPATIENT_IMAGE_NODE("0");
-                            updateImageBeanList3.add(updateImageBean);
+                            if (uploadAImages.get(i).getImageUrl() != null && uploadAImages.get(i).getImageUrl().contains("http://")) {
+                                UpdateImageBean updateImageBean = new UpdateImageBean();
+                                updateImageBean.setIMG_URL(uploadAImages.get(i).getImageUrl());
+                                updateImageBean.setPATIENT_IMAGE_NODE("0");
+                                updateImageBeanList3.add(updateImageBean);
+                            } else {
+                                UpdateImageBean updateImageBean = new UpdateImageBean();
+                                updateImageBean.setIMG_URL(uploadAImages.get(i).getAllfilePath());
+                                updateImageBean.setMENU_CATALOGUES(uploadAImages.get(i).getCatalogues());
+                                updateImageBean.setPATIENT_IMAGE_NODE("0");
+                                updateImageBeanList3.add(updateImageBean);
+                            }
                         }
-                        Log.e("ImageSelector", "is2 " + updateImageBeanList2.size());
                         saveImagesData(imageSelector, updateImageBeanList3);
                     } else if (imageSelector == mDataBinding.is3) {
                         updateImageBeanList4.clear();
                         for (int i = 0; i < uploadAImages.size(); i++) {
-                            UpdateImageBean updateImageBean = new UpdateImageBean();
-                            updateImageBean.setIMG_URL(uploadAImages.get(i).getAllfilePath());
-                            updateImageBean.setMENU_CATALOGUES(uploadAImages.get(i).getCatalogues());
-                            updateImageBean.setPATIENT_IMAGE_NODE("0");
-                            updateImageBeanList4.add(updateImageBean);
+                            if (uploadAImages.get(i).getImageUrl() != null && uploadAImages.get(i).getImageUrl().contains("http://")) {
+                                UpdateImageBean updateImageBean = new UpdateImageBean();
+                                updateImageBean.setIMG_URL(uploadAImages.get(i).getImageUrl());
+                                updateImageBean.setPATIENT_IMAGE_NODE("0");
+                                updateImageBeanList4.add(updateImageBean);
+                            } else {
+                                UpdateImageBean updateImageBean = new UpdateImageBean();
+                                updateImageBean.setIMG_URL(uploadAImages.get(i).getAllfilePath());
+                                updateImageBean.setMENU_CATALOGUES(uploadAImages.get(i).getCatalogues());
+                                updateImageBean.setPATIENT_IMAGE_NODE("0");
+                                updateImageBeanList4.add(updateImageBean);
+                            }
                         }
-                        Log.e("ImageSelector", "is3 " + updateImageBeanList2.size());
                         saveImagesData(imageSelector, updateImageBeanList4);
                     }
                 } else {
@@ -506,6 +631,7 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
         if (imageSelector == mDataBinding.is1) {//财产
             LesseeBean.WBankleaseFileListBean wBankleaseFileListBean = new LesseeBean.WBankleaseFileListBean();
             wBankleaseFileListBean.setType(1);
+            wBankleaseFileListBean.setState(3);
             wBankleaseFileListBean.setFileType("5");
             wBankleaseFileListBean.setFileUrl(updateImageBeanList.get(0).getIMG_URL());
             itemsBeans.add(wBankleaseFileListBean);
@@ -522,9 +648,11 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
         } else if (imageSelector == mDataBinding.is2) {//物产
             LesseeBean.WBankleaseFileListBean wBankleaseFileListBean = new LesseeBean.WBankleaseFileListBean();
             wBankleaseFileListBean.setType(1);
+            wBankleaseFileListBean.setState(4);
             wBankleaseFileListBean.setFileType("3");
             wBankleaseFileListBean.setFileUrl(updateImageBeanList.get(0).getIMG_URL());
             itemsBeans.add(wBankleaseFileListBean);
+            Log.e("saveImagesData", "itemsBeans " + itemsBeans.size());
             if (mDataBinding.is3.getUploadImageList().size() > 0) {
                 doUploadAImagesAction(mDataBinding.is3);
             } else {
@@ -535,6 +663,7 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
         } else if (imageSelector == mDataBinding.is3) {//征信
             LesseeBean.WBankleaseFileListBean wBankleaseFileListBean = new LesseeBean.WBankleaseFileListBean();
             wBankleaseFileListBean.setType(1);
+            wBankleaseFileListBean.setState(5);
             wBankleaseFileListBean.setFileType("7");
             wBankleaseFileListBean.setFileUrl(updateImageBeanList.get(0).getIMG_URL());
             itemsBeans.add(wBankleaseFileListBean);
@@ -548,7 +677,7 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
      * 提交 lease/create
      */
     private void createLessee() {
-        if (getContext() != null) {
+        if (getContext() != null && isUpdateResult) {
             showDialog();
             Map<String, Object> map = new TreeMap<String, Object>();
             map.put("wBankLeaseFileList", JSON.toJSONString(lesseeBean.getWBankleaseFileList()));

@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jhhscm.platform.fragment.Mechanics.bean.GetGoodsPageListBean;
 import com.jhhscm.platform.fragment.home.HomePageItem;
+import com.jhhscm.platform.fragment.lessee.LesseeBean;
 import com.jhhscm.platform.http.bean.UserSession;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class ConfigUtils {
     private static final String UPDATA_URL = "updata_url";//更新下载安装包地址
     private static final String SEARCH_HISTORY = "search_history";
     private static final String COUPON_NO_SEE_DATA = "COUPON_NO_SEE_DATA";
+    private static final String LESSEE_DATA = "LESSEE_DATA";//融资信息提交缓存
     private static List<String> couponList;//缓存不提示优惠券
     private static List<String> searchList;//缓存搜索历史
     private static String url; //缓存版本更新地址
@@ -40,13 +42,14 @@ public class ConfigUtils {
     private static UserSession mCurrentUser;//用户信息缓存
     private static GetGoodsPageListBean dataBean;//新机浏览历史；最多只存5个
     private static HomePageItem homePageItem;//首页缓存数据
+    private static LesseeBean lesseeBean; //融资信息提交缓存
 
     private static SharedPreferences getSharedPreferences(Context context) {
         return getSharedPreferences(context, PREFERENCE_NAME);
     }
 
     private static SharedPreferences getSharedPreferences(Context context, String fileName) {
-        return context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
+        return context.getSharedPreferences(fileName, Context.MODE_PRIVATE); // MODE_PRIVATE   MODE_MULTI_PROCESS
     }
 
     public static boolean getIsLaunch(Context context) {
@@ -297,4 +300,30 @@ public class ConfigUtils {
         return getSharedPreferences(context, COOKIES).getString(HTTP_HEADERS_COOKIE, "");
     }
 
+    public static void setLesseeData(Context context, LesseeBean user) {
+        removeLesseeData(context);
+        Gson gson = new Gson();
+        String userJson = gson.toJson(user);
+        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
+        edit.putString(LESSEE_DATA, userJson);
+        edit.commit();
+    }
+
+    public static void removeLesseeData(Context context) {
+        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
+        edit.remove(LESSEE_DATA);
+        edit.commit();
+        lesseeBean = null;
+    }
+
+    public synchronized static LesseeBean getLesseeData(Context context) {
+        if (lesseeBean == null) {
+            String userJson = getSharedPreferences(context).getString(LESSEE_DATA, "");
+            if (!TextUtils.isEmpty(userJson)) {
+                Gson gson = new Gson();
+                lesseeBean = gson.fromJson(userJson, LesseeBean.class);
+            }
+        }
+        return lesseeBean;
+    }
 }

@@ -73,6 +73,7 @@ public class LesseeBean implements Serializable {
         private String aName;
         private String name;
         private int sex;
+        private String sex_str;
         private String idCard;
         private String idCardAddress;
         private String phone;
@@ -81,12 +82,29 @@ public class LesseeBean implements Serializable {
         private String company;
         private String companyAddress;
         private int marryType;
+        private String marryType_str;
         private String spouseName;
         private String spouseCard;
         private String spousePhone;
         private String spouseCompany;
         private String spouseCompanyAddress;
         private String userCode;
+
+        public String getSex_str() {
+            return sex_str;
+        }
+
+        public void setSex_str(String sex_str) {
+            this.sex_str = sex_str;
+        }
+
+        public String getMarryType_str() {
+            return marryType_str;
+        }
+
+        public void setMarryType_str(String marryType_str) {
+            this.marryType_str = marryType_str;
+        }
 
         public String getUserCode() {
             return userCode;
@@ -238,11 +256,21 @@ public class LesseeBean implements Serializable {
          * type : 0
          * fileType : 1
          * fileUrl : 123
+         * state : 位置 身份证人像1；身份证国徽2；财产 3；物产 4 ；征信 5
          */
 
         private int type;
+        private int state;
         private String fileType;
         private String fileUrl;
+
+        public int getState() {
+            return state;
+        }
+
+        public void setState(int state) {
+            this.state = state;
+        }
 
         public int getType() {
             return type;

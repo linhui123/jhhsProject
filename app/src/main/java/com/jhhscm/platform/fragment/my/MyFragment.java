@@ -152,6 +152,7 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                                         userSession.setIs_bus(response.body().getData().getResult().getIs_bus());
                                         userSession.setUser_level(response.body().getData().getResult().getUser_level());
                                         ConfigUtils.setCurrentUser(getContext(), userSession);
+                                        mDataBinding.tvMember.setVisibility(View.VISIBLE);
                                         if ("1".equals(userCenterBean.getResult().getUser_level())) {
                                             mDataBinding.tvMember.setText("高级会员");
                                             Drawable drawable = getContext().getResources().getDrawable(R.mipmap.ic_member_ii);
@@ -650,6 +651,7 @@ public class MyFragment extends AbsFragment<FragmentMyBinding> {
                 mDataBinding.tvCer.setText("未认证");
                 mDataBinding.tvCerGo.setText("未认证");
             }
+            mDataBinding.tvMember.setVisibility(View.VISIBLE);
             if ("1".equals(ConfigUtils.getCurrentUser(getContext()).getUser_level())) {
                 mDataBinding.tvMember.setText("高级会员");
                 Drawable drawable = getContext().getResources().getDrawable(R.mipmap.ic_member_ii);

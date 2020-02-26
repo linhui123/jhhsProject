@@ -1,5 +1,6 @@
 package com.jhhscm.platform.fragment.lessee;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,6 @@ import java.util.List;
 public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
     private LesseeBean lesseeBean;
     private LesseeBean.WBankLeasePersonBean personBean;
-    //    private LesseeBean.WBankLeaseSuretyBean suretyBean;
     private FindGoodsOwnerBean.DataBean dataBean;
     private String province, city;
 
@@ -53,60 +53,15 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
         dataBean = (FindGoodsOwnerBean.DataBean) getArguments().getSerializable("data");
         lesseeBean = new LesseeBean();
         personBean = new LesseeBean.WBankLeasePersonBean();
-//        suretyBean = new LesseeBean.WBankLeaseSuretyBean();
         mDataBinding.tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mDataBinding.etName.getText().toString().trim().length() > 0) {
-                    personBean.setName(mDataBinding.etName.getText().toString().trim());
-                    if (mDataBinding.tvSex.getText().toString().trim().length() > 0) {
-                        if (mDataBinding.etId.getText().toString().trim().length() > 0) {
-                            if (IDCard.IDCardValidate(mDataBinding.etId.getText().toString().trim())) {
-                                personBean.setIdCard(mDataBinding.etId.getText().toString().trim());
-                                if (mDataBinding.tvMarray.getText().toString().trim().length() > 0) {
-                                    if (mDataBinding.etPhone.getText().toString().trim().length() > 0) {
-                                        if (UdaUtils.isMobile(mDataBinding.etPhone.getText().toString().trim())) {
-                                            personBean.setPhone(mDataBinding.etPhone.getText().toString().trim());
-                                            if (mDataBinding.etAddress.getText().toString().trim().length() > 0) {
-                                                personBean.setIdCardAddress(mDataBinding.etAddress.getText().toString().trim());
-                                                personBean.setUserCode(ConfigUtils.getCurrentUser(getContext()).getUserCode());
-                                                lesseeBean.setWBankLeasePerson(personBean);
-//                                                personBean.setaName(mDataBinding.etEmergency.getText().toString().trim());
-//                                                personBean.setaPhone(mDataBinding.etEmergencyPhone.getText().toString().trim());
-//                                                suretyBean.setM1(mDataBinding.etEmergency.getText().toString().trim());
-//                                                suretyBean.setM2(mDataBinding.etEmergencyPhone.getText().toString().trim());
-//                                                suretyBean.setName(mDataBinding.etGuarantee.getText().toString().trim());
-//                                                suretyBean.setIdCard(mDataBinding.etGuaranteeId.getText().toString().trim());
-//                                                suretyBean.setPhone(mDataBinding.etGuaranteePhone.getText().toString().trim());
-//                                                lesseeBean.setwBankLeaseSurety(suretyBean);
-                                                if (dataBean != null) {
-                                                    Lessee2Activity.start(getContext(), lesseeBean, dataBean);
-                                                } else {
-                                                    Lessee2Activity.start(getContext(), lesseeBean);
-                                                }
-                                            } else {
-                                                ToastUtil.show(getActivity(), "通讯地址不能为空");
-                                            }
-                                        } else {
-                                            ToastUtil.show(getActivity(), "手机号格式错误");
-                                        }
-                                    } else {
-                                        ToastUtil.show(getActivity(), "手机号不能为空");
-                                    }
-                                } else {
-                                    ToastUtil.show(getActivity(), "婚姻情况不能为空");
-                                }
-                            } else {
-                                ToastUtil.show(getActivity(), "身份证号格式错误");
-                            }
-                        } else {
-                            ToastUtil.show(getActivity(), "身份证号不能为空");
-                        }
+                if (isFull()) {
+                    if (dataBean != null) {
+                        Lessee2Activity.start(getContext(), lesseeBean, dataBean);
                     } else {
-                        ToastUtil.show(getActivity(), "性别不能为空");
+                        Lessee2Activity.start(getContext(), lesseeBean);
                     }
-                } else {
-                    ToastUtil.show(getActivity(), "姓名不能为空");
                 }
             }
         });
@@ -122,6 +77,7 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
                     public void clickResult(String id, String Nmae) {
                         mDataBinding.tvSex.setText(Nmae);
                         personBean.setSex(Integer.parseInt(id));
+                        personBean.setSex_str(Nmae);
                     }
                 }).show();
             }
@@ -139,6 +95,7 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
                     public void clickResult(String id, String Nmae) {
                         mDataBinding.tvMarray.setText(Nmae);
                         personBean.setMarryType(Integer.parseInt(id));
+                        personBean.setMarryType_str(Nmae);
                     }
                 }).show();
             }
@@ -151,23 +108,44 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
                     @Override
                     public void clickResult(String pid, String pNmae, String cityId, String cName, String countryID, String countryName) {
                         mDataBinding.etAddress.setText(pNmae + " " + cName + " " + countryName);
+                        personBean.setIdCardAddress(pNmae + " " + cName + " " + countryName);
                         province = pid;
                         city = cityId;
                     }
                 }).show();
             }
         });
+    }
 
-        if (BuildConfig.DEBUG) {//测试数据
-            mDataBinding.etName.setText("cl");
-            mDataBinding.etId.setText("350181199304061596");
-            mDataBinding.etPhone.setText("18030129696");
-//            mDataBinding.etEmergency.setText("111");
-//            mDataBinding.etEmergencyPhone.setText("111");
-//            mDataBinding.etGuarantee.setText("111");
-//            mDataBinding.etGuaranteeId.setText("111");
-//            mDataBinding.etGuaranteePhone.setText("111");
+    @Override
+    public void onResume() {
+        super.onResume();
+        //判断是否从我的设备进来；判断草稿箱是否有内容
+        if (ConfigUtils.getLesseeData(getContext()) != null
+                && ConfigUtils.getLesseeData(getContext()).getWBankLeasePerson() != null
+                && dataBean == null) {
+            personBean = ConfigUtils.getLesseeData(getContext()).getWBankLeasePerson();
+            lesseeBean = ConfigUtils.getLesseeData(getContext());
+            initData();
+        } else {
+            if (BuildConfig.DEBUG) {//测试数据
+                mDataBinding.etName.setText("cl");
+                mDataBinding.etId.setText("350181199304061596");
+                mDataBinding.etPhone.setText("18030129696");
+            }
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        personBean.setName(mDataBinding.etName.getText().toString().trim());
+        personBean.setIdCard(mDataBinding.etId.getText().toString().trim());
+        personBean.setPhone(mDataBinding.etPhone.getText().toString().trim());
+        personBean.setIdCardAddress(mDataBinding.etAddress.getText().toString().trim());
+        personBean.setUserCode(ConfigUtils.getCurrentUser(getContext()).getUserCode());
+        lesseeBean.setWBankLeasePerson(personBean);
+        ConfigUtils.setLesseeData(getContext(), lesseeBean);
     }
 
     public void onEvent(LesseeFinishEvent event) {
@@ -178,5 +156,57 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
     public void onDestroy() {
         super.onDestroy();
         EventBusUtil.unregisterEvent(this);
+    }
+
+    private void initData() {
+        mDataBinding.etPhone.setText(personBean.getPhone());
+        mDataBinding.etId.setText(personBean.getIdCard());
+        mDataBinding.etName.setText(personBean.getName());
+        mDataBinding.etAddress.setText(personBean.getIdCardAddress());
+        mDataBinding.tvSex.setText(personBean.getSex_str());
+        mDataBinding.tvMarray.setText(personBean.getMarryType_str());
+    }
+
+    private boolean isFull() {
+        if (mDataBinding.etName.getText().toString().trim().length() > 0) {
+            personBean.setName(mDataBinding.etName.getText().toString().trim());
+            if (mDataBinding.tvSex.getText().toString().trim().length() > 0) {
+                if (mDataBinding.etId.getText().toString().trim().length() > 0) {
+                    if (IDCard.IDCardValidate(mDataBinding.etId.getText().toString().trim())) {
+                        personBean.setIdCard(mDataBinding.etId.getText().toString().trim());
+                        if (mDataBinding.tvMarray.getText().toString().trim().length() > 0) {
+                            if (mDataBinding.etPhone.getText().toString().trim().length() > 0) {
+                                if (UdaUtils.isMobile(mDataBinding.etPhone.getText().toString().trim())) {
+                                    personBean.setPhone(mDataBinding.etPhone.getText().toString().trim());
+                                    if (mDataBinding.etAddress.getText().toString().trim().length() > 0) {
+                                        personBean.setIdCardAddress(mDataBinding.etAddress.getText().toString().trim());
+                                        personBean.setUserCode(ConfigUtils.getCurrentUser(getContext()).getUserCode());
+                                        lesseeBean.setWBankLeasePerson(personBean);
+                                        return true;
+                                    } else {
+                                        ToastUtil.show(getActivity(), "通讯地址不能为空");
+                                    }
+                                } else {
+                                    ToastUtil.show(getActivity(), "手机号格式错误");
+                                }
+                            } else {
+                                ToastUtil.show(getActivity(), "手机号不能为空");
+                            }
+                        } else {
+                            ToastUtil.show(getActivity(), "婚姻情况不能为空");
+                        }
+                    } else {
+                        ToastUtil.show(getActivity(), "身份证号格式错误");
+                    }
+                } else {
+                    ToastUtil.show(getActivity(), "身份证号不能为空");
+                }
+            } else {
+                ToastUtil.show(getActivity(), "性别不能为空");
+            }
+        } else {
+            ToastUtil.show(getActivity(), "姓名不能为空");
+        }
+        return false;
     }
 }
