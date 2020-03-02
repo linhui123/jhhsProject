@@ -64,6 +64,7 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
     private String id;
     private InnerAdapter mAdapter;
     private LesseeBean lesseeBean;
+    private LesseeBean lessee;
     private List<LesseeBean.WBankLeaseItemsBean> itemsBeans;
     private List<ImageSelector> imageSelectors;
 
@@ -161,8 +162,11 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
     @Override
     public void onPause() {
         super.onPause();
-        lesseeBean.setWBankLeaseItems(itemsBeans);
-        ConfigUtils.setLesseeData(getContext(), lesseeBean);
+        if (ConfigUtils.getLesseeData(getContext()) != null) {
+            lessee = ConfigUtils.getLesseeData(getContext());
+            lessee.setWBankLeaseItems(itemsBeans);
+            ConfigUtils.setLesseeData(getContext(), lessee);
+        }
     }
 
     @Override

@@ -29,6 +29,7 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
     private LesseeBean.WBankLeasePersonBean personBean;
     private FindGoodsOwnerBean.DataBean dataBean;
     private String province, city;
+    private LesseeBean lessee;
 
     public static Lessee1Fragment instance() {
         Lessee1Fragment view = new Lessee1Fragment();
@@ -139,13 +140,16 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
     @Override
     public void onPause() {
         super.onPause();
-        personBean.setName(mDataBinding.etName.getText().toString().trim());
-        personBean.setIdCard(mDataBinding.etId.getText().toString().trim());
-        personBean.setPhone(mDataBinding.etPhone.getText().toString().trim());
-        personBean.setIdCardAddress(mDataBinding.etAddress.getText().toString().trim());
-        personBean.setUserCode(ConfigUtils.getCurrentUser(getContext()).getUserCode());
-        lesseeBean.setWBankLeasePerson(personBean);
-        ConfigUtils.setLesseeData(getContext(), lesseeBean);
+        if (ConfigUtils.getLesseeData(getContext()) != null) {
+            lessee = ConfigUtils.getLesseeData(getContext());
+            personBean.setName(mDataBinding.etName.getText().toString().trim());
+            personBean.setIdCard(mDataBinding.etId.getText().toString().trim());
+            personBean.setPhone(mDataBinding.etPhone.getText().toString().trim());
+            personBean.setIdCardAddress(mDataBinding.etAddress.getText().toString().trim());
+            personBean.setUserCode(ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            lessee.setWBankLeasePerson(personBean);
+            ConfigUtils.setLesseeData(getContext(), lessee);
+        }
     }
 
     public void onEvent(LesseeFinishEvent event) {

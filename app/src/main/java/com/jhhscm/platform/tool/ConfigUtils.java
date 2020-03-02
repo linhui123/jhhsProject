@@ -316,7 +316,7 @@ public class ConfigUtils {
         lesseeBean = null;
     }
 
-    public synchronized static LesseeBean getLesseeData(Context context) {
+    public static LesseeBean getLesseeData(Context context) {
         if (lesseeBean == null) {
             String userJson = getSharedPreferences(context).getString(LESSEE_DATA, "");
             if (!TextUtils.isEmpty(userJson)) {

@@ -52,6 +52,7 @@ import top.zibin.luban.Luban;
 
 public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
     private LesseeBean lesseeBean;
+    private LesseeBean lessee;
     private List<LesseeBean.WBankleaseFileListBean> itemsBeans;
     private LesseeBean.WBankLeaseSuretyBean suretyBean;
     private boolean isUpdateResult;//是否提交完整信息；false 只上传图片，不提交全信息
@@ -103,12 +104,10 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
     public void onResume() {
         super.onResume();
         //判断是否从我的设备进来；判断草稿箱是否有内容
-        if (ConfigUtils.getLesseeData(getContext()) != null
-                && ConfigUtils.getLesseeData(getContext()).getwBankLeaseSurety() != null
-                && ConfigUtils.getLesseeData(getContext()).getWBankleaseFileList() != null) {
-            suretyBean = ConfigUtils.getLesseeData(getContext()).getwBankLeaseSurety();
-            itemsBeans = ConfigUtils.getLesseeData(getContext()).getWBankleaseFileList();
+        if (ConfigUtils.getLesseeData(getContext()) != null) {
             lesseeBean = ConfigUtils.getLesseeData(getContext());
+            suretyBean = lesseeBean.getwBankLeaseSurety();
+            itemsBeans = lesseeBean.getWBankleaseFileList();
             initData();
         } else {
             if (BuildConfig.DEBUG) {//测试数据
@@ -171,17 +170,17 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
     @Override
     public void onPause() {
         super.onPause();
-        Log.e("onPause1", "itemsBeans " + itemsBeans.size());
-        suretyBean.setPhone(mDataBinding.etGuaranteePhone.getText().toString().trim());
-        suretyBean.setName(mDataBinding.etGuarantee.getText().toString().trim());
-        suretyBean.setIdCard(mDataBinding.etGuaranteeId.getText().toString().trim());
-        suretyBean.setM1(mDataBinding.etEmergency.getText().toString().trim());
-        suretyBean.setM2(mDataBinding.etEmergencyPhone.getText().toString().trim());
-        lesseeBean.setwBankLeaseSurety(suretyBean);
-        lesseeBean.setWBankleaseFileList(itemsBeans);
-        ConfigUtils.setLesseeData(getActivity(), lesseeBean);
-//        lesseeBean.setWBankleaseFileList(itemsBeans);
-//        ConfigUtils.setLesseeData(getContext(), lesseeBean);
+        if (ConfigUtils.getLesseeData(getContext()) != null) {
+            lessee = ConfigUtils.getLesseeData(getContext());
+            suretyBean.setPhone(mDataBinding.etGuaranteePhone.getText().toString().trim());
+            suretyBean.setName(mDataBinding.etGuarantee.getText().toString().trim());
+            suretyBean.setIdCard(mDataBinding.etGuaranteeId.getText().toString().trim());
+            suretyBean.setM1(mDataBinding.etEmergency.getText().toString().trim());
+            suretyBean.setM2(mDataBinding.etEmergencyPhone.getText().toString().trim());
+            lesseeBean.setwBankLeaseSurety(suretyBean);
+            lesseeBean.setWBankleaseFileList(itemsBeans);
+            ConfigUtils.setLesseeData(getContext(), lessee);
+        }
     }
 
     @Override
