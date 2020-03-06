@@ -63,11 +63,14 @@ public class AboutFragment extends AbsFragment<FragmentAboutBinding> {
         if (BuildConfig.DEBUG) {
             mDataBinding.llTest.setVisibility(View.VISIBLE);
             if (MyApplication.getBaseUrl().length() > 0) {
-                mDataBinding.http.setText("当前地址：" + MyApplication.getBaseUrl());
+                mDataBinding.http.setText("当前api地址：" + MyApplication.getBaseUrl());
             } else {
-                mDataBinding.http.setText("当前地址：" + ApiServiceModule.BASE_URL5);
+                mDataBinding.http.setText("当前api地址：" + ApiServiceModule.BASE_URL5);
             }
-
+            if (MyApplication.getBaseWebUrl().length() > 0) {
+                mDataBinding.http.append("\n当前web地址：" + MyApplication.getBaseWebUrl());
+                mDataBinding.etWeb.setText(MyApplication.getBaseWebUrl());
+            }
             mDataBinding.etHttp.setText(ApiServiceModule.BASE_URL3);
             mDataBinding.confirm1.setOnClickListener(new View.OnClickListener() {
                 @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
@@ -76,14 +79,6 @@ public class AboutFragment extends AbsFragment<FragmentAboutBinding> {
                     if (mDataBinding.etHttp.getText().toString().length() > 0) {
                         String http = mDataBinding.etHttp.getText().toString();
                         ConfigUtils.setApiUrl(getContext(), http);
-//                        Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage(getContext().getPackageName());
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                        intent.putExtra("REBOOT", "reboot");
-//                        startActivity(intent);
-                        //                        System.exit(0);
-//                        EventBusUtil.post(new FinishEvent());
-//                        EventBusUtil.post(new ForceCloseEvent());
-//                        getActivity().finish();
                         ToastUtil.show(getContext(), "设置成功，请重启应用");
                     } else {
                         ToastUtil.show(getContext(), "请输入完整信息");
@@ -96,14 +91,19 @@ public class AboutFragment extends AbsFragment<FragmentAboutBinding> {
                 public void onClick(View v) {
                     ConfigUtils.setApiUrl(getContext(), ApiServiceModule.BASE_URL5);
                     ToastUtil.show(getContext(), "设置成功，请重启应用");
-//                    EventBusUtil.post(new FinishEvent());
-//                    EventBusUtil.post(new ForceCloseEvent());
-//                    getActivity().finish();
-//                    Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage(getContext().getPackageName());
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    intent.putExtra("REBOOT", "reboot");
-//                    startActivity(intent);
-//                    System.exit(0);
+                }
+            });
+
+            mDataBinding.confirmWeb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mDataBinding.etWeb.getText().toString().length() > 0) {
+                        String http = mDataBinding.etWeb.getText().toString();
+                        ConfigUtils.setWebUrl(getContext(), http);
+                        ToastUtil.show(getContext(), "设置成功，请清除缓存后，重启应用");
+                    } else {
+                        ToastUtil.show(getContext(), "请输入完整信息");
+                    }
                 }
             });
         } else {

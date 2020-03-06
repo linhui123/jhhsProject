@@ -1,5 +1,7 @@
 package com.jhhscm.platform.tool;
 
+import com.jhhscm.platform.MyApplication;
+
 /**
  * Created by Administrator on 2019/3/1/001.
  */
@@ -7,9 +9,9 @@ package com.jhhscm.platform.tool;
 public class UrlUtils {
 
     //        private static String BASE_URL = "http://192.168.0.235:8080/#/";//测试专用
-    private static String BASE_URL = "http://api.jhhscm.cn:9095/#/";//线上
-
-
+//    private static String BASE_URL = "http://api.jhhscm.cn:9095/#/";//线上
+    //http://120.76.101.183:9098
+    private static String BASE_URL = MyApplication.getBaseWebUrl();
     //新机详情   http://192.168.0.234:8080/#/product/productDetail?good_code=1
     public static String XJXQ = BASE_URL + "product/productDetail?isShowGetPhone=1";
     //二手机详情  http://192.168.0.234:8080/#/product/oldProductDetail?good_code=8

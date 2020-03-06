@@ -25,6 +25,7 @@ public class ConfigUtils {
     private static final String COOKIES = "cookies";
     private static final String IS_LAUNCH = "is_launch";
     private static final String API_URL = "api_url";
+    private static final String WEB_URL = "web_url";
     private static final String NEW_MECHANICS = "newMechanics";
     private static final String HOME = "home";
     private static final String P_Time = "p_time";//首页权限提示时间
@@ -222,6 +223,23 @@ public class ConfigUtils {
     public static void removeApiUrl(Context context) {
         SharedPreferences.Editor edit = getSharedPreferences(context).edit();
         edit.remove(API_URL);
+        edit.commit();
+    }
+
+    public static void setWebUrl(Context context, String apiUrl) {
+        removeApiUrl(context);
+        SharedPreferences.Editor edit = getSharedPreferences(context, SYSTEM_CONFIG).edit();
+        edit.putString(WEB_URL, apiUrl);
+        edit.commit();
+    }
+
+    public static String getWebUrl(Context context) {
+        return getSharedPreferences(context, SYSTEM_CONFIG).getString(WEB_URL, "");
+    }
+
+    public static void removeWebUrl(Context context) {
+        SharedPreferences.Editor edit = getSharedPreferences(context).edit();
+        edit.remove(WEB_URL);
         edit.commit();
     }
 

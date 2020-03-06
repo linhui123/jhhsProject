@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/name"
                     android:gravity="center_vertical"
-                    android:text="修改ip地址: "
+                    android:text="修改api地址: "
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -108,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/name"
                     android:gravity="center_vertical"
-                    android:text="正式地址：http://api.jhhscm.cn/wajueji/v1-0/ "
+                    android:text="修改为正式地址：http://api.jhhscm.cn/wajueji/v1-0/ "
                     android:textColor="@color/acc3"
                     android:textSize="@dimen/text_size_16" />
 
@@ -116,6 +116,42 @@
 
             <TextView
                 android:id="@+id/confirm_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_10"
+                android:background="@drawable/button_c397"
+                android:padding="@dimen/padding_10"
+                android:text="确认"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_16" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:layout_gravity="left"
+                android:layout_marginTop="@dimen/padding_10"
+                android:text="修改web地址:\n（线上 http://api.jhhscm.cn:9095/#/）"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_16" />
+
+            <EditText
+                android:id="@+id/et_web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_10"
+                android:layout_marginRight="@dimen/padding_10"
+                android:background="@drawable/edit_bg_acc9"
+                android:hint="修改web地址"
+                android:lineSpacingMultiplier="1.2"
+                android:minLines="2"
+                android:padding="@dimen/dp_5"
+                android:textColor="@color/acc3"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/confirm_web"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_10"

@@ -65,11 +65,6 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
             showDialog();
             DataCleanManager.getTotalCacheSize(getContext());
             mDataBinding.tvCache.setText(DataCleanManager.getTotalCacheSize(getContext()));
-            ConfigUtils.removeCoupon(getContext());
-            ConfigUtils.removePTime(getContext());
-            ConfigUtils.removeUpdataTime(getContext());
-            ConfigUtils.removeNewMechanics(getContext());
-            ConfigUtils.removeUpdataUrl(getContext());
         } catch (Exception e) {
             e.printStackTrace();
             mDataBinding.tvCache.setText("0.0M");
@@ -89,6 +84,11 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
             public void onClick(View v) {
                 try {
                     DataCleanManager.clearAllCache(getContext());
+                    ConfigUtils.removeCoupon(getContext());
+                    ConfigUtils.removePTime(getContext());
+                    ConfigUtils.removeUpdataTime(getContext());
+                    ConfigUtils.removeNewMechanics(getContext());
+                    ConfigUtils.removeUpdataUrl(getContext());
                     mDataBinding.tvCache.setText("0.0M");
                 } catch (Exception e) {
                     e.printStackTrace();

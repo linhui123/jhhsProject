@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.jhhscm.platform.jpush.MyReceiver;
 import com.jhhscm.platform.tool.ConfigUtils;
+import com.jhhscm.platform.tool.UrlUtils;
 import com.jhhscm.platform.views.AuthImageDownloader;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -38,6 +39,7 @@ public class MyApplication extends Application {
     private static final String TAG = "JIGUANG-Example";
     public IWXAPI api;
     private static String BASE_URL = "";
+    private static String BASE_WEB_URL = "";
     private double gaodeLat;
     private double gaodeLon;
 
@@ -83,6 +85,13 @@ public class MyApplication extends Application {
 
         Log.e("http", "http : " + ConfigUtils.getApiUrl(getInstance().getApplicationContext()));
         BASE_URL = ConfigUtils.getApiUrl(getInstance().getApplicationContext());
+        if (ConfigUtils.getWebUrl(getInstance().getApplicationContext()) != null
+                && ConfigUtils.getWebUrl(getInstance().getApplicationContext()).length() > 0) {
+            BASE_WEB_URL = ConfigUtils.getWebUrl(getInstance().getApplicationContext());
+        } else {
+            BASE_WEB_URL = "http://api.jhhscm.cn:9095/#/";
+        }
+
 //        if (ConfigUtils.getApiUrl(getInstance().getApplicationContext()) != null
 //                && ConfigUtils.getApiUrl(getInstance().getApplicationContext()).length() > 0) {
 //            BASE_URL = ConfigUtils.getApiUrl(getInstance().getApplicationContext());
@@ -177,6 +186,14 @@ public class MyApplication extends Application {
 
     public static void setBaseUrl(String baseUrl) {
         BASE_URL = baseUrl;
+    }
+
+    public static String getBaseWebUrl() {
+        return BASE_WEB_URL;
+    }
+
+    public static void setBaseWebUrl(String baseWebUrl) {
+        BASE_WEB_URL = baseWebUrl;
     }
 
     public double getGaodeLat() {
