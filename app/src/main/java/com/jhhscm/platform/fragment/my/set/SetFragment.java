@@ -17,6 +17,8 @@ import com.jhhscm.platform.activity.FeedbackActivity;
 import com.jhhscm.platform.activity.LoginActivity;
 import com.jhhscm.platform.activity.ReceiveAddressActivity;
 import com.jhhscm.platform.databinding.FragmentSetBinding;
+import com.jhhscm.platform.event.FinishEvent;
+import com.jhhscm.platform.event.LesseeFinishEvent;
 import com.jhhscm.platform.event.LoginOutEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.http.AHttpService;
@@ -34,6 +36,7 @@ import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
 import com.jhhscm.platform.views.dialog.LoginOutDialog;
+import com.jhhscm.platform.views.dialog.OrderSuccessDialog;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 
@@ -57,6 +60,7 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
 
     @Override
     protected void setupViews() {
+        EventBusUtil.registerEvent(this);
         try {
             showDialog();
             DataCleanManager.getTotalCacheSize(getContext());
@@ -205,5 +209,15 @@ public class SetFragment extends AbsFragment<FragmentSetBinding> {
                         }
                     }));
         }
+    }
+
+    public void onEvent(FinishEvent event) {
+        getActivity().finish();
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBusUtil.unregisterEvent(this);
+        super.onDestroy();
     }
 }

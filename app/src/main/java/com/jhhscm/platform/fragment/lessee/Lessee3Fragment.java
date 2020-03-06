@@ -126,46 +126,47 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
         mDataBinding.etGuarantee.setText(suretyBean.getName());
         mDataBinding.etGuaranteeId.setText(suretyBean.getIdCard());
         mDataBinding.etGuaranteePhone.setText(suretyBean.getPhone());
-        List<PbImage> items1 = new ArrayList<>();
-        List<PbImage> items2 = new ArrayList<>();
-        List<PbImage> items3 = new ArrayList<>();
-        Log.e("initData", "itemsBeans " + itemsBeans.size());
-        for (LesseeBean.WBankleaseFileListBean image : itemsBeans) {
-            if (image.getState() == 1) {
-                List<PbImage> items = new ArrayList<>();
-                PbImage pbImage = new PbImage();
-                pbImage.setmUrl(image.getFileUrl());
-                pbImage.setmToken(image.getFileUrl());
-                items.add(pbImage);
-                mDataBinding.isFace.setPbImageList(items);
-            } else if (image.getState() == 2) {
-                List<PbImage> items = new ArrayList<>();
-                PbImage pbImage = new PbImage();
-                pbImage.setmUrl(image.getFileUrl());
-                pbImage.setmToken(image.getFileUrl());
-                items.add(pbImage);
-                mDataBinding.isGuohui.setPbImageList(items);
-            } else if (image.getState() == 3) {
-                PbImage pbImage = new PbImage();
-                pbImage.setmUrl(image.getFileUrl());
-                pbImage.setmToken(image.getFileUrl());
-                items1.add(pbImage);
-                mDataBinding.is1.setPbImageList(items1);
-            } else if (image.getState() == 4) {
-                PbImage pbImage = new PbImage();
-                pbImage.setmUrl(image.getFileUrl());
-                pbImage.setmToken(image.getFileUrl());
-                items2.add(pbImage);
-                mDataBinding.is2.setPbImageList(items2);
-            } else if (image.getState() == 5) {
-                PbImage pbImage = new PbImage();
-                pbImage.setmUrl(image.getFileUrl());
-                pbImage.setmToken(image.getFileUrl());
-                items3.add(pbImage);
-                mDataBinding.is3.setPbImageList(items3);
-            }
-        }
-    }
+//        List<PbImage> items1 = new ArrayList<>();
+//        List<PbImage> items2 = new ArrayList<>();
+//        List<PbImage> items3 = new ArrayList<>();
+//        Log.e("initData", "itemsBeans " + itemsBeans.size());
+//        for (LesseeBean.WBankleaseFileListBean image : itemsBeans) {
+//            if (image.getState() == 1) {
+//                List<PbImage> items = new ArrayList<>();
+//                PbImage pbImage = new PbImage();
+//                pbImage.setmUrl(image.getFileUrl());
+//                pbImage.setmToken(image.getFileUrl());
+//                items.add(pbImage);
+//                mDataBinding.isFace.setPbImageList(items);
+//            } else if (image.getState() == 2) {
+//                List<PbImage> items = new ArrayList<>();
+//                PbImage pbImage = new PbImage();
+//                pbImage.setmUrl(image.getFileUrl());
+//                pbImage.setmToken(image.getFileUrl());
+//                items.add(pbImage);
+//                mDataBinding.isGuohui.setPbImageList(items);
+//            } else if (image.getState() == 3) {
+//                PbImage pbImage = new PbImage();
+//                pbImage.setmUrl(image.getFileUrl());
+//                pbImage.setmToken(image.getFileUrl());
+//                items1.add(pbImage);
+//                mDataBinding.is1.setPbImageList(items1);
+//            } else if (image.getState() == 4) {
+//                PbImage pbImage = new PbImage();
+//                pbImage.setmUrl(image.getFileUrl());
+//                pbImage.setmToken(image.getFileUrl());
+//                items2.add(pbImage);
+//                mDataBinding.is2.setPbImageList(items2);
+//            } else if (image.getState() == 5) {
+//                PbImage pbImage = new PbImage();
+//                pbImage.setmUrl(image.getFileUrl());
+//                pbImage.setmToken(image.getFileUrl());
+//                items3.add(pbImage);
+//                mDataBinding.is3.setPbImageList(items3);
+//            }
+//    }
+
+}
 
     @Override
     public void onPause() {

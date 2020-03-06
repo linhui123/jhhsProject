@@ -124,6 +124,16 @@
                 android:text="确认"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_10"
+                android:padding="@dimen/padding_10"
+                android:text="修改地址需要重启应用，才能生效"
+                android:textColor="@color/acc6"
+                android:textSize="@dimen/text_size_16" />
         </LinearLayout>
     </RelativeLayout>
 

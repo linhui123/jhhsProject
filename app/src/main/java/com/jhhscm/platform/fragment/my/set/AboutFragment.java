@@ -13,6 +13,8 @@ import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.MyApplication;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.FragmentAboutBinding;
+import com.jhhscm.platform.event.FinishEvent;
+import com.jhhscm.platform.event.ForceCloseEvent;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.my.CheckVersionAction;
 import com.jhhscm.platform.fragment.my.CheckVersionBean;
@@ -26,6 +28,7 @@ import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.jpush.ExampleUtil;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -73,11 +76,15 @@ public class AboutFragment extends AbsFragment<FragmentAboutBinding> {
                     if (mDataBinding.etHttp.getText().toString().length() > 0) {
                         String http = mDataBinding.etHttp.getText().toString();
                         ConfigUtils.setApiUrl(getContext(), http);
-                        Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage(getContext().getPackageName());
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtra("REBOOT", "reboot");
-                        startActivity(intent);
-                        System.exit(0);
+//                        Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage(getContext().getPackageName());
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        intent.putExtra("REBOOT", "reboot");
+//                        startActivity(intent);
+                        //                        System.exit(0);
+//                        EventBusUtil.post(new FinishEvent());
+//                        EventBusUtil.post(new ForceCloseEvent());
+//                        getActivity().finish();
+                        ToastUtil.show(getContext(), "设置成功，请重启应用");
                     } else {
                         ToastUtil.show(getContext(), "请输入完整信息");
                     }
@@ -88,11 +95,15 @@ public class AboutFragment extends AbsFragment<FragmentAboutBinding> {
                 @Override
                 public void onClick(View v) {
                     ConfigUtils.setApiUrl(getContext(), ApiServiceModule.BASE_URL5);
-                    Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage(getContext().getPackageName());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra("REBOOT", "reboot");
-                    startActivity(intent);
-                    System.exit(0);
+                    ToastUtil.show(getContext(), "设置成功，请重启应用");
+//                    EventBusUtil.post(new FinishEvent());
+//                    EventBusUtil.post(new ForceCloseEvent());
+//                    getActivity().finish();
+//                    Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage(getContext().getPackageName());
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    intent.putExtra("REBOOT", "reboot");
+//                    startActivity(intent);
+//                    System.exit(0);
                 }
             });
         } else {
