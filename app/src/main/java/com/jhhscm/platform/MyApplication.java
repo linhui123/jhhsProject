@@ -91,11 +91,6 @@ public class MyApplication extends Application {
         } else {
             BASE_WEB_URL = "http://api.jhhscm.cn:9095/#/";
         }
-
-//        if (ConfigUtils.getApiUrl(getInstance().getApplicationContext()) != null
-//                && ConfigUtils.getApiUrl(getInstance().getApplicationContext()).length() > 0) {
-//            BASE_URL = ConfigUtils.getApiUrl(getInstance().getApplicationContext());
-//        }
     }
 
     public static MyApplication getInstance() {

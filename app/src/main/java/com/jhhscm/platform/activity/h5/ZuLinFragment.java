@@ -299,29 +299,6 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
 
             }
         });
-        initTel();
-    }
-
-    private boolean isMove;
-
-    private void initTel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            mDataBinding.webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                    Log.e("webView", "scrollY " + scrollY + "  oldScrollY " + oldScrollY);
-                    if (Math.abs(scrollY - oldScrollY) > 5) {
-                        if (!isMove) {
-                            imgTranslateAnimation(0, 200);
-                            mDataBinding.tel.setVisibility(View.GONE);
-                        }
-                    } else {
-                        mDataBinding.tel.setVisibility(View.VISIBLE);
-                        imgTranslateAnimation(200, 0);
-                    }
-                }
-            });
-        }
 
         mDataBinding.tel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -338,31 +315,51 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
         });
     }
 
-    //动画的左右进出平移动画
-    private void imgTranslateAnimation(float fromXDelta, float toXDelta) {
-        TranslateAnimation translateAnimation = new TranslateAnimation(fromXDelta, toXDelta, 0, 0);
-        translateAnimation.setFillAfter(true);//这句话会造成imageView.setVisibility(GONE)的时候，会停留在动画最后的地方，导致还没有隐藏的假象。
-        translateAnimation.setDuration(800);
-        mDataBinding.tel.setAnimation(translateAnimation);
-        mDataBinding.tel.startAnimation(translateAnimation);
-        translateAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                isMove = true;
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                isMove = false;
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-
-            }
-        });
-    }
+//    private boolean isMove;
+//    private void initTel() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            mDataBinding.webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//                @Override
+//                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                    Log.e("webView", "scrollY " + scrollY + "  oldScrollY " + oldScrollY);
+//                    if (Math.abs(scrollY - oldScrollY) > 5) {
+//                        if (!isMove) {
+//                            imgTranslateAnimation(0, 200);
+//                            mDataBinding.tel.setVisibility(View.GONE);
+//                        }
+//                    } else {
+//                        mDataBinding.tel.setVisibility(View.VISIBLE);
+//                        imgTranslateAnimation(200, 0);
+//                    }
+//                }
+//            });
+//        }
+//    }
+//    //动画的左右进出平移动画
+//    private void imgTranslateAnimation(float fromXDelta, float toXDelta) {
+//        TranslateAnimation translateAnimation = new TranslateAnimation(fromXDelta, toXDelta, 0, 0);
+//        translateAnimation.setFillAfter(true);//这句话会造成imageView.setVisibility(GONE)的时候，会停留在动画最后的地方，导致还没有隐藏的假象。
+//        translateAnimation.setDuration(800);
+//        mDataBinding.tel.setAnimation(translateAnimation);
+//        mDataBinding.tel.startAnimation(translateAnimation);
+//        translateAnimation.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//                isMove = true;
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                isMove = false;
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//
+//            }
+//        });
+//    }
 
     /**
      * 分享
@@ -433,6 +430,7 @@ public class ZuLinFragment extends AbsFragment<FragmentZuLinBinding> {
 
     private void initViews() {
         mDataBinding.webView.setVisibility(View.GONE);
+        mDataBinding.webView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         WebSettings settings = mDataBinding.webView.getSettings();
         settings.setJavaScriptEnabled(true); //与js交互必须设置
         settings.setAllowFileAccess(true);

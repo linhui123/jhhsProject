@@ -12,7 +12,7 @@ android {
     }
 
     buildTypes {
-        debug {
+        debug{
             manifestPlaceholders = [APP_NAME: "挖矿来"]
             signingConfig signingConfigs.config
         }

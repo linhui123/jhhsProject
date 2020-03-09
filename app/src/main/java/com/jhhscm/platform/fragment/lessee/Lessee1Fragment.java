@@ -66,7 +66,6 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
                 }
             }
         });
-
         mDataBinding.tvSex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

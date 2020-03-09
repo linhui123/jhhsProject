@@ -136,7 +136,7 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
                 return false;
             }
             if (StringUtils.isNullEmpty(wBankLeaseItemsBean.getMachinePrice())) {
-                ToastUtil.show(getContext(), "单价不能为空");
+                ToastUtil.show(getContext(), "融资金额不能为空");
                 return false;
             }
             if (StringUtils.isNullEmpty(wBankLeaseItemsBean.getMachineNum())) {

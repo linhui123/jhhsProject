@@ -47,7 +47,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.setData(list.get(position));
         if (list.get(position).isSelect()) {
             holder.tv_name.setTextColor(Color.parseColor("#3977FE"));
@@ -57,6 +57,12 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
             holder.im_select.setVisibility(View.GONE);
         }
         holder.tv_name.setText(list.get(position).getName());
+        holder.tv_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.rl.performClick();
+            }
+        });
         holder.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +104,6 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
 
         public void setData(GetRegionBean.ResultBean item) {
             this.item = item;
-
         }
 
         @Override

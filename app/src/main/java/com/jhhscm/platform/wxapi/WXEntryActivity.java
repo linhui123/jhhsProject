@@ -71,7 +71,7 @@ public class WXEntryActivity extends AbsToolbarActivity implements IWXAPIEventHa
     @Override
     public void onReq(BaseReq req) {
         Log.e("ac onReq", "openid：" + req.openId);
-        Toast.makeText(this, "openid = " + req.openId, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "openid = " + req.openId, Toast.LENGTH_SHORT).show();
         switch (req.getType()) {
             case ConstantsAPI.COMMAND_PAY_BY_WX:
                 Toast.makeText(this, "Launch From Weixin", Toast.LENGTH_SHORT).show();
@@ -87,7 +87,7 @@ public class WXEntryActivity extends AbsToolbarActivity implements IWXAPIEventHa
     // 第三方应用发送到微信的请求处理后的响应结果，会回调到该方法
     @Override
     public void onResp(BaseResp resp) {
-        Toast.makeText(this, "openid = " + resp.openId, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "openid = " + resp.openId, Toast.LENGTH_SHORT).show();
         if (resp.getType() == ConstantsAPI.COMMAND_SENDAUTH) {
             Toast.makeText(this, "code = " + resp.errCode, Toast.LENGTH_SHORT).show();
         }
@@ -113,6 +113,6 @@ public class WXEntryActivity extends AbsToolbarActivity implements IWXAPIEventHa
                 break;
         }
         finish();
-        Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, result, Toast.LENGTH_LONG).show();
     }
 }

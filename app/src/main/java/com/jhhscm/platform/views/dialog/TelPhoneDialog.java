@@ -9,6 +9,7 @@ import com.jhhscm.platform.R;
 import com.jhhscm.platform.databinding.DialogTelphoneBinding;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.ToastUtils;
+import com.jhhscm.platform.tool.UdaUtils;
 
 public class TelPhoneDialog extends BaseDialog {
     private DialogTelphoneBinding mDataBinding;
@@ -55,7 +56,7 @@ public class TelPhoneDialog extends BaseDialog {
         mDataBinding.tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mDataBinding.edPhone.getText().toString().length() > 8) {
+                if (UdaUtils.isMobile(mDataBinding.edPhone.getText().toString().trim())) {
                     if (mListener != null)
                         mListener.clickYes(mDataBinding.edPhone.getText().toString());
                     dismiss();

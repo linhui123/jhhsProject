@@ -267,7 +267,7 @@ public class LesseeViewHolder extends AbsRecyclerViewHolder<LesseeBean.WBankLeas
         mBinding.tvM5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AddressDialog(itemView.getContext(), "施工区月", new AddressDialog.CallbackListener() {
+                new AddressDialog(itemView.getContext(), "施工区域", new AddressDialog.CallbackListener() {
                     @Override
                     public void clickResult(String pid, String pNmae, String cityId, String cName, String countryID, String countryName) {
                         mBinding.tvM5.setText(pNmae + " " + cName + " " + countryName);
