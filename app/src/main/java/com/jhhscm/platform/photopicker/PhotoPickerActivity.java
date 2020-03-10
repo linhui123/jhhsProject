@@ -565,7 +565,12 @@ public class PhotoPickerActivity extends AbsToolbarActivity {
                     case ImageCaptureManager.REQUEST_TAKE_PHOTO:
                         if (mImageCaptureManager.getCurrentPhotoPath() != null) {
                             mImageCaptureManager.galleryAddPic();
-                            mSelectList.add(FileUtils.getPhotoImageUri(mImageCaptureManager.getCurrentPhotoPath()));
+                            if (getArguments().getInt(EXTRA_SELECT_COUNT, DEFAULT_MAX_TOTAL) == 1) {
+                                mSelectList.clear();//单张照片；
+                                mSelectList.add(FileUtils.getPhotoImageUri(mImageCaptureManager.getCurrentPhotoPath()));
+                            } else {
+                                mSelectList.add(FileUtils.getPhotoImageUri(mImageCaptureManager.getCurrentPhotoPath()));
+                            }
                         }
                         complete();
                         break;

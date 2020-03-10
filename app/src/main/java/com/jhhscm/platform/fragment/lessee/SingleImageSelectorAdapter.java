@@ -11,6 +11,8 @@ import com.jhhscm.platform.adater.AbsViewHolder;
 import com.jhhscm.platform.databinding.ItemImageSelectorAddFaceBinding;
 import com.jhhscm.platform.databinding.ItemImageSelectorBinding;
 import com.jhhscm.platform.databinding.ItemImageSelectorNeBinding;
+import com.jhhscm.platform.event.ImageSelectorEvent;
+import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.views.selector.ImageSelectorItem;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -95,6 +97,16 @@ public class SingleImageSelectorAdapter extends AbsAdapter<ImageSelectorItem> {
 
         @Override
         protected void onBindView(final ImageSelectorItem item) {
+            mItemBinding.ivPressed.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (item.imageUrl != null) {
+                        EventBusUtil.post(ImageSelectorEvent.newInstance(mCode, ImageSelectorEvent.EVENT_DEL, item.imageUrl));
+                        getItems().remove(item);
+                        notifyDataSetChanged();
+                    }
+                }
+            });
             ImageLoader.getInstance().displayImage(StringUtils.filterNullAndTrim(item.imageUrl), mItemBinding.ivImage);
         }
     }
@@ -105,25 +117,10 @@ public class SingleImageSelectorAdapter extends AbsAdapter<ImageSelectorItem> {
         public ImageSelectorAddFaceHolder(View convertView) {
             super(convertView);
             mItemBinding = DataBindingUtil.bind(convertView);
-//            ViewGroup.LayoutParams params = mItemBinding.flImage.getLayoutParams();
-//            int head = (int) (((double) mItemWidth) / 1.33);
-//            if (params == null) {
-//                params = new ViewGroup.LayoutParams(mItemWidth, head);
-//            } else {
-//                params.width = mItemWidth;
-//                params.height = head;
-//            }
-//            mItemBinding.flImage.setLayoutParams(params);
-
         }
 
         @Override
-        protected void onBindView(ImageSelectorItem item) {
-//            if (getItems().size() - 1 == 0) {
-//                mItemBinding.tvSubscript.setText("添加图片");
-//            } else {
-//                mItemBinding.tvSubscript.setText(context.getString(R.string.image_subscript, getItems().size() - 1));
-//            }
+        protected void onBindView(final ImageSelectorItem item) {
         }
     }
 
@@ -133,25 +130,11 @@ public class SingleImageSelectorAdapter extends AbsAdapter<ImageSelectorItem> {
         public ImageSelectorAddNEHolder(View convertView) {
             super(convertView);
             mItemBinding = DataBindingUtil.bind(convertView);
-//            ViewGroup.LayoutParams params = mItemBinding.flImage.getLayoutParams();
-//            int head = (int) (((double) mItemWidth) / 1.33);
-//            if (params == null) {
-//                params = new ViewGroup.LayoutParams(mItemWidth, head);
-//            } else {
-//                params.width = mItemWidth;
-//                params.height = head;
-//            }
-//            mItemBinding.flImage.setLayoutParams(params);
-
         }
 
         @Override
-        protected void onBindView(ImageSelectorItem item) {
-//            if (getItems().size() - 1 == 0) {
-//                mItemBinding.tvSubscript.setText("添加图片");
-//            } else {
-//                mItemBinding.tvSubscript.setText(context.getString(R.string.image_subscript, getItems().size() - 1));
-//            }
+        protected void onBindView(final ImageSelectorItem item) {
+
         }
     }
 }

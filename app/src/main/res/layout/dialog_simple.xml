@@ -52,7 +52,7 @@
             android:lineSpacingMultiplier="1.2"
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
-            android:text="您的手机13000000001将很快接到挖矿来的来电请注意接听"
+            android:text="您的手机13000000001将很快接到骏惠的来电，请注意接听！"
             android:textColor="@color/acc3"
             android:textSize="@dimen/text_size_16" />
 

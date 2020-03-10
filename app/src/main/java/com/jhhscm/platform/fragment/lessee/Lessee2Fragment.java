@@ -1,11 +1,14 @@
 package com.jhhscm.platform.fragment.lessee;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 
 import com.alibaba.fastjson.JSON;
 import com.jhhscm.platform.BuildConfig;
@@ -92,11 +95,16 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
         mDataBinding.tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LesseeBean.WBankLeaseItemsBean dataBean = new LesseeBean.WBankLeaseItemsBean();
-                itemsBeans.add(dataBean);
-                mAdapter.add(dataBean);
-                imageSelectors.add(new ImageSelector(getContext()));
-                mDataBinding.tvDel.setVisibility(View.VISIBLE);
+                if (itemsBeans.size() < 5) {
+                    LesseeBean.WBankLeaseItemsBean dataBean = new LesseeBean.WBankLeaseItemsBean();
+                    itemsBeans.add(dataBean);
+                    mAdapter.add(dataBean);
+                    imageSelectors.add(new ImageSelector(getContext()));
+                    mDataBinding.tvDel.setVisibility(View.VISIBLE);
+                    mAdapter.notifyItemChanged(itemsBeans.size() - 1);
+                } else {
+                    ToastUtil.show(getContext(), "最多只能上传5台设备");
+                }
             }
         });
 
@@ -107,6 +115,7 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
                     mAdapter.remove(mAdapter.getItemCount() - 1);
                     imageSelectors.remove(imageSelectors.size() - 1);
                     itemsBeans.remove(mAdapter.getItemCount());
+                    mAdapter.notifyItemChanged(itemsBeans.size() - 1);
                 }
                 if (mAdapter.getItemCount() == 1) {
                     mDataBinding.tvDel.setVisibility(View.GONE);
@@ -166,6 +175,10 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
             lessee = ConfigUtils.getLesseeData(getContext());
             lessee.setWBankLeaseItems(itemsBeans);
             ConfigUtils.setLesseeData(getContext(), lessee);
+        }else {
+            lessee = new LesseeBean();
+            lessee.setWBankLeaseItems(itemsBeans);
+            ConfigUtils.setLesseeData(getContext(), lessee);
         }
     }
 
@@ -176,8 +189,12 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
     }
 
     private void initList(List<GetComboBoxBean.ResultBean> list) {
-        mDataBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager.setStackFromEnd(true);
+        mDataBinding.rv.setLayoutManager(mLayoutManager);
+
         mAdapter = new InnerAdapter(getContext(), list);
+        mAdapter.setHasStableIds(true);
         mDataBinding.rv.setAdapter(mAdapter);
 
         itemsBeans = new ArrayList<>();
@@ -207,29 +224,33 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
                 itemsBeans = ConfigUtils.getLesseeData(getContext()).getWBankLeaseItems();
                 lesseeBean = ConfigUtils.getLesseeData(getContext());
                 mAdapter.setData(itemsBeans);
+                if (mAdapter.getItemCount() > 1) {
+                    mDataBinding.tvDel.setVisibility(View.VISIBLE);
+                }
                 for (LesseeBean.WBankLeaseItemsBean dataBean : itemsBeans) {
                     imageSelectors.add(new ImageSelector(getContext()));
                 }
             } else {
                 LesseeBean.WBankLeaseItemsBean dataBean = new LesseeBean.WBankLeaseItemsBean();
-                if (BuildConfig.DEBUG) {//测试数据
-                    dataBean.setMachineNum("111");
-                    dataBean.setName("111");
-                    dataBean.setFixP17("111");
-                    dataBean.setMachinePrice("111");
-                    dataBean.setM1("111");
-                    dataBean.setM2("111");
-                    dataBean.setM3("111");
-                    dataBean.setM4("111");
-                    dataBean.setM5("111");
-                    dataBean.setM6("111");
-                    itemsBeans.add(dataBean);
-                    mAdapter.add(dataBean);
-                    imageSelectors.add(new ImageSelector(getContext()));
-                }
+//                if (BuildConfig.DEBUG) {//测试数据
+//                    dataBean.setMachineNum("111");
+//                    dataBean.setName("111");
+//                    dataBean.setFixP17("111");
+//                    dataBean.setMachinePrice("111");
+//                    dataBean.setM1("111");
+//                    dataBean.setM2("111");
+//                    dataBean.setM3("111");
+//                    dataBean.setM4("111");
+//                    dataBean.setM5("111");
+//                    dataBean.setM6("111");
+//                }
+                itemsBeans.add(dataBean);
+                mAdapter.add(dataBean);
+                imageSelectors.add(new ImageSelector(getContext()));
             }
         }
     }
+
     /**
      * 获取品牌列表
      */
@@ -289,12 +310,6 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
                 updateImgResult = true;
                 doUploadAImagesAction(event.getPosition());
             }
-        }
-    }
-
-    public void onEvent(DelPhotoEvent event) {
-        if (event.getUrl() != null) {
-
         }
     }
 
@@ -497,6 +512,11 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
         public InnerAdapter(Context context, List<GetComboBoxBean.ResultBean> list) {
             super(context);
             this.list = list;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
         }
 
         @Override

@@ -110,22 +110,25 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
             itemsBeans = lesseeBean.getWBankleaseFileList();
             initData();
         } else {
-            if (BuildConfig.DEBUG) {//测试数据
-                mDataBinding.etEmergency.setText("111");
-                mDataBinding.etEmergencyPhone.setText("111");
-                mDataBinding.etGuarantee.setText("111");
-                mDataBinding.etGuaranteeId.setText("111");
-                mDataBinding.etGuaranteePhone.setText("111");
-            }
+//            if (BuildConfig.DEBUG) {//测试数据
+//                mDataBinding.etEmergency.setText("111");
+//                mDataBinding.etEmergencyPhone.setText("111");
+//                mDataBinding.etGuarantee.setText("111");
+//                mDataBinding.etGuaranteeId.setText("111");
+//                mDataBinding.etGuaranteePhone.setText("111");
+//            }
         }
     }
 
     private void initData() {
-        mDataBinding.etEmergency.setText(suretyBean.getM1());
-        mDataBinding.etEmergencyPhone.setText(suretyBean.getM2());
-        mDataBinding.etGuarantee.setText(suretyBean.getName());
-        mDataBinding.etGuaranteeId.setText(suretyBean.getIdCard());
-        mDataBinding.etGuaranteePhone.setText(suretyBean.getPhone());
+        if (suretyBean != null) {
+            mDataBinding.etEmergency.setText(suretyBean.getM1() != null ? suretyBean.getM1() : "");
+            mDataBinding.etEmergencyPhone.setText(suretyBean.getM2() != null ? suretyBean.getM2() : "");
+            mDataBinding.etGuarantee.setText(suretyBean.getName() != null ? suretyBean.getName() : "");
+            mDataBinding.etGuaranteeId.setText(suretyBean.getIdCard() != null ? suretyBean.getIdCard() : "");
+            mDataBinding.etGuaranteePhone.setText(suretyBean.getPhone() != null ? suretyBean.getPhone() : "");
+        }
+
 //        List<PbImage> items1 = new ArrayList<>();
 //        List<PbImage> items2 = new ArrayList<>();
 //        List<PbImage> items3 = new ArrayList<>();
@@ -166,13 +169,26 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
 //            }
 //    }
 
-}
+    }
 
     @Override
     public void onPause() {
         super.onPause();
         if (ConfigUtils.getLesseeData(getContext()) != null) {
             lessee = ConfigUtils.getLesseeData(getContext());
+            if (suretyBean == null) {
+                suretyBean = new LesseeBean.WBankLeaseSuretyBean();
+            }
+            suretyBean.setPhone(mDataBinding.etGuaranteePhone.getText().toString().trim());
+            suretyBean.setName(mDataBinding.etGuarantee.getText().toString().trim());
+            suretyBean.setIdCard(mDataBinding.etGuaranteeId.getText().toString().trim());
+            suretyBean.setM1(mDataBinding.etEmergency.getText().toString().trim());
+            suretyBean.setM2(mDataBinding.etEmergencyPhone.getText().toString().trim());
+            lesseeBean.setwBankLeaseSurety(suretyBean);
+            lesseeBean.setWBankleaseFileList(itemsBeans);
+            ConfigUtils.setLesseeData(getContext(), lessee);
+        } else {
+//            lessee = new LesseeBean();
             suretyBean.setPhone(mDataBinding.etGuaranteePhone.getText().toString().trim());
             suretyBean.setName(mDataBinding.etGuarantee.getText().toString().trim());
             suretyBean.setIdCard(mDataBinding.etGuaranteeId.getText().toString().trim());
@@ -464,7 +480,7 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
         }
         try {
             //1M以上图片进行压缩处理
-            Log.e("imageFile", "imageFile.length() " + imageFile.length());
+//            Log.e("imageFile", "imageFile.length() " + imageFile.length());
             if (imageFile.length() > UPLOAD_IMAGE_SIZE_LIMIT) {
                 Luban.get(MyApplication.getInstance())
                         .load(imageFile)
@@ -489,7 +505,7 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
                             @Override
                             public void call(File file) {
                                 // TODO 压缩成功后调用，返回压缩后的图片文件
-                                Log.e("file", "file.length() " + file.length());
+//                                Log.e("file", "file.length() " + file.length());
                                 doUploadImageAction(imageSelector, file, imagePath);
                             }
                         });
@@ -634,6 +650,9 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
             wBankleaseFileListBean.setState(3);
             wBankleaseFileListBean.setFileType("5");
             wBankleaseFileListBean.setFileUrl(updateImageBeanList.get(0).getIMG_URL());
+            if (itemsBeans == null) {
+                itemsBeans = new ArrayList<>();
+            }
             itemsBeans.add(wBankleaseFileListBean);
             updateImgResult = true;
             if (mDataBinding.is2.getUploadImageList().size() > 0) {
@@ -651,6 +670,9 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
             wBankleaseFileListBean.setState(4);
             wBankleaseFileListBean.setFileType("3");
             wBankleaseFileListBean.setFileUrl(updateImageBeanList.get(0).getIMG_URL());
+            if (itemsBeans == null) {
+                itemsBeans = new ArrayList<>();
+            }
             itemsBeans.add(wBankleaseFileListBean);
             Log.e("saveImagesData", "itemsBeans " + itemsBeans.size());
             if (mDataBinding.is3.getUploadImageList().size() > 0) {
@@ -666,6 +688,9 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
             wBankleaseFileListBean.setState(5);
             wBankleaseFileListBean.setFileType("7");
             wBankleaseFileListBean.setFileUrl(updateImageBeanList.get(0).getIMG_URL());
+            if (itemsBeans == null) {
+                itemsBeans = new ArrayList<>();
+            }
             itemsBeans.add(wBankleaseFileListBean);
             lesseeBean.setWBankleaseFileList(itemsBeans);
             //提交

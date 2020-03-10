@@ -128,11 +128,11 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
             lesseeBean = ConfigUtils.getLesseeData(getContext());
             initData();
         } else {
-            if (BuildConfig.DEBUG) {//测试数据
-                mDataBinding.etName.setText("cl");
-                mDataBinding.etId.setText("350181199304061596");
-                mDataBinding.etPhone.setText("18030129696");
-            }
+//            if (BuildConfig.DEBUG) {//测试数据
+//                mDataBinding.etName.setText("cl");
+//                mDataBinding.etId.setText("35018119930406159");
+//                mDataBinding.etPhone.setText("18030129696");
+//            }
         }
     }
 
@@ -141,6 +141,15 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
         super.onPause();
         if (ConfigUtils.getLesseeData(getContext()) != null) {
             lessee = ConfigUtils.getLesseeData(getContext());
+            personBean.setName(mDataBinding.etName.getText().toString().trim());
+            personBean.setIdCard(mDataBinding.etId.getText().toString().trim());
+            personBean.setPhone(mDataBinding.etPhone.getText().toString().trim());
+            personBean.setIdCardAddress(mDataBinding.etAddress.getText().toString().trim());
+            personBean.setUserCode(ConfigUtils.getCurrentUser(getContext()).getUserCode());
+            lessee.setWBankLeasePerson(personBean);
+            ConfigUtils.setLesseeData(getContext(), lessee);
+        } else {
+            lessee = new LesseeBean();
             personBean.setName(mDataBinding.etName.getText().toString().trim());
             personBean.setIdCard(mDataBinding.etId.getText().toString().trim());
             personBean.setPhone(mDataBinding.etPhone.getText().toString().trim());
@@ -162,12 +171,14 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
     }
 
     private void initData() {
-        mDataBinding.etPhone.setText(personBean.getPhone());
-        mDataBinding.etId.setText(personBean.getIdCard());
-        mDataBinding.etName.setText(personBean.getName());
-        mDataBinding.etAddress.setText(personBean.getIdCardAddress());
-        mDataBinding.tvSex.setText(personBean.getSex_str());
-        mDataBinding.tvMarray.setText(personBean.getMarryType_str());
+        if (personBean != null) {
+            mDataBinding.etPhone.setText(personBean.getPhone() != null ? personBean.getPhone() : "");
+            mDataBinding.etId.setText(personBean.getIdCard() != null ? personBean.getIdCard() : "");
+            mDataBinding.etName.setText(personBean.getName() != null ? personBean.getName() : "");
+            mDataBinding.etAddress.setText(personBean.getIdCardAddress() != null ? personBean.getIdCardAddress() : "");
+            mDataBinding.tvSex.setText(personBean.getSex_str() != null ? personBean.getSex_str() : "");
+            mDataBinding.tvMarray.setText(personBean.getMarryType_str() != null ? personBean.getMarryType_str() : "");
+        }
     }
 
     private boolean isFull() {
