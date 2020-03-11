@@ -10,6 +10,7 @@ public class ImageSelectorUpdataEvent implements EventBusUtil.IEvent {
     private List<ImageSelectorItem> images;
     private ImageSelector imageSelector;
     private int position;
+    private int type;//0 更新；1删除
 
     public ImageSelectorUpdataEvent(ImageSelector imageSelector, List<ImageSelectorItem> images, int position) {
         this.imageSelector = imageSelector;
@@ -17,6 +18,12 @@ public class ImageSelectorUpdataEvent implements EventBusUtil.IEvent {
         this.images = images;
     }
 
+    public ImageSelectorUpdataEvent(ImageSelector imageSelector, List<ImageSelectorItem> images, int position, int type) {
+        this.imageSelector = imageSelector;
+        this.position = position;
+        this.images = images;
+        this.type = type;
+    }
 
     public ImageSelectorUpdataEvent(ImageSelector imageSelector, int position) {
         this.imageSelector = imageSelector;
@@ -26,6 +33,14 @@ public class ImageSelectorUpdataEvent implements EventBusUtil.IEvent {
     public ImageSelectorUpdataEvent(List<ImageSelectorItem> images, int position) {
         this.images = images;
         this.position = position;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public ImageSelectorUpdataEvent(List<ImageSelectorItem> images) {

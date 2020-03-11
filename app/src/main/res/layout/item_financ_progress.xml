@@ -56,6 +56,7 @@
                 android:layout_marginTop="@dimen/dp_3"
                 android:singleLine="true"
                 android:text="审核中"
+                android:textStyle="bold"
                 android:textColor="@color/ff1a"
                 android:textSize="@dimen/sp_14" />
         </RelativeLayout>

@@ -2,6 +2,7 @@ package com.jhhscm.platform.fragment.lessee;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.constraint.solver.GoalRow;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -173,12 +174,23 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
     @Override
     public void onPause() {
         super.onPause();
+        mDataBinding.rv.setFocusable(true);
+        mDataBinding.rv.setFocusableInTouchMode(true);
+        mDataBinding.rv.requestFocus();
         if (ConfigUtils.getLesseeData(getContext()) != null) {
             lessee = ConfigUtils.getLesseeData(getContext());
+            for (int i = 0; i < itemsBeans.size(); i++) {
+                itemsBeans.get(i).setItemUrl(mAdapter.get(i).getItemUrl());
+                Log.e("onPause", "onPause" + itemsBeans.get(i).getItemUrl());
+            }
             lessee.setWBankLeaseItems(itemsBeans);
             ConfigUtils.setLesseeData(getContext(), lessee);
         } else {
             lessee = new LesseeBean();
+            for (int i = 0; i < itemsBeans.size(); i++) {
+                itemsBeans.get(i).setItemUrl(mAdapter.get(i).getItemUrl());
+                Log.e("onPause", "onPause" + itemsBeans.get(i).getItemUrl());
+            }
             lessee.setWBankLeaseItems(itemsBeans);
             ConfigUtils.setLesseeData(getContext(), lessee);
         }
@@ -310,7 +322,11 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
             imageSelectors.add(event.getImageSelector());
             if (imageSelectors.get(event.getPosition()) != null) {
                 updateImgResult = true;
-                doUploadAImagesAction(event.getPosition());
+                if (event.getType() == 1) {
+                    saveImages(event.getPosition(), imageSelectors.get(event.getPosition()).getUploadImageList());
+                } else {
+                    doUploadAImagesAction(event.getPosition());
+                }
             }
         }
     }
@@ -415,7 +431,6 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
                             if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
                                 return;
                             }
-                            closeDialog();
                             if (response != null) {
                                 if (response.body().getCode().equals("200")) {
                                     if ("0".equals(response.body().getData().getCode())) {
@@ -497,12 +512,28 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
      * 数据合并处理
      */
     private void saveImagesData(int position, List<UpdateImageBean> updateImageBeanList) {
+        closeDialog();
         String jsonString = "";
         for (UpdateImageBean updateImageBean : updateImageBeanList) {
             if (jsonString.length() > 0) {
                 jsonString = jsonString + "," + "\"" + updateImageBean.getIMG_URL() + "\"";
             } else {
                 jsonString = "\"" + updateImageBean.getIMG_URL() + "\"";
+            }
+        }
+        mAdapter.get(position).setItemUrl(jsonString);
+    }
+
+    /**
+     * 数据合并处理
+     */
+    private void saveImages(int position, List<UploadImage> updateImageBeanList) {
+        String jsonString = "";
+        for (UploadImage updateImageBean : updateImageBeanList) {
+            if (jsonString.length() > 0) {
+                jsonString = jsonString + "," + "\"" + updateImageBean.getImageUrl() + "\"";
+            } else {
+                jsonString = "\"" + updateImageBean.getImageUrl() + "\"";
             }
         }
         mAdapter.get(position).setItemUrl(jsonString);

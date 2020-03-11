@@ -403,6 +403,9 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
             wBankleaseFileListBean.setState(1);
             wBankleaseFileListBean.setFileType("0");
             wBankleaseFileListBean.setFileUrl(updateImageBeanList.get(0).getIMG_URL());
+            if (itemsBeans == null) {
+                itemsBeans = new ArrayList<>();
+            }
             itemsBeans.add(wBankleaseFileListBean);
             //上传国徽面
             updateImgResult = true;
@@ -413,6 +416,9 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
             wBankleaseFileListBean.setState(2);
             wBankleaseFileListBean.setFileType("0");
             wBankleaseFileListBean.setFileUrl(updateImageBeanList.get(0).getIMG_URL());
+            if (itemsBeans == null) {
+                itemsBeans = new ArrayList<>();
+            }
             itemsBeans.add(wBankleaseFileListBean);
 
             if (itemsBeans.get(0).getFileUrl() != null && itemsBeans.get(0).getFileUrl().length() > 0

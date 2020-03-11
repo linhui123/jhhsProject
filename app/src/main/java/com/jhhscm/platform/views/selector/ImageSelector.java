@@ -405,6 +405,7 @@ public class ImageSelector extends LinearLayout {
             if (!item.isAddFlag()) {
                 if (item.equals(delImage)) {
                     mAdapter.remove(i);
+                    EventBusUtil.post(new ImageSelectorUpdataEvent(this, mAdapter.getItems(), position,1));
                     break;
                 }
             }

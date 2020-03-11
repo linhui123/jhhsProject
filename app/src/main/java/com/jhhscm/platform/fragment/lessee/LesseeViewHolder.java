@@ -3,6 +3,7 @@ package com.jhhscm.platform.fragment.lessee;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
@@ -69,8 +70,8 @@ public class LesseeViewHolder extends AbsRecyclerViewHolder<LesseeBean.WBankLeas
                 } else {
                     mBinding.isSchemeImage.setPbImageList(items);
                 }
-            }else {
-                mBinding.isSchemeImage.setPbImageList( new ArrayList<PbImage>());
+            } else {
+                mBinding.isSchemeImage.setPbImageList(new ArrayList<PbImage>());
             }
 
             mBinding.isSchemeImage.setPosition(getAdapterPosition());
