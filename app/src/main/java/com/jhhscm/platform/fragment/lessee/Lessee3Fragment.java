@@ -29,6 +29,7 @@ import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.KeyboardPatch;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -70,6 +71,8 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
+        //启动edittext优化，解决被挡住问题
+        new KeyboardPatch(getActivity(), mDataBinding.ll).enable();
         lesseeBean = new LesseeBean();
         lesseeBean = (LesseeBean) getArguments().getSerializable("lesseeBean");
         itemsBeans = new ArrayList<>();

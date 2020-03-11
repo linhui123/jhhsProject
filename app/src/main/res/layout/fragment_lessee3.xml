@@ -9,6 +9,7 @@
         android:background="@color/white">
 
         <android.support.v4.widget.NestedScrollView
+            android:id="@+id/ll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/tv_submit"
@@ -228,9 +229,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
-                        android:digits="1234567890"
                         android:gravity="right"
                         android:hint="请输入"
+                        android:inputType="number"
                         android:maxLines="2"
                         android:paddingLeft="@dimen/padding_15"
                         android:paddingTop="12dp"
@@ -297,9 +298,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
-                        android:digits="1234567890"
                         android:gravity="right"
                         android:hint="请输入"
+                        android:inputType="number"
                         android:maxLines="2"
                         android:paddingLeft="@dimen/padding_15"
                         android:paddingTop="12dp"

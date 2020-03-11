@@ -16,6 +16,7 @@ import com.jhhscm.platform.fragment.my.mechanics.FindGoodsOwnerBean;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.EventBusUtil;
 import com.jhhscm.platform.tool.IDCard;
+import com.jhhscm.platform.tool.KeyboardPatch;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.UdaUtils;
 import com.jhhscm.platform.views.dialog.AddressDialog;
@@ -44,6 +45,8 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
     @Override
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
+        //启动edittext优化，解决被挡住问题
+        new KeyboardPatch(getActivity(), mDataBinding.ll).enable();
         if (ConfigUtils.getCurrentUser(getContext()) != null
                 && ConfigUtils.getCurrentUser(getContext()).getMobile() != null) {
 

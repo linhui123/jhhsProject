@@ -39,6 +39,7 @@ import com.jhhscm.platform.http.sign.Sign;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.KeyboardPatch;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
 import com.jhhscm.platform.tool.ToastUtils;
@@ -85,7 +86,8 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
     protected void setupViews() {
         EventBusUtil.registerEvent(this);
         findBrand();
-
+        //启动edittext优化，解决被挡住问题
+        new KeyboardPatch(getActivity(), mDataBinding.rv).enable();
         if ((LesseeBean) getArguments().getSerializable("lesseeBean") != null) {
             lesseeBean = (LesseeBean) getArguments().getSerializable("lesseeBean");
         } else {
@@ -175,7 +177,7 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
             lessee = ConfigUtils.getLesseeData(getContext());
             lessee.setWBankLeaseItems(itemsBeans);
             ConfigUtils.setLesseeData(getContext(), lessee);
-        }else {
+        } else {
             lessee = new LesseeBean();
             lessee.setWBankLeaseItems(itemsBeans);
             ConfigUtils.setLesseeData(getContext(), lessee);
