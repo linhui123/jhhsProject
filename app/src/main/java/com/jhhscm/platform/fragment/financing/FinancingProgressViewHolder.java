@@ -25,10 +25,12 @@ public class FinancingProgressViewHolder extends AbsRecyclerViewHolder<LeaseSelB
             mBinding.name.setText("业务申请号:" + item.getLease_code());
             mBinding.data.setText("申请时间:" + item.getAdd_time());
             mBinding.orderStaus.setText(item.getLease_state_str());
-            if (item.getLease_state() == 0) {
-                mBinding.orderStaus.setTextColor(itemView.getContext().getResources().getColor(R.color.ff1a));
-            } else {
+            if (item.getLease_state() == 0) {//审核中
                 mBinding.orderStaus.setTextColor(itemView.getContext().getResources().getColor(R.color.a397));
+            } else if (item.getLease_state() == 1) {//审核通过
+                mBinding.orderStaus.setTextColor(itemView.getContext().getResources().getColor(R.color.a37B));
+            } else {//否决
+                mBinding.orderStaus.setTextColor(itemView.getContext().getResources().getColor(R.color.ff1a));
             }
             mBinding.tv1.setText(item.getItem_name());
             mBinding.tv2.setText(item.getBrand_name());

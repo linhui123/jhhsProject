@@ -27,14 +27,13 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="middle"
-                android:singleLine="true"
                 android:layout_marginRight="@dimen/padding_10"
+                android:ellipsize="middle"
                 android:gravity="left"
+                android:singleLine="true"
                 android:text="业务申请号:"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14"
-                android:layout_toLeftOf="@+id/order_staus"
                 android:textStyle="bold" />
 
             <TextView
@@ -52,7 +51,9 @@
                 android:id="@+id/order_staus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
                 android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/dp_3"
                 android:singleLine="true"
                 android:text="审核中"
                 android:textColor="@color/ff1a"
@@ -72,10 +73,11 @@
             android:paddingBottom="@dimen/padding_10">
 
             <TextView
+                android:id="@+id/tv_11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_15"
-                android:text="租赁物"
+                android:text="设备名称"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
 
@@ -84,7 +86,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/padding_15"
                 android:layout_marginTop="@dimen/padding_15"
+                android:layout_toRightOf="@+id/tv_11"
+                android:gravity="right"
+                android:singleLine="true"
                 android:text="挖掘机"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
@@ -98,6 +104,7 @@
             android:paddingBottom="@dimen/padding_10">
 
             <TextView
+                android:id="@+id/tv_22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_15"
@@ -110,7 +117,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/padding_15"
                 android:layout_marginTop="@dimen/padding_15"
+                android:layout_toRightOf="@+id/tv_22"
+                android:gravity="right"
+                android:singleLine="true"
                 android:text="山河智能"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
@@ -124,6 +135,7 @@
             android:paddingBottom="@dimen/padding_10">
 
             <TextView
+                android:id="@+id/tv_33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_15"
@@ -136,7 +148,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/padding_15"
                 android:layout_marginTop="@dimen/padding_15"
+                android:layout_toRightOf="@+id/tv_33"
+                android:gravity="right"
+                android:singleLine="true"
                 android:text="SWE100E"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
@@ -150,10 +166,11 @@
             android:paddingBottom="@dimen/padding_10">
 
             <TextView
+                android:id="@+id/tv_44"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_15"
-                android:text="担保人"
+                android:text="担保人姓名"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
 
@@ -162,7 +179,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/padding_15"
                 android:layout_marginTop="@dimen/padding_15"
+                android:layout_toRightOf="@+id/tv_44"
+                android:gravity="right"
+                android:singleLine="true"
                 android:text="张三"
                 android:textColor="@color/acc3"
                 android:textSize="@dimen/sp_14" />
