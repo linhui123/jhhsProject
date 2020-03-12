@@ -159,6 +159,8 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
             public void onClick(View v) {
                 mDataBinding.rlLabview.setVisibility(View.VISIBLE);
                 mDataBinding.rv.setVisibility(View.GONE);
+                mDataBinding.llZonghe.setVisibility(View.GONE);
+                mDataBinding.rlZonghe.setVisibility(View.GONE);
                 historys = ConfigUtils.getSearchHistory(getContext());
                 if (ConfigUtils.getSearchHistory(getContext()) != null && ConfigUtils.getSearchHistory(getContext()).size() > 0) {
                     tagAdapter.setDatas(historys);
