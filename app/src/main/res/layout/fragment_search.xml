@@ -20,26 +20,48 @@
             android:paddingTop="@dimen/dp_5"
             android:paddingBottom="@dimen/dp_5">
 
-            <EditText
-                android:id="@+id/home_eidt"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_centerVertical="true"
                 android:layout_weight="4"
                 android:background="@drawable/edit_shpape_bg"
-                android:drawableLeft="@mipmap/ic_search_hint"
-                android:drawablePadding="@dimen/dp_5"
                 android:gravity="center_vertical"
-                android:hint="请输入产品名称、品牌、机型"
-                android:imeOptions="actionSearch"
-                android:paddingLeft="12dp"
-                android:singleLine="true"
-                android:textSize="@dimen/text_size_14" />
+                android:paddingLeft="@dimen/dp_5">
+
+                <TextView
+                    android:id="@+id/type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/ic_point1"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:gravity="center"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="配件分类"
+                    android:textColor="@color/acc6"
+                    android:textSize="@dimen/text_size_16"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/home_eidt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/edit_shpape_bg"
+                    android:drawableLeft="@mipmap/ic_search_hint"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:gravity="center_vertical"
+                    android:hint="请输入产品名称、品牌、机型"
+                    android:imeOptions="actionSearch"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/cancle"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="取消"
@@ -89,18 +111,36 @@
             <com.jhhscm.platform.views.recyclerview.WrappedRecyclerView
                 android:id="@+id/rv"
                 android:layout_width="match_parent"
-                android:background="@color/white"
                 android:layout_height="match_parent"
+                android:background="@color/white"
                 android:visibility="gone"></com.jhhscm.platform.views.recyclerview.WrappedRecyclerView>
 
+            <LinearLayout
+                android:id="@+id/ll_zonghe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_10"
+                android:layout_marginTop="-10dp"
+                android:background="@drawable/edit_shpape_bg_cf5"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_5"
+                android:visibility="gone">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rl_zonghe"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
+            </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_column"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:visibility="gone"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:visibility="gone">
 
             <com.jhhscm.platform.views.EnhanceTabLayout
                 android:id="@+id/enhance_tab_layout"
@@ -121,9 +161,9 @@
         <com.jhhscm.platform.views.tabstrip.APSTSViewPager
             android:id="@+id/vp_m"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="match_parent"
-            android:background="@color/white" />
+            android:background="@color/white"
+            android:visibility="gone" />
 
     </LinearLayout>
 </layout>

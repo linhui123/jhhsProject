@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -18,12 +19,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.jhhscm.platform.BuildConfig;
 import com.jhhscm.platform.R;
 import com.jhhscm.platform.adater.AbsRecyclerViewAdapter;
 import com.jhhscm.platform.adater.AbsRecyclerViewHolder;
 import com.jhhscm.platform.databinding.FragmentSearchBinding;
 import com.jhhscm.platform.event.ConsultationEvent;
 import com.jhhscm.platform.event.SerachEvent;
+import com.jhhscm.platform.fragment.Mechanics.action.GoodsCatatoryListAction;
+import com.jhhscm.platform.fragment.Mechanics.adapter.JXDropAdapter;
+import com.jhhscm.platform.fragment.Mechanics.adapter.SXDropAdapter;
+import com.jhhscm.platform.fragment.Mechanics.bean.GetComboBoxBean;
+import com.jhhscm.platform.fragment.Mechanics.bean.GoodsCatatoryListBean;
 import com.jhhscm.platform.fragment.base.AbsFragment;
 import com.jhhscm.platform.fragment.home.action.SaveMsgAction;
 import com.jhhscm.platform.http.AHttpService;
@@ -70,6 +77,8 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
     private final int START_PAGE = mCurrentPage;
     private SearchBean searchBean;
     private String keyword = "";
+    private String category_id = "";
+    private JXDropAdapter JXAdapter;
 
     public static SearchFragment instance() {
         SearchFragment view = new SearchFragment();
@@ -92,6 +101,10 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
         newListFragment = SearchNewFragment.instance();
         oldListFragment = SearchOldFragment.instance();
         peijianListFragment = SearchPeiJianFragment.instance();
+        if (type == 2) {
+            initSearchEdit();
+        }
+
         initTab();
         setFlow();
         initRv();
@@ -153,6 +166,28 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
                 showSoftInputFromWindow(getActivity(), mDataBinding.homeEidt);
             }
         });
+    }
+
+    private void initSearchEdit() {
+        mDataBinding.type.setVisibility(View.VISIBLE);
+        goodscatatoryLise();
+        mDataBinding.type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (JXAdapter != null && JXAdapter.getItemCount() > 0) {
+                    if (mDataBinding.llZonghe.getVisibility() == View.VISIBLE) {
+                        mDataBinding.llZonghe.setVisibility(View.GONE);
+                        mDataBinding.rlZonghe.setVisibility(View.GONE);
+                    } else {
+                        mDataBinding.llZonghe.setVisibility(View.VISIBLE);
+                        mDataBinding.rlZonghe.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    goodscatatoryLise();
+                }
+            }
+        });
+
     }
 
     /**
@@ -242,13 +277,14 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
     }
 
     /**
-     * 获取新机列表
+     * 获取搜索列表
      */
     private void findCategoryAll(final boolean refresh) {
         if (getContext() != null) {
             mCurrentPage = refresh ? START_PAGE : ++mCurrentPage;
             Map<String, String> map = new TreeMap<String, String>();
             map.put("keyword", mDataBinding.homeEidt.getText().toString().trim());
+            map.put("category_id", category_id);
             map.put("page", mCurrentPage + "");
             map.put("limit", mShowCount + "");
             String content = JSON.toJSONString(map);
@@ -377,6 +413,86 @@ public class SearchFragment extends AbsFragment<FragmentSearchBinding> {
                         }
                     }
                 }));
+    }
+
+    /**
+     * 获取配件品类列表 v1-3/goodscatatory/list
+     */
+    private void goodscatatoryLise() {
+        if (getContext() != null) {
+            showDialog();
+            Map<String, String> map = new TreeMap<String, String>();
+            map.put("pid", "7");
+            String content = JSON.toJSONString(map);
+            content = Des.encryptByDes(content);
+            String sign = Sign.getSignKey(getActivity(), map, "GoodsCatatoryList");
+            NetBean netBean = new NetBean();
+            netBean.setToken("");
+            netBean.setSign(sign);
+            netBean.setContent(content);
+            onNewRequestCall(GoodsCatatoryListAction.newInstance(getContext(), netBean)
+                    .request(new AHttpService.IResCallback<BaseEntity<GoodsCatatoryListBean>>() {
+                        @Override
+                        public void onCallback(int resultCode, Response<BaseEntity<GoodsCatatoryListBean>> response,
+                                               BaseErrorInfo baseErrorInfo) {
+                            if (getView() != null) {
+                                closeDialog();
+                                if (new HttpHelper().showError(getContext(), resultCode, baseErrorInfo, getString(R.string.error_net))) {
+                                    return;
+                                }
+                                if (response != null) {
+                                    new HttpHelper().showError(getContext(), response.body().getCode(), response.body().getMessage());
+                                    if (response.body().getCode().equals("200")) {
+                                        pinlei1(response.body().getData());
+                                    } else if (!BuildConfig.DEBUG && response.body().getCode().equals("1006")) {
+                                        ToastUtils.show(getContext(), "网络错误");
+                                    } else {
+                                        ToastUtils.show(getContext(), response.body().getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }));
+        }
+    }
+
+    /**
+     * 下拉全部 品类
+     */
+    private void pinlei1(final GoodsCatatoryListBean findBrandBean) {
+        if (findBrandBean != null && findBrandBean.getData() != null && findBrandBean.getData().size() > 0) {
+            final GetComboBoxBean getComboBoxBean = new GetComboBoxBean();
+            List<GetComboBoxBean.ResultBean> resultBeans = new ArrayList<>();
+            resultBeans.add(new GetComboBoxBean.ResultBean("", "全部"));
+            for (GoodsCatatoryListBean.DataBean resultBean : findBrandBean.getData()) {
+                GetComboBoxBean.ResultBean resultBean1 =
+                        new GetComboBoxBean.ResultBean(resultBean.getId(), resultBean.getName());
+                if (category_id.equals(resultBean.getId())) {
+                    resultBean1.setSelect(true);
+                }
+                resultBeans.add(resultBean1);
+            }
+
+            if (category_id.equals("")) {
+                findBrandBean.getData().get(0).setSelect(true);
+            }
+            getComboBoxBean.setResult(resultBeans);
+            mDataBinding.rlZonghe.setLayoutManager(new LinearLayoutManager(getContext()));
+            JXAdapter = new JXDropAdapter(getComboBoxBean.getResult(), getContext());
+            mDataBinding.rlZonghe.setAdapter(JXAdapter);
+            JXAdapter.setMyListener(new JXDropAdapter.ItemListener() {
+                @Override
+                public void onItemClick(GetComboBoxBean.ResultBean item) {
+                    category_id = item.getKey_name();
+                    mDataBinding.type.setText(item.getKey_value());
+                    mDataBinding.rlZonghe.setVisibility(View.GONE);
+                    mDataBinding.llZonghe.setVisibility(View.GONE);
+                    mDataBinding.rv.autoRefresh();
+                    mDataBinding.rlLabview.setVisibility(View.GONE);
+                    mDataBinding.rv.setVisibility(View.VISIBLE);
+                }
+            });
+        }
     }
 
     /**

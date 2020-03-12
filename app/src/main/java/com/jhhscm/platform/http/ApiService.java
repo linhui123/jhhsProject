@@ -866,12 +866,12 @@ public interface ApiService {
     @POST(UPDATE_ORDERSTATUS)
     Call<BaseEntity<ResultBean>> updateOrderStatus(@Body NetBean content);
 
-    //用户确认商户提交的订单状态
+    //全局搜索
     String SEARCH_FINDCATEGORYALL = "v1-3/search/findCategoryAll";
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST(SEARCH_FINDCATEGORYALL)
-    Call<BaseEntity<SearchBean>> findCategoryAll (@Body NetBean content);
+    Call<BaseEntity<SearchBean>> findCategoryAll(@Body NetBean content);
 
     //意见反馈
     String FIND_ORDERLISTCOUNT = "v1-3/order/findOrderListCount";

@@ -439,6 +439,7 @@
             android:padding="10dp"
             app:colum_num="3"
             app:image_num="9"
+            app:is_face="true"
             app:with_camera="true"></com.jhhscm.platform.views.selector.ImageSelector>
 
     </LinearLayout>

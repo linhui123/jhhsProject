@@ -29,6 +29,7 @@ import com.jhhscm.platform.http.sign.SignObject;
 import com.jhhscm.platform.tool.ConfigUtils;
 import com.jhhscm.platform.tool.Des;
 import com.jhhscm.platform.tool.EventBusUtil;
+import com.jhhscm.platform.tool.FastClickUtils;
 import com.jhhscm.platform.tool.KeyboardPatch;
 import com.jhhscm.platform.tool.StringUtils;
 import com.jhhscm.platform.tool.ToastUtil;
@@ -82,26 +83,30 @@ public class Lessee3Fragment extends AbsFragment<FragmentLessee3Binding> {
         mDataBinding.tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isUpdateResult = true;
-                suretyBean.setM1(mDataBinding.etEmergency.getText().toString().trim());
-                suretyBean.setM2(mDataBinding.etEmergencyPhone.getText().toString().trim());
-                suretyBean.setName(mDataBinding.etGuarantee.getText().toString().trim());
-                suretyBean.setIdCard(mDataBinding.etGuaranteeId.getText().toString().trim());
-                suretyBean.setPhone(mDataBinding.etGuaranteePhone.getText().toString().trim());
-                lesseeBean.setwBankLeaseSurety(suretyBean);
-                if (mDataBinding.isFace.getUploadImageList().size() > 0) {
-                    if (mDataBinding.isGuohui.getUploadImageList().size() > 0) {
-                        updateImgResult = true;
-                        doUploadAImagesAction(mDataBinding.isFace);
+                if (FastClickUtils.isFastClick()) {
+                    isUpdateResult = true;
+                    suretyBean.setM1(mDataBinding.etEmergency.getText().toString().trim());
+                    suretyBean.setM2(mDataBinding.etEmergencyPhone.getText().toString().trim());
+                    suretyBean.setName(mDataBinding.etGuarantee.getText().toString().trim());
+                    suretyBean.setIdCard(mDataBinding.etGuaranteeId.getText().toString().trim());
+                    suretyBean.setPhone(mDataBinding.etGuaranteePhone.getText().toString().trim());
+                    lesseeBean.setwBankLeaseSurety(suretyBean);
+                    if (mDataBinding.isFace.getUploadImageList().size() > 0) {
+                        if (mDataBinding.isGuohui.getUploadImageList().size() > 0) {
+                            updateImgResult = true;
+                            doUploadAImagesAction(mDataBinding.isFace);
+                        } else {
+                            ToastUtil.show(getActivity(), "请上传身份证国徽面");
+                        }
                     } else {
-                        ToastUtil.show(getActivity(), "请上传身份证国徽面");
+                        ToastUtil.show(getActivity(), "请上传身份证人面像");
                     }
-                } else {
-                    ToastUtil.show(getActivity(), "请上传身份证人面像");
                 }
             }
         });
     }
+
+
 
     @Override
     public void onResume() {

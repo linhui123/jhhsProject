@@ -179,18 +179,10 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
         mDataBinding.rv.requestFocus();
         if (ConfigUtils.getLesseeData(getContext()) != null) {
             lessee = ConfigUtils.getLesseeData(getContext());
-            for (int i = 0; i < itemsBeans.size(); i++) {
-                itemsBeans.get(i).setItemUrl(mAdapter.get(i).getItemUrl());
-                Log.e("onPause", "onPause" + itemsBeans.get(i).getItemUrl());
-            }
             lessee.setWBankLeaseItems(itemsBeans);
             ConfigUtils.setLesseeData(getContext(), lessee);
         } else {
             lessee = new LesseeBean();
-            for (int i = 0; i < itemsBeans.size(); i++) {
-                itemsBeans.get(i).setItemUrl(mAdapter.get(i).getItemUrl());
-                Log.e("onPause", "onPause" + itemsBeans.get(i).getItemUrl());
-            }
             lessee.setWBankLeaseItems(itemsBeans);
             ConfigUtils.setLesseeData(getContext(), lessee);
         }
@@ -228,7 +220,7 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
             dataBean.setFixP17(data.getFixp17());
             dataBean.setFactoryTime(data.getFcatory_time());
             itemsBeans.add(dataBean);
-            mAdapter.add(dataBean);
+            mAdapter.setData(itemsBeans);
             imageSelectors.add(new ImageSelector(getContext()));
         } else {
             //判断是否从我的设备进来；判断草稿箱是否有内容
@@ -246,18 +238,6 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
                 }
             } else {
                 LesseeBean.WBankLeaseItemsBean dataBean = new LesseeBean.WBankLeaseItemsBean();
-//                if (BuildConfig.DEBUG) {//测试数据
-//                    dataBean.setMachineNum("111");
-//                    dataBean.setName("111");
-//                    dataBean.setFixP17("111");
-//                    dataBean.setMachinePrice("111");
-//                    dataBean.setM1("111");
-//                    dataBean.setM2("111");
-//                    dataBean.setM3("111");
-//                    dataBean.setM4("111");
-//                    dataBean.setM5("111");
-//                    dataBean.setM6("111");
-//                }
                 itemsBeans.add(dataBean);
                 mAdapter.add(dataBean);
                 imageSelectors.add(new ImageSelector(getContext()));
@@ -270,6 +250,7 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
      */
     private void findBrand() {
         if (getContext() != null) {
+            showDialog();
             Map<String, String> map = new TreeMap<String, String>();
             map.put("brand_type", "1");
             String content = JSON.toJSONString(map);
@@ -521,7 +502,7 @@ public class Lessee2Fragment extends AbsFragment<FragmentLessee2Binding> {
                 jsonString = "\"" + updateImageBean.getIMG_URL() + "\"";
             }
         }
-        mAdapter.get(position).setItemUrl(jsonString);
+        itemsBeans.get(position).setItemUrl(jsonString);
     }
 
     /**

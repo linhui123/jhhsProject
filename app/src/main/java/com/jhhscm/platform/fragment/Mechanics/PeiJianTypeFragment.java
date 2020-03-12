@@ -83,7 +83,7 @@ public class PeiJianTypeFragment extends AbsFragment<FragmentPeiJianTypeBinding>
         mDataBinding.homeEidt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchActivity.start(getContext());
+                SearchActivity.start(getContext(), 2);
             }
         });
 

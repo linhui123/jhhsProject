@@ -124,18 +124,15 @@ public class Lessee1Fragment extends AbsFragment<FragmentLessee1Binding> {
     public void onResume() {
         super.onResume();
         //判断是否从我的设备进来；判断草稿箱是否有内容
-        if (ConfigUtils.getLesseeData(getContext()) != null
-                && ConfigUtils.getLesseeData(getContext()).getWBankLeasePerson() != null
-                && dataBean == null) {
-            personBean = ConfigUtils.getLesseeData(getContext()).getWBankLeasePerson();
-            lesseeBean = ConfigUtils.getLesseeData(getContext());
-            initData();
-        } else {
-//            if (BuildConfig.DEBUG) {//测试数据
-//                mDataBinding.etName.setText("cl");
-//                mDataBinding.etId.setText("35018119930406159");
-//                mDataBinding.etPhone.setText("18030129696");
-//            }
+        if (dataBean == null) {
+            if (ConfigUtils.getLesseeData(getContext()) != null
+                    && ConfigUtils.getLesseeData(getContext()).getWBankLeasePerson() != null) {
+                personBean = ConfigUtils.getLesseeData(getContext()).getWBankLeasePerson();
+                lesseeBean = ConfigUtils.getLesseeData(getContext());
+                initData();
+            }
+        } else {//从我的设备入口进来
+            ConfigUtils.removeLesseeData(getContext());
         }
     }
 
